@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Input from "../../styles/Input";
@@ -7,6 +6,7 @@ import Button from "../../styles/Button";
 import { FcGoogle } from "react-icons/fc";
 import { ImFacebook } from "react-icons/im";
 import {
+  Body,
   DadosLogin,
   Botoes,
   BotoesAlternativos,
@@ -19,30 +19,18 @@ function Login() {
   const history = useHistory();
   // const [email, setEmail] = useState();
   // const [senha, setSenha] = useState();
-  const Body = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  min-height: 100vh;
-  padding: 1% ;
-`;
-
   return (
     <div>
       <Body>
-        
         <DadosLogin>
-        <Logo>
-          <img
-            src={logoGuilherme}
-            alt="logoGuilherme"
-            width="100%"
-            height="100%"
-          ></img>
-        </Logo>
+          <Logo>
+            <img
+              src={logoGuilherme}
+              alt="logoGuilherme"
+              width="100%"
+              height="100%"
+            ></img>
+          </Logo>
           <Input
             placeholder="Email"
             backgroundColor="#E4E6F4"

@@ -1,5 +1,15 @@
 import styled from "styled-components";
 
+export const Body = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  padding: 1%;
+`;
 
 export const DadosLogin = styled.div`
   display: flex;
@@ -55,7 +65,6 @@ export const BarraEstetica = styled.div`
   background-color: #151b57;
   height: 1px;
   width: 40%;
- 
 `;
 export const Logo = styled.div`
   align-items: center;
@@ -64,5 +73,4 @@ export const Logo = styled.div`
   height: 33%;
   min-width: 120px;
   min-height: 120px;
-  
 `;
