@@ -24,6 +24,9 @@ const Button = styled.button`
   font-size: ${(props) => props.fontSize};
   text-decoration: ${(props) => props.textDecoration};
   text-align: center;
-  font-weight: ${(props) => props.fontWeight}; ;
+  font-weight: ${(props) => props.fontWeight};
+  @media(max-width:480px){
+    font-size: ${(props) => props.fontSizeMedia};
+  }
 `;
 export default Button;
