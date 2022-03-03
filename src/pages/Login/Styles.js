@@ -9,6 +9,7 @@ export const Body = styled.div`
   height: 100%;
   min-height: 100vh;
   padding: 1%;
+  background-color: #e5e5e5 ;
 `;
 
 export const DadosLogin = styled.div`
@@ -67,10 +68,12 @@ export const BarraEstetica = styled.div`
   width: 40%;
 `;
 export const Logo = styled.div`
+  display: flex;
   align-items: center;
   justify-content: center;
   width: 33%;
   height: 33%;
   min-width: 120px;
   min-height: 120px;
+  .logo{ border-radius: 15px;}
 `;

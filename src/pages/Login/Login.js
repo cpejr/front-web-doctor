@@ -26,6 +26,7 @@ function Login() {
           <Logo>
             <img
               src={logoGuilherme}
+              className="logo"
               alt="logoGuilherme"
               width="100%"
               height="100%"
@@ -89,9 +90,9 @@ function Login() {
           </Button>
         </Botoes>
         <Estetica>
-          <BarraEstetica> </BarraEstetica>
+          <BarraEstetica/> 
           ou
-          <BarraEstetica> </BarraEstetica>
+          <BarraEstetica/>
         </Estetica>
         <BotoesAlternativos>
           <Button
@@ -105,7 +106,7 @@ function Login() {
               history.push("/");
             }}
           >
-            <FcGoogle></FcGoogle>Continuar com o Google
+            <FcGoogle/>Continuar com o Google
           </Button>
           <Button
             width="100%"
@@ -118,7 +119,7 @@ function Login() {
               history.push("/");
             }}
           >
-            <ImFacebook></ImFacebook>Continuar com o Facebook
+            <ImFacebook/>Continuar com o Facebook
           </Button>
         </BotoesAlternativos>
       </Body>
