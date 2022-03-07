@@ -90,9 +90,9 @@ function Login() {
           </Button>
         </Botoes>
         <Estetica>
-          <BarraEstetica/> 
+          <BarraEstetica />
           ou
-          <BarraEstetica/>
+          <BarraEstetica />
         </Estetica>
         <BotoesAlternativos>
           <Button
@@ -106,7 +106,8 @@ function Login() {
               history.push("/");
             }}
           >
-            <FcGoogle/>Continuar com o Google
+            <FcGoogle />
+            Continuar com o Google
           </Button>
           <Button
             width="100%"
@@ -119,7 +120,8 @@ function Login() {
               history.push("/");
             }}
           >
-            <ImFacebook/>Continuar com o Facebook
+            <ImFacebook />
+            Continuar com o Facebook
           </Button>
         </BotoesAlternativos>
       </Body>
