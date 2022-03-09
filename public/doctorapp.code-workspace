@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../front-app-doctor"
+		},
+		{
+			"path": "../../backend-doctor"
+		}
+	],
+	"settings": {}
+}
