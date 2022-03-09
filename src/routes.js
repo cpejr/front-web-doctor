@@ -25,8 +25,9 @@ function Routes() {
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route exact path="/cadastro" component={Cadastro} />
-        <Route path="/header" component={UserHeader} />
-        <Route component={() => <Redirect to="/header/homemedico" />} />
+        <Route exact path="/web" component={() => <Redirect to="/web/homemedico" />} />
+        <Route path="/web" component={UserHeader} />
+        <Route component={() => <Redirect to="/web/homemedico" />} />
       </Switch>
     </BrowserRouter>
   )
@@ -36,32 +37,33 @@ function UserHeader() {
   return (
     <Header>
       <Switch>
-        <Route exact path="/header/homemedico" component={HomeMedico} />
-        <Route exact path="/header/homesecretaria" component={HomeSecretaria} />
-        <Route exact path="/header/alterardados" component={AlterarDados} />
-        <Route exact path="/header/alterarsenha" component={AlterarSenha} />
-        <Route exact path="/header/areareceitas" component={AreaReceitas} />
-        <Route exact path="/header/chat" component={Chat} />
+        <Route exact path="/web/homemedico" component={HomeMedico} />
+        <Route exact path="/web/homesecretaria" component={HomeSecretaria} />
+        <Route exact path="/web/editarperfil" component={AlterarDados} />
+        <Route exact path="/web/alterarsenha" component={AlterarSenha} />
+        <Route exact path="/web/areareceitas" component={AreaReceitas} />
+        <Route exact path="/web/chat" component={Chat} />
         <Route
           exact
-          path="/header/criacaoformulario"
+          path="/web/criacaoformulario"
           component={CriacaoFormulario}
         />
-        <Route exact path="/header/edicaoconteudo" component={EdicaoConteudo} />
+        <Route exact path="/web/editarconteudo" component={EdicaoConteudo} />
         <Route
           exact
-          path="/header/listaformularios"
+          path="/web/listaformularios"
           component={ListaFormularios}
         />
-        <Route exact path="/header/listausuarios" component={ListaUsuarios} />
-        <Route exact path="/header/modeloreceitas" component={ModeloReceitas} />
-        <Route exact path="/header/perfil" component={Perfil} />
-        <Route exact path="/header/perfilpaciente" component={PerfilPaciente} />
+        <Route exact path="/web/listadeusuarios" component={ListaUsuarios} />
+        <Route exact path="/web/modeloreceitas" component={ModeloReceitas} />
+        <Route exact path="/web/perfil" component={Perfil} />
+        <Route exact path="/web/perfildopaciente" component={PerfilPaciente} />
         <Route
           exact
-          path="/header/respostaformulario"
+          path="/web/respostaformulario"
           component={RespostaFormulario}
         />
+        <Route component={() => <Redirect to="/web/homemedico" />} />
       </Switch>
     </Header>
   );
