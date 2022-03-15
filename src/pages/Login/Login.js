@@ -5,6 +5,8 @@ import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import { FcGoogle } from "react-icons/fc";
 import { ImFacebook } from "react-icons/im";
+import api from "../../services/api";
+import handleError from "../../utils/HttpErrors";
 import {
   Body,
   DadosLogin,
@@ -17,9 +19,29 @@ import {
 
 function Login() {
   const history = useHistory();
-  // const [email, setEmail] = useState();
-  // const [senha, setSenha] = useState();
-  return (
+  const [email, setEmail] = useState("");
+  const [senha, setSenha] = useState("");
+
+  async function requisicaoLogin() {
+    if (email.length === 0 || senha.length === 0) {
+      alert("Preencha os campos email e senha!");
+    } else {
+      try {
+        const response = await api.post("/login", {
+          email,
+          senha,
+        });
+        console.log(response.data);
+        history.push("/");
+      } catch (error) {
+        setEmail("");
+        setSenha("");
+        handleError(error, () => history.push("/login"));
+      }
+    }
+  }
+
+  return (  
     <div>
       <Body>
         <DadosLogin>
@@ -38,8 +60,8 @@ function Login() {
             borderColor="#151B57"
             color="black"
             width="100%"
-            // value={email}
-            // onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           ></Input>
           <Input
             placeholder="Senha"
@@ -47,8 +69,9 @@ function Login() {
             borderColor="#151B57"
             color="black"
             width="100%"
-            // value={senha}
-            // onChange={(e) => setSenha(e.target.value)}
+            type="password"
+            value={senha}
+            onChange={(e) => setSenha(e.target.value)}
           ></Input>
           <Button
             width="100%"
@@ -58,7 +81,7 @@ function Login() {
             fontSize="1.5em"
             fontWeight="bold"
             fontSizeMedia="1.2em"
-            onClick={() => history.push("/home")}
+            onClick={() => requisicaoLogin()}
           >
             ENTRAR
           </Button>
