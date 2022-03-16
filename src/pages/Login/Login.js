@@ -7,6 +7,7 @@ import { FcGoogle } from "react-icons/fc";
 import { ImFacebook } from "react-icons/im";
 import api from "../../services/api";
 import handleError from "../../utils/HttpErrors";
+import { login } from "../../services/auth";
 import {
   Body,
   DadosLogin,
@@ -31,12 +32,14 @@ function Login() {
           email,
           senha,
         });
-        console.log(response.data);
+        alert("Bem vindo")
+        login(response.data.token)
         history.push("/");
       } catch (error) {
         setEmail("");
         setSenha("");
         handleError(error, () => history.push("/login"));
+        console.warn(error)
       }
     }
   }
