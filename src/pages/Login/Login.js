@@ -59,6 +59,7 @@ function Login() {
             backgroundColor="#E4E6F4"
             borderColor="#151B57"
             color="black"
+            fontSize="1em"
             width="100%"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -68,6 +69,7 @@ function Login() {
             backgroundColor="#E4E6F4"
             borderColor="#151B57"
             color="black"
+            fontSize="1em"
             width="100%"
             type="password"
             value={senha}

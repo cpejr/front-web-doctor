@@ -6,7 +6,7 @@ const Input = styled.input`
   border-color: ${(props) => props.borderColor};
   color: ${(props) => props.color};
   border-radius: 3px;
-  font-size: 1em;
+  font-size: ${(props) => props.fontSize};
   margin-top: 2%;
   border-style: solid;
   height: 50px;
