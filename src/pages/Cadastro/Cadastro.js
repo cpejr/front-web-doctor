@@ -31,14 +31,10 @@ function Cadastro() {
               history.push("/login");
             })
             .catch((error) => {
-              console.log(estado, "aa", endereco);
-              console.warn(error);
               handleError(error, () => history.push("/cadastro"));
             });
         })
         .catch((error) => {
-          console.log(endereco, "bb", estado);
-          console.warn(error);
           handleError(error, () => history.push("/cadastro"));
         });
     } else {
