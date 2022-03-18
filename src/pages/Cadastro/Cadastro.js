@@ -4,6 +4,8 @@ import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import Select from "../../styles/Select/Select";
+import api from "../../services/api";
+import handleError from "../../utils/HttpErrors";
 import {
   Body,
   DadosCadastro,
@@ -14,20 +16,40 @@ import {
 
 function Cadastro() {
   const history = useHistory();
-  // const [nome, setNome] = useState();
-  // const [telefone, setTelefone] = useState();
-  // const [dataNascimento, setDataNascimento] = useState();
-  // const [email, setEmail] = useState();
-  // const [cep, setCep] = useState();
-  // const [pais, setPais] = useState();
-  // const [estado, setEstado] = useState();
-  // const [cidade, setCidade] = useState();
-  // const [rua, setRua] = useState();
-  // const [numero, setNumero] = useState();
-  // const [complemento, setComplemento] = useState();
-  // const [senha, setSenha] = useState();
-  // const [confirmarSenha, setConfirmarSenha] = useState();
-  // const [tipo, setTipo] = useState();
+  const [estado, setEstado] = useState({});
+  const [endereco, setEndereco] = useState({});
+
+  function requisicaoCadastro() {
+    if (estado.senha === estado.senhaConfirmada) {
+      api
+        .post("/enderecos", endereco)
+        .then((res) => {
+          api
+            .post("/usuarios", { ...estado, id_endereco: res.data.id })
+            .then(() => {
+              alert("Usuário cadastrado com sucesso.");
+              history.push("/login");
+            })
+            .catch((error) => {
+              handleError(error, () => history.push("/cadastro"));
+            });
+        })
+        .catch((error) => {
+          handleError(error, () => history.push("/cadastro"));
+        });
+    } else {
+      alert("As senhas digitadas são diferentes.");
+    }
+  }
+
+  function preenchendoDados(e) {
+    setEstado({ ...estado, [e.target.name]: e.target.value });
+  }
+
+  function preenchendoEndereco(e) {
+    setEndereco({ ...endereco, [e.target.name]: e.target.value });
+  }
+
   return (
     <div>
       <Body>
@@ -46,9 +68,10 @@ function Cadastro() {
             backgroundColor="#E4E6F4"
             borderColor="#151B57"
             color="black"
+            fontSize="1em"
             width="100%"
-            // value={nome}
-            // onChange={(e) => setNome(e.target.value)}
+            name="nome"
+            onChange={preenchendoDados}
           ></Input>
           <InputMesmaLinha>
             <Input
@@ -56,18 +79,21 @@ function Cadastro() {
               backgroundColor="#E4E6F4"
               borderColor="#151B57"
               color="black"
+              fontSize="1em"
               width="48%"
-              // value={telefone}
-              // onChange={(e) => setTelefone(e.target.value)}
+              name="telefone"
+              onChange={preenchendoDados}
             ></Input>
             <Input
               placeholder="Data de Nascimento"
               backgroundColor="#E4E6F4"
               borderColor="#151B57"
-              color="black"
+              color="#807D7D"
+              fontSize="1.25em"
               width="48%"
-              // value={dataNascimento}
-              // onChange={(e) => setDataNascimento(e.target.value)}
+              name="data_nascimento"
+              type="date"
+              onChange={preenchendoDados}
             ></Input>
           </InputMesmaLinha>
           <Input
@@ -75,104 +101,165 @@ function Cadastro() {
             backgroundColor="#E4E6F4"
             borderColor="#151B57"
             color="black"
+            fontSize="1em"
             width="100%"
-            // value={email}
-            // onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            onChange={preenchendoDados}
           ></Input>
           <Input
             placeholder="CEP"
             backgroundColor="#E4E6F4"
             borderColor="#151B57"
             color="black"
+            fontSize="1em"
             width="100%"
-            // value={cep}
-            // onChange={(e) => setCep(e.target.value)}
+            name="cep"
+            onChange={preenchendoEndereco}
           ></Input>
           <Input
             placeholder="País"
             backgroundColor="#E4E6F4"
             borderColor="#151B57"
             color="black"
+            fontSize="1em"
             width="100%"
-            // value={pais}
-            // onChange={(e) => setPais(e.target.value)}
+            name="pais"
+            onChange={preenchendoEndereco}
           ></Input>
-          <Input
-            placeholder="Estado"
+          <Select
+            id="estado"
+            name="estado"
             backgroundColor="#E4E6F4"
             borderColor="#151B57"
-            color="black"
+            color="#8D8D8D"
             width="100%"
-            // value={estado}
-            // onChange={(e) => setEstado(e.target.value)}
-          ></Input>
+            onChange={preenchendoEndereco}
+          >
+            <option value="">Estado</option>
+            <option value="AC">Acre</option>
+            <option value="AL">Alagoas</option>
+            <option value="AP">Amapá</option>
+            <option value="AM">Amazonas</option>
+            <option value="BA">Bahia</option>
+            <option value="CE">Ceará</option>
+            <option value="DF">Distrito Federal</option>
+            <option value="ES">Espírito Santo</option>
+            <option value="GO">Goiás</option>
+            <option value="MA">Maranhão</option>
+            <option value="MT">Mato Grosso</option>
+            <option value="MS">Mato Grosso do Sul</option>
+            <option value="MG">Minas Gerais</option>
+            <option value="PA">Pará</option>
+            <option value="PB">Paraíba</option>
+            <option value="PR">Paraná</option>
+            <option value="PE">Pernambuco</option>
+            <option value="PI">Piauí</option>
+            <option value="RJ">Rio de Janeiro</option>
+            <option value="RN">Rio Grande do Norte</option>
+            <option value="RS">Rio Grande do Sul</option>
+            <option value="RO">Rondônia</option>
+            <option value="RR">Roraima</option>
+            <option value="SC">Santa Catarina</option>
+            <option value="SP">São Paulo</option>
+            <option value="SE">Sergipe</option>
+            <option value="TO">Tocantins</option>
+            <option value="EX">Estrangeiro</option>
+          </Select>
           <Input
             placeholder="Cidade"
             backgroundColor="#E4E6F4"
             borderColor="#151B57"
             color="black"
+            fontSize="1em"
             width="100%"
-            // value={cidade}
-            // onChange={(e) => setCidade(e.target.value)}
+            name="cidade"
+            onChange={preenchendoEndereco}
+          ></Input>
+          <Input
+            placeholder="Bairro"
+            backgroundColor="#E4E6F4"
+            borderColor="#151B57"
+            color="black"
+            fontSize="1em"
+            width="100%"
+            name="bairro"
+            onChange={preenchendoEndereco}
           ></Input>
           <Input
             placeholder="Rua"
             backgroundColor="#E4E6F4"
             borderColor="#151B57"
             color="black"
+            fontSize="1em"
             width="100%"
-            // value={rua}
-            // onChange={(e) => setRua(e.target.value)}
+            name="rua"
+            onChange={preenchendoEndereco}
           ></Input>
-          <Input
-            placeholder="Número"
-            backgroundColor="#E4E6F4"
-            borderColor="#151B57"
-            color="black"
-            width="100%"
-            // value={numero}
-            // onChange={(e) => setNumero(e.target.value)}
-          ></Input>
-          <Input
-            placeholder="Complemento"
-            backgroundColor="#E4E6F4"
-            borderColor="#151B57"
-            color="black"
-            width="100%"
-            // value={complemento}
-            // onChange={(e) => setComplemento(e.target.value)}
-          ></Input>
+          <InputMesmaLinha>
+            <Input
+              placeholder="Número"
+              backgroundColor="#E4E6F4"
+              borderColor="#151B57"
+              color="black"
+              fontSize="1em"
+              width="48%"
+              name="numero"
+              onChange={preenchendoEndereco}
+            ></Input>
+            <Input
+              placeholder="Complemento"
+              backgroundColor="#E4E6F4"
+              borderColor="#151B57"
+              color="black"
+              fontSize="1em"
+              width="48%"
+              name="complemento"
+              onChange={preenchendoEndereco}
+            ></Input>
+          </InputMesmaLinha>
+
           <Input
             placeholder="Defina sua senha"
             backgroundColor="#E4E6F4"
             borderColor="#151B57"
             color="black"
             width="100%"
-            // value={senha}
-            // onChange={(e) => setSenha(e.target.value)}
+            fontSize="1em"
+            name="senha"
+            id="senha"
+            type="password"
+            onChange={preenchendoDados}
           ></Input>
+
           <Input
             placeholder="Confirme sua senha"
             backgroundColor="#E4E6F4"
             borderColor="#151B57"
             color="black"
             width="100%"
-            // value={senha}
-            // onChange={(e) => setSenha(e.target.value)}
+            fontSize="1em"
+            name="senhaConfirmada"
+            id="senhaConfirmada"
+            type="password"
+            onChange={preenchendoDados}
           ></Input>
+
           <Select
             id="tipos"
-            name="tipos"
             backgroundColor="#E4E6F4"
             borderColor="#151B57"
             color="#8D8D8D"
             width="100%"
-            // value={senha}
-            // onChange={(e) => setSenha(e.target.value)}
+            name="tipo"
+            onChange={preenchendoDados}
           >
             <option value="">Tipo de Usuário</option>
-            <option value="secretaria" borderColor="#151B57" >Secretária</option>
-            <option value="paciente" borderColor="#151B57">Paciente</option>
+            <option value="SECRETARIA" borderColor="#151B57">
+              Secretária
+            </option>
+            <option value="PACIENTE" borderColor="#151B57">
+              Paciente
+            </option>
           </Select>
           <BotoesMesmaLinha>
             <Button
@@ -195,7 +282,7 @@ function Cadastro() {
               fontSize="1.5em"
               fontWeight="bold"
               fontSizeMedia="1.2em"
-              onClick={() => history.push("/home")}
+              onClick={requisicaoCadastro}
             >
               ENTRAR
             </Button>
