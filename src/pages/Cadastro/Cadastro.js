@@ -5,7 +5,7 @@ import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import Select from "../../styles/Select/Select";
 import api from "../../services/api";
-import handleError from "../../utils/HttpErrors";
+import requisicaoErro from "../../utils/HttpErros";
 import {
   Body,
   DadosCadastro,
@@ -31,11 +31,11 @@ function Cadastro() {
               history.push("/login");
             })
             .catch((error) => {
-              handleError(error, () => history.push("/cadastro"));
+              requisicaoErro(error, () => history.push("/cadastro"));
             });
         })
         .catch((error) => {
-          handleError(error, () => history.push("/cadastro"));
+          requisicaoErro(error, () => history.push("/cadastro"));
         });
     } else {
       alert("As senhas digitadas são diferentes.");
