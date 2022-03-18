@@ -6,8 +6,8 @@ import Button from "../../styles/Button";
 import { FcGoogle } from "react-icons/fc";
 import { ImFacebook } from "react-icons/im";
 import api from "../../services/api";
-import handleError from "../../utils/HttpErrors";
 import { login } from "../../services/auth";
+import requisicaoErro from "../../utils/HttpErros";
 import {
   Body,
   DadosLogin,
@@ -28,18 +28,17 @@ function Login() {
       alert("Preencha os campos email e senha!");
     } else {
       try {
-        const response = await api.post("/login", {
+        const resposta = await api.post("/login", {
           email,
           senha,
         });
-        alert("Bem vindo");
-        login(response.data.token);
+        alert("Bem vindo")
+        login(resposta.data.token)
         history.push("/");
       } catch (error) {
         setEmail("");
         setSenha("");
-        handleError(error, () => history.push("/login"));
-        console.warn(error);
+        requisicaoErro(error, () => history.push("/login"));
       }
     }
   }
