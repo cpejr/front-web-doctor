@@ -137,7 +137,7 @@ function Cadastro() {
             borderColor="#151B57"
             color="#8D8D8D"
             width="100%"
-            onChange={preenchendoDados}
+            onChange={preenchendoEndereco}
           >
             <option value="">Estado</option>
             <option value="AC">Acre</option>
