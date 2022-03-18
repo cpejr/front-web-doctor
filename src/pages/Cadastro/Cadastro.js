@@ -20,7 +20,6 @@ function Cadastro() {
   const [endereco, setEndereco] = useState({});
 
   function requisicaoCadastro() {
-    console.log(estado);
     if (estado.senha === estado.senhaConfirmada) {
       api
         .post("/enderecos", endereco)
