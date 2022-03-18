@@ -39,7 +39,7 @@ function Login() {
         setEmail("");
         setSenha("");
         requisicaoErro(error, () => history.push("/login"));
-        console.warn(error)
+
       }
     }
   }
