@@ -32,19 +32,19 @@ function Login() {
           email,
           senha,
         });
-        alert("Bem vindo")
-        login(response.data.token)
+        alert("Bem vindo");
+        login(response.data.token);
         history.push("/");
       } catch (error) {
         setEmail("");
         setSenha("");
         handleError(error, () => history.push("/login"));
-        console.warn(error)
+        console.warn(error);
       }
     }
   }
 
-  return (  
+  return (
     <div>
       <Body>
         <DadosLogin>
