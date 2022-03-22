@@ -1,9 +1,194 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
+import Button from "../../styles/Button";
+import {
+  Body,
+  Board,
+  Notificacao,
+  TextoNotificacao,
+  CaixaTexto,
+  BotoesColuna,
+  BotaoCanto,
+  IconeAdicionar,
+} from "./Styles";
 
 function HomeSecretaria() {
+  const history = useHistory();
+
   return (
     <div>
-      <h1>HomeSecretaria</h1>
+      <Body>
+        <Board>
+          <Notificacao>
+            <CaixaTexto>
+              <h3>
+                <TextoNotificacao>
+                  Formulário Pré-consulta respondido por Nome do Usuário
+                </TextoNotificacao>
+              </h3>
+            </CaixaTexto>
+            <BotoesColuna>
+              <Button
+                width="100%"
+                backgroundColor="#434B97"
+                borderColor="#151B57"
+                color="white"
+                fontSize="1.5em"
+                fontWeight="medium"
+                fontSizeMedia="1.2em"
+                onClick={() => history.push("/web/respostaformulario")}
+              >
+                VISUALIZAR
+              </Button>
+              <Button
+                width="100%"
+                backgroundColor="#E4E6F4"
+                borderColor="#151B57"
+                color="black"
+                fontSize="1.5em"
+                fontWeight="medium"
+                fontSizeMedia="1.2em"
+                onClick={() => history.push("/web/chat")}
+              >
+                INICIAR CHAT
+              </Button>
+            </BotoesColuna>
+          </Notificacao>
+          <Notificacao>
+            <CaixaTexto>
+              <h3>
+                <TextoNotificacao>
+                  Formulário Pré-consulta respondido por Nome do Usuário
+                </TextoNotificacao>
+              </h3>
+            </CaixaTexto>
+            <BotoesColuna>
+              <Button
+                width="100%"
+                backgroundColor="#434B97"
+                borderColor="#151B57"
+                color="white"
+                fontSize="1.5em"
+                fontWeight="medium"
+                fontSizeMedia="1.2em"
+                onClick={() => history.push("/web/respostaformulario")}
+              >
+                VISUALIZAR
+              </Button>
+              <Button
+                width="100%"
+                backgroundColor="#E4E6F4"
+                borderColor="#151B57"
+                color="black"
+                fontSize="1.5em"
+                fontWeight="medium"
+                fontSizeMedia="1.2em"
+                onClick={() => history.push("/web/chat")}
+              >
+                INICIAR CHAT
+              </Button>
+            </BotoesColuna>
+          </Notificacao>
+          <Notificacao>
+            <CaixaTexto>
+              <h3>
+                <TextoNotificacao>
+                  Formulário Pré-consulta respondido por Nome do Usuário
+                </TextoNotificacao>
+              </h3>
+            </CaixaTexto>
+            <BotoesColuna>
+              <Button
+                width="100%"
+                backgroundColor="#434B97"
+                borderColor="#151B57"
+                color="white"
+                fontSize="1.5em"
+                fontWeight="medium"
+                fontSizeMedia="1.2em"
+                onClick={() => history.push("/web/respostaformulario")}
+              >
+                VISUALIZAR
+              </Button>
+              <Button
+                width="100%"
+                backgroundColor="#E4E6F4"
+                borderColor="#151B57"
+                color="black"
+                fontSize="1.5em"
+                fontWeight="medium"
+                fontSizeMedia="1.2em"
+                onClick={() => history.push("/web/chat")}
+              >
+                INICIAR CHAT
+              </Button>
+            </BotoesColuna>
+          </Notificacao>
+          <Notificacao>
+            <CaixaTexto>
+              <h3>
+                <TextoNotificacao>
+                  Formulário Pré-consulta respondido por Nome do Usuário
+                </TextoNotificacao>
+              </h3>
+            </CaixaTexto>
+            <BotoesColuna>
+              <Button
+                width="100%"
+                backgroundColor="#434B97"
+                borderColor="#151B57"
+                color="white"
+                fontSize="1.5em"
+                fontWeight="medium"
+                fontSizeMedia="1.2em"
+                onClick={() => history.push("/web/respostaformulario")}
+              >
+                VISUALIZAR
+              </Button>
+              <Button
+                width="100%"
+                backgroundColor="#E4E6F4"
+                borderColor="#151B57"
+                color="black"
+                fontSize="1.5em"
+                fontWeight="medium"
+                fontSizeMedia="1.2em"
+                onClick={() => history.push("/web/chat")}
+              >
+                INICIAR CHAT
+              </Button>
+            </BotoesColuna>
+          </Notificacao>
+        </Board>
+        <BotaoCanto>
+          <Button
+            width="50%"
+            backgroundColor="#E4E6F4"
+            borderColor="#000000"
+            justify-content="flex-end"
+            color="#151B57"
+            fontSize="1.5em"
+            fontWeight="medium"
+            fontSizeMedia="1.2em"
+            boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+            onClick={() => history.push("/cadastro")}
+          >
+            Cadastrar Novo Paciente
+            <IconeAdicionar>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                height="24px"
+                viewBox="0 0 24 24"
+                width="24px"
+                fill="#151B57"
+              >
+                <path d="M0 0h24v24H0V0z" fill="none" />
+                <path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+              </svg>
+            </IconeAdicionar>
+          </Button>
+        </BotaoCanto>
+      </Body>
     </div>
   );
 }

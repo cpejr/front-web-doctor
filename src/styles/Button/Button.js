@@ -18,6 +18,7 @@ const Button = styled.button`
   border-color: ${(props) => props.borderColor};
   border-style: solid;
   cursor: pointer;
+  box-shadow: ${(props) => props.boxShadow};
   /*características do texto*/
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
