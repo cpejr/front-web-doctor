@@ -35,7 +35,9 @@ function HomeSecretaria() {
                 color="white"
                 fontSize="1.5em"
                 fontWeight="medium"
-                fontSizeMedia="1.2em"
+                fontSizeMedia="0.8em"
+                fontSizeMedia950="1em"
+                heightMedia= "2em"
                 onClick={() => history.push("/web/respostaformulario")}
               >
                 VISUALIZAR
@@ -47,7 +49,9 @@ function HomeSecretaria() {
                 color="black"
                 fontSize="1.5em"
                 fontWeight="medium"
-                fontSizeMedia="1.2em"
+                fontSizeMedia="0.8em"
+                fontSizeMedia950="1em"
+                heightMedia= "2em"
                 onClick={() => history.push("/web/chat")}
               >
                 INICIAR CHAT
@@ -70,7 +74,9 @@ function HomeSecretaria() {
                 color="white"
                 fontSize="1.5em"
                 fontWeight="medium"
-                fontSizeMedia="1.2em"
+                fontSizeMedia="0.8em"
+                fontSizeMedia950="1em"
+                heightMedia= "2em"
                 onClick={() => history.push("/web/respostaformulario")}
               >
                 VISUALIZAR
@@ -82,7 +88,9 @@ function HomeSecretaria() {
                 color="black"
                 fontSize="1.5em"
                 fontWeight="medium"
-                fontSizeMedia="1.2em"
+                fontSizeMedia="0.8em"
+                fontSizeMedia950="1em"
+                heightMedia= "2em"
                 onClick={() => history.push("/web/chat")}
               >
                 INICIAR CHAT
@@ -105,7 +113,9 @@ function HomeSecretaria() {
                 color="white"
                 fontSize="1.5em"
                 fontWeight="medium"
-                fontSizeMedia="1.2em"
+                fontSizeMedia="0.8em"
+                fontSizeMedia950="1em"
+                heightMedia= "2em"
                 onClick={() => history.push("/web/respostaformulario")}
               >
                 VISUALIZAR
@@ -117,7 +127,9 @@ function HomeSecretaria() {
                 color="black"
                 fontSize="1.5em"
                 fontWeight="medium"
-                fontSizeMedia="1.2em"
+                fontSizeMedia="0.8em"
+                fontSizeMedia950="1em"
+                heightMedia= "2em"
                 onClick={() => history.push("/web/chat")}
               >
                 INICIAR CHAT
@@ -140,7 +152,9 @@ function HomeSecretaria() {
                 color="white"
                 fontSize="1.5em"
                 fontWeight="medium"
-                fontSizeMedia="1.2em"
+                fontSizeMedia="0.8em"
+                fontSizeMedia950="1em"
+                heightMedia= "2em"
                 onClick={() => history.push("/web/respostaformulario")}
               >
                 VISUALIZAR
@@ -152,7 +166,9 @@ function HomeSecretaria() {
                 color="black"
                 fontSize="1.5em"
                 fontWeight="medium"
-                fontSizeMedia="1.2em"
+                fontSizeMedia="0.8em"
+                fontSizeMedia950="1em"
+                heightMedia= "2em"
                 onClick={() => history.push("/web/chat")}
               >
                 INICIAR CHAT
@@ -169,7 +185,8 @@ function HomeSecretaria() {
             color="#151B57"
             fontSize="1.5em"
             fontWeight="medium"
-            fontSizeMedia="1.2em"
+            fontSizeMedia="1em"
+            fontSizeMedia950="1.2em"
             boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
             onClick={() => history.push("/cadastro")}
           >

@@ -20,7 +20,7 @@ export const Board = styled.div`
   height: 93%;
   padding: 3%;
   margin-top: 3%;
-  background-color: #ffffff ;
+  background-color: #7AFF77; //#ffffff
   border-style: solid;
   border-color: #000000;
   box-shadow: 0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -36,6 +36,10 @@ export const Notificacao = styled.div`
   height: 6em;
   padding-left: 2%;
   padding-right: 2%;
+  @media(max-width:560px){
+    flex-direction: column;
+    height: 9em;
+  }
 `;
 export const CaixaTexto = styled.div`
   display: flex;
@@ -50,26 +54,40 @@ export const CaixaTexto = styled.div`
   border-color: #BBC0F4;
   border-width: 0.2em;
   border-radius: 6px;
+  @media (max-width: 560px) {
+    width: 90%;
+  }
 `;
 export const TextoNotificacao = styled.div`
   display: flex;
   align-items: center;
   flex-direction: row;
   justify-content: center;
+  text-align: center;
   width: 100%;
   font-family: 'Roboto Condensed', sans-serif;
+  font-size: 1em;
+  @media(max-width:950px){
+    font-size: 0.8em;
+  }
+  @media (max-width: 560px) {
+    font-size: 0.7em;
+    
+  }
 `;
 
 export const BotoesColuna = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  alig-items: end;
+  alig-items: center;
   width: 20%;
   height: 80%;
   font-size: 1em;
   @media (max-width: 560px) {
-    flex-direction: column;
+    flex-direction: row;
+    width: 90%;
+    justify-content: space-between;
   }
 `;
 export const BotaoCanto = styled.div`
