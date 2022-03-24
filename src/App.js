@@ -1,13 +1,11 @@
 import React from "react";
-import GlobalStyle from "./globalStyles";
+import GlobalStyle from "./globalStyles"; 
 import Routes from "./routes";
-import Carregando from "./components/Carregando/Carregando";
 function App() {
   return (
     <div>
+      <Routes/>
       <GlobalStyle />
-      <Routes />
-      <Carregando />
     </div>
   );
 }

@@ -99,7 +99,7 @@ function Login() {
             fontSize="1em"
             textDecoration="underline"
             onClick={() => {
-              history.push("/");
+              history.push("/web/alterarsenha");
             }}
           >
             Esqueceu sua senha?
