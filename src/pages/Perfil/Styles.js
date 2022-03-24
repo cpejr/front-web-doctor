@@ -49,7 +49,7 @@ export const Nome = styled.div`
   font-family: 'Barlow', sans-serif;
   font-weight: 600;
   font-size: 1.4em;
-  @media (max-width: 1100px) and (min-width: 770px) {
+  @media (max-width: 1100px) and (min-width: 480px) {
     font-size: 1.2em;
   }
 `;
@@ -75,8 +75,8 @@ export const BotoesColuna = styled.div`
   height: 7.5em;
   width: 25%;
   font-size: 1em;
-  @media (max-width: 1100px) and (min-width: 770px) {
-    height: 2em;
+  @media (max-width: 1100px) and (min-width: 480px) {
+    height: 6em;
   }
 `;
 export const BoardBaixo = styled.div`
