@@ -1,4 +1,5 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
 import {
@@ -23,6 +24,7 @@ import {
 } from "./Styles";
 
 function Perfil() {
+  const history = useHistory();
   return (
     <div>
       <Body>
@@ -48,6 +50,8 @@ function Perfil() {
               color="#0A0E3C"
               fontSize="1em"
               fontWeight="bold"
+              boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+              onClick={() => history.push("/web/editarperfil")}
             >
               ALTERAR DADOS
             </Button>
@@ -58,6 +62,8 @@ function Perfil() {
               color="#0A0E3C"
               fontSize="1em"
               fontWeight="bold"
+              boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+              onClick={() => history.push("/web/alterarsenha")}
             >
               ALTERAR SENHA
             </Button>
@@ -83,7 +89,11 @@ function Perfil() {
             <DadosContato>(31) 99999-9999</DadosContato>
             <DadosContato>nomenomedenome@gmail.com</DadosContato>
           </BoardDireita>
-          <ExcluirConta>EXCLUIR CONTA</ExcluirConta>
+          <ExcluirConta
+          onClick={() => history.push("/web/homemedico")}
+          >
+            EXCLUIR CONTA
+          </ExcluirConta>
         </ContatoExcluirConta>
         </BoardBaixo>
       </Body>
