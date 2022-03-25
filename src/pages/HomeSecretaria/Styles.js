@@ -15,10 +15,11 @@ export const Board = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: center;
   width: 93%;
-  height: 93%;
-  padding: 3%;
+  height: 70vh;
+  max-height: 512px;
+  overflow: auto;
+  padding: 8px;
   margin-top: 3%;
   background-color: #7AFF77; //#ffffff
   border-style: solid;
@@ -38,7 +39,9 @@ export const Notificacao = styled.div`
   padding-right: 2%;
   @media(max-width:560px){
     flex-direction: column;
-    height: 9em;
+    height: 20em;
+    margin-bottom: 3em;
+}
   }
 `;
 export const CaixaTexto = styled.div`
@@ -46,7 +49,7 @@ export const CaixaTexto = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: center;
-  width: 79%;
+  width: 78%;
   height: 80%;
   padding: 1%;
   background-color: #CFD3F8;
@@ -54,6 +57,9 @@ export const CaixaTexto = styled.div`
   border-color: #BBC0F4;
   border-width: 0.2em;
   border-radius: 6px;
+  @media(max-width:950px) and (min-width: 560px){
+    height: 60%;
+  }
   @media (max-width: 560px) {
     width: 90%;
   }
@@ -72,7 +78,6 @@ export const TextoNotificacao = styled.div`
   }
   @media (max-width: 560px) {
     font-size: 0.7em;
-    
   }
 `;
 
@@ -82,7 +87,7 @@ export const BotoesColuna = styled.div`
   justify-content: space-around;
   alig-items: center;
   width: 20%;
-  height: 80%;
+  height: 20%;
   font-size: 1em;
   @media (max-width: 560px) {
     flex-direction: row;
