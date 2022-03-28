@@ -26,7 +26,7 @@ export const InputMesmaLinha = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  alig-items: end;
+  align-items: end;
   width: 100%;
   font-size: 1em;
   @media (max-width: 820px) {
@@ -37,7 +37,7 @@ export const BotoesMesmaLinha = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  alig-items: end;
+  align-items: end;
   width: 100%;
   font-size: 1em;
   @media (max-width: 560px) {

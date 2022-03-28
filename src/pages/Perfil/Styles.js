@@ -34,7 +34,7 @@ export const FotoNomeData = styled.div`
   align-items: center;
   flex-direction: row;
   width: 68%;
-  @media (max-width: 560px) {
+  @media (max-width: 770px) {
     width: 100%;
   }
 `;
@@ -60,6 +60,10 @@ export const NomeData = styled.div`
   @media (max-width: 560px) {
     height: 4em;
   }
+  @media (max-width: 770px) and (min-width: 560px) {
+    width: 64%;
+    height: 4em;
+  }
 `;
 export const Nome = styled.div`
   display: flex;
@@ -70,14 +74,18 @@ export const Nome = styled.div`
   font-family: "Barlow", sans-serif;
   font-weight: 600;
   font-size: 1.4em;
-  @media (max-width: 1100px) and (min-width: 560px) {
+  @media (max-width: 1100px) and (min-width: 770px) {
     font-size: 1.2em;
   }
-  @media (max-width: 560px) and (min-width: 480px) {
+  @media (max-width: 770px) and (min-width: 480px) {
     font-size: 1.1em;
   }
   @media (max-width: 480px) {
     font-size: 0.9em;
+  }
+  @media (max-width: 770px) and (min-width: 560px) {
+    margin-left: 5%;
+    width: 100%;
   }
 `;
 export const DataNascimento = styled.div`
@@ -93,11 +101,15 @@ export const DataNascimento = styled.div`
   @media (max-width: 1100px) and (min-width: 770px) {
     font-size: 1em;
   }
-  @media (max-width: 560px) and (min-width: 480px) {
+  @media (max-width: 770px) and (min-width: 480px) {
     font-size: 0.9em;
   }
   @media (max-width: 480px) {
     font-size: 0.8em;
+  }
+  @media (max-width: 770px) and (min-width: 560px) {
+    margin-left: 5%;
+    width: 100%;
   }
 `;
 export const BotoesColuna = styled.div`
@@ -113,6 +125,7 @@ export const BotoesColuna = styled.div`
   }
   @media (max-width: 770px) and (min-width: 560px) {
     height: 5em;
+    width: 35%;
   }
   @media (max-width: 560px) {
     flex-direction: row;
@@ -164,12 +177,17 @@ export const EnderecoContato = styled.div`
   font-family: "Barlow", sans-serif;
   font-weight: 600;
   font-size: 1.4em;
-  @media (max-width: 1100px) and (min-width: 560px){
+  @media (max-width: 1100px) and (min-width: 770px) {
     height: 15%;
     margin-bottom: 9%;
   }
+  @media (max-width: 770px) and (min-width: 560px) {
+    font-size: 1.1em;
+  }
   @media (max-width: 560px) {
     font-size: 1em;
+    height: 15%;
+    margin-bottom: 9%;
   }
 `;
 export const DadosEndereco = styled.div`
@@ -183,14 +201,16 @@ export const DadosEndereco = styled.div`
   font-family: "Barlow", sans-serif;
   font-weight: 400;
   font-size: 1.3em;
-  @media (max-width: 1100px) and (min-width: 560px) {
+  @media (max-width: 1100px) and (min-width: 770px) {
     font-size: 1.2em;
+  }
+  @media (max-width: 770px) and (min-width: 560px) {
+    font-size: 1em;
   }
   @media (max-width: 560px) {
     font-size: 0.9em;
   }
 `;
-
 export const RuaNumeroComplemento = styled.div`
   display: flex;
   flex-direction: row;
@@ -209,10 +229,15 @@ export const Rua = styled.div`
   font-family: "Barlow", sans-serif;
   font-weight: 400;
   font-size: 1.2em;
-  @media (max-width: 1100px) and (min-width: 560px){
+  @media (max-width: 1100px) and (min-width: 770px) {
     font-size: 1.2em;
     width: 100%;
     margin-bottom: 3%;
+  }
+  @media (max-width: 770px) and (min-width: 560px) {
+    font-size: 1em;
+    width: 100%;
+    margin-bottom: 4%;
   }
   @media (max-width: 560px) {
     font-size: 0.9em;
@@ -231,8 +256,14 @@ export const Complemento = styled.div`
   font-family: "Barlow", sans-serif;
   font-weight: 400;
   font-size: 1.2em;
-  @media (max-width: 1100px) and (min-width: 560px){
+  @media (max-width: 1100px) and (min-width: 770px) {
     font-size: 1.2em;
+    justify-content: start;
+    align-items: start;
+    width: 100%;
+  }
+  @media (max-width: 770px) and (min-width: 560px) {
+    font-size: 1em;
     justify-content: start;
     align-items: start;
     width: 100%;
@@ -268,14 +299,13 @@ export const BoardDireita = styled.div`
   border-style: solid;
   border-radius: 4px;
   border-color: #c4c4c4;
-  @media (max-width: 1100px) and (min-width: 560px){
+  @media (max-width: 1100px) and (min-width: 560px) {
     padding: 9%;
   }
   @media (max-width: 560px) {
     padding: 4%;
   }
 `;
-
 export const DadosContato = styled.div`
   display: flex;
   flex-direction: column;
@@ -287,8 +317,12 @@ export const DadosContato = styled.div`
   font-family: "Barlow", sans-serif;
   font-weight: 400;
   font-size: 1.3em;
-  @media (max-width: 1100px) and (min-width: 560px) {
+  @media (max-width: 1100px) and (min-width: 770px) {
     font-size: 1.1em;
+    margin-bottom: 0.5%;
+  }
+  @media (max-width: 770px) and (min-width: 560px) {
+    font-size: 1em;
     margin-bottom: 0.5%;
   }
   @media (max-width: 560px) {
@@ -306,8 +340,12 @@ export const ExcluirConta = styled.div`
   font-family: "Barlow", sans-serif;
   font-weight: 400;
   font-size: 1.1em;
-  @media (max-width: 1100px) and (min-width: 560px){
+  @media (max-width: 1100px) and (min-width: 770px) {
     font-size: 1em;
+  }
+  @media (max-width: 770px) and (min-width: 560px) {
+    font-size: 0.9em;
+    height: 10%;
   }
   @media (max-width: 560px) {
     margin-top: 4%;
