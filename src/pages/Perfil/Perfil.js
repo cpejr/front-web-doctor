@@ -48,10 +48,13 @@ function Perfil() {
           <BotoesColuna>
             <Button
               width="100%"
+              widthMedia480="30%"
+              heightMedia560="30px"
               backgroundColor="#A7ADE8"
               borderColor="#0A0E3C"
               color="#0A0E3C"
               fontSize="1em"
+              fontSizeMedia="0.6em"
               fontSizeMedia950="0.7em"
               fontWeight="bold"
               boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
@@ -61,10 +64,13 @@ function Perfil() {
             </Button>
             <Button
               width="100%"
+              widthMedia480="30%"
+              heightMedia560="30px"
               backgroundColor="#A7ADE8"
               borderColor="#0A0E3C"
               color="#0A0E3C"
               fontSize="1em"
+              fontSizeMedia="0.6em"
               fontSizeMedia950="0.7em"
               fontWeight="bold"
               boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
@@ -88,6 +94,7 @@ function Perfil() {
               <Complemento>apto 999</Complemento>
             </RuaNumeroComplemento>
           </BoardEsquerda>
+
           <ContatoExcluirConta>
             <BoardDireita>
               <EnderecoContato>Contato</EnderecoContato>
