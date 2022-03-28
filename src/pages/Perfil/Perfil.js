@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
@@ -24,8 +24,21 @@ import {
   ContatoExcluirConta,
 } from "./Styles";
 
-function Perfil() {
+function Perfil(usuarioSS) {
   const history = useHistory();
+  const usuarioToken = sessionStorage.getItem("@doctorapp-Token")
+  // const[usuario, setUsuario] = useState({});
+  // // const[endereco, setEndereco] = useState({});
+  // // const[enderecoID, setEnderecoID] = useState([]);
+
+  useEffect(() => {
+    console.log(usuarioToken)
+    // const getUsuario = api.get(`/usuarios/${usuarioToken}`);
+    // console.log(getUsuario);
+    // setUsuario(getUsuario.data[0]);
+     
+  },[usuarioToken]);
+
   return (
     <div>
       <Body>
@@ -41,7 +54,7 @@ function Perfil() {
               ></img>
             </FotoPerfil>
             <NomeData>
-              <Nome> Nome Nome de nome</Nome>
+              <Nome>Nome nome de nome</Nome>
               <DataNascimento>12/12/2001</DataNascimento>
             </NomeData>
           </FotoNomeData>
