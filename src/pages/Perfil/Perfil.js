@@ -5,6 +5,7 @@ import Button from "../../styles/Button";
 import {
   Body,
   BoardCima,
+  FotoNomeData,
   FotoPerfil,
   Nome,
   DataNascimento,
@@ -29,19 +30,21 @@ function Perfil() {
     <div>
       <Body>
         <BoardCima>
-          <FotoPerfil>
-            <img
-              src={logoGuilherme}
-              className="logo"
-              alt="logoGuilherme"
-              width="100%"
-              height="100%"
-            ></img>
-          </FotoPerfil>
-          <NomeData>
-            <Nome> Nome Nome de nome</Nome>
-            <DataNascimento>12/12/2001</DataNascimento>
-          </NomeData>
+          <FotoNomeData>
+            <FotoPerfil>
+              <img
+                src={logoGuilherme}
+                className="logo"
+                alt="logoGuilherme"
+                width="100%"
+                height="100%"
+              ></img>
+            </FotoPerfil>
+            <NomeData>
+              <Nome> Nome Nome de nome</Nome>
+              <DataNascimento>12/12/2001</DataNascimento>
+            </NomeData>
+          </FotoNomeData>
           <BotoesColuna>
             <Button
               width="100%"
@@ -71,7 +74,7 @@ function Perfil() {
             </Button>
           </BotoesColuna>
         </BoardCima>
-        
+
         <BoardBaixo>
           <BoardEsquerda>
             <EnderecoContato>Endereço</EnderecoContato>
@@ -86,17 +89,15 @@ function Perfil() {
             </RuaNumeroComplemento>
           </BoardEsquerda>
           <ContatoExcluirConta>
-          <BoardDireita>
-            <EnderecoContato>Contato</EnderecoContato>
-            <DadosContato>(31) 99999-9999</DadosContato>
-            <DadosContato>nomenomedenome@gmail.com</DadosContato>
-          </BoardDireita>
-          <ExcluirConta
-          onClick={() => history.push("/web/homemedico")}
-          >
-            EXCLUIR CONTA
-          </ExcluirConta>
-        </ContatoExcluirConta>
+            <BoardDireita>
+              <EnderecoContato>Contato</EnderecoContato>
+              <DadosContato>(31) 99999-9999</DadosContato>
+              <DadosContato>nomenomedenome@gmail.com</DadosContato>
+            </BoardDireita>
+            <ExcluirConta onClick={() => history.push("/web/homemedico")}>
+              EXCLUIR CONTA
+            </ExcluirConta>
+          </ContatoExcluirConta>
         </BoardBaixo>
       </Body>
     </div>

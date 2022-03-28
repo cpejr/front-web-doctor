@@ -23,12 +23,28 @@ export const BoardCima = styled.div`
   border-style: solid;
   border-radius: 4px;
   border-color: #C4C4C4;
+  @media (max-width: 560px) {
+    flex-direction: column;
+    width: 80%;
+  }
 `;
+
+export const FotoNomeData = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  width: 68%;
+  @media (max-width: 560px) {
+    width: 85%
+  }
+  
+`;
+
 export const FotoPerfil = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 18%;
+  width: 26%;
   height: 10%;
   .logo{ border-radius: 15px;}
 `;
@@ -37,7 +53,7 @@ export const NomeData = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 5em;
-  width: 50%;
+  width: 74%;
 `;
 export const Nome = styled.div`
   display: flex;
@@ -75,9 +91,15 @@ export const BotoesColuna = styled.div`
   height: 7.5em;
   width: 25%;
   font-size: 1em;
-  @media (max-width: 1100px) and (min-width: 480px) {
+  @media (max-width: 1100px) and (min-width: 560px) {
     height: 6em;
   }
+  @media (max-width: 560px) {
+    flex-direction: row;
+    width:85%;
+    height:4em   
+  }
+
 `;
 export const BoardBaixo = styled.div`
   display: flex;
@@ -87,6 +109,11 @@ export const BoardBaixo = styled.div`
   height: 22em;
   width: 70%;
   margin-top: 4%
+  // @media (max-width: 560px) {
+  //   width:85%
+  //   flex-direction: column;
+  //   height: 100%;
+  // }
   
 `;
 export const BoardEsquerda = styled.div`
@@ -101,6 +128,9 @@ export const BoardEsquerda = styled.div`
   border-style: solid;
   border-radius: 4px;
   border-color: #C4C4C4;
+  @media (max-width: 560px) {
+    width:100%;
+  }
 `;
 export const EnderecoContato = styled.div`
   display: flex;
@@ -184,6 +214,9 @@ export const ContatoExcluirConta = styled.div`
   align-items: center;
   height: 100%;
   width: 48%;
+  // @media (max-width: 560px) {
+  //   width:100%;
+  // }
 `;
 export const BoardDireita = styled.div`
   display: flex;
@@ -200,6 +233,7 @@ export const BoardDireita = styled.div`
   @media (max-width: 1100px) {
     padding: 9%;
   }
+  
 `;
 
 export const DadosContato = styled.div`
