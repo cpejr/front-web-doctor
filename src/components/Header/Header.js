@@ -1,20 +1,55 @@
 import React from "react";
-import { ContainerHeader, BotoesHeader, MenuHeader, Logo } from "./Styles";
+import {
+  ContainerHeader,
+  BotoesHeader,
+  MenuHeader,
+  Logo,
+  Wrapper,
+  Separator,
+  Section,
+} from "./Styles";
+import NavItem from "../NavItem";
 import Button from "../../styles/Button";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import logoEscrita from "./../../assets/logoEscrita.png";
 import { CgProfile } from "react-icons/cg";
 import { useHistory } from "react-router-dom";
-import { Menu } from "antd";
-import { AppstoreOutlined } from "@ant-design/icons";
-import { GiHamburgerMenu } from "react-icons/gi";
+import { Menu, Tooltip } from "antd";
+
 function Header() {
   const history = useHistory();
-  const SubMenu = Menu.SubMenu;
+  const menu = (
+    <Menu>
+      <Menu.Item>palmeiras</Menu.Item>
+      <Menu.Item>vasco</Menu.Item>
+      <Menu.Divider />
+      <Menu.Item>3rd menu item</Menu.Item>
+    </Menu>
+  );
 
   return (
     <ContainerHeader>
-      <MenuHeader></MenuHeader>
+      <MenuHeader>
+        <Section style={{ marginTop: "40px" }}>
+          {open && <Section.Title>Cadastro</Section.Title>}
+          {registerSelect.map((item) => (
+            <Tooltip
+              title={!open && item.name}
+              placement="rightTop"
+              key={item.id}
+            >
+              <NavItem
+                open={open}
+                Icon={item.icon}
+                onClick={() => handleClick(item.id)}
+                selected={selectedKey === item.id}
+              >
+                {item.name}
+              </NavItem>
+            </Tooltip>
+          ))}
+        </Section>
+      </MenuHeader>
       <Logo>
         <img src={logoGuilherme} className="logo1" alt="logoGuilherme"></img>
         <img src={logoEscrita} className="logo2" alt="logoEscrita"></img>
