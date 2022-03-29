@@ -1,54 +1,112 @@
 import React from "react";
-import {
-  ContainerHeader,
-  BotoesHeader,
-  MenuHeader,
-  Logo,
-  Wrapper,
-  Separator,
-  Section,
-} from "./Styles";
-import NavItem from "../NavItem";
+import { ContainerHeader, BotoesHeader, MenuHeader, Logo } from "./Styles";
 import Button from "../../styles/Button";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import logoEscrita from "./../../assets/logoEscrita.png";
-import { CgProfile } from "react-icons/cg";
+
 import { useHistory } from "react-router-dom";
-import { Menu, Tooltip } from "antd";
+import { Dropdown, Menu } from "antd";
+import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 
 function Header() {
   const history = useHistory();
   const menu = (
     <Menu>
-      <Menu.Item>palmeiras</Menu.Item>
-      <Menu.Item>vasco</Menu.Item>
-      <Menu.Divider />
-      <Menu.Item>3rd menu item</Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color="black"
+          fontSize="1rem"
+          height="50px"
+          onClick={() => {
+            history.push("/web/homemedico");
+          }}
+        >
+          Home
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color="black"
+          fontSize="1rem"
+          height="50px"
+          onClick={() => {
+            history.push("/web/areareceitas");
+          }}
+        >
+          Receitas
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color="black"
+          fontSize="1rem"
+          height="50px"
+          onClick={() => {
+            history.push("/web/listadeusuarios");
+          }}
+        >
+          Lista de Usuários
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color="green"
+          fontSize="1rem"
+          height="50px"
+          onClick={() => {
+            history.push("/web/homemedico");
+          }}
+        >
+          Agendamentos
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color="black"
+          fontSize="1rem"
+          height="50px"
+          onClick={() => {
+            history.push("/web/criacaoformulario");
+          }}
+        >
+          Formulários
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color="black"
+          fontSize="1rem"
+          height="50px"
+          onClick={() => {
+            history.push("/web/chat");
+          }}
+        >
+          Chat
+        </Button>
+      </Menu.Item>
     </Menu>
   );
 
   return (
     <ContainerHeader>
       <MenuHeader>
-        <Section style={{ marginTop: "40px" }}>
-          {open && <Section.Title>Cadastro</Section.Title>}
-          {registerSelect.map((item) => (
-            <Tooltip
-              title={!open && item.name}
-              placement="rightTop"
-              key={item.id}
-            >
-              <NavItem
-                open={open}
-                Icon={item.icon}
-                onClick={() => handleClick(item.id)}
-                selected={selectedKey === item.id}
-              >
-                {item.name}
-              </NavItem>
-            </Tooltip>
-          ))}
-        </Section>
+        <Dropdown onClick={(e) => e.preventDefault()} overlay={menu} placement={"bottom"}>
+           
+            <MenuOutlined style={{ color: "white", fontSize: "1.5em" }} />
+          
+        </Dropdown>
       </MenuHeader>
       <Logo>
         <img src={logoGuilherme} className="logo1" alt="logoGuilherme"></img>
@@ -61,6 +119,7 @@ function Header() {
           borderColor="transparent"
           color="#ffffff"
           fontSize="1.1rem"
+          height="50px"
           onClick={() => {
             console.log("vasco");
             history.push("/web/homemedico");
@@ -74,8 +133,9 @@ function Header() {
           borderColor="transparent"
           color="#ffffff"
           fontSize="1.1rem"
+          height="50px"
           onClick={() => {
-            history.push("/web/criacaoformulario");
+            history.push("/web/areareceitas");
           }}
         >
           Receitas
@@ -86,6 +146,7 @@ function Header() {
           borderColor="transparent"
           color="#E4E6F4"
           fontSize="1.1rem"
+          height="50px"
           onClick={() => {
             history.push("/web/listadeusuarios");
           }}
@@ -96,8 +157,9 @@ function Header() {
           fontSizeMedia1080="1rem"
           backgroundColor="transparent"
           borderColor="transparent"
-          color="#ffffff"
+          color="green"
           fontSize="1.1rem"
+          height="50px"
           onClick={() => {
             history.push("/web/homemedico");
           }}
@@ -110,8 +172,9 @@ function Header() {
           borderColor="transparent"
           color="#ffffff"
           fontSize="1.1rem"
+          height="50px"
           onClick={() => {
-            history.push("/web/homemedico");
+            history.push("/web/criacaoformulario");
           }}
         >
           Formulários
@@ -122,8 +185,9 @@ function Header() {
           borderColor="transparent"
           color="#ffffff"
           fontSize="1.1rem"
+          height="50px"
           onClick={() => {
-            history.push("/web/criacaoformulario");
+            history.push("/web/chat");
           }}
         >
           Chat
@@ -133,11 +197,12 @@ function Header() {
           backgroundColor="green"
           borderColor="transparent"
           color="#ffffff"
+          height="50px"
           onClick={() => {
             history.push("/login");
           }}
         >
-          <CgProfile size="2em" />
+          <UserOutlined style={{ fontSize: "1.5em" }} />
         </Button>
       </BotoesHeader>
     </ContainerHeader>

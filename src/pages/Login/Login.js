@@ -86,6 +86,7 @@ function Login() {
             fontSize="1.5em"
             fontWeight="bold"
             fontSizeMedia="1.2em"
+            height="50px"
             onClick={() => requisicaoLogin()}
           >
             ENTRAR
@@ -98,6 +99,7 @@ function Login() {
             color="#151B57"
             fontSize="1em"
             textDecoration="underline"
+            height="50px"
             onClick={() => {
               history.push("/web/alterarsenha");
             }}
@@ -110,6 +112,7 @@ function Login() {
             color="#434B97"
             fontSize="1em"
             textDecoration="underline"
+            height="50px"
             onClick={() => {
               history.push("/cadastro");
             }}
@@ -130,6 +133,7 @@ function Login() {
             color="#151b57"
             fontSize="1em"
             gap="1%"
+            height="50px"
             onClick={() => {
               history.push("/");
             }}
@@ -144,6 +148,7 @@ function Login() {
             color="#151b57"
             fontSize="1em"
             gap="1%"
+            height="50px"
             onClick={() => {
               history.push("/");
             }}

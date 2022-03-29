@@ -57,8 +57,8 @@ export const Logo = styled.div`
       width: 100%;
     }
   }
-  @media (max-width: 380px) {
-    width: 100%;
+  @media (max-width: 600px) {
+    width: 80%;
 
     .logo1 {
       width: 15%;
@@ -68,68 +68,28 @@ export const Logo = styled.div`
       width: 75%;
     }
   }
+  @media (max-width: 360px) {
+    width: 80%;
+
+    .logo1 {
+      width: 30%;
+    }
+    .logo2 {
+      display: none;
+      width: 75%;
+    }
+  }
 `;
 export const MenuHeader = styled.div`
   display: none;
 
   @media (max-width: 780px) {
     display: flex;
+
   }
-`;
-export const Wrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  padding-bottom: 100px;
-  min-height: 100vh;
-  width: fit-content;
-  padding: 20px;
-  background-color: ${({ theme }) => theme.sidebar.background};
-  color: ${({ theme }) => theme.sidebar.color};
-
-  .search-icon {
-    color: ${({ theme }) => theme.sidebar.color};
-
-    &:hover {
-      color: ${({ theme }) => theme.primary};
-      cursor: pointer;
-    }
+  @media (max-width: 600px) {
+    width:20% ;
+    display:flex;
+    justify-content:center ;
   }
-
-  @media only screen and (max-width: 768px) {
-
-    height: 100%;
-  }
-`;
-
-export const Separator = styled.div`
-  border-top: solid 1px white;
-  height: 2px;
-  width: 90%;
-  margin: 16px 0;
-
-  &:hover {
-    opacity: 0.5;
-  }
-`;
-
-
-
-export const Section = styled.div`
-  flex-direction: column;
-  align-items: center;
-  margin: 20px 0;
-
-  a {
-    text-decoration: none;
-  }
-`;
-
-Section.Title = styled.p`
-  display: block;
-  margin-right: auto;
-  color: ${({ theme }) => theme.sidebar.smooth};
-  font-size: 15px;
-  font-weight: ${({ theme }) => theme.bold};
 `;

@@ -9,7 +9,7 @@ const Button = styled.button`
   /*Medidas*/
   border-radius: 3px;
   margin-top: 2%;
-  height: 50px;
+  height: ${(props) => props.height};
   gap: ${(props) => props.gap};
   width: ${(props) => props.width};
   /*cor e estilo do botão*/
