@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
+import api from "../../services/api";
 import {
   Body,
   BoardCima,
@@ -26,18 +27,18 @@ import {
 
 function Perfil(usuarioSS) {
   const history = useHistory();
-  const usuarioToken = sessionStorage.getItem("@doctorapp-Token")
-  // const[usuario, setUsuario] = useState({});
+  const usuarioId = sessionStorage.getItem("@doctorapp-UserId")
+  const[usuario, setUsuario] = useState([]);
   // // const[endereco, setEndereco] = useState({});
   // // const[enderecoID, setEnderecoID] = useState([]);
 
   useEffect(() => {
-    console.log(usuarioToken)
-    // const getUsuario = api.get(`/usuarios/${usuarioToken}`);
-    // console.log(getUsuario);
-    // setUsuario(getUsuario.data[0]);
+    const getUsuario = api.get(`/usuarios/${usuarioId}`);
+    console.log(getUsuario.catch("data"))
+    setUsuario(getUsuario.data);
+    console.log(usuario)
      
-  },[usuarioToken]);
+  },[usuarioId]);
 
   return (
     <div>
