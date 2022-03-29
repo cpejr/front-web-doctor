@@ -28,58 +28,35 @@ function HomeMedico() {
               </Botoes>
               <Botoes>
                 <Button
-                backgroundColor="#FDF1D1"
-                color="black"
-                width="100%"
-                borderColor="black"
-                fontSize="1em"
-                gap="1%"
-                >Aceitar Solicitação</Button>
+                  backgroundColor="#FDF1D1"
+                  color="black"
+                  width="100%"
+                  borderColor="black"
+                  fontSize="1em"
+                  gap="1%"
+                >
+                  Aceitar Solicitação
+                </Button>
                 <Button
-                backgroundColor="#FDF1D1"
-                color="black"
-                width="100%"
-                borderColor="black"
-                fontSize="1em"
-                gap="1%"
-                >Negar Solicitação</Button>
+                  backgroundColor="#FDF1D1"
+                  color="black"
+                  width="100%"
+                  borderColor="black"
+                  fontSize="1em"
+                  gap="1%"
+                >
+                  Negar Solicitação
+                </Button>
               </Botoes>
             </Dados>
           </Secretarios>
-          <Secretarios>
-            Nova(o) secretária(o) aguardando informação:
-            <Dados>
-              <Botoes>
-                <InfoSecretario>Adrianus Babaca Vieira</InfoSecretario>
-                <InfoSecretario>adrianus@babaca.com.br</InfoSecretario>
-              </Botoes>
-              <Botoes>
-                <Button
-                backgroundColor="#FDF1D1"
-                color="black"
-                width="100%"
-                borderColor="black"
-                fontSize="1em"
-                gap="1%"
-                >Aceitar Solicitação</Button>
-                <Button
-                backgroundColor="#FDF1D1"
-                color="black"
-                width="100%"
-                borderColor="black"
-                fontSize="1em"
-                gap="1%"
-                >Negar Solicitação</Button>
-              </Botoes>
-            </Dados>
-          </Secretarios>
+
+          
         </ContainerSecretario>
         <ContainerFormulario>
           <Formulario>Formulário 1</Formulario>
           <Formulario>Formulário 2</Formulario>
           <Formulario>Formulário 3</Formulario>
-          <Formulario>Formulário 4</Formulario>
-          
         </ContainerFormulario>
       </ContainerSuperior>
       <ContainerBotoes>
