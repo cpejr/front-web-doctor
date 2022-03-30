@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ContainerHeader, BotoesHeader, MenuHeader, Logo } from "./Styles";
 import Button from "../../styles/Button";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import logoEscrita from "./../../assets/logoEscrita.png";
-
 import { useHistory } from "react-router-dom";
 import { Dropdown, Menu } from "antd";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
+import api from "../../services/api";
 
 function Header() {
+  const usuarioId = sessionStorage.getItem("@doctorapp-UserId");
+  const [tipo, setTipo] = useState([]);
+
+  useEffect(() => {
+    api.get(`/usuarios/${usuarioId}`).then((response) => {
+      setTipo(response.data.tipo);
+      console.log(response.data.tipo);
+    });
+  }, []);
   const history = useHistory();
   const menu = (
     <Menu>
@@ -26,20 +35,37 @@ function Header() {
           Home
         </Button>
       </Menu.Item>
-      <Menu.Item>
-        <Button
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color="black"
-          fontSize="1rem"
-          height="50px"
-          onClick={() => {
-            history.push("/web/areareceitas");
-          }}
-        >
-          Receitas
-        </Button>
-      </Menu.Item>
+      {tipo === "MASTER" ? (
+        <Menu.Item>
+          <Button
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color="black"
+            fontSize="1rem"
+            height="50px"
+            onClick={() => {
+              history.push("/web/areareceitas");
+            }}
+          >
+            Receitas
+          </Button>
+        </Menu.Item>
+      ) : (
+        <Menu.Item>
+          <Button
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color="green"
+            fontSize="1rem"
+            height="50px"
+            onClick={() => {
+              history.push("/web/homesecretaria");
+            }}
+          >
+            Agendamentos
+          </Button>
+        </Menu.Item>
+      )}
       <Menu.Item>
         <Button
           backgroundColor="transparent"
@@ -52,20 +78,6 @@ function Header() {
           }}
         >
           Lista de Usuários
-        </Button>
-      </Menu.Item>
-      <Menu.Item>
-        <Button
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color="green"
-          fontSize="1rem"
-          height="50px"
-          onClick={() => {
-            history.push("/web/homemedico");
-          }}
-        >
-          Agendamentos
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -102,10 +114,12 @@ function Header() {
   return (
     <ContainerHeader>
       <MenuHeader>
-        <Dropdown onClick={(e) => e.preventDefault()} overlay={menu} placement={"bottom"}>
-           
-            <MenuOutlined style={{ color: "white", fontSize: "1.5em" }} />
-          
+        <Dropdown
+          onClick={(e) => e.preventDefault()}
+          overlay={menu}
+          placement={"bottom"}
+        >
+          <MenuOutlined style={{ color: "white", fontSize: "1.5em" }} />
         </Dropdown>
       </MenuHeader>
       <Logo>
@@ -127,6 +141,7 @@ function Header() {
         >
           Home
         </Button>
+        {tipo === "MASTER" ? (
         <Button
           fontSizeMedia1080="1rem"
           backgroundColor="transparent"
@@ -140,6 +155,21 @@ function Header() {
         >
           Receitas
         </Button>
+        ) : (
+          <Button
+          fontSizeMedia1080="1rem"
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color="green"
+          fontSize="1.1rem"
+          height="50px"
+          onClick={() => {
+            history.push("/web/homesecretaria");
+          }}
+        >
+          Agendamentos
+        </Button> 
+        )}
         <Button
           fontSizeMedia1080="1rem"
           backgroundColor="transparent"
@@ -153,19 +183,7 @@ function Header() {
         >
           Lista de Usuários
         </Button>
-        <Button
-          fontSizeMedia1080="1rem"
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color="green"
-          fontSize="1.1rem"
-          height="50px"
-          onClick={() => {
-            history.push("/web/homemedico");
-          }}
-        >
-          Agendamentos
-        </Button>
+
         <Button
           fontSizeMedia1080="1rem"
           backgroundColor="transparent"
