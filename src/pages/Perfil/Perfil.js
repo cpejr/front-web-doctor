@@ -25,20 +25,24 @@ import {
   ContatoExcluirConta,
 } from "./Styles";
 
-function Perfil(usuarioSS) {
+function Perfil() {
   const history = useHistory();
   const usuarioId = sessionStorage.getItem("@doctorapp-UserId")
-  const[usuario, setUsuario] = useState([]);
-  // // const[endereco, setEndereco] = useState({});
-  // // const[enderecoID, setEnderecoID] = useState([]);
+  const[usuario, setUsuario] = useState({});
+  const[endereco, setEndereco] = useState({});
+  const [telefone, setTelefone] = useState("");
 
-  useEffect(() => {
-    const getUsuario = api.get(`/usuarios/${usuarioId}`);
-    console.log(getUsuario.catch("data"))
-    setUsuario(getUsuario.data);
-    console.log(usuario)
-     
-  },[usuarioId]);
+    useEffect(() => {
+      api.get(`/usuarios/${usuarioId}`).then((res) => {
+        setUsuario(res.data)
+        setTelefone(res.data.telefone)
+        api.get(`/enderecos/${res.data.id_endereco}`).then((res) => {
+          setEndereco(res.data)
+        })
+      })
+    },[]);
+    
+    
 
   return (
     <div>
@@ -55,8 +59,8 @@ function Perfil(usuarioSS) {
               ></img>
             </FotoPerfil>
             <NomeData>
-              <Nome>Nome nome de nome</Nome>
-              <DataNascimento>12/12/2001</DataNascimento>
+              <Nome>{usuario.nome}</Nome>
+              <DataNascimento>{usuario.data}</DataNascimento>
             </NomeData>
           </FotoNomeData>
           <BotoesColuna>
@@ -98,22 +102,22 @@ function Perfil(usuarioSS) {
         <BoardBaixo>
           <BoardEsquerda>
             <EnderecoContato>Endereço</EnderecoContato>
-            <DadosEndereco>País</DadosEndereco>
-            <DadosEndereco>CEP</DadosEndereco>
-            <DadosEndereco>Estado</DadosEndereco>
-            <DadosEndereco>Cidade</DadosEndereco>
-            <DadosEndereco>Bairro</DadosEndereco>
+            <DadosEndereco>{endereco.pais}</DadosEndereco>
+            <DadosEndereco>{endereco.cep}</DadosEndereco>
+            <DadosEndereco>{endereco.estado}</DadosEndereco>
+            <DadosEndereco>{endereco.cidade}</DadosEndereco>
+            <DadosEndereco>{endereco.bairro}</DadosEndereco>
             <RuaNumeroComplemento>
-              <Rua>Rua Lorem Ipsum is simply 999</Rua>
-              <Complemento>apto 999</Complemento>
+              <Rua>{endereco.rua}  {endereco.numero}</Rua>
+              <Complemento>{endereco.complemento}</Complemento>
             </RuaNumeroComplemento>
           </BoardEsquerda>
 
           <ContatoExcluirConta>
             <BoardDireita>
               <EnderecoContato>Contato</EnderecoContato>
-              <DadosContato>(31) 99999-9999</DadosContato>
-              <DadosContato>nomenomedenome@gmail.com</DadosContato>
+              <DadosContato>({telefone.slice(0,-9)}) {telefone.slice(2,-4)}-{telefone.slice(-4)}</DadosContato>
+              <DadosContato>{usuario.email}</DadosContato>
             </BoardDireita>
             <ExcluirConta onClick={() => history.push("/web/homemedico")}>
               EXCLUIR CONTA
