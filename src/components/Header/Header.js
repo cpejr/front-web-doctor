@@ -21,20 +21,37 @@ function Header() {
   const history = useHistory();
   const menu = (
     <Menu>
-      <Menu.Item>
-        <Button
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color="black"
-          fontSize="1rem"
-          height="50px"
-          onClick={() => {
-            history.push("/web/homemedico");
-          }}
-        >
-          Home
-        </Button>
-      </Menu.Item>
+      {tipo === "MASTER" ? (
+        <Menu.Item>
+          <Button
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color="black"
+            fontSize="1rem"
+            height="50px"
+            onClick={() => {
+              history.push("/web/homemedico");
+            }}
+          >
+            Home
+          </Button>
+        </Menu.Item>
+      ) : (
+        <Menu.Item>
+          <Button
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color="black"
+            fontSize="1rem"
+            height="50px"
+            onClick={() => {
+              history.push("/web/homesecretaria");
+            }}
+          >
+            Home
+          </Button>
+        </Menu.Item>
+      )}
       {tipo === "MASTER" ? (
         <Menu.Item>
           <Button
@@ -127,48 +144,65 @@ function Header() {
         <img src={logoEscrita} className="logo2" alt="logoEscrita"></img>
       </Logo>
       <BotoesHeader>
-        <Button
-          fontSizeMedia1080="1rem"
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color="#ffffff"
-          fontSize="1.1rem"
-          height="50px"
-          onClick={() => {
-            console.log("vasco");
-            history.push("/web/homemedico");
-          }}
-        >
-          Home
-        </Button>
         {tipo === "MASTER" ? (
-        <Button
-          fontSizeMedia1080="1rem"
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color="#ffffff"
-          fontSize="1.1rem"
-          height="50px"
-          onClick={() => {
-            history.push("/web/areareceitas");
-          }}
-        >
-          Receitas
-        </Button>
+          <Button
+            fontSizeMedia1080="1rem"
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color="#ffffff"
+            fontSize="1.1rem"
+            height="50px"
+            onClick={() => {
+              console.log("vasco");
+              history.push("/web/homemedico");
+            }}
+          >
+            Home
+          </Button>
         ) : (
           <Button
-          fontSizeMedia1080="1rem"
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color="green"
-          fontSize="1.1rem"
-          height="50px"
-          onClick={() => {
-            history.push("/web/homesecretaria");
-          }}
-        >
-          Agendamentos
-        </Button> 
+            fontSizeMedia1080="1rem"
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color="#ffffff"
+            fontSize="1.1rem"
+            height="50px"
+            onClick={() => {
+              console.log("vasco");
+              history.push("/web/homesecretaria");
+            }}
+          >
+            Home
+          </Button>
+        )}
+        {tipo === "MASTER" ? (
+          <Button
+            fontSizeMedia1080="1rem"
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color="#ffffff"
+            fontSize="1.1rem"
+            height="50px"
+            onClick={() => {
+              history.push("/web/areareceitas");
+            }}
+          >
+            Receitas
+          </Button>
+        ) : (
+          <Button
+            fontSizeMedia1080="1rem"
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color="green"
+            fontSize="1.1rem"
+            height="50px"
+            onClick={() => {
+              history.push("/web/homesecretaria");
+            }}
+          >
+            Agendamentos
+          </Button>
         )}
         <Button
           fontSizeMedia1080="1rem"
