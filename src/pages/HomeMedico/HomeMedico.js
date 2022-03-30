@@ -80,6 +80,7 @@ function HomeMedico() {
                   gap="1%"
                   boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
                   borderRadius="6px"
+                  fontSizeMedia="0.8em"
                 >
                   Aceitar Solicitação
                 </Button>
@@ -93,6 +94,7 @@ function HomeMedico() {
                   gap="1%"
                   boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
                   borderRadius="6px"
+                  fontSizeMedia="0.8em"
                 >
                   Negar Solicitação
                 </Button>
