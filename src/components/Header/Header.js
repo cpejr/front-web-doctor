@@ -8,14 +8,13 @@ import { Dropdown, Menu } from "antd";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 import api from "../../services/api";
 
-function Header() {
+function Header(props) {
   const usuarioId = sessionStorage.getItem("@doctorapp-UserId");
   const [tipo, setTipo] = useState([]);
 
   useEffect(() => {
     api.get(`/usuarios/${usuarioId}`).then((response) => {
       setTipo(response.data.tipo);
-      console.log(response.data.tipo);
     });
   }, []);
   const history = useHistory();
@@ -129,135 +128,136 @@ function Header() {
   );
 
   return (
-    <ContainerHeader>
-      <MenuHeader>
-        <Dropdown
-          onClick={(e) => e.preventDefault()}
-          overlay={menu}
-          placement={"bottom"}
-        >
-          <MenuOutlined style={{ color: "white", fontSize: "1.5em" }} />
-        </Dropdown>
-      </MenuHeader>
-      <Logo>
-        <img src={logoGuilherme} className="logo1" alt="logoGuilherme"></img>
-        <img src={logoEscrita} className="logo2" alt="logoEscrita"></img>
-      </Logo>
-      <BotoesHeader>
-        {tipo === "MASTER" ? (
+    <div>
+      <ContainerHeader>
+        <MenuHeader>
+          <Dropdown
+            onClick={(e) => e.preventDefault()}
+            overlay={menu}
+            placement={"bottom"}
+          >
+            <MenuOutlined style={{ color: "white", fontSize: "1.5em" }} />
+          </Dropdown>
+        </MenuHeader>
+        <Logo>
+          <img src={logoGuilherme} className="logo1" alt="logoGuilherme"></img>
+          <img src={logoEscrita} className="logo2" alt="logoEscrita"></img>
+        </Logo>
+        <BotoesHeader>
+          {tipo === "MASTER" ? (
+            <Button
+              fontSizeMedia1080="1rem"
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color="#ffffff"
+              fontSize="1.1rem"
+              height="50px"
+              onClick={() => {
+                history.push("/web/homemedico");
+              }}
+            >
+              Home
+            </Button>
+          ) : (
+            <Button
+              fontSizeMedia1080="1rem"
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color="#ffffff"
+              fontSize="1.1rem"
+              height="50px"
+              onClick={() => {
+                history.push("/web/homesecretaria");
+              }}
+            >
+              Home
+            </Button>
+          )}
+          {tipo === "MASTER" ? (
+            <Button
+              fontSizeMedia1080="1rem"
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color="#ffffff"
+              fontSize="1.1rem"
+              height="50px"
+              onClick={() => {
+                history.push("/web/areareceitas");
+              }}
+            >
+              Receitas
+            </Button>
+          ) : (
+            <Button
+              fontSizeMedia1080="1rem"
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color="green"
+              fontSize="1.1rem"
+              height="50px"
+              onClick={() => {
+                history.push("/web/homesecretaria");
+              }}
+            >
+              Agendamentos
+            </Button>
+          )}
           <Button
             fontSizeMedia1080="1rem"
             backgroundColor="transparent"
             borderColor="transparent"
-            color="#ffffff"
+            color="#E4E6F4"
             fontSize="1.1rem"
             height="50px"
             onClick={() => {
-              console.log("vasco");
-              history.push("/web/homemedico");
+              history.push("/web/listadeusuarios");
             }}
           >
-            Home
+            Lista de Usuários
           </Button>
-        ) : (
-          <Button
-            fontSizeMedia1080="1rem"
-            backgroundColor="transparent"
-            borderColor="transparent"
-            color="#ffffff"
-            fontSize="1.1rem"
-            height="50px"
-            onClick={() => {
-              console.log("vasco");
-              history.push("/web/homesecretaria");
-            }}
-          >
-            Home
-          </Button>
-        )}
-        {tipo === "MASTER" ? (
-          <Button
-            fontSizeMedia1080="1rem"
-            backgroundColor="transparent"
-            borderColor="transparent"
-            color="#ffffff"
-            fontSize="1.1rem"
-            height="50px"
-            onClick={() => {
-              history.push("/web/areareceitas");
-            }}
-          >
-            Receitas
-          </Button>
-        ) : (
-          <Button
-            fontSizeMedia1080="1rem"
-            backgroundColor="transparent"
-            borderColor="transparent"
-            color="green"
-            fontSize="1.1rem"
-            height="50px"
-            onClick={() => {
-              history.push("/web/homesecretaria");
-            }}
-          >
-            Agendamentos
-          </Button>
-        )}
-        <Button
-          fontSizeMedia1080="1rem"
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color="#E4E6F4"
-          fontSize="1.1rem"
-          height="50px"
-          onClick={() => {
-            history.push("/web/listadeusuarios");
-          }}
-        >
-          Lista de Usuários
-        </Button>
 
-        <Button
-          fontSizeMedia1080="1rem"
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color="#ffffff"
-          fontSize="1.1rem"
-          height="50px"
-          onClick={() => {
-            history.push("/web/criacaoformulario");
-          }}
-        >
-          Formulários
-        </Button>
-        <Button
-          fontSizeMedia1080="1rem"
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color="#ffffff"
-          fontSize="1.1rem"
-          height="50px"
-          onClick={() => {
-            history.push("/web/chat");
-          }}
-        >
-          Chat
-        </Button>
-        <Button
-          fontSizeMedia1080="1rem"
-          backgroundColor="green"
-          borderColor="transparent"
-          color="#ffffff"
-          height="50px"
-          onClick={() => {
-            history.push("/login");
-          }}
-        >
-          <UserOutlined style={{ fontSize: "1.5em" }} />
-        </Button>
-      </BotoesHeader>
-    </ContainerHeader>
+          <Button
+            fontSizeMedia1080="1rem"
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color="#ffffff"
+            fontSize="1.1rem"
+            height="50px"
+            onClick={() => {
+              history.push("/web/criacaoformulario");
+            }}
+          >
+            Formulários
+          </Button>
+          <Button
+            fontSizeMedia1080="1rem"
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color="#ffffff"
+            fontSize="1.1rem"
+            height="50px"
+            onClick={() => {
+              history.push("/web/chat");
+            }}
+          >
+            Chat
+          </Button>
+          <Button
+            fontSizeMedia1080="1rem"
+            backgroundColor="green"
+            borderColor="transparent"
+            color="#ffffff"
+            height="50px"
+            onClick={() => {
+              history.push("/login");
+            }}
+          >
+            <UserOutlined style={{ fontSize: "1.5em" }} />
+          </Button>
+        </BotoesHeader>
+      </ContainerHeader>
+      {props.children}
+    </div>
   );
 }
 export default Header;
