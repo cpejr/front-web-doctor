@@ -20,6 +20,7 @@ const Button = styled.button`
   border-radius: ${(props) => props.borderRadius};
   box-shadow: ${(props) => props.boxShadow};
   cursor: pointer;
+  box-shadow: ${(props) => props.boxShadow};
   /*características do texto*/
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -31,7 +32,11 @@ const Button = styled.button`
     font-size: ${(props) => props.fontSizeMedia};
   }
   @media(max-width:560px){
-    width: 100%
+    width: 100%;
+    height: ${(props) => props.heightMedia};
+  }
+  @media(max-width:950px) and (min-width:480px) {
+    font-size: ${(props) => props.fontSizeMedia950};
   }
 `;
 export default Button;
