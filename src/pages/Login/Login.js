@@ -80,6 +80,7 @@ function Login() {
           ></Input>
           <Button
             width="100%"
+            height="50px"
             backgroundColor="#434B97"
             borderColor="#151B57"
             color="white"
@@ -125,6 +126,7 @@ function Login() {
         <BotoesAlternativos>
           <Button
             width="100%"
+            height="50px"
             backgroundColor="green"
             borderColor="#151b57"
             color="#151b57"
@@ -139,6 +141,7 @@ function Login() {
           </Button>
           <Button
             width="100%"
+            height="50px"
             backgroundColor="green"
             borderColor="#151b57"
             color="#151b57"

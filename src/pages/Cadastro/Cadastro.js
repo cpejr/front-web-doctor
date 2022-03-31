@@ -264,6 +264,7 @@ function Cadastro() {
           <BotoesMesmaLinha>
             <Button
               width="42%"
+              height="50px"
               backgroundColor="#FFFFFF"
               borderColor="rgba(255, 0, 0, 0.25)"
               color="#8D8D8D"
@@ -276,6 +277,7 @@ function Cadastro() {
             </Button>
             <Button
               width="42%"
+              height="50px"
               backgroundColor="#434B97"
               borderColor="#151B57"
               color="white"

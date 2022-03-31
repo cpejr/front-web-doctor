@@ -83,6 +83,7 @@ function Perfil() {
           <BotoesColuna>
             <Button
               width="100%"
+              height="50px"
               widthMedia480="30%"
               heightMedia560="30px"
               backgroundColor="#A7ADE8"
@@ -99,6 +100,7 @@ function Perfil() {
             </Button>
             <Button
               width="100%"
+              height="50px"
               widthMedia480="30%"
               heightMedia560="30px"
               backgroundColor="#A7ADE8"

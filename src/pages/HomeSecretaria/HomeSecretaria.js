@@ -30,6 +30,7 @@ function HomeSecretaria() {
             <BotoesColuna>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#434B97"
                 borderColor="#151B57"
                 color="white"
@@ -44,6 +45,7 @@ function HomeSecretaria() {
               </Button>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#E4E6F4"
                 borderColor="#151B57"
                 color="black"
@@ -69,6 +71,7 @@ function HomeSecretaria() {
             <BotoesColuna>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#434B97"
                 borderColor="#151B57"
                 color="white"
@@ -83,6 +86,7 @@ function HomeSecretaria() {
               </Button>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#E4E6F4"
                 borderColor="#151B57"
                 color="black"
@@ -108,6 +112,7 @@ function HomeSecretaria() {
             <BotoesColuna>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#434B97"
                 borderColor="#151B57"
                 color="white"
@@ -122,6 +127,7 @@ function HomeSecretaria() {
               </Button>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#E4E6F4"
                 borderColor="#151B57"
                 color="black"
@@ -147,6 +153,7 @@ function HomeSecretaria() {
             <BotoesColuna>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#434B97"
                 borderColor="#151B57"
                 color="white"
@@ -161,6 +168,7 @@ function HomeSecretaria() {
               </Button>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#E4E6F4"
                 borderColor="#151B57"
                 color="black"
@@ -186,6 +194,7 @@ function HomeSecretaria() {
             <BotoesColuna>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#434B97"
                 borderColor="#151B57"
                 color="white"
@@ -200,6 +209,7 @@ function HomeSecretaria() {
               </Button>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#E4E6F4"
                 borderColor="#151B57"
                 color="black"
@@ -225,6 +235,7 @@ function HomeSecretaria() {
             <BotoesColuna>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#434B97"
                 borderColor="#151B57"
                 color="white"
@@ -239,6 +250,7 @@ function HomeSecretaria() {
               </Button>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#E4E6F4"
                 borderColor="#151B57"
                 color="black"
@@ -264,6 +276,7 @@ function HomeSecretaria() {
             <BotoesColuna>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#434B97"
                 borderColor="#151B57"
                 color="white"
@@ -278,6 +291,7 @@ function HomeSecretaria() {
               </Button>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#E4E6F4"
                 borderColor="#151B57"
                 color="black"
@@ -303,6 +317,7 @@ function HomeSecretaria() {
             <BotoesColuna>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#434B97"
                 borderColor="#151B57"
                 color="white"
@@ -317,6 +332,7 @@ function HomeSecretaria() {
               </Button>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#E4E6F4"
                 borderColor="#151B57"
                 color="black"
@@ -342,6 +358,7 @@ function HomeSecretaria() {
             <BotoesColuna>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#434B97"
                 borderColor="#151B57"
                 color="white"
@@ -356,6 +373,7 @@ function HomeSecretaria() {
               </Button>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#E4E6F4"
                 borderColor="#151B57"
                 color="black"
@@ -381,6 +399,7 @@ function HomeSecretaria() {
             <BotoesColuna>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#434B97"
                 borderColor="#151B57"
                 color="white"
@@ -395,6 +414,7 @@ function HomeSecretaria() {
               </Button>
               <Button
                 width="100%"
+                height="50px"
                 backgroundColor="#E4E6F4"
                 borderColor="#151B57"
                 color="black"
@@ -413,6 +433,7 @@ function HomeSecretaria() {
         <BotaoCanto>
           <Button
             width="50%"
+            height="50px"
             backgroundColor="#E4E6F4"
             borderColor="#000000"
             justify-content="flex-end"
