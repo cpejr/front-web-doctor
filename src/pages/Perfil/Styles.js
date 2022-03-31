@@ -352,3 +352,19 @@ export const ExcluirConta = styled.div`
     font-size: 0.8em;
   }
 `;
+
+export const CaixaCimaCarregando = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 68%;
+  @media (max-width: 770px) {
+    width: 100%;
+  }
+`;
+export const CaixaEnderecoCarregando = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
