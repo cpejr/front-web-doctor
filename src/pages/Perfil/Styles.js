@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Body = styled.div`
+export const Conteudo = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -11,7 +11,7 @@ export const Body = styled.div`
   background-color: #ffffff;
 `;
 
-export const BoardCima = styled.div`
+export const CaixaCima = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -134,7 +134,7 @@ export const BotoesColuna = styled.div`
     margin-top: 5%;
   }
 `;
-export const BoardBaixo = styled.div`
+export const CaixaBaixo = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -149,7 +149,7 @@ export const BoardBaixo = styled.div`
     height: 100%;
   }
 `;
-export const BoardEsquerda = styled.div`
+export const CaixaEndereco = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -287,7 +287,7 @@ export const ContatoExcluirConta = styled.div`
     margin-top: 4%;
   }
 `;
-export const BoardDireita = styled.div`
+export const CaixaContato = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;

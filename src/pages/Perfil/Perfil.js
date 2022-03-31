@@ -4,22 +4,22 @@ import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
 import api from "../../services/api";
 import {
-  Body,
-  BoardCima,
+  Conteudo,
+  CaixaCima,
   FotoNomeData,
   FotoPerfil,
   Nome,
   DataNascimento,
   BotoesColuna,
   NomeData,
-  BoardBaixo,
-  BoardEsquerda,
+  CaixaBaixo,
+  CaixaEndereco,
   EnderecoContato,
   DadosEndereco,
   Rua,
   Complemento,
   RuaNumeroComplemento,
-  BoardDireita,
+  CaixaContato,
   DadosContato,
   ExcluirConta,
   ContatoExcluirConta,
@@ -27,27 +27,26 @@ import {
 
 function Perfil() {
   const history = useHistory();
-  const usuarioId = sessionStorage.getItem("@doctorapp-UserId")
-  const[usuario, setUsuario] = useState({});
-  const[endereco, setEndereco] = useState({});
+  const email = sessionStorage.getItem("@doctorapp-Email");
+  const [usuario, setUsuario] = useState({});
+  const [endereco, setEndereco] = useState({});
   const [telefone, setTelefone] = useState("");
 
-    useEffect(() => {
-      api.get(`/usuarios/${usuarioId}`).then((res) => {
-        setUsuario(res.data)
-        setTelefone(res.data.telefone)
-        api.get(`/enderecos/${res.data.id_endereco}`).then((res) => {
-          setEndereco(res.data)
-        })
-      })
-    },[]);
-    
-    
+  useEffect(() => {
+    console.log(usuario);
+    api.get(`/usuarios/${email}`).then((res) => {
+      setUsuario(res.data);
+      setTelefone(res.data.telefone);
+      api.get(`/enderecos/${res.data.id_endereco}`).then((res) => {
+        setEndereco(res.data);
+      });
+    });
+  }, []);
 
   return (
     <div>
-      <Body>
-        <BoardCima>
+      <Conteudo>
+        <CaixaCima>
           <FotoNomeData>
             <FotoPerfil>
               <img
@@ -60,7 +59,11 @@ function Perfil() {
             </FotoPerfil>
             <NomeData>
               <Nome>{usuario.nome}</Nome>
-              <DataNascimento>{usuario.data}</DataNascimento>
+              <DataNascimento>
+                {usuario.data_nascimento.slice(8, -14)}/
+                {usuario.data_nascimento.slice(5, -17)}/
+                {usuario.data_nascimento.slice(0, -20)}
+              </DataNascimento>
             </NomeData>
           </FotoNomeData>
           <BotoesColuna>
@@ -97,10 +100,10 @@ function Perfil() {
               ALTERAR SENHA
             </Button>
           </BotoesColuna>
-        </BoardCima>
+        </CaixaCima>
 
-        <BoardBaixo>
-          <BoardEsquerda>
+        <CaixaBaixo>
+          <CaixaEndereco>
             <EnderecoContato>Endereço</EnderecoContato>
             <DadosEndereco>{endereco.pais}</DadosEndereco>
             <DadosEndereco>{endereco.cep}</DadosEndereco>
@@ -108,23 +111,28 @@ function Perfil() {
             <DadosEndereco>{endereco.cidade}</DadosEndereco>
             <DadosEndereco>{endereco.bairro}</DadosEndereco>
             <RuaNumeroComplemento>
-              <Rua>{endereco.rua}  {endereco.numero}</Rua>
+              <Rua>
+                {endereco.rua} {endereco.numero}
+              </Rua>
               <Complemento>{endereco.complemento}</Complemento>
             </RuaNumeroComplemento>
-          </BoardEsquerda>
+          </CaixaEndereco>
 
           <ContatoExcluirConta>
-            <BoardDireita>
+            <CaixaContato>
               <EnderecoContato>Contato</EnderecoContato>
-              <DadosContato>({telefone.slice(0,-9)}) {telefone.slice(2,-4)}-{telefone.slice(-4)}</DadosContato>
+              <DadosContato>
+                ({telefone.slice(0, -9)}) {telefone.slice(2, -4)}-
+                {telefone.slice(-4)}
+              </DadosContato>
               <DadosContato>{usuario.email}</DadosContato>
-            </BoardDireita>
+            </CaixaContato>
             <ExcluirConta onClick={() => history.push("/web/homemedico")}>
               EXCLUIR CONTA
             </ExcluirConta>
           </ContatoExcluirConta>
-        </BoardBaixo>
-      </Body>
+        </CaixaBaixo>
+      </Conteudo>
     </div>
   );
 }
