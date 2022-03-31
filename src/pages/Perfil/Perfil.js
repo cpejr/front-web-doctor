@@ -31,12 +31,13 @@ function Perfil() {
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
   const [telefone, setTelefone] = useState("");
+  const [dataNascimento, setDataNascimento] = useState("");
 
   useEffect(() => {
-    console.log(usuario);
     api.get(`/usuarios/${email}`).then((res) => {
       setUsuario(res.data);
       setTelefone(res.data.telefone);
+      setDataNascimento(res.data.data_nascimento)
       api.get(`/enderecos/${res.data.id_endereco}`).then((res) => {
         setEndereco(res.data);
       });
@@ -60,9 +61,9 @@ function Perfil() {
             <NomeData>
               <Nome>{usuario.nome}</Nome>
               <DataNascimento>
-                {usuario.data_nascimento.slice(8, -14)}/
-                {usuario.data_nascimento.slice(5, -17)}/
-                {usuario.data_nascimento.slice(0, -20)}
+                {dataNascimento.slice(8, -14)}/
+                {dataNascimento.slice(5, -17)}/
+                {dataNascimento.slice(0, -20)}
               </DataNascimento>
             </NomeData>
           </FotoNomeData>
