@@ -8,6 +8,8 @@ import { ImFacebook } from "react-icons/im";
 import api from "../../services/api";
 import { login } from "../../services/auth";
 import requisicaoErro from "../../utils/HttpErros";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import {
   Body,
   DadosLogin,
@@ -22,8 +24,12 @@ function Login() {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [carregando, setCarregando] = useState(false);
+
+  const antIcon = <LoadingOutlined style={{ fontSize: 24}} spin />;
 
   async function requisicaoLogin() {
+    setCarregando(true);
     if (email.length === 0 || senha.length === 0) {
       alert("Preencha os campos email e senha!");
     } else {
@@ -32,16 +38,16 @@ function Login() {
           email,
           senha,
         });
-        alert("Bem vindo")
-        login(resposta.data.token)
+        alert("Bem vindo");
+        login(resposta.data.token);
         history.push("/");
       } catch (error) {
         setEmail("");
         setSenha("");
         requisicaoErro(error, () => history.push("/login"));
-
       }
     }
+    setCarregando(false);
   }
 
   return (
@@ -80,6 +86,7 @@ function Login() {
           ></Input>
           <Button
             width="100%"
+            height="50px"
             backgroundColor="#434B97"
             borderColor="#151B57"
             color="white"
@@ -88,7 +95,7 @@ function Login() {
             fontSizeMedia="1.2em"
             onClick={() => requisicaoLogin()}
           >
-            ENTRAR
+            {carregando ? <Spin indicator={antIcon} /> : <p>ENTRAR</p>}
           </Button>
         </DadosLogin>
         <Botoes>
@@ -125,6 +132,7 @@ function Login() {
         <BotoesAlternativos>
           <Button
             width="100%"
+            height="50px"
             backgroundColor="green"
             borderColor="#151b57"
             color="#151b57"
@@ -139,6 +147,7 @@ function Login() {
           </Button>
           <Button
             width="100%"
+            height="50px"
             backgroundColor="green"
             borderColor="#151b57"
             color="#151b57"
