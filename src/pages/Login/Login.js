@@ -33,7 +33,7 @@ function Login() {
           senha,
         });
         alert("Bem vindo")
-        login(resposta.data.token, resposta.data.userId);
+        login(resposta.data.token, resposta.data.email)
         history.push("/");
       } catch (error) {
         setEmail("");

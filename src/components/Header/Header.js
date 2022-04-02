@@ -9,11 +9,11 @@ import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 import api from "../../services/api";
 
 function Header(props) {
-  const usuarioId = sessionStorage.getItem("@doctorapp-UserId");
+  const email = sessionStorage.getItem("@doctorapp-Email");
   const [tipo, setTipo] = useState([]);
 
   useEffect(() => {
-    api.get(`/usuarios/${usuarioId}`).then((response) => {
+    api.get(`/usuarios/${email}`).then((response) => {
       setTipo(response.data.tipo);
     });
   }, []);
