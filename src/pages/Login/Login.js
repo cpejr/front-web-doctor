@@ -26,7 +26,7 @@ function Login() {
   const [senha, setSenha] = useState("");
   const [carregando, setCarregando] = useState(false);
 
-  const antIcon = <LoadingOutlined style={{ fontSize: 24}} spin />;
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   async function requisicaoLogin() {
     setCarregando(true);
@@ -38,8 +38,8 @@ function Login() {
           email,
           senha,
         });
-        alert("Bem vindo")
-        login(resposta.data.token, resposta.data.email)
+        alert("Bem vindo");
+        login(resposta.data.token, resposta.data.email);
         history.push("/");
       } catch (error) {
         setEmail("");
@@ -93,10 +93,9 @@ function Login() {
             fontSize="1.5em"
             fontWeight="bold"
             fontSizeMedia="1.2em"
-            height="50px"
             onClick={() => requisicaoLogin()}
           >
-            {carregando ? <Spin indicator={antIcon} /> : <p>ENTRAR</p>}
+            {carregando ? <Spin indicator={antIcon} /> : <div>ENTRAR</div>}
           </Button>
         </DadosLogin>
         <Botoes>
@@ -141,7 +140,6 @@ function Login() {
             color="#151b57"
             fontSize="1em"
             gap="1%"
-            height="50px"
             onClick={() => {
               history.push("/");
             }}
@@ -157,7 +155,6 @@ function Login() {
             color="#151b57"
             fontSize="1em"
             gap="1%"
-            height="50px"
             onClick={() => {
               history.push("/");
             }}
