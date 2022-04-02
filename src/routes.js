@@ -8,7 +8,7 @@ import Cadastro from "./pages/Cadastro";
 import Chat from "./pages/Chat";
 import CriacaoFormulario from "./pages/CriacaoFormulario";
 import EdicaoConteudo from "./pages/EdicaoConteudo";
-import Header from "./pages/Header";
+import Header from "./components/Header/Header";
 import HomeMedico from "./pages/HomeMedico";
 import HomeSecretaria from "./pages/HomeSecretaria";
 import ListaFormularios from "./pages/ListaFormularios";
