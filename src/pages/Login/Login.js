@@ -8,6 +8,8 @@ import { ImFacebook } from "react-icons/im";
 import api from "../../services/api";
 import { login } from "../../services/auth";
 import requisicaoErro from "../../utils/HttpErros";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import {
   Body,
   DadosLogin,
@@ -22,8 +24,12 @@ function Login() {
   const history = useHistory();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [carregando, setCarregando] = useState(false);
+
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   async function requisicaoLogin() {
+    setCarregando(true);
     if (email.length === 0 || senha.length === 0) {
       alert("Preencha os campos email e senha!");
     } else {
@@ -32,16 +38,19 @@ function Login() {
           email,
           senha,
         });
-        alert("Bem vindo")
-        login(resposta.data.token, resposta.data.email)
+
+        alert("Bem vindo");
+        login(resposta.data.token, resposta.data.email);
         history.push("/");
       } catch (error) {
         setEmail("");
         setSenha("");
         requisicaoErro(error, () => history.push("/login"));
         alert(email,senha)
+
       }
     }
+    setCarregando(false);
   }
 
   return (
@@ -89,7 +98,7 @@ function Login() {
             fontSizeMedia="1.2em"
             onClick={() => requisicaoLogin()}
           >
-            ENTRAR
+            {carregando ? <Spin indicator={antIcon} /> : <div>ENTRAR</div>}
           </Button>
         </DadosLogin>
         <Botoes>
@@ -99,8 +108,9 @@ function Login() {
             color="#151B57"
             fontSize="1em"
             textDecoration="underline"
+            height="50px"
             onClick={() => {
-              history.push("/");
+              history.push("/web/alterarsenha");
             }}
           >
             Esqueceu sua senha?
@@ -111,6 +121,7 @@ function Login() {
             color="#434B97"
             fontSize="1em"
             textDecoration="underline"
+            height="50px"
             onClick={() => {
               history.push("/cadastro");
             }}

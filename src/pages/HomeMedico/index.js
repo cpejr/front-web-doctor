@@ -1,2 +1,1 @@
-import HomeMedico from "./HomeMedico";
-export default HomeMedico;
+export { default } from "./HomeMedico";
