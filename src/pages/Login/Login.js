@@ -38,6 +38,7 @@ function Login() {
           email,
           senha,
         });
+
         alert("Bem vindo");
         login(resposta.data.token, resposta.data.email);
         history.push("/");
@@ -45,6 +46,8 @@ function Login() {
         setEmail("");
         setSenha("");
         requisicaoErro(error, () => history.push("/login"));
+        alert(email,senha)
+
       }
     }
     setCarregando(false);

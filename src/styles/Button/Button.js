@@ -33,7 +33,7 @@ const Button = styled.button`
   }
   @media(max-width:560px){
     width: 100%;
-    height: ${(props) => props.heightMedia};
+    height: ${(props) => props.heightMedia560}
   }
   @media(max-width:950px) and (min-width:480px) {
     font-size: ${(props) => props.fontSizeMedia950};
