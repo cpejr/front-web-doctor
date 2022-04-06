@@ -19,6 +19,7 @@ import {
   BarraEstetica,
   Logo,
 } from "./Styles";
+import * as managerService from "../../services/ManagerService/managerService"
 
 function Login() {
   const history = useHistory();
@@ -28,28 +29,11 @@ function Login() {
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-  async function requisicaoLogin() {
+  //criar funcao setcarregando + requisicaoLogin
+
+  async function entrar () {
     setCarregando(true);
-    if (email.length === 0 || senha.length === 0) {
-      alert("Preencha os campos email e senha!");
-    } else {
-      try {
-        const resposta = await api.post("/login", {
-          email,
-          senha,
-        });
-
-        alert("Bem vindo");
-        login(resposta.data.token, resposta.data.email);
-        history.push("/");
-      } catch (error) {
-        setEmail("");
-        setSenha("");
-        requisicaoErro(error, () => history.push("/login"));
-        alert(email,senha)
-
-      }
-    }
+    await managerService.requisicaoLogin(email, senha)
     setCarregando(false);
   }
 
@@ -96,7 +80,7 @@ function Login() {
             fontSize="1.5em"
             fontWeight="bold"
             fontSizeMedia="1.2em"
-            onClick={() => requisicaoLogin()}
+            onClick={() => entrar()}
           >
             {carregando ? <Spin indicator={antIcon} /> : <div>ENTRAR</div>}
           </Button>
