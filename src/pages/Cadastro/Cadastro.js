@@ -65,6 +65,7 @@ function Cadastro() {
             color="black"
             fontSize="1em"
             width="100%"
+            marginTop="2%"
             name="nome"
             onChange={preenchendoDados}
           ></Input>
@@ -75,6 +76,7 @@ function Cadastro() {
               borderColor="#151B57"
               color="black"
               fontSize="1em"
+              marginTop="2%"
               width="48%"
               name="telefone"
               onChange={preenchendoDados}
@@ -86,6 +88,7 @@ function Cadastro() {
               color="#807D7D"
               fontSize="1.25em"
               width="48%"
+              marginTop="2%"
               name="data_nascimento"
               type="date"
               onChange={preenchendoDados}
@@ -98,6 +101,7 @@ function Cadastro() {
             color="black"
             fontSize="1em"
             width="100%"
+            marginTop="2%"
             name="email"
             onChange={preenchendoDados}
           ></Input>
@@ -108,6 +112,7 @@ function Cadastro() {
             color="black"
             fontSize="1em"
             width="100%"
+            marginTop="2%"
             name="cep"
             onChange={preenchendoEndereco}
           ></Input>
@@ -118,6 +123,7 @@ function Cadastro() {
             color="black"
             fontSize="1em"
             width="100%"
+            marginTop="2%"
             name="pais"
             onChange={preenchendoEndereco}
           ></Input>
@@ -128,6 +134,7 @@ function Cadastro() {
             borderColor="#151B57"
             color="#8D8D8D"
             width="100%"
+            marginTop="2%"
             onChange={preenchendoEndereco}
           >
             <option value="">Estado</option>
@@ -167,6 +174,7 @@ function Cadastro() {
             color="black"
             fontSize="1em"
             width="100%"
+            marginTop="2%"
             name="cidade"
             onChange={preenchendoEndereco}
           ></Input>
@@ -177,6 +185,7 @@ function Cadastro() {
             color="black"
             fontSize="1em"
             width="100%"
+            marginTop="2%"
             name="bairro"
             onChange={preenchendoEndereco}
           ></Input>
@@ -187,6 +196,7 @@ function Cadastro() {
             color="black"
             fontSize="1em"
             width="100%"
+            marginTop="2%"
             name="rua"
             onChange={preenchendoEndereco}
           ></Input>
@@ -219,6 +229,7 @@ function Cadastro() {
             borderColor="#151B57"
             color="black"
             width="100%"
+            marginTop="2%"
             fontSize="1em"
             name="senha"
             id="senha"
@@ -232,6 +243,7 @@ function Cadastro() {
             borderColor="#151B57"
             color="black"
             width="100%"
+            marginTop="2%"
             fontSize="1em"
             name="senhaConfirmada"
             id="senhaConfirmada"
@@ -266,7 +278,6 @@ function Cadastro() {
               fontSize="1.5em"
               fontWeight="bold"
               fontSizeMedia="1.2em"
-              height="50px"
               onClick={() => history.push("/login")}
             >
               CANCELAR
@@ -274,7 +285,6 @@ function Cadastro() {
             <Button
               height="50px"
               width="42%"
-              height="50px"
               backgroundColor="#434B97"
               borderColor="#151B57"
               color="white"
