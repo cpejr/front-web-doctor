@@ -6,16 +6,19 @@ import logoEscrita from "./../../assets/logoEscrita.png";
 import { useHistory } from "react-router-dom";
 import { Dropdown, Menu } from "antd";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
-import api from "../../services/api";
+import * as managerService from "../../services/ManagerService/managerService"
 
 function Header(props) {
   const email = sessionStorage.getItem("@doctorapp-Email");
   const [tipo, setTipo] = useState([]);
 
+  async function pegandoTipo(){
+    const resposta = await managerService.GetDadosUsuario(email)
+    setTipo(resposta.dadosUsuario.tipo);
+  }
+
   useEffect(() => {
-    api.get(`/usuarios/${email}`).then((response) => {
-      setTipo(response.data.tipo);
-    });
+    pegandoTipo();
   }, []);
   const history = useHistory();
   const menu = (

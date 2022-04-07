@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
-import api from "../../services/api";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import {
@@ -28,6 +27,7 @@ import {
   CaixaCimaCarregando,
   CaixaEnderecoCarregando,
 } from "./Styles";
+import * as managerService from "../../services/ManagerService/managerService"
 
 function Perfil() {
   const history = useHistory();
@@ -40,16 +40,17 @@ function Perfil() {
 
   const antIcon = <LoadingOutlined style={{ fontSize: 45, color: "#151B57" }} spin />;
 
+  async function pegandoDados(){
+    const resposta = await managerService.GetDadosUsuario(email)
+    setUsuario(resposta.dadosUsuario)
+    setTelefone(resposta.dadosUsuario.telefone)
+    setDataNascimento(resposta.dadosUsuario.data_nascimento)
+    setEndereco(resposta.dadosEndereco)
+    setCarregando(false)
+  }
+
   useEffect(() => {
-    api.get(`/usuarios/${email}`).then((res) => {
-      setUsuario(res.data);
-      setTelefone(res.data.telefone);
-      setDataNascimento(res.data.data_nascimento);
-      api.get(`/enderecos/${res.data.id_endereco}`).then((res) => {
-        setEndereco(res.data);
-        setCarregando(false);
-      });
-    });
+    pegandoDados()
   }, []);
 
   return (
