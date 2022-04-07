@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
-import api from "../../services/api";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import {

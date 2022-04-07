@@ -5,9 +5,6 @@ import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import { FcGoogle } from "react-icons/fc";
 import { ImFacebook } from "react-icons/im";
-import api from "../../services/api";
-import { login } from "../../services/auth";
-import requisicaoErro from "../../utils/HttpErros";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import {

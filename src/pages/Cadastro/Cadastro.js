@@ -4,9 +4,7 @@ import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import Select from "../../styles/Select/Select";
-import api from "../../services/api";
 import { Spin } from "antd";
-import requisicaoErro from "../../utils/HttpErros";
 import { LoadingOutlined } from "@ant-design/icons";
 import {
   Body,
@@ -266,7 +264,6 @@ function Cadastro() {
               fontSize="1.5em"
               fontWeight="bold"
               fontSizeMedia="1.2em"
-              height="50px"
               onClick={() => history.push("/login")}
             >
               CANCELAR
@@ -274,7 +271,6 @@ function Cadastro() {
             <Button
               height="50px"
               width="42%"
-              height="50px"
               backgroundColor="#434B97"
               borderColor="#151B57"
               color="white"
