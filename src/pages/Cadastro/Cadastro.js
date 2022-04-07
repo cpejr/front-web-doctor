@@ -4,9 +4,7 @@ import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import Select from "../../styles/Select/Select";
-import api from "../../services/api";
 import { Spin } from "antd";
-import requisicaoErro from "../../utils/HttpErros";
 import { LoadingOutlined } from "@ant-design/icons";
 import {
   Body,
