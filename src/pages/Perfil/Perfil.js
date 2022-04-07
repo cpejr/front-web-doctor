@@ -28,6 +28,7 @@ import {
   CaixaCimaCarregando,
   CaixaEnderecoCarregando,
 } from "./Styles";
+import * as managerService from "../../services/ManagerService/managerService"
 
 function Perfil() {
   const history = useHistory();
@@ -40,16 +41,17 @@ function Perfil() {
 
   const antIcon = <LoadingOutlined style={{ fontSize: 45, color: "#151B57" }} spin />;
 
+  async function pegandoDados(){
+    const resposta = await managerService.GetDadosUsuario(email)
+    setUsuario(resposta.dadosUsuario)
+    setTelefone(resposta.dadosUsuario.telefone)
+    setDataNascimento(resposta.dadosUsuario.data_nascimento)
+    setEndereco(resposta.dadosEndereco)
+    setCarregando(false)
+  }
+
   useEffect(() => {
-    api.get(`/usuarios/${email}`).then((res) => {
-      setUsuario(res.data);
-      setTelefone(res.data.telefone);
-      setDataNascimento(res.data.data_nascimento);
-      api.get(`/enderecos/${res.data.id_endereco}`).then((res) => {
-        setEndereco(res.data);
-        setCarregando(false);
-      });
-    });
+    pegandoDados()
   }, []);
 
   return (

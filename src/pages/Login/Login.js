@@ -29,8 +29,6 @@ function Login() {
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-  //criar funcao setcarregando + requisicaoLogin
-
   async function entrar () {
     setCarregando(true);
     await managerService.requisicaoLogin(email, senha)

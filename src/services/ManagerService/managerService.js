@@ -1,7 +1,6 @@
 import { login } from "../../services/auth";
 import requisicaoErro from "../../utils/HttpErros";
-import { useHistory } from "react-router-dom";
-import * as requesterService from "../RequesterService/requesterService"
+import * as requesterService from "../RequesterService/requesterService";
 
 export const requisicaoLogin = async (email, senha) => {
     if (email.lenght === 0 || senha.lenght === 0) {
@@ -14,17 +13,42 @@ export const requisicaoLogin = async (email, senha) => {
             window.location.href = "/";
         } catch (error) {
             requisicaoErro(error, () => window.location.href = "/login");
-          }
-    } 
-    
+        }
+    }
     return 
 }
 
-export const requisicaoCadastro = async (estado, endereco) => {
-    
+export const Cadastrando = async (estado, endereco) => {
+        await requesterService.criarUsuario(endereco, estado)
+          .then(() => {
+            alert("Usuário cadastrado com sucesso.");
+            window.location.href = "/login";
+          })
+          .catch((error) => {
+            requisicaoErro(error, () => (window.location.href = "/cadastro"));
+            return false;
+          });
+    return false;
+  };
 
+export const GetDadosUsuario = async (emailUrl) => {
+    let dadosUsuario = {};
+    let dadosEndereco = {};
+    
+    await requesterService.requisicaoDadosUsuario(emailUrl)
+    .then((res) => {
+        dadosUsuario = res.data        
+      })
+    .catch((error) => {
+        requisicaoErro(error);
+    })
 
-    
-    
-    return
+    await requesterService.requisicaoDadosEndereco(dadosUsuario)
+    .then((res) => {
+       dadosEndereco = res.data
+    })
+    .catch((error) => {
+        requisicaoErro(error);
+    })
+    return {dadosEndereco, dadosUsuario};
 }

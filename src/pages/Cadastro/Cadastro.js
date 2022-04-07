@@ -15,6 +15,7 @@ import {
   InputMesmaLinha,
   BotoesMesmaLinha,
 } from "./Styles";
+import * as managerService from "../../services/ManagerService/managerService"
 
 function Cadastro() {
   const history = useHistory();
@@ -24,34 +25,16 @@ function Cadastro() {
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-  function requisicaoCadastro() {
+  async function requisicaoCadastro() {
     if (estado.senha === estado.senhaConfirmada) {
-      
       setCarregando(true);
-      api
-        .post("/enderecos", endereco)
-        .then((res) => {
-          api
-            .post("/usuarios", { ...estado, id_endereco: res.data.id })
-            .then(() => {
-              alert("Usuário cadastrado com sucesso.");
-              history.push("/login");
-            })
-            .catch((error) => {
-              requisicaoErro(error, () => history.push("/cadastro"));
-              setCarregando(false);
-            });
-        })
-        .catch((error) => {
-          requisicaoErro(error, () => history.push("/cadastro"));
-          setCarregando(false);
-        });
+      await managerService.Cadastrando(estado, endereco);
+      setCarregando(false)
+      
     } else {
       alert("As senhas digitadas são diferentes.");
       setCarregando(false);
-      
     }
-    
   }
 
   function preenchendoDados(e) {
