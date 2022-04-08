@@ -1,7 +1,5 @@
 import React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
-
-import AlterarDados from "./pages/AlterarDados";
 import AlterarSenha from "./pages/AlterarSenha";
 import AreaReceitas from "./pages/AreaReceitas";
 import Cadastro from "./pages/Cadastro";
@@ -18,6 +16,7 @@ import ModeloReceitas from "./pages/ModeloReceitas";
 import Perfil from "./pages/Perfil";
 import PerfilPaciente from "./pages/PerfilPaciente";
 import RespostaFormulario from "./pages/RespostaFormulario";
+import EditarPerfil from "./pages/EditarPerfil";
 
 function Routes() {
   return (
@@ -39,7 +38,7 @@ function UserHeader() {
       <Switch>
         <Route exact path="/web/homemedico" component={HomeMedico} />
         <Route exact path="/web/homesecretaria" component={HomeSecretaria} />
-        <Route exact path="/web/editarperfil" component={AlterarDados} />
+        <Route exact path="/web/editarperfil" component={EditarPerfil} />
         <Route exact path="/web/alterarsenha" component={AlterarSenha} />
         <Route exact path="/web/areareceitas" component={AreaReceitas} />
         <Route exact path="/web/chat" component={Chat} />

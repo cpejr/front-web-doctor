@@ -11,10 +11,12 @@ const Input = styled.input`
   border-style: solid;
   height: 50px;
   padding-left: 2%;
+  box-shadow: ${(props) => props.boxShadow};
+  border-width:${(props) => props.borderWidth};
   width: ${(props) => props.width};
   @media (max-width: 820px) {
     width: 100%
   }
 `;
 
-export default Input;
+export default Input; 
