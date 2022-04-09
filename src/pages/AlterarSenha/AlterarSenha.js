@@ -9,6 +9,7 @@ import {
   BotoesMesmaLinha,
   Titulo,
 } from "./Styles";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function AlterarSenha() {
   const history = useHistory();
@@ -28,9 +29,28 @@ function AlterarSenha() {
   }, [alterador]);
 
   const [senhaAtual, setSenhaAtual] = useState("");
+  const email = sessionStorage.getItem("@doctorapp-Email");
+
+  async function conferirSenha() {
+    //função que recebe como parâmetro a senha digitada e o email do usuário logado, retorna true como valor para alterador se as senhas forem diferentes, e false se as senhas forem iguais;
+    setAlterador(await managerService.ConferirSenha(senhaAtual, email));
+    if (alterador === true) {
+      alert("A senha digitada não confere!");
+    }
+  }
 
   const [novaSenha, setNovaSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
+
+  async function trocarSenha() {
+    //conferir se a "novaSenha" é igual a "confirmarSenha"; se for igual postar a nova senha do usuário; se não for igual alertar que as senhas digitadas não conferem
+    if (novaSenha === confirmarSenha) {
+      await managerService.AlterarSenha(novaSenha, email);
+      alert("Senha alterada com sucesso!");
+    } else {
+      alert("As senhas digitadas são diferentes!");
+    }
+  }
 
   return (
     <div>
