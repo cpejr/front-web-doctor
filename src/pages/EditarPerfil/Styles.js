@@ -10,10 +10,10 @@ export const ContainerEditarPerfil = styled.div`
   align-items: center;
   justify-content: center;
   padding: 2% 5% 2% 5%;
-  @media (max-width: 900px) {
+  @media (max-width: 930px) {
+    justify-content: normal;
     display: flex;
     flex-direction: column;
-    padding: 2% 10% 2% 10%;
   }
 `;
 export const ColunaEsquerda = styled.div`
@@ -27,9 +27,9 @@ export const ColunaEsquerda = styled.div`
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   border-width: 2px;
   padding: 2% 4% 2% 4%;
-  @media (max-width: 900px) {
-    justify-content: space-around ;
-    height: 50vh;
+  @media (max-width: 930px) {
+    justify-content: space-around;
+    height: 30vh;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -56,7 +56,7 @@ export const ColunaDireita = styled.div`
   border-color: #c4c4c4;
   border-style: solid;
 
-  @media (max-width: 900px) {
+  @media (max-width: 930px) {
     margin-top: 5%;
     height: 100%;
     width: 100%;
@@ -96,11 +96,14 @@ export const CaixaBotao = styled.div`
 `;
 export const ImagemPerfil = styled.div`
   display: flex;
-  justify-content:center ;
+  justify-content: center;
+
   .fotoPerfil {
     border-radius: 3px;
+    border-radius: 3px;
+    box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
 
-    @media (max-width: 900px) {
+    @media (max-width: 930px) {
       width: 100%;
       height: 100%;
     }
@@ -116,30 +119,31 @@ export const BlocoSuperior = styled.div`
   justify-content: center;
   height: 50vh;
 
-  @media (max-width: 900px) {
+  @media (max-width: 930px) {
     height: 100%;
     justify-content: center;
-    gap: 2%
+    gap: 2%;
   }
 `;
 export const BlocoInferior = styled.div`
   display: flex;
   flex-direction: column;
-  height: 50vh;
+  height: 40%;
   justify-content: flex-end;
   gap: 10%;
-  @media (max-width: 900px) {
-  display: flex; 
-  justify-content: center ;
-  width: 50% ;
-  gap: 2%
+  @media (max-width: 930px) {
+    justify-content: center;
+    height: 100%;
+    display: flex;
+    width: 50%;
+    gap: 2%;
   }
   @media (max-width: 480px) {
-  display: flex; 
-  flex-direction: row ;
-  width: 100% ;
-  gap: 2%;
-  margin-top:5% ;
+    display: flex;
+    height: 10vh;
+    flex-direction: row;
+    width: 100%;
+    gap: 2%;
+    margin-top: 5%;
   }
 `;
-
