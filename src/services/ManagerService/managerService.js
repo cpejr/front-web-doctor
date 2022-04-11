@@ -56,12 +56,21 @@ export const GetDadosUsuario = async (emailUrl) => {
   return { dadosEndereco, dadosUsuario };
 };
 
-export const ConferirSenha = async (senhaAtual, email) => {
+export const ConferirSenha = async (email, senhaAtual) => {
   //comparar a senha do Email  com a senha digitada
   //se as senhas forem iguais retornar true
   //se as senhas nao forem iguais retornar false
+  try {
+    await requesterService.requisicaoVerificar(
+      email,
+      senhaAtual
+    );
+    return false;
+  } catch (error) {
+    requisicaoErro(error, () => (window.location.href = "/web/alterarsenha"));
+  }
 };
 
 export const AlterarSenha = async (novaSenha, email) => {
   //passar a "novaSenha" como senha do usuário que possui esse "email"
-}
+};

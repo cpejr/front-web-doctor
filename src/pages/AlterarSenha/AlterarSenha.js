@@ -33,10 +33,7 @@ function AlterarSenha() {
 
   async function conferirSenha() {
     //função que recebe como parâmetro a senha digitada e o email do usuário logado, retorna true como valor para alterador se as senhas forem diferentes, e false se as senhas forem iguais;
-    setAlterador(await managerService.ConferirSenha(senhaAtual, email));
-    if (alterador === true) {
-      alert("A senha digitada não confere!");
-    }
+    setAlterador(await managerService.ConferirSenha(email, senhaAtual));
   }
 
   const [novaSenha, setNovaSenha] = useState("");
@@ -100,7 +97,7 @@ function AlterarSenha() {
                   fontSizeMedia="1.2em"
                   fontSizeMedia950="1.1em"
                   boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-                  onClick={() => setAlterador(false)}
+                  onClick={() => conferirSenha()}
                 >
                   CONFIRMAR
                 </Button>
