@@ -32,7 +32,8 @@ function AlterarSenha() {
   const email = sessionStorage.getItem("@doctorapp-Email");
 
   async function conferirSenha() {
-    //função que recebe como parâmetro a senha digitada e o email do usuário logado, retorna true como valor para alterador se as senhas forem diferentes, e false se as senhas forem iguais;
+    //função que recebe como parâmetro a senha digitada e o email do usuário logado, 
+    //retorna true como valor para alterador se as senhas forem diferentes, e false se as senhas forem iguais;
     setAlterador(await managerService.ConferirSenha(email, senhaAtual));
   }
 
@@ -40,10 +41,11 @@ function AlterarSenha() {
   const [confirmarSenha, setConfirmarSenha] = useState("");
 
   async function trocarSenha() {
-    //conferir se a "novaSenha" é igual a "confirmarSenha"; se for igual postar a nova senha do usuário; se não for igual alertar que as senhas digitadas não conferem
+    //conferir se a "novaSenha" é igual a "confirmarSenha"; se for igual postar a nova senha do usuário; 
+    //se não for igual alertar que as senhas digitadas não conferem
     if (novaSenha === confirmarSenha) {
-      await managerService.AlterarSenha(novaSenha, email);
-      alert("Senha alterada com sucesso!");
+      const resposta = await managerService.GetDadosUsuario(email);
+      await managerService.AlterarSenha(novaSenha, resposta.dadosUsuario.id);
     } else {
       alert("As senhas digitadas são diferentes!");
     }
@@ -164,7 +166,7 @@ function AlterarSenha() {
                   fontSizeMedia="1.2em"
                   fontSizeMedia950="1.1em"
                   boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-                  onClick={() => history.push("/web/perfil")}
+                  onClick={() => trocarSenha()}
                 >
                   ALTERAR
                 </Button>

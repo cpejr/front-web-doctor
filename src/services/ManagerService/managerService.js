@@ -57,7 +57,7 @@ export const GetDadosUsuario = async (emailUrl) => {
 };
 
 export const ConferirSenha = async (email, senhaAtual) => {
-  //comparar a senha do Email  com a senha digitada
+  //comparar a senha do Email com a senha digitada
   //se as senhas forem iguais retornar true
   //se as senhas nao forem iguais retornar false
   try {
@@ -67,10 +67,22 @@ export const ConferirSenha = async (email, senhaAtual) => {
     );
     return false;
   } catch (error) {
-    requisicaoErro(error, () => (window.location.href = "/web/alterarsenha"));
+    alert("Senha incorreta!")
+    window.location.href = "/web/alterarsenha"
   }
 };
 
-export const AlterarSenha = async (novaSenha, email) => {
+export const AlterarSenha = async (novaSenha, id) => {
   //passar a "novaSenha" como senha do usuário que possui esse "email"
+  await requesterService
+    .alterarSenha(id, novaSenha)
+    .then(() => {
+      alert("Senha alterada com sucesso!");
+      window.location.href = "/web/perfil";
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = "/web/alterarsenha"));
+      return false;
+    });
+  return false;
 };

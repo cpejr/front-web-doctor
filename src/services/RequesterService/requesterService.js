@@ -22,3 +22,6 @@ export const requisicaoVerificar = (email, senha) =>
     email,
     senha,
   });
+
+export const alterarSenha = (id, senha) => 
+  api.put(`/usuarios/${id}`, {senha: senha});
