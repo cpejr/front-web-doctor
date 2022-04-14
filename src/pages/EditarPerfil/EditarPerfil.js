@@ -13,6 +13,8 @@ import {
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 import { useHistory } from "react-router-dom";
 import * as managerService from "../../services/ManagerService/managerService";
 
@@ -27,6 +29,8 @@ function EditarPerfil() {
   const [carregando, setCarregando] = useState(true);
 
   const [estado, setEstado] = useState({});
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  
 
   async function pegandoDados() {
     const resposta = await managerService.GetDadosUsuario(email);
@@ -283,7 +287,7 @@ function EditarPerfil() {
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             onClick={() => atualizarDados()}
           >
-            CONFIRMAR
+            {carregando ? <Spin indicator={antIcon} /> : <p>CONFIRMAR</p>}
           </Button>
         </CaixaBotao>
       </ColunaDireita>
