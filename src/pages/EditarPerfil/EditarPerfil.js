@@ -9,7 +9,6 @@ import {
   ImagemPerfil,
   BlocoSuperior,
   BlocoInferior,
-  BotaoData,
 } from "./Styles";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
@@ -25,8 +24,6 @@ function EditarPerfil() {
   const [endereco, setEndereco] = useState({});
   const [telefone, setTelefone] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
-  const [testeTelefone, setTesteTelefone] = useState(false);
-  const [testeData, setTesteData] = useState(false);
   const [carregando, setCarregando] = useState(true);
 
   const [estado, setEstado] = useState({});
@@ -42,7 +39,12 @@ function EditarPerfil() {
 
   async function atualizarDados() {
     setCarregando(true);
-    await managerService.UpdateDadosUsuario(usuario.id,endereco.id, endereco, estado);
+    await managerService.UpdateDadosUsuario(
+      usuario.id,
+      endereco.id,
+      endereco,
+      estado
+    );
     setCarregando(false);
   }
   function preenchendoDados(e) {
@@ -52,8 +54,6 @@ function EditarPerfil() {
   function preenchendoEndereco(e) {
     setEndereco({ ...endereco, [e.target.name]: e.target.value });
   }
-
-  
 
   useEffect(() => {
     pegandoDados();
@@ -125,6 +125,7 @@ function EditarPerfil() {
             color="black"
             fontSize="1em"
             width="50%"
+            name="nome"
             onChange={preenchendoDados}
           ></Input>
           <Input
@@ -136,6 +137,7 @@ function EditarPerfil() {
             color="black"
             fontSize="1em"
             width="50%"
+            name="cpf"
             onChange={preenchendoDados}
           ></Input>
         </CaixaInputs>
@@ -149,62 +151,36 @@ function EditarPerfil() {
             color="black"
             fontSize="1em"
             width="50%"
+            name="email"
             onChange={preenchendoDados}
           ></Input>
-          {testeTelefone ? (
-            <Input
-              backgroundColor="#E4E6F4"
-              borderColor="black"
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              borderWidth="1px"
-              color="black"
-              fontSize="1em"
-              width="50%"
-              onChange={preenchendoDados}
-            ></Input>
-          ) : (
-            <BotaoData
-              backgroundColor="#E4E6F4"
-              borderColor="black"
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              borderWidth="1px"
-              color="black"
-              fontSize="1em"
-              width="50%"
-              onClick={() => setTesteTelefone(true)}
-            >
-              ({telefone.slice(0, -9)}) {telefone.slice(2, -4)}-
-              {telefone.slice(-4)}
-            </BotaoData>
-          )}
+
+          <Input
+            placeholder={telefone}
+            backgroundColor="#E4E6F4"
+            borderColor="black"
+            boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+            borderWidth="1px"
+            color="black"
+            fontSize="1em"
+            width="50%"
+            name="telefone"
+            onChange={preenchendoDados}
+          ></Input>
         </CaixaInputs>
         <CaixaInputs>
-          {testeData ? (
-            <Input
-              backgroundColor="#E4E6F4"
-              borderColor="black"
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              borderWidth="1px"
-              color="black"
-              fontSize="1em"
-              width="50%"
-              onChange={preenchendoDados}
-            ></Input>
-          ) : (
-            <BotaoData
-              backgroundColor="#E4E6F4"
-              borderColor="black"
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              borderWidth="1px"
-              color="black"
-              fontSize="1em"
-              width="50%"
-              onClick={() => setTesteData(true)}
-            >
-              {dataNascimento.slice(8, -14)}/{dataNascimento.slice(5, -17)}/
-              {dataNascimento.slice(0, -20)}
-            </BotaoData>
-          )}
+          <Input
+            placeholder={dataNascimento}
+            backgroundColor="#E4E6F4"
+            borderColor="black"
+            boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+            borderWidth="1px"
+            color="black"
+            fontSize="1em"
+            width="50%"
+            name="data_nascimento"
+            onChange={preenchendoDados}
+          ></Input>
 
           <Input
             placeholder={endereco.cep}
@@ -215,6 +191,7 @@ function EditarPerfil() {
             color="black"
             fontSize="1em"
             width="50%"
+            name="cep"
             onChange={preenchendoEndereco}
           ></Input>
         </CaixaInputs>
@@ -228,6 +205,7 @@ function EditarPerfil() {
             color="black"
             fontSize="1em"
             width="50%"
+            name="pais"
             onChange={preenchendoEndereco}
           ></Input>
           <Input
@@ -239,6 +217,7 @@ function EditarPerfil() {
             color="black"
             fontSize="1em"
             width="50%"
+            name="estado"
             onChange={preenchendoEndereco}
           ></Input>
         </CaixaInputs>
@@ -252,6 +231,7 @@ function EditarPerfil() {
             color="black"
             fontSize="1em"
             width="50%"
+            name="bairro"
             onChange={preenchendoEndereco}
           ></Input>
           <Input
@@ -263,6 +243,7 @@ function EditarPerfil() {
             color="black"
             fontSize="1em"
             width="50%"
+            name="complemento"
             onChange={preenchendoEndereco}
           ></Input>
         </CaixaInputs>
@@ -276,6 +257,7 @@ function EditarPerfil() {
             color="black"
             fontSize="1em"
             width="50%"
+            name="rua"
             onChange={preenchendoEndereco}
           ></Input>
           <Input
@@ -287,6 +269,7 @@ function EditarPerfil() {
             color="black"
             fontSize="1em"
             width="50%"
+            name="numero"
             onChange={preenchendoEndereco}
           ></Input>
         </CaixaInputs>
