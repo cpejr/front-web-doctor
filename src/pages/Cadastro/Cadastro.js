@@ -90,6 +90,16 @@ function Cadastro() {
             ></Input>
           </InputMesmaLinha>
           <Input
+            placeholder="CPF"
+            backgroundColor="#E4E6F4"
+            borderColor="#151B57"
+            color="black"
+            fontSize="1em"
+            width="100%"
+            name="cpf"
+            onChange={preenchendoDados}
+          ></Input>
+          <Input
             placeholder="Endereço de e-mail"
             backgroundColor="#E4E6F4"
             borderColor="#151B57"
@@ -279,7 +289,7 @@ function Cadastro() {
               fontSizeMedia="1.2em"
               onClick={() => requisicaoCadastro()}
             >
-              {carregando ? <Spin indicator={antIcon} /> : <p>ENTRAR</p>}
+              {carregando ? <Spin indicator={antIcon} /> : "ENTRAR"}
             </Button>
           </BotoesMesmaLinha>
         </DadosCadastro>
