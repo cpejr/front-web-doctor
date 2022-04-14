@@ -42,8 +42,7 @@ function EditarPerfil() {
 
   async function atualizarDados() {
     setCarregando(true);
-    await managerService.UpdateDadosUsuario(usuario.id, endereco, estado);
-    
+    await managerService.UpdateDadosUsuario(usuario.id,endereco.id, endereco, estado);
     setCarregando(false);
   }
   function preenchendoDados(e) {
@@ -53,6 +52,8 @@ function EditarPerfil() {
   function preenchendoEndereco(e) {
     setEndereco({ ...endereco, [e.target.name]: e.target.value });
   }
+
+  
 
   useEffect(() => {
     pegandoDados();

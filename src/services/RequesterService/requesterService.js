@@ -17,10 +17,7 @@ export const requisicaoDadosUsuario = (emailUrl) =>
 export const requisicaoDadosEndereco = (dadosUsuario) =>
   api.get(`/enderecos/${dadosUsuario.id_endereco}`);
 
-export const updateDadosUsuario = (id, endereco, estado) =>
-  api.put(`/usuarios/${id}`, endereco).then((res) => {
-    api.put(`/usuarios/${id}`, { ...estado, id_endereco: res.data.id });
-    console.log(endereco);
-    console.log(estado);
-    console.log(id);
+export const updateDadosUsuario = (id_usuario,id_endereco, endereco, estado) =>
+  api.put(`/enderecos/${id_endereco}`, endereco).then((res) => {
+    api.put(`/usuarios/${id_usuario}`, { ...estado, id_endereco: res.data.id });
   });
