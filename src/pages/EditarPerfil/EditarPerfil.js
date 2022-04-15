@@ -25,21 +25,57 @@ function EditarPerfil() {
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
   const [telefone, setTelefone] = useState("");
+  const [cpf, setCpf] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [carregando, setCarregando] = useState(true);
 
   const [estado, setEstado] = useState({});
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  
+
+  const [cpfMasked, setCpfMasked] = useState({});
+  const [dataMasked, setDataMasked] = useState({});
+  const [telMasked, setTelMasked] = useState({});
 
   async function pegandoDados() {
     const resposta = await managerService.GetDadosUsuario(email);
     setUsuario(resposta.dadosUsuario);
     setTelefone(resposta.dadosUsuario.telefone);
+    setCpf(resposta.dadosUsuario.cpf);
     setDataNascimento(resposta.dadosUsuario.data_nascimento);
     setEndereco(resposta.dadosEndereco);
     setCarregando(false);
   }
+
+  useEffect(() => {
+    setCpfMasked(
+      cpf.slice(+0, -8) +
+        "." +
+        cpf.slice(+3, -5) +
+        "." +
+        cpf.slice(+6, -2) +
+        "-" +
+        cpf.slice(-2)
+    );
+  }, [cpf]);
+  useEffect(() => {
+    setTelMasked(
+      "(" +
+        telefone.slice(0, -9) +
+        ")" +
+        telefone.slice(2, -4) +
+        "-" +
+        telefone.slice(-4)
+    );
+  }, [telefone]);
+  useEffect(() => {
+    setDataMasked(
+      dataNascimento.slice(8, -14) +
+        "/" +
+        dataNascimento.slice(5, -17) +
+        "/" +
+        dataNascimento.slice(0, -20)
+    );
+  }, [dataNascimento]);
 
   async function atualizarDados() {
     setCarregando(true);
@@ -133,7 +169,7 @@ function EditarPerfil() {
             onChange={preenchendoDados}
           ></Input>
           <Input
-            placeholder={usuario.cpf}
+            placeholder={cpfMasked}
             backgroundColor="#E4E6F4"
             borderColor="black"
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
@@ -160,7 +196,7 @@ function EditarPerfil() {
           ></Input>
 
           <Input
-            placeholder={telefone}
+            placeholder={telMasked}
             backgroundColor="#E4E6F4"
             borderColor="black"
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
@@ -174,7 +210,7 @@ function EditarPerfil() {
         </CaixaInputs>
         <CaixaInputs>
           <Input
-            placeholder={dataNascimento}
+            placeholder={dataMasked}
             backgroundColor="#E4E6F4"
             borderColor="black"
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
