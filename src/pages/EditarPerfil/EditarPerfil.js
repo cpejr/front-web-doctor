@@ -26,6 +26,7 @@ function EditarPerfil() {
   const [endereco, setEndereco] = useState({});
   const [telefone, setTelefone] = useState("");
   const [cpf, setCpf] = useState("");
+  const [complemento, setComplemento] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [carregando, setCarregando] = useState(true);
 
@@ -43,9 +44,10 @@ function EditarPerfil() {
     setCpf(resposta.dadosUsuario.cpf);
     setDataNascimento(resposta.dadosUsuario.data_nascimento);
     setEndereco(resposta.dadosEndereco);
+    setComplemento(resposta.dadosEndereco.complemento);
     setCarregando(false);
   }
-
+  
   useEffect(() => {
     setCpfMasked(
       cpf.slice(+0, -8) +
@@ -115,7 +117,7 @@ function EditarPerfil() {
           <Button
             backgroundColor="transparent"
             borderColor="transparent"
-            color="#151B57"
+            color="green"
             fontSize="1em"
             textDecoration="underline"
             height="10px"
@@ -274,18 +276,33 @@ function EditarPerfil() {
             name="bairro"
             onChange={preenchendoEndereco}
           ></Input>
-          <Input
-            placeholder={endereco.complemento}
-            backgroundColor="#E4E6F4"
-            borderColor="black"
-            boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-            borderWidth="1px"
-            color="black"
-            fontSize="1em"
-            width="50%"
-            name="complemento"
-            onChange={preenchendoEndereco}
-          ></Input>
+          {complemento === null ? (
+            <Input
+              placeholder="Complemento: "
+              backgroundColor="#E4E6F4"
+              borderColor="black"
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color="black"
+              fontSize="1em"
+              width="50%"
+              name="complemento"
+              onChange={preenchendoEndereco}
+            ></Input>
+          ) : (
+            <Input
+              placeholder={complemento}
+              backgroundColor="#E4E6F4"
+              borderColor="black"
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color="black"
+              fontSize="1em"
+              width="50%"
+              name="complemento"
+              onChange={preenchendoEndereco}
+            ></Input>
+          )}
         </CaixaInputs>
         <CaixaInputs>
           <Input
