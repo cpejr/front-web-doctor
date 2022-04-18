@@ -20,7 +20,6 @@ const Button = styled.button`
   border-radius: ${(props) => props.borderRadius};
   box-shadow: ${(props) => props.boxShadow};
   cursor: pointer;
-  box-shadow: ${(props) => props.boxShadow};
   /*características do texto*/
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;

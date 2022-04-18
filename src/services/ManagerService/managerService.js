@@ -80,9 +80,32 @@ export const AlterarSenha = async (novaSenha, id) => {
       alert("Senha alterada com sucesso!");
       window.location.href = "/web/perfil";
     })
-    .catch((error) => {
+      .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/web/alterarsenha"));
       return false;
     });
   return false;
 };
+
+
+
+export const UpdateDadosUsuario = async (
+  id_usuario,
+  id_endereco,
+  endereco,
+  estado
+) => {
+  await requesterService
+    .updateDadosUsuario(id_usuario, id_endereco, endereco, estado)
+    .then(() => {
+      alert("Usuário atualizado com sucesso.");
+      window.location.href = "/web/perfil";
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));
+      return false;
+    });
+
+  return false;
+};
+

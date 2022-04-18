@@ -50,6 +50,8 @@ function Perfil() {
     setCarregando(false)
   }
 
+  
+
   useEffect(() => {
     pegandoDados()
   }, []);
