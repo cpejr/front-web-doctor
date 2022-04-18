@@ -63,6 +63,7 @@ function Cadastro() {
             color="black"
             fontSize="1em"
             width="100%"
+            marginTop="2%"
             name="nome"
             onChange={preenchendoDados}
           ></Input>
@@ -73,6 +74,7 @@ function Cadastro() {
               borderColor="#151B57"
               color="black"
               fontSize="1em"
+              marginTop="2%"
               width="48%"
               name="telefone"
               onChange={preenchendoDados}
@@ -84,11 +86,22 @@ function Cadastro() {
               color="#807D7D"
               fontSize="1.25em"
               width="48%"
+              marginTop="2%"
               name="data_nascimento"
               type="date"
               onChange={preenchendoDados}
             ></Input>
           </InputMesmaLinha>
+          <Input
+            placeholder="CPF"
+            backgroundColor="#E4E6F4"
+            borderColor="#151B57"
+            color="black"
+            fontSize="1em"
+            width="100%"
+            name="cpf"
+            onChange={preenchendoDados}
+          ></Input>
           <Input
             placeholder="Endereço de e-mail"
             backgroundColor="#E4E6F4"
@@ -96,6 +109,7 @@ function Cadastro() {
             color="black"
             fontSize="1em"
             width="100%"
+            marginTop="2%"
             name="email"
             onChange={preenchendoDados}
           ></Input>
@@ -106,6 +120,7 @@ function Cadastro() {
             color="black"
             fontSize="1em"
             width="100%"
+            marginTop="2%"
             name="cep"
             onChange={preenchendoEndereco}
           ></Input>
@@ -116,6 +131,7 @@ function Cadastro() {
             color="black"
             fontSize="1em"
             width="100%"
+            marginTop="2%"
             name="pais"
             onChange={preenchendoEndereco}
           ></Input>
@@ -126,6 +142,7 @@ function Cadastro() {
             borderColor="#151B57"
             color="#8D8D8D"
             width="100%"
+            marginTop="2%"
             onChange={preenchendoEndereco}
           >
             <option value="">Estado</option>
@@ -165,6 +182,7 @@ function Cadastro() {
             color="black"
             fontSize="1em"
             width="100%"
+            marginTop="2%"
             name="cidade"
             onChange={preenchendoEndereco}
           ></Input>
@@ -175,6 +193,7 @@ function Cadastro() {
             color="black"
             fontSize="1em"
             width="100%"
+            marginTop="2%"
             name="bairro"
             onChange={preenchendoEndereco}
           ></Input>
@@ -185,6 +204,7 @@ function Cadastro() {
             color="black"
             fontSize="1em"
             width="100%"
+            marginTop="2%"
             name="rua"
             onChange={preenchendoEndereco}
           ></Input>
@@ -217,6 +237,7 @@ function Cadastro() {
             borderColor="#151B57"
             color="black"
             width="100%"
+            marginTop="2%"
             fontSize="1em"
             name="senha"
             id="senha"
@@ -230,6 +251,7 @@ function Cadastro() {
             borderColor="#151B57"
             color="black"
             width="100%"
+            marginTop="2%"
             fontSize="1em"
             name="senhaConfirmada"
             id="senhaConfirmada"
@@ -279,7 +301,7 @@ function Cadastro() {
               fontSizeMedia="1.2em"
               onClick={() => requisicaoCadastro()}
             >
-              {carregando ? <Spin indicator={antIcon} /> : <p>ENTRAR</p>}
+              {carregando ? <Spin indicator={antIcon} /> : "ENTRAR"}
             </Button>
           </BotoesMesmaLinha>
         </DadosCadastro>

@@ -10,7 +10,8 @@ import {
   FotoNomeData,
   FotoPerfil,
   Nome,
-  DataNascimento,
+  DataCPF,
+  ConjuntoDataCPF,
   BotoesColuna,
   NomeData,
   CaixaBaixo,
@@ -76,10 +77,15 @@ function Perfil() {
               </FotoPerfil>
               <NomeData>
                 <Nome>{usuario.nome}</Nome>
-                <DataNascimento>
+                <ConjuntoDataCPF>
+                <DataCPF>
                   {dataNascimento.slice(8, -14)}/{dataNascimento.slice(5, -17)}/
                   {dataNascimento.slice(0, -20)}
-                </DataNascimento>
+                </DataCPF>
+                <DataCPF>
+                  {usuario.cpf}
+                </DataCPF>
+                </ConjuntoDataCPF>
               </NomeData>
             </FotoNomeData>
           )}

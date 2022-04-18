@@ -7,7 +7,7 @@ const Input = styled.input`
   color: ${(props) => props.color};
   border-radius: 3px;
   font-size: ${(props) => props.fontSize};
-  margin-top: 2%;
+  margin-top: ${(props) => props.marginTop};
   border-style: solid;
   height: 50px;
   padding-left: 2%;

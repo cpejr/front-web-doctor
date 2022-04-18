@@ -52,6 +52,7 @@ function Login() {
             color="black"
             fontSize="1em"
             width="100%"
+            marginTop="2%"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           ></Input>
@@ -62,6 +63,7 @@ function Login() {
             color="black"
             fontSize="1em"
             width="100%"
+            marginTop="2%"
             type="password"
             value={senha}
             onChange={(e) => setSenha(e.target.value)}
