@@ -88,12 +88,24 @@ export const Nome = styled.div`
     width: 100%;
   }
 `;
-export const DataNascimento = styled.div`
+export const ConjuntoDataCPF = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: space-between;
   margin-left: 10%;
-  width: 90%;
+  width: 75%;
+  @media (max-width: 480px) {
+    font-size: 0.8em;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+  }
+  @media (max-width: 770px) and (min-width: 560px) {
+    width: 100%;
+    margin-left: 5%;
+  }
+`;
+export const DataCPF = styled.div`
   color: #151b57;
   font-family: "Barlow", sans-serif;
   font-weight: 400;
@@ -106,10 +118,6 @@ export const DataNascimento = styled.div`
   }
   @media (max-width: 480px) {
     font-size: 0.8em;
-  }
-  @media (max-width: 770px) and (min-width: 560px) {
-    margin-left: 5%;
-    width: 100%;
   }
 `;
 export const BotoesColuna = styled.div`
