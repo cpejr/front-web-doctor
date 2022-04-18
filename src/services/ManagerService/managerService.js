@@ -87,8 +87,7 @@ export const AlterarSenha = async (novaSenha, id) => {
   return false;
 };
 
-    return {dadosEndereco, dadosUsuario};
-}
+
 
 export const UpdateDadosUsuario = async (
   id_usuario,
