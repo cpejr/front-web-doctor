@@ -11,7 +11,12 @@ import {
   Titulo,
   ContainerUsuarios,
   Usuario,
-  Imagem
+  Imagem,
+  Nome,
+  Telefone,
+  UltimaVisita,
+  Agendamento,
+  CódigoPaciente,
 } from "./Styles";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 
@@ -32,7 +37,7 @@ function ListaUsuarios() {
           <FiltroDatas>
             <Select
               defaultValue="Todas as datas"
-              style={{ color: "#151B57", width: 200  }}
+              style={{ color: "#151B57", width: 200 }}
             ></Select>
           </FiltroDatas>
         </Filtros>
@@ -40,28 +45,28 @@ function ListaUsuarios() {
       <BarraEstetica></BarraEstetica>
       <DadosUsuario>
         <Titulo></Titulo>
-        <Titulo>Nome do Usuário</Titulo>
-        <Titulo>Telefone</Titulo>
-        <Titulo>Última Visita</Titulo>
-        <Titulo>Agendamento</Titulo>
-        <Titulo>Código do Paciente</Titulo>
+        <Nome>Nome do Usuário</Nome>
+        <Telefone>Telefone</Telefone>
+        <UltimaVisita>Última Visita</UltimaVisita>
+        <Agendamento>Agendamento</Agendamento>
+        <CódigoPaciente>Código do Paciente</CódigoPaciente>
       </DadosUsuario>
       <ContainerUsuarios>
         <Usuario>
-        <Titulo><Imagem src={logoGuilherme}  alt="logoGuilherme"></Imagem></Titulo>
-        <Titulo>Mateus</Titulo>
-        <Titulo>Telefone</Titulo>
-        <Titulo>Última Visita</Titulo>
-        <Titulo>Agendamento</Titulo>
-        <Titulo>Código do Paciente</Titulo>
+          <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
+          <Nome>Mateus Pardini</Nome>
+          <Telefone>(19)94002-8922</Telefone>
+          <UltimaVisita>21/04/2022</UltimaVisita>
+          <Agendamento>30/04/2022 - 15h</Agendamento>
+          <CódigoPaciente>923902-2823092</CódigoPaciente>
         </Usuario>
         <Usuario>
-        <Titulo><Imagem src={logoGuilherme}  alt="logoGuilherme"></Imagem></Titulo>
-        <Titulo>Nome do Usuário</Titulo>
-        <Titulo>Telefone</Titulo>
-        <Titulo>Última Visita</Titulo>
-        <Titulo>Agendamento</Titulo>
-        <Titulo>Código do Paciente</Titulo>
+          <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
+          <Nome>Nome do Usuário</Nome>
+          <Telefone>Telefone</Telefone>
+          <UltimaVisita>Última Visita</UltimaVisita>
+          <Agendamento>Agendamento</Agendamento>
+          <CódigoPaciente>Código do Paciente</CódigoPaciente>
         </Usuario>
       </ContainerUsuarios>
     </ContainerListadeUsuarios>

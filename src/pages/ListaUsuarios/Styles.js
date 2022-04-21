@@ -35,8 +35,9 @@ export const DadosUsuario = styled.div`
   justify-content: space-around;
   display: flex;
   flex-direction: row;
+  padding: 0% 2% 0% 2%;
 `;
-export const Titulo = styled.div``;
+
 export const ContainerUsuarios = styled.div`
   padding: 2% 0% 2% 0%;
   display: flex;
@@ -50,13 +51,106 @@ export const Usuario = styled.div`
   align-items: center;
   width: 100%;
   height: 80px;
+  padding: 0% 1% 0% 1%;
   border-color: black;
   border-style: solid;
   border-radius: 3px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
-  margin-bottom: 2% ;
+  margin-bottom: 2%;
+`;
+
+export const Titulo = styled.div`
+  display: flex;
+  width: 40px;
+  justify-content: center;
+  @media (max-width: 880px) {
+    display: none;
+  }
 `;
 export const Imagem = styled.img`
-    object-fit:fill;
-    width: 40px;
+  justify-content: center;
+  object-fit: fill;
+  width: 10%;
+  width: 40px;
+  display: flex;
+  @media (max-width: 880px) {
+    display: none;
+  }
+`;
+export const Nome = styled.div`
+  width: 18%;
+  display: flex;
+  justify-content: center;
+
+  @media (max-width: 880px) {
+    width: 20%;
+  }
+  @media (max-width: 700px) {
+    width: 25%;
+  }
+  @media (max-width: 600px) {
+    width: 33%;
+  }
+  @media (max-width: 500px) {
+    width: 50%;
+  }
+`;
+export const Telefone = styled.div`
+  width: 18%;
+  justify-content: center;
+  display: flex;
+  @media (max-width: 880px) {
+    width: 20%;
+  }
+  @media (max-width: 700px) {
+    width: 25%;
+  }
+  @media (max-width: 600px) {
+    width: 33%;
+  }
+  @media (max-width: 500px) {
+    display: none;
+  }
+`;
+export const UltimaVisita = styled.div`
+  width: 18%;
+  display: flex;
+  justify-content: center;
+  @media (max-width: 880px) {
+    width: 20%;
+  }
+  @media (max-width: 700px) {
+    width: 25%;
+  }
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
+export const Agendamento = styled.div`
+  width: 18%;
+  display: flex;
+  justify-content: center;
+  @media (max-width: 880px) {
+    width: 20%;
+  }
+  @media (max-width: 700px) {
+    width: 25%;
+  }
+  @media (max-width: 600px) {
+    width: 33%;
+  }
+  @media (max-width: 500px) {
+    width: 50%;
+  }
+`;
+export const CódigoPaciente = styled.div`
+  width: 18%;
+  display: flex;
+  justify-content: center;
+  @media (max-width: 880px) {
+    width: 20%;
+  }
+  @media (max-width: 700px) {
+    display: none;
+  }
 `;
