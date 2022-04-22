@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Input, Select } from "antd";
+import api from "../../services/api";
 import {
   TopoPagina,
   ContainerListadeUsuarios,
   Filtros,
   FiltroDatas,
   FiltroUsuario,
+  BarraPesquisa,
   BarraEstetica,
   DadosUsuario,
   Titulo,
@@ -19,14 +21,25 @@ import {
   CódigoPaciente,
 } from "./Styles";
 import logoGuilherme from "../../assets/logoGuilherme.png";
+import Button from "../../styles/Button";
 
 function ListaUsuarios() {
   const { Search } = Input;
+  const [usuarios, setUsuarios] = useState([]);
+
+  useEffect(() => {
+    api.get("/usuarios").then((response) => {
+      setUsuarios(response.data);
+      console.log(response.data);
+    });
+  }, []);
 
   return (
     <ContainerListadeUsuarios>
       <TopoPagina>
-        <Search placeholder="BUSCAR" style={{ width: 600 }} />
+        <BarraPesquisa>
+          <Search placeholder="BUSCAR" style={{ width: 400 }} />
+        </BarraPesquisa>
         <Filtros>
           <FiltroUsuario>
             <Select
@@ -52,22 +65,28 @@ function ListaUsuarios() {
         <CódigoPaciente>Código do Paciente</CódigoPaciente>
       </DadosUsuario>
       <ContainerUsuarios>
-        <Usuario>
+        {usuarios.map((value) => (
+          <Usuario key={value.id}>
           <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
-          <Nome>Mateus Pardini</Nome>
-          <Telefone>(19)94002-8922</Telefone>
+          <Nome>{value.nome}</Nome>
+          <Telefone>{value.telefone}</Telefone>
           <UltimaVisita>21/04/2022</UltimaVisita>
-          <Agendamento>30/04/2022 - 15h</Agendamento>
-          <CódigoPaciente>923902-2823092</CódigoPaciente>
+
+          <Agendamento>
+            <Button
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color="green"
+              fontSize="1em"
+              textDecoration="underline"
+              height="50px"
+            >
+              Marcar Agendamento
+            </Button>
+          </Agendamento>
+          <CódigoPaciente>{value.codigo}</CódigoPaciente>
         </Usuario>
-        <Usuario>
-          <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
-          <Nome>Nome do Usuário</Nome>
-          <Telefone>Telefone</Telefone>
-          <UltimaVisita>Última Visita</UltimaVisita>
-          <Agendamento>Agendamento</Agendamento>
-          <CódigoPaciente>Código do Paciente</CódigoPaciente>
-        </Usuario>
+        ))}
       </ContainerUsuarios>
     </ContainerListadeUsuarios>
   );

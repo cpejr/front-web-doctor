@@ -12,6 +12,20 @@ export const TopoPagina = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  @media (max-width: 920px) {
+    flex-direction: column;
+    justify-content: center;
+  }
+`;
+export const BarraPesquisa = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  @media (max-width: 920px) {
+    width: 100%;
+    justify-content: center;
+  }
 `;
 export const Filtros = styled.div`
   width: 50%;
@@ -19,9 +33,29 @@ export const Filtros = styled.div`
   flex-direction: row;
   justify-content: center;
   gap: 2%;
+  @media (max-width: 920px) {
+    margin-top: 2%;
+    width: 100%;
+    justify-content: center;
+  }
+  @media (max-width: 450px) {
+    margin-top: 2%;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
 `;
-export const FiltroUsuario = styled.div``;
-export const FiltroDatas = styled.div``;
+export const FiltroUsuario = styled.div`
+  @media (max-width: 480px) {
+    margin-top: 2%;
+  }
+`;
+export const FiltroDatas = styled.div`
+  @media (max-width: 480px) {
+    margin-top: 2%;
+  }
+`;
 
 export const BarraEstetica = styled.div`
   margin-top: 2%;
@@ -79,8 +113,13 @@ export const Imagem = styled.img`
 `;
 export const Nome = styled.div`
   width: 18%;
-  display: flex;
   justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  :hover {
+    overflow: visible;
+  }
 
   @media (max-width: 880px) {
     width: 20%;
@@ -116,6 +155,7 @@ export const UltimaVisita = styled.div`
   width: 18%;
   display: flex;
   justify-content: center;
+  color: green;
   @media (max-width: 880px) {
     width: 20%;
   }
@@ -130,6 +170,7 @@ export const Agendamento = styled.div`
   width: 18%;
   display: flex;
   justify-content: center;
+  color: green;
   @media (max-width: 880px) {
     width: 20%;
   }
@@ -147,6 +188,7 @@ export const CódigoPaciente = styled.div`
   width: 18%;
   display: flex;
   justify-content: center;
+  color: green;
   @media (max-width: 880px) {
     width: 20%;
   }
