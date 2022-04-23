@@ -6,14 +6,14 @@ import logoEscrita from "./../../assets/logoEscrita.png";
 import { useHistory } from "react-router-dom";
 import { Dropdown, Menu } from "antd";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
-import * as managerService from "../../services/ManagerService/managerService"
+import * as managerService from "../../services/ManagerService/managerService";
 
 function Header(props) {
   const email = sessionStorage.getItem("@doctorapp-Email");
   const [tipo, setTipo] = useState([]);
 
-  async function pegandoTipo(){
-    const resposta = await managerService.GetDadosUsuario(email)
+  async function pegandoTipo() {
+    const resposta = await managerService.GetDadosUsuario(email);
     setTipo(resposta.dadosUsuario.tipo);
   }
 
@@ -86,18 +86,37 @@ function Header(props) {
         </Menu.Item>
       )}
       <Menu.Item>
-        <Button
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color="black"
-          fontSize="1rem"
-          height="50px"
-          onClick={() => {
-            history.push("/web/listadeusuarios");
-          }}
-        >
-          Lista de Usuários
-        </Button>
+        {tipo === "MASTER" ? (
+          <Menu.Item>
+            <Button
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color="black"
+              fontSize="1rem"
+              height="50px"
+              onClick={() => {
+                history.push("/web/listadeusuariosmedico");
+              }}
+            >
+              Lista de Usuários
+            </Button>
+          </Menu.Item>
+        ) : (
+          <Menu.Item>
+            <Button
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color="black"
+              fontSize="1rem"
+              height="50px"
+              onClick={() => {
+                history.push("/web/listadeusuariossecretaria");
+              }}
+            >
+              Lista de Usuários
+            </Button>
+          </Menu.Item>
+        )}
       </Menu.Item>
       <Menu.Item>
         <Button
@@ -205,20 +224,35 @@ function Header(props) {
               Agendamentos
             </Button>
           )}
-          <Button
-            fontSizeMedia1080="1rem"
-            backgroundColor="transparent"
-            borderColor="transparent"
-            color="#E4E6F4"
-            fontSize="1.1rem"
-            height="50px"
-            onClick={() => {
-              history.push("/web/listadeusuarios");
-            }}
-          >
-            Lista de Usuários
-          </Button>
-
+          {tipo === "MASTER" ? (
+            <Button
+              fontSizeMedia1080="1rem"
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color="#E4E6F4"
+              fontSize="1.1rem"
+              height="50px"
+              onClick={() => {
+                history.push("/web/listadeusuariosmedico");
+              }}
+            >
+              Lista de Usuários
+            </Button>
+          ) : (
+            <Button
+              fontSizeMedia1080="1rem"
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color="#E4E6F4"
+              fontSize="1.1rem"
+              height="50px"
+              onClick={() => {
+                history.push("/web/listadeusuariossecretaria");
+              }}
+            >
+              Lista de Usuários
+            </Button>
+          )}
           <Button
             fontSizeMedia1080="1rem"
             backgroundColor="transparent"
