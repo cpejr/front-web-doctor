@@ -93,7 +93,7 @@ export const Usuario = styled.div`
 `;
 
 export const Titulo = styled.div`
-  width:30px ;
+  width: 30px;
   display: flex;
   justify-content: center;
   @media (max-width: 880px) {
@@ -113,11 +113,14 @@ export const Imagem = styled.img`
 export const Nome = styled.div`
   width: 18%;
   justify-content: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  :hover {
-    overflow: visible;
+  .p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    :hover {
+      overflow: visible;
+    }
   }
 
   @media (max-width: 880px) {
@@ -193,5 +196,21 @@ export const CódigoPaciente = styled.div`
   }
   @media (max-width: 700px) {
     display: none;
+  }
+`;
+export const CaixaVazia = styled.div`
+  width: 18%;
+
+  @media (max-width: 880px) {
+    width: 20%;
+  }
+  @media (max-width: 700px) {
+    width: 25%;
+  }
+  @media (max-width: 600px) {
+    width: 33%;
+  }
+  @media (max-width: 500px) {
+    width: 50%;
   }
 `;

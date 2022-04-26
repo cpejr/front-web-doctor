@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Input, Select } from "antd";
-import api from "../../services/api";
 import {
   TopoPagina,
   ContainerListadeUsuarios,
@@ -24,6 +23,7 @@ import logoGuilherme from "../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function ListaUsuariosSecretaria() {
   const { Search } = Input;
@@ -33,11 +33,14 @@ function ListaUsuariosSecretaria() {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   useEffect(() => {
-    api.get("/usuarios").then((response) => {
-      setUsuarios(response.data);
-      console.log(response.data);
-    });
+    pegandoDados();
   }, []);
+
+  async function pegandoDados() {
+    const resposta = await managerService.GetDadosPessoais();
+    setUsuarios(resposta);
+    setCarregando(false);
+  }
 
   return (
     <ContainerListadeUsuarios>
@@ -73,7 +76,6 @@ function ListaUsuariosSecretaria() {
         {usuarios.map((value) => (
           <Usuario key={value.id}>
             <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
-            <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
             <Nome>
               {carregando ? (
                 <Spin indicator={antIcon} />
@@ -85,11 +87,12 @@ function ListaUsuariosSecretaria() {
               {carregando ? (
                 <Spin indicator={antIcon} />
               ) : (
-                <div>{value.telefone}</div>
+                <div>
+                  ({value.telefone.slice(0, -9)}) {value.telefone.slice(2, -4)}-
+                  {value.telefone.slice(-4)}
+                </div>
               )}
             </Telefone>
-            <UltimaVisita>21/04/2022</UltimaVisita>
-
             <UltimaVisita>21/04/2022</UltimaVisita>
 
             <Agendamento>

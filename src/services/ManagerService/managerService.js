@@ -32,6 +32,19 @@ export const Cadastrando = async (estado, endereco) => {
   return false;
 };
 
+export const GetDadosPessoais = async () => {
+  let dadosUsuario = {};
+  await requesterService
+    .requisicaoDadosPessoais()
+    .then((res) => {
+      dadosUsuario = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosUsuario;
+};
+
 export const GetDadosUsuario = async (emailUrl) => {
   let dadosUsuario = {};
   let dadosEndereco = {};
@@ -61,14 +74,11 @@ export const ConferirSenha = async (email, senhaAtual) => {
   //se as senhas forem iguais retornar true
   //se as senhas nao forem iguais retornar false
   try {
-    await requesterService.requisicaoVerificar(
-      email,
-      senhaAtual
-    );
+    await requesterService.requisicaoVerificar(email, senhaAtual);
     return false;
   } catch (error) {
-    alert("Senha incorreta!")
-    window.location.href = "/web/alterarsenha"
+    alert("Senha incorreta!");
+    window.location.href = "/web/alterarsenha";
   }
 };
 
@@ -80,14 +90,12 @@ export const AlterarSenha = async (novaSenha, id) => {
       alert("Senha alterada com sucesso!");
       window.location.href = "/web/perfil";
     })
-      .catch((error) => {
+    .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/web/alterarsenha"));
       return false;
     });
   return false;
 };
-
-
 
 export const UpdateDadosUsuario = async (
   id_usuario,
@@ -108,4 +116,3 @@ export const UpdateDadosUsuario = async (
 
   return false;
 };
-

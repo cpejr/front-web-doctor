@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Input, Select } from "antd";
-import api from "../../services/api";
 import {
   TopoPagina,
   ContainerListadeUsuarios,
@@ -19,11 +18,13 @@ import {
   UltimaVisita,
   CódigoPaciente,
   AdicionarCodigo,
+  CaixaVazia
 } from "./Styles";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function ListaUsuariosMedico() {
   const { Search } = Input;
@@ -32,12 +33,14 @@ function ListaUsuariosMedico() {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   useEffect(() => {
-    api.get("/usuarios").then((response) => {
-      setUsuarios(response.data);
-      console.log(response.data);
-      setCarregando(false);
-    });
+    pegandoDados();
   }, []);
+
+  async function pegandoDados() {
+    const resposta = await managerService.GetDadosPessoais();
+    setUsuarios(resposta);
+    setCarregando(false);
+  }
 
   return (
     <ContainerListadeUsuarios>
@@ -67,9 +70,10 @@ function ListaUsuariosMedico() {
         <Telefone>Telefone</Telefone>
         <UltimaVisita>Última Visita</UltimaVisita>
         <CódigoPaciente>Código do Paciente</CódigoPaciente>
+        <CaixaVazia></CaixaVazia>
       </DadosUsuario>
       <ContainerUsuarios>
-        {usuarios.map((value) => (
+        {usuarios?.map((value) => (
           <Usuario key={value.id}>
             <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
             <Nome>
@@ -83,7 +87,10 @@ function ListaUsuariosMedico() {
               {carregando ? (
                 <Spin indicator={antIcon} />
               ) : (
-                <div>{value.telefone}</div>
+                <div>
+                  ({value.telefone.slice(0, -9)}) {value.telefone.slice(2, -4)}-
+                  {value.telefone.slice(-4)}
+                </div>
               )}
             </Telefone>
             <UltimaVisita>21/04/2022</UltimaVisita>
