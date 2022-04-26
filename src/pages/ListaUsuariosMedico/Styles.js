@@ -113,14 +113,13 @@ export const Imagem = styled.img`
 export const Nome = styled.div`
   width: 18%;
   justify-content: center;
-  .p {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 
-    :hover {
-      overflow: visible;
-    }
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  :hover {
+    overflow: visible;
   }
 
   @media (max-width: 880px) {
