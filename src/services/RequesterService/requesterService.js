@@ -20,6 +20,9 @@ export const updateDadosUsuario = (id_usuario,id_endereco, endereco, estado) =>
 export const requisicaoDadosUsuario = (emailUrl) =>
   api.get(`/usuarios/${emailUrl}`);
 
+export const requisicaoDadosPessoais = () =>
+  api.get(`/usuarios/`);
+
 export const requisicaoDadosEndereco = (dadosUsuario) =>
   api.get(`/enderecos/${dadosUsuario.id_endereco}`);
 

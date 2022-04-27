@@ -80,6 +80,7 @@ export const CaixaInputs = styled.div`
   height: 15%;
   padding-left: 2%;
   padding-right: 2%;
+  margin-bottom: 2%; ;
   gap: 2%;
 
   @media (max-width: 780px) {
