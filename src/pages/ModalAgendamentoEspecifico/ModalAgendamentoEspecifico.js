@@ -21,7 +21,7 @@ import {
 
 import logoGuilherme from "../../assets/logoGuilherme.png";
 
-function ModalAgendamentoEspecifico() {
+function ModalAgendamentoEspecifico(props) {
   //   const history = useHistory();
   const { TextArea } = Input;
   const { Option } = Select;
@@ -32,7 +32,7 @@ function ModalAgendamentoEspecifico() {
         <InfoEsquerdaEDireita>
           <Usuario>
             <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
-            <Nome>Mateus Pardini</Nome>
+            <Nome>{props.NomeUsuario}</Nome>
           </Usuario>
           <TipoAgendamento>
             <TextoTipoAgendamento>

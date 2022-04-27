@@ -24,10 +24,14 @@ import Button from "../../styles/Button";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
+import ModalAgendamentoEspecifico from "../ModalAgendamentoEspecifico/ModalAgendamentoEspecifico";
 
 function ListaUsuariosSecretaria() {
   const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
+
+  const [listaUsuarios, setListaUsuarios] = useState(true);
+  const [modalAgendamento, setModalAgendamento] = useState(false);
 
   const [carregando, setCarregando] = useState(true);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -42,7 +46,15 @@ function ListaUsuariosSecretaria() {
     setCarregando(false);
   }
 
+  async function marcandoAgendamento() {
+    setListaUsuarios(false);
+    setModalAgendamento(true);
+  }
+
   return (
+    <div>
+    {listaUsuarios && (
+      <div>
     <ContainerListadeUsuarios>
       <TopoPagina>
         <BarraPesquisa>
@@ -103,6 +115,7 @@ function ListaUsuariosSecretaria() {
                 fontSize="1em"
                 textDecoration="underline"
                 height="50px"
+                onClick={() => marcandoAgendamento()}
               >
                 Marcar Agendamento
               </Button>
@@ -118,6 +131,14 @@ function ListaUsuariosSecretaria() {
         ))}
       </ContainerUsuarios>
     </ContainerListadeUsuarios>
+    </div>
+    )}
+    {modalAgendamento && (
+        <div>
+        <ModalAgendamentoEspecifico NomeUsuario={usuarios.nome}/>
+        </div>
+    )}
+  </div>
   );
 }
 
