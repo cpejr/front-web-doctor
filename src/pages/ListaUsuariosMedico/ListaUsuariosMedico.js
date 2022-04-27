@@ -18,7 +18,7 @@ import {
   UltimaVisita,
   CódigoPaciente,
   AdicionarCodigo,
-  CaixaVazia
+  CaixaVazia,
 } from "./Styles";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
@@ -52,13 +52,13 @@ function ListaUsuariosMedico() {
           <FiltroUsuario>
             <Select
               defaultValue="Todos os Usuários"
-              style={{ color: "#151B57", width: 200 }}
+              style={{ color: "green", width: 200 }}
             ></Select>
           </FiltroUsuario>
           <FiltroDatas>
             <Select
               defaultValue="Todas as datas"
-              style={{ color: "#151B57", width: 200 }}
+              style={{ color: "green", width: 200 }}
             ></Select>
           </FiltroDatas>
         </Filtros>
@@ -75,32 +75,24 @@ function ListaUsuariosMedico() {
       <ContainerUsuarios>
         {usuarios?.map((value) => (
           <Usuario key={value.id}>
-            <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
+            <Imagem>{value.avatar_url}</Imagem>
             <Nome>
-              {carregando ? (
-                <Spin indicator={antIcon} />
-              ) : (
-                <div>{value.nome}</div>
-              )}
+              {carregando ? <Spin indicator={antIcon} /> : <>{value.nome}</>}
             </Nome>
             <Telefone>
               {carregando ? (
                 <Spin indicator={antIcon} />
               ) : (
-                <div>
+                <>
                   ({value.telefone.slice(0, -9)}) {value.telefone.slice(2, -4)}-
                   {value.telefone.slice(-4)}
-                </div>
+                </>
               )}
             </Telefone>
             <UltimaVisita>21/04/2022</UltimaVisita>
 
             <CódigoPaciente>
-              {carregando ? (
-                <Spin indicator={antIcon} />
-              ) : (
-                <div>{value.codigo}</div>
-              )}
+              {carregando ? <Spin indicator={antIcon} /> : <>{value.codigo}</>}
             </CódigoPaciente>
             <AdicionarCodigo>
               <Button
