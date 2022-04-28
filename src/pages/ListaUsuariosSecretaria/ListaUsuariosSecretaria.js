@@ -94,7 +94,7 @@ function ListaUsuariosSecretaria() {
               {carregando ? (
                 <Spin indicator={antIcon} />
               ) : (
-                <div>{value.email}</div>
+                <div>{value.nome}</div>
               )}
             </Nome>
             <Telefone>
