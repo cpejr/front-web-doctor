@@ -18,7 +18,6 @@ import Perfil from "./pages/Perfil";
 import PerfilPaciente from "./pages/PerfilPaciente";
 import RespostaFormulario from "./pages/RespostaFormulario";
 import EditarPerfil from "./pages/EditarPerfil";
-import ModalAgendamentoEspecifico from "./pages/ModalAgendamentoEspecifico"
 
 function Routes() {
   return (
@@ -57,7 +56,6 @@ function UserHeader() {
         />
         <Route exact path="/web/listadeusuariosmedico" component={ListaUsuariosMedico} />
         <Route exact path="/web/listadeusuariossecretaria" component={ListaUsuariosSecretaria} />
-        <Route exact path="/web/modalagendamentoespecifico" component={ModalAgendamentoEspecifico} />
         <Route exact path="/web/modeloreceitas" component={ModeloReceitas} />
         <Route exact path="/web/perfil" component={Perfil} />
         <Route exact path="/web/perfildopaciente" component={PerfilPaciente} />

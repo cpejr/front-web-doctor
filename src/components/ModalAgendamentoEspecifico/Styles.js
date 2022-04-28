@@ -31,6 +31,7 @@ export const InfoEsquerdaEDireita = styled.div`
   height: 100%;
   min-height: 80vh;
   padding: 5%;
+  
   @media (max-width: 700px) {
     width: 100%;
   }
@@ -58,6 +59,7 @@ export const Imagem = styled.img`
   width: 20%;
   width: 40px;
   display: flex;
+  
 `;
 export const Nome = styled.div`
   width: 40%;
@@ -80,6 +82,7 @@ export const TipoAgendamento = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 80%;
+  background-color: green;
 `;
 
 export const TextoTipoAgendamento = styled.h3`
@@ -111,6 +114,7 @@ export const DoisSelect = styled.h3`
   justify-content: space-around;
   align-items: center;
   width: 100%;
+  background-color: green;
 
   @media (max-width: 560px) {
     flex-direction: column;
@@ -118,13 +122,14 @@ export const DoisSelect = styled.h3`
   }
 `;
 
-export const TamanhoInput = styled.h3`
+export const TamanhoInput = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
   justify-content: center;
   width: 40%;
-
+  
+  background-color: green;
   @media (max-width: 560px) {
     width: 100%;
   }
@@ -144,6 +149,9 @@ export const SelecioneUmaData = styled.h3`
   align-items: start;
   justify-content: center;
   width: 90%;
+  
+  background-color: green;
+  
   @media (max-width: 560px) {
     width: 100%;
   }

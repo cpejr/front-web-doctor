@@ -24,7 +24,7 @@ import Button from "../../styles/Button";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
-import ModalAgendamentoEspecifico from "../ModalAgendamentoEspecifico/ModalAgendamentoEspecifico";
+import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico"
 
 function ListaUsuariosSecretaria() {
   const { Search } = Input;
@@ -32,6 +32,7 @@ function ListaUsuariosSecretaria() {
 
   const [listaUsuarios, setListaUsuarios] = useState(true);
   const [modalAgendamento, setModalAgendamento] = useState(false);
+  const [email, setEmail] = useState(false);
 
   const [carregando, setCarregando] = useState(true);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -46,9 +47,10 @@ function ListaUsuariosSecretaria() {
     setCarregando(false);
   }
 
-  async function marcandoAgendamento() {
+  async function marcandoAgendamento(email) {
     setListaUsuarios(false);
     setModalAgendamento(true);
+    setEmail(email);
   }
 
   return (
@@ -92,7 +94,7 @@ function ListaUsuariosSecretaria() {
               {carregando ? (
                 <Spin indicator={antIcon} />
               ) : (
-                <div>{value.nome}</div>
+                <div>{value.email}</div>
               )}
             </Nome>
             <Telefone>
@@ -115,7 +117,7 @@ function ListaUsuariosSecretaria() {
                 fontSize="1em"
                 textDecoration="underline"
                 height="50px"
-                onClick={() => marcandoAgendamento()}
+                onClick={() => marcandoAgendamento(value.email)}
               >
                 Marcar Agendamento
               </Button>
@@ -135,7 +137,7 @@ function ListaUsuariosSecretaria() {
     )}
     {modalAgendamento && (
         <div>
-        <ModalAgendamentoEspecifico NomeUsuario={usuarios.nome}/>
+        <ModalAgendamentoEspecifico emailUsuario={email}/>
         </div>
     )}
   </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // import { useHistory } from "react-router-dom";
 import { Checkbox, Row, Col, Input, Select } from "antd";
 // import Input from "../../styles/Input";
@@ -18,13 +18,23 @@ import {
   SelecioneUmaData,
   TextoSelecioneUmaData,
 } from "./Styles";
-
+import * as managerService from "../../services/ManagerService/managerService";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 
 function ModalAgendamentoEspecifico(props) {
   //   const history = useHistory();
   const { TextArea } = Input;
   const { Option } = Select;
+  const [usuario, setUsuario] = useState({})
+
+  async function pegandoDados(){
+    const resposta = await managerService.GetDadosUsuario(props.emailUsuario)
+    setUsuario(resposta.dadosUsuario)
+  }
+
+  useEffect(()=>{
+    pegandoDados();
+  },[])
 
   return (
     <Container>
@@ -32,7 +42,7 @@ function ModalAgendamentoEspecifico(props) {
         <InfoEsquerdaEDireita>
           <Usuario>
             <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
-            <Nome>{props.NomeUsuario}</Nome>
+            <Nome>{usuario.nome}</Nome>
           </Usuario>
           <TipoAgendamento>
             <TextoTipoAgendamento>
@@ -116,7 +126,8 @@ function ModalAgendamentoEspecifico(props) {
           <Button
             width="80%"
             height="50px"
-            backgroundColor="#A7ADE8"
+            backgroundColor="green"
+            // backgroundColor="#A7ADE8" -estatico
             borderColor="#151B57"
             color="#0A0E3C"
             fontSize="1.5em"
