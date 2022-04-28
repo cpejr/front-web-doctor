@@ -118,6 +118,7 @@ export const Nome = styled.div`
   white-space: nowrap;
   :hover {
     overflow: visible;
+    cursor: pointer;
   }
 
   @media (max-width: 880px) {

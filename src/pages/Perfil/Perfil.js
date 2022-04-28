@@ -39,25 +39,25 @@ function Perfil(props) {
   const [dataNascimento, setDataNascimento] = useState("");
   
   const [perfilPessoal, setPerfilPessoal] = useState(); 
-  const [perfilSelecionado, setPerfilSelecionado] = useState(
-    
-  ); 
+  const [perfilSelecionado, setPerfilSelecionado] = useState(); 
   
   const [carregando, setCarregando] = useState(true);
   const antIcon = <LoadingOutlined style={{ fontSize: 45, color: "#151B57" }} spin />;
 
   async function PerfilSecretariaOuMedico(){
-    if(props === null){
+    if(props.location.state === undefined){
       setPerfilPessoal(true);
       setPerfilSelecionado(false);
+      pegandoDadosPerfilPessoal();
+      
     } else {
       setPerfilPessoal(false);
       setPerfilSelecionado(true);
+      pegandoDadosPerfilSelecionado();
     }
-    console.log(perfilPessoal);
   }
 
-  async function pegandoDados(){
+  async function pegandoDadosPerfilPessoal(){
     const resposta = await managerService.GetDadosUsuario(email)
     setUsuario(resposta.dadosUsuario)
     setTelefone(resposta.dadosUsuario.telefone)
@@ -66,8 +66,17 @@ function Perfil(props) {
     setCarregando(false);
   }
 
+  async function pegandoDadosPerfilSelecionado(){
+    const resposta = await managerService.GetDadosUsuario(props.location.state.email)
+    console.log(resposta)
+    setUsuario(resposta.dadosUsuario)
+    setTelefone(resposta.dadosUsuario.telefone)
+    setDataNascimento(resposta.dadosUsuario.data_nascimento)
+    setEndereco(resposta.dadosEndereco)
+    setCarregando(false);
+  }
+
   useEffect(() => {
-    pegandoDados();
     PerfilSecretariaOuMedico();
   }, []);
 
@@ -104,7 +113,8 @@ function Perfil(props) {
               </NomeData>
             </FotoNomeData>
           )}
-          <BotoesColuna>
+          { perfilPessoal &&(
+            <BotoesColuna>
             <Button
               width="100%"
               height="50px"
@@ -140,6 +150,8 @@ function Perfil(props) {
               ALTERAR SENHA
             </Button>
           </BotoesColuna>
+          )}
+          
         </CaixaCima>
 
         <CaixaBaixo>
