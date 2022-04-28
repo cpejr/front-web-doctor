@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Input, Select } from "antd";
 import {
   TopoPagina,
@@ -26,6 +27,8 @@ import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ListaUsuariosSecretaria() {
+  const history = useHistory();
+
   const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
 
@@ -40,6 +43,20 @@ function ListaUsuariosSecretaria() {
     const resposta = await managerService.GetDadosPessoais();
     setUsuarios(resposta);
     setCarregando(false);
+  }
+
+  async function verificandoSecretariaOuPaciente(tipo, email){
+    if(tipo === "SECRETARIA"){
+      history.push({
+        pathname: "/web/perfil",
+        state: {email},
+      })
+    } else {
+      history.push({
+        pathname: "/web/perfildopaciente",
+        state: {email},
+      })
+    }
   }
 
   return (
@@ -80,7 +97,7 @@ function ListaUsuariosSecretaria() {
               {carregando ? (
                 <Spin indicator={antIcon} />
               ) : (
-                <div>{value.nome}</div>
+                <div onClick={() => verificandoSecretariaOuPaciente(value.tipo, value.email)}>{value.nome}</div>
               )}
             </Nome>
             <Telefone>

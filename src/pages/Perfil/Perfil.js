@@ -30,16 +30,32 @@ import {
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService"
 
-function Perfil() {
+function Perfil(props) {
   const history = useHistory();
   const email = sessionStorage.getItem("@doctorapp-Email");
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
   const [telefone, setTelefone] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
+  
+  const [perfilPessoal, setPerfilPessoal] = useState(); 
+  const [perfilSelecionado, setPerfilSelecionado] = useState(
+    
+  ); 
+  
   const [carregando, setCarregando] = useState(true);
-
   const antIcon = <LoadingOutlined style={{ fontSize: 45, color: "#151B57" }} spin />;
+
+  async function PerfilSecretariaOuMedico(){
+    if(props === null){
+      setPerfilPessoal(true);
+      setPerfilSelecionado(false);
+    } else {
+      setPerfilPessoal(false);
+      setPerfilSelecionado(true);
+    }
+    console.log(perfilPessoal);
+  }
 
   async function pegandoDados(){
     const resposta = await managerService.GetDadosUsuario(email)
@@ -47,13 +63,12 @@ function Perfil() {
     setTelefone(resposta.dadosUsuario.telefone)
     setDataNascimento(resposta.dadosUsuario.data_nascimento)
     setEndereco(resposta.dadosEndereco)
-    setCarregando(false)
+    setCarregando(false);
   }
 
-  
-
   useEffect(() => {
-    pegandoDados()
+    pegandoDados();
+    PerfilSecretariaOuMedico();
   }, []);
 
   return (
