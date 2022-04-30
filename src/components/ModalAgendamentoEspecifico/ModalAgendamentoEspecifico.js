@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
-// import { useHistory } from "react-router-dom";
 import { Checkbox, Row, Col, Input, Select } from "antd";
-// import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import {
   Container,
@@ -22,7 +20,6 @@ import * as managerService from "../../services/ManagerService/managerService";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 
 function ModalAgendamentoEspecifico(props) {
-  //   const history = useHistory();
   const { TextArea } = Input;
   const { Option } = Select;
   const [usuario, setUsuario] = useState({})
@@ -130,12 +127,11 @@ function ModalAgendamentoEspecifico(props) {
             // backgroundColor="#A7ADE8" -estatico
             borderColor="#151B57"
             color="#0A0E3C"
-            fontSize="1.5em"
+            fontSize="1.1em"
             fontWeight="bold"
             fontSizeMedia="0.9em"
-            fontSizeMedia950="1em"
+            fontSizeMedia950="1.1em"
           >
-            {" "}
             Cadastrar novo agendamento
           </Button>
         </InfoEsquerdaEDireita>
