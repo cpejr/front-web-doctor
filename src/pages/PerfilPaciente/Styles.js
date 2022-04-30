@@ -25,6 +25,7 @@ export const Perfil = styled.div`
   display: flex;
   height: 30%;
   flex-direction: row;
+  justify-content: center;
   border-style: solid;
   border-color: #c4c4c4;
   border-width: 2px;
@@ -61,7 +62,7 @@ export const PerfilSuperior = styled.div`
   display: flex;
   flex-direction: row;
   gap: 2%;
-  justify-content: space-around;
+  justify-content: flex-start;
   width: 100%;
 `;
 export const PerfilInferior = styled.div`
@@ -151,7 +152,7 @@ export const Formulario = styled.div`
   border-color: #151b57;
   border-width: 2px;
   border-radius: 3px;
-  background-color: #eaecff;
+  background-color: "green";
 `;
 export const Receita = styled.div`
   height: 140px;
@@ -160,7 +161,7 @@ export const Receita = styled.div`
   border-color: #151b57;
   border-width: 2px;
   border-radius: 3px;
-  background-color: #eaecff;
+  background-color: "green";
 `;
 export const DadosReceita = styled.div`
   display: flex;
@@ -199,3 +200,4 @@ export const TituloReceita = styled.div`
   color: ${(props) => props.color};
   font-size: ${(props) => props.fontSize};
 `;
+export const RuaNomeApartamento = styled.div``;
