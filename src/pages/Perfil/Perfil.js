@@ -30,30 +30,54 @@ import {
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService"
 
-function Perfil() {
+function Perfil(props) {
   const history = useHistory();
   const email = sessionStorage.getItem("@doctorapp-Email");
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
   const [telefone, setTelefone] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
+  
+  const [perfilPessoal, setPerfilPessoal] = useState(); 
+  const [perfilSelecionado, setPerfilSelecionado] = useState(); 
+  
   const [carregando, setCarregando] = useState(true);
-
   const antIcon = <LoadingOutlined style={{ fontSize: 45, color: "#151B57" }} spin />;
 
-  async function pegandoDados(){
+  async function PerfilSecretariaOuMedico(){
+    if(props.location.state === undefined){
+      setPerfilPessoal(true);
+      setPerfilSelecionado(false);
+      pegandoDadosPerfilPessoal();
+      
+    } else {
+      setPerfilPessoal(false);
+      setPerfilSelecionado(true);
+      pegandoDadosPerfilSelecionado();
+    }
+  }
+
+  async function pegandoDadosPerfilPessoal(){
     const resposta = await managerService.GetDadosUsuario(email)
     setUsuario(resposta.dadosUsuario)
     setTelefone(resposta.dadosUsuario.telefone)
     setDataNascimento(resposta.dadosUsuario.data_nascimento)
     setEndereco(resposta.dadosEndereco)
-    setCarregando(false)
+    setCarregando(false);
   }
 
-  
+  async function pegandoDadosPerfilSelecionado(){
+    const resposta = await managerService.GetDadosUsuario(props.location.state.email)
+    console.log(resposta)
+    setUsuario(resposta.dadosUsuario)
+    setTelefone(resposta.dadosUsuario.telefone)
+    setDataNascimento(resposta.dadosUsuario.data_nascimento)
+    setEndereco(resposta.dadosEndereco)
+    setCarregando(false);
+  }
 
   useEffect(() => {
-    pegandoDados()
+    PerfilSecretariaOuMedico();
   }, []);
 
   return (
@@ -89,7 +113,8 @@ function Perfil() {
               </NomeData>
             </FotoNomeData>
           )}
-          <BotoesColuna>
+          { perfilPessoal &&(
+            <BotoesColuna>
             <Button
               width="100%"
               height="50px"
@@ -125,6 +150,8 @@ function Perfil() {
               ALTERAR SENHA
             </Button>
           </BotoesColuna>
+          )}
+          
         </CaixaCima>
 
         <CaixaBaixo>

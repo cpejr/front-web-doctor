@@ -126,6 +126,7 @@ export const Nome = styled.div`
 
   :hover {
     overflow: visible;
+    cursor: pointer;
   }
 
   @media (max-width: 880px) {
