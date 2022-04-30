@@ -30,7 +30,6 @@ function ListaUsuariosSecretaria() {
   const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
 
-  const [listaUsuarios, setListaUsuarios] = useState(true);
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [email, setEmail] = useState(false);
 
