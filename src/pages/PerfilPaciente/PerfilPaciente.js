@@ -59,9 +59,7 @@ function PerfilPaciente(props) {
     setCarregando(false);
   }
   async function deletarUsuario() {
-    
     await managerService.DeletarUsuario(usuario.id);
-    alert("Usuário deletado com sucesso!");
   }
 
 
