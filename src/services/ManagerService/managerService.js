@@ -123,12 +123,15 @@ export const DeletarUsuario = async (id) => {
     .then(() => {
       alert("Usuário deletado com sucesso.");
       window.location.href = "/web/listadeusuariosmedico";
-      console.log(id);
     })
     .catch((error) => {
-      requisicaoErro(error, () => (window.location.href = "/web/perfildopaciente"));
-      console.log(id);
+      requisicaoErro(
+        error,
+        () => (window.location.href = "/web/perfildopaciente")
+      );
+
       return false;
     });
+
   return false;
-}
+};
