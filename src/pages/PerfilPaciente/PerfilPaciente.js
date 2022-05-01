@@ -28,6 +28,9 @@ import {
   Resposta,
   TituloReceita,
   RuaNomeApartamento,
+  DataFormulario,
+  TipoFormulario,
+  UrgenciaFormulario,
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
@@ -93,11 +96,9 @@ function PerfilPaciente(props) {
                 <DadosGeo>Estado: {endereco.estado}</DadosGeo>
                 <DadosGeo>Cidade: {endereco.cidade}</DadosGeo>
                 <DadosGeo>CEP: {endereco.cep}</DadosGeo>
-                <RuaNomeApartamento>
-                  <DadosGeo>Rua: {endereco.rua}</DadosGeo>
-                  <DadosGeo>Número: {endereco.numero}</DadosGeo>
-                  <DadosGeo>Complemento: {endereco.complemento}</DadosGeo>
-                </RuaNomeApartamento>
+                <DadosGeo>Rua: {endereco.rua}</DadosGeo>
+                <DadosGeo>Número: {endereco.numero}</DadosGeo>
+                <DadosGeo>Complemento: {endereco.complemento}</DadosGeo>
               </PerfilInferior>
             </PerfilEsquerda>
             <PerfilDireita>
@@ -166,25 +167,15 @@ function PerfilPaciente(props) {
             <Titulo>FORMULÁRIOS</Titulo>
             <Formulario>
               <DadosFormulario>
-                <TituloFormulario
-                  textDecoration="underline"
-                  color="black"
-                  fontSize="1.5em"
-                >
-                  Título do Formulário
-                </TituloFormulario>
-                <TituloFormulario color="#434B97" fontSize="1.2em">
-                  xx/xx/2022
-                </TituloFormulario>
-                <TituloFormulario color="#434B97" fontSize="1.2em">
-                  Tipo:
-                </TituloFormulario>
-                <TituloFormulario color="#434B97" fontSize="1.2em">
+                <TituloFormulario>Título do Formulário</TituloFormulario>
+                <DataFormulario>xx/xx/2022</DataFormulario>
+                <TipoFormulario>Tipo:</TipoFormulario>
+                <UrgenciaFormulario>
                   <> Urgência: </>
                   <StarFilled />
                   <StarFilled />
                   <StarOutlined />
-                </TituloFormulario>
+                </UrgenciaFormulario>
               </DadosFormulario>
               <RespostaPendente>
                 <Resposta>Resposta Pendente</Resposta>
@@ -194,7 +185,7 @@ function PerfilPaciente(props) {
                   fontWeight="bold"
                   borderColor="#0A0E3C"
                   height="40px"
-                  width="100%"
+                  width="25%"
                 >
                   ENVIAR LEMBRETE
                 </Button>
@@ -229,7 +220,7 @@ function PerfilPaciente(props) {
                   fontWeight="bold"
                   borderColor="#0A0E3C"
                   height="40px"
-                  width="100%"
+                  width="25%"
                 >
                   DOWNLOAD
                 </Button>
