@@ -116,3 +116,17 @@ export const UpdateDadosUsuario = async (
 
   return false;
 };
+
+export const DeletarUsuario = async (id) => {
+  await requesterService
+    .deletarUsuario(id)
+    .then(() => {
+      alert("Usuário deletado com sucesso.");
+      window.location.href = "/web/perfil";
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = "/web/perfil"));
+      return false;
+    });
+  return false;
+}

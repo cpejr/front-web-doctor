@@ -58,6 +58,13 @@ function PerfilPaciente(props) {
     setEndereco(resposta.dadosEndereco);
     setCarregando(false);
   }
+  async function deletarUsuario() {
+    
+    await managerService.DeletarUsuario(usuario.id);
+    alert("Usuário deletado com sucesso!");
+  }
+
+
 
   useEffect(() => {
     pegandoDados();
@@ -85,7 +92,7 @@ function PerfilPaciente(props) {
                 </Dados>
               </PerfilSuperior>
               <PerfilInferior>
-                <Titulo>Endereço:</Titulo>
+                <Titulo>Endereço</Titulo>
                 <DadosGeo>País: {endereco.pais}</DadosGeo>
                 <DadosGeo>Estado: {endereco.estado}</DadosGeo>
                 <DadosGeo>Cidade: {endereco.cidade}</DadosGeo>
@@ -144,8 +151,9 @@ function PerfilPaciente(props) {
                     height="40px"
                     width="100%"
                     fontSize="1.3em"
+                    onClick={deletarUsuario}
                   >
-                    Excluir Usuário
+                    Excluir Paciente
                   </Button>
                 </Botao>
               </Botoes>
@@ -175,9 +183,10 @@ function PerfilPaciente(props) {
                   Tipo:
                 </TituloFormulario>
                 <TituloFormulario color="#434B97" fontSize="1.2em">
-                  Urgência <StarOutlined />
+                  <> Urgência: </> 
                   <StarFilled />
                   <StarFilled />
+                  <StarOutlined />
                 </TituloFormulario>
               </DadosFormulario>
               <RespostaPendente>

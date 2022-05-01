@@ -9,18 +9,6 @@ export const ContainerPerfil = styled.div`
   padding: 2% 5% 2% 5%;
 `;
 
-export const PerfilEsquerda = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 50%;
-`;
-export const PerfilDireita = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  width: 50%;
-`;
 export const Perfil = styled.div`
   display: flex;
   height: 30%;
@@ -34,7 +22,34 @@ export const Perfil = styled.div`
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   gap: 15%;
   margin-bottom: 2%;
+
+  @media (max-width: 1080px) {
+    flex-direction: column;
+    width: 100%;
+  }
 `;
+
+
+export const PerfilEsquerda = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 50%;
+
+  @media (max-width: 1080px) {
+    justify-content: center ;
+    width: 100%;
+  }
+
+`;
+export const PerfilDireita = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 50%;
+`;
+
+
 export const Formularios = styled.div`
   display: flex;
   flex-direction: column;
@@ -64,6 +79,7 @@ export const PerfilSuperior = styled.div`
   gap: 2%;
   justify-content: flex-start;
   width: 100%;
+  margin: 2% 0% 0% 0%;
 `;
 export const PerfilInferior = styled.div`
   display: flex;
@@ -71,6 +87,7 @@ export const PerfilInferior = styled.div`
   gap: 2%;
   justify-content: space-around;
   width: 100%;
+  margin: 2% 0% 0% 0%;
 `;
 export const FotoPerfil = styled.div`
   .foto {
@@ -79,7 +96,11 @@ export const FotoPerfil = styled.div`
     height: 100%;
   }
 `;
-export const Dados = styled.div``;
+export const Dados = styled.div`
+  display: flex;
+  flex-direction: column;
+  column-gap: 2%;
+`;
 export const Nome = styled.div`
   width: 100%;
   font-size: 1.8em;
@@ -200,4 +221,11 @@ export const TituloReceita = styled.div`
   color: ${(props) => props.color};
   font-size: ${(props) => props.fontSize};
 `;
-export const RuaNomeApartamento = styled.div``;
+export const RuaNomeApartamento = styled.div`
+  display: flex;
+  gap: 2%;
+  flex-direction: row;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+`;
