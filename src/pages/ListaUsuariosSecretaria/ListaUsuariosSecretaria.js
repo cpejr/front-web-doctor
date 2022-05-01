@@ -38,7 +38,7 @@ function ListaUsuariosSecretaria() {
 
   useEffect(() => {
     pegandoDados();
-  }, []);
+  }, [email]);
 
   async function pegandoDados() {
     const resposta = await managerService.GetDadosPessoais();
@@ -47,8 +47,8 @@ function ListaUsuariosSecretaria() {
   }
 
   async function marcandoAgendamento(email) {
-    setModalAgendamento(true);
-    setEmail(email);
+    setEmail(email)
+    setModalAgendamento(true)
   }
 
   async function fechandoModal() {

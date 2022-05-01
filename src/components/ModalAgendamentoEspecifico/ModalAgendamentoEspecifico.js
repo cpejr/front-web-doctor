@@ -18,28 +18,42 @@ import {
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 import logoGuilherme from "../../assets/logoGuilherme.png";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 
 function ModalAgendamentoEspecifico(props) {
   const { TextArea } = Input;
   const { Option } = Select;
-  const [usuario, setUsuario] = useState({})
 
-  async function pegandoDados(){
-    const resposta = await managerService.GetDadosUsuario(props.emailUsuario)
-    setUsuario(resposta.dadosUsuario)
+  const [usuario, setUsuario] = useState({});
+  const [aux, setAux] = useState();
+
+  const [carregando, setCarregando] = useState();
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+  async function pegandoDados() {
+    setCarregando(true);
+    const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
+    setUsuario(resposta.dadosUsuario);
+    setCarregando(false);
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     pegandoDados();
-  },[])
+  }, [props]);
 
+  
   return (
     <Container>
       <Caixa>
         <InfoEsquerdaEDireita>
           <Usuario>
             <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
-            <Nome>{usuario.nome}</Nome>
+            {carregando ? (
+              <Spin indicator={antIcon} />
+            ) : (
+              <Nome>{usuario.nome}</Nome>
+            )}
           </Usuario>
           <TipoAgendamento>
             <TextoTipoAgendamento>
@@ -62,20 +76,16 @@ function ModalAgendamentoEspecifico(props) {
         </InfoEsquerdaEDireita>
         <InfoEsquerdaEDireita>
           <SelecioneUmaData>
-              <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
-              <Input
-                placeholder="Selecione uma data"
-                type="date"
-                size="large"
-              ></Input>
-            </SelecioneUmaData>
+            <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
+            <Input
+              placeholder="Selecione uma data"
+              type="date"
+              size="large"
+            ></Input>
+          </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
-              <Select
-                style={{ width: "100%" }}
-                size="large"
-                placeholder="Tipo"
-              >
+              <Select style={{ width: "100%" }} size="large" placeholder="Tipo">
                 <Option value="1">Consulta 1</Option>
                 <Option value="2">Consulta 2</Option>
                 <Option value="3">Consulta 3</Option>
