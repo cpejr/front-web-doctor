@@ -79,7 +79,9 @@ function Perfil(props) {
     setEndereco(resposta.dadosEndereco);
     setCarregando(false);
   }
-
+  async function deletarUsuario() {
+    await managerService.DeletarUsuario(usuario.id);
+  }
   useEffect(() => {
     PerfilSecretariaOuMedico();
   }, []);
@@ -193,7 +195,7 @@ function Perfil(props) {
                 </>
               )}
             </CaixaContato>
-            <ExcluirConta onClick={() => history.push("/web/homemedico")}>
+            <ExcluirConta onClick={deletarUsuario}>
               EXCLUIR CONTA
             </ExcluirConta>
           </ContatoExcluirConta>

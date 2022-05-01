@@ -6,12 +6,13 @@ export const ContainerPerfil = styled.div`
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  padding: 2% 5% 2% 5%;
+  padding: 2% 8% 2% 8%;
 `;
 
 export const Perfil = styled.div`
   display: flex;
   height: 30%;
+  width: 100%;
   flex-direction: row;
   justify-content: center;
   border-style: solid;
@@ -24,11 +25,10 @@ export const Perfil = styled.div`
   margin-bottom: 2%;
 
   @media (max-width: 1080px) {
-    flex-direction: column;
+    gap: 10%;
     width: 100%;
   }
 `;
-
 
 export const PerfilEsquerda = styled.div`
   display: flex;
@@ -37,10 +37,9 @@ export const PerfilEsquerda = styled.div`
   width: 50%;
 
   @media (max-width: 1080px) {
-    justify-content: center ;
+    justify-content: center;
     width: 100%;
   }
-
 `;
 export const PerfilDireita = styled.div`
   display: flex;
@@ -49,30 +48,6 @@ export const PerfilDireita = styled.div`
   width: 50%;
 `;
 
-
-export const Formularios = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-style: solid;
-  border-color: #c4c4c4;
-  border-width: 2px;
-  border-radius: 3px;
-  height: 30%;
-  margin-bottom: 2%;
-  padding: 2%;
-  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
-`;
-export const Receitas = styled.div`
-  display: flex;
-  flex-direction: column;
-  border-style: solid;
-  border-color: #c4c4c4;
-  border-width: 2px;
-  border-radius: 3px;
-  padding: 2%;
-  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
-  height: 30%;
-`;
 export const PerfilSuperior = styled.div`
   display: flex;
   flex-direction: row;
@@ -89,12 +64,39 @@ export const PerfilInferior = styled.div`
   width: 100%;
   margin: 2% 0% 0% 0%;
 `;
+
+export const Formularios = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-style: solid;
+  border-color: #c4c4c4;
+  border-width: 2px;
+  border-radius: 3px;
+  height: 30%;
+  margin-bottom: 2%;
+  padding: 2%;
+  background-color: green;
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
+`;
+export const Receitas = styled.div`
+  display: flex;
+  flex-direction: column;
+  border-style: solid;
+  border-color: #c4c4c4;
+  border-width: 2px;
+  border-radius: 3px;
+  padding: 2%;
+  background-color: green;
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
+  height: 30%;
+`;
+
 export const FotoPerfil = styled.div`
-  .foto {
-    border-radius: 5px;
-    width: 100%;
-    height: 100%;
-  }
+  display: flex;
+  width: 100px;
+  height: 100px;
+  object-fit: fill;
+  border-radius: 5px;
 `;
 export const Dados = styled.div`
   display: flex;
@@ -167,22 +169,18 @@ export const InfoContato = styled.div`
   color: #151b57;
 `;
 export const Formulario = styled.div`
-  height: 140px;
   width: 100%;
   border-style: solid;
   border-color: #151b57;
   border-width: 2px;
   border-radius: 3px;
-  background-color: "green";
 `;
 export const Receita = styled.div`
-  height: 140px;
   width: 100%;
   border-style: solid;
   border-color: #151b57;
   border-width: 2px;
   border-radius: 3px;
-  background-color: "green";
 `;
 export const DadosReceita = styled.div`
   display: flex;

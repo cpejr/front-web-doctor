@@ -339,6 +339,7 @@ export const DadosContato = styled.div`
 `;
 export const ExcluirConta = styled.div`
   display: flex;
+  cursor: pointer;
   flex-direction: column;
   justify-content: end;
   height: 15%;

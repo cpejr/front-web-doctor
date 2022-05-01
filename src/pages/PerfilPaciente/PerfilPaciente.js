@@ -59,12 +59,8 @@ function PerfilPaciente(props) {
     setCarregando(false);
   }
   async function deletarUsuario() {
-    
     await managerService.DeletarUsuario(usuario.id);
-    alert("Usuário deletado com sucesso!");
   }
-
-
 
   useEffect(() => {
     pegandoDados();
@@ -98,9 +94,9 @@ function PerfilPaciente(props) {
                 <DadosGeo>Cidade: {endereco.cidade}</DadosGeo>
                 <DadosGeo>CEP: {endereco.cep}</DadosGeo>
                 <RuaNomeApartamento>
-                <DadosGeo>Rua: {endereco.rua}</DadosGeo>
-                <DadosGeo>Número: {endereco.numero}</DadosGeo>
-                <DadosGeo>Complemento: {endereco.complemento}</DadosGeo>
+                  <DadosGeo>Rua: {endereco.rua}</DadosGeo>
+                  <DadosGeo>Número: {endereco.numero}</DadosGeo>
+                  <DadosGeo>Complemento: {endereco.complemento}</DadosGeo>
                 </RuaNomeApartamento>
               </PerfilInferior>
             </PerfilEsquerda>
@@ -144,14 +140,15 @@ function PerfilPaciente(props) {
                 </Botao>
                 <Botao>
                   <Button
-                    backgroundColor="green"
+                    backgroundColor="#A7ADE8"
                     color="#0A0E3C"
                     fontWeight="bold"
                     borderColor="#0A0E3C"
                     height="40px"
                     width="100%"
                     fontSize="1.3em"
-                    onClick={deletarUsuario}
+                    fontSizeMedia=""
+                    onClick={() => deletarUsuario()}
                   >
                     Excluir Paciente
                   </Button>
@@ -183,7 +180,7 @@ function PerfilPaciente(props) {
                   Tipo:
                 </TituloFormulario>
                 <TituloFormulario color="#434B97" fontSize="1.2em">
-                  <> Urgência: </> 
+                  <> Urgência: </>
                   <StarFilled />
                   <StarFilled />
                   <StarOutlined />
