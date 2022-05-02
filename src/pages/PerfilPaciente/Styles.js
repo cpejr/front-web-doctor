@@ -70,6 +70,7 @@ export const PerfilSuperior = styled.div`
   margin: 2% 0% 0% 0%;
 
   @media (max-width: 1080px) {
+    display:block ;
     justify-content: center;
     align-items: center;
     width: 80%;
