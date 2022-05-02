@@ -27,7 +27,6 @@ import {
   RespostaPendente,
   Resposta,
   TituloReceita,
-  RuaNomeApartamento,
   DataFormulario,
   TipoFormulario,
   UrgenciaFormulario,
@@ -35,7 +34,6 @@ import {
 import * as managerService from "../../services/ManagerService/managerService";
 import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
 import { Spin } from "antd";
-import { useHistory } from "react-router-dom";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
 
@@ -44,7 +42,6 @@ function PerfilPaciente(props) {
   const [endereco, setEndereco] = useState({});
   const [telefone, setTelefone] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
-
   const [carregando, setCarregando] = useState(true);
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 45, color: "#151B57" }} spin />
@@ -67,6 +64,7 @@ function PerfilPaciente(props) {
 
   useEffect(() => {
     pegandoDados();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
