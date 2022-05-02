@@ -24,10 +24,7 @@ import { Spin } from "antd";
 function ModalAgendamentoEspecifico(props) {
   const { TextArea } = Input;
   const { Option } = Select;
-
   const [usuario, setUsuario] = useState({});
-  const [aux, setAux] = useState();
-
   const [carregando, setCarregando] = useState();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -40,9 +37,9 @@ function ModalAgendamentoEspecifico(props) {
 
   useEffect(() => {
     pegandoDados();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
-  
   return (
     <Container>
       <Caixa>

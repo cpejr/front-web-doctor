@@ -29,10 +29,8 @@ import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecif
 function ListaUsuariosSecretaria() {
   const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
-
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [email, setEmail] = useState(false);
-
   const [carregando, setCarregando] = useState(true);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -47,8 +45,8 @@ function ListaUsuariosSecretaria() {
   }
 
   async function marcandoAgendamento(email) {
-    setEmail(email)
-    setModalAgendamento(true)
+    setEmail(email);
+    setModalAgendamento(true);
   }
 
   async function fechandoModal() {
