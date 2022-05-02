@@ -80,8 +80,9 @@ export const PerfilSuperior = styled.div`
     border-radius: 3px;
     box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   }
-  @media (max-width: 480px) {
+  @media (max-width: 640px) {
     flex-direction: column;
+    display: block ;
   }
 `;
 export const PerfilInferior = styled.div`
