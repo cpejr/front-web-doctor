@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Input, Select, Modal } from "antd";
 import { useHistory } from "react-router-dom";
-import { Input, Select } from "antd";
 import {
   TopoPagina,
   ContainerListadeUsuarios,
@@ -24,24 +24,35 @@ import Button from "../../styles/Button";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
+import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 
 function ListaUsuariosSecretaria() {
   const history = useHistory();
 
   const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
-
+  const [modalAgendamento, setModalAgendamento] = useState(false);
+  const [email, setEmail] = useState(false);
   const [carregando, setCarregando] = useState(true);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   useEffect(() => {
     pegandoDados();
-  }, []);
+  }, [email]);
 
   async function pegandoDados() {
     const resposta = await managerService.GetDadosPessoais();
     setUsuarios(resposta);
     setCarregando(false);
+  }
+
+  async function marcandoAgendamento(email) {
+    setEmail(email);
+    setModalAgendamento(true);
+  }
+
+  async function fechandoModal() {
+    setModalAgendamento(false);
   }
 
   async function verificandoSecretariaOuPaciente(tipo, email){
@@ -59,6 +70,7 @@ function ListaUsuariosSecretaria() {
   }
 
   return (
+    <div>
     <ContainerListadeUsuarios>
       <TopoPagina>
         <BarraPesquisa>
@@ -111,25 +123,41 @@ function ListaUsuariosSecretaria() {
             </Telefone>
             <UltimaVisita>21/04/2022</UltimaVisita>
 
-            <Agendamento>
-              <Button
-                backgroundColor="transparent"
-                borderColor="transparent"
-                color="green"
-                fontSize="1em"
-                textDecoration="underline"
-                height="50px"
-              >
-                Marcar Agendamento
-              </Button>
-            </Agendamento>
-            <CódigoPaciente>
-              {carregando ? <Spin indicator={antIcon} /> : <>{value.codigo}</>}
-            </CódigoPaciente>
-          </Usuario>
-        ))}
-      </ContainerUsuarios>
-    </ContainerListadeUsuarios>
+              <Agendamento>
+                <Button
+                  backgroundColor="transparent"
+                  borderColor="transparent"
+                  color="green"
+                  fontSize="1em"
+                  textDecoration="underline"
+                  height="50px"
+                  onClick={() => marcandoAgendamento(value.email)}
+                >
+                  Marcar Agendamento
+                </Button>
+              </Agendamento>
+              <CódigoPaciente>
+                {carregando ? (
+                  <Spin indicator={antIcon} />
+                ) : (
+                  <div>{value.codigo}</div>
+                )}
+              </CódigoPaciente>
+            </Usuario>
+          ))}
+        </ContainerUsuarios>
+      </ContainerListadeUsuarios>
+
+      <Modal
+        visible={modalAgendamento}
+        onCancel={fechandoModal}
+        footer={null}
+        width={"70%"}
+        centered={true}
+      >
+        <ModalAgendamentoEspecifico emailUsuario={email} />
+      </Modal>
+    </div>
   );
 }
 
