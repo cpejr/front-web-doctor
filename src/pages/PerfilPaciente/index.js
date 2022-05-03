@@ -1,2 +1,1 @@
-import PerfilPaciente from "./PerfilPaciente";
-export default PerfilPaciente;
+export { default } from "./PerfilPaciente";

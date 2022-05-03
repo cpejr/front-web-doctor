@@ -22,6 +22,12 @@ export const BarraPesquisa = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  .ant-input {
+    background-color: green ;
+  }
+  .ant-btn.ant-btn-default.ant-btn-icon-only.ant-input-search-button{
+    background-color: green ;
+  }
   @media (max-width: 920px) {
     width: 100%;
     justify-content: center;
@@ -100,7 +106,7 @@ export const Titulo = styled.div`
     display: none;
   }
 `;
-export const Imagem = styled.img`
+export const Imagem = styled.div`
   justify-content: center;
   object-fit: fill;
   width: 10%;
@@ -120,6 +126,7 @@ export const Nome = styled.div`
 
   :hover {
     overflow: visible;
+    cursor: pointer;
   }
 
   @media (max-width: 880px) {

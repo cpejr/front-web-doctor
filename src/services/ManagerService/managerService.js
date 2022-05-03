@@ -116,3 +116,22 @@ export const UpdateDadosUsuario = async (
 
   return false;
 };
+
+export const DeletarUsuario = async (id) => {
+  await requesterService
+    .deletarUsuario(id)
+    .then(() => {
+      alert("Usuário deletado com sucesso.");
+      window.location.href = "/web/listadeusuariosmedico";
+    })
+    .catch((error) => {
+      requisicaoErro(
+        error,
+        () => (window.location.href = "/web/perfildopaciente")
+      );
+
+      return false;
+    });
+
+  return false;
+};

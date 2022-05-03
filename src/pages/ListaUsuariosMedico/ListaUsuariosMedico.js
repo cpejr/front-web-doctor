@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Input, Select } from "antd";
 import {
   TopoPagina,
@@ -18,7 +19,7 @@ import {
   UltimaVisita,
   CódigoPaciente,
   AdicionarCodigo,
-  CaixaVazia
+  CaixaVazia,
 } from "./Styles";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
@@ -27,8 +28,11 @@ import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ListaUsuariosMedico() {
+  const history = useHistory();
+
   const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
+
   const [carregando, setCarregando] = useState(true);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -42,6 +46,20 @@ function ListaUsuariosMedico() {
     setCarregando(false);
   }
 
+  async function verificandoSecretariaOuPaciente(tipo, email){
+    if(tipo === "SECRETARIA"){
+      history.push({
+        pathname: "/web/perfil",
+        state: {email},
+      })
+    } else {
+      history.push({
+        pathname: "/web/perfildopaciente",
+        state: {email},
+      })
+    }
+  }
+
   return (
     <ContainerListadeUsuarios>
       <TopoPagina>
@@ -52,13 +70,13 @@ function ListaUsuariosMedico() {
           <FiltroUsuario>
             <Select
               defaultValue="Todos os Usuários"
-              style={{ color: "#151B57", width: 200 }}
+              style={{ color: "green", width: 200 }}
             ></Select>
           </FiltroUsuario>
           <FiltroDatas>
             <Select
               defaultValue="Todas as datas"
-              style={{ color: "#151B57", width: 200 }}
+              style={{ color: "green", width: 200 }}
             ></Select>
           </FiltroDatas>
         </Filtros>
@@ -75,32 +93,28 @@ function ListaUsuariosMedico() {
       <ContainerUsuarios>
         {usuarios?.map((value) => (
           <Usuario key={value.id}>
-            <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
+            <Imagem>{value.avatar_url}</Imagem>
             <Nome>
               {carregando ? (
                 <Spin indicator={antIcon} />
               ) : (
-                <div>{value.nome}</div>
+                <div onClick={() => verificandoSecretariaOuPaciente(value.tipo, value.email)}>{value.nome}</div>
               )}
             </Nome>
             <Telefone>
               {carregando ? (
                 <Spin indicator={antIcon} />
               ) : (
-                <div>
+                <>
                   ({value.telefone.slice(0, -9)}) {value.telefone.slice(2, -4)}-
                   {value.telefone.slice(-4)}
-                </div>
+                </>
               )}
             </Telefone>
             <UltimaVisita>21/04/2022</UltimaVisita>
 
             <CódigoPaciente>
-              {carregando ? (
-                <Spin indicator={antIcon} />
-              ) : (
-                <div>{value.codigo}</div>
-              )}
+              {carregando ? <Spin indicator={antIcon} /> : <>{value.codigo}</>}
             </CódigoPaciente>
             <AdicionarCodigo>
               <Button

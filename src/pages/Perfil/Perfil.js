@@ -28,32 +28,62 @@ import {
   CaixaCimaCarregando,
   CaixaEnderecoCarregando,
 } from "./Styles";
-import * as managerService from "../../services/ManagerService/managerService"
+import * as managerService from "../../services/ManagerService/managerService";
 
-function Perfil() {
+function Perfil(props) {
   const history = useHistory();
   const email = sessionStorage.getItem("@doctorapp-Email");
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
   const [telefone, setTelefone] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
+
+  const [perfilPessoal, setPerfilPessoal] = useState();
+  const [perfilSelecionado, setPerfilSelecionado] = useState();
+
   const [carregando, setCarregando] = useState(true);
+  const antIcon = (
+    <LoadingOutlined style={{ fontSize: 45, color: "#151B57" }} spin />
+  );
 
-  const antIcon = <LoadingOutlined style={{ fontSize: 45, color: "#151B57" }} spin />;
-
-  async function pegandoDados(){
-    const resposta = await managerService.GetDadosUsuario(email)
-    setUsuario(resposta.dadosUsuario)
-    setTelefone(resposta.dadosUsuario.telefone)
-    setDataNascimento(resposta.dadosUsuario.data_nascimento)
-    setEndereco(resposta.dadosEndereco)
-    setCarregando(false)
+  async function PerfilSecretariaOuMedico() {
+    if (props.location.state === undefined) {
+      setPerfilPessoal(true);
+      setPerfilSelecionado(false);
+      pegandoDadosPerfilPessoal();
+    } else {
+      setPerfilPessoal(false);
+      setPerfilSelecionado(true);
+      pegandoDadosPerfilSelecionado();
+    }
   }
 
-  
+  async function pegandoDadosPerfilPessoal() {
+    const resposta = await managerService.GetDadosUsuario(email);
+    const data = new Date(resposta.dadosUsuario.data_nascimento);
+    setUsuario(resposta.dadosUsuario);
+    setTelefone(resposta.dadosUsuario.telefone);
+    setDataNascimento(data.toLocaleDateString());
+    setEndereco(resposta.dadosEndereco);
+    setCarregando(false);
+  }
 
+  async function pegandoDadosPerfilSelecionado() {
+    const resposta = await managerService.GetDadosUsuario(
+      props.location.state.email
+    );
+    const data = new Date(resposta.dadosUsuario.data_nascimento);
+    setUsuario(resposta.dadosUsuario);
+    setTelefone(resposta.dadosUsuario.telefone);
+    setDataNascimento(data.toLocaleDateString());
+    setEndereco(resposta.dadosEndereco);
+    setCarregando(false);
+  }
+  async function deletarUsuario() {
+    await managerService.DeletarUsuario(usuario.id);
+  }
   useEffect(() => {
-    pegandoDados()
+    PerfilSecretariaOuMedico();
   }, []);
 
   return (
@@ -78,53 +108,50 @@ function Perfil() {
               <NomeData>
                 <Nome>{usuario.nome}</Nome>
                 <ConjuntoDataCPF>
-                <DataCPF>
-                  {dataNascimento.slice(8, -14)}/{dataNascimento.slice(5, -17)}/
-                  {dataNascimento.slice(0, -20)}
-                </DataCPF>
-                <DataCPF>
-                  {usuario.cpf}
-                </DataCPF>
+                  <DataCPF>{dataNascimento}</DataCPF>
+                  <DataCPF>{usuario.cpf}</DataCPF>
                 </ConjuntoDataCPF>
               </NomeData>
             </FotoNomeData>
           )}
-          <BotoesColuna>
-            <Button
-              width="100%"
-              height="50px"
-              widthMedia480="30%"
-              heightMedia560="30px"
-              backgroundColor="#A7ADE8"
-              borderColor="#0A0E3C"
-              color="#0A0E3C"
-              fontSize="1em"
-              fontSizeMedia="0.6em"
-              fontSizeMedia950="0.7em"
-              fontWeight="bold"
-              boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-              onClick={() => history.push("/web/editarperfil")}
-            >
-              ALTERAR DADOS
-            </Button>
-            <Button
-              width="100%"
-              height="50px"
-              widthMedia480="30%"
-              heightMedia560="30px"
-              backgroundColor="#A7ADE8"
-              borderColor="#0A0E3C"
-              color="#0A0E3C"
-              fontSize="1em"
-              fontSizeMedia="0.6em"
-              fontSizeMedia950="0.7em"
-              fontWeight="bold"
-              boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-              onClick={() => history.push("/web/alterarsenha")}
-            >
-              ALTERAR SENHA
-            </Button>
-          </BotoesColuna>
+          {perfilPessoal && (
+            <BotoesColuna>
+              <Button
+                width="100%"
+                height="50px"
+                widthMedia480="30%"
+                heightMedia560="30px"
+                backgroundColor="#A7ADE8"
+                borderColor="#0A0E3C"
+                color="#0A0E3C"
+                fontSize="1em"
+                fontSizeMedia="0.6em"
+                fontSizeMedia950="0.7em"
+                fontWeight="bold"
+                boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+                onClick={() => history.push("/web/editarperfil")}
+              >
+                ALTERAR DADOS
+              </Button>
+              <Button
+                width="100%"
+                height="50px"
+                widthMedia480="30%"
+                heightMedia560="30px"
+                backgroundColor="#A7ADE8"
+                borderColor="#0A0E3C"
+                color="#0A0E3C"
+                fontSize="1em"
+                fontSizeMedia="0.6em"
+                fontSizeMedia950="0.7em"
+                fontWeight="bold"
+                boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+                onClick={() => history.push("/web/alterarsenha")}
+              >
+                ALTERAR SENHA
+              </Button>
+            </BotoesColuna>
+          )}
         </CaixaCima>
 
         <CaixaBaixo>
@@ -168,7 +195,7 @@ function Perfil() {
                 </>
               )}
             </CaixaContato>
-            <ExcluirConta onClick={() => history.push("/web/homemedico")}>
+            <ExcluirConta onClick={deletarUsuario}>
               EXCLUIR CONTA
             </ExcluirConta>
           </ContatoExcluirConta>

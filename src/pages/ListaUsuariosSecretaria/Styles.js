@@ -26,6 +26,12 @@ export const BarraPesquisa = styled.div`
     width: 100%;
     justify-content: center;
   }
+  .ant-input {
+    background-color: green;
+  }
+  .ant-btn.ant-btn-default.ant-btn-icon-only.ant-input-search-button {
+    background-color: green;
+  }
 `;
 export const Filtros = styled.div`
   width: 50%;
@@ -101,7 +107,7 @@ export const Titulo = styled.div`
     display: none;
   }
 `;
-export const Imagem = styled.img`
+export const Imagem = styled.div`
   justify-content: center;
   object-fit: fill;
   width: 10%;
@@ -118,6 +124,7 @@ export const Nome = styled.div`
   white-space: nowrap;
   :hover {
     overflow: visible;
+    cursor: pointer;
   }
 
   @media (max-width: 880px) {
