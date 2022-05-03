@@ -70,7 +70,6 @@ export const PerfilSuperior = styled.div`
   margin: 2% 0% 0% 0%;
 
   @media (max-width: 1080px) {
-    display:block ;
     justify-content: center;
     align-items: center;
     width: 80%;
@@ -82,6 +81,7 @@ export const PerfilSuperior = styled.div`
     box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   }
   @media (max-width: 640px) {
+    justify-content: center ;
     flex-direction: column;
     display: block ;
   }
@@ -155,6 +155,11 @@ export const FotoPerfil = styled.div`
   object-fit: fill;
   border-radius: 5px;
   justify-content: center;
+
+  @media (max-width: 640px) {
+    width: auto
+  }
+
 `;
 export const Dados = styled.div`
   display: flex;
