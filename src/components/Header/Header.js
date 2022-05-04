@@ -74,11 +74,11 @@ function Header(props) {
           <Button
             backgroundColor="transparent"
             borderColor="transparent"
-            color="green"
+            color="white"
             fontSize="1rem"
             height="50px"
             onClick={() => {
-              history.push("/web/homesecretaria");
+              history.push("/web/agendamentos");
             }}
           >
             Agendamentos
@@ -214,11 +214,11 @@ function Header(props) {
               fontSizeMedia1080="1rem"
               backgroundColor="transparent"
               borderColor="transparent"
-              color="green"
+              color="white"
               fontSize="1.1rem"
               height="50px"
               onClick={() => {
-                history.push("/web/homesecretaria");
+                history.push("/web/agendamentos");
               }}
             >
               Agendamentos
