@@ -42,7 +42,6 @@ export const Notificacao = styled.div`
     height: 20em;
     margin-bottom: 3em;
 }
-  }
 `;
 export const CaixaTexto = styled.div`
   display: flex;
