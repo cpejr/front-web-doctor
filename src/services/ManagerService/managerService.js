@@ -45,6 +45,48 @@ export const GetDadosPessoais = async () => {
   return dadosUsuario;
 };
 
+export const GetDadosConsultas = async (idUsuario) => {
+  let dadosConsultas = {};
+
+  await requesterService
+    .requisicaoConsultas(idUsuario)
+    .then((res) => {
+      dadosConsultas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+    console.log(dadosConsultas)
+  return dadosConsultas;
+};
+
+export const GetDadosExamesMarcados = async (idUsuario) => {
+  let dadosExamesMarcados = {};
+
+  await requesterService
+    .requisicaoExamesMarcados(idUsuario)
+    .then((res) => {
+      dadosExamesMarcados = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosExamesMarcados;
+};
+
+export const GetDadosExame = async () => {
+  let dadosExame = {};
+  await requesterService
+    .requisicaoExame()
+    .then((res) => {
+      dadosExame = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosExame;
+};
+
 export const GetDadosUsuario = async (emailUrl) => {
   let dadosUsuario = {};
   let dadosEndereco = {};
