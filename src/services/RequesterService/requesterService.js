@@ -38,8 +38,16 @@ export const requisicaoExamesMarcados = (id_usuario) =>
 
 export const requisicaoExame = (id) =>
   api.get(`/exames/${id}`);
+<<<<<<< HEAD
 
 export const alterarSenha = (id, senha) =>
   api.put(`/usuarios/${id}`, { senha: senha });
 
+=======
+
+  
+export const alterarSenha = (id, senha) =>
+  api.put(`/usuarios/${id}`, { senha: senha });
+
+>>>>>>> ModalAgendamento
 export const deletarUsuario = (id) => api.delete(`/usuarios/${id}`);

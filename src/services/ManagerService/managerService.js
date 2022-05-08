@@ -45,17 +45,26 @@ export const GetDadosPessoais = async () => {
   return dadosUsuario;
 };
 
+<<<<<<< HEAD
 export const GetDadosConsultas = async (id_usuario) => {
   let dadosConsultas = {};
 
   await requesterService
     .requisicaoConsultas(id_usuario)
+=======
+export const GetDadosConsultas = async (idUsuario) => {
+  let dadosConsultas = {};
+
+  await requesterService
+    .requisicaoConsultas(idUsuario)
+>>>>>>> ModalAgendamento
     .then((res) => {
       dadosConsultas = res.data;
     })
     .catch((error) => {
       requisicaoErro(error);
     });
+<<<<<<< HEAD
 
   return dadosConsultas;
 };
@@ -67,11 +76,24 @@ export const GetDadosExamesMarcados = async (id_usuario) => {
     .requisicaoExamesMarcados(id_usuario)
     .then((res) => {
       console.log(res.data)
+=======
+    console.log(dadosConsultas)
+  return dadosConsultas;
+};
+
+export const GetDadosExamesMarcados = async (idUsuario) => {
+  let dadosExamesMarcados = {};
+
+  await requesterService
+    .requisicaoExamesMarcados(idUsuario)
+    .then((res) => {
+>>>>>>> ModalAgendamento
       dadosExamesMarcados = res.data;
     })
     .catch((error) => {
       requisicaoErro(error);
     });
+<<<<<<< HEAD
 
   return dadosExamesMarcados;
 };
@@ -81,6 +103,15 @@ export const GetDadosExame = async (id) => {
 
   await requesterService
     .requisicaoExame(id)
+=======
+  return dadosExamesMarcados;
+};
+
+export const GetDadosExame = async () => {
+  let dadosExame = {};
+  await requesterService
+    .requisicaoExame()
+>>>>>>> ModalAgendamento
     .then((res) => {
       dadosExame = res.data;
     })
