@@ -13,7 +13,7 @@ import {
   InputMesmaLinha,
   BotoesMesmaLinha,
 } from "./Styles";
-import * as managerService from "../../services/ManagerService/managerService"
+import * as managerService from "../../services/ManagerService/managerService";
 
 function Cadastro() {
   const history = useHistory();
@@ -21,14 +21,25 @@ function Cadastro() {
   const [endereco, setEndereco] = useState({});
   const [carregando, setCarregando] = useState(false);
 
+  const [erro, setErro] = useState(false);
+  const [camposVazios, setCamposVazio] = useState(false);
+
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
+  async function verificandoEnter(e) {
+    if (e.key === "Enter") {
+      preenchendoDados();
+    }
+  }
+
   async function requisicaoCadastro() {
+    if (estado.nome.length === 0) {
+      setCamposVazio({ ...camposVazios, nome: true });
+    }
     if (estado.senha === estado.senhaConfirmada) {
       setCarregando(true);
       await managerService.Cadastrando(estado, endereco);
-      setCarregando(false)
-      
+      setCarregando(false);
     } else {
       alert("As senhas digitadas são diferentes.");
       setCarregando(false);
@@ -36,10 +47,22 @@ function Cadastro() {
   }
 
   function preenchendoDados(e) {
+    if ((e.target.name === "cpf" || e.target.name === "telefone") &&
+      e.target.value.length !== 11
+    ) {
+      setErro({ ...erro, [e.target.name]: true });
+    } else {
+      setErro({ ...erro, [e.target.name]: false });
+    }
     setEstado({ ...estado, [e.target.name]: e.target.value });
   }
 
   function preenchendoEndereco(e) {
+    if (e.target.name === "cep" && e.target.value.length !== 8) {
+      setErro({ ...erro, [e.target.name]: true });
+    } else {
+      setErro({ ...erro, [e.target.name]: false });
+    }
     setEndereco({ ...endereco, [e.target.name]: e.target.value });
   }
 
@@ -58,6 +81,7 @@ function Cadastro() {
           </Logo>
           <Input
             placeholder="Nome Completo"
+            status="error"
             backgroundColor="#E4E6F4"
             borderColor="#151B57"
             color="black"
@@ -66,18 +90,22 @@ function Cadastro() {
             marginTop="2%"
             name="nome"
             onChange={preenchendoDados}
+            onKeyPress={verificandoEnter}
+            camposVazios={camposVazios.nome}
           ></Input>
           <InputMesmaLinha>
             <Input
               placeholder="Telefone"
               backgroundColor="#E4E6F4"
-              borderColor="#151B57"
               color="black"
               fontSize="1em"
               marginTop="2%"
               width="48%"
               name="telefone"
               onChange={preenchendoDados}
+              onKeyPress={verificandoEnter}
+              erro={erro.telefone}
+              camposVazios={camposVazios.telefone}
             ></Input>
             <Input
               placeholder="Data de Nascimento"
@@ -90,17 +118,19 @@ function Cadastro() {
               name="data_nascimento"
               type="date"
               onChange={preenchendoDados}
+              camposVazios={camposVazios.data_nascimento}
             ></Input>
           </InputMesmaLinha>
           <Input
             placeholder="CPF"
             backgroundColor="#E4E6F4"
-            borderColor="#151B57"
             color="black"
             fontSize="1em"
             width="100%"
             name="cpf"
             onChange={preenchendoDados}
+            erro={erro.cpf}
+            camposVazios={camposVazios.cpf}
           ></Input>
           <Input
             placeholder="Endereço de e-mail"
@@ -112,17 +142,19 @@ function Cadastro() {
             marginTop="2%"
             name="email"
             onChange={preenchendoDados}
+            camposVazios={camposVazios.email}
           ></Input>
           <Input
             placeholder="CEP"
             backgroundColor="#E4E6F4"
-            borderColor="#151B57"
             color="black"
             fontSize="1em"
             width="100%"
             marginTop="2%"
             name="cep"
             onChange={preenchendoEndereco}
+            erro={erro.cep}
+            camposVazios={camposVazios.cep}
           ></Input>
           <Input
             placeholder="País"
@@ -134,6 +166,7 @@ function Cadastro() {
             marginTop="2%"
             name="pais"
             onChange={preenchendoEndereco}
+            camposVazios={camposVazios.pais}
           ></Input>
           <Select
             id="estado"
@@ -144,6 +177,7 @@ function Cadastro() {
             width="100%"
             marginTop="2%"
             onChange={preenchendoEndereco}
+            camposVazios={camposVazios.estado}
           >
             <option value="">Estado</option>
             <option value="AC">Acre</option>
@@ -185,6 +219,7 @@ function Cadastro() {
             marginTop="2%"
             name="cidade"
             onChange={preenchendoEndereco}
+            camposVazios={camposVazios.cidade}
           ></Input>
           <Input
             placeholder="Bairro"
@@ -196,6 +231,7 @@ function Cadastro() {
             marginTop="2%"
             name="bairro"
             onChange={preenchendoEndereco}
+            camposVazios={camposVazios.bairro}
           ></Input>
           <Input
             placeholder="Rua"
@@ -207,6 +243,7 @@ function Cadastro() {
             marginTop="2%"
             name="rua"
             onChange={preenchendoEndereco}
+            camposVazios={camposVazios.rua}
           ></Input>
           <InputMesmaLinha>
             <Input
@@ -218,6 +255,7 @@ function Cadastro() {
               width="48%"
               name="numero"
               onChange={preenchendoEndereco}
+              camposVazios={camposVazios.numero}
             ></Input>
             <Input
               placeholder="Complemento"
@@ -243,6 +281,7 @@ function Cadastro() {
             id="senha"
             type="password"
             onChange={preenchendoDados}
+            camposVazios={camposVazios.senha}
           ></Input>
 
           <Input
@@ -257,6 +296,7 @@ function Cadastro() {
             id="senhaConfirmada"
             type="password"
             onChange={preenchendoDados}
+            camposVazios={camposVazios.senhaConfirmada}
           ></Input>
 
           <Select
@@ -267,6 +307,7 @@ function Cadastro() {
             width="100%"
             name="tipo"
             onChange={preenchendoDados}
+            camposVazios={camposVazios.tipo}
           >
             <option value="">Tipo de Usuário</option>
             <option value="SECRETARIA" borderColor="#151B57">
