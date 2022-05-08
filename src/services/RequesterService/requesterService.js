@@ -39,7 +39,6 @@ export const requisicaoExamesMarcados = (id_usuario) =>
 export const requisicaoExame = (id) =>
   api.get(`/exames/${id}`);
 
-  
 export const alterarSenha = (id, senha) =>
   api.put(`/usuarios/${id}`, { senha: senha });
 

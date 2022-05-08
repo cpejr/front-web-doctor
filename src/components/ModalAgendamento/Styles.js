@@ -158,7 +158,6 @@ export const CaixaAgendamento = styled.div`
 
   @media (max-width: 1100px) {
     width: 98%;
-    margin-top: 0%;
   }
   @media (max-width: 480px) {
     flex-direction: column;

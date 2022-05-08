@@ -45,39 +45,42 @@ export const GetDadosPessoais = async () => {
   return dadosUsuario;
 };
 
-export const GetDadosConsultas = async (idUsuario) => {
+export const GetDadosConsultas = async (id_usuario) => {
   let dadosConsultas = {};
 
   await requesterService
-    .requisicaoConsultas(idUsuario)
+    .requisicaoConsultas(id_usuario)
     .then((res) => {
       dadosConsultas = res.data;
     })
     .catch((error) => {
       requisicaoErro(error);
     });
-    console.log(dadosConsultas)
+
   return dadosConsultas;
 };
 
-export const GetDadosExamesMarcados = async (idUsuario) => {
+export const GetDadosExamesMarcados = async (id_usuario) => {
   let dadosExamesMarcados = {};
 
   await requesterService
-    .requisicaoExamesMarcados(idUsuario)
+    .requisicaoExamesMarcados(id_usuario)
     .then((res) => {
+      console.log(res.data)
       dadosExamesMarcados = res.data;
     })
     .catch((error) => {
       requisicaoErro(error);
     });
+
   return dadosExamesMarcados;
 };
 
-export const GetDadosExame = async () => {
+export const GetDadosExame = async (id) => {
   let dadosExame = {};
+
   await requesterService
-    .requisicaoExame()
+    .requisicaoExame(id)
     .then((res) => {
       dadosExame = res.data;
     })

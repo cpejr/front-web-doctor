@@ -75,7 +75,6 @@ function PerfilPaciente(props) {
 
   async function marcandoAgendamento() {
     setModalAgendamento(true);
-    console.log(modalAgendamento)
   }
 
   async function fechandoModal() {
@@ -253,7 +252,7 @@ function PerfilPaciente(props) {
         width={"70%"}
         centered={true}
       >
-        <ModalAgendamento />
+        <ModalAgendamento id_usuario={usuario.id} email={usuario.email}/>
       </Modal>
     </div>
   );
