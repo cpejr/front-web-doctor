@@ -28,107 +28,37 @@ function Cadastro() {
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-  const regexPattern =
-    "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
-
   async function verificandoEnter(e) {
     if (e.key === "Enter") {
-      preenchendoDados();
+      requisicaoCadastro();
     }
   }
 
   async function requisicaoCadastro() {
-    if (estado.nome === undefined) {
-      setCamposVazios({ ...camposVazios, nome: true });
+    if (estado.senha === estado.senhaConfirmada) {
+      setCarregando(true);
+      await managerService.Cadastrando(estado, endereco);
+      setCarregando(false);
     } else {
-      setCamposVazios({ ...camposVazios, nome: false });
+      alert("As senhas digitadas são diferentes.");
+      setCarregando(false);
     }
-    if (estado.telefone === undefined) {
-      setCamposVazios({ ...camposVazios, telefone: true });
+  }
+
+  async function validacaoEmail(e) {
+    const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+    if (!regEx.test(e.target.value)) {
+      console.log("a");
+      setErro({ ...erro, [e.target.name]: true });
+      console.log(erro.email);
     } else {
-      setCamposVazios({ ...camposVazios, telefone: false });
-    }
-    if (estado.data_nascimento === undefined) {
-      setCamposVazios({ ...camposVazios, data_nascimento: true });
-    } else {
-      setCamposVazios({ ...camposVazios, data_nascimento: false });
-    }
-    if (estado.cpf === undefined) {
-      setCamposVazios({ ...camposVazios, cpf: true });
-    } else {
-      setCamposVazios({ ...camposVazios, cpf: false });
-    }
-    if (estado.email === undefined) {
-      setCamposVazios({ ...camposVazios, email: true });
-    } else {
-      setCamposVazios({ ...camposVazios, email: false });
-    }
-    if (estado.cep === undefined) {
-      setCamposVazios({ ...camposVazios, cep: true });
-    } else {
-      setCamposVazios({ ...camposVazios, cep: false });
-    }
-    if (endereco.pais === undefined) {
-      setCamposVazios({ ...camposVazios, pais: true });
-    } else {
-      setCamposVazios({ ...camposVazios, pais: false });
-    }
-    if (endereco.estado === undefined) {
-      setCamposVazios({ ...camposVazios, estado: true });
-    } else {
-      setCamposVazios({ ...camposVazios, estado: false });
-    }
-    if (endereco.cidade === undefined) {
-      setCamposVazios({ ...camposVazios, cidade: true });
-    } else {
-      setCamposVazios({ ...camposVazios, cidade: false });
-    }
-    if (endereco.bairro === undefined) {
-      setCamposVazios({ ...camposVazios, bairro: true });
-    } else {
-      setCamposVazios({ ...camposVazios, bairro: false });
-    }
-    if (endereco.rua === undefined) {
-      setCamposVazios({ ...camposVazios, rua: true });
-    } else {
-      setCamposVazios({ ...camposVazios, rua: false });
-    }
-    if (endereco.numero === undefined) {
-      setCamposVazios({ ...camposVazios, numero: true });
-    } else {
-      setCamposVazios({ ...camposVazios, numero: false });
-    }
-    if (estado.senha === undefined) {
-      setCamposVazios({ ...camposVazios, senha: true });
-    } else {
-      setCamposVazios({ ...camposVazios, senha: false });
-    }
-    if (estado.senhaConfirmada === undefined) {
-      setCamposVazios({ ...camposVazios, senhaConfirmada: true });
-    } else {
-      setCamposVazios({ ...camposVazios, senhaConfirmada: false });
-    }
-    if (estado.tipo === undefined) {
-      setCamposVazios({ ...camposVazios, tipo: true });
-    } else {
-      setCamposVazios({ ...camposVazios, tipo: false });
+      setErro({ ...erro, [e.target.name]: false });
     }
 
-    // if (estado.senha === estado.senhaConfirmada) {
-    //   setCarregando(true);
-    //   await managerService.Cadastrando(estado, endereco);
-    //   setCarregando(false);
-    // } else {
-    //   alert("As senhas digitadas são diferentes.");
-    //   setCarregando(false);
-    // }
+    setEstado({ ...estado, [e.target.name]: e.target.value });
   }
 
   function preenchendoDados(e) {
-    // if(regexPattern.test(e.target.value)){
-    //   console.log("oba")
-    // }
-
     if (
       ((e.target.name === "cpf" || e.target.name === "telefone") &&
         e.target.value.length !== 11) ||
@@ -166,6 +96,24 @@ function Cadastro() {
               height="100%"
             ></img>
           </Logo>
+          <Select
+            id="tipos"
+            backgroundColor="#E4E6F4"
+            borderColor="#151B57"
+            color="#8D8D8D"
+            width="100%"
+            name="tipo"
+            onChange={preenchendoDados}
+            camposVazios={camposVazios.tipo}
+          >
+            <option value="">Tipo de Usuário</option>
+            <option value="SECRETARIA" borderColor="#151B57">
+              Secretária
+            </option>
+            <option value="PACIENTE" borderColor="#151B57">
+              Paciente
+            </option>
+          </Select>
           <Input
             placeholder="Nome Completo"
             status="error"
@@ -235,15 +183,18 @@ function Cadastro() {
           <Input
             placeholder="Endereço de e-mail"
             backgroundColor="#E4E6F4"
-            borderColor="#151B57"
             color="black"
             fontSize="1em"
             width="100%"
             marginTop="2%"
             name="email"
-            onChange={preenchendoDados}
+            onChange={validacaoEmail}
+            erro={erro.email}
             camposVazios={camposVazios.email}
           ></Input>
+          {erro.email && (
+            <Rotulo>Digite um email no formato email@email.com</Rotulo>
+          )}
           <Input
             placeholder="CEP"
             backgroundColor="#E4E6F4"
@@ -396,24 +347,7 @@ function Cadastro() {
           {erro.senhaConfirmada && (
             <Rotulo>A senha deve ter no minimo 6 digitos</Rotulo>
           )}
-          <Select
-            id="tipos"
-            backgroundColor="#E4E6F4"
-            borderColor="#151B57"
-            color="#8D8D8D"
-            width="100%"
-            name="tipo"
-            onChange={preenchendoDados}
-            camposVazios={camposVazios.tipo}
-          >
-            <option value="">Tipo de Usuário</option>
-            <option value="SECRETARIA" borderColor="#151B57">
-              Secretária
-            </option>
-            <option value="PACIENTE" borderColor="#151B57">
-              Paciente
-            </option>
-          </Select>
+
           <BotoesMesmaLinha>
             <Button
               width="42%"
@@ -437,7 +371,7 @@ function Cadastro() {
               fontSize="1.5em"
               fontWeight="bold"
               fontSizeMedia="1.2em"
-              onClick={() => requisicaoCadastro()}
+              onClick={() => verificandoEnter()}
             >
               {carregando ? <Spin indicator={antIcon} /> : "ENTRAR"}
             </Button>
