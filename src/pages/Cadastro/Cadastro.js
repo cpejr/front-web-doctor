@@ -11,8 +11,10 @@ import {
   DadosCadastro,
   Logo,
   InputMesmaLinha,
-  BotoesMesmaLinha,
+  InputMesmaLinha2,
+  Botao
 } from "./Styles";
+
 import * as managerService from "../../services/ManagerService/managerService";
 
 const maskCPF = (value) => {
@@ -53,6 +55,7 @@ const maskCEP = (value) => {
     .replace(/(\d{5})(\d)/, "$1-$2")
     .replace(/(-\d{3})(\d)/, "$1");
 };
+
 
 function Cadastro() {
   const history = useHistory();
@@ -132,6 +135,11 @@ function Cadastro() {
               height="100%"
             ></img>
           </Logo>
+          <Botao
+          onClick={() => history.push("/login")}
+          >
+            <LeftOutlined /> Voltar para login
+          </Botao>
           <Input
             placeholder="Nome Completo"
             backgroundColor="#E4E6F4"
@@ -161,7 +169,9 @@ function Cadastro() {
               placeholder="Data de Nascimento"
               backgroundColor="#E4E6F4"
               borderColor="#151B57"
+
               color="black"
+
               fontSize="1em"
               width="48%"
               marginTop="2%"
@@ -290,7 +300,7 @@ function Cadastro() {
             name="rua"
             onChange={preenchendoEndereco}
           ></Input>
-          <InputMesmaLinha>
+          <InputMesmaLinha2>
             <Input
               placeholder="Número"
               backgroundColor="#E4E6F4"
@@ -309,10 +319,11 @@ function Cadastro() {
               color="black"
               fontSize="1em"
               width="48%"
+              marginTop="2%" 
               name="complemento"
               onChange={preenchendoEndereco}
             ></Input>
-          </InputMesmaLinha>
+          </InputMesmaLinha2>
 
           <Input
             placeholder="Defina sua senha"
@@ -359,34 +370,20 @@ function Cadastro() {
               Paciente
             </option>
           </Select>
-          <BotoesMesmaLinha>
-            <Button
-              width="42%"
-              height="50px"
-              backgroundColor="#FFFFFF"
-              borderColor="rgba(255, 0, 0, 0.25)"
-              color="#8D8D8D"
-              fontSize="1.5em"
-              fontWeight="bold"
-              fontSizeMedia="1.2em"
-              onClick={() => history.push("/login")}
-            >
-              CANCELAR
-            </Button>
-            <Button
-              height="50px"
-              width="42%"
-              backgroundColor="#434B97"
-              borderColor="#151B57"
-              color="white"
-              fontSize="1.5em"
-              fontWeight="bold"
-              fontSizeMedia="1.2em"
-              onClick={() => requisicaoCadastro()}
-            >
-              {carregando ? <Spin indicator={antIcon} /> : "ENTRAR"}
-            </Button>
-          </BotoesMesmaLinha>
+
+          <Button
+            height="50px"
+            width="60%"
+            backgroundColor="#434B97"
+            borderColor="#151B57"
+            color="white"
+            fontSize="1.5em"
+            fontWeight="bold"
+            fontSizeMedia="1.2em"
+            onClick={() => requisicaoCadastro()}
+          >
+            {carregando ? <Spin indicator={antIcon} /> : "CADASTRAR"}
+          </Button>
         </DadosCadastro>
       </Body>
     </div>
