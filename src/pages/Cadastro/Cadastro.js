@@ -14,8 +14,48 @@ import {
   InputMesmaLinha2,
   Botao
 } from "./Styles";
-import {LeftOutlined } from "@ant-design/icons";
+
 import * as managerService from "../../services/ManagerService/managerService";
+
+const maskCPF = (value) => {
+  return value
+    .replace(/\D/g, "")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d{1,2})/, "$1-$2")
+    .replace(/(-\d{2})\d+?$/, "$1");
+};
+
+const maskTelefone = (value) => {
+  return value
+    .replace(/\D/g, "")
+    .replace(/(\d{2})(\d)/, "($1) $2")
+    .replace(/(\d{5})(\d)/, "$1-$2")
+    .replace(/(-\d{4})(\d+?)$/, "$1");
+};
+const maskApenasNumeros = (value) => {
+  return value.replace(/\D/g, "");
+};
+
+const maskData = (value) => {
+  return value
+    .replace(/\D/g, "")
+    .replace(/(\d{2})(\d)/, "$1/$2")
+    .replace(/(\d{2})(\d)/, "$1/$2")
+    .replace(/(\d{4})(\d)/, "$1");
+};
+
+const maskApenasLetras = (value) => {
+  return value.replace(/[0-9!@#¨$%^&*)(+=._-]+/g, "");
+};
+
+const maskCEP = (value) => {
+  return value
+    .replace(/\D/g, "")
+    .replace(/(\d{5})(\d)/, "$1-$2")
+    .replace(/(-\d{3})(\d)/, "$1");
+};
+
 
 function Cadastro() {
   const history = useHistory();
@@ -38,10 +78,48 @@ function Cadastro() {
 
   function preenchendoDados(e) {
     setEstado({ ...estado, [e.target.name]: e.target.value });
+
+    if (e.target.name === "nome") {
+      setEstado({
+        ...estado,
+        [e.target.name]: maskApenasLetras(e.target.value),
+      });
+    }
+    if (e.target.name === "telefone") {
+      setEstado({ ...estado, [e.target.name]: maskTelefone(e.target.value) });
+    }
+    if (e.target.name === "data_nascimento") {
+      setEstado({ ...estado, [e.target.name]: maskData(e.target.value) });
+    }
+    if (e.target.name === "cpf") {
+      setEstado({ ...estado, [e.target.name]: maskCPF(e.target.value) });
+    }
   }
 
   function preenchendoEndereco(e) {
     setEndereco({ ...endereco, [e.target.name]: e.target.value });
+
+    if (e.target.name === "cep") {
+      setEndereco({ ...endereco, [e.target.name]: maskCEP(e.target.value) });
+    }
+    if (e.target.name === "pais") {
+      setEndereco({
+        ...endereco,
+        [e.target.name]: maskApenasLetras(e.target.value),
+      });
+    }
+    if (e.target.name === "cidade") {
+      setEndereco({
+        ...endereco,
+        [e.target.name]: maskApenasLetras(e.target.value),
+      });
+    }
+    if (e.target.name === "numero") {
+      setEndereco({
+        ...endereco,
+        [e.target.name]: maskApenasNumeros(e.target.value),
+      });
+    }
   }
 
   return (
@@ -71,6 +149,7 @@ function Cadastro() {
             width="100%"
             marginTop="2%"
             name="nome"
+            value={estado.nome}
             onChange={preenchendoDados}
           ></Input>
           <InputMesmaLinha>
@@ -83,18 +162,21 @@ function Cadastro() {
               marginTop="2%"
               width="48%"
               name="telefone"
+              value={estado.telefone}
               onChange={preenchendoDados}
             ></Input>
             <Input
               placeholder="Data de Nascimento"
               backgroundColor="#E4E6F4"
               borderColor="#151B57"
-              color="#807D7D"
+
+              color="black"
+
               fontSize="1em"
               width="48%"
               marginTop="2%"
               name="data_nascimento"
-              type="date"
+              value={estado.data_nascimento}
               onChange={preenchendoDados}
             ></Input>
           </InputMesmaLinha>
@@ -106,6 +188,7 @@ function Cadastro() {
             fontSize="1em"
             width="100%"
             name="cpf"
+            value={estado.cpf}
             onChange={preenchendoDados}
           ></Input>
           <Input
@@ -128,6 +211,7 @@ function Cadastro() {
             width="100%"
             marginTop="2%"
             name="cep"
+            value={endereco.cep}
             onChange={preenchendoEndereco}
           ></Input>
           <Input
@@ -139,6 +223,7 @@ function Cadastro() {
             width="100%"
             marginTop="2%"
             name="pais"
+            value={endereco.pais}
             onChange={preenchendoEndereco}
           ></Input>
           <Select
@@ -190,6 +275,7 @@ function Cadastro() {
             width="100%"
             marginTop="2%"
             name="cidade"
+            value={endereco.cidade}
             onChange={preenchendoEndereco}
           ></Input>
           <Input
@@ -223,6 +309,7 @@ function Cadastro() {
               fontSize="1em"
               width="48%"
               name="numero"
+              value={endereco.numero}
               onChange={preenchendoEndereco}
             ></Input>
             <Input
