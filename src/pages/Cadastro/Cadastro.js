@@ -132,7 +132,9 @@ function Cadastro() {
     if (
       ((e.target.name === "cpf" || e.target.name === "telefone") &&
         e.target.value.length !== 11) ||
-      (e.target.name === "data_nascimento" && e.target.value.length !== 10)
+      (e.target.name === "data_nascimento" && e.target.value.length !== 10) ||
+      ((e.target.name === "senha" || e.target.name === "senhaConfirmada") &&
+        e.target.value.length < 6)
     ) {
       setErro({ ...erro, [e.target.name]: true });
     } else {
@@ -258,7 +260,6 @@ function Cadastro() {
           <Input
             placeholder="País"
             backgroundColor="#E4E6F4"
-            borderColor="#151B57"
             color="black"
             fontSize="1em"
             width="100%"
@@ -271,7 +272,6 @@ function Cadastro() {
             id="estado"
             name="estado"
             backgroundColor="#E4E6F4"
-            borderColor="#151B57"
             color="#8D8D8D"
             width="100%"
             marginTop="2%"
@@ -311,7 +311,6 @@ function Cadastro() {
           <Input
             placeholder="Cidade"
             backgroundColor="#E4E6F4"
-            borderColor="#151B57"
             color="black"
             fontSize="1em"
             width="100%"
@@ -323,7 +322,6 @@ function Cadastro() {
           <Input
             placeholder="Bairro"
             backgroundColor="#E4E6F4"
-            borderColor="#151B57"
             color="black"
             fontSize="1em"
             width="100%"
@@ -335,7 +333,6 @@ function Cadastro() {
           <Input
             placeholder="Rua"
             backgroundColor="#E4E6F4"
-            borderColor="#151B57"
             color="black"
             fontSize="1em"
             width="100%"
@@ -348,7 +345,6 @@ function Cadastro() {
             <Input
               placeholder="Número"
               backgroundColor="#E4E6F4"
-              borderColor="#151B57"
               color="black"
               fontSize="1em"
               width="48%"
@@ -371,7 +367,6 @@ function Cadastro() {
           <Input
             placeholder="Defina sua senha"
             backgroundColor="#E4E6F4"
-            borderColor="#151B57"
             color="black"
             width="100%"
             marginTop="2%"
@@ -380,13 +375,13 @@ function Cadastro() {
             id="senha"
             type="password"
             onChange={preenchendoDados}
+            erro={erro.senha}
             camposVazios={camposVazios.senha}
           ></Input>
-
+          {erro.senha && <Rotulo>A senha deve ter no minimo 6 digitos</Rotulo>}
           <Input
             placeholder="Confirme sua senha"
             backgroundColor="#E4E6F4"
-            borderColor="#151B57"
             color="black"
             width="100%"
             marginTop="2%"
@@ -395,9 +390,12 @@ function Cadastro() {
             id="senhaConfirmada"
             type="password"
             onChange={preenchendoDados}
+            erro={erro.senhaConfirmada}
             camposVazios={camposVazios.senhaConfirmada}
           ></Input>
-
+          {erro.senhaConfirmada && (
+            <Rotulo>A senha deve ter no minimo 6 digitos</Rotulo>
+          )}
           <Select
             id="tipos"
             backgroundColor="#E4E6F4"
