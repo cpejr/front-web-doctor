@@ -11,9 +11,8 @@ export const Body = styled.div`
   padding: 4% 2% 4% 2%;
   background-color: #e5e5e5;
 `;
-
 export const DadosCadastro = styled.div`
-  display: flex;
+  display: flex ;
   flex-direction: column;
   justify-content: center;
   align-items: center;
