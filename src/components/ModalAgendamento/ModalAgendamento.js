@@ -48,10 +48,8 @@ function ModalAgendamento(props) {
   }
 
   async function pegandoNomeExames(id_exame) {
-
-    const respostaExame = await managerService.GetDadosExame(id_exame)
-    setExame(respostaExame[0].titulo)
-
+    const respostaExame = await managerService.GetDadosExame(id_exame);
+    setExame(respostaExame[0].titulo);
   }
 
   async function marcandoAgendamento() {
@@ -62,6 +60,14 @@ function ModalAgendamento(props) {
     setModalAgendamento(false);
   }
 
+  async function excluirConsulta(id) {
+    await managerService.DeletarConsulta(id);
+  }
+
+  async function excluirExameMarcado(id) {
+    await managerService.DeletarExameMarcado(id);
+  }
+
   return (
     <Container>
       <Caixa>
@@ -69,8 +75,8 @@ function ModalAgendamento(props) {
 
         <CorpoCaixa>
           <InfoEsquerda>
-            <Agendamento>
-              {consultas.map((value) => (
+            {consultas.map((value) => (
+              <Agendamento>
                 <CaixaAgendamento key={value.id}>
                   <DiaAgendamento>
                     {value.data_hora.slice(8, -14)}/
@@ -87,56 +93,40 @@ function ModalAgendamento(props) {
                     {value.data_hora.slice(13, -8)}
                   </HorarioAgendamento>
                 </CaixaAgendamento>
-              ))}
-              {examesMarcados.map((value) => (
-                <CaixaAgendamento key={value.id} onLoad={pegandoNomeExames(value.id_exame)}>
-                  <DiaAgendamento>
-                    {value.data_hora.slice(8, -14)}/
-                    {value.data_hora.slice(5, -17)}/
-                    {value.data_hora.slice(0, -20)}
-                  </DiaAgendamento>
-                  <BarraEstetica></BarraEstetica>
-                  <TextoAgendamentoEspecifico>
-                    {exame}
-                  </TextoAgendamentoEspecifico>
-                  <BarraEstetica></BarraEstetica>
-                  <HorarioAgendamento>
-                    {value.data_hora.slice(11, -11)}
-                    {value.data_hora.slice(13, -8)}
-                  </HorarioAgendamento>
-                </CaixaAgendamento>
-              ))}
-              <BotoesEditarExcluir>
-                <Button
-                  width="45%"
-                  height="40px"
-                  backgroundColor="#EFEFEF"
-                  borderColor="#BBC0F4"
-                  color="#8D8D8D"
-                  fontSize="0.9em"
-                  fontWeight="bold"
-                  fontSizeMedia="0.8em"
-                  fontSizeMedia950="1em"
-                  heightMedia560="30px"
-                >
-                  EDITAR
-                </Button>
-                <Button
-                  width="45%"
-                  height="40px"
-                  backgroundColor="#FFFFFF"
-                  borderColor="rgba(255, 0, 0, 0.25)"
-                  color="#8D8D8D"
-                  fontSize="0.9em"
-                  fontWeight="bold"
-                  fontSizeMedia="0.8em"
-                  fontSizeMedia950="1em"
-                  heightMedia560="30px"
-                >
-                  EXCLUIR
-                </Button>
-              </BotoesEditarExcluir>
-            </Agendamento>
+
+                <BotoesEditarExcluir>
+                  <Button
+                    width="45%"
+                    height="40px"
+                    backgroundColor="#EFEFEF"
+                    borderColor="#BBC0F4"
+                    color="#8D8D8D"
+                    fontSize="0.9em"
+                    fontWeight="bold"
+                    fontSizeMedia="0.8em"
+                    fontSizeMedia950="1em"
+                    heightMedia560="30px"
+                  >
+                    EDITAR
+                  </Button>
+                  <Button
+                    width="45%"
+                    height="40px"
+                    backgroundColor="#FFFFFF"
+                    borderColor="rgba(255, 0, 0, 0.25)"
+                    color="#8D8D8D"
+                    fontSize="0.9em"
+                    fontWeight="bold"
+                    fontSizeMedia="0.8em"
+                    fontSizeMedia950="1em"
+                    heightMedia560="30px"
+                    onClick={() => excluirConsulta(value.id)}
+                  >
+                    EXCLUIR
+                  </Button>
+                </BotoesEditarExcluir>
+              </Agendamento>
+            ))}
           </InfoEsquerda>
 
           <InfoDireita>

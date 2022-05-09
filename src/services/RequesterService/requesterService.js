@@ -36,18 +36,13 @@ export const requisicaoConsultas = (id_usuario) =>
 export const requisicaoExamesMarcados = (id_usuario) =>
   api.get(`/exame_marcados/${id_usuario}`);
 
-export const requisicaoExame = (id) =>
-  api.get(`/exames/${id}`);
-<<<<<<< HEAD
+export const requisicaoExame = (id) => api.get(`/exames/${id}`);
 
 export const alterarSenha = (id, senha) =>
   api.put(`/usuarios/${id}`, { senha: senha });
 
-=======
+export const deletarConsulta = (id) => api.delete(`/consultas/${id}`);
 
-  
-export const alterarSenha = (id, senha) =>
-  api.put(`/usuarios/${id}`, { senha: senha });
+export const deletarExameMarcado = (id) => api.delete(`/exame_marcados/${id}`);
 
->>>>>>> ModalAgendamento
 export const deletarUsuario = (id) => api.delete(`/usuarios/${id}`);

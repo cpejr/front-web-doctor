@@ -75,10 +75,9 @@ export const InfoEsquerda = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  align-items: center;
+  align-items: start;
   width: 65%;
   height: 100%;
-  min-height: 70vh;
 
   @media (max-width: 800px) {
     width: 100%;
@@ -132,7 +131,8 @@ export const Agendamento = styled.div`
   display: flex;
   align-items: end;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: start;
+  align-self: start;
   width: 94%;
   height: 100%;
   margin: 0% 2% 0% 2%;
