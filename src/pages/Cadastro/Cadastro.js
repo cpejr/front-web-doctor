@@ -12,6 +12,8 @@ import {
   Logo,
   InputMesmaLinha,
   BotoesMesmaLinha,
+  Rotulo,
+  RotuloColuna,
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 
@@ -22,9 +24,12 @@ function Cadastro() {
   const [carregando, setCarregando] = useState(false);
 
   const [erro, setErro] = useState(false);
-  const [camposVazios, setCamposVazio] = useState(false);
+  const [camposVazios, setCamposVazios] = useState(false);
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+  const regexPattern =
+    "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
 
   async function verificandoEnter(e) {
     if (e.key === "Enter") {
@@ -33,27 +38,107 @@ function Cadastro() {
   }
 
   async function requisicaoCadastro() {
-    if (estado.nome.length === 0) {
-      setCamposVazio({ ...camposVazios, nome: true });
-    }
-    if (estado.senha === estado.senhaConfirmada) {
-      setCarregando(true);
-      await managerService.Cadastrando(estado, endereco);
-      setCarregando(false);
+    if (estado.nome === undefined) {
+      setCamposVazios({ ...camposVazios, nome: true });
     } else {
-      alert("As senhas digitadas são diferentes.");
-      setCarregando(false);
+      setCamposVazios({ ...camposVazios, nome: false });
     }
+    if (estado.telefone === undefined) {
+      setCamposVazios({ ...camposVazios, telefone: true });
+    } else {
+      setCamposVazios({ ...camposVazios, telefone: false });
+    }
+    if (estado.data_nascimento === undefined) {
+      setCamposVazios({ ...camposVazios, data_nascimento: true });
+    } else {
+      setCamposVazios({ ...camposVazios, data_nascimento: false });
+    }
+    if (estado.cpf === undefined) {
+      setCamposVazios({ ...camposVazios, cpf: true });
+    } else {
+      setCamposVazios({ ...camposVazios, cpf: false });
+    }
+    if (estado.email === undefined) {
+      setCamposVazios({ ...camposVazios, email: true });
+    } else {
+      setCamposVazios({ ...camposVazios, email: false });
+    }
+    if (estado.cep === undefined) {
+      setCamposVazios({ ...camposVazios, cep: true });
+    } else {
+      setCamposVazios({ ...camposVazios, cep: false });
+    }
+    if (endereco.pais === undefined) {
+      setCamposVazios({ ...camposVazios, pais: true });
+    } else {
+      setCamposVazios({ ...camposVazios, pais: false });
+    }
+    if (endereco.estado === undefined) {
+      setCamposVazios({ ...camposVazios, estado: true });
+    } else {
+      setCamposVazios({ ...camposVazios, estado: false });
+    }
+    if (endereco.cidade === undefined) {
+      setCamposVazios({ ...camposVazios, cidade: true });
+    } else {
+      setCamposVazios({ ...camposVazios, cidade: false });
+    }
+    if (endereco.bairro === undefined) {
+      setCamposVazios({ ...camposVazios, bairro: true });
+    } else {
+      setCamposVazios({ ...camposVazios, bairro: false });
+    }
+    if (endereco.rua === undefined) {
+      setCamposVazios({ ...camposVazios, rua: true });
+    } else {
+      setCamposVazios({ ...camposVazios, rua: false });
+    }
+    if (endereco.numero === undefined) {
+      setCamposVazios({ ...camposVazios, numero: true });
+    } else {
+      setCamposVazios({ ...camposVazios, numero: false });
+    }
+    if (estado.senha === undefined) {
+      setCamposVazios({ ...camposVazios, senha: true });
+    } else {
+      setCamposVazios({ ...camposVazios, senha: false });
+    }
+    if (estado.senhaConfirmada === undefined) {
+      setCamposVazios({ ...camposVazios, senhaConfirmada: true });
+    } else {
+      setCamposVazios({ ...camposVazios, senhaConfirmada: false });
+    }
+    if (estado.tipo === undefined) {
+      setCamposVazios({ ...camposVazios, tipo: true });
+    } else {
+      setCamposVazios({ ...camposVazios, tipo: false });
+    }
+
+    // if (estado.senha === estado.senhaConfirmada) {
+    //   setCarregando(true);
+    //   await managerService.Cadastrando(estado, endereco);
+    //   setCarregando(false);
+    // } else {
+    //   alert("As senhas digitadas são diferentes.");
+    //   setCarregando(false);
+    // }
   }
 
   function preenchendoDados(e) {
-    if ((e.target.name === "cpf" || e.target.name === "telefone") &&
-      e.target.value.length !== 11
+    // if(regexPattern.test(e.target.value)){
+    //   console.log("oba")
+    // }
+
+    if (
+      ((e.target.name === "cpf" || e.target.name === "telefone") &&
+        e.target.value.length !== 11) ||
+      (e.target.name === "data_nascimento" && e.target.value.length !== 10)
     ) {
       setErro({ ...erro, [e.target.name]: true });
     } else {
       setErro({ ...erro, [e.target.name]: false });
     }
+
     setEstado({ ...estado, [e.target.name]: e.target.value });
   }
 
@@ -83,7 +168,6 @@ function Cadastro() {
             placeholder="Nome Completo"
             status="error"
             backgroundColor="#E4E6F4"
-            borderColor="#151B57"
             color="black"
             fontSize="1em"
             width="100%"
@@ -91,36 +175,49 @@ function Cadastro() {
             name="nome"
             onChange={preenchendoDados}
             onKeyPress={verificandoEnter}
-            camposVazios={camposVazios.nome}
+            erro={erro.nome}
+            camposVazios={camposVazios}
           ></Input>
           <InputMesmaLinha>
-            <Input
-              placeholder="Telefone"
-              backgroundColor="#E4E6F4"
-              color="black"
-              fontSize="1em"
-              marginTop="2%"
-              width="48%"
-              name="telefone"
-              onChange={preenchendoDados}
-              onKeyPress={verificandoEnter}
-              erro={erro.telefone}
-              camposVazios={camposVazios.telefone}
-            ></Input>
-            <Input
-              placeholder="Data de Nascimento"
-              backgroundColor="#E4E6F4"
-              borderColor="#151B57"
-              color="#807D7D"
-              fontSize="1.25em"
-              width="48%"
-              marginTop="2%"
-              name="data_nascimento"
-              type="date"
-              onChange={preenchendoDados}
-              camposVazios={camposVazios.data_nascimento}
-            ></Input>
+            <RotuloColuna>
+              <Input
+                placeholder="Telefone"
+                backgroundColor="#E4E6F4"
+                color="black"
+                fontSize="1em"
+                marginTop="2%"
+                width="100%"
+                name="telefone"
+                onChange={preenchendoDados}
+                onKeyPress={verificandoEnter}
+                erro={erro.telefone}
+                camposVazios={camposVazios.telefone}
+              ></Input>
+              {erro.telefone && (
+                <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
+              )}
+            </RotuloColuna>
+            <RotuloColuna>
+              <Input
+                placeholder="Data de Nascimento"
+                backgroundColor="#E4E6F4"
+                color="#807D7D"
+                fontSize="1.25em"
+                width="100%"
+                marginTop="2%"
+                name="data_nascimento"
+                type="date"
+                onChange={preenchendoDados}
+                erro={erro.data_nascimento}
+                camposVazios={camposVazios.data_nascimento}
+              ></Input>
+
+              {erro.data_nascimento && (
+                <Rotulo>Digite uma data no formato xx/xx/xxxx</Rotulo>
+              )}
+            </RotuloColuna>
           </InputMesmaLinha>
+
           <Input
             placeholder="CPF"
             backgroundColor="#E4E6F4"
@@ -132,6 +229,7 @@ function Cadastro() {
             erro={erro.cpf}
             camposVazios={camposVazios.cpf}
           ></Input>
+          {erro.cpf && <Rotulo>Digite um CPF no formato xxx.xxx.xxx-xx</Rotulo>}
           <Input
             placeholder="Endereço de e-mail"
             backgroundColor="#E4E6F4"
@@ -156,6 +254,7 @@ function Cadastro() {
             erro={erro.cep}
             camposVazios={camposVazios.cep}
           ></Input>
+          {erro.cep && <Rotulo>Digite um CEP no formato xx.xxx-xxx</Rotulo>}
           <Input
             placeholder="País"
             backgroundColor="#E4E6F4"

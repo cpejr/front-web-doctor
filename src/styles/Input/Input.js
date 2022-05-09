@@ -6,7 +6,11 @@ const Input = styled.input`
   border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
-      cor = props.erro ? "#E00000" :  "#151B57";
+      if(props.erro || props.camposVazios){
+        cor = "#E00000";
+      } else {
+        cor = "#151B57";
+      }
     } else {
       cor = props.borderColor;
     }
