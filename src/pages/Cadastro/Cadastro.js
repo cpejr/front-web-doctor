@@ -19,12 +19,26 @@ import * as managerService from "../../services/ManagerService/managerService";
 
 function Cadastro() {
   const history = useHistory();
-  const [estado, setEstado] = useState({});
+  const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
   const [carregando, setCarregando] = useState(false);
 
   const [erro, setErro] = useState(false);
-  const [camposVazios, setCamposVazios] = useState(false);
+  const [tipo, setTipo] = useState(false);
+  const [nome, setNome] = useState(false);
+  const [telefone, setTelefone] = useState(false);  
+  const [dataNascimento, setDataNascimento] = useState(false);
+  const [cpf, setCpf] = useState(false);
+  const [email, setEmail] = useState(false);
+  const [cep, setCep] = useState(false);
+  const [pais, setPais] = useState(false);
+  const [estado, setEstado] = useState(false);
+  const [bairro, setBairro] = useState(false);
+  const [rua, setRua] = useState(false);
+  const [numero, setNumero] = useState(false);
+  const [cidade, setCidade] = useState(false);
+  const [senha, setSenha] = useState(false);
+  const [senhaConfirmada, setSenhaConfirmada] = useState(false);
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -35,6 +49,52 @@ function Cadastro() {
   }
 
   async function requisicaoCadastro() {
+    if(usuario.nome === undefined){
+      setNome(true);
+    }
+    if(usuario.telefone === undefined){
+      setTelefone(true);
+    }
+    if(usuario.cpf === undefined){
+      setCpf(true);
+    }
+    if(usuario.email === undefined){
+      setEmail(true);
+    }
+    if(usuario.dataNascimento === undefined){
+      setDataNascimento(true);
+    }
+    if(usuario.senha === undefined){
+      setSenha(true);
+    }
+    if(usuario.senhaConfirmada === undefined){
+      setSenhaConfirmada(true);
+    }
+    if(usuario.tipo === undefined){
+      setTipo(true);
+    }
+    if(endereco.cep === undefined){
+      setCep(true);
+    }
+    if(endereco.rua === undefined){
+      setRua(true);
+    }
+    if(endereco.pais === undefined){
+      setPais(true);
+    }
+    if(endereco.bairro === undefined){
+      setBairro(true);
+    }
+    if(endereco.estado === undefined){
+      setEstado(true);
+    }
+    if(endereco.numero === undefined){
+      setNumero(true);
+    }
+    if(endereco.cidade === undefined){
+      setCidade(true);
+    }
+  
     if (estado.senha === estado.senhaConfirmada) {
       setCarregando(true);
       await managerService.Cadastrando(estado, endereco);
@@ -55,7 +115,7 @@ function Cadastro() {
       setErro({ ...erro, [e.target.name]: false });
     }
 
-    setEstado({ ...estado, [e.target.name]: e.target.value });
+    setUsuario({ ...usuario, [e.target.name]: e.target.value });
   }
 
   function preenchendoDados(e) {
@@ -71,7 +131,7 @@ function Cadastro() {
       setErro({ ...erro, [e.target.name]: false });
     }
 
-    setEstado({ ...estado, [e.target.name]: e.target.value });
+    setUsuario({ ...usuario, [e.target.name]: e.target.value });
   }
 
   function preenchendoEndereco(e) {
@@ -99,12 +159,11 @@ function Cadastro() {
           <Select
             id="tipos"
             backgroundColor="#E4E6F4"
-            borderColor="#151B57"
             color="#8D8D8D"
             width="100%"
             name="tipo"
             onChange={preenchendoDados}
-            camposVazios={camposVazios.tipo}
+            camposVazios={tipo}
           >
             <option value="">Tipo de Usuário</option>
             <option value="SECRETARIA" borderColor="#151B57">
@@ -126,7 +185,7 @@ function Cadastro() {
             onChange={preenchendoDados}
             onKeyPress={verificandoEnter}
             erro={erro.nome}
-            camposVazios={camposVazios}
+            camposVazios={nome}
           ></Input>
           <InputMesmaLinha>
             <RotuloColuna>
@@ -141,7 +200,7 @@ function Cadastro() {
                 onChange={preenchendoDados}
                 onKeyPress={verificandoEnter}
                 erro={erro.telefone}
-                camposVazios={camposVazios.telefone}
+                camposVazios={telefone}
               ></Input>
               {erro.telefone && (
                 <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
@@ -159,7 +218,7 @@ function Cadastro() {
                 type="date"
                 onChange={preenchendoDados}
                 erro={erro.data_nascimento}
-                camposVazios={camposVazios.data_nascimento}
+                camposVazios={dataNascimento}
               ></Input>
 
               {erro.data_nascimento && (
@@ -177,7 +236,7 @@ function Cadastro() {
             name="cpf"
             onChange={preenchendoDados}
             erro={erro.cpf}
-            camposVazios={camposVazios.cpf}
+            camposVazios={cpf}
           ></Input>
           {erro.cpf && <Rotulo>Digite um CPF no formato xxx.xxx.xxx-xx</Rotulo>}
           <Input
@@ -190,7 +249,7 @@ function Cadastro() {
             name="email"
             onChange={validacaoEmail}
             erro={erro.email}
-            camposVazios={camposVazios.email}
+            camposVazios={email}
           ></Input>
           {erro.email && (
             <Rotulo>Digite um email no formato email@email.com</Rotulo>
@@ -205,7 +264,7 @@ function Cadastro() {
             name="cep"
             onChange={preenchendoEndereco}
             erro={erro.cep}
-            camposVazios={camposVazios.cep}
+            camposVazios={cep}
           ></Input>
           {erro.cep && <Rotulo>Digite um CEP no formato xx.xxx-xxx</Rotulo>}
           <Input
@@ -217,7 +276,7 @@ function Cadastro() {
             marginTop="2%"
             name="pais"
             onChange={preenchendoEndereco}
-            camposVazios={camposVazios.pais}
+            camposVazios={pais}
           ></Input>
           <Select
             id="estado"
@@ -227,7 +286,7 @@ function Cadastro() {
             width="100%"
             marginTop="2%"
             onChange={preenchendoEndereco}
-            camposVazios={camposVazios.estado}
+            camposVazios={estado}
           >
             <option value="">Estado</option>
             <option value="AC">Acre</option>
@@ -268,7 +327,7 @@ function Cadastro() {
             marginTop="2%"
             name="cidade"
             onChange={preenchendoEndereco}
-            camposVazios={camposVazios.cidade}
+            camposVazios={cidade}
           ></Input>
           <Input
             placeholder="Bairro"
@@ -279,7 +338,7 @@ function Cadastro() {
             marginTop="2%"
             name="bairro"
             onChange={preenchendoEndereco}
-            camposVazios={camposVazios.bairro}
+            camposVazios={bairro}
           ></Input>
           <Input
             placeholder="Rua"
@@ -290,7 +349,7 @@ function Cadastro() {
             marginTop="2%"
             name="rua"
             onChange={preenchendoEndereco}
-            camposVazios={camposVazios.rua}
+            camposVazios={rua}
           ></Input>
           <InputMesmaLinha>
             <Input
@@ -301,7 +360,7 @@ function Cadastro() {
               width="48%"
               name="numero"
               onChange={preenchendoEndereco}
-              camposVazios={camposVazios.numero}
+              camposVazios={numero}
             ></Input>
             <Input
               placeholder="Complemento"
@@ -327,7 +386,7 @@ function Cadastro() {
             type="password"
             onChange={preenchendoDados}
             erro={erro.senha}
-            camposVazios={camposVazios.senha}
+            camposVazios={senha}
           ></Input>
           {erro.senha && <Rotulo>A senha deve ter no minimo 6 digitos</Rotulo>}
           <Input
@@ -342,7 +401,7 @@ function Cadastro() {
             type="password"
             onChange={preenchendoDados}
             erro={erro.senhaConfirmada}
-            camposVazios={camposVazios.senhaConfirmada}
+            camposVazios={senhaConfirmada}
           ></Input>
           {erro.senhaConfirmada && (
             <Rotulo>A senha deve ter no minimo 6 digitos</Rotulo>
@@ -371,7 +430,7 @@ function Cadastro() {
               fontSize="1.5em"
               fontWeight="bold"
               fontSizeMedia="1.2em"
-              onClick={() => verificandoEnter()}
+              onClick={() => requisicaoCadastro()}
             >
               {carregando ? <Spin indicator={antIcon} /> : "ENTRAR"}
             </Button>
