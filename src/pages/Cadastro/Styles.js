@@ -8,8 +8,8 @@ export const Body = styled.div`
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  padding: 1%;
-  background-color: #e5e5e5 ;
+  padding: 4% 2% 4% 2%;
+  background-color: #e5e5e5;
 `;
 
 export const DadosCadastro = styled.div`
@@ -26,6 +26,7 @@ export const InputMesmaLinha = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 2%;
   align-items: end;
   width: 100%;
   font-size: 1em;
@@ -33,14 +34,15 @@ export const InputMesmaLinha = styled.div`
     flex-direction: column;
   }
 `;
-export const BotoesMesmaLinha = styled.div`
+export const InputMesmaLinha2 = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: end;
+
   width: 100%;
   font-size: 1em;
-  @media (max-width: 560px) {
+  @media (max-width: 820px) {
     flex-direction: column;
   }
 `;
@@ -52,5 +54,21 @@ export const Logo = styled.div`
   height: 33%;
   min-width: 120px;
   min-height: 120px;
-  .logo{ border-radius: 15px;}
+  .logo {
+    border-radius: 15px;
+  }
+`;
+export const Botao = styled.button`
+  display: flex;
+  width: 100%;
+  height: 10px;
+  align-items: center;
+  margin: 1%;
+  justify-content: flex-start;
+  background-color: transparent;
+  border-color: transparent;
+  color: red;
+  font-size: 1em;
+  cursor: pointer;
+  text-decoration: underline;
 `;
