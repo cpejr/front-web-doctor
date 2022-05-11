@@ -68,6 +68,7 @@ export const Titulo = styled.div`
   }
   @media (max-width: 560px) {
     font-size: 1.2em;
+    margin-bottom: 8%;
   }
 `;
 
@@ -95,6 +96,7 @@ export const InfoDireita = styled.div`
 
   @media (max-width: 800px) {
     width: 80%;
+    min-height: 40vh;
   }
 `;
 
@@ -118,6 +120,9 @@ export const NumeroAgendamentos = styled.div`
 
   @media (max-width: 1100px) and (min-width: 800px) {
     font-size: 1em;
+  }
+  @media (max-width: 800px) and (min-width: 560px) {
+    font-size: 1.2em;
   }
   @media (max-width: 800px) {
     width: 100%;
@@ -196,7 +201,7 @@ export const TextoAgendamentoEspecifico = styled.div`
   }
 `;
 
-export const DiaAgendamento = styled.div`
+export const DiaHorarioAgendamento = styled.div`
   display: flex;
   align-items: center;
   flex-direction: row;
@@ -206,22 +211,8 @@ export const DiaAgendamento = styled.div`
   font-family: "Roboto Condensed", sans-serif;
   font-size: 1em;
   font-weight: medium;
-  @media (max-width: 950px) {
-    font-size: 0.8em;
-  }
-`;
-
-export const HorarioAgendamento = styled.div`
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  justify-content: center;
-  text-align: center;
-  width: 25%;
-  font-family: "Roboto Condensed", sans-serif;
-  font-size: 1em;
-  font-weight: medium;
-  @media (max-width: 950px) {
+  
+  @media (max-width: 1110px) {
     font-size: 0.8em;
   }
 `;

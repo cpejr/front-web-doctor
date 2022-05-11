@@ -44,12 +44,12 @@ export const GetDadosPessoais = async () => {
     });
   return dadosUsuario;
 };
-export const GetDadosConsultas = async (id_usuario) => {
+export const GetDadosConsultasExamesMarcados = async (id_usuario) => {
   let dadosConsultas = {};
+  let dadosExamesMarcados = {};
 
   await requesterService
     .requisicaoConsultas(id_usuario)
-
     .then((res) => {
       dadosConsultas = res.data;
     })
@@ -57,24 +57,16 @@ export const GetDadosConsultas = async (id_usuario) => {
       requisicaoErro(error);
     });
 
-  return dadosConsultas;
-};
-
-export const GetDadosExamesMarcados = async (id_usuario) => {
-  let dadosExamesMarcados = {};
-
-  await requesterService
+    await requesterService
     .requisicaoExamesMarcados(id_usuario)
     .then((res) => {
-      console.log(res.data);
-
       dadosExamesMarcados = res.data;
     })
     .catch((error) => {
       requisicaoErro(error);
     });
 
-  return dadosExamesMarcados;
+  return { dadosConsultas, dadosExamesMarcados};
 };
 
 export const GetDadosExame = async (id) => {
