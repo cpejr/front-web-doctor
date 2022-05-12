@@ -17,8 +17,13 @@ import {
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 
+import "react-toastify/dist/ReactToastify.min.css";
+import AddToast from "../../components/AddToast/AddToast";
+import { toast } from "react-toastify";
+
 function Cadastro() {
   const history = useHistory();
+
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
   const [carregando, setCarregando] = useState(false);
@@ -26,7 +31,7 @@ function Cadastro() {
   const [erro, setErro] = useState(false);
   const [tipo, setTipo] = useState(false);
   const [nome, setNome] = useState(false);
-  const [telefone, setTelefone] = useState(false);  
+  const [telefone, setTelefone] = useState(false);
   const [dataNascimento, setDataNascimento] = useState(false);
   const [cpf, setCpf] = useState(false);
   const [email, setEmail] = useState(false);
@@ -49,60 +54,61 @@ function Cadastro() {
   }
 
   async function requisicaoCadastro() {
-    if(usuario.nome === undefined){
+    if (usuario.nome === undefined) {
       setNome(true);
     }
-    if(usuario.telefone === undefined){
+    if (usuario.telefone === undefined) {
       setTelefone(true);
     }
-    if(usuario.cpf === undefined){
+    if (usuario.cpf === undefined) {
       setCpf(true);
     }
-    if(usuario.email === undefined){
+    if (usuario.email === undefined) {
       setEmail(true);
     }
-    if(usuario.dataNascimento === undefined){
+    if (usuario.dataNascimento === undefined) {
       setDataNascimento(true);
     }
-    if(usuario.senha === undefined){
+    if (usuario.senha === undefined) {
       setSenha(true);
     }
-    if(usuario.senhaConfirmada === undefined){
+    if (usuario.senhaConfirmada === undefined) {
       setSenhaConfirmada(true);
     }
-    if(usuario.tipo === undefined){
+    if (usuario.tipo === undefined) {
       setTipo(true);
     }
-    if(endereco.cep === undefined){
+    if (endereco.cep === undefined) {
       setCep(true);
     }
-    if(endereco.rua === undefined){
+    if (endereco.rua === undefined) {
       setRua(true);
     }
-    if(endereco.pais === undefined){
+    if (endereco.pais === undefined) {
       setPais(true);
     }
-    if(endereco.bairro === undefined){
+    if (endereco.bairro === undefined) {
       setBairro(true);
     }
-    if(endereco.estado === undefined){
+    if (endereco.estado === undefined) {
       setEstado(true);
     }
-    if(endereco.numero === undefined){
+    if (endereco.numero === undefined) {
       setNumero(true);
     }
-    if(endereco.cidade === undefined){
+    if (endereco.cidade === undefined) {
       setCidade(true);
     }
-  
-    if (estado.senha === estado.senhaConfirmada) {
+    
+    if (usuario.senha === usuario.senhaConfirmada) {
       setCarregando(true);
-      await managerService.Cadastrando(estado, endereco);
+      await managerService.Cadastrando(usuario, endereco);
       setCarregando(false);
     } else {
-      alert("As senhas digitadas são diferentes.");
+      toast.error("As senhas digitadas são diferentes.");
       setCarregando(false);
     }
+  
   }
 
   async function validacaoEmail(e) {
@@ -400,6 +406,7 @@ function Cadastro() {
             id="senhaConfirmada"
             type="password"
             onChange={preenchendoDados}
+            onKeyPress={verificandoEnter}
             erro={erro.senhaConfirmada}
             camposVazios={senhaConfirmada}
           ></Input>
@@ -437,6 +444,7 @@ function Cadastro() {
           </BotoesMesmaLinha>
         </DadosCadastro>
       </Body>
+      <AddToast />
     </div>
   );
 }
