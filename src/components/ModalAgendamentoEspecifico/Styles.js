@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Input } from "antd";
 
 export const Container = styled.div`
   display: flex;
@@ -33,7 +34,7 @@ export const InfoEsquerdaEDireita = styled.div`
   height: 100%;
   min-height: 80vh;
   padding: 5%;
-  
+
   @media (max-width: 800px) {
     width: 100%;
   }
@@ -101,7 +102,7 @@ export const TextoTipoAgendamento = styled.h3`
   color: #0a0e3c;
   text-align: center;
 
-  @media (max-width: 850px) and (min-width: 560px){
+  @media (max-width: 850px) and (min-width: 560px) {
     font-size: 1.2em;
   }
 
@@ -134,7 +135,7 @@ export const DoisSelect = styled.h3`
     height: 100%;
   }
 
-  @media (max-width: 1260px) and (min-width: 800px){
+  @media (max-width: 1260px) and (min-width: 800px) {
     flex-direction: column;
     height: 100%;
   }
@@ -146,17 +147,37 @@ export const TamanhoInput = styled.div`
   align-items: start;
   justify-content: center;
   width: 40%;
-  
+  height: 40px;
   background-color: green;
 
   @media (max-width: 560px) {
     width: 100%;
     margin-bottom: 5%;
   }
-  @media (max-width: 1260px) and (min-width: 800px){
+  @media (max-width: 1260px) and (min-width: 800px) {
     width: 90%;
     margin-bottom: 5%;
   }
+`;
+
+export const InputHora = styled.input`
+  width: 100%;
+  height: 100%;
+  font-family: "Barlow", sans-serif;
+  font-weight: 600;
+  font-size: 0.9em;
+  padding-left: 10%;
+  border-width: 0.1px;
+`;
+
+export const InputDuracao = styled(Input)`
+  width: 100%;
+  height: 100%;
+  font-family: "Barlow", sans-serif;
+  font-weight: 600;
+  font-size: 0.9em;
+  padding-left: 10%;
+  border-width: 0.1px;
 `;
 
 export const TextoSelecioneUmaData = styled.h3`
@@ -175,11 +196,9 @@ export const SelecioneUmaData = styled.h3`
   align-items: start;
   justify-content: center;
   width: 90%;
-  
   background-color: green;
-  
+
   @media (max-width: 560px) {
     width: 100%;
   }
 `;
-

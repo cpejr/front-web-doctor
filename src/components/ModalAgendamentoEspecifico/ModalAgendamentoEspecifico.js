@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, Row, Col, Input, Select } from "antd";
+import { Checkbox, Row, Col, Input } from "antd";
+import Select from "../../styles/Select";
 import Button from "../../styles/Button";
 import {
   Container,
@@ -13,6 +14,8 @@ import {
   TextoCheckbox,
   DoisSelect,
   TamanhoInput,
+  InputHora,
+  InputDuracao,
   SelecioneUmaData,
   TextoSelecioneUmaData,
 } from "./Styles";
@@ -20,25 +23,119 @@ import * as managerService from "../../services/ManagerService/managerService";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import moment from 'moment'
+
 
 function ModalAgendamentoEspecifico(props) {
+
   const { TextArea } = Input;
   const { Option } = Select;
   const [usuario, setUsuario] = useState({});
+  const [consultorios, setConsultorios] = useState([]);
   const [carregando, setCarregando] = useState();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const [ consulta, setConsulta ] = useState({
+    data_hora:"",
+    duracao_em_minutos:"",
+    descricao:"",
+    avaliacao:"",
+    id_usuario:"",
+    id_consultorio:"03d4ccd8-1518-417a-8c36-80eaecbbc884"
+  });
+  const [ data, setData ] = useState("");
+  const [ hora, setHora ] = useState("");
+  const [ duracaoEmMinutos, setDuracaoEmMinutos ] = useState("");
+  // const [selectValue, setSelectValue] = useState("");
+  moment.locale('pt-br');
 
   async function pegandoDados() {
     setCarregando(true);
     const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
     setUsuario(resposta.dadosUsuario);
     setCarregando(false);
+
+  }
+
+  async function pegandoConsultorios(){
+    const res = await managerService.GetDadosConsultorios();
+    setConsultorios(res.dadosConsultorios);
+    console.log(res.dadosConsultorios)
   }
 
   useEffect(() => {
     pegandoDados();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
+
+  useEffect(() => {
+    pegandoConsultorios()
+  }, [])
+
+  async function requisicaoCriarConsulta() {
+    console.log(consulta)
+    await managerService.CriandoColsulta(consulta);
+  }
+
+  function formatacaoData() {
+    try {
+      const dataFormatada = new Date(data)
+      formatacaoDataHora(dataFormatada.toLocaleDateString())
+      // console.log(`${data} ${hora}`)
+    } catch {
+      alert("Data inválida.");
+    }
+  }
+
+  function formatacaoDataHora(dataFormatada) {
+    try {
+      const dataHora = `${dataFormatada} ${hora}:00`
+      consulta.data_hora = dataHora
+    } catch {
+      alert("DataHora inválida.");
+    }
+  }
+
+  function formatacaoDuracao() {
+    try {
+      const duracaoFormatada = moment.duration(moment(`${duracaoEmMinutos}:00`, 'HH:mm:ss').format("HH:mm")).asMinutes()
+      consulta.duracao_em_minutos = duracaoFormatada
+    } catch {
+      alert("DataHora inválida.");
+    }
+  }
+
+  function testagem () {
+    console.log(consulta)
+  }
+
+  function testagemDois () {
+    formatacaoData()
+    formatacaoDuracao()
+    consulta.id_usuario = usuario.id
+  }
+
+  function preenchendoDadosInput(e) {
+    if (e.target.name === "hora") {
+      setHora(e.target.value)
+      return hora
+    } else
+    if (e.target.name === "data") {
+      setData(e.target.value)
+      return data
+    } if (e.target.name === "duracao_em_minutos") {
+      setDuracaoEmMinutos(e.target.value)
+      return duracaoEmMinutos
+  } else {
+    setConsulta({ ...consulta, [e.target.name]: e.target.value });
+      return consulta
+  }
+  
+}
+
+  function preenchendoDadosConsulta(value, e) {
+    console.log(e)
+      
+  }
 
   return (
     <Container>
@@ -78,50 +175,63 @@ function ModalAgendamentoEspecifico(props) {
               placeholder="Selecione uma data"
               type="date"
               size="large"
+              name="data"
+              onChange={(e) => {preenchendoDadosInput(e)}}
             ></Input>
           </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
               <Select style={{ width: "100%" }} size="large" placeholder="Tipo">
-                <Option value="1">Consulta 1</Option>
-                <Option value="2">Consulta 2</Option>
-                <Option value="3">Consulta 3</Option>
+                <option value="1">Tipo 1</option>
+                <option value="2">Tipo 2</option>
+                <option value="3">Tipo 3</option>
               </Select>
             </TamanhoInput>
             <TamanhoInput>
-              <Select
+               <Select
+                id="id_consultorio"
+                name="id_consultorio"
                 style={{ width: "100%" }}
                 size="large"
-                placeholder="Consultório "
+                placeholder="Consultório"
+                onChange={(e) => {preenchendoDadosInput(e)}}
               >
-                <Option value="1">Consulta 1</Option>
-                <Option value="2">Consulta 2</Option>
-                <Option value="3">Consulta 3</Option>
-              </Select>
+                {consultorios.map((consultorio) => (
+                  <option key={consultorio.id} value={consultorio.id}>
+                    {consultorio.nome}
+                  </option>
+                ))}
+              </Select> 
             </TamanhoInput>
           </DoisSelect>
+          
+          <button onClick={testagemDois}>
+            TESTAGEM 2
+          </button>
+
+          <button onClick={testagem}>
+            TESTAGEM
+          </button>
           <DoisSelect>
+
             <TamanhoInput>
-              <Select
-                style={{ width: "100%" }}
-                size="large"
+              <InputHora
+                type="text"
+                onFocus={(e) => (e.target.type = "time")}
+                onBlur={(e) => (e.target.type = "text")}
                 placeholder="Horário"
-              >
-                <Option value="1">Consulta 1</Option>
-                <Option value="2">Consulta 2</Option>
-                <Option value="3">Consulta 3</Option>
-              </Select>
+                name="hora"
+                onChange={preenchendoDadosInput}
+              />
             </TamanhoInput>
+
             <TamanhoInput>
-              <Select
-                style={{ width: "100%" }}
-                size="large"
+              <InputDuracao
                 placeholder="Duração"
-              >
-                <Option value="1">Consulta 1</Option>
-                <Option value="2">Consulta 2</Option>
-                <Option value="3">Consulta 3</Option>
-              </Select>
+                name="duracao_em_minutos"
+                onChange={preenchendoDadosInput}
+                suffix="min"
+              />
             </TamanhoInput>
           </DoisSelect>
           <Checkbox>
@@ -138,6 +248,7 @@ function ModalAgendamentoEspecifico(props) {
             fontWeight="bold"
             fontSizeMedia="0.9em"
             fontSizeMedia950="1.1em"
+            onClick={() => requisicaoCriarConsulta()}
           >
             Cadastrar novo agendamento
           </Button>
