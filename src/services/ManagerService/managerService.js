@@ -32,6 +32,21 @@ export const Cadastrando = async (estado, endereco) => {
   return false;
 };
 
+export const CriandoColsulta = async (consulta) => {
+  await requesterService
+    .criarConsulta(consulta)
+    .then(() => {
+      alert("Consulta criada com sucesso.");
+      window.location.href = "web/listadesuariossecretaria";
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      console.log(error)
+      return false;
+    });
+  return;
+};
+
 export const GetDadosPessoais = async () => {
   let dadosUsuario = {};
   await requesterService
@@ -43,6 +58,53 @@ export const GetDadosPessoais = async () => {
       requisicaoErro(error);
     });
   return dadosUsuario;
+};
+export const GetDadosConsultas = async (id_usuario) => {
+  let dadosConsultas = {};
+
+  await requesterService
+    .requisicaoConsultas(id_usuario)
+
+    .then((res) => {
+      dadosConsultas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return dadosConsultas;
+};
+
+export const GetDadosExamesMarcados = async (id_usuario) => {
+  let dadosExamesMarcados = {};
+
+  await requesterService
+    .requisicaoExamesMarcados(id_usuario)
+    .then((res) => {
+      console.log(res.data);
+
+      dadosExamesMarcados = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return dadosExamesMarcados;
+};
+
+export const GetDadosExame = async (id) => {
+  let dadosExame = {};
+
+  await requesterService
+    .requisicaoExame(id)
+
+    .then((res) => {
+      dadosExame = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosExame;
 };
 
 export const GetDadosUsuario = async (emailUrl) => {
@@ -67,6 +129,30 @@ export const GetDadosUsuario = async (emailUrl) => {
       requisicaoErro(error);
     });
   return { dadosEndereco, dadosUsuario };
+};
+
+export const GetDadosConsultorios = async () => {
+  let dadosConsultorios = {};
+  let dadosEndereco = {};
+
+  await requesterService
+    .requisicaoDadosConsultorios()
+    .then((res) => {
+      dadosConsultorios = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  await requesterService
+    .requisicaoDadosEndereco(dadosConsultorios)
+    .then((res) => {
+      dadosEndereco = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return { dadosEndereco, dadosConsultorios };
 };
 
 export const ConferirSenha = async (email, senhaAtual) => {
@@ -123,6 +209,44 @@ export const DeletarUsuario = async (id) => {
     .then(() => {
       alert("Usuário deletado com sucesso.");
       window.location.href = "/web/listadeusuariosmedico";
+    })
+    .catch((error) => {
+      requisicaoErro(
+        error,
+        () => (window.location.href = "/web/perfildopaciente")
+      );
+
+      return false;
+    });
+
+  return false;
+};
+
+export const DeletarConsulta = async (id) => {
+  await requesterService
+    .deletarConsulta(id)
+    .then(() => {
+      alert("Consulta deletada com sucesso.");
+      window.location.href = "/web/perfildopaciente";
+    })
+    .catch((error) => {
+      requisicaoErro(
+        error,
+        () => (window.location.href = "/web/perfildopaciente")
+      );
+
+      return false;
+    });
+
+  return false;
+};
+
+export const DeletarExameMarcado = async (id) => {
+  await requesterService
+    .deletarExameMarcado(id)
+    .then(() => {
+      alert("Exame deletado com sucesso.");
+      window.location.href = "/web/perfildopaciente";
     })
     .catch((error) => {
       requisicaoErro(

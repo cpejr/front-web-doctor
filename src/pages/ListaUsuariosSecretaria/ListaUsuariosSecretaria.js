@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Input, Select, Modal } from "antd";
+import { Spin } from "antd";
 import { useHistory } from "react-router-dom";
 import {
   TopoPagina,
@@ -22,7 +23,6 @@ import {
 } from "./Styles";
 import Button from "../../styles/Button";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 
