@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Input, Select, Modal } from "antd";
 import { useHistory } from "react-router-dom";
+import { PlusCircleOutlined } from "@ant-design/icons";
 import {
   TopoPagina,
   ContainerListadeUsuarios,
@@ -8,6 +9,7 @@ import {
   FiltroDatas,
   FiltroUsuario,
   BarraPesquisa,
+  BotaoNovoAgendamento,
   BarraEstetica,
   DadosUsuario,
   Titulo,
@@ -140,6 +142,21 @@ function ListaUsuariosSecretaria() {
             </Usuario>
           ))}
         </ContainerUsuarios>
+        <BotaoNovoAgendamento>
+          <Button
+            width="48%"
+            height="50px"
+            backgroundColor="#A7ADE8"
+            borderColor="#0A0E3C"
+            color="#151b57"
+            fontSize="1.8em"
+            fontWeight="bold"
+            fontSizeMedia950="1em"
+            fontSizeMedia1080="1.5em"
+            gap="1%"
+            onClick={() => marcandoAgendamento()}
+          >Novo Agendamento <PlusCircleOutlined/></Button>
+        </BotaoNovoAgendamento>
       </ContainerListadeUsuarios>
 
       <Modal

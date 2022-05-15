@@ -202,3 +202,8 @@ export const CódigoPaciente = styled.div`
     display: none;
   }
 `;
+export const BotaoNovoAgendamento = styled.div`
+  display: flex;
+  justify-content: end;
+  
+`;
