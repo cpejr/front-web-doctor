@@ -27,26 +27,20 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
-
 function ListaUsuariosSecretaria() {
   const history = useHistory();
 
   const { Search } = Input;
-  const [usuarios, setUsuarios] = useState([]);
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [email, setEmail] = useState(false);
   const [carregando, setCarregando] = useState(true);
+  const [consultas, setConsultas] = useState([]);
+  const [examesMarcados, setExamesMarcados] = useState([]);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   useEffect(() => {
     pegandoDados();
   }, [email]);
-
-  async function pegandoDados() {
-    const resposta = await managerService.GetDadosPessoais();
-    setUsuarios(resposta);
-    setCarregando(false);
-  }
 
   async function marcandoAgendamento(email) {
     setEmail(email);
@@ -57,18 +51,13 @@ function ListaUsuariosSecretaria() {
     setModalAgendamento(false);
   }
 
-  async function verificandoSecretariaOuPaciente(tipo, email) {
-    if (tipo === "SECRETARIA") {
-      history.push({
-        pathname: "/web/perfil",
-        state: { email },
-      });
-    } else {
-      history.push({
-        pathname: "/web/perfildopaciente",
-        state: { email },
-      });
-    }
+  async function pegandoDados() {
+    const respostaConsultas =
+      await managerService.GetDadosConsultasExamesMarcados();
+    setConsultas(respostaConsultas.dadosConsultas);
+    setExamesMarcados(respostaConsultas.dadosExamesMarcados);
+
+    setCarregando(false);
   }
 
   return (
@@ -103,20 +92,14 @@ function ListaUsuariosSecretaria() {
           <CódigoPaciente>Código do Paciente</CódigoPaciente>
         </DadosUsuario>
         <ContainerUsuarios>
-          {usuarios.map((value) => (
-            <Usuario key={value.id}>
+          {consultas.map((value) => (
+            <Usuario key={value.id_usuario}>
               <Imagem>{value.avatar_url}</Imagem>
               <Nome>
                 {carregando ? (
                   <Spin indicator={antIcon} />
                 ) : (
-                  <div
-                    onClick={() =>
-                      verificandoSecretariaOuPaciente(value.tipo, value.email)
-                    }
-                  >
-                    {value.nome}
-                  </div>
+                  <div>{value.nome}</div>
                 )}
               </Nome>
               <Telefone>
@@ -129,14 +112,54 @@ function ListaUsuariosSecretaria() {
                   </>
                 )}
               </Telefone>
-              <Data>21/04/2022</Data>
+              <Data>
+                {value.data_hora.slice(8, 10)}/{value.data_hora.slice(5, 7)}/
+                {value.data_hora.slice(0, 4)} - {value.data_hora.slice(11, 16)}:
+                {value.data_hora.slice(17, 19)}
+              </Data>
 
-              <Agendamento>Marcar Agendamento</Agendamento>
+              <Agendamento>Consulta</Agendamento>
               <CódigoPaciente>
                 {carregando ? (
                   <Spin indicator={antIcon} />
                 ) : (
-                  <div>{value.codigo}</div>
+                  <div>XXXXXX-XXXXX</div>
+                )}
+              </CódigoPaciente>
+            </Usuario>
+          ))}
+          {examesMarcados.map((value) => (
+            <Usuario key={value.id_usuario}>
+              <Imagem>{value.avatar_url}</Imagem>
+              <Nome>
+                {carregando ? (
+                  <Spin indicator={antIcon} />
+                ) : (
+                  <div>{value.nome}</div>
+                )}
+              </Nome>
+              <Telefone>
+                {carregando ? (
+                  <Spin indicator={antIcon} />
+                ) : (
+                  <>
+                    ({value.telefone.slice(0, -9)}){" "}
+                    {value.telefone.slice(2, -4)}-{value.telefone.slice(-4)}
+                  </>
+                )}
+              </Telefone>
+              <Data>
+                {value.data_hora.slice(8, 10)}/{value.data_hora.slice(5, 7)}/
+                {value.data_hora.slice(0, 4)} - {value.data_hora.slice(11, 16)}:
+                {value.data_hora.slice(17, 19)}
+              </Data>
+
+              <Agendamento>{value.titulo}</Agendamento>
+              <CódigoPaciente>
+                {carregando ? (
+                  <Spin indicator={antIcon} />
+                ) : (
+                  <div>XXXXXX-XXXXX</div>
                 )}
               </CódigoPaciente>
             </Usuario>
@@ -155,7 +178,9 @@ function ListaUsuariosSecretaria() {
             fontSizeMedia1080="1.5em"
             gap="1%"
             onClick={() => marcandoAgendamento()}
-          >Novo Agendamento <PlusCircleOutlined/></Button>
+          >
+            Novo Agendamento <PlusCircleOutlined />
+          </Button>
         </BotaoNovoAgendamento>
       </ContainerListadeUsuarios>
 

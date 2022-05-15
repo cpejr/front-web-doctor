@@ -135,3 +135,27 @@ export const DeletarUsuario = async (id) => {
 
   return false;
 };
+export const GetDadosConsultasExamesMarcados = async () => {
+  let dadosConsultas = {};
+  let dadosExamesMarcados = {};
+
+  await requesterService
+    .requisicaoConsultas()
+    .then((res) => {
+      dadosConsultas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+    await requesterService
+    .requisicaoExamesMarcados()
+    .then((res) => {
+      dadosExamesMarcados = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return { dadosConsultas, dadosExamesMarcados};
+};

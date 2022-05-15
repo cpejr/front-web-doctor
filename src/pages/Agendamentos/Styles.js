@@ -161,7 +161,7 @@ export const Data = styled.div`
   width: 18%;
   display: flex;
   justify-content: center;
-  color: black;
+  
   @media (max-width: 880px) {
     width: 20%;
   }
@@ -176,7 +176,7 @@ export const Agendamento = styled.div`
   width: 18%;
   display: flex;
   justify-content: center;
-  color: green;
+
   @media (max-width: 880px) {
     width: 20%;
   }
