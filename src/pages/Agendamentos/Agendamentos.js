@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Input, Select, Modal } from "antd";
-import { useHistory } from "react-router-dom";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import {
   TopoPagina,
@@ -28,8 +27,7 @@ import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 function ListaUsuariosSecretaria() {
-  const history = useHistory();
-
+ 
   const { Search } = Input;
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [email, setEmail] = useState(false);
