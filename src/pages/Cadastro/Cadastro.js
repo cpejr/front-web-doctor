@@ -6,14 +6,14 @@ import Button from "../../styles/Button";
 import Select from "../../styles/Select/Select";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import {LeftOutlined} from "@ant-design/icons";
+import { LeftOutlined } from "@ant-design/icons";
 import {
   Body,
   DadosCadastro,
   Logo,
   InputMesmaLinha,
   InputMesmaLinha2,
-  Botao
+  Botao,
 } from "./Styles";
 
 import * as managerService from "../../services/ManagerService/managerService";
@@ -57,19 +57,21 @@ const maskCEP = (value) => {
     .replace(/(-\d{3})(\d)/, "$1");
 };
 
-
 function Cadastro() {
   const history = useHistory();
   const [estado, setEstado] = useState({});
   const [endereco, setEndereco] = useState({});
+  const [estadoBack, setEstadoBack] = useState({});
+  const [enderecoBack, setEnderecoBack] = useState({});
   const [carregando, setCarregando] = useState(false);
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   async function requisicaoCadastro() {
+
     if (estado.senha === estado.senhaConfirmada) {
       setCarregando(true);
-      await managerService.Cadastrando(estado, endereco);
+      await managerService.Cadastrando(estadoBack, enderecoBack);
       setCarregando(false);
     } else {
       alert("As senhas digitadas são diferentes.");
@@ -79,12 +81,10 @@ function Cadastro() {
 
   function preenchendoDados(e) {
     setEstado({ ...estado, [e.target.name]: e.target.value });
+    setEstadoBack({ ...estadoBack, [e.target.name]: e.target.value });
 
     if (e.target.name === "nome") {
-      setEstado({
-        ...estado,
-        [e.target.name]: maskApenasLetras(e.target.value),
-      });
+      setEstado({ ...estado, [e.target.name]: maskApenasLetras(e.target.value)});
     }
     if (e.target.name === "telefone") {
       setEstado({ ...estado, [e.target.name]: maskTelefone(e.target.value) });
@@ -99,6 +99,8 @@ function Cadastro() {
 
   function preenchendoEndereco(e) {
     setEndereco({ ...endereco, [e.target.name]: e.target.value });
+    setEnderecoBack({ ...enderecoBack, [e.target.name]: e.target.value });
+
 
     if (e.target.name === "cep") {
       setEndereco({ ...endereco, [e.target.name]: maskCEP(e.target.value) });
@@ -136,9 +138,7 @@ function Cadastro() {
               height="100%"
             ></img>
           </Logo>
-          <Botao
-          onClick={() => history.push("/login")}
-          >
+          <Botao onClick={() => history.push("/login")}>
             <LeftOutlined /> Voltar para login
           </Botao>
           <Input
@@ -170,9 +170,7 @@ function Cadastro() {
               placeholder="Data de Nascimento"
               backgroundColor="#E4E6F4"
               borderColor="#151B57"
-
               color="black"
-
               fontSize="1em"
               width="48%"
               marginTop="2%"
@@ -320,7 +318,7 @@ function Cadastro() {
               color="black"
               fontSize="1em"
               width="48%"
-              marginTop="2%" 
+              marginTop="2%"
               name="complemento"
               onChange={preenchendoEndereco}
             ></Input>
