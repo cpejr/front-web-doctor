@@ -1,6 +1,8 @@
 import { login } from "../../services/auth";
 import requisicaoErro from "../../utils/HttpErros";
 import * as requesterService from "../RequesterService/requesterService";
+import AddToast from "../../components/AddToast/AddToast";
+import { toast } from "react-toastify";
 
 export const requisicaoLogin = async (email, senha) => {
   if (email.lenght === 0 || senha.lenght === 0) {
@@ -22,8 +24,13 @@ export const Cadastrando = async (usuario, endereco) => {
   await requesterService
     .criarUsuario(endereco, usuario)
     .then(() => {
+      alert("Usuário cadastrado com sucesso.");
       window.location.href = "/login";
     })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = "/cadastro"));
+      return false;
+    });
   return false;
 };
 

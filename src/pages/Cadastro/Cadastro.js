@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import _ from 'lodash';
-import { isEqual } from 'lodash';
+import _ from "lodash";
+import { isEqual } from "lodash";
 import { useHistory } from "react-router-dom";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Input from "../../styles/Input";
@@ -8,19 +8,61 @@ import Button from "../../styles/Button";
 import Select from "../../styles/Select/Select";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import { LeftOutlined } from "@ant-design/icons";
 import {
   Body,
   DadosCadastro,
   Logo,
   InputMesmaLinha,
-  BotoesMesmaLinha,
   Rotulo,
+  InputMesmaLinha2,
+  Botao,
   RotuloColuna,
 } from "./Styles";
-import * as managerService from "../../services/ManagerService/managerService";
 import "react-toastify/dist/ReactToastify.min.css";
 import AddToast from "../../components/AddToast/AddToast";
 import { toast } from "react-toastify";
+
+import * as managerService from "../../services/ManagerService/managerService";
+
+const maskCPF = (value) => {
+  return value
+    .replace(/\D/g, "")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d)/, "$1.$2")
+    .replace(/(\d{3})(\d{1,2})/, "$1-$2")
+    .replace(/(-\d{2})\d+?$/, "$1");
+};
+
+const maskTelefone = (value) => {
+  return value
+    .replace(/\D/g, "")
+    .replace(/(\d{2})(\d)/, "($1) $2")
+    .replace(/(\d{5})(\d)/, "$1-$2")
+    .replace(/(-\d{4})(\d+?)$/, "$1");
+};
+const maskApenasNumeros = (value) => {
+  return value.replace(/\D/g, "");
+};
+
+const maskData = (value) => {
+  return value
+    .replace(/\D/g, "")
+    .replace(/(\d{2})(\d)/, "$1/$2")
+    .replace(/(\d{2})(\d)/, "$1/$2")
+    .replace(/(\d{4})(\d)/, "$1");
+};
+
+const maskApenasLetras = (value) => {
+  return value.replace(/[0-9!@#¨$%^&*)(+=._-]+/g, "");
+};
+
+const maskCEP = (value) => {
+  return value
+    .replace(/\D/g, "")
+    .replace(/(\d{5})(\d)/, "$1-$2")
+    .replace(/(-\d{3})(\d)/, "$1");
+};
 
 function Cadastro() {
   const history = useHistory();
@@ -30,6 +72,9 @@ function Cadastro() {
 
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
+
+  const [enderecoBack, setEnderecoBack] = useState({});
+  const [estado, setEstado] = useState({});
 
   const [carregando, setCarregando] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -66,24 +111,22 @@ function Cadastro() {
     if (!usuario.data_nascimento) errors.data_nascimento = true;
     if (!usuario.cpf) errors.cpf = true;
     if (!usuario.email) errors.email = true;
-    if (!endereco.cep) errors.cep = true;
-    if (!endereco.pais) errors.pais = true;
-    if (!endereco.estado) errors.estado = true;
-    if (!endereco.cidade) errors.cidade = true;
-    if (!endereco.bairro) errors.bairro = true;
-    if (!endereco.rua) errors.rua = true;
-    if (!endereco.numero) errors.numero = true;
+    if (!enderecoBack.cep) errors.cep = true;
+    if (!enderecoBack.pais) errors.pais = true;
+    if (!enderecoBack.estado) errors.estado = true;
+    if (!enderecoBack.cidade) errors.cidade = true;
+    if (!enderecoBack.bairro) errors.bairro = true;
+    if (!enderecoBack.rua) errors.rua = true;
+    if (!enderecoBack.numero) errors.numero = true;
     if (!usuario.senha) errors.senha = true;
     if (!usuario.senhaConfirmada) errors.senhaConfirmada = true;
 
     setCamposVazios({ ...camposVazios, ...errors });
 
-
-    
     if (_.isEqual(camposVazios, teste)) {
       if (usuario.senha === usuario.senhaConfirmada) {
         setCarregando(true);
-        await managerService.Cadastrando(usuario, endereco);
+        await managerService.Cadastrando(usuario, enderecoBack);
         setCarregando(false);
       } else {
         toast.error("As senhas digitadas são diferentes.");
@@ -92,15 +135,12 @@ function Cadastro() {
     } else {
       toast.error("Preencha todos os campos obrigatórios");
     }
-
-    
   }
 
   async function validacaoEmail(e) {
     const { value, name } = e.target;
     if (value) {
       setCamposVazios({ ...camposVazios, [name]: false });
-      console.log(camposVazios.email);
     }
 
     const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
@@ -118,9 +158,10 @@ function Cadastro() {
     if (value) setCamposVazios({ ...camposVazios, [name]: false });
 
     if (
-      ((name === "cpf" || name === "telefone") && value.length !== 11) ||
-      (name === "data_nascimento" && value.length !== 8) ||
-      ((name === "senha" || name === "senhaConfirmada") && value.length < 6)
+      (name === "cpf" && value.length !== 14) ||
+      (name === "telefone" && value.length !== 15) ||
+      (name === "data_nascimento" && value.length !== 10) ||
+      ((name === "senha" || name === "senhaConfirmada") && value.length < 8)
     ) {
       setErro({ ...erro, [name]: true });
     } else {
@@ -128,6 +169,23 @@ function Cadastro() {
     }
 
     setUsuario({ ...usuario, [name]: value });
+    setEstado({ ...estado, [e.target.name]: e.target.value });
+
+    if (e.target.name === "nome") {
+      setEstado({
+        ...estado,
+        [e.target.name]: maskApenasLetras(e.target.value),
+      });
+    }
+    if (e.target.name === "telefone") {
+      setEstado({ ...estado, [e.target.name]: maskTelefone(e.target.value) });
+    }
+    if (e.target.name === "data_nascimento") {
+      setEstado({ ...estado, [e.target.name]: maskData(e.target.value) });
+    }
+    if (e.target.name === "cpf") {
+      setEstado({ ...estado, [e.target.name]: maskCPF(e.target.value) });
+    }
   }
 
   function preenchendoEndereco(e) {
@@ -139,7 +197,30 @@ function Cadastro() {
     } else {
       setErro({ ...erro, [name]: false });
     }
-    setEndereco({ ...endereco, [name]: value });
+    setEndereco({ ...endereco, [e.target.name]: e.target.value });
+    setEnderecoBack({ ...enderecoBack, [e.target.name]: e.target.value });
+
+    if (e.target.name === "cep") {
+      setEndereco({ ...endereco, [e.target.name]: maskCEP(e.target.value) });
+    }
+    if (e.target.name === "pais") {
+      setEndereco({
+        ...endereco,
+        [e.target.name]: maskApenasLetras(e.target.value),
+      });
+    }
+    if (e.target.name === "cidade") {
+      setEndereco({
+        ...endereco,
+        [e.target.name]: maskApenasLetras(e.target.value),
+      });
+    }
+    if (e.target.name === "numero") {
+      setEndereco({
+        ...endereco,
+        [e.target.name]: maskApenasNumeros(e.target.value),
+      });
+    }
   }
 
   return (
@@ -155,6 +236,9 @@ function Cadastro() {
               height="100%"
             ></img>
           </Logo>
+          <Botao onClick={() => history.push("/login")}>
+            <LeftOutlined /> Voltar para login
+          </Botao>
           <Select
             id="tipos"
             backgroundColor="#E4E6F4"
@@ -181,6 +265,7 @@ function Cadastro() {
             width="100%"
             marginTop="2%"
             name="nome"
+            value={estado.nome}
             onChange={preenchendoDados}
             erro={erro.nome}
             camposVazios={camposVazios.nome}
@@ -195,6 +280,7 @@ function Cadastro() {
                 marginTop="2%"
                 width="100%"
                 name="telefone"
+                value={estado.telefone}
                 onChange={preenchendoDados}
                 onKeyPress={verificandoEnter}
                 erro={erro.telefone}
@@ -212,8 +298,8 @@ function Cadastro() {
                 fontSize="1em"
                 width="100%"
                 marginTop="2%"
-                type="date"
                 name="data_nascimento"
+                value={estado.data_nascimento}
                 onChange={preenchendoDados}
                 erro={erro.data_nascimento}
                 camposVazios={camposVazios.dataNascimento}
@@ -232,6 +318,7 @@ function Cadastro() {
             fontSize="1em"
             width="100%"
             name="cpf"
+            value={estado.cpf}
             onChange={preenchendoDados}
             erro={erro.cpf}
             camposVazios={camposVazios.cpf}
@@ -260,6 +347,7 @@ function Cadastro() {
             width="100%"
             marginTop="2%"
             name="cep"
+            value={endereco.cep}
             onChange={preenchendoEndereco}
             erro={erro.cep}
             camposVazios={camposVazios.cep}
@@ -273,6 +361,7 @@ function Cadastro() {
             width="100%"
             marginTop="2%"
             name="pais"
+            value={endereco.pais}
             onChange={preenchendoEndereco}
             camposVazios={camposVazios.pais}
           ></Input>
@@ -324,6 +413,7 @@ function Cadastro() {
             width="100%"
             marginTop="2%"
             name="cidade"
+            value={endereco.cidade}
             onChange={preenchendoEndereco}
             camposVazios={camposVazios.cidade}
           ></Input>
@@ -349,7 +439,7 @@ function Cadastro() {
             onChange={preenchendoEndereco}
             camposVazios={camposVazios.rua}
           ></Input>
-          <InputMesmaLinha>
+          <InputMesmaLinha2>
             <Input
               placeholder="Número"
               backgroundColor="#E4E6F4"
@@ -357,6 +447,7 @@ function Cadastro() {
               fontSize="1em"
               width="48%"
               name="numero"
+              value={endereco.numero}
               onChange={preenchendoEndereco}
               camposVazios={camposVazios.numero}
             ></Input>
@@ -367,10 +458,11 @@ function Cadastro() {
               color="black"
               fontSize="1em"
               width="48%"
+              marginTop="2%"
               name="complemento"
               onChange={preenchendoEndereco}
             ></Input>
-          </InputMesmaLinha>
+          </InputMesmaLinha2>
 
           <Input
             placeholder="Defina sua senha"
@@ -386,7 +478,7 @@ function Cadastro() {
             erro={erro.senha}
             camposVazios={camposVazios.senha}
           ></Input>
-          {erro.senha && <Rotulo>A senha deve ter no minimo 6 digitos</Rotulo>}
+          {erro.senha && <Rotulo>A senha deve ter no minimo 8 digitos</Rotulo>}
           <Input
             placeholder="Confirme sua senha"
             backgroundColor="#E4E6F4"
@@ -403,37 +495,22 @@ function Cadastro() {
             camposVazios={camposVazios.senhaConfirmada}
           ></Input>
           {erro.senhaConfirmada && (
-            <Rotulo>A senha deve ter no minimo 6 digitos</Rotulo>
+            <Rotulo>A senha deve ter no minimo 8 digitos</Rotulo>
           )}
 
-          <BotoesMesmaLinha>
-            <Button
-              width="42%"
-              height="50px"
-              backgroundColor="#FFFFFF"
-              borderColor="rgba(255, 0, 0, 0.25)"
-              color="#8D8D8D"
-              fontSize="1.5em"
-              fontWeight="bold"
-              fontSizeMedia="1.2em"
-              onClick={() => history.push("/login")}
-            >
-              CANCELAR
-            </Button>
-            <Button
-              height="50px"
-              width="42%"
-              backgroundColor="#434B97"
-              borderColor="#151B57"
-              color="white"
-              fontSize="1.5em"
-              fontWeight="bold"
-              fontSizeMedia="1.2em"
-              onClick={() => requisicaoCadastro()}
-            >
-              {carregando ? <Spin indicator={antIcon} /> : "ENTRAR"}
-            </Button>
-          </BotoesMesmaLinha>
+          <Button
+            height="50px"
+            width="60%"
+            backgroundColor="#434B97"
+            borderColor="#151B57"
+            color="white"
+            fontSize="1.5em"
+            fontSizeMedia="1.2em"
+            onClick={() => requisicaoCadastro()}
+            fontWeight="bold"
+          >
+            {carregando ? <Spin indicator={antIcon} /> : "CADASTRAR"}
+          </Button>
         </DadosCadastro>
       </Body>
       <AddToast />
