@@ -68,6 +68,7 @@ function Cadastro() {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   async function requisicaoCadastro() {
+    console.log(estado)
 
     if (estado.senha === estado.senhaConfirmada) {
       setCarregando(true);
@@ -91,6 +92,7 @@ function Cadastro() {
     }
     if (e.target.name === "data_nascimento") {
       setEstado({ ...estado, [e.target.name]: maskData(e.target.value) });
+      setEstadoBack({ ...estadoBack, [e.target.name]: maskData(e.target.value) });
     }
     if (e.target.name === "cpf") {
       setEstado({ ...estado, [e.target.name]: maskCPF(e.target.value) });
