@@ -84,7 +84,7 @@ export const BotoesColuna = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  alig-items: center;
+  align-items: center;
   width: 20%;
   height: 20%;
   font-size: 1em;
