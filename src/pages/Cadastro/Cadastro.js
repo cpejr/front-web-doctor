@@ -74,6 +74,7 @@ function Cadastro() {
 
   const [enderecoBack, setEnderecoBack] = useState({});
   const [estado, setEstado] = useState({});
+  const [estadoBack, setEstadoBack] = useState({});
 
   const [carregando, setCarregando] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -159,9 +160,9 @@ function Cadastro() {
     if (value) setCamposVazios({ ...camposVazios, [name]: false });
 
     if (
-      (name === "cpf" && value.length !== 14) ||
-      (name === "telefone" && value.length !== 15) ||
-      (name === "data_nascimento" && value.length !== 10) ||
+      (name === "cpf" && value.length < 14) ||
+      (name === "telefone" && value.length < 15) ||
+      (name === "data_nascimento" && value.length < 10) ||
       ((name === "senha" || name === "senhaConfirmada") && value.length < 8)
     ) {
       setErro({ ...erro, [name]: true });
@@ -194,7 +195,7 @@ function Cadastro() {
     const { value, name } = e.target;
     if (value) setCamposVazios({ ...camposVazios, [name]: false });
 
-    if (name === "cep" && value.length !== 8) {
+    if (name === "cep" && value.length <= 8) {
       setErro({ ...erro, [name]: true });
     } else {
       setErro({ ...erro, [name]: false });

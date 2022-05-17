@@ -177,7 +177,7 @@ export const DeletarUsuario = async (id) => {
   return false;
 };
 
-export const GetDadosConsultasExamesMarcados = async () => {
+export const GetDadosConsultasExamesMarcadosGeral = async () => {
   let dadosConsultas = {};
   let dadosExamesMarcados = {};
 
