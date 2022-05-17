@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { Input, Select } from "antd";
+import { Input, Select, Modal } from "antd";
 import {
   TopoPagina,
   ContainerListadeUsuarios,
@@ -26,12 +26,14 @@ import Button from "../../styles/Button";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
+import ModalAdicionarCodigo from "../../components/ModalAdicionarCodigo/ModalAdicionarCodigo";
 
 function ListaUsuariosMedico() {
   const history = useHistory();
 
   const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
+  const [modalAdicionarCodigo, setModalAdicionarCodigo] = useState(false);
 
   const [carregando, setCarregando] = useState(true);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -60,7 +62,16 @@ function ListaUsuariosMedico() {
     }
   }
 
+  async function abrindoModal() {
+    setModalAdicionarCodigo(true);
+  }
+
+  async function fechandoModal() {
+    setModalAdicionarCodigo(false);
+  }
+
   return (
+    <div>
     <ContainerListadeUsuarios>
       <TopoPagina>
         <BarraPesquisa>
@@ -124,6 +135,7 @@ function ListaUsuariosMedico() {
                 fontSize="1em"
                 textDecoration="underline"
                 height="50px"
+                onClick={() => abrindoModal()}
               >
                 Adicionar Código
               </Button>
@@ -132,6 +144,17 @@ function ListaUsuariosMedico() {
         ))}
       </ContainerUsuarios>
     </ContainerListadeUsuarios>
+    
+      <Modal
+        visible={modalAdicionarCodigo}
+        onCancel={fechandoModal}
+        footer={null}
+        width={"70%"}
+        centered={true}
+      >
+        <ModalAdicionarCodigo />
+      </Modal>
+    </div>
   );
 }
 
