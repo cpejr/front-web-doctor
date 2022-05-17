@@ -6,9 +6,9 @@ export const logarUsuario = (email, senha) =>
     senha,
   });
 
-export const criarUsuario = (endereco, estado) =>
+export const criarUsuario = (endereco, usuario) =>
   api.post("/enderecos", endereco).then((res) => {
-    api.post("/usuarios", { ...estado, id_endereco: res.data.id });
+    api.post("/usuarios", { ...usuario, id_endereco: res.data.id });
   });
 
 export const updateDadosUsuario = (id_usuario, id_endereco, endereco, estado) =>

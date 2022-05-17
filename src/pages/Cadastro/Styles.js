@@ -71,3 +71,22 @@ export const Botao = styled.button`
   cursor: pointer;
   text-decoration: underline;
 `;
+
+export const Rotulo = styled.div`
+  width: 100%;
+  font-family: "Barlow", sans-serif;
+  font-weight: 400;
+  font-size: 1em;
+  color: #E00000;
+`;
+
+export const RotuloColuna = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  width: 48%;
+  @media (max-width: 820px) {
+    width: 100%;
+  }
+`;

@@ -3,7 +3,19 @@ import styled from "styled-components";
 const Select = styled.select`
   background-color: ${(props) => props.backgroundColor};
   text-align: left;
-  border-color: ${(props) => props.borderColor};
+  border-color: ${(props) => {
+    let cor;
+    if (!props.borderColor) {
+      if(props.erro || props.camposVazios){
+        cor = "#E00000";
+      } else {
+        cor = "#151B57";
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
   color: ${(props) => props.color};
   border-radius: 3px;
   font-size: 1em;
