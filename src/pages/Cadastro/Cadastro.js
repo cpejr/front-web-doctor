@@ -7,8 +7,7 @@ import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import Select from "../../styles/Select/Select";
 import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-import { LeftOutlined } from "@ant-design/icons";
+import { LoadingOutlined, LeftOutlined } from "@ant-design/icons";
 import {
   Body,
   DadosCadastro,
@@ -105,6 +104,7 @@ function Cadastro() {
   }
 
   async function requisicaoCadastro() {
+
     if (!usuario.nome) errors.nome = true;
     if (!usuario.telefone) errors.telefone = true;
     if (!usuario.tipo) errors.tipo = true;
@@ -122,6 +122,7 @@ function Cadastro() {
     if (!usuario.senhaConfirmada) errors.senhaConfirmada = true;
 
     setCamposVazios({ ...camposVazios, ...errors });
+
 
     if (_.isEqual(camposVazios, teste)) {
       if (usuario.senha === usuario.senhaConfirmada) {
@@ -182,6 +183,7 @@ function Cadastro() {
     }
     if (e.target.name === "data_nascimento") {
       setEstado({ ...estado, [e.target.name]: maskData(e.target.value) });
+      setEstadoBack({ ...estadoBack, [e.target.name]: maskData(e.target.value) });
     }
     if (e.target.name === "cpf") {
       setEstado({ ...estado, [e.target.name]: maskCPF(e.target.value) });

@@ -46,6 +46,45 @@ export const GetDadosPessoais = async () => {
     });
   return dadosUsuario;
 };
+export const GetDadosConsultasExamesMarcados = async (id_usuario) => {
+  let dadosConsultas = {};
+  let dadosExamesMarcados = {};
+
+  await requesterService
+    .requisicaoConsultas(id_usuario)
+    .then((res) => {
+      dadosConsultas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+    await requesterService
+    .requisicaoExamesMarcados(id_usuario)
+    .then((res) => {
+      dadosExamesMarcados = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return { dadosConsultas, dadosExamesMarcados};
+};
+
+export const GetDadosExame = async (id) => {
+  let dadosExame = {};
+
+  await requesterService
+    .requisicaoExame(id)
+
+    .then((res) => {
+      dadosExame = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosExame;
+};
 
 export const GetDadosUsuario = async (emailUrl) => {
   let dadosUsuario = {};
@@ -125,6 +164,44 @@ export const DeletarUsuario = async (id) => {
     .then(() => {
       alert("Usuário deletado com sucesso.");
       window.location.href = "/web/listadeusuariosmedico";
+    })
+    .catch((error) => {
+      requisicaoErro(
+        error,
+        () => (window.location.href = "/web/perfildopaciente")
+      );
+
+      return false;
+    });
+
+  return false;
+};
+
+export const DeletarConsulta = async (id) => {
+  await requesterService
+    .deletarConsulta(id)
+    .then(() => {
+      alert("Consulta deletada com sucesso.");
+      window.location.href = "/web/perfildopaciente";
+    })
+    .catch((error) => {
+      requisicaoErro(
+        error,
+        () => (window.location.href = "/web/perfildopaciente")
+      );
+
+      return false;
+    });
+
+  return false;
+};
+
+export const DeletarExameMarcado = async (id) => {
+  await requesterService
+    .deletarExameMarcado(id)
+    .then(() => {
+      alert("Exame deletado com sucesso.");
+      window.location.href = "/web/perfildopaciente";
     })
     .catch((error) => {
       requisicaoErro(
