@@ -6,6 +6,7 @@ import Button from "../../styles/Button";
 import Select from "../../styles/Select/Select";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import { LeftOutlined } from "@ant-design/icons";
 import {
   Body,
   DadosCadastro,
