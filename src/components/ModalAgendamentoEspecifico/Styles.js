@@ -128,7 +128,9 @@ export const DoisSelect = styled.h3`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  background-color: green;
+  font-family: "Barlow", sans-serif;
+  font-size: 1em;
+  
 
   @media (max-width: 560px) {
     flex-direction: column;
@@ -141,6 +143,11 @@ export const DoisSelect = styled.h3`
   }
 `;
 
+export const Select = styled.select`
+  border-color: black;
+  border-width: 1px;
+`
+
 export const TamanhoInput = styled.div`
   display: flex;
   flex-direction: column;
@@ -148,7 +155,7 @@ export const TamanhoInput = styled.div`
   justify-content: center;
   width: 40%;
   height: 40px;
-  background-color: green;
+  
 
   @media (max-width: 560px) {
     width: 100%;
@@ -164,20 +171,28 @@ export const InputHora = styled.input`
   width: 100%;
   height: 100%;
   font-family: "Barlow", sans-serif;
-  font-weight: 600;
-  font-size: 0.9em;
-  padding-left: 10%;
-  border-width: 0.1px;
+  font-weight: 500;
+  font-size: 1em;
+  color:black;
+  padding-left: 5%;
+  border-color: black;
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 1px;
 `;
 
 export const InputDuracao = styled(Input)`
   width: 100%;
   height: 100%;
+  color:black;
   font-family: "Barlow", sans-serif;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 0.9em;
-  padding-left: 10%;
-  border-width: 0.1px;
+  padding-left: 5%;
+  border-color: black;
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 1px;
 `;
 
 export const TextoSelecioneUmaData = styled.h3`
@@ -196,7 +211,6 @@ export const SelecioneUmaData = styled.h3`
   align-items: start;
   justify-content: center;
   width: 90%;
-  background-color: green;
 
   @media (max-width: 560px) {
     width: 100%;

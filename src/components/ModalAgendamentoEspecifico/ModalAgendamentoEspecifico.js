@@ -23,43 +23,40 @@ import * as managerService from "../../services/ManagerService/managerService";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
-import moment from 'moment'
-
+import moment from "moment";
 
 function ModalAgendamentoEspecifico(props) {
-
   const { TextArea } = Input;
   const { Option } = Select;
   const [usuario, setUsuario] = useState({});
   const [consultorios, setConsultorios] = useState([]);
   const [carregando, setCarregando] = useState();
+  const [carregandoCadastro, setCarregandoCadastro] = useState();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const [ consulta, setConsulta ] = useState({
-    data_hora:"",
-    duracao_em_minutos:"",
-    descricao:"",
-    avaliacao:"",
-    id_usuario:"",
-    id_consultorio:"03d4ccd8-1518-417a-8c36-80eaecbbc884"
+  const [consulta, setConsulta] = useState({
+    data_hora: "",
+    duracao_em_minutos: "",
+    descricao: "",
+    avaliacao: "",
+    id_usuario: "",
+    id_consultorio: "",
   });
-  const [ data, setData ] = useState("");
-  const [ hora, setHora ] = useState("");
-  const [ duracaoEmMinutos, setDuracaoEmMinutos ] = useState("");
+  const [data, setData] = useState("");
+  const [hora, setHora] = useState("");
+  const [duracaoEmMinutos, setDuracaoEmMinutos] = useState("");
   // const [selectValue, setSelectValue] = useState("");
-  moment.locale('pt-br');
+  moment.locale("pt-br");
 
   async function pegandoDados() {
     setCarregando(true);
     const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
     setUsuario(resposta.dadosUsuario);
     setCarregando(false);
-
   }
 
-  async function pegandoConsultorios(){
+  async function pegandoConsultorios() {
     const res = await managerService.GetDadosConsultorios();
     setConsultorios(res.dadosConsultorios);
-    console.log(res.dadosConsultorios)
   }
 
   useEffect(() => {
@@ -68,73 +65,37 @@ function ModalAgendamentoEspecifico(props) {
   }, [props]);
 
   useEffect(() => {
-    pegandoConsultorios()
-  }, [])
+    pegandoConsultorios();
+  }, []);
 
   async function requisicaoCriarConsulta() {
-    console.log(consulta)
+    setCarregandoCadastro(true)
+    formatacaoDataHora();
+    consulta.id_usuario = usuario.id;
     await managerService.CriandoColsulta(consulta);
+    setCarregandoCadastro(false)
   }
 
-  function formatacaoData() {
+  function formatacaoDataHora() {
     try {
-      const dataFormatada = new Date(data)
-      formatacaoDataHora(dataFormatada.toLocaleDateString())
-      // console.log(`${data} ${hora}`)
-    } catch {
-      alert("Data inválida.");
-    }
-  }
-
-  function formatacaoDataHora(dataFormatada) {
-    try {
-      const dataHora = `${dataFormatada} ${hora}:00`
-      consulta.data_hora = dataHora
+      const dataHora = `${data} ${hora}:00`;
+      consulta.data_hora = dataHora;
     } catch {
       alert("DataHora inválida.");
     }
   }
 
-  function formatacaoDuracao() {
-    try {
-      const duracaoFormatada = moment.duration(moment(`${duracaoEmMinutos}:00`, 'HH:mm:ss').format("HH:mm")).asMinutes()
-      consulta.duracao_em_minutos = duracaoFormatada
-    } catch {
-      alert("DataHora inválida.");
-    }
-  }
-
-  function testagem () {
-    console.log(consulta)
-  }
-
-  function testagemDois () {
-    formatacaoData()
-    formatacaoDuracao()
-    consulta.id_usuario = usuario.id
-  }
-
-  function preenchendoDadosInput(e) {
+  function preenchendoDadosConsulta(e) {
     if (e.target.name === "hora") {
-      setHora(e.target.value)
-      return hora
-    } else
-    if (e.target.name === "data") {
-      setData(e.target.value)
-      return data
-    } if (e.target.name === "duracao_em_minutos") {
-      setDuracaoEmMinutos(e.target.value)
-      return duracaoEmMinutos
-  } else {
-    setConsulta({ ...consulta, [e.target.name]: e.target.value });
-      return consulta
-  }
-  
-}
-
-  function preenchendoDadosConsulta(value, e) {
-    console.log(e)
-      
+      setHora(e.target.value);
+      return hora;
+    } else if (e.target.name === "data") {
+      setData(e.target.value);
+      return data;
+    } else {
+      setConsulta({ ...consulta, [e.target.name]: e.target.value });
+      return consulta;
+    }
   }
 
   return (
@@ -166,7 +127,18 @@ function ModalAgendamentoEspecifico(props) {
               </Col>
             </Row>
           </TipoAgendamento>
-          <TextArea placeholder="Adicione uma descrição" rows={4}></TextArea>
+          <TextArea
+            placeholder="Adicione uma descrição"
+            rows={4}
+            name="descricao"
+            value={consulta.descricao}
+            onChange={preenchendoDadosConsulta}
+            style={{
+              borderWidth:"1px",
+              borderColor:"black",
+              color:"black"
+            }}
+          />
         </InfoEsquerdaEDireita>
         <InfoEsquerdaEDireita>
           <SelecioneUmaData>
@@ -176,44 +148,45 @@ function ModalAgendamentoEspecifico(props) {
               type="date"
               size="large"
               name="data"
-              onChange={(e) => {preenchendoDadosInput(e)}}
+              onChange={(e) => {
+                preenchendoDadosConsulta(e);
+              }}
+              style={{
+                borderWidth:"1px",
+                borderColor:"black",
+                color:"black"
+              }}
             ></Input>
           </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
-              <Select style={{ width: "100%" }} size="large" placeholder="Tipo">
+              <Select style={{ width: "100%", color:"black", borderColor:"black", borderWidth:"1px" }} size="large" placeholder="Tipo">
                 <option value="1">Tipo 1</option>
                 <option value="2">Tipo 2</option>
                 <option value="3">Tipo 3</option>
               </Select>
             </TamanhoInput>
             <TamanhoInput>
-               <Select
+              <Select
                 id="id_consultorio"
                 name="id_consultorio"
-                style={{ width: "100%" }}
+                style={{ width: "100%", color:"black", borderColor:"black", borderWidth:"1px"  }}
                 size="large"
                 placeholder="Consultório"
-                onChange={(e) => {preenchendoDadosInput(e)}}
+                onChange={(e) => {
+                  preenchendoDadosConsulta(e);
+                }}
               >
                 {consultorios.map((consultorio) => (
                   <option key={consultorio.id} value={consultorio.id}>
                     {consultorio.nome}
                   </option>
                 ))}
-              </Select> 
+              </Select>
             </TamanhoInput>
           </DoisSelect>
-          
-          <button onClick={testagemDois}>
-            TESTAGEM 2
-          </button>
 
-          <button onClick={testagem}>
-            TESTAGEM
-          </button>
           <DoisSelect>
-
             <TamanhoInput>
               <InputHora
                 type="text"
@@ -221,7 +194,7 @@ function ModalAgendamentoEspecifico(props) {
                 onBlur={(e) => (e.target.type = "text")}
                 placeholder="Horário"
                 name="hora"
-                onChange={preenchendoDadosInput}
+                onChange={preenchendoDadosConsulta}
               />
             </TamanhoInput>
 
@@ -229,7 +202,7 @@ function ModalAgendamentoEspecifico(props) {
               <InputDuracao
                 placeholder="Duração"
                 name="duracao_em_minutos"
-                onChange={preenchendoDadosInput}
+                onChange={preenchendoDadosConsulta}
                 suffix="min"
               />
             </TamanhoInput>
@@ -237,11 +210,11 @@ function ModalAgendamentoEspecifico(props) {
           <Checkbox>
             <TextoCheckbox>Notificar paciente</TextoCheckbox>
           </Checkbox>
+
           <Button
             width="80%"
             height="50px"
-            backgroundColor="green"
-            // backgroundColor="#A7ADE8" -estatico
+            backgroundColor="#A7ADE8"
             borderColor="#151B57"
             color="#0A0E3C"
             fontSize="1.1em"
@@ -250,7 +223,11 @@ function ModalAgendamentoEspecifico(props) {
             fontSizeMedia950="1.1em"
             onClick={() => requisicaoCriarConsulta()}
           >
-            Cadastrar novo agendamento
+            {carregandoCadastro ? (
+              <Spin indicator={antIcon} />
+            ) : (
+              <div>Cadastrar novo agendamento</div>
+            )}
           </Button>
         </InfoEsquerdaEDireita>
       </Caixa>
