@@ -149,7 +149,7 @@ function ListaUsuariosMedico() {
         visible={modalAdicionarCodigo}
         onCancel={fechandoModal}
         footer={null}
-        width={"70%"}
+        width={"60%"}
         centered={true}
       >
         <ModalAdicionarCodigo />
