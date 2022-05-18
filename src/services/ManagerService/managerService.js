@@ -41,7 +41,6 @@ export const CriandoColsulta = async (consulta) => {
     })
     .catch((error) => {
       requisicaoErro(error);
-      console.log(error)
       return false;
     });
   return;
