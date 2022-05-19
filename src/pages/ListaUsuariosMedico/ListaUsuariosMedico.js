@@ -34,6 +34,7 @@ function ListaUsuariosMedico() {
   const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
   const [modalAdicionarCodigo, setModalAdicionarCodigo] = useState(false);
+  const [email, setEmail] = useState();
 
   const [carregando, setCarregando] = useState(true);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -62,7 +63,8 @@ function ListaUsuariosMedico() {
     }
   }
 
-  async function abrindoModal() {
+  async function abrindoModal(email) {
+    setEmail(email);
     setModalAdicionarCodigo(true);
   }
 
@@ -135,7 +137,7 @@ function ListaUsuariosMedico() {
                 fontSize="1em"
                 textDecoration="underline"
                 height="50px"
-                onClick={() => abrindoModal()}
+                onClick={() => abrindoModal(value.email)}
               >
                 Adicionar Código
               </Button>
@@ -152,7 +154,7 @@ function ListaUsuariosMedico() {
         width={"60%"}
         centered={true}
       >
-        <ModalAdicionarCodigo />
+        <ModalAdicionarCodigo emailUsuario={email}/>
       </Modal>
     </div>
   );

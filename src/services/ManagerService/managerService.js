@@ -158,6 +158,24 @@ export const UpdateDadosUsuario = async (
   return false;
 };
 
+export const UpdateCodigo = async (
+  id_usuario,
+  codigo
+) => {
+  await requesterService
+    .updateCodigo(id_usuario, codigo)
+    .then(() => {
+      alert("Código adicionado com sucesso.");
+      window.location.href = "/web/listadeusuariosmedico";
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));
+      return false;
+    });
+
+  return false;
+};
+
 export const DeletarUsuario = async (id) => {
   await requesterService
     .deletarUsuario(id)

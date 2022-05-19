@@ -1,9 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import { ContainerModalCodigo, Titulo } from "./Styles";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
+import * as managerService from "../../services/ManagerService/managerService";
 
-function ModalAdicionarCodigo() {
+function ModalAdicionarCodigo(props) {
+  const [usuario, setUsuario] = useState({});
+  const [codigo, setCodigo] = useState({});
+  const [carregando, setCarregando] = useState(false);
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+  async function verificandoEnter(e) {
+    if (e.key === "Enter") {
+      atualizarDados();
+    }
+  }
+
+  async function pegandoDados() {
+    const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
+    setUsuario(resposta.dadosUsuario);
+  }
+
+  async function atualizarDados() {
+    setCarregando(true);
+    if (usuario.codigo) {
+      await managerService.UpdateCodigo(usuario.id, usuario.codigo + "/" + codigo);
+    } else {
+      await managerService.UpdateCodigo(usuario.id, codigo);
+    }
+  }
+
+  function preenchendoDados(e) {
+    setCodigo(e.target.value);
+  }
+
+  useEffect(() => {
+    pegandoDados();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props]);
+
   return (
     <ContainerModalCodigo>
       <Titulo>Adicione um codigo</Titulo>
@@ -15,6 +53,9 @@ function ModalAdicionarCodigo() {
         fontSize="1em"
         width="100%"
         marginTop="2%"
+        name="codigo"
+        onKeyPress={verificandoEnter}
+        onChange={preenchendoDados}
       ></Input>
 
       <Button
@@ -26,7 +67,10 @@ function ModalAdicionarCodigo() {
         fontSize="1.5em"
         fontWeight="bold"
         fontSizeMedia="1.2em"
-      >Confirmar</Button>
+        onClick={() => atualizarDados()}
+      >
+        {carregando ? <Spin indicator={antIcon} /> : "CONFIRMAR"}
+      </Button>
     </ContainerModalCodigo>
   );
 }
