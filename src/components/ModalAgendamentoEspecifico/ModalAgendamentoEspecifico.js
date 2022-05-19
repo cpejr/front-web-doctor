@@ -32,6 +32,7 @@ function ModalAgendamentoEspecifico(props) {
   const [consultorios, setConsultorios] = useState([]);
   const [carregando, setCarregando] = useState();
   const [carregandoCadastro, setCarregandoCadastro] = useState();
+  const [carregandoConsultorios, setCarregandoConsultorios] = useState();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const [consulta, setConsulta] = useState({
     data_hora: "",
@@ -47,7 +48,7 @@ function ModalAgendamentoEspecifico(props) {
   // const [selectValue, setSelectValue] = useState("");
   moment.locale("pt-br");
 
-  async function pegandoDados() {
+  async function pegandoDadosUsuario() {
     setCarregando(true);
     const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
     setUsuario(resposta.dadosUsuario);
@@ -55,12 +56,14 @@ function ModalAgendamentoEspecifico(props) {
   }
 
   async function pegandoConsultorios() {
+    setCarregandoConsultorios(true)
     const res = await managerService.GetDadosConsultorios();
     setConsultorios(res.dadosConsultorios);
+    setCarregandoConsultorios(false)
   }
 
   useEffect(() => {
-    pegandoDados();
+    pegandoDadosUsuario();
     //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
@@ -69,11 +72,11 @@ function ModalAgendamentoEspecifico(props) {
   }, []);
 
   async function requisicaoCriarConsulta() {
-    setCarregandoCadastro(true)
+    setCarregandoCadastro(true);
     formatacaoDataHora();
     consulta.id_usuario = usuario.id;
     await managerService.CriandoColsulta(consulta);
-    setCarregandoCadastro(false)
+    setCarregandoCadastro(false);
   }
 
   function formatacaoDataHora() {
@@ -90,8 +93,8 @@ function ModalAgendamentoEspecifico(props) {
       setHora(e.target.value);
       return hora;
     } else if (e.target.name === "data") {
-      setData(e.target.value);
-      return data;
+      formatacaoData(e.target.value)
+
     } else {
       setConsulta({ ...consulta, [e.target.name]: e.target.value });
       return consulta;
@@ -134,9 +137,9 @@ function ModalAgendamentoEspecifico(props) {
             value={consulta.descricao}
             onChange={preenchendoDadosConsulta}
             style={{
-              borderWidth:"1px",
-              borderColor:"black",
-              color:"black"
+              borderWidth: "1px",
+              borderColor: "black",
+              color: "black",
             }}
           />
         </InfoEsquerdaEDireita>
@@ -152,15 +155,25 @@ function ModalAgendamentoEspecifico(props) {
                 preenchendoDadosConsulta(e);
               }}
               style={{
-                borderWidth:"1px",
-                borderColor:"black",
-                color:"black"
+                borderWidth: "1px",
+                borderColor: "black",
+                color: "black",
               }}
             ></Input>
           </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
-              <Select style={{ width: "100%", color:"black", borderColor:"black", borderWidth:"1px" }} size="large" placeholder="Tipo">
+              <Select
+                style={{
+                  width: "100%",
+                  color:"black",
+                  borderColor: "black",
+                  borderWidth: "1px",
+                }}
+                size="large"
+                placeholder="Tipo"
+              >
+                <option value="" disabled selected >Tipo</option>
                 <option value="1">Tipo 1</option>
                 <option value="2">Tipo 2</option>
                 <option value="3">Tipo 3</option>
@@ -170,18 +183,36 @@ function ModalAgendamentoEspecifico(props) {
               <Select
                 id="id_consultorio"
                 name="id_consultorio"
-                style={{ width: "100%", color:"black", borderColor:"black", borderWidth:"1px"  }}
+                style={{
+                  width: "100%",
+                  borderColor: "black",
+                  borderWidth: "1px",
+                  // color:"black"
+                }}
                 size="large"
                 placeholder="Consultório"
                 onChange={(e) => {
                   preenchendoDadosConsulta(e);
                 }}
+                              
               >
+                <option color="grey" value="" disabled selected >
+                    Consultório
+                  </option>
                 {consultorios.map((consultorio) => (
-                  <option key={consultorio.id} value={consultorio.id}>
+                  <>
+                {carregandoConsultorios ? (
+                  <Spin indicator={antIcon} />
+                ) : (
+                  <option key={consultorio.id} value={consultorio.id} color="red">
                     {consultorio.nome}
                   </option>
+                )}
+                </>
                 ))}
+                
+                  
+                
               </Select>
             </TamanhoInput>
           </DoisSelect>
@@ -195,6 +226,7 @@ function ModalAgendamentoEspecifico(props) {
                 placeholder="Horário"
                 name="hora"
                 onChange={preenchendoDadosConsulta}
+                style={{color:"black"}}
               />
             </TamanhoInput>
 

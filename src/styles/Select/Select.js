@@ -16,12 +16,19 @@ const Select = styled.select`
 
   option {
     border-color: ${(props) => props.borderColor};
+    color: ${(props) => props.color};
     border-radius: 3px;
     border-style: solid;
     border-width: 0.1em;
     height: 50px;
     padding-left: 2%;
   }
+
+  option[value=""][disabled] {
+    display:none;
+    /* color:"black" */
+  }
+
 `;
 
 export default Select;
