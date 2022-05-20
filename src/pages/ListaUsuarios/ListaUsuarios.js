@@ -33,7 +33,8 @@ function ListaUsuarios() {
 
   const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
-  const [tipoUsuario, setTipoUsuario] = useState([]);
+  const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState([]);
+  const [tipoUsuarioLista, setTipoUsuarioLista] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [emailPaciente, setEmailPaciente] = useState(false);
@@ -43,18 +44,31 @@ function ListaUsuarios() {
 
   async function pegandoTipoUsuarioLogado() {
     const resposta = await managerService.GetDadosUsuario(emailLogado);
-    setTipoUsuario(resposta.dadosUsuario.tipo);
+    setTipoUsuarioLogado(resposta.dadosUsuario.tipo);
   }
 
   useEffect(() => {
-    pegandoTipoUsuarioLogado();
     pegandoDadosUsuarios();
+  }, [tipoUsuarioLogado]);
+
+  useEffect(() => {
+    pegandoTipoUsuarioLogado();
   }, []);
 
   async function pegandoDadosUsuarios() {
     const resposta = await managerService.GetDadosPessoais();
-    setUsuarios(resposta);
-    setCarregando(false);
+    console.log(tipoUsuarioLogado)
+    if (tipoUsuarioLogado === "MASTER"){
+      setUsuarios(resposta);
+      setCarregando(false);
+    } else {
+      resposta.forEach(usuario => {
+        if (usuario.tipo === "PACIENTE") {
+          usuarios.push(usuario);
+        }
+      })
+      setCarregando(false);
+    }
   }
 
   async function marcandoAgendamento(emailPaciente) {
@@ -66,6 +80,9 @@ function ListaUsuarios() {
     setModalAgendamento(false);
   }
 
+  function testagem (){
+    console.log(usuarios)
+  }
   async function verificandoSecretariaOuPaciente(tipo, email) {
     if (tipo === "SECRETARIA") {
       history.push({
@@ -82,6 +99,11 @@ function ListaUsuarios() {
 
   return (
     <div>
+      <button
+      onClick={testagem}
+      >
+        Teste
+      </button>
       <ContainerListadeUsuarios>
         <TopoPagina>
           <BarraPesquisa>
@@ -148,7 +170,7 @@ function ListaUsuarios() {
                 )}
               </CódigoPaciente>
 
-              {tipoUsuario === "MASTER" ? (
+              {tipoUsuarioLogado === "MASTER" ? (
                 <BotaoAdicionar>
                   <Button
                     backgroundColor="transparent"
