@@ -10,7 +10,7 @@ import Header from "./components/Header/Header";
 import HomeMedico from "./pages/HomeMedico";
 import HomeSecretaria from "./pages/HomeSecretaria";
 import ListaFormularios from "./pages/ListaFormularios";
-import ListaUsuariosMedico from "./pages/ListaUsuariosMedico";
+import ListaUsuarios from "./pages/ListaUsuarios";
 import ListaUsuariosSecretaria from "./pages/ListaUsuariosSecretaria";
 import Login from "./pages/Login";
 import ModeloReceitas from "./pages/ModeloReceitas";
@@ -56,7 +56,7 @@ function UserHeader() {
           path="/web/listaformularios"
           component={ListaFormularios}
         />
-        <Route exact path="/web/listadeusuariosmedico" component={ListaUsuariosMedico} />
+        <Route exact path="/web/listadeusuarios" component={ListaUsuarios} />
         <Route exact path="/web/listadeusuariossecretaria" component={ListaUsuariosSecretaria} />
         <Route exact path="/web/modeloreceitas" component={ModeloReceitas} />
         <Route exact path="/web/perfil" component={Perfil} />

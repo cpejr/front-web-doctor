@@ -163,7 +163,7 @@ export const DeletarUsuario = async (id) => {
     .deletarUsuario(id)
     .then(() => {
       alert("Usuário deletado com sucesso.");
-      window.location.href = "/web/listadeusuariosmedico";
+      window.location.href = "/web/listadeusuarios";
     })
     .catch((error) => {
       requisicaoErro(

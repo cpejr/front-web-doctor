@@ -27,7 +27,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
 
-function ListaUsuariosMedico() {
+function ListaUsuarios() {
   const history = useHistory();
 
   const { Search } = Input;
@@ -135,4 +135,4 @@ function ListaUsuariosMedico() {
   );
 }
 
-export default ListaUsuariosMedico;
+export default ListaUsuarios;
