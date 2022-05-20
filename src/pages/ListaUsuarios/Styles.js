@@ -174,7 +174,7 @@ export const UltimaVisita = styled.div`
     display: none;
   }
 `;
-export const AdicionarCodigo = styled.div`
+export const BotaoAdicionar = styled.div`
   width: 18%;
   display: flex;
   justify-content: center;
@@ -192,6 +192,7 @@ export const AdicionarCodigo = styled.div`
     width: 50%;
   }
 `;
+
 export const CódigoPaciente = styled.div`
   width: 18%;
   display: flex;
