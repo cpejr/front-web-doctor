@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Input } from "antd";
+const { TextArea } = Input;
 
 export const Container = styled.div`
   display: flex;
@@ -122,6 +123,15 @@ export const TextoCheckbox = styled.h3`
   }
 `;
 
+export const TextAreaDescricao = styled(TextArea)`
+  border-color: black;
+  border-width: 1px;
+  color:black;
+  ::placeholder{
+    color:black
+  }
+`
+
 export const DoisSelect = styled.h3`
   display: flex;
   flex-direction: row;
@@ -177,6 +187,9 @@ export const InputHora = styled.input`
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
+  ::placeholder {
+    color:black;
+  };
 `;
 
 export const InputDuracao = styled(Input)`
@@ -192,6 +205,11 @@ export const InputDuracao = styled(Input)`
   border-radius: 3px;
   border-width: 1px;
 
+  .ant-input {
+    ::placeholder {
+      color:black
+    }
+  }
 `;
 
 export const TextoSelecioneUmaData = styled.h3`

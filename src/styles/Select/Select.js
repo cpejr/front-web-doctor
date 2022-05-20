@@ -26,7 +26,6 @@ const Select = styled.select`
 
   option[value=""][disabled] {
     display:none;
-    /* color:"black" */
   }
 
 `;

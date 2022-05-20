@@ -18,6 +18,7 @@ import {
   InputDuracao,
   SelecioneUmaData,
   TextoSelecioneUmaData,
+  TextAreaDescricao,
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 import logoGuilherme from "../../assets/logoGuilherme.png";
@@ -26,7 +27,6 @@ import { Spin } from "antd";
 import moment from "moment";
 
 function ModalAgendamentoEspecifico(props) {
-  const { TextArea } = Input;
   const { Option } = Select;
   const [usuario, setUsuario] = useState({});
   const [consultorios, setConsultorios] = useState([]);
@@ -93,8 +93,8 @@ function ModalAgendamentoEspecifico(props) {
       setHora(e.target.value);
       return hora;
     } else if (e.target.name === "data") {
-      formatacaoData(e.target.value)
-
+      setData(e.target.value)
+      return data;
     } else {
       setConsulta({ ...consulta, [e.target.name]: e.target.value });
       return consulta;
@@ -130,7 +130,7 @@ function ModalAgendamentoEspecifico(props) {
               </Col>
             </Row>
           </TipoAgendamento>
-          <TextArea
+          <TextAreaDescricao
             placeholder="Adicione uma descrição"
             rows={4}
             name="descricao"
@@ -187,16 +187,15 @@ function ModalAgendamentoEspecifico(props) {
                   width: "100%",
                   borderColor: "black",
                   borderWidth: "1px",
-                  // color:"black"
+                  color:"black"
                 }}
                 size="large"
-                placeholder="Consultório"
                 onChange={(e) => {
                   preenchendoDadosConsulta(e);
                 }}
-                              
+                            
               >
-                <option color="grey" value="" disabled selected >
+                <option value="" disabled selected >
                     Consultório
                   </option>
                 {consultorios.map((consultorio) => (
