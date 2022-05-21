@@ -6,7 +6,7 @@ export const ContainerHeader = styled.div`
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  background-color: ${Cores.azulEscuro};
+  background-color: ${Cores.azul};
   height: 100px;
   padding-left: 5%;
   padding-right: 5%;

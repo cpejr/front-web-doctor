@@ -19,7 +19,89 @@ function HomeSecretaria() {
     <div>
       <Body>
         <Board>
-           <Notificacao>
+          <Notificacao>
+            <CaixaTexto>
+              <h3>
+                <TextoNotificacao>
+                  Formulário Pré-consulta respondido por Nome do Usuário
+                </TextoNotificacao>
+              </h3>
+            </CaixaTexto>
+            <BotoesColuna>
+              <Button
+                width="100%"
+                height="50px"
+                backgroundColor="#434B97"
+                borderColor="#151B57"
+                color="white"
+                fontSize="1.5em"
+                fontWeight="medium"
+                fontSizeMedia="0.8em"
+                fontSizeMedia950="1em"
+                heightMedia="2em"
+                onClick={() => history.push("/web/respostaformulario")}
+              >
+                VISUALIZAR
+              </Button>
+              <Button
+                width="100%"
+                height="50px"
+                backgroundColor="#E4E6F4"
+                borderColor="#151B57"
+                color="black"
+                fontSize="1.5em"
+                fontWeight="medium"
+                fontSizeMedia="0.8em"
+                fontSizeMedia950="1em"
+                heightMedia="2em"
+                onClick={() => history.push("/web/chat")}
+              >
+                INICIAR CHAT
+              </Button>
+            </BotoesColuna>
+          </Notificacao>
+          <Notificacao>
+            <CaixaTexto>
+              <h3>
+                <TextoNotificacao>
+                  Formulário Pré-consulta respondido por Nome do Usuário
+                </TextoNotificacao>
+              </h3>
+            </CaixaTexto>
+            <BotoesColuna>
+              <Button
+                width="100%"
+                height="50px"
+                backgroundColor="#434B97"
+                borderColor="#151B57"
+                color="white"
+                fontSize="1.5em"
+                fontWeight="medium"
+                fontSizeMedia="0.8em"
+                fontSizeMedia950="1em"
+                heightMedia="2em"
+                onClick={() => history.push("/web/respostaformulario")}
+              >
+                VISUALIZAR
+              </Button>
+              <Button
+                width="100%"
+                height="50px"
+                backgroundColor="#E4E6F4"
+                borderColor="#151B57"
+                color="black"
+                fontSize="1.5em"
+                fontWeight="medium"
+                fontSizeMedia="0.8em"
+                fontSizeMedia950="1em"
+                heightMedia="2em"
+                onClick={() => history.push("/web/chat")}
+              >
+                INICIAR CHAT
+              </Button>
+            </BotoesColuna>
+          </Notificacao>
+          <Notificacao>
             <CaixaTexto>
               <h3>
                 <TextoNotificacao>
@@ -182,7 +264,7 @@ function HomeSecretaria() {
                 INICIAR CHAT
               </Button>
             </BotoesColuna>
-          </Notificacao> 
+          </Notificacao>
           <Notificacao>
             <CaixaTexto>
               <h3>
@@ -264,7 +346,7 @@ function HomeSecretaria() {
                 INICIAR CHAT
               </Button>
             </BotoesColuna>
-          </Notificacao> 
+          </Notificacao>
           <Notificacao>
             <CaixaTexto>
               <h3>
@@ -346,89 +428,7 @@ function HomeSecretaria() {
                 INICIAR CHAT
               </Button>
             </BotoesColuna>
-          </Notificacao> 
-          <Notificacao>
-            <CaixaTexto>
-              <h3>
-                <TextoNotificacao>
-                  Formulário Pré-consulta respondido por Nome do Usuário
-                </TextoNotificacao>
-              </h3>
-            </CaixaTexto>
-            <BotoesColuna>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor="#434B97"
-                borderColor="#151B57"
-                color="white"
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/respostaformulario")}
-              >
-                VISUALIZAR
-              </Button>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor="#E4E6F4"
-                borderColor="#151B57"
-                color="black"
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/chat")}
-              >
-                INICIAR CHAT
-              </Button>
-            </BotoesColuna>
           </Notificacao>
-          <Notificacao>
-            <CaixaTexto>
-              <h3>
-                <TextoNotificacao>
-                  Formulário Pré-consulta respondido por Nome do Usuário
-                </TextoNotificacao>
-              </h3>
-            </CaixaTexto>
-            <BotoesColuna>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor="#434B97"
-                borderColor="#151B57"
-                color="white"
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/respostaformulario")}
-              >
-                VISUALIZAR
-              </Button>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor="#E4E6F4"
-                borderColor="#151B57"
-                color="black"
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/chat")}
-              >
-                INICIAR CHAT
-              </Button>
-            </BotoesColuna>
-          </Notificacao> 
         </Board>
         <BotaoCanto>
           <Button

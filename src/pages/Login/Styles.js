@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Cores } from "../../variaveis";
 
 export const Body = styled.div`
   display: flex;
@@ -9,7 +10,7 @@ export const Body = styled.div`
   height: 100%;
   min-height: 100vh;
   padding: 1%;
-  background-color: #e5e5e5 ;
+  background-color: ${Cores.cinza[8]} ;
 `;
 
 export const DadosLogin = styled.div`
@@ -49,7 +50,7 @@ export const Estetica = styled.div`
   margin-top: 1%;
   display: flex;
   flex-direction: row;
-  color: #151b57;
+  color: ${Cores.azul};
   align-items: center;
   justify-content: space-between;
   gap: 5%;
@@ -62,8 +63,8 @@ export const Estetica = styled.div`
   }
 `;
 export const BarraEstetica = styled.div`
-  color: #151b57;
-  background-color: #151b57;
+  color: ${Cores.azul};
+  background-color: ${Cores.azul};
   height: 1px;
   width: 40%;
 `;

@@ -1,21 +1,24 @@
 export const Cores = {
-  azulEscuro: "#151B57",
-  azulMaisEscuro:"#0A0E3C",
+  cinza: {
+    1: "#807D7D",
+    2: "#8D8D8D",
+    3: "#c4c4c4",
+    4: "#dcdff9",
+    5: "#eaebf8",
+    7: "#E4E6F4",
+    8: "#e5e5e5",
+  },
+  lilas: {
+    1: "#434b97",
+    2: "#A7ADE8",
+    3: "#bbc0f4",
+    4: "#cfd3f8",
+  },
+
+  azul: "#151B57",
+  azulEscuro: "#0A0E3C",
+  preto: "black",
+  branco: "white",
+  vermelho: "red",
   amarelo: "#fdf1d1",
-  cinzaClaro: "#eaebf8",
-  cinza: "#E4E6F4",
-  cinzaClaroFundo: "#dcdff9",
-  cinzaClaroBorda: "#cfd3f8",
-  outroCinza: "#f7f7f7",
-  branco:"#ffffff",
-  cinzaEscuro:"#c4c4c4",
-  outroCinza2:" #e5e5e5",
-  vermelho:" #E00000",
-  lilasClaro: "#bbc0f4",
-  lilasForte:"#434b97",
-  lilasMedio:"#A7ADE8",
-  cinzaMaisEscuro:"#8D8D8D",
-  
-
-
 };

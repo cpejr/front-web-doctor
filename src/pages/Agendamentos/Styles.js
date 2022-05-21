@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Cores } from "../../variaveis";
 
 export const ContainerListadeUsuarios = styled.div`
   display: flex;
@@ -68,10 +69,10 @@ export const BarraEstetica = styled.div`
   margin-bottom: 1%;
   height: 2px;
   width: 100%;
-  background-color: #151b57; ;
+  background-color: ${Cores.azul}; 
 `;
 export const DadosUsuario = styled.div`
-  color: #151b57;
+  color: ${Cores.azul};
   justify-content: space-around;
   display: flex;
   flex-direction: row;

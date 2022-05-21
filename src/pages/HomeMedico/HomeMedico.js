@@ -16,6 +16,7 @@ import {
   Info,
 } from "./Styles";
 import { PlusCircleOutlined } from "@ant-design/icons";
+import { Cores } from "../../variaveis";
 
 function HomeMedico() {
   const history = useHistory();
@@ -32,11 +33,11 @@ function HomeMedico() {
               </Info>
               <BotoesSecretario>
                 <Button
-                  backgroundColor="#FDF1D1"
-                  color="black"
+                  backgroundColor={Cores.amarelo}
+                  color={Cores.preto}
                   width="100%"
                   height="40px"
-                  borderColor="black"
+                  borderColor={Cores.preto}
                   fontSize="1em"
                   gap="1%"
                   boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
@@ -46,11 +47,11 @@ function HomeMedico() {
                   Aceitar Solicitação
                 </Button>
                 <Button
-                  backgroundColor="#FDF1D1"
-                  color="black"
+                  backgroundColor={Cores.amarelo}
+                  color={Cores.preto}
                   width="100%"
                   height="40px"
-                  borderColor="black"
+                  borderColor={Cores.preto}
                   fontSize="1em"
                   gap="1%"
                   boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
@@ -71,11 +72,11 @@ function HomeMedico() {
               </Info>
               <BotoesSecretario>
                 <Button
-                  backgroundColor="#FDF1D1"
-                  color="black"
+                  backgroundColor={Cores.amarelo}
+                  color={Cores.preto}
                   width="100%"
                   height="40px"
-                  borderColor="black"
+                  borderColor={Cores.preto}
                   fontSize="1em"
                   gap="1%"
                   boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
@@ -85,11 +86,11 @@ function HomeMedico() {
                   Aceitar Solicitação
                 </Button>
                 <Button
-                  backgroundColor="#FDF1D1"
-                  color="black"
+                  backgroundColor={Cores.amarelo}
+                  color={Cores.preto}
                   width="100%"
                   height="40px"
-                  borderColor="black"
+                  borderColor={Cores.preto}
                   fontSize="1em"
                   gap="1%"
                   boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
@@ -114,11 +115,11 @@ function HomeMedico() {
       <ContainerBotoes>
         <Botoes>
           <Button
-            backgroundColor="#E9EBFC"
-            color="#151B57"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.azul}
             width="100%"
             height="50px"
-            borderColor="#151B57"
+            borderColor={Cores.azul}
             fontSize="1em"
             gap="1%"
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
@@ -128,46 +129,46 @@ function HomeMedico() {
           </Button>
           <Button
             backgroundColor="green"
-            color="#151B57"
+            color={Cores.azul}
             width="100%"
             height="50px"
-            borderColor="#151B57"
+            borderColor={Cores.azul}
             fontSize="1em"
             gap="1%"
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-           // onClick={() => history.push("avaliar-app")}
+            // onClick={() => history.push("avaliar-app")}
           >
             Avaliação do Aplicativo
           </Button>
         </Botoes>
         <Botoes>
           <Button
-            backgroundColor="#E9EBFC"
-            color="#151B57"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.azul}
             width="100%"
             height="50px"
-            borderColor="#151B57"
+            borderColor={Cores.azul}
             fontSize="1em"
             gap="1%"
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             onClick={() => history.push("/cadastro")}
           >
             Cadastrar Novo Paciente
-            <PlusCircleOutlined style={{ color: "#151B57" }} />
+            <PlusCircleOutlined style={{ color: "#151b57" }} />
           </Button>
           <Button
-            backgroundColor="#E9EBFC"
-            color="#151B57"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.azul}
             width="100%"
             height="50px"
-            borderColor="#151B57"
+            borderColor={Cores.azul}
             fontSize="1em"
             gap="1%"
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             onClick={() => history.push("/cadastro")}
           >
             Cadastrar Nova Secretária
-            <PlusCircleOutlined style={{ color: "#151B57" }} />
+            <PlusCircleOutlined style={{ color: "#151b57" }} />
           </Button>
         </Botoes>
       </ContainerBotoes>

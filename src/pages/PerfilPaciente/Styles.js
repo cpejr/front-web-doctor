@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Cores } from "../../variaveis";
 
 export const ContainerPerfil = styled.div`
   display: flex;
@@ -22,7 +23,7 @@ export const Perfil = styled.div`
   flex-direction: row;
   justify-content: center;
   border-style: solid;
-  border-color: #c4c4c4;
+  border-color: ${Cores.cinza[3]};
   border-width: 2px;
   border-radius: 3px;
   padding: 2%;
@@ -75,15 +76,15 @@ export const PerfilSuperior = styled.div`
     width: 80%;
     padding: 2%;
     border-style: solid;
-    border-color: #c4c4c4;
+    border-color: ${Cores.cinza[3]};
     border-width: 2px;
     border-radius: 3px;
     box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   }
   @media (max-width: 640px) {
-    justify-content: center ;
+    justify-content: center;
     flex-direction: column;
-    display: block ;
+    display: block;
   }
 `;
 export const PerfilInferior = styled.div`
@@ -104,7 +105,7 @@ export const PerfilInferior = styled.div`
     padding: 2%;
     width: 80%;
     border-style: solid;
-    border-color: #c4c4c4;
+    border-color: ${Cores.cinza[3]};
     border-width: 2px;
     border-radius: 3px;
     margin-bottom: 2%;
@@ -117,7 +118,7 @@ export const Formularios = styled.div`
   flex-direction: column;
   width: 100%;
   border-style: solid;
-  border-color: #c4c4c4;
+  border-color: ${Cores.cinza[3]};
   border-width: 2px;
   border-radius: 3px;
   height: 30%;
@@ -135,7 +136,7 @@ export const Receitas = styled.div`
   width: 100%;
   flex-direction: column;
   border-style: solid;
-  border-color: #c4c4c4;
+  border-color: ${Cores.cinza[3]};
   border-width: 2px;
   border-radius: 3px;
   padding: 2%;
@@ -157,9 +158,8 @@ export const FotoPerfil = styled.div`
   justify-content: center;
 
   @media (max-width: 640px) {
-    width: auto
+    width: auto;
   }
-
 `;
 export const Dados = styled.div`
   display: flex;
@@ -170,7 +170,7 @@ export const Dados = styled.div`
 export const Nome = styled.div`
   width: 100%;
   font-size: 1.8em;
-  color: #151b57;
+  color: ${Cores.azul};
   font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -186,21 +186,21 @@ export const DataAnos = styled.div`
 export const Data = styled.div`
   font-size: 1.2em;
   justify-content: flex-start;
-  color: #151b57;
+  color: ${Cores.azul};
 `;
 export const Anos = styled.div`
   font-size: 1.2em;
-  color: #151b57;
+  color: ${Cores.azul};
 `;
 export const Titulo = styled.div`
   font-size: 1.5em;
-  color: #151b57;
+  color: ${Cores.azul};
   font-weight: bold;
   margin: 0% 0% 2% 0%;
 `;
 export const DadosGeo = styled.div`
   font-size: 1.2em;
-  color: #151b57;
+  color: ${Cores.azul};
   margin-bottom: 2%;
   text-decoration: ${(props) => props.textDecoration};
   text-overflow: ellipsis;
@@ -258,7 +258,7 @@ export const DadosContato = styled.div`
     width: 100%;
     display: block;
     border-style: solid;
-    border-color: #c4c4c4;
+    border-color: ${Cores.cinza[3]};
     border-width: 2px;
     border-radius: 3px;
     box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
@@ -267,7 +267,7 @@ export const DadosContato = styled.div`
 export const InfoContato = styled.div`
   text-decoration: ${(props) => props.textDecoration};
   font-size: 1.2em;
-  color: #151b57;
+  color: ${Cores.azul};
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -277,7 +277,7 @@ export const Formulario = styled.div`
   display: flex;
   flex-direction: column;
   border-style: solid;
-  border-color: #151b57;
+  border-color: ${Cores.azul};
   border-width: 2px;
   border-radius: 3px;
   justify-content: center;
@@ -286,7 +286,7 @@ export const Formulario = styled.div`
 export const Receita = styled.div`
   width: 100%;
   border-style: solid;
-  border-color: #151b57;
+  border-color: ${Cores.azul};
   border-width: 2px;
   border-radius: 3px;
   padding: 0 2% 2% 2%;
@@ -308,7 +308,7 @@ export const BotaoReceita = styled.div`
 export const TituloFormulario = styled.div`
   font-size: 1.5em;
   text-decoration: underline;
-  color: "black";
+  color: ${Cores.preto};
 
   @media (max-width: 780px) {
     font-size: 1.3em;
@@ -319,7 +319,7 @@ export const TituloFormulario = styled.div`
 `;
 export const DataFormulario = styled.div`
   font-size: 1.2em;
-  color: #434b97;
+  color: ${Cores.lilas[1]};
 
   @media (max-width: 780px) {
     display: none;
@@ -327,7 +327,7 @@ export const DataFormulario = styled.div`
 `;
 export const TipoFormulario = styled.div`
   font-size: 1.2em;
-  color: #434b97;
+  color: ${Cores.lilas[1]};
 
   @media (max-width: 560px) {
     display: none;
@@ -335,7 +335,7 @@ export const TipoFormulario = styled.div`
 `;
 export const UrgenciaFormulario = styled.div`
   font-size: 1.2em;
-  color: #434b97;
+  color: ${Cores.lilas[1]};
   @media (max-width: 780px) {
     font-size: 1.3em;
   }

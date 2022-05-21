@@ -21,7 +21,6 @@ import {
   AdicionarCodigo,
   CaixaVazia,
 } from "./Styles";
-import logoGuilherme from "../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";

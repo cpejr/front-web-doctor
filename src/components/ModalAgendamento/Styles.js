@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Cores } from "../../variaveis";
 
 export const Container = styled.div`
   display: flex;
@@ -7,7 +8,7 @@ export const Container = styled.div`
   width: 98%;
   height: 98%;
   padding: 3% 2% 2% 2%;
-  background-color: #e4e6f4;
+  background-color: ${Cores.cinza[7]};
 
   @media (max-width: 560px) {
     padding: 0% 0% 0% 0%;
@@ -27,7 +28,7 @@ export const Caixa = styled.div`
   height: 98%;
   margin: 1% 1.5% 1% 1.5%;
   min-height: 80vh;
-  background-color: #f7f7f7;
+  background-color: ${Cores.branco};
   border-color: rgba(0, 0, 0, 0.1);
   border-style: solid;
   border-radius: 3px;
@@ -61,7 +62,7 @@ export const Titulo = styled.div`
   text-align: center;
   font-family: "Roboto Condensed", sans-serif;
   font-size: 2em;
-  color: #0a0e3c;
+  color: ${Cores.azulEscuro};
   margin-top: 2%;
   @media (max-width: 950px) and (min-width: 560px) {
     font-size: 1.5em;
@@ -107,7 +108,7 @@ export const NumeroAgendamentos = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: #f7f7f7;
+  background-color: ${Cores.branco};
   border-color: rgba(0, 0, 0, 0.1);
   border-style: solid;
   border-radius: 3px;
@@ -116,7 +117,7 @@ export const NumeroAgendamentos = styled.div`
   text-align: center;
   font-family: "Roboto Condensed", sans-serif;
   font-size: 1.5em;
-  color: #0a0e3c;
+  color: ${Cores.azulEscuro};
 
   @media (max-width: 1100px) and (min-width: 800px) {
     font-size: 1em;
@@ -155,9 +156,9 @@ export const CaixaAgendamento = styled.div`
   margin-top: 2%;
   width: 65%;
   height: 40px;
-  background-color: #cfd3f8;
+  background-color: ${Cores.lilas[4]};
   border-style: solid;
-  border-color: #bbc0f4;
+  border-color:${Cores.lilas[3]};
   border-width: 0.2em;
   border-radius: 6px;
 
@@ -219,11 +220,11 @@ export const DiaHorarioAgendamento = styled.div`
 
 export const BarraEstetica = styled.div`
   display: flex;
-  background-color: #bbc0f4;
+  background-color:${Cores.lilas[3]};
   height: 100%;
   width: 3px;
   border-style: solid;
-  border-color: #bbc0f4;
+  border-color:${Cores.lilas[3]};
   border-width: 0.2em;
 
   @media (max-width: 480px) {

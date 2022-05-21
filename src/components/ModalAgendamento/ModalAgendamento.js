@@ -19,6 +19,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import ModalAgendamentoEspecifico from "../ModalAgendamentoEspecifico";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Modal, Spin } from "antd";
+import { Cores } from "../../variaveis";
 
 function ModalAgendamento(props) {
   const [consultas, setConsultas] = useState([]);
@@ -99,8 +100,8 @@ function ModalAgendamento(props) {
                     width="45%"
                     height="40px"
                     backgroundColor="green"
-                    borderColor="#BBC0F4"
-                    color="#8D8D8D"
+                    borderColor={Cores.lilas[3]}
+                    color={Cores.cinza[1]}
                     fontSize="0.9em"
                     fontWeight="bold"
                     fontSizeMedia="0.8em"
@@ -112,9 +113,9 @@ function ModalAgendamento(props) {
                   <Button
                     width="45%"
                     height="40px"
-                    backgroundColor="#FFFFFF"
+                    backgroundColor={Cores.branco}
                     borderColor="rgba(255, 0, 0, 0.25)"
-                    color="#8D8D8D"
+                    color={Cores.cinza[1]}
                     fontSize="0.9em"
                     fontWeight="bold"
                     fontSizeMedia="0.8em"
@@ -151,8 +152,8 @@ function ModalAgendamento(props) {
                     width="45%"
                     height="40px"
                     backgroundColor="green"
-                    borderColor="#BBC0F4"
-                    color="#8D8D8D"
+                    borderColor={Cores.lilas[3]}
+                    color={Cores.cinza[1]}
                     fontSize="0.9em"
                     fontWeight="bold"
                     fontSizeMedia="0.8em"
@@ -164,9 +165,9 @@ function ModalAgendamento(props) {
                   <Button
                     width="45%"
                     height="40px"
-                    backgroundColor="#FFFFFF"
+                    backgroundColor={Cores.branco}
                     borderColor="rgba(255, 0, 0, 0.25)"
-                    color="#8D8D8D"
+                    color={Cores.cinza[1]}
                     fontSize="0.9em"
                     fontWeight="bold"
                     fontSizeMedia="0.8em"
@@ -188,9 +189,9 @@ function ModalAgendamento(props) {
             <Button
               width="100%"
               height="50px"
-              backgroundColor="#A7ADE8"
-              borderColor="#151B57"
-              color="#0A0E3C"
+              backgroundColor={Cores.lilas[2]}
+              borderColor={Cores.azul}
+              color={Cores.azulEscuro}
               fontSize="1.1em"
               fontWeight="bold"
               fontSizeMedia="0.9em"
