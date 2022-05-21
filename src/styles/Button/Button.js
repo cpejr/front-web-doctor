@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Fontes } from "../../variaveis";
 
 const Button = styled.button`
   /*Posição */
@@ -21,23 +22,22 @@ const Button = styled.button`
   box-shadow: ${(props) => props.boxShadow};
   cursor: pointer;
   /*características do texto*/
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: ${Fontes.roboto};
   font-size: ${(props) => props.fontSize};
   text-decoration: ${(props) => props.textDecoration};
   text-align: center;
   font-weight: ${(props) => props.fontWeight};
-  @media(max-width:480px){
+  @media (max-width: 480px) {
     font-size: ${(props) => props.fontSizeMedia};
   }
-  @media(max-width:560px){
+  @media (max-width: 560px) {
     width: 100%;
-    height: ${(props) => props.heightMedia560}
+    height: ${(props) => props.heightMedia560};
   }
-  @media(max-width:950px) and (min-width:480px) {
+  @media (max-width: 950px) and (min-width: 480px) {
     font-size: ${(props) => props.fontSizeMedia950};
   }
-  @media(max-width:1080px){
+  @media (max-width: 1080px) {
     font-size: ${(props) => props.fontSizeMedia1080};
   }
 `;

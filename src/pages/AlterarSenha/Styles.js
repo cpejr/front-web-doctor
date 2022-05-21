@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Cores } from "../../variaveis";
+import { Cores, Fontes } from "../../variaveis";
 
 export const Conteudo = styled.div`
   display: flex;
@@ -36,7 +36,7 @@ export const Titulo = styled.div`
   flex-direction: row;
   justify-content: start;
   width: 100%;
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 500;
   font-size: 2em;
   @media (max-width: 950px) {

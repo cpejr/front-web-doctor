@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Cores } from "../../variaveis";
+import { Cores, Fontes } from "../../variaveis";
 
 export const Conteudo = styled.div`
   display: flex;
@@ -20,7 +20,7 @@ export const CaixaCima = styled.div`
   height: 100%;
   width: 70%;
   padding: 5%;
-  background-color:${Cores.branco};
+  background-color: ${Cores.branco};
   border-style: solid;
   border-radius: 4px;
   border-color: ${Cores.cinza[3]};
@@ -72,7 +72,7 @@ export const Nome = styled.div`
   margin-left: 10%;
   width: 90%;
   color: ${Cores.azul};
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 600;
   font-size: 1.4em;
   @media (max-width: 1100px) and (min-width: 770px) {
@@ -108,7 +108,7 @@ export const ConjuntoDataCPF = styled.div`
 `;
 export const DataCPF = styled.div`
   color: ${Cores.azul};
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1.2em;
   @media (max-width: 1100px) and (min-width: 770px) {
@@ -166,7 +166,7 @@ export const CaixaEndereco = styled.div`
   height: 100%;
   width: 48%;
   padding: 4%;
-  background-color:${Cores.branco};
+  background-color: ${Cores.branco};
   border-style: solid;
   border-radius: 4px;
   border-color: ${Cores.cinza[3]};
@@ -183,7 +183,7 @@ export const EnderecoContato = styled.div`
   height: 20%;
   width: 100%;
   color: ${Cores.azul};
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 600;
   font-size: 1.4em;
   @media (max-width: 1100px) and (min-width: 770px) {
@@ -207,7 +207,7 @@ export const DadosEndereco = styled.div`
   height: 40%;
   width: 100%;
   color: ${Cores.azul};
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1.3em;
   @media (max-width: 1100px) and (min-width: 770px) {
@@ -235,7 +235,7 @@ export const Rua = styled.div`
   justify-content: start;
   width: 70%;
   color: ${Cores.azul};
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1.2em;
   @media (max-width: 1100px) and (min-width: 770px) {
@@ -262,7 +262,7 @@ export const Complemento = styled.div`
   align-items: center;
   width: 30%;
   color: ${Cores.azul};
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1.2em;
   @media (max-width: 1100px) and (min-width: 770px) {
@@ -304,7 +304,7 @@ export const CaixaContato = styled.div`
   height: 100%;
   width: 100%;
   padding: 7%;
-  background-color:${Cores.branco};
+  background-color: ${Cores.branco};
   border-style: solid;
   border-radius: 4px;
   border-color: ${Cores.cinza[3]};
@@ -323,7 +323,7 @@ export const DadosContato = styled.div`
   height: 60%;
   width: 100%;
   color: ${Cores.azul};
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1.3em;
   @media (max-width: 1100px) and (min-width: 770px) {
@@ -347,7 +347,7 @@ export const ExcluirConta = styled.div`
   width: 100%;
   color: ${Cores.azul};
   text-decoration: underline;
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1.1em;
   @media (max-width: 1100px) and (min-width: 770px) {

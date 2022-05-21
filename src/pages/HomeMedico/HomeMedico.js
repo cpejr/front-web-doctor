@@ -154,7 +154,7 @@ function HomeMedico() {
             onClick={() => history.push("/cadastro")}
           >
             Cadastrar Novo Paciente
-            <PlusCircleOutlined style={{ color: "#151b57" }} />
+            <PlusCircleOutlined style={{ color: Cores.azul }} />
           </Button>
           <Button
             backgroundColor={Cores.cinza[7]}
@@ -168,7 +168,7 @@ function HomeMedico() {
             onClick={() => history.push("/cadastro")}
           >
             Cadastrar Nova Secretária
-            <PlusCircleOutlined style={{ color: "#151b57" }} />
+            <PlusCircleOutlined style={{ color: Cores.azul }} />
           </Button>
         </Botoes>
       </ContainerBotoes>

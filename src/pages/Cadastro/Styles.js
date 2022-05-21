@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Cores, Fontes } from "../../variaveis";
 
 export const Body = styled.div`
   display: flex;
@@ -9,7 +10,7 @@ export const Body = styled.div`
   height: 100%;
   min-height: 100vh;
   padding: 4% 2% 4% 2%;
-  background-color: #e5e5e5;
+  background-color: ${Cores.cinza[8]};
 `;
 export const DadosCadastro = styled.div`
   display: flex ;
@@ -74,7 +75,7 @@ export const Botao = styled.button`
 
 export const Rotulo = styled.div`
   width: 100%;
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1em;
   color: #E00000;

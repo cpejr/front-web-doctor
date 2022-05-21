@@ -74,7 +74,7 @@ function AlterarSenha() {
                   placeholder="Confirme sua senha atual"
                   backgroundColor={Cores.cinza[7]}
                   borderColor={Cores.azul}
-                  color="black"
+                  color={Cores.preto}
                   fontSize="1em"
                   width="100%"
                   marginTop="2%"
@@ -104,7 +104,7 @@ function AlterarSenha() {
                   width="40%"
                   backgroundColor={Cores.lilas[1]}
                   borderColor={Cores.azul}
-                  color="white"
+                  color={Cores.branco}
                   fontSize="1.5em"
                   fontWeight="bold"
                   fontSizeMedia="1.2em"
@@ -129,7 +129,7 @@ function AlterarSenha() {
                   placeholder="Defina sua nova senha"
                   backgroundColor={Cores.cinza[7]}
                   borderColor={Cores.azul}
-                  color="black"
+                  color={Cores.preto}
                   fontSize="1em"
                   width="100%"
                   marginTop="2%"
@@ -141,7 +141,7 @@ function AlterarSenha() {
                   placeholder="Confirme sua nova senha"
                   backgroundColor={Cores.cinza[7]}
                   borderColor={Cores.azul}
-                  color="black"
+                  color={Cores.preto}
                   fontSize="1em"
                   width="100%"
                   marginTop="5%"
@@ -171,7 +171,7 @@ function AlterarSenha() {
                   width="40%"
                   backgroundColor={Cores.lilas[1]}
                   borderColor={Cores.azul}
-                  color="white"
+                  color={Cores.branco}
                   fontSize="1.5em"
                   fontWeight="bold"
                   fontSizeMedia="1.2em"

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Cores } from "../../variaveis";
+import { Cores, Fontes } from "../../variaveis";
 
 export const Body = styled.div`
   display: flex;
@@ -54,8 +54,7 @@ export const Estetica = styled.div`
   align-items: center;
   justify-content: space-between;
   gap: 5%;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  font-family: ${Fontes.roboto};
   font-size: 1em;
   width: 40%;
   @media (max-width: 1100px) {

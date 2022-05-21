@@ -44,7 +44,7 @@ function Perfil(props) {
 
   const [carregando, setCarregando] = useState(true);
   const antIcon = (
-    <LoadingOutlined style={{ fontSize: 45, color: "#151B57" }} spin />
+    <LoadingOutlined style={{ fontSize: 45, color: Cores.azul }} spin />
   );
 
   async function PerfilSecretariaOuMedico() {

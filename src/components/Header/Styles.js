@@ -11,7 +11,7 @@ export const ContainerHeader = styled.div`
   padding-left: 5%;
   padding-right: 5%;
 
-  color: white;
+  color:${Cores.branco};
 `;
 export const BotoesHeader = styled.div`
   display: flex;

@@ -51,7 +51,7 @@ function PerfilPaciente(props) {
   const [dataNascimento, setDataNascimento] = useState("");
   const [carregando, setCarregando] = useState(true);
   const antIcon = (
-    <LoadingOutlined style={{ fontSize: 45, color: "#151B57" }} spin />
+    <LoadingOutlined style={{ fontSize: 45, color: Cores.azul }} spin />
   );
 
   async function pegandoDados() {
@@ -218,7 +218,7 @@ function PerfilPaciente(props) {
                 <DadosReceita>
                   <TituloReceita
                     textDecoration="underline"
-                    color="black"
+                    color={Cores.preto}
                     fontSize="1.5em"
                   >
                     Título
@@ -252,7 +252,7 @@ function PerfilPaciente(props) {
         width={"70%"}
         centered={true}
       >
-        <ModalAgendamento id_usuario={usuario.id} email={usuario.email}/>
+        <ModalAgendamento id_usuario={usuario.id} email={usuario.email} />
       </Modal>
     </div>
   );

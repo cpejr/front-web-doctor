@@ -22,3 +22,9 @@ export const Cores = {
   vermelho: "red",
   amarelo: "#fdf1d1",
 };
+
+export const Fontes = {
+  roboto: "Roboto, sans-serif",
+  barlow: "Barlow, sans-serif",
+
+};

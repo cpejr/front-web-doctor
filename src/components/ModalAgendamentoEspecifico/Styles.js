@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Cores, Fontes } from "../../variaveis";
 
 export const Container = styled.div`
   display: flex;
@@ -14,7 +15,7 @@ export const Caixa = styled.div`
   width: 100%;
   height: 100%;
   min-height: 80vh;
-  background-color: #f7f7f7;
+  background-color: ${Cores.branco};
   border-color: rgba(0, 0, 0, 0.1);
   border-style: solid;
   border-radius: 3px;
@@ -33,7 +34,7 @@ export const InfoEsquerdaEDireita = styled.div`
   height: 100%;
   min-height: 80vh;
   padding: 5%;
-  
+
   @media (max-width: 800px) {
     width: 100%;
   }
@@ -47,7 +48,7 @@ export const Usuario = styled.div`
   width: 100%;
   height: 60px;
   padding: 0% 1% 0% 1%;
-  border-color: black;
+  border-color: ${Cores.preto};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
@@ -72,10 +73,10 @@ export const Nome = styled.div`
   width: 40%;
   display: flex;
   justify-content: start;
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1.4em;
-  color: #0a0e3c;
+  color: ${Cores.azulEscuro};
 
   @media (max-width: 500px) {
     width: 50%;
@@ -95,13 +96,13 @@ export const TipoAgendamento = styled.div`
 `;
 
 export const TextoTipoAgendamento = styled.h3`
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 600;
   font-size: 1.4em;
-  color: #0a0e3c;
+  color: ${Cores.azulEscuro};
   text-align: center;
 
-  @media (max-width: 850px) and (min-width: 560px){
+  @media (max-width: 850px) and (min-width: 560px) {
     font-size: 1.2em;
   }
 
@@ -111,10 +112,10 @@ export const TextoTipoAgendamento = styled.h3`
 `;
 
 export const TextoCheckbox = styled.h3`
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 600;
   font-size: 1.2em;
-  color: #0a0e3c;
+  color: ${Cores.azulEscuro};
 
   @media (max-width: 560px) {
     font-size: 1em;
@@ -134,7 +135,7 @@ export const DoisSelect = styled.h3`
     height: 100%;
   }
 
-  @media (max-width: 1260px) and (min-width: 800px){
+  @media (max-width: 1260px) and (min-width: 800px) {
     flex-direction: column;
     height: 100%;
   }
@@ -146,24 +147,24 @@ export const TamanhoInput = styled.div`
   align-items: start;
   justify-content: center;
   width: 40%;
-  
+
   background-color: green;
 
   @media (max-width: 560px) {
     width: 100%;
     margin-bottom: 5%;
   }
-  @media (max-width: 1260px) and (min-width: 800px){
+  @media (max-width: 1260px) and (min-width: 800px) {
     width: 90%;
     margin-bottom: 5%;
   }
 `;
 
 export const TextoSelecioneUmaData = styled.h3`
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 500;
   font-size: 0.9em;
-  color: #0a0e3c;
+  color: ${Cores.azulEscuro};
   display: flex;
   justify-content: end;
   align-items: center;
@@ -175,11 +176,10 @@ export const SelecioneUmaData = styled.h3`
   align-items: start;
   justify-content: center;
   width: 90%;
-  
+
   background-color: green;
-  
+
   @media (max-width: 560px) {
     width: 100%;
   }
 `;
-

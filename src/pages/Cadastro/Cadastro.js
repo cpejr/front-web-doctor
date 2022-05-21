@@ -508,7 +508,7 @@ function Cadastro() {
             width="60%"
             backgroundColor={Cores.lilas[1]}
             borderColor={Cores.azul}
-            color="white"
+            color={Cores.branco}
             fontSize="1.5em"
             fontSizeMedia="1.2em"
             onClick={() => requisicaoCadastro()}

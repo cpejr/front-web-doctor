@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Cores } from "../../variaveis";
+import { Cores, Fontes } from "../../variaveis";
 
 export const Body = styled.div`
   display: flex;
@@ -71,7 +71,7 @@ export const TextoNotificacao = styled.div`
   justify-content: center;
   text-align: center;
   width: 100%;
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: ${Fontes.roboto};
   font-size: 1em;
   @media (max-width: 950px) {
     font-size: 0.8em;

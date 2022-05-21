@@ -159,7 +159,7 @@ function Header(props) {
             overlay={menu}
             placement={"bottom"}
           >
-            <MenuOutlined style={{ color: "white", fontSize: "1.5em" }} />
+            <MenuOutlined style={{ color: Cores.branco , fontSize: "1.5em" }} />
           </Dropdown>
         </MenuHeader>
         <Logo>

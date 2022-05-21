@@ -143,7 +143,7 @@ function EditarPerfil() {
           </Button>
           <Button
             width="100%"
-            backgroundColor="white"
+            backgroundColor={Cores.branco}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             borderColor={Cores.vermelho}
             height="50px"
@@ -337,7 +337,7 @@ function EditarPerfil() {
             backgroundColor={Cores.lilas[1]}
             borderColor={Cores.azul}
             height="50px"
-            color="white"
+            color={Cores.branco}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             onClick={() => atualizarDados()}
           >

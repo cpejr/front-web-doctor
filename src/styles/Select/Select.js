@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { Cores } from "../../variaveis";
 const Select = styled.select`
   background-color: ${(props) => props.backgroundColor};
   text-align: left;
@@ -7,9 +7,9 @@ const Select = styled.select`
     let cor;
     if (!props.borderColor) {
       if(props.erro || props.camposVazios){
-        cor = "#E00000";
+        cor = Cores.vermelho;
       } else {
-        cor = "#151B57";
+        cor = Cores.azul;
       }
     } else {
       cor = props.borderColor;

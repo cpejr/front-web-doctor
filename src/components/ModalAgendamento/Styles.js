@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Cores } from "../../variaveis";
+import { Cores, Fontes } from "../../variaveis";
 
 export const Container = styled.div`
   display: flex;
@@ -60,7 +60,7 @@ export const Titulo = styled.div`
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: ${Fontes.roboto};
   font-size: 2em;
   color: ${Cores.azulEscuro};
   margin-top: 2%;
@@ -115,7 +115,7 @@ export const NumeroAgendamentos = styled.div`
   padding: 10%;
 
   text-align: center;
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: ${Fontes.roboto};
   font-size: 1.5em;
   color: ${Cores.azulEscuro};
 
@@ -195,7 +195,7 @@ export const TextoAgendamentoEspecifico = styled.div`
   text-align: center;
   width: 50%;
   height: 100%;
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: ${Fontes.roboto};
   font-size: 1em;
   @media (max-width: 950px) {
     font-size: 0.8em;
@@ -209,7 +209,7 @@ export const DiaHorarioAgendamento = styled.div`
   justify-content: center;
   text-align: center;
   width: 25%;
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: ${Fontes.roboto};
   font-size: 1em;
   font-weight: medium;
   
