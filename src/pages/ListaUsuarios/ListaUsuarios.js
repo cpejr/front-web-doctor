@@ -57,16 +57,16 @@ function ListaUsuarios() {
 
   async function pegandoDadosUsuarios() {
     const resposta = await managerService.GetDadosPessoais();
-    console.log(tipoUsuarioLogado)
-    if (tipoUsuarioLogado === "MASTER"){
+    console.log(tipoUsuarioLogado);
+    if (tipoUsuarioLogado === "MASTER") {
       setUsuarios(resposta);
       setCarregando(false);
     } else {
-      resposta.forEach(usuario => {
+      resposta.forEach((usuario) => {
         if (usuario.tipo === "PACIENTE") {
           usuarios.push(usuario);
         }
-      })
+      });
       setCarregando(false);
     }
   }
@@ -80,8 +80,8 @@ function ListaUsuarios() {
     setModalAgendamento(false);
   }
 
-  function testagem (){
-    console.log(usuarios)
+  function testagem() {
+    console.log(usuarios);
   }
   async function verificandoSecretariaOuPaciente(tipo, email) {
     if (tipo === "SECRETARIA") {
@@ -99,23 +99,23 @@ function ListaUsuarios() {
 
   return (
     <div>
-      <button
-      onClick={testagem}
-      >
-        Teste
-      </button>
+      <button onClick={testagem}>Teste</button>
       <ContainerListadeUsuarios>
         <TopoPagina>
           <BarraPesquisa>
             <Search placeholder="BUSCAR" style={{ width: 400 }} />
           </BarraPesquisa>
           <Filtros>
-            <FiltroUsuario>
-              <Select
-                defaultValue="Todos os Usuários"
-                style={{ color: "green", width: 200 }}
-              ></Select>
-            </FiltroUsuario>
+            {tipoUsuarioLogado === "MASTER" ? (
+              <FiltroUsuario>
+                <Select
+                  defaultValue="Todos os Usuários"
+                  style={{ color: "green", width: 200 }}
+                ></Select>
+              </FiltroUsuario>
+            ) : (
+              <></>
+            )}
             <FiltroDatas>
               <Select
                 defaultValue="Todas as datas"
