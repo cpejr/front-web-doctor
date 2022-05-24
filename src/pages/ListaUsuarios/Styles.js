@@ -150,12 +150,6 @@ export const Telefone = styled.div`
     width: 20%;
   }
   @media (max-width: 700px) {
-    width: 25%;
-  }
-  @media (max-width: 600px) {
-    width: 33%;
-  }
-  @media (max-width: 500px) {
     display: none;
   }
 `;
@@ -202,6 +196,12 @@ export const CódigoPaciente = styled.div`
     width: 20%;
   }
   @media (max-width: 700px) {
+    width: 25%;
+  }
+  @media (max-width: 600px) {
+    width: 33%;
+  }
+  @media (max-width: 500px) {
     display: none;
   }
 `;
