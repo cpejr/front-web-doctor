@@ -43,6 +43,12 @@ const maskTelefone = (value) => {
 const maskApenasNumeros = (value) => {
   return value.replace(/\D/g, "");
 };
+const maskApenasNumerosCpfTel = (value) => {
+  return value.replace(/\D/g, "").replace(/(\d{11})(\d)/, "$1");
+};
+const maskApenasNumerosCep = (value) => {
+  return value.replace(/\D/g, "").replace(/(\d{8})(\d)/, "$1");
+};
 
 const maskData = (value) => {
   return value
@@ -74,7 +80,6 @@ function Cadastro() {
 
   const [enderecoBack, setEnderecoBack] = useState({});
   const [estado, setEstado] = useState({});
-  const [estadoBack, setEstadoBack] = useState({});
 
   const [carregando, setCarregando] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -105,7 +110,6 @@ function Cadastro() {
   }
 
   async function requisicaoCadastro() {
-
     if (!usuario.nome) errors.nome = true;
     if (!usuario.telefone) errors.telefone = true;
     if (!usuario.tipo) errors.tipo = true;
@@ -124,6 +128,7 @@ function Cadastro() {
 
     setCamposVazios({ ...camposVazios, ...errors });
 
+    console.log(estado)
 
     if (_.isEqual(camposVazios, teste)) {
       if (usuario.senha === usuario.senhaConfirmada) {
@@ -181,13 +186,15 @@ function Cadastro() {
     }
     if (e.target.name === "telefone") {
       setEstado({ ...estado, [e.target.name]: maskTelefone(e.target.value) });
+      setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
     }
     if (e.target.name === "data_nascimento") {
       setEstado({ ...estado, [e.target.name]: maskData(e.target.value) });
-      setEstadoBack({ ...estadoBack, [e.target.name]: maskData(e.target.value) });
+      setUsuario({ ...usuario, [name]: maskData(value) });
     }
     if (e.target.name === "cpf") {
       setEstado({ ...estado, [e.target.name]: maskCPF(e.target.value) });
+      setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
     }
   }
 
@@ -205,6 +212,10 @@ function Cadastro() {
 
     if (e.target.name === "cep") {
       setEndereco({ ...endereco, [e.target.name]: maskCEP(e.target.value) });
+      setEnderecoBack({
+        ...enderecoBack,
+        [e.target.name]: maskApenasNumerosCep(e.target.value),
+      });
     }
     if (e.target.name === "pais") {
       setEndereco({
