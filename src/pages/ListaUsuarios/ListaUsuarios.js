@@ -34,7 +34,6 @@ function ListaUsuarios() {
   const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
   const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState([]);
-  const [tipoUsuarioLista, setTipoUsuarioLista] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [emailPaciente, setEmailPaciente] = useState(false);
@@ -57,7 +56,6 @@ function ListaUsuarios() {
 
   async function pegandoDadosUsuarios() {
     const resposta = await managerService.GetDadosPessoais();
-    console.log(tipoUsuarioLogado);
     if (tipoUsuarioLogado === "MASTER") {
       setUsuarios(resposta);
       setCarregando(false);
@@ -80,9 +78,6 @@ function ListaUsuarios() {
     setModalAgendamento(false);
   }
 
-  function testagem() {
-    console.log(usuarios);
-  }
   async function verificandoSecretariaOuPaciente(tipo, email) {
     if (tipo === "SECRETARIA") {
       history.push({
@@ -99,7 +94,6 @@ function ListaUsuarios() {
 
   return (
     <div>
-      <button onClick={testagem}>Teste</button>
       <ContainerListadeUsuarios>
         <TopoPagina>
           <BarraPesquisa>

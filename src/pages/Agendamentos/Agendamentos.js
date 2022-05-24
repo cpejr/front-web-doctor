@@ -26,7 +26,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
-function ListaUsuariosSecretaria() {
+function Agendamentos () {
  
   const { Search } = Input;
   const [modalAgendamento, setModalAgendamento] = useState(false);
@@ -195,4 +195,4 @@ function ListaUsuariosSecretaria() {
   );
 }
 
-export default ListaUsuariosSecretaria;
+export default Agendamentos ;
