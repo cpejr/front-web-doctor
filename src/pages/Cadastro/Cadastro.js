@@ -127,9 +127,6 @@ function Cadastro() {
 
     setCamposVazios({ ...camposVazios, ...errors });
 
-    console.log(camposVazios)
-    console.log(teste)
-
     if (_.isEqual(camposVazios, teste)) {
       if (usuario.senha === usuario.senhaConfirmada) {
         setCarregando(true);
