@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import _ from "lodash";
-import { isEqual } from "lodash";
 import { useHistory } from "react-router-dom";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Input from "../../styles/Input";
@@ -128,7 +127,8 @@ function Cadastro() {
 
     setCamposVazios({ ...camposVazios, ...errors });
 
-    console.log(estado)
+    console.log(camposVazios)
+    console.log(teste)
 
     if (_.isEqual(camposVazios, teste)) {
       if (usuario.senha === usuario.senhaConfirmada) {
@@ -200,7 +200,9 @@ function Cadastro() {
 
   function preenchendoEndereco(e) {
     const { value, name } = e.target;
-    if (value) setCamposVazios({ ...camposVazios, [name]: false });
+    if(name !== "complemento"){
+      if (value) setCamposVazios({ ...camposVazios, [name]: false });
+    }
 
     if (name === "cep" && value.length <= 8) {
       setErro({ ...erro, [name]: true });
