@@ -1,16 +1,17 @@
 import styled from "styled-components";
+import { Cores } from "../../variaveis";
 
 export const ContainerHeader = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  background-color: #151b57;
+  background-color: ${Cores.azul};
   height: 100px;
   padding-left: 5%;
   padding-right: 5%;
 
-  color: white;
+  color:${Cores.branco};
 `;
 export const BotoesHeader = styled.div`
   display: flex;

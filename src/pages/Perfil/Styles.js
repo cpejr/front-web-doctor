@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Cores, Fontes } from "../../variaveis";
 
 export const Conteudo = styled.div`
   display: flex;
@@ -8,7 +9,7 @@ export const Conteudo = styled.div`
   width: 100%;
   height: 100%;
   padding: 1%;
-  background-color: #ffffff;
+  background-color: ${Cores.branco};
 `;
 
 export const CaixaCima = styled.div`
@@ -19,10 +20,10 @@ export const CaixaCima = styled.div`
   height: 100%;
   width: 70%;
   padding: 5%;
-  background-color: #f7f7f7;
+  background-color: ${Cores.branco};
   border-style: solid;
   border-radius: 4px;
-  border-color: #c4c4c4;
+  border-color: ${Cores.cinza[3]};
   @media (max-width: 560px) {
     flex-direction: column;
     width: 80%;
@@ -70,8 +71,8 @@ export const Nome = styled.div`
   flex-direction: row;
   margin-left: 10%;
   width: 90%;
-  color: #151b57;
-  font-family: "Barlow", sans-serif;
+  color: ${Cores.azul};
+  font-family: ${Fontes.barlow};
   font-weight: 600;
   font-size: 1.4em;
   @media (max-width: 1100px) and (min-width: 770px) {
@@ -106,8 +107,8 @@ export const ConjuntoDataCPF = styled.div`
   }
 `;
 export const DataCPF = styled.div`
-  color: #151b57;
-  font-family: "Barlow", sans-serif;
+  color: ${Cores.azul};
+  font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1.2em;
   @media (max-width: 1100px) and (min-width: 770px) {
@@ -165,10 +166,10 @@ export const CaixaEndereco = styled.div`
   height: 100%;
   width: 48%;
   padding: 4%;
-  background-color: #f7f7f7;
+  background-color: ${Cores.branco};
   border-style: solid;
   border-radius: 4px;
-  border-color: #c4c4c4;
+  border-color: ${Cores.cinza[3]};
   @media (max-width: 560px) {
     width: 100%;
   }
@@ -181,8 +182,8 @@ export const EnderecoContato = styled.div`
   margin-bottom: 8%;
   height: 20%;
   width: 100%;
-  color: #151b57;
-  font-family: "Barlow", sans-serif;
+  color: ${Cores.azul};
+  font-family: ${Fontes.barlow};
   font-weight: 600;
   font-size: 1.4em;
   @media (max-width: 1100px) and (min-width: 770px) {
@@ -205,8 +206,8 @@ export const DadosEndereco = styled.div`
   margin-bottom: 3%;
   height: 40%;
   width: 100%;
-  color: #151b57;
-  font-family: "Barlow", sans-serif;
+  color: ${Cores.azul};
+  font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1.3em;
   @media (max-width: 1100px) and (min-width: 770px) {
@@ -233,8 +234,8 @@ export const Rua = styled.div`
   flex-direction: column;
   justify-content: start;
   width: 70%;
-  color: #151b57;
-  font-family: "Barlow", sans-serif;
+  color: ${Cores.azul};
+  font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1.2em;
   @media (max-width: 1100px) and (min-width: 770px) {
@@ -260,8 +261,8 @@ export const Complemento = styled.div`
   justify-content: right;
   align-items: center;
   width: 30%;
-  color: #151b57;
-  font-family: "Barlow", sans-serif;
+  color: ${Cores.azul};
+  font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1.2em;
   @media (max-width: 1100px) and (min-width: 770px) {
@@ -303,10 +304,10 @@ export const CaixaContato = styled.div`
   height: 100%;
   width: 100%;
   padding: 7%;
-  background-color: #f7f7f7;
+  background-color: ${Cores.branco};
   border-style: solid;
   border-radius: 4px;
-  border-color: #c4c4c4;
+  border-color: ${Cores.cinza[3]};
   @media (max-width: 1100px) and (min-width: 560px) {
     padding: 9%;
   }
@@ -321,8 +322,8 @@ export const DadosContato = styled.div`
   margin-bottom: 3%;
   height: 60%;
   width: 100%;
-  color: #151b57;
-  font-family: "Barlow", sans-serif;
+  color: ${Cores.azul};
+  font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1.3em;
   @media (max-width: 1100px) and (min-width: 770px) {
@@ -344,9 +345,9 @@ export const ExcluirConta = styled.div`
   justify-content: end;
   height: 15%;
   width: 100%;
-  color: #151b57;
+  color: ${Cores.azul};
   text-decoration: underline;
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1.1em;
   @media (max-width: 1100px) and (min-width: 770px) {
