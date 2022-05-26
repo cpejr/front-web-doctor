@@ -1,11 +1,12 @@
 import styled from "styled-components";
+import { Cores } from "../../variaveis";
 
 export const ContainerHome = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
   height: 100%;
-  min-height: calc ( 100vh - 100px);
+  min-height: calc (100vh - 100px);
   align-items: center;
   justify-content: center;
   padding: 2% 5% 2% 5%;
@@ -29,7 +30,7 @@ export const ContainerSecretario = styled.div`
   width: 100%;
   height: 300px;
   background-color: green;
-  border-color: black;
+  border-color: ${Cores.preto};
   border-style: solid;
   border-radius: 3px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
@@ -51,7 +52,7 @@ export const ContainerFormulario = styled.div`
   width: 100%;
   height: 300px;
   background-color: green;
-  border-color: black;
+  border-color: ${Cores.preto};
   border-style: solid;
   border-radius: 3px;
   border-width: 2px;
@@ -65,9 +66,9 @@ export const ContainerFormulario = styled.div`
 export const Secretarios = styled.div`
   width: 100%;
   height: 150px;
-  background-color: #eaebf8;
+  background-color: ${Cores.cinza[5]};
   padding: 2%;
-  border-color: black;
+  border-color: ${Cores.preto};
   border-style: solid;
   border-radius: 3px;
   border-width: 2px;
@@ -93,11 +94,11 @@ export const Info = styled.div`
 `;
 export const InfoSecretario = styled.div`
   display: flex;
-  color: black;
-  background-color: #fdf1d1;
+  color: ${Cores.preto};
+  background-color: ${Cores.amarelo};
   width: 100%;
   height: 40px;
-  border-color: black;
+  border-color: ${Cores.preto};
   border-style: solid;
   border-radius: 6px;
   border-width: 2px;
@@ -127,8 +128,8 @@ export const BotoesSecretario = styled.div`
 export const Formulario = styled.div`
   border-radius: 6px;
   border-style: solid;
-  border-color: #cfd3f8;
-  background-color: #dcdff9;
+  border-color: ${Cores.lilas[4]};
+  background-color: ${Cores.cinza[4]};
   width: 100%;
   height: 100%;
   margin-bottom: 2%;

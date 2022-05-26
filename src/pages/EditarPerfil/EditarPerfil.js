@@ -17,6 +17,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { useHistory } from "react-router-dom";
 import * as managerService from "../../services/ManagerService/managerService";
+import { Cores } from "../../variaveis";
 
 function EditarPerfil() {
   const history = useHistory();
@@ -129,11 +130,11 @@ function EditarPerfil() {
         <BlocoInferior>
           <Button
             width="100%"
-            backgroundColor="#A7ADE8"
+            backgroundColor={Cores.lilas[2]}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             height="50px"
-            borderColor="#151B57"
-            color="#151B57"
+            borderColor={Cores.azul}
+            color={Cores.azul}
             onClick={() => {
               history.push("/web/alterarsenha");
             }}
@@ -142,11 +143,11 @@ function EditarPerfil() {
           </Button>
           <Button
             width="100%"
-            backgroundColor="white"
+            backgroundColor={Cores.branco}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-            borderColor="#DD0D0D"
+            borderColor={Cores.vermelho}
             height="50px"
-            color="#DD0D0D"
+            color={Cores.vermelho}
             onClick={() => {
               history.push("/web/perfil");
             }}
@@ -160,11 +161,11 @@ function EditarPerfil() {
         <CaixaInputs>
           <Input
             placeholder={usuario.nome}
-            backgroundColor="#E4E6F4"
-            borderColor="black"
+            backgroundColor={Cores.cinza[7]}
+            borderColor={Cores.preto}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             borderWidth="1px"
-            color="black"
+            color={Cores.preto}
             fontSize="1em"
             width="50%"
             name="nome"
@@ -172,11 +173,11 @@ function EditarPerfil() {
           ></Input>
           <Input
             placeholder={cpfMasked}
-            backgroundColor="#E4E6F4"
-            borderColor="black"
+            backgroundColor={Cores.cinza[7]}
+            borderColor={Cores.preto}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             borderWidth="1px"
-            color="black"
+            color={Cores.preto}
             fontSize="1em"
             width="50%"
             name="cpf"
@@ -186,11 +187,11 @@ function EditarPerfil() {
         <CaixaInputs>
           <Input
             placeholder={usuario.email}
-            backgroundColor="#E4E6F4"
-            borderColor="black"
+            backgroundColor={Cores.cinza[7]}
+            borderColor={Cores.preto}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             borderWidth="1px"
-            color="black"
+            color={Cores.preto}
             fontSize="1em"
             width="50%"
             name="email"
@@ -199,11 +200,11 @@ function EditarPerfil() {
 
           <Input
             placeholder={telMasked}
-            backgroundColor="#E4E6F4"
-            borderColor="black"
+            backgroundColor={Cores.cinza[7]}
+            borderColor={Cores.preto}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             borderWidth="1px"
-            color="black"
+            color={Cores.preto}
             fontSize="1em"
             width="50%"
             name="telefone"
@@ -213,11 +214,11 @@ function EditarPerfil() {
         <CaixaInputs>
           <Input
             placeholder={dataMasked}
-            backgroundColor="#E4E6F4"
-            borderColor="black"
+            backgroundColor={Cores.cinza[7]}
+            borderColor={Cores.preto}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             borderWidth="1px"
-            color="black"
+            color={Cores.preto}
             fontSize="1em"
             width="50%"
             name="data_nascimento"
@@ -226,11 +227,11 @@ function EditarPerfil() {
 
           <Input
             placeholder={endereco.cep}
-            backgroundColor="#E4E6F4"
-            borderColor="black"
+            backgroundColor={Cores.cinza[7]}
+            borderColor={Cores.preto}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             borderWidth="1px"
-            color="black"
+            color={Cores.preto}
             fontSize="1em"
             width="50%"
             name="cep"
@@ -240,11 +241,11 @@ function EditarPerfil() {
         <CaixaInputs>
           <Input
             placeholder={endereco.pais}
-            backgroundColor="#E4E6F4"
-            borderColor="black"
+            backgroundColor={Cores.cinza[7]}
+            borderColor={Cores.preto}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             borderWidth="1px"
-            color="black"
+            color={Cores.preto}
             fontSize="1em"
             width="50%"
             name="pais"
@@ -252,11 +253,11 @@ function EditarPerfil() {
           ></Input>
           <Input
             placeholder={endereco.estado}
-            backgroundColor="#E4E6F4"
-            borderColor="black"
+            backgroundColor={Cores.cinza[7]}
+            borderColor={Cores.preto}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             borderWidth="1px"
-            color="black"
+            color={Cores.preto}
             fontSize="1em"
             width="50%"
             name="estado"
@@ -266,11 +267,11 @@ function EditarPerfil() {
         <CaixaInputs>
           <Input
             placeholder={endereco.bairro}
-            backgroundColor="#E4E6F4"
-            borderColor="black"
+            backgroundColor={Cores.cinza[7]}
+            borderColor={Cores.preto}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             borderWidth="1px"
-            color="black"
+            color={Cores.preto}
             fontSize="1em"
             width="50%"
             name="bairro"
@@ -279,11 +280,11 @@ function EditarPerfil() {
           {complemento === null ? (
             <Input
               placeholder="Complemento: "
-              backgroundColor="#E4E6F4"
-              borderColor="black"
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
               boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
               borderWidth="1px"
-              color="black"
+              color={Cores.preto}
               fontSize="1em"
               width="50%"
               name="complemento"
@@ -292,11 +293,11 @@ function EditarPerfil() {
           ) : (
             <Input
               placeholder={complemento}
-              backgroundColor="#E4E6F4"
-              borderColor="black"
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
               boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
               borderWidth="1px"
-              color="black"
+              color={Cores.preto}
               fontSize="1em"
               width="50%"
               name="complemento"
@@ -307,11 +308,11 @@ function EditarPerfil() {
         <CaixaInputs>
           <Input
             placeholder={endereco.rua}
-            backgroundColor="#E4E6F4"
-            borderColor="black"
+            backgroundColor={Cores.cinza[7]}
+            borderColor={Cores.preto}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             borderWidth="1px"
-            color="black"
+            color={Cores.preto}
             fontSize="1em"
             width="50%"
             name="rua"
@@ -319,11 +320,11 @@ function EditarPerfil() {
           ></Input>
           <Input
             placeholder={endereco.numero}
-            backgroundColor="#E4E6F4"
-            borderColor="black"
+            backgroundColor={Cores.cinza[7]}
+            borderColor={Cores.preto}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             borderWidth="1px"
-            color="black"
+            color={Cores.preto}
             fontSize="1em"
             width="50%"
             name="numero"
@@ -333,10 +334,10 @@ function EditarPerfil() {
         <CaixaBotao>
           <Button
             width="30%"
-            backgroundColor="#434B97"
-            borderColor="#151B57"
+            backgroundColor={Cores.lilas[1]}
+            borderColor={Cores.azul}
             height="50px"
-            color="white"
+            color={Cores.branco}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             onClick={() => atualizarDados()}
           >

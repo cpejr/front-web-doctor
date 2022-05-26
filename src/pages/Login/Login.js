@@ -17,6 +17,7 @@ import {
   Logo,
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService"
+import { Cores } from "../../variaveis";
 
 function Login() {
   const history = useHistory();
@@ -47,9 +48,9 @@ function Login() {
           </Logo>
           <Input
             placeholder="Email"
-            backgroundColor="#E4E6F4"
-            borderColor="#151B57"
-            color="black"
+            backgroundColor={Cores.cinza[7]}
+            borderColor={Cores.azul}
+            color={Cores.preto}
             fontSize="1em"
             width="100%"
             marginTop="2%"
@@ -58,9 +59,9 @@ function Login() {
           ></Input>
           <Input
             placeholder="Senha"
-            backgroundColor="#E4E6F4"
-            borderColor="#151B57"
-            color="black"
+            backgroundColor={Cores.cinza[7]}
+            borderColor={Cores.azul}
+            color={Cores.preto}
             fontSize="1em"
             width="100%"
             marginTop="2%"
@@ -71,9 +72,9 @@ function Login() {
           <Button
             width="100%"
             height="50px"
-            backgroundColor="#434B97"
-            borderColor="#151B57"
-            color="white"
+            backgroundColor={Cores.lilas[1]}
+            borderColor={Cores.azul}
+            color={Cores.branco}
             fontSize="1.5em"
             fontWeight="bold"
             fontSizeMedia="1.2em"
@@ -86,7 +87,7 @@ function Login() {
           <Button
             backgroundColor="transparent"
             borderColor="transparent"
-            color="#151B57"
+            color={Cores.azul}
             fontSize="1em"
             textDecoration="underline"
             height="50px"
@@ -99,7 +100,7 @@ function Login() {
           <Button
             backgroundColor="transparent"
             borderColor="transparent"
-            color="#434B97"
+            color={Cores.lilas[1]}
             fontSize="1em"
             textDecoration="underline"
             height="50px"
@@ -120,8 +121,8 @@ function Login() {
             width="100%"
             height="50px"
             backgroundColor="green"
-            borderColor="#151b57"
-            color="#151b57"
+            borderColor={Cores.azul}
+            color={Cores.azul}
             fontSize="1em"
             gap="1%"
             onClick={() => {
@@ -135,8 +136,8 @@ function Login() {
             width="100%"
             height="50px"
             backgroundColor="green"
-            borderColor="#151b57"
-            color="#151b57"
+            borderColor={Cores.azul}
+            color={Cores.azul}
             fontSize="1em"
             gap="1%"
             onClick={() => {

@@ -1,10 +1,11 @@
 import styled from "styled-components";
+import { Cores } from "../../variaveis";
 
 export const Container = styled.div`
   position: fixed;
   height: 100vh;
   width: 100vw;
-  background-color: #E4E6F4;
+  background-color: ${Cores.cinza[7]};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,7 +13,7 @@ export const Container = styled.div`
 export const Carregar = styled.div`
   width: 12px;
   height: 12px;
-  background-color: #151b57;
+  background-color: ${Cores.azul};
   border-radius: 50%;
   border-top-color: transparent;
   animation: spin 1s ease-in-out infinite;

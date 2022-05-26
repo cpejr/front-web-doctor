@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Cores } from "../../variaveis";
 
 const Input = styled.input`
   background-color: ${(props) => props.backgroundColor};
@@ -7,9 +8,9 @@ const Input = styled.input`
     let cor;
     if (!props.borderColor) {
       if(props.erro || props.camposVazios){
-        cor = "#E00000";
+        cor = Cores.vermelho;
       } else {
-        cor = "#151B57";
+        cor = Cores.azul;
       }
     } else {
       cor = props.borderColor;

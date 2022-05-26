@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import{Cores} from "../../variaveis";
 
 export const ContainerEditarPerfil = styled.div`
   display: flex;
@@ -21,7 +22,7 @@ export const ColunaEsquerda = styled.div`
   flex-direction: column;
   width: 30%;
   height: 100vh;
-  border-color: #c4c4c4;
+  border-color: ${Cores.cinza[3]};
   border-radius: 3px;
   border-style: solid;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
@@ -53,7 +54,7 @@ export const ColunaDireita = styled.div`
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   border-width: 2px;
   border-radius: 3px;
-  border-color: #c4c4c4;
+  border-color: ${Cores.cinza[3]};
   border-style: solid;
 
   @media (max-width: 930px) {

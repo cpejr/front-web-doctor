@@ -39,6 +39,7 @@ import logoGuilherme from "../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
 import { useHistory } from "react-router-dom";
 import ModalAgendamento from "../../components/ModalAgendamento/ModalAgendamento";
+import { Cores } from "../../variaveis";
 
 function PerfilPaciente(props) {
   const history = useHistory();
@@ -50,7 +51,7 @@ function PerfilPaciente(props) {
   const [dataNascimento, setDataNascimento] = useState("");
   const [carregando, setCarregando] = useState(true);
   const antIcon = (
-    <LoadingOutlined style={{ fontSize: 45, color: "#151B57" }} spin />
+    <LoadingOutlined style={{ fontSize: 45, color: Cores.azul }} spin />
   );
 
   async function pegandoDados() {
@@ -128,9 +129,9 @@ function PerfilPaciente(props) {
                   <Botao>
                     <Button
                       backgroundColor="green"
-                      color="#0A0E3C"
+                      color={Cores.azulEscuro}
                       fontWeight="bold"
-                      borderColor="#0A0E3C"
+                      borderColor={Cores.azulEscuro}
                       height="40px"
                       width="100%"
                       fontSize="1.3em"
@@ -141,9 +142,9 @@ function PerfilPaciente(props) {
                   <Botao>
                     <Button
                       backgroundColor="green"
-                      color="#0A0E3C"
+                      color={Cores.azulEscuro}
                       fontWeight="bold"
-                      borderColor="#0A0E3C"
+                      borderColor={Cores.azulEscuro}
                       height="40px"
                       width="100%"
                       fontSize="1.3em"
@@ -154,10 +155,10 @@ function PerfilPaciente(props) {
                   </Botao>
                   <Botao>
                     <Button
-                      backgroundColor="#A7ADE8"
-                      color="#0A0E3C"
+                      backgroundColor={Cores.lilas[2]}
+                      color={Cores.azulEscuro}
                       fontWeight="bold"
-                      borderColor="#0A0E3C"
+                      borderColor={Cores.azulEscuro}
                       height="40px"
                       width="100%"
                       fontSize="1.3em"
@@ -194,9 +195,9 @@ function PerfilPaciente(props) {
                   <Resposta>Resposta Pendente</Resposta>
                   <Button
                     backgroundColor="green"
-                    color="#0A0E3C"
+                    color={Cores.azulEscuro}
                     fontWeight="bold"
-                    borderColor="#0A0E3C"
+                    borderColor={Cores.azulEscuro}
                     height="40px"
                     width="25%"
                   >
@@ -217,21 +218,21 @@ function PerfilPaciente(props) {
                 <DadosReceita>
                   <TituloReceita
                     textDecoration="underline"
-                    color="black"
+                    color={Cores.preto}
                     fontSize="1.5em"
                   >
                     Título
                   </TituloReceita>
-                  <TituloReceita color="#434B97" fontSize="1.2em">
+                  <TituloReceita color={Cores.lilas[1]} fontSize="1.2em">
                     xx/xx/2022
                   </TituloReceita>
                 </DadosReceita>
                 <BotaoReceita>
                   <Button
                     backgroundColor="green"
-                    color="#0A0E3C"
+                    color={Cores.azulEscuro}
                     fontWeight="bold"
-                    borderColor="#0A0E3C"
+                    borderColor={Cores.azulEscuro}
                     height="40px"
                     width="25%"
                   >
@@ -251,7 +252,7 @@ function PerfilPaciente(props) {
         width={"70%"}
         centered={true}
       >
-        <ModalAgendamento id_usuario={usuario.id} email={usuario.email}/>
+        <ModalAgendamento id_usuario={usuario.id} email={usuario.email} />
       </Modal>
     </div>
   );
