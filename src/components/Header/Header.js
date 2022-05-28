@@ -75,7 +75,7 @@ function Header(props) {
           <Button
             backgroundColor="transparent"
             borderColor="transparent"
-            color={Cores.branco}
+            color={Cores.preto}
             fontSize="1rem"
             height="50px"
             onClick={() => {
@@ -230,7 +230,7 @@ function Header(props) {
               fontSizeMedia1080="1rem"
               backgroundColor="transparent"
               borderColor="transparent"
-              color={Cores.cinza[7]}
+              color={Cores.branco}
               fontSize="1.1rem"
               height="50px"
               onClick={() => {
@@ -244,7 +244,7 @@ function Header(props) {
               fontSizeMedia1080="1rem"
               backgroundColor="transparent"
               borderColor="transparent"
-              color={Cores.cinza[7]}
+              color={Cores.branco}
               fontSize="1.1rem"
               height="50px"
               onClick={() => {

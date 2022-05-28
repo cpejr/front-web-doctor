@@ -81,6 +81,8 @@ function Cadastro() {
   const [enderecoBack, setEnderecoBack] = useState({});
   const [estado, setEstado] = useState({});
 
+  const [convenio, setConvenio] = useState(false);
+
   const [carregando, setCarregando] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -198,7 +200,7 @@ function Cadastro() {
 
   function preenchendoEndereco(e) {
     const { value, name } = e.target;
-    if(name !== "complemento"){
+    if (name !== "complemento") {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
     }
 
@@ -353,6 +355,91 @@ function Cadastro() {
           {erro.email && (
             <Rotulo>Digite um email no formato email@email.com</Rotulo>
           )}
+          <Select
+            // id="tipos"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            width="100%"
+            // name="tipo"
+            // onChange={preenchendoDados}
+            // camposVazios={camposVazios.tipo}
+          >
+            <option value="">Possui Convênio?</option>
+            <option
+              value="SIM"
+              borderColor={Cores.azul}
+              onClick={() => setConvenio(true)}
+            >
+              Sim
+            </option>
+            <option
+              value="NÃO"
+              borderColor={Cores.azul}
+              onClick={() => setConvenio(true)}
+            >
+              Não
+            </option>
+          </Select>
+
+          <Input
+            placeholder="Nome do Convênio"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            fontSize="1em"
+            width="100%"
+            marginTop="2%"
+            // name="nomeConvenio"
+            // value={endereco.pais}
+            // onChange={preenchendoDados}
+          ></Input>
+
+          <Select
+            // id="tipos"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            width="100%"
+            // name="tipo"
+            // onChange={preenchendoDados}
+            // camposVazios={camposVazios.tipo}
+          >
+            <option value="">Possui Cuidador?</option>
+            <option
+              value="SIM"
+              borderColor={Cores.azul}
+              onClick={() => setConvenio(true)}
+            >
+              Sim
+            </option>
+            <option
+              value="NÃO"
+              borderColor={Cores.azul}
+              onClick={() => setConvenio(true)}
+            >
+              Não
+            </option>
+          </Select>
+          <Input
+            placeholder="Nome do Cuidador"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            fontSize="1em"
+            width="100%"
+            marginTop="2%"
+            // name="nomeConvenio"
+            // value={endereco.pais}
+            // onChange={preenchendoDados}
+          ></Input>
+          <Input
+            placeholder="Telefone do Cuidador"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            fontSize="1em"
+            width="100%"
+            marginTop="2%"
+            // name="nomeConvenio"
+            // value={endereco.pais}
+            // onChange={preenchendoDados}
+          ></Input>
           <Input
             placeholder="CEP"
             backgroundColor={Cores.cinza[7]}
