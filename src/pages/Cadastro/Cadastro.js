@@ -82,6 +82,7 @@ function Cadastro() {
   const [estado, setEstado] = useState({});
 
   const [convenio, setConvenio] = useState(false);
+  const [cuidador, setCuidador] = useState(false);
 
   const [carregando, setCarregando] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -361,37 +362,32 @@ function Cadastro() {
             color={Cores.preto}
             width="100%"
             // name="tipo"
-            // onChange={preenchendoDados}
+            onChange={(e) => {
+              setConvenio(e.target.value);
+            }}
             // camposVazios={camposVazios.tipo}
           >
             <option value="">Possui Convênio?</option>
-            <option
-              value="SIM"
-              borderColor={Cores.azul}
-              onClick={() => setConvenio(true)}
-            >
+            <option value={true} borderColor={Cores.azul}>
               Sim
             </option>
-            <option
-              value="NÃO"
-              borderColor={Cores.azul}
-              onClick={() => setConvenio(true)}
-            >
+            <option value="" borderColor={Cores.azul}>
               Não
             </option>
           </Select>
-
-          <Input
-            placeholder="Nome do Convênio"
-            backgroundColor={Cores.cinza[7]}
-            color={Cores.preto}
-            fontSize="1em"
-            width="100%"
-            marginTop="2%"
-            // name="nomeConvenio"
-            // value={endereco.pais}
-            // onChange={preenchendoDados}
-          ></Input>
+          {convenio && (
+            <Input
+              placeholder="Nome do Convênio"
+              backgroundColor={Cores.cinza[7]}
+              color={Cores.preto}
+              fontSize="1em"
+              width="100%"
+              marginTop="2%"
+              // name="nomeConvenio"
+              // value={endereco.pais}
+              // onChange={preenchendoDados}
+            ></Input>
+          )}
 
           <Select
             // id="tipos"
@@ -399,47 +395,45 @@ function Cadastro() {
             color={Cores.preto}
             width="100%"
             // name="tipo"
-            // onChange={preenchendoDados}
+            onChange={(e) => {
+              setCuidador(e.target.value);
+            }}
             // camposVazios={camposVazios.tipo}
           >
             <option value="">Possui Cuidador?</option>
-            <option
-              value="SIM"
-              borderColor={Cores.azul}
-              onClick={() => setConvenio(true)}
-            >
+            <option value="SIM" borderColor={Cores.azul}>
               Sim
             </option>
-            <option
-              value="NÃO"
-              borderColor={Cores.azul}
-              onClick={() => setConvenio(true)}
-            >
+            <option value="" borderColor={Cores.azul}>
               Não
             </option>
           </Select>
-          <Input
-            placeholder="Nome do Cuidador"
-            backgroundColor={Cores.cinza[7]}
-            color={Cores.preto}
-            fontSize="1em"
-            width="100%"
-            marginTop="2%"
-            // name="nomeConvenio"
-            // value={endereco.pais}
-            // onChange={preenchendoDados}
-          ></Input>
-          <Input
-            placeholder="Telefone do Cuidador"
-            backgroundColor={Cores.cinza[7]}
-            color={Cores.preto}
-            fontSize="1em"
-            width="100%"
-            marginTop="2%"
-            // name="nomeConvenio"
-            // value={endereco.pais}
-            // onChange={preenchendoDados}
-          ></Input>
+          {cuidador && (
+            <>
+              <Input
+                placeholder="Nome do Cuidador"
+                backgroundColor={Cores.cinza[7]}
+                color={Cores.preto}
+                fontSize="1em"
+                width="100%"
+                marginTop="2%"
+                // name="nomeConvenio"
+                // value={endereco.pais}
+                // onChange={preenchendoDados}
+              ></Input>
+              <Input
+                placeholder="Telefone do Cuidador"
+                backgroundColor={Cores.cinza[7]}
+                color={Cores.preto}
+                fontSize="1em"
+                width="100%"
+                marginTop="2%"
+                // name="nomeConvenio"
+                // value={endereco.pais}
+                // onChange={preenchendoDados}
+              ></Input>
+            </>
+          )}
           <Input
             placeholder="CEP"
             backgroundColor={Cores.cinza[7]}
