@@ -44,6 +44,7 @@ export const InputMesmaLinha2 = styled.div`
   font-size: 1em;
   @media (max-width: 820px) {
     flex-direction: column;
+    margin-top:2% ;
   }
 `;
 export const Logo = styled.div`
