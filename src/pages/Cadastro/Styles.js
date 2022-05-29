@@ -13,7 +13,7 @@ export const Body = styled.div`
   background-color: ${Cores.cinza[8]};
 `;
 export const DadosCadastro = styled.div`
-  display: flex ;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -44,6 +44,7 @@ export const InputMesmaLinha2 = styled.div`
   font-size: 1em;
   @media (max-width: 820px) {
     flex-direction: column;
+    margin-top: 2%;
   }
 `;
 export const Logo = styled.div`
@@ -78,7 +79,7 @@ export const Rotulo = styled.div`
   font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1em;
-  color: #E00000;
+  color: #e00000;
 `;
 
 export const RotuloColuna = styled.div`
@@ -89,5 +90,25 @@ export const RotuloColuna = styled.div`
   width: 48%;
   @media (max-width: 820px) {
     width: 100%;
+  }
+`;
+export const PossuiConvenio = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 2% 5% 0% 5%;
+  font-weight: bold;
+  .ant-switch-checked {
+    background-color: ${Cores.azul};
+  }
+`;
+export const PossuiCuidador = styled.div`
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 2% 5% 0% 5%;
+  font-weight: bold;
+  .ant-switch-checked {
+    background-color: ${Cores.azul};
   }
 `;

@@ -5,7 +5,7 @@ import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import Select from "../../styles/Select/Select";
-import { Spin } from "antd";
+import { Spin, Switch } from "antd";
 import { LoadingOutlined, LeftOutlined } from "@ant-design/icons";
 import {
   Body,
@@ -16,6 +16,8 @@ import {
   InputMesmaLinha2,
   Botao,
   RotuloColuna,
+  PossuiConvenio,
+  PossuiCuidador,
 } from "./Styles";
 import "react-toastify/dist/ReactToastify.min.css";
 import AddToast from "../../components/AddToast/AddToast";
@@ -84,6 +86,15 @@ function Cadastro() {
   const [carregando, setCarregando] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
+  const [convenio, setConvenio] = useState(false);
+  const [cuidador, setCuidador] = useState(false);
+
+  function funcaoConvenio() {
+    setConvenio(!convenio);
+  }
+  function funcaoCuidador() {
+    setCuidador(!cuidador);
+  }
   const errors = {};
   const teste = {
     tipo: false,
@@ -198,7 +209,7 @@ function Cadastro() {
 
   function preenchendoEndereco(e) {
     const { value, name } = e.target;
-    if(name !== "complemento"){
+    if (name !== "complemento") {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
     }
 
@@ -353,6 +364,59 @@ function Cadastro() {
           {erro.email && (
             <Rotulo>Digite um email no formato email@email.com</Rotulo>
           )}
+
+          <PossuiConvenio>
+            {" "}
+            Possui Convênio?
+            <Switch onChange={funcaoConvenio}></Switch>
+          </PossuiConvenio>
+
+          {convenio && (
+            <Input
+              placeholder="Nome do Convênio"
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.azul}
+              color={Cores.preto}
+              fontSize="1em"
+              width="100%"
+              marginTop="2%"
+              name="nome_convenio"
+              onChange={preenchendoDados}
+            ></Input>
+          )}
+
+          <PossuiCuidador>
+            {" "}
+            Possui Cuidador?<Switch onChange={funcaoCuidador}></Switch>
+          </PossuiCuidador>
+
+          {cuidador && (
+            <>
+              <Input
+                placeholder="Nome Cuidador"
+                backgroundColor={Cores.cinza[7]}
+                borderColor={Cores.azul}
+                color={Cores.preto}
+                fontSize="1em"
+                width="100%"
+                marginTop="2%"
+                name="nome_cuidador"
+                onChange={preenchendoDados}
+              ></Input>
+              <Input
+                placeholder="Telefone Cuidador"
+                backgroundColor={Cores.cinza[7]}
+                borderColor={Cores.azul}
+                color={Cores.preto}
+                fontSize="1em"
+                width="100%"
+                marginTop="2%"
+                name="telefone_cuidador"
+                onChange={preenchendoDados}
+              ></Input>
+            </>
+          )}
+
           <Input
             placeholder="CEP"
             backgroundColor={Cores.cinza[7]}
