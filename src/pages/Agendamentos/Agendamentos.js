@@ -26,7 +26,8 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
-function ListaUsuariosSecretaria() {
+import { Cores } from "../../variaveis";
+function Agendamentos () {
  
   const { Search } = Input;
   const [modalAgendamento, setModalAgendamento] = useState(false);
@@ -167,9 +168,9 @@ function ListaUsuariosSecretaria() {
           <Button
             width="48%"
             height="50px"
-            backgroundColor="#A7ADE8"
-            borderColor="#0A0E3C"
-            color="#151b57"
+            backgroundColor={Cores.lilas[2]}
+            borderColor={Cores.azulEscuro}
+            color={Cores.azul}
             fontSize="1.8em"
             fontWeight="bold"
             fontSizeMedia950="1em"
@@ -195,4 +196,4 @@ function ListaUsuariosSecretaria() {
   );
 }
 
-export default ListaUsuariosSecretaria;
+export default Agendamentos ;

@@ -7,6 +7,7 @@ import { useHistory } from "react-router-dom";
 import { Dropdown, Menu } from "antd";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 import * as managerService from "../../services/ManagerService/managerService";
+import{Cores} from "../../variaveis";
 
 function Header(props) {
   const email = sessionStorage.getItem("@doctorapp-Email");
@@ -28,7 +29,7 @@ function Header(props) {
           <Button
             backgroundColor="transparent"
             borderColor="transparent"
-            color="black"
+            color={Cores.preto}
             fontSize="1rem"
             height="50px"
             onClick={() => {
@@ -43,7 +44,7 @@ function Header(props) {
           <Button
             backgroundColor="transparent"
             borderColor="transparent"
-            color="black"
+            color={Cores.preto}
             fontSize="1rem"
             height="50px"
             onClick={() => {
@@ -59,7 +60,7 @@ function Header(props) {
           <Button
             backgroundColor="transparent"
             borderColor="transparent"
-            color="black"
+            color={Cores.preto}
             fontSize="1rem"
             height="50px"
             onClick={() => {
@@ -74,7 +75,7 @@ function Header(props) {
           <Button
             backgroundColor="transparent"
             borderColor="transparent"
-            color="white"
+            color={Cores.branco}
             fontSize="1rem"
             height="50px"
             onClick={() => {
@@ -91,11 +92,11 @@ function Header(props) {
             <Button
               backgroundColor="transparent"
               borderColor="transparent"
-              color="black"
+              color={Cores.preto}
               fontSize="1rem"
               height="50px"
               onClick={() => {
-                history.push("/web/listadeusuariosmedico");
+                history.push("/web/listadeusuarios");
               }}
             >
               Lista de Usuários
@@ -106,11 +107,11 @@ function Header(props) {
             <Button
               backgroundColor="transparent"
               borderColor="transparent"
-              color="black"
+              color={Cores.preto}
               fontSize="1rem"
               height="50px"
               onClick={() => {
-                history.push("/web/listadeusuariossecretaria");
+                history.push("/web/listadeusuarios");
               }}
             >
               Lista de Usuários
@@ -122,7 +123,7 @@ function Header(props) {
         <Button
           backgroundColor="transparent"
           borderColor="transparent"
-          color="black"
+          color={Cores.preto}
           fontSize="1rem"
           height="50px"
           onClick={() => {
@@ -136,7 +137,7 @@ function Header(props) {
         <Button
           backgroundColor="transparent"
           borderColor="transparent"
-          color="black"
+          color={Cores.preto}
           fontSize="1rem"
           height="50px"
           onClick={() => {
@@ -158,7 +159,7 @@ function Header(props) {
             overlay={menu}
             placement={"bottom"}
           >
-            <MenuOutlined style={{ color: "white", fontSize: "1.5em" }} />
+            <MenuOutlined style={{ color: Cores.branco , fontSize: "1.5em" }} />
           </Dropdown>
         </MenuHeader>
         <Logo>
@@ -171,7 +172,7 @@ function Header(props) {
               fontSizeMedia1080="1rem"
               backgroundColor="transparent"
               borderColor="transparent"
-              color="#ffffff"
+              color={Cores.branco}
               fontSize="1.1rem"
               height="50px"
               onClick={() => {
@@ -185,7 +186,7 @@ function Header(props) {
               fontSizeMedia1080="1rem"
               backgroundColor="transparent"
               borderColor="transparent"
-              color="#ffffff"
+              color={Cores.branco}
               fontSize="1.1rem"
               height="50px"
               onClick={() => {
@@ -200,7 +201,7 @@ function Header(props) {
               fontSizeMedia1080="1rem"
               backgroundColor="transparent"
               borderColor="transparent"
-              color="#ffffff"
+              color={Cores.branco}
               fontSize="1.1rem"
               height="50px"
               onClick={() => {
@@ -214,7 +215,7 @@ function Header(props) {
               fontSizeMedia1080="1rem"
               backgroundColor="transparent"
               borderColor="transparent"
-              color="white"
+              color={Cores.branco}
               fontSize="1.1rem"
               height="50px"
               onClick={() => {
@@ -229,11 +230,11 @@ function Header(props) {
               fontSizeMedia1080="1rem"
               backgroundColor="transparent"
               borderColor="transparent"
-              color="#E4E6F4"
+              color={Cores.cinza[7]}
               fontSize="1.1rem"
               height="50px"
               onClick={() => {
-                history.push("/web/listadeusuariosmedico");
+                history.push("/web/listadeusuarios");
               }}
             >
               Lista de Usuários
@@ -243,11 +244,11 @@ function Header(props) {
               fontSizeMedia1080="1rem"
               backgroundColor="transparent"
               borderColor="transparent"
-              color="#E4E6F4"
+              color={Cores.cinza[7]}
               fontSize="1.1rem"
               height="50px"
               onClick={() => {
-                history.push("/web/listadeusuariossecretaria");
+                history.push("/web/listadeusuarios");
               }}
             >
               Lista de Usuários
@@ -257,7 +258,7 @@ function Header(props) {
             fontSizeMedia1080="1rem"
             backgroundColor="transparent"
             borderColor="transparent"
-            color="#ffffff"
+            color={Cores.branco}
             fontSize="1.1rem"
             height="50px"
             onClick={() => {
@@ -270,7 +271,7 @@ function Header(props) {
             fontSizeMedia1080="1rem"
             backgroundColor="transparent"
             borderColor="transparent"
-            color="#ffffff"
+            color={Cores.branco}
             fontSize="1.1rem"
             height="50px"
             onClick={() => {
@@ -283,7 +284,7 @@ function Header(props) {
             fontSizeMedia1080="1rem"
             backgroundColor="green"
             borderColor="transparent"
-            color="#ffffff"
+            color={Cores.branco}
             height="50px"
             onClick={() => {
               history.push("/login");

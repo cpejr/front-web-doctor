@@ -12,6 +12,7 @@ import {
   Titulo,
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
+import{Cores} from "../../variaveis";
 
 function AlterarSenha() {
   const history = useHistory();
@@ -71,9 +72,9 @@ function AlterarSenha() {
               <InputVertical>
                 <Input
                   placeholder="Confirme sua senha atual"
-                  backgroundColor="#E4E6F4"
-                  borderColor="#151B57"
-                  color="black"
+                  backgroundColor={Cores.cinza[7]}
+                  borderColor={Cores.azul}
+                  color={Cores.preto}
                   fontSize="1em"
                   width="100%"
                   marginTop="2%"
@@ -86,9 +87,9 @@ function AlterarSenha() {
                 <Button
                   width="40%"
                   height="50px"
-                  backgroundColor="#FFFFFF"
+                  backgroundColor={Cores.branco}
                   borderColor="rgba(255, 0, 0, 0.25)"
-                  color="#8D8D8D"
+                  color={Cores.cinza[1]}
                   fontSize="1.5em"
                   fontWeight="bold"
                   fontSizeMedia="1.2em"
@@ -101,9 +102,9 @@ function AlterarSenha() {
                 <Button
                   height="50px"
                   width="40%"
-                  backgroundColor="#434B97"
-                  borderColor="#151B57"
-                  color="white"
+                  backgroundColor={Cores.lilas[1]}
+                  borderColor={Cores.azul}
+                  color={Cores.branco}
                   fontSize="1.5em"
                   fontWeight="bold"
                   fontSizeMedia="1.2em"
@@ -126,9 +127,9 @@ function AlterarSenha() {
               <InputVertical>
                 <Input
                   placeholder="Defina sua nova senha"
-                  backgroundColor="#E4E6F4"
-                  borderColor="#151B57"
-                  color="black"
+                  backgroundColor={Cores.cinza[7]}
+                  borderColor={Cores.azul}
+                  color={Cores.preto}
                   fontSize="1em"
                   width="100%"
                   marginTop="2%"
@@ -138,9 +139,9 @@ function AlterarSenha() {
                 ></Input>
                 <Input
                   placeholder="Confirme sua nova senha"
-                  backgroundColor="#E4E6F4"
-                  borderColor="#151B57"
-                  color="black"
+                  backgroundColor={Cores.cinza[7]}
+                  borderColor={Cores.azul}
+                  color={Cores.preto}
                   fontSize="1em"
                   width="100%"
                   marginTop="5%"
@@ -153,9 +154,9 @@ function AlterarSenha() {
                 <Button
                   width="40%"
                   height="50px"
-                  backgroundColor="#FFFFFF"
+                  backgroundColor={Cores.branco}
                   borderColor="rgba(255, 0, 0, 0.25)"
-                  color="#8D8D8D"
+                  color={Cores.cinza[1]}
                   fontSize="1.5em"
                   fontWeight="bold"
                   fontSizeMedia="1.2em"
@@ -168,9 +169,9 @@ function AlterarSenha() {
                 <Button
                   height="50px"
                   width="40%"
-                  backgroundColor="#434B97"
-                  borderColor="#151B57"
-                  color="white"
+                  backgroundColor={Cores.lilas[1]}
+                  borderColor={Cores.azul}
+                  color={Cores.branco}
                   fontSize="1.5em"
                   fontWeight="bold"
                   fontSizeMedia="1.2em"

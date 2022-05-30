@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Cores, Fontes } from "../../variaveis";
 
 export const Conteudo = styled.div`
   display: flex;
@@ -8,7 +9,7 @@ export const Conteudo = styled.div`
   width: 100%;
   height: 100%;
   padding: 1%;
-  background-color: #ffffff;
+  background-color: ${Cores.branco};
 `;
 
 export const Caixa = styled.div`
@@ -20,10 +21,10 @@ export const Caixa = styled.div`
   width: 70%;
   padding: 2% 5%;
   margin-top: 7%;
-  background-color: #f7f7f7;
+  background-color: ${Cores.branco};
   border-style: solid;
   border-radius: 4px;
-  border-color: #c4c4c4;
+  border-color: ${Cores.cinza[3]};
   @media (max-width: 560px) {
     flex-direction: column;
     width: 80%;
@@ -35,10 +36,10 @@ export const Titulo = styled.div`
   flex-direction: row;
   justify-content: start;
   width: 100%;
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 500;
   font-size: 2em;
-  @media(max-width:950px){
+  @media (max-width: 950px) {
     font-size: 1.5em;
   }
 `;
@@ -53,7 +54,7 @@ export const InputVertical = styled.div`
   font-size: 1em;
   @media (max-width: 850px) {
     flex-direction: column;
-    width: 80%
+    width: 80%;
   }
 `;
 export const BotoesMesmaLinha = styled.div`
@@ -67,6 +68,6 @@ export const BotoesMesmaLinha = styled.div`
   @media (max-width: 560px) {
     flex-direction: column-reverse;
     height: 130px;
-    width: 80%; 
+    width: 80%;
   }
 `;
