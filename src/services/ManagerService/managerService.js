@@ -165,8 +165,8 @@ export const UpdateCodigo = async (
   await requesterService
     .updateCodigo(id_usuario, codigo)
     .then(() => {
-      alert("Código adicionado com sucesso.");
-      window.location.href = "/web/listadeusuariosmedico";
+      toast.success("Código adicionado com sucesso.");
+      
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));

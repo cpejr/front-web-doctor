@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import { ContainerModalCodigo, Titulo } from "./Styles";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import AddToast from "../AddToast/AddToast";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAdicionarCodigo(props) {
@@ -24,13 +24,23 @@ function ModalAdicionarCodigo(props) {
     setUsuario(resposta.dadosUsuario);
   }
 
+  const sleep = (milliseconds) => {
+    return new Promise(resolve => setTimeout(resolve, milliseconds))
+  }
+
   async function atualizarDados() {
     setCarregando(true);
     if (usuario.codigo) {
-      await managerService.UpdateCodigo(usuario.id, usuario.codigo + "/" + codigo);
+      await managerService.UpdateCodigo(usuario.id, usuario.codigo + "/" + codigo)
     } else {
       await managerService.UpdateCodigo(usuario.id, codigo);
     }
+    await sleep(3000);
+    redirecionamento();
+    setCarregando(false);
+  }
+  async function redirecionamento() {
+    window.location.href = "/web/listadeusuariosmedico";
   }
 
   function preenchendoDados(e) {
@@ -42,7 +52,9 @@ function ModalAdicionarCodigo(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
+
   return (
+    <>
     <ContainerModalCodigo>
       <Titulo>Adicione um codigo</Titulo>
       <Input
@@ -72,6 +84,8 @@ function ModalAdicionarCodigo(props) {
         {carregando ? <Spin indicator={antIcon} /> : "CONFIRMAR"}
       </Button>
     </ContainerModalCodigo>
+    <AddToast />
+    </>
   );
 }
 
