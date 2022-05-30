@@ -96,7 +96,7 @@ function Header(props) {
               fontSize="1rem"
               height="50px"
               onClick={() => {
-                history.push("/web/listadeusuariosmedico");
+                history.push("/web/listadeusuarios");
               }}
             >
               Lista de Usuários
@@ -111,7 +111,7 @@ function Header(props) {
               fontSize="1rem"
               height="50px"
               onClick={() => {
-                history.push("/web/listadeusuariossecretaria");
+                history.push("/web/listadeusuarios");
               }}
             >
               Lista de Usuários
@@ -234,7 +234,7 @@ function Header(props) {
               fontSize="1.1rem"
               height="50px"
               onClick={() => {
-                history.push("/web/listadeusuariosmedico");
+                history.push("/web/listadeusuarios");
               }}
             >
               Lista de Usuários
@@ -248,7 +248,7 @@ function Header(props) {
               fontSize="1.1rem"
               height="50px"
               onClick={() => {
-                history.push("/web/listadeusuariossecretaria");
+                history.push("/web/listadeusuarios");
               }}
             >
               Lista de Usuários
