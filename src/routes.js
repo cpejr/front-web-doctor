@@ -18,6 +18,7 @@ import PerfilPaciente from "./pages/PerfilPaciente";
 import RespostaFormulario from "./pages/RespostaFormulario";
 import EditarPerfil from "./pages/EditarPerfil";
 import Agendamentos from "./pages/Agendamentos";
+import POC from "./pages/POC";
 
 function Routes() {
   return (
@@ -43,6 +44,7 @@ function UserHeader() {
         <Route exact path="/web/alterarsenha" component={AlterarSenha} />
         <Route exact path="/web/areareceitas" component={AreaReceitas} />
         <Route exact path="/web/agendamentos" component={Agendamentos} />
+        <Route exact path="/web/poc" component={POC} />
         <Route exact path="/web/chat" component={Chat} />
         <Route
           exact
