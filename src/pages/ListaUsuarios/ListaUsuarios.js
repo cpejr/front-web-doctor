@@ -26,6 +26,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
+import ModalAdicionarCodigo from "../../components/ModalAdicionarCodigo/ModalAdicionarCodigo";
 
 function ListaUsuarios() {
   const history = useHistory();
@@ -36,6 +37,8 @@ function ListaUsuarios() {
   const [carregando, setCarregando] = useState(true);
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [emailPaciente, setEmailPaciente] = useState(false);
+  const [modalAdicionarCodigo, setModalAdicionarCodigo] = useState(false);
+  const [email, setEmail] = useState();
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const emailLogado = sessionStorage.getItem("@doctorapp-Email");
@@ -75,6 +78,15 @@ function ListaUsuarios() {
 
   async function fechandoModal() {
     setModalAgendamento(false);
+  }
+
+  async function abrindoModalCodigo(email) {
+    setEmail(email);
+    setModalAdicionarCodigo(true);
+  }
+
+  async function fechandoModalCodigo() {
+    setModalAdicionarCodigo(false);
   }
 
   async function verificandoSecretariaOuPaciente(tipo, email) {
@@ -172,6 +184,7 @@ function ListaUsuarios() {
                     fontSize="1em"
                     textDecoration="underline"
                     height="50px"
+                    onClick={() => abrindoModalCodigo(value.email)}
                   >
                     Adicionar Código
                   </Button>
@@ -204,6 +217,16 @@ function ListaUsuarios() {
         centered={true}
       >
         <ModalAgendamentoEspecifico emailUsuario={emailPaciente} />
+      </Modal>
+
+      <Modal
+        visible={modalAdicionarCodigo}
+        onCancel={fechandoModal}
+        footer={null}
+        width={"70%"}
+        centered={true}
+      >
+        <ModalAdicionarCodigo emailUsuario={email} />
       </Modal>
     </div>
   );
