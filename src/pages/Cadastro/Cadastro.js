@@ -20,6 +20,7 @@ import {
 import "react-toastify/dist/ReactToastify.min.css";
 import AddToast from "../../components/AddToast/AddToast";
 import { toast } from "react-toastify";
+import { brParaPadrao } from "../../utils/date"; 
 
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
@@ -56,6 +57,10 @@ const maskData = (value) => {
     .replace(/(\d{2})(\d)/, "$1/$2")
     .replace(/(\d{2})(\d)/, "$1/$2")
     .replace(/(\d{4})(\d)/, "$1");
+};
+
+const maskDataBack = (value) => { 
+  return brParaPadrao(value) 
 };
 
 const maskApenasLetras = (value) => {
@@ -188,7 +193,7 @@ function Cadastro() {
     }
     if (e.target.name === "data_nascimento") {
       setEstado({ ...estado, [e.target.name]: maskData(e.target.value) });
-      setUsuario({ ...usuario, [name]: maskData(value) });
+      setUsuario({ ...usuario, [name]: maskDataBack(value) });
     }
     if (e.target.name === "cpf") {
       setEstado({ ...estado, [e.target.name]: maskCPF(e.target.value) });
@@ -263,7 +268,7 @@ function Cadastro() {
             camposVazios={camposVazios.tipo}
           >
             <option value="">Tipo de Usuário</option>
-            <option value="SECRETARIA" borderColor={Cores.azul}>
+            <option value="SECRETARIA(O)" borderColor={Cores.azul}> 
               Secretária
             </option>
             <option value="PACIENTE" borderColor={Cores.azul}>
