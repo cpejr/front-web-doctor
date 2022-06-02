@@ -171,7 +171,11 @@ function ModalAgendamentoEspecifico(props) {
                   borderWidth: "1px",
                 }}
                 size="large"
+                name="tipo"
                 placeholder="Tipo"
+                onChange={(e) => {
+                  preenchendoDadosConsulta(e);
+                }}
               >
                 <option value="" disabled selected >Tipo</option>
                 <option value="1">Tipo 1</option>
