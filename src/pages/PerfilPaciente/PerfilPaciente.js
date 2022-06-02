@@ -30,6 +30,9 @@ import {
   DataFormulario,
   TipoFormulario,
   UrgenciaFormulario,
+  ContainerModalExcluir,
+  ConteudoModalExcluir,
+  ContainerFooterModalExcluir,
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
@@ -40,11 +43,13 @@ import Button from "../../styles/Button";
 import { useHistory } from "react-router-dom";
 import ModalAgendamento from "../../components/ModalAgendamento/ModalAgendamento";
 import { Cores } from "../../variaveis";
+import ModalConfirmacao from "../../components/ModalConfirmacao/ModalConfirmacao";
 
 function PerfilPaciente(props) {
   const history = useHistory();
 
   const [modalAgendamento, setModalAgendamento] = useState(false);
+  const [modalDeletarUsuario, setModalDeletarUsuario] = useState(false);
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
   const [telefone, setTelefone] = useState("");
@@ -77,7 +82,7 @@ function PerfilPaciente(props) {
     setModalAgendamento(true);
   }
 
-  async function fechandoModal() {
+  async function fechandoModalAgendamento() {
     setModalAgendamento(false);
   }
 
@@ -163,7 +168,7 @@ function PerfilPaciente(props) {
                       width="100%"
                       fontSize="1.3em"
                       fontSizeMedia=""
-                      onClick={() => deletarUsuario()}
+                      onClick={() => setModalDeletarUsuario(true)}
                     >
                       Excluir Paciente
                     </Button>
@@ -247,12 +252,57 @@ function PerfilPaciente(props) {
 
       <Modal
         visible={modalAgendamento}
-        onCancel={fechandoModal}
+        onCancel={fechandoModalAgendamento}
         footer={null}
         width={"70%"}
         centered={true}
       >
         <ModalAgendamento id_usuario={usuario.id} email={usuario.email} />
+      </Modal>
+
+      <Modal
+        visible={modalDeletarUsuario}
+        onCancel={() => setModalDeletarUsuario(false)}
+        style={{ maxWidth: "450px", minWidth: "250px" }}
+        width={"50%"}
+        centered={true}
+        footer={null}
+      >
+        <ContainerModalExcluir>
+          <ConteudoModalExcluir>
+            Tem certeza que quer excluir esse usuário?
+          </ConteudoModalExcluir>
+          <ContainerFooterModalExcluir>
+            <Button
+              color={Cores.azulEscuro}
+              fontWeight="normal"
+              borderColor={Cores.cinza[3]}
+              height="28px"
+              width="25%"
+              fontSize="13px"
+              onClick={() => setModalDeletarUsuario(false)}
+            >
+              Cancelar
+            </Button>
+            {carregando ? (
+              <Spin indicator={antIcon} />
+            ) : (
+              <Button
+                backgroundColor={Cores.lilas[2]}
+                color={Cores.azulEscuro}
+                borderColor={Cores.azulEscuro}
+                fontWeight="normal"
+                height="28px"
+                width="25%"
+                fontSize="13px"
+                marginLeft="2%"
+                onClick={() => deletarUsuario()}
+              >
+                Confirmar
+              </Button>
+            )}
+          </ContainerFooterModalExcluir>
+        </ContainerModalExcluir>
       </Modal>
     </div>
   );

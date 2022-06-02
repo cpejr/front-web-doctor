@@ -10,6 +10,7 @@ const Button = styled.button`
   /*Medidas*/
   border-radius: 3px;
   margin-top: 2%;
+  margin-left: ${(props) => props.marginLeft};
   height: ${(props) => props.height};
   gap: ${(props) => props.gap};
   width: ${(props) => props.width};
