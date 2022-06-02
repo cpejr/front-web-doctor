@@ -1,15 +1,12 @@
 import React from "react";
 
 //tentativa de fazer um input estilizado com diferentes informacoes, mas falhei
-function CustomFieldTemplate(props) {
-    const {id, classNames, label, help, required, description, errors, children} = props;
+function CustomFieldTemplate({label, children}) {
     return (
-      <div className={classNames}>
-        <label htmlFor={id}>{label}{required ? "*" : null}</label>
-        {description}
-        {children}
-        {errors}
-        {help}
+      <div >
+        <label>{label}</label>
+    
+        {children} 
       </div>
     );
   }

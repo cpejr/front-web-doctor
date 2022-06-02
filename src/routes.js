@@ -19,6 +19,7 @@ import RespostaFormulario from "./pages/RespostaFormulario";
 import EditarPerfil from "./pages/EditarPerfil";
 import Agendamentos from "./pages/Agendamentos";
 import POC from "./pages/POC";
+import POC3 from "./pages/POC3";
 
 function Routes() {
   return (
@@ -45,6 +46,7 @@ function UserHeader() {
         <Route exact path="/web/areareceitas" component={AreaReceitas} />
         <Route exact path="/web/agendamentos" component={Agendamentos} />
         <Route exact path="/web/poc" component={POC} />
+        <Route exact path="/web/poc3" component={POC3} />
         <Route exact path="/web/chat" component={Chat} />
         <Route
           exact
