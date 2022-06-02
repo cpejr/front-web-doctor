@@ -24,6 +24,7 @@ import * as managerService from "../../services/ManagerService/managerService";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import { Cores } from "../../variaveis";
 import moment from "moment";
 
 function ModalAgendamentoEspecifico(props) {
@@ -249,9 +250,9 @@ function ModalAgendamentoEspecifico(props) {
           <Button
             width="80%"
             height="50px"
-            backgroundColor="#A7ADE8"
-            borderColor="#151B57"
-            color="#0A0E3C"
+            backgroundColor={Cores.lilas[2]}
+            borderColor={Cores.azul}
+            color={Cores.azulEscuro}
             fontSize="1.1em"
             fontWeight="bold"
             fontSizeMedia="0.9em"

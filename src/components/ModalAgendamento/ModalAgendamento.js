@@ -8,48 +8,46 @@ import {
   InfoEsquerda,
   InfoDireita,
   CaixaAgendamento,
-  DiaAgendamento,
-  HorarioAgendamento,
+  DiaHorarioAgendamento,
   Agendamento,
   TextoAgendamentoEspecifico,
   NumeroAgendamentos,
   BarraEstetica,
   BotoesEditarExcluir,
 } from "./Styles";
+import { LoadingOutlined } from "@ant-design/icons";
 import ModalAgendamentoEspecifico from "../ModalAgendamentoEspecifico";
 import * as managerService from "../../services/ManagerService/managerService";
-// import { LoadingOutlined } from "@ant-design/icons";
-import { Modal } from "antd";
+import { Modal, Spin } from "antd";
+import { Cores } from "../../variaveis";
 
 function ModalAgendamento(props) {
-  //   const { TextArea } = Input;
-  //   const { Option } = Select;
   const [consultas, setConsultas] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
-  const [exame, setExame] = useState([]);
   const [modalAgendamento, setModalAgendamento] = useState(false);
-  //   const [carregando, setCarregando] = useState();
-  //   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const [quantidadeAgendamentos, setQuantidadeAgendamentos] = useState();
+
+  const [carregando, setCarregando] = useState(true);
+  const antIcon = (
+    <LoadingOutlined style={{ fontSize: 45, color: Cores.azul}} spin />
+  );
+
   useEffect(() => {
     pegandoDados();
   }, []);
 
   async function pegandoDados() {
-    const respostaConsultas = await managerService.GetDadosConsultas(
+    const respostaConsultas = await managerService.GetDadosConsultasExamesMarcados(
       props.id_usuario
     );
-    const respostaExames = await managerService.GetDadosExamesMarcados(
-      props.id_usuario
-    );
+    setConsultas(respostaConsultas.dadosConsultas);
+    setExamesMarcados(respostaConsultas.dadosExamesMarcados);
 
-    console.log(respostaExames);
-    setConsultas(respostaConsultas);
-    setExamesMarcados(respostaExames);
-  }
+    let contador = 0;
+    contador = respostaConsultas.dadosConsultas.length + respostaConsultas.dadosExamesMarcados.length;
+    setQuantidadeAgendamentos(contador);
 
-  async function pegandoNomeExames(id_exame) {
-    const respostaExame = await managerService.GetDadosExame(id_exame);
-    setExame(respostaExame[0].titulo);
+    setCarregando(false);
   }
 
   async function marcandoAgendamento() {
@@ -73,34 +71,37 @@ function ModalAgendamento(props) {
       <Caixa>
         <Titulo>Agendamentos Marcados:</Titulo>
 
+        {carregando ? (
+            <Spin indicator={antIcon} />
+          ) : (
         <CorpoCaixa>
           <InfoEsquerda>
             {consultas.map((value) => (
               <Agendamento>
                 <CaixaAgendamento key={value.id}>
-                  <DiaAgendamento>
+                  <DiaHorarioAgendamento>
                     {value.data_hora.slice(8, -14)}/
                     {value.data_hora.slice(5, -17)}/
                     {value.data_hora.slice(0, -20)}
-                  </DiaAgendamento>
+                  </DiaHorarioAgendamento>
                   <BarraEstetica></BarraEstetica>
                   <TextoAgendamentoEspecifico>
                     Consulta
                   </TextoAgendamentoEspecifico>
                   <BarraEstetica></BarraEstetica>
-                  <HorarioAgendamento>
+                  <DiaHorarioAgendamento>
                     {value.data_hora.slice(11, -11)}
                     {value.data_hora.slice(13, -8)}
-                  </HorarioAgendamento>
+                  </DiaHorarioAgendamento>
                 </CaixaAgendamento>
 
                 <BotoesEditarExcluir>
                   <Button
                     width="45%"
                     height="40px"
-                    backgroundColor="#EFEFEF"
-                    borderColor="#BBC0F4"
-                    color="#8D8D8D"
+                    backgroundColor="green"
+                    borderColor={Cores.lilas[3]}
+                    color={Cores.cinza[1]}
                     fontSize="0.9em"
                     fontWeight="bold"
                     fontSizeMedia="0.8em"
@@ -112,9 +113,9 @@ function ModalAgendamento(props) {
                   <Button
                     width="45%"
                     height="40px"
-                    backgroundColor="#FFFFFF"
+                    backgroundColor={Cores.branco}
                     borderColor="rgba(255, 0, 0, 0.25)"
-                    color="#8D8D8D"
+                    color={Cores.cinza[1]}
                     fontSize="0.9em"
                     fontWeight="bold"
                     fontSizeMedia="0.8em"
@@ -127,18 +128,70 @@ function ModalAgendamento(props) {
                 </BotoesEditarExcluir>
               </Agendamento>
             ))}
+            {examesMarcados.map((value) => (
+              <Agendamento>
+                <CaixaAgendamento key={value.id}>
+                  <DiaHorarioAgendamento>
+                    {value.data_hora.slice(8, -14)}/
+                    {value.data_hora.slice(5, -17)}/
+                    {value.data_hora.slice(0, -20)}
+                  </DiaHorarioAgendamento>
+                  <BarraEstetica></BarraEstetica>
+                  <TextoAgendamentoEspecifico>
+                    {value.titulo}
+                  </TextoAgendamentoEspecifico>
+                  <BarraEstetica></BarraEstetica>
+                  <DiaHorarioAgendamento>
+                    {value.data_hora.slice(11, -11)}
+                    {value.data_hora.slice(13, -8)}
+                  </DiaHorarioAgendamento>
+                </CaixaAgendamento>
+
+                <BotoesEditarExcluir>
+                  <Button
+                    width="45%"
+                    height="40px"
+                    backgroundColor="green"
+                    borderColor={Cores.lilas[3]}
+                    color={Cores.cinza[1]}
+                    fontSize="0.9em"
+                    fontWeight="bold"
+                    fontSizeMedia="0.8em"
+                    fontSizeMedia950="1em"
+                    heightMedia560="30px"
+                  >
+                    EDITAR
+                  </Button>
+                  <Button
+                    width="45%"
+                    height="40px"
+                    backgroundColor={Cores.branco}
+                    borderColor="rgba(255, 0, 0, 0.25)"
+                    color={Cores.cinza[1]}
+                    fontSize="0.9em"
+                    fontWeight="bold"
+                    fontSizeMedia="0.8em"
+                    fontSizeMedia950="1em"
+                    heightMedia560="30px"
+                    onClick={() => excluirExameMarcado(value.id)}
+                  >
+                    EXCLUIR
+                  </Button>
+                </BotoesEditarExcluir>
+              </Agendamento>
+            ))}
           </InfoEsquerda>
 
           <InfoDireita>
             <NumeroAgendamentos>
-              O paciente ja realizou 10 agendamentos
+              O paciente ja realizou {quantidadeAgendamentos} agendamentos
             </NumeroAgendamentos>
             <Button
               width="100%"
               height="50px"
-              backgroundColor="#A7ADE8"
-              borderColor="#151B57"
-              color="#0A0E3C"
+              backgroundColor={Cores.lilas[2]}
+              borderColor={Cores.azul}
+              color={Cores.azulEscuro}
               fontSize="1.1em"
               fontWeight="bold"
               fontSizeMedia="0.9em"
@@ -149,6 +202,7 @@ function ModalAgendamento(props) {
             </Button>
           </InfoDireita>
         </CorpoCaixa>
+        )}
       </Caixa>
       <Modal
         visible={modalAgendamento}

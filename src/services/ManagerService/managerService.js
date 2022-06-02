@@ -1,6 +1,8 @@
 import { login } from "../../services/auth";
 import requisicaoErro from "../../utils/HttpErros";
 import * as requesterService from "../RequesterService/requesterService";
+import AddToast from "../../components/AddToast/AddToast";
+import { toast } from "react-toastify";
 
 export const requisicaoLogin = async (email, senha) => {
   if (email.lenght === 0 || senha.lenght === 0) {
@@ -18,9 +20,9 @@ export const requisicaoLogin = async (email, senha) => {
   return;
 };
 
-export const Cadastrando = async (estado, endereco) => {
+export const Cadastrando = async (usuario, endereco) => {
   await requesterService
-    .criarUsuario(endereco, estado)
+    .criarUsuario(endereco, usuario)
     .then(() => {
       alert("Usuário cadastrado com sucesso.");
       window.location.href = "/login";
@@ -58,12 +60,12 @@ export const GetDadosPessoais = async () => {
     });
   return dadosUsuario;
 };
-export const GetDadosConsultas = async (id_usuario) => {
+export const GetDadosConsultasExamesMarcados = async (id_usuario) => {
   let dadosConsultas = {};
+  let dadosExamesMarcados = {};
 
   await requesterService
     .requisicaoConsultas(id_usuario)
-
     .then((res) => {
       dadosConsultas = res.data;
     })
@@ -71,24 +73,16 @@ export const GetDadosConsultas = async (id_usuario) => {
       requisicaoErro(error);
     });
 
-  return dadosConsultas;
-};
-
-export const GetDadosExamesMarcados = async (id_usuario) => {
-  let dadosExamesMarcados = {};
-
-  await requesterService
+    await requesterService
     .requisicaoExamesMarcados(id_usuario)
     .then((res) => {
-      console.log(res.data);
-
       dadosExamesMarcados = res.data;
     })
     .catch((error) => {
       requisicaoErro(error);
     });
 
-  return dadosExamesMarcados;
+  return { dadosConsultas, dadosExamesMarcados};
 };
 
 export const GetDadosExame = async (id) => {
@@ -202,12 +196,30 @@ export const UpdateDadosUsuario = async (
   return false;
 };
 
+export const UpdateCodigo = async (
+  id_usuario,
+  codigo
+) => {
+  await requesterService
+    .updateCodigo(id_usuario, codigo)
+    .then(() => {
+      toast.success("Código adicionado com sucesso.");
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));
+      return false;
+    });
+
+  return false;
+};
+
 export const DeletarUsuario = async (id) => {
   await requesterService
     .deletarUsuario(id)
     .then(() => {
       alert("Usuário deletado com sucesso.");
-      window.location.href = "/web/listadeusuariosmedico";
+      window.location.href = "/web/listadeusuarios";
     })
     .catch((error) => {
       requisicaoErro(
@@ -220,6 +232,32 @@ export const DeletarUsuario = async (id) => {
 
   return false;
 };
+
+export const GetDadosConsultasExamesMarcadosGeral = async () => {
+  let dadosConsultas = {};
+  let dadosExamesMarcados = {};
+
+  await requesterService
+    .requisicaoConsultas()
+    .then((res) => {
+      dadosConsultas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+    await requesterService
+    .requisicaoExamesMarcados()
+    .then((res) => {
+      dadosExamesMarcados = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return { dadosConsultas, dadosExamesMarcados};
+};
+
 
 export const DeletarConsulta = async (id) => {
   await requesterService

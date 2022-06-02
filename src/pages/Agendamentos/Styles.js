@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Cores } from "../../variaveis";
 
 export const ContainerListadeUsuarios = styled.div`
   display: flex;
@@ -22,15 +23,15 @@ export const BarraPesquisa = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  .ant-input {
-    background-color: green ;
-  }
-  .ant-btn.ant-btn-default.ant-btn-icon-only.ant-input-search-button{
-    background-color: green ;
-  }
   @media (max-width: 920px) {
     width: 100%;
     justify-content: center;
+  }
+  .ant-input {
+    background-color: green;
+  }
+  .ant-btn.ant-btn-default.ant-btn-icon-only.ant-input-search-button {
+    background-color: green;
   }
 `;
 export const Filtros = styled.div`
@@ -68,13 +69,14 @@ export const BarraEstetica = styled.div`
   margin-bottom: 1%;
   height: 2px;
   width: 100%;
-  background-color: #151b57; ;
+  background-color: ${Cores.azul}; 
 `;
 export const DadosUsuario = styled.div`
-  color: #151b57;
+  color: ${Cores.azul};
   justify-content: space-around;
   display: flex;
   flex-direction: row;
+  padding: 0% 2% 0% 2%;
 `;
 
 export const ContainerUsuarios = styled.div`
@@ -91,7 +93,7 @@ export const Usuario = styled.div`
   width: 100%;
   height: 80px;
   padding: 0% 1% 0% 1%;
-  border-color: black;
+  border-color: ${Cores.preto};
   border-style: solid;
   border-radius: 3px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
@@ -99,8 +101,8 @@ export const Usuario = styled.div`
 `;
 
 export const Titulo = styled.div`
-  width: 30px;
   display: flex;
+  width: 40px;
   justify-content: center;
   @media (max-width: 880px) {
     display: none;
@@ -118,12 +120,9 @@ export const Imagem = styled.div`
 `;
 export const Nome = styled.div`
   width: 18%;
-  justify-content: center;
-
-  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-
+  white-space: nowrap;
   :hover {
     overflow: visible;
     cursor: pointer;
@@ -159,11 +158,11 @@ export const Telefone = styled.div`
     display: none;
   }
 `;
-export const UltimaVisita = styled.div`
+export const Data = styled.div`
   width: 18%;
   display: flex;
   justify-content: center;
-  color: green;
+  
   @media (max-width: 880px) {
     width: 20%;
   }
@@ -174,11 +173,11 @@ export const UltimaVisita = styled.div`
     display: none;
   }
 `;
-export const AdicionarCodigo = styled.div`
+export const Agendamento = styled.div`
   width: 18%;
   display: flex;
   justify-content: center;
-  color: green;
+
   @media (max-width: 880px) {
     width: 20%;
   }
@@ -204,19 +203,8 @@ export const CódigoPaciente = styled.div`
     display: none;
   }
 `;
-export const CaixaVazia = styled.div`
-  width: 18%;
-
-  @media (max-width: 880px) {
-    width: 20%;
-  }
-  @media (max-width: 700px) {
-    width: 25%;
-  }
-  @media (max-width: 600px) {
-    width: 33%;
-  }
-  @media (max-width: 500px) {
-    width: 50%;
-  }
+export const BotaoNovoAgendamento = styled.div`
+  display: flex;
+  justify-content: end;
+  
 `;

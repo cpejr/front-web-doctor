@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Cores, Fontes } from "../../variaveis";
 
 export const Body = styled.div`
   display: flex;
@@ -9,7 +10,7 @@ export const Body = styled.div`
   height: 100%;
   min-height: calc (100vh - 100px);
   padding: 1%;
-  background-color: #ffffff;
+  background-color: ${Cores.branco};
 `;
 export const Board = styled.div`
   display: flex;
@@ -21,9 +22,9 @@ export const Board = styled.div`
   overflow: auto;
   padding: 8px;
   margin-top: 3%;
-  background-color: #7aff77; //#ffffff
+  background-color: green; //${Cores.branco};
   border-style: solid;
-  border-color: #000000;
+  border-color: ${Cores.preto};
   box-shadow: 0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   border-width: 0.1em;
   border-radius: 3px;
@@ -51,9 +52,9 @@ export const CaixaTexto = styled.div`
   width: 78%;
   height: 80%;
   padding: 1%;
-  background-color: #cfd3f8;
+  background-color: ${Cores.lilas[4]};
   border-style: solid;
-  border-color: #bbc0f4;
+  border-color: ${Cores.lilas[3]};
   border-width: 0.2em;
   border-radius: 6px;
   @media (max-width: 950px) and (min-width: 560px) {
@@ -70,7 +71,7 @@ export const TextoNotificacao = styled.div`
   justify-content: center;
   text-align: center;
   width: 100%;
-  font-family: "Roboto Condensed", sans-serif;
+  font-family: ${Fontes.roboto};
   font-size: 1em;
   @media (max-width: 950px) {
     font-size: 0.8em;
@@ -84,7 +85,7 @@ export const BotoesColuna = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  alig-items: center;
+  align-items: center;
   width: 20%;
   height: 20%;
   font-size: 1em;

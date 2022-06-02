@@ -10,14 +10,14 @@ import Header from "./components/Header/Header";
 import HomeMedico from "./pages/HomeMedico";
 import HomeSecretaria from "./pages/HomeSecretaria";
 import ListaFormularios from "./pages/ListaFormularios";
-import ListaUsuariosMedico from "./pages/ListaUsuariosMedico";
-import ListaUsuariosSecretaria from "./pages/ListaUsuariosSecretaria";
+import ListaUsuarios from "./pages/ListaUsuarios";
 import Login from "./pages/Login";
 import ModeloReceitas from "./pages/ModeloReceitas";
 import Perfil from "./pages/Perfil";
 import PerfilPaciente from "./pages/PerfilPaciente";
 import RespostaFormulario from "./pages/RespostaFormulario";
 import EditarPerfil from "./pages/EditarPerfil";
+import Agendamentos from "./pages/Agendamentos";
 
 function Routes() {
   return (
@@ -42,6 +42,7 @@ function UserHeader() {
         <Route exact path="/web/editarperfil" component={EditarPerfil} />
         <Route exact path="/web/alterarsenha" component={AlterarSenha} />
         <Route exact path="/web/areareceitas" component={AreaReceitas} />
+        <Route exact path="/web/agendamentos" component={Agendamentos} />
         <Route exact path="/web/chat" component={Chat} />
         <Route
           exact
@@ -54,8 +55,7 @@ function UserHeader() {
           path="/web/listaformularios"
           component={ListaFormularios}
         />
-        <Route exact path="/web/listadeusuariosmedico" component={ListaUsuariosMedico} />
-        <Route exact path="/web/listadeusuariossecretaria" component={ListaUsuariosSecretaria} />
+        <Route exact path="/web/listadeusuarios" component={ListaUsuarios} />
         <Route exact path="/web/modeloreceitas" component={ModeloReceitas} />
         <Route exact path="/web/perfil" component={Perfil} />
         <Route exact path="/web/perfildopaciente" component={PerfilPaciente} />

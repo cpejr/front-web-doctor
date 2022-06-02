@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { Input } from "antd";
 const { TextArea } = Input;
+import { Cores, Fontes } from "../../variaveis";
 
 export const Container = styled.div`
   display: flex;
@@ -16,7 +17,7 @@ export const Caixa = styled.div`
   width: 100%;
   height: 100%;
   min-height: 80vh;
-  background-color: #f7f7f7;
+  background-color: ${Cores.branco};
   border-color: rgba(0, 0, 0, 0.1);
   border-style: solid;
   border-radius: 3px;
@@ -49,7 +50,7 @@ export const Usuario = styled.div`
   width: 100%;
   height: 60px;
   padding: 0% 1% 0% 1%;
-  border-color: black;
+  border-color: ${Cores.preto};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
@@ -74,10 +75,10 @@ export const Nome = styled.div`
   width: 40%;
   display: flex;
   justify-content: start;
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1.4em;
-  color: #0a0e3c;
+  color: ${Cores.azulEscuro};
 
   @media (max-width: 500px) {
     width: 50%;
@@ -97,10 +98,10 @@ export const TipoAgendamento = styled.div`
 `;
 
 export const TextoTipoAgendamento = styled.h3`
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 600;
   font-size: 1.4em;
-  color: #0a0e3c;
+  color: ${Cores.azulEscuro};
   text-align: center;
 
   @media (max-width: 850px) and (min-width: 560px) {
@@ -113,10 +114,10 @@ export const TextoTipoAgendamento = styled.h3`
 `;
 
 export const TextoCheckbox = styled.h3`
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 600;
   font-size: 1.2em;
-  color: #0a0e3c;
+  color: ${Cores.azulEscuro};
 
   @media (max-width: 560px) {
     font-size: 1em;
@@ -124,12 +125,11 @@ export const TextoCheckbox = styled.h3`
 `;
 
 export const TextAreaDescricao = styled(TextArea)`
-  border-color: black;
+  border-color: ${Cores.preto};
   border-width: 1px;
-  color:black;
+  color:${Cores.preto};
   ::placeholder{
-    color:black
-  }
+    color:${Cores.preto};  }
 `
 
 export const DoisSelect = styled.h3`
@@ -138,7 +138,7 @@ export const DoisSelect = styled.h3`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-size: 1em;
 
   @media (max-width: 560px) {
@@ -153,7 +153,7 @@ export const DoisSelect = styled.h3`
 `;
 
 export const Select = styled.select`
-  border-color: black;
+  border-color: ${Cores.preto};
   border-width: 1px;
 `;
 
@@ -178,45 +178,45 @@ export const TamanhoInput = styled.div`
 export const InputHora = styled.input`
   width: 100%;
   height: 100%;
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 500;
   font-size: 1em;
-  color: black;
+  color: ${Cores.preto};
   padding-left: 5%;
-  border-color: black;
+  border-color: ${Cores.preto};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
   ::placeholder {
-    color:black;
+    color:${Cores.preto};
   };
 `;
 
 export const InputDuracao = styled(Input)`
   width: 100%;
   height: 100%;
-  color: black;
-  font-family: "Barlow", sans-serif;
+  color: ${Cores.preto};
+  font-family: ${Fontes.barlow};
   font-weight: 500;
   font-size: 0.9em;
   padding-left: 5%;
-  border-color: black;
+  border-color: ${Cores.preto};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
 
   .ant-input {
     ::placeholder {
-      color:black
+      color:${Cores.preto}
     }
   }
 `;
 
 export const TextoSelecioneUmaData = styled.h3`
-  font-family: "Barlow", sans-serif;
+  font-family: ${Fontes.barlow};
   font-weight: 500;
   font-size: 0.9em;
-  color: #0a0e3c;
+  color: ${Cores.azulEscuro};
   display: flex;
   justify-content: end;
   align-items: center;

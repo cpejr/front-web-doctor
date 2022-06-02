@@ -6,9 +6,9 @@ export const logarUsuario = (email, senha) =>
     senha,
   });
 
-export const criarUsuario = (endereco, estado) =>
+export const criarUsuario = (endereco, usuario) =>
   api.post("/enderecos", endereco).then((res) => {
-    api.post("/usuarios", { ...estado, id_endereco: res.data.id });
+    api.post("/usuarios", { ...usuario, id_endereco: res.data.id });
   });
 
 export const criarConsulta = (consulta) => api.post("/consultas", consulta);
@@ -17,6 +17,9 @@ export const updateDadosUsuario = (id_usuario, id_endereco, endereco, estado) =>
   api.put(`/enderecos/${id_endereco}`, endereco).then((res) => {
     api.put(`/usuarios/${id_usuario}`, { ...estado, id_endereco: res.data.id });
   });
+
+export const updateCodigo = (id_usuario, codigo) =>
+  api.put(`/usuarios/${id_usuario}`, { codigo: codigo });
 
 export const requisicaoDadosUsuario = (emailUrl) =>
   api.get(`/usuarios/${emailUrl}`);
@@ -32,21 +35,19 @@ export const requisicaoVerificar = (email, senha) =>
     senha,
   });
 
-export const requisicaoConsultas = (id_usuario) =>
-  api.get(`/consultas/${id_usuario}`);
+export const alterarSenha = (id, senha) =>
+  api.put(`/usuarios/${id}`, { senha: senha });
 
-export const requisicaoExamesMarcados = (id_usuario) =>
-  api.get(`/exame_marcados/${id_usuario}`);
+export const deletarUsuario = (id) => api.delete(`/usuarios/${id}`);
+
+export const requisicaoExamesMarcados = () => api.get(`/exame_marcados/`);
+
+export const requisicaoConsultas = () => api.get(`/consultas/`);
 
 export const requisicaoExame = (id) => api.get(`/exames/${id}`);
 
 export const requisicaoDadosConsultorios = () => api.get(`/consultorios`);
 
-export const alterarSenha = (id, senha) =>
-  api.put(`/usuarios/${id}`, { senha: senha });
-
 export const deletarConsulta = (id) => api.delete(`/consultas/${id}`);
 
 export const deletarExameMarcado = (id) => api.delete(`/exame_marcados/${id}`);
-
-export const deletarUsuario = (id) => api.delete(`/usuarios/${id}`);

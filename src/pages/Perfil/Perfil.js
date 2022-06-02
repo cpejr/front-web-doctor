@@ -29,6 +29,7 @@ import {
   CaixaEnderecoCarregando,
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
+import { Cores } from "../../variaveis";
 
 function Perfil(props) {
   const history = useHistory();
@@ -43,7 +44,7 @@ function Perfil(props) {
 
   const [carregando, setCarregando] = useState(true);
   const antIcon = (
-    <LoadingOutlined style={{ fontSize: 45, color: "#151B57" }} spin />
+    <LoadingOutlined style={{ fontSize: 45, color: Cores.azul }} spin />
   );
 
   async function PerfilSecretariaOuMedico() {
@@ -121,9 +122,9 @@ function Perfil(props) {
                 height="50px"
                 widthMedia480="30%"
                 heightMedia560="30px"
-                backgroundColor="#A7ADE8"
-                borderColor="#0A0E3C"
-                color="#0A0E3C"
+                backgroundColor={Cores.lilas[2]}
+                borderColor={Cores.azulEscuro}
+                color={Cores.azulEscuro}
                 fontSize="1em"
                 fontSizeMedia="0.6em"
                 fontSizeMedia950="0.7em"
@@ -138,9 +139,9 @@ function Perfil(props) {
                 height="50px"
                 widthMedia480="30%"
                 heightMedia560="30px"
-                backgroundColor="#A7ADE8"
-                borderColor="#0A0E3C"
-                color="#0A0E3C"
+                backgroundColor={Cores.lilas[2]}
+                borderColor={Cores.azulEscuro}
+                color={Cores.azulEscuro}
                 fontSize="1em"
                 fontSizeMedia="0.6em"
                 fontSizeMedia950="0.7em"
