@@ -39,7 +39,7 @@ export const CriandoColsulta = async (consulta) => {
     .criarConsulta(consulta)
     .then(() => {
       alert("Consulta criada com sucesso.");
-      window.location.href = "web/listadesuariossecretaria";
+      window.location.href = "/web/agendamentos";
     })
     .catch((error) => {
       requisicaoErro(error);
