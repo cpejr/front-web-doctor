@@ -79,7 +79,7 @@ export const Rotulo = styled.div`
   font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1em;
-  color: #e00000;
+  color: ${Cores.vermelho}
 `;
 
 export const RotuloColuna = styled.div`
@@ -96,8 +96,9 @@ export const PossuiConvenio = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 2% 5% 0% 5%;
+  padding: 2% 10% 0% 10%;
   font-weight: bold;
+  color:${Cores.azul} ;
   .ant-switch-checked {
     background-color: ${Cores.azul};
   }
@@ -106,8 +107,9 @@ export const PossuiCuidador = styled.div`
   display: flex;
   justify-content: space-between;
   width: 100%;
-  padding: 2% 5% 0% 5%;
+  padding: 2% 10% 0% 10%;
   font-weight: bold;
+  color:${Cores.azul} ;
   .ant-switch-checked {
     background-color: ${Cores.azul};
   }

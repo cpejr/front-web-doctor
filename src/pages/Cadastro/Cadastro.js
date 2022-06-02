@@ -91,9 +91,18 @@ function Cadastro() {
 
   function funcaoConvenio() {
     setConvenio(!convenio);
+
+    if (convenio === true) {
+      teste.convenio = true;
+      setCamposVazios({ ...camposVazios, convenio: true });
+    }
   }
   function funcaoCuidador() {
     setCuidador(!cuidador);
+    if (cuidador === true) {
+      teste.nome_cuidador = true;
+      teste.telefone_cuidador = true;
+    }
   }
   const errors = {};
   const teste = {
@@ -136,6 +145,13 @@ function Cadastro() {
     if (!enderecoBack.numero) errors.numero = true;
     if (!usuario.senha) errors.senha = true;
     if (!usuario.senhaConfirmada) errors.senhaConfirmada = true;
+    if (convenio === true) {
+      if (!usuario.convenio) errors.convenio = true;
+    }
+
+    console.log(errors.convenio);
+    console.log(usuario.convenio);
+    console.log(camposVazios.convenio);
 
     setCamposVazios({ ...camposVazios, ...errors });
 
@@ -171,6 +187,7 @@ function Cadastro() {
 
   function preenchendoDados(e) {
     const { value, name } = e.target;
+
     if (value) setCamposVazios({ ...camposVazios, [name]: false });
 
     if (
@@ -193,7 +210,17 @@ function Cadastro() {
         [e.target.name]: maskApenasLetras(e.target.value),
       });
     }
+    if (e.target.name === "nome_cuidador") {
+      setEstado({
+        ...estado,
+        [e.target.name]: maskApenasLetras(e.target.value),
+      });
+    }
     if (e.target.name === "telefone") {
+      setEstado({ ...estado, [e.target.name]: maskTelefone(e.target.value) });
+      setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
+    }
+    if (e.target.name === "telefone_cuidador") {
       setEstado({ ...estado, [e.target.name]: maskTelefone(e.target.value) });
       setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
     }
@@ -274,7 +301,7 @@ function Cadastro() {
             camposVazios={camposVazios.tipo}
           >
             <option value="">Tipo de Usuário</option>
-            <option value="SECRETARIA" borderColor={Cores.azul}>
+            <option value="SECRETARIA(O)" borderColor={Cores.azul}>
               Secretária
             </option>
             <option value="PACIENTE" borderColor={Cores.azul}>
@@ -327,7 +354,7 @@ function Cadastro() {
                 value={estado.data_nascimento}
                 onChange={preenchendoDados}
                 erro={erro.data_nascimento}
-                camposVazios={camposVazios.dataNascimento}
+                camposVazios={camposVazios.data_nascimento}
               ></Input>
 
               {erro.data_nascimento && (
@@ -380,7 +407,10 @@ function Cadastro() {
               fontSize="1em"
               width="100%"
               marginTop="2%"
-              name="nome_convenio"
+              value={estado.convenio}
+              name="convenio"
+              error={erro.convenio}
+              camposVazios={camposVazios.convenio}
               onChange={preenchendoDados}
             ></Input>
           )}
@@ -400,6 +430,7 @@ function Cadastro() {
                 fontSize="1em"
                 width="100%"
                 marginTop="2%"
+                value={estado.nome_cuidador}
                 name="nome_cuidador"
                 onChange={preenchendoDados}
               ></Input>
@@ -411,6 +442,7 @@ function Cadastro() {
                 fontSize="1em"
                 width="100%"
                 marginTop="2%"
+                value={estado.telefone_cuidador}
                 name="telefone_cuidador"
                 onChange={preenchendoDados}
               ></Input>
