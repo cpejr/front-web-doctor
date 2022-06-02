@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Input } from "antd";
-const { TextArea } = Input;
 import { Cores, Fontes } from "../../variaveis";
+const { TextArea } = Input;
 
 export const Container = styled.div`
   display: flex;
