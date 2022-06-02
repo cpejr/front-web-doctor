@@ -43,7 +43,6 @@ import Button from "../../styles/Button";
 import { useHistory } from "react-router-dom";
 import ModalAgendamento from "../../components/ModalAgendamento/ModalAgendamento";
 import { Cores } from "../../variaveis";
-import ModalConfirmacao from "../../components/ModalConfirmacao/ModalConfirmacao";
 
 function PerfilPaciente(props) {
   const history = useHistory();
