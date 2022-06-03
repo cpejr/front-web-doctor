@@ -20,6 +20,9 @@ import EditarPerfil from "./pages/EditarPerfil";
 import Agendamentos from "./pages/Agendamentos";
 import POC from "./pages/POC";
 import POC3 from "./pages/POC3";
+import POC4 from "./pages/POC4";
+import InputPOC from "./components/InputPOC/InputPOC";
+import POC5 from "./pages/POC5";
 
 function Routes() {
   return (
@@ -47,6 +50,8 @@ function UserHeader() {
         <Route exact path="/web/agendamentos" component={Agendamentos} />
         <Route exact path="/web/poc" component={POC} />
         <Route exact path="/web/poc3" component={POC3} />
+        <Route exact path="/web/poc4" component={POC4} />
+        <Route exact path="/web/poc5" component={POC5} />
         <Route exact path="/web/chat" component={Chat} />
         <Route
           exact
