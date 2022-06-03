@@ -43,6 +43,8 @@ import Button from "../../styles/Button";
 import { useHistory } from "react-router-dom";
 import ModalAgendamento from "../../components/ModalAgendamento/ModalAgendamento";
 import { Cores } from "../../variaveis";
+import AddToast from "../../components/AddToast/AddToast";
+import { redirecionamento, sleep } from "../../utils/sleep";
 
 function PerfilPaciente(props) {
   const history = useHistory();
@@ -54,8 +56,12 @@ function PerfilPaciente(props) {
   const [telefone, setTelefone] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [carregando, setCarregando] = useState(true);
+  const [carregandoDeletar, setCarregandoDeletar] = useState(false);
   const antIcon = (
-    <LoadingOutlined style={{ fontSize: 45, color: Cores.azul }} spin />
+    <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
+  );
+  const antIconModal = (
+    <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin />
   );
 
   async function pegandoDados() {
@@ -70,7 +76,12 @@ function PerfilPaciente(props) {
     setCarregando(false);
   }
   async function deletarUsuario() {
+    setCarregandoDeletar(true);
     await managerService.DeletarUsuario(usuario.id);
+    setModalDeletarUsuario(false);
+    await sleep(3000);
+    redirecionamento("/web/listadeusuarios");
+    setCarregandoDeletar(false);
   }
 
   useEffect(() => {
@@ -283,26 +294,23 @@ function PerfilPaciente(props) {
             >
               Cancelar
             </Button>
-            {carregando ? (
-              <Spin indicator={antIcon} />
-            ) : (
-              <Button
-                backgroundColor={Cores.lilas[2]}
-                color={Cores.azulEscuro}
-                borderColor={Cores.azulEscuro}
-                fontWeight="normal"
-                height="28px"
-                width="25%"
-                fontSize="13px"
-                marginLeft="2%"
-                onClick={() => deletarUsuario()}
-              >
-                Confirmar
-              </Button>
-            )}
+            <Button
+              backgroundColor={Cores.lilas[2]}
+              color={Cores.azulEscuro}
+              borderColor={Cores.azulEscuro}
+              fontWeight="normal"
+              height="28px"
+              width="25%"
+              fontSize="13px"
+              marginLeft="2%"
+              onClick={() => deletarUsuario()}
+            >
+              {carregandoDeletar ? <Spin indicator={antIconModal} /> : "Confirmar"}
+            </Button>
           </ContainerFooterModalExcluir>
         </ContainerModalExcluir>
       </Modal>
+      <AddToast />
     </div>
   );
 }

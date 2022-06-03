@@ -59,7 +59,7 @@ export const GetDadosConsultasExamesMarcados = async (id_usuario) => {
       requisicaoErro(error);
     });
 
-    await requesterService
+  await requesterService
     .requisicaoExamesMarcados(id_usuario)
     .then((res) => {
       dadosExamesMarcados = res.data;
@@ -68,7 +68,7 @@ export const GetDadosConsultasExamesMarcados = async (id_usuario) => {
       requisicaoErro(error);
     });
 
-  return { dadosConsultas, dadosExamesMarcados};
+  return { dadosConsultas, dadosExamesMarcados };
 };
 
 export const GetDadosExame = async (id) => {
@@ -158,15 +158,11 @@ export const UpdateDadosUsuario = async (
   return false;
 };
 
-export const UpdateCodigo = async (
-  id_usuario,
-  codigo
-) => {
+export const UpdateCodigo = async (id_usuario, codigo) => {
   await requesterService
     .updateCodigo(id_usuario, codigo)
     .then(() => {
       toast.success("Código adicionado com sucesso.");
-      
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));
@@ -180,8 +176,7 @@ export const DeletarUsuario = async (id) => {
   await requesterService
     .deletarUsuario(id)
     .then(() => {
-      alert("Usuário deletado com sucesso.");
-      window.location.href = "/web/listadeusuarios";
+      toast.success("Usuário deletado com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(
@@ -208,7 +203,7 @@ export const GetDadosConsultasExamesMarcadosGeral = async () => {
       requisicaoErro(error);
     });
 
-    await requesterService
+  await requesterService
     .requisicaoExamesMarcados()
     .then((res) => {
       dadosExamesMarcados = res.data;
@@ -217,9 +212,8 @@ export const GetDadosConsultasExamesMarcadosGeral = async () => {
       requisicaoErro(error);
     });
 
-  return { dadosConsultas, dadosExamesMarcados};
+  return { dadosConsultas, dadosExamesMarcados };
 };
-
 
 export const DeletarConsulta = async (id) => {
   await requesterService
@@ -258,4 +252,3 @@ export const DeletarExameMarcado = async (id) => {
 
   return false;
 };
-
