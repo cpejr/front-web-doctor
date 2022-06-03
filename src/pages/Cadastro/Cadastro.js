@@ -269,7 +269,7 @@ function Cadastro() {
           >
             <option value="">Tipo de Usuário</option>
             <option value="SECRETARIA(O)" borderColor={Cores.azul}> 
-              Secretária
+              Secretária(o)
             </option>
             <option value="PACIENTE" borderColor={Cores.azul}>
               Paciente
