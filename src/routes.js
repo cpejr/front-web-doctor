@@ -18,19 +18,39 @@ import PerfilPaciente from "./pages/PerfilPaciente";
 import RespostaFormulario from "./pages/RespostaFormulario";
 import EditarPerfil from "./pages/EditarPerfil";
 import Agendamentos from "./pages/Agendamentos";
+import { usuarioAutenticado } from "./services/auth";
 
+const RotasPrivadas = ({ component: Component, ...rest }) => (
+ <Route
+    {...rest}
+    render={(props) =>
+      usuarioAutenticado() ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{ pathname: "/login", state: { from: props.location } }}
+        />
+      )
+    }
+  />
+);
 function Routes() {
   return (
     <BrowserRouter>
       <Switch>
+        <Route exact path="/web/login" component={Login} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/cadastro" component={Cadastro} />
-        <Route exact path="/web" component={() => <Redirect to="/web/homemedico" />} />
+        <Route
+          exact
+          path="/web"
+          component={() => <Redirect to="/web/login" />}
+        />
         <Route path="/web" component={UserHeader} />
         <Route component={() => <Redirect to="/web/homemedico" />} />
       </Switch>
     </BrowserRouter>
-  )
+  );
 }
 
 function UserHeader() {
@@ -44,7 +64,8 @@ function UserHeader() {
         <Route exact path="/web/areareceitas" component={AreaReceitas} />
         <Route exact path="/web/agendamentos" component={Agendamentos} />
         <Route exact path="/web/chat" component={Chat} />
-        <Route
+        <RotasPrivadas
+      
           exact
           path="/web/criacaoformulario"
           component={CriacaoFormulario}
