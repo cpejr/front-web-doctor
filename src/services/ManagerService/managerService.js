@@ -259,3 +259,16 @@ export const DeletarExameMarcado = async (id) => {
   return false;
 };
 
+export const CriarFormulario = async (estado) => {
+  console.log(estado)
+  await requesterService
+    .criarFormulario(estado)
+    .then(() => {
+      alert("Usuário cadastrado com sucesso.");
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = "/cadastro"));
+      return false;
+    });
+  return false;
+};

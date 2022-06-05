@@ -12,10 +12,7 @@ function InputPOC() {
           title: "input",
         }
       }
-    
-     
   };
-
 
   return (
     <>

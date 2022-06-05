@@ -47,3 +47,6 @@ export const requisicaoExame = (id) => api.get(`/exames/${id}`);
 export const deletarConsulta = (id) => api.delete(`/consultas/${id}`);
 
 export const deletarExameMarcado = (id) => api.delete(`/exame_marcados/${id}`);
+
+export const criarFormulario = (estado) =>
+  api.post("/formularios", estado);
