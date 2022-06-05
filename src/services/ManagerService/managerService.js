@@ -1,20 +1,27 @@
 import { login } from "../../services/auth";
 import requisicaoErro from "../../utils/HttpErros";
 import * as requesterService from "../RequesterService/requesterService";
-import AddToast from "../../components/AddToast/AddToast";
 import { toast } from "react-toastify";
 
 export const requisicaoLogin = async (email, senha) => {
-  if (email.lenght === 0 || senha.lenght === 0) {
-    alert("Preencha os campos email e senha!");
+  if (email === "" || senha === "") {
+    toast.warn("Preencha os campos email e senha!");
   } else {
     try {
       const resposta = await requesterService.logarUsuario(email, senha);
-      alert("Bem vindo");
-      login(resposta.data.token, resposta.data.email);
-      window.location.href = "/";
+      if (resposta.data.tipo === "PACIENTE") {
+        toast.error("Paciente não pode fazer login no sistema!");
+      } else {
+        login(resposta.data.token, resposta.data.email, resposta.data.tipo);
+        toast.success("Seja bem vindo");
+        if (resposta.data.tipo === "MASTER") {
+          window.location.href = "/web/homemedico";
+        } else {
+          window.location.href = "/web/homesecretaria";
+        }
+      }
     } catch (error) {
-      requisicaoErro(error, () => (window.location.href = "/login"));
+      requisicaoErro(error);
     }
   }
   return;
@@ -73,7 +80,7 @@ export const GetDadosConsultasExamesMarcados = async (id_usuario) => {
       requisicaoErro(error);
     });
 
-    await requesterService
+  await requesterService
     .requisicaoExamesMarcados(id_usuario)
     .then((res) => {
       dadosExamesMarcados = res.data;
@@ -82,7 +89,7 @@ export const GetDadosConsultasExamesMarcados = async (id_usuario) => {
       requisicaoErro(error);
     });
 
-  return { dadosConsultas, dadosExamesMarcados};
+  return { dadosConsultas, dadosExamesMarcados };
 };
 
 export const GetDadosExame = async (id) => {
@@ -196,15 +203,11 @@ export const UpdateDadosUsuario = async (
   return false;
 };
 
-export const UpdateCodigo = async (
-  id_usuario,
-  codigo
-) => {
+export const UpdateCodigo = async (id_usuario, codigo) => {
   await requesterService
     .updateCodigo(id_usuario, codigo)
     .then(() => {
       toast.success("Código adicionado com sucesso.");
-      
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));
@@ -246,7 +249,7 @@ export const GetDadosConsultasExamesMarcadosGeral = async () => {
       requisicaoErro(error);
     });
 
-    await requesterService
+  await requesterService
     .requisicaoExamesMarcados()
     .then((res) => {
       dadosExamesMarcados = res.data;
@@ -255,9 +258,8 @@ export const GetDadosConsultasExamesMarcadosGeral = async () => {
       requisicaoErro(error);
     });
 
-  return { dadosConsultas, dadosExamesMarcados};
+  return { dadosConsultas, dadosExamesMarcados };
 };
-
 
 export const DeletarConsulta = async (id) => {
   await requesterService

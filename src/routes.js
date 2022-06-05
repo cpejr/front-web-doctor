@@ -21,7 +21,7 @@ import Agendamentos from "./pages/Agendamentos";
 import { usuarioAutenticado } from "./services/auth";
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
- <Route
+  <Route
     {...rest}
     render={(props) =>
       usuarioAutenticado() ? (
@@ -62,10 +62,13 @@ function UserHeader() {
         <Route exact path="/web/editarperfil" component={EditarPerfil} />
         <Route exact path="/web/alterarsenha" component={AlterarSenha} />
         <Route exact path="/web/areareceitas" component={AreaReceitas} />
-        <Route exact path="/web/agendamentos" component={Agendamentos} />
-        <Route exact path="/web/chat" component={Chat} />
         <RotasPrivadas
-      
+          exact
+          path="/web/agendamentos"
+          component={Agendamentos}
+        />
+        <RotasPrivadas exact path="/web/chat" component={Chat} />
+        <RotasPrivadas
           exact
           path="/web/criacaoformulario"
           component={CriacaoFormulario}
@@ -76,16 +79,24 @@ function UserHeader() {
           path="/web/listaformularios"
           component={ListaFormularios}
         />
-        <Route exact path="/web/listadeusuarios" component={ListaUsuarios} />
+        <RotasPrivadas
+          exact
+          path="/web/listadeusuarios"
+          component={ListaUsuarios}
+        />
         <Route exact path="/web/modeloreceitas" component={ModeloReceitas} />
-        <Route exact path="/web/perfil" component={Perfil} />
-        <Route exact path="/web/perfildopaciente" component={PerfilPaciente} />
+        <RotasPrivadas exact path="/web/perfil" component={Perfil} />
+        <RotasPrivadas
+          exact
+          path="/web/perfildopaciente"
+          component={PerfilPaciente}
+        />
         <Route
           exact
           path="/web/respostaformulario"
           component={RespostaFormulario}
         />
-        <Route component={() => <Redirect to="/web/homemedico" />} />
+        <RotasPrivadas component={() => <Redirect to="/web/homemedico" />} />
       </Switch>
     </Header>
   );
