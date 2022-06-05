@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
@@ -20,7 +20,7 @@ import {
 import "react-toastify/dist/ReactToastify.min.css";
 import AddToast from "../../components/AddToast/AddToast";
 import { toast } from "react-toastify";
-import { brParaPadrao } from "../../utils/date"; 
+import { brParaPadrao } from "../../utils/date";
 
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
@@ -59,8 +59,8 @@ const maskData = (value) => {
     .replace(/(\d{4})(\d)/, "$1");
 };
 
-const maskDataBack = (value) => { 
-  return brParaPadrao(value) 
+const maskDataBack = (value) => {
+  return brParaPadrao(value);
 };
 
 const maskApenasLetras = (value) => {
@@ -115,6 +115,7 @@ function Cadastro() {
   }
 
   async function requisicaoCadastro() {
+    console.log(usuario.data_nascimento);
     if (!usuario.nome) errors.nome = true;
     if (!usuario.telefone) errors.telefone = true;
     if (!usuario.tipo) errors.tipo = true;
@@ -146,6 +147,8 @@ function Cadastro() {
       toast.error("Preencha todos os campos obrigatórios");
     }
   }
+
+  const [dataInvalida, setDataInvalida] = useState(false)
 
   async function validacaoEmail(e) {
     const { value, name } = e.target;
@@ -203,7 +206,7 @@ function Cadastro() {
 
   function preenchendoEndereco(e) {
     const { value, name } = e.target;
-    if(name !== "complemento"){
+    if (name !== "complemento") {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
     }
 
@@ -268,7 +271,7 @@ function Cadastro() {
             camposVazios={camposVazios.tipo}
           >
             <option value="">Tipo de Usuário</option>
-            <option value="SECRETARIA(O)" borderColor={Cores.azul}> 
+            <option value="SECRETARIA(O)" borderColor={Cores.azul}>
               Secretária(o)
             </option>
             <option value="PACIENTE" borderColor={Cores.azul}>
