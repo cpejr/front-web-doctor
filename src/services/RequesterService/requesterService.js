@@ -50,3 +50,7 @@ export const deletarExameMarcado = (id) => api.delete(`/exame_marcados/${id}`);
 
 export const criarFormulario = (estado) =>
   api.post("/formularios", estado);
+
+export const requisicaoRespostasFormularios = () => api.get(`/formularios_pacientes/`);
+
+export const requisicaoRespostaFormulario = (id) => api.get(`/formularios_pacientes/${id}`);

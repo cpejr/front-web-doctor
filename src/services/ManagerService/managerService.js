@@ -260,7 +260,6 @@ export const DeletarExameMarcado = async (id) => {
 };
 
 export const CriarFormulario = async (estado) => {
-  console.log(estado)
   await requesterService
     .criarFormulario(estado)
     .then(() => {
@@ -271,4 +270,32 @@ export const CriarFormulario = async (estado) => {
       return false;
     });
   return false;
+};
+
+export const GetRespostasFormulario = async () => {
+  let dadosRespostas = {};
+  await requesterService
+    .requisicaoRespostasFormularios()
+    .then((res) => {
+      dadosRespostas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosRespostas;
+};
+
+export const GetResposta = async (id) => {
+  let dadosResposta = {};
+
+  await requesterService
+    .requisicaoRespostaFormulario(id)
+
+    .then((res) => {
+      dadosResposta = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosResposta;
 };

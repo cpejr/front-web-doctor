@@ -1,19 +1,71 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import { useHistory } from "react-router-dom";
 import Form from "@rjsf/antd";
+import {
+  ContainerListadeUsuarios,
+  DadosUsuario,
+  Titulo,
+  ContainerUsuarios,
+  Usuario,
+  Imagem,
+  Nome,
+  Telefone,
+  UltimaVisita,
+  CódigoPaciente,
+  CaixaVazia,
+} from "./Styles";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function POC4(props) {
-  const schema = {
-    type: "array",
-    items: props.properties
-    
-  };
+  const [respostas, setRespostas] = useState([]);
+  const history = useHistory();
 
-  const uiSchema = props.uiSchema
+  useEffect(() => {
+    pegandoRespostasFormulario();
+  }, []);
+
+  async function pegandoRespostasFormulario() {
+    const resposta = await managerService.GetRespostasFormulario();
+    setRespostas(resposta);
+  }
+
+  async function encaminhando(id_usuario) {
+    history.push({
+      pathname: "/web/poc5",
+      state: {id_usuario},
+    })
+  }
 
   return (
-    <>
-      <Form schema={schema} uiSchema={uiSchema}></Form>
-    </>
+    <div>
+    <ContainerListadeUsuarios>
+      <DadosUsuario>
+        <Titulo></Titulo>
+        <Nome>Nome do Usuário</Nome>
+        <Telefone>Telefone</Telefone>
+        <UltimaVisita>Última Visita</UltimaVisita>
+        <CódigoPaciente>Código do Paciente</CódigoPaciente>
+        <CaixaVazia></CaixaVazia>
+      </DadosUsuario>
+      <ContainerUsuarios>
+        {respostas?.map((value) => (
+          <Usuario key={value.id}>
+            <Imagem>{value.avatar_url}</Imagem>
+            <Nome>
+              
+                <div
+                  onClick={() => encaminhando(value.id_usuario)
+                  }
+                >
+                  {value.word}
+                </div>
+            
+            </Nome>
+          </Usuario>
+        ))}
+      </ContainerUsuarios>
+    </ContainerListadeUsuarios>
+  </div>
   );
 }
 
