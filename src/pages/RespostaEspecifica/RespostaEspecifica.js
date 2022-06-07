@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import Form from "@rjsf/antd";
 import * as managerService from "../../services/ManagerService/managerService";
 
-function POC5(props) {
+function RespostaEspecifica(props) {
 const [schema, setSchema] = useState();
 const [foi, setFoi] = useState(false);
 async function pegandoDados() {
@@ -28,4 +28,4 @@ useEffect(() => {
   );
 }
 
-export default POC5;
+export default RespostaEspecifica;

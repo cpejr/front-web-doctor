@@ -16,7 +16,7 @@ import {
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 
-function POC4(props) {
+function ListaRespostasPOC(props) {
   const [respostas, setRespostas] = useState([]);
   const history = useHistory();
 
@@ -31,7 +31,7 @@ function POC4(props) {
 
   async function encaminhando(id) {
     history.push({
-      pathname: "/web/poc5",
+      pathname: "/web/respostaespecifica",
       state: {id},
     })
   }
@@ -69,4 +69,4 @@ function POC4(props) {
   );
 }
 
-export default POC4;
+export default ListaRespostasPOC;
