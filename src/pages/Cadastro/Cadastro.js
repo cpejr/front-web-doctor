@@ -60,7 +60,7 @@ const maskData = (value) => {
 };
 
 const maskDataBack = (value) => {
-  return brParaPadrao(value);
+  brParaPadrao(value);
 };
 
 const maskApenasLetras = (value) => {
