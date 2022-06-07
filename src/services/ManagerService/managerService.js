@@ -11,7 +11,7 @@ export const requisicaoLogin = async (email, senha) => {
     try {
       const resposta = await requesterService.logarUsuario(email, senha);
       alert("Bem vindo");
-      login(resposta.data.token, resposta.data.email);
+      login(resposta.data.token, resposta.data.email, resposta.data.tipo);
       window.location.href = "/";
     } catch (error) {
       requisicaoErro(error, () => (window.location.href = "/login"));

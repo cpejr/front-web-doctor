@@ -45,6 +45,8 @@ import ModalAgendamento from "../../components/ModalAgendamento/ModalAgendamento
 import { Cores } from "../../variaveis";
 import AddToast from "../../components/AddToast/AddToast";
 import { redirecionamento, sleep } from "../../utils/sleep";
+import { recebeTipo, usuarioAutenticado } from "../../services/auth";
+import { toast } from "react-toastify";
 
 function PerfilPaciente(props) {
   const history = useHistory();
@@ -75,13 +77,23 @@ function PerfilPaciente(props) {
     setEndereco(resposta.dadosEndereco);
     setCarregando(false);
   }
+
   async function deletarUsuario() {
-    setCarregandoDeletar(true);
-    await managerService.DeletarUsuario(usuario.id);
-    setModalDeletarUsuario(false);
-    await sleep(3000);
-    redirecionamento("/web/listadeusuarios");
-    setCarregandoDeletar(false);
+    if (
+      usuarioAutenticado() &&
+      (recebeTipo() === "MASTER" || recebeTipo() === "SECRETARIA(O)")
+    ) {
+      setCarregandoDeletar(true);
+      await managerService.DeletarUsuario(usuario.id);
+      setModalDeletarUsuario(false);
+      await sleep(3000);
+      redirecionamento("/web/listadeusuarios");
+      setCarregandoDeletar(false);
+    } else {
+      toast.error("Usuário não autenticado.");
+      await sleep(3000);
+      redirecionamento("/login");
+    }
   }
 
   useEffect(() => {
@@ -305,7 +317,11 @@ function PerfilPaciente(props) {
               marginLeft="2%"
               onClick={() => deletarUsuario()}
             >
-              {carregandoDeletar ? <Spin indicator={antIconModal} /> : "Confirmar"}
+              {carregandoDeletar ? (
+                <Spin indicator={antIconModal} />
+              ) : (
+                "Confirmar"
+              )}
             </Button>
           </ContainerFooterModalExcluir>
         </ContainerModalExcluir>
