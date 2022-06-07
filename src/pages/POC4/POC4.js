@@ -29,10 +29,10 @@ function POC4(props) {
     setRespostas(resposta);
   }
 
-  async function encaminhando(id_usuario) {
+  async function encaminhando(id) {
     history.push({
       pathname: "/web/poc5",
-      state: {id_usuario},
+      state: {id},
     })
   }
 
@@ -54,7 +54,7 @@ function POC4(props) {
             <Nome>
               
                 <div
-                  onClick={() => encaminhando(value.id_usuario)
+                  onClick={() => encaminhando(value.id)
                   }
                 >
                   {value.word}

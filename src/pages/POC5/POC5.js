@@ -5,12 +5,11 @@ import * as managerService from "../../services/ManagerService/managerService";
 function POC5(props) {
 const [schema, setSchema] = useState();
 const [foi, setFoi] = useState(false);
-
 async function pegandoDados() {
   const resposta = await managerService.GetResposta(
-    props.location.state.id_usuario
+    props.location.state.id
   );
-  setSchema(resposta[3].respostas)
+  setSchema(resposta.respostas)
   setFoi(true)
 }
 
