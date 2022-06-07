@@ -27,14 +27,11 @@ function FormularioEspecifico(props) {
 //     await managerService.CriarFormulario(estado);
 //     }
 const [formularios, setFormularios] = useState();
-const [foi, setFoi] = useState(false);
 async function pegandoDados() {
   const resposta = await managerService.GetFormularioEspecifico(
     props.location.state.id
   );
   setFormularios(resposta)
-  console.log(resposta)
-  setFoi(true)
 }
 
 useEffect(() => {
@@ -49,7 +46,7 @@ async function deletarFormulario() {
     <Container>
       <CaixaInputs>
         <Input
-          placeholder={formularios.titulo}
+          placeholder="{formularios.titulo}"
           backgroundColor={Cores.cinza[7]}
           borderColor={Cores.azul}
           color={Cores.preto}
@@ -59,7 +56,7 @@ async function deletarFormulario() {
           name="titulo"
         ></Input>
         <Input
-          placeholder={formularios.tipo}
+          placeholder="{formularios.tipo}"
           backgroundColor={Cores.cinza[7]}
           borderColor={Cores.azul}
           color={Cores.preto}
@@ -69,7 +66,7 @@ async function deletarFormulario() {
           name="tipo"
         ></Input>
         <Input
-          placeholder={formularios.finalidade}
+          placeholder="{formularios.finalidade}"
           backgroundColor={Cores.cinza[7]}
           borderColor={Cores.azul}
           color={Cores.preto}
@@ -85,7 +82,7 @@ async function deletarFormulario() {
           width="100%"
           name="urgencia"
         >
-          <option value="">{formularios.urgencia}</option>
+          <option value="">urgencia</option>
           <option value="1" borderColor={Cores.azul}>
             1
           </option>
