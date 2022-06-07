@@ -4,6 +4,10 @@ import * as requesterService from "../RequesterService/requesterService";
 import { toast } from "react-toastify";
 
 export const requisicaoLogin = async (email, senha) => {
+  const sleep = (milliseconds) => {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  };
+
   if (email === "" || senha === "") {
     toast.warn("Preencha os campos email e senha!");
   } else {
@@ -13,10 +17,14 @@ export const requisicaoLogin = async (email, senha) => {
         toast.error("Paciente não pode fazer login no sistema!");
       } else {
         login(resposta.data.token, resposta.data.email, resposta.data.tipo);
-        toast.success("Seja bem vindo");
+
         if (resposta.data.tipo === "MASTER") {
+          toast.success("Login realizado com sucesso!");
+          await sleep(1500);
           window.location.href = "/web/homemedico";
         } else {
+          toast.success("Login realizado com sucesso!");
+          await sleep(1500);
           window.location.href = "/web/homesecretaria";
         }
       }
