@@ -44,9 +44,9 @@ import { useHistory } from "react-router-dom";
 import ModalAgendamento from "../../components/ModalAgendamento/ModalAgendamento";
 import { Cores } from "../../variaveis";
 import AddToast from "../../components/AddToast/AddToast";
-import { redirecionamento, sleep } from "../../utils/sleep";
 import { recebeTipo, usuarioAutenticado } from "../../services/auth";
 import { toast } from "react-toastify";
+import ModalExcluirUsuario from "../../components/ModalExcluirUsuario";
 
 function PerfilPaciente(props) {
   const history = useHistory();
@@ -190,7 +190,7 @@ function PerfilPaciente(props) {
                         fontSizeMedia=""
                         onClick={() => setModalDeletarUsuario(true)}
                       >
-                        Excluir Paciente
+                        Excluir Usuário
                       </Button>
                     </Botao>
                   )}
@@ -289,41 +289,7 @@ function PerfilPaciente(props) {
         centered={true}
         footer={null}
       >
-        <ContainerModalExcluir>
-          <ConteudoModalExcluir>
-            Tem certeza que quer excluir esse usuário?
-          </ConteudoModalExcluir>
-          <ContainerFooterModalExcluir>
-            <Button
-              color={Cores.azulEscuro}
-              fontWeight="normal"
-              borderColor={Cores.cinza[3]}
-              height="28px"
-              width="25%"
-              fontSize="13px"
-              onClick={() => setModalDeletarUsuario(false)}
-            >
-              Cancelar
-            </Button>
-            <Button
-              backgroundColor={Cores.lilas[2]}
-              color={Cores.azulEscuro}
-              borderColor={Cores.azulEscuro}
-              fontWeight="normal"
-              height="28px"
-              width="25%"
-              fontSize="13px"
-              marginLeft="2%"
-              onClick={() => deletarUsuario()}
-            >
-              {carregandoDeletar ? (
-                <Spin indicator={antIconModal} />
-              ) : (
-                "Confirmar"
-              )}
-            </Button>
-          </ContainerFooterModalExcluir>
-        </ContainerModalExcluir>
+        <ModalExcluirUsuario usuario={usuario} />
       </Modal>
       <AddToast />
     </div>
