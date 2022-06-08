@@ -79,10 +79,7 @@ function PerfilPaciente(props) {
   }
 
   async function deletarUsuario() {
-    if (
-      usuarioAutenticado() &&
-      (recebeTipo() === "MASTER" || recebeTipo() === "SECRETARIA(O)")
-    ) {
+    if (usuarioAutenticado() && recebeTipo() === "MASTER") {
       setCarregandoDeletar(true);
       await managerService.DeletarUsuario(usuario.id);
       setModalDeletarUsuario(false);
@@ -180,21 +177,23 @@ function PerfilPaciente(props) {
                       Agendamentos
                     </Button>
                   </Botao>
-                  <Botao>
-                    <Button
-                      backgroundColor={Cores.lilas[2]}
-                      color={Cores.azulEscuro}
-                      fontWeight="bold"
-                      borderColor={Cores.azulEscuro}
-                      height="40px"
-                      width="100%"
-                      fontSize="1.3em"
-                      fontSizeMedia=""
-                      onClick={() => setModalDeletarUsuario(true)}
-                    >
-                      Excluir Paciente
-                    </Button>
-                  </Botao>
+                  {recebeTipo() === "MASTER" && (
+                    <Botao>
+                      <Button
+                        backgroundColor={Cores.lilas[2]}
+                        color={Cores.azulEscuro}
+                        fontWeight="bold"
+                        borderColor={Cores.azulEscuro}
+                        height="40px"
+                        width="100%"
+                        fontSize="1.3em"
+                        fontSizeMedia=""
+                        onClick={() => setModalDeletarUsuario(true)}
+                      >
+                        Excluir Paciente
+                      </Button>
+                    </Botao>
+                  )}
                 </Botoes>
               </PerfilDireita>
             </>
