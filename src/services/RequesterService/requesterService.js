@@ -11,6 +11,8 @@ export const criarUsuario = (endereco, usuario) =>
     api.post("/usuarios", { ...usuario, id_endereco: res.data.id });
   });
 
+export const criarConsulta = (consulta) => api.post("/consultas", consulta);
+
 export const updateDadosUsuario = (id_usuario, id_endereco, endereco, estado) =>
   api.put(`/enderecos/${id_endereco}`, endereco).then((res) => {
     api.put(`/usuarios/${id_usuario}`, { ...estado, id_endereco: res.data.id });
@@ -43,6 +45,8 @@ export const requisicaoExamesMarcados = () => api.get(`/exame_marcados/`);
 export const requisicaoConsultas = () => api.get(`/consultas/`);
 
 export const requisicaoExame = (id) => api.get(`/exames/${id}`);
+
+export const requisicaoDadosConsultorios = () => api.get(`/consultorios`);
 
 export const deletarConsulta = (id) => api.delete(`/consultas/${id}`);
 

@@ -34,6 +34,20 @@ export const Cadastrando = async (usuario, endereco) => {
   return false;
 };
 
+export const CriandoColsulta = async (consulta) => {
+  await requesterService
+    .criarConsulta(consulta)
+    .then(() => {
+      alert("Consulta criada com sucesso.");
+      window.location.href = "/web/agendamentos";
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return;
+};
+
 export const GetDadosPessoais = async () => {
   let dadosUsuario = {};
   await requesterService
@@ -108,6 +122,30 @@ export const GetDadosUsuario = async (emailUrl) => {
       requisicaoErro(error);
     });
   return { dadosEndereco, dadosUsuario };
+};
+
+export const GetDadosConsultorios = async () => {
+  let dadosConsultorios = {};
+  let dadosEndereco = {};
+
+  await requesterService
+    .requisicaoDadosConsultorios()
+    .then((res) => {
+      dadosConsultorios = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  await requesterService
+    .requisicaoDadosEndereco(dadosConsultorios)
+    .then((res) => {
+      dadosEndereco = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return { dadosEndereco, dadosConsultorios };
 };
 
 export const ConferirSenha = async (email, senhaAtual) => {
