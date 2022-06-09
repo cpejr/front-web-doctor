@@ -131,6 +131,9 @@ function Cadastro() {
     if (!usuario.senha) errors.senha = true;
     if (!usuario.senhaConfirmada) errors.senhaConfirmada = true;
 
+    if (erro.data_nascimento === true) errors.data_nascimento = true;
+    if (erro.email === true) errors.email = true;
+
     setCamposVazios({ ...camposVazios, ...errors });
 
     if (_.isEqual(camposVazios, teste)) {
@@ -163,15 +166,26 @@ function Cadastro() {
     setUsuario({ ...usuario, [e.target.name]: e.target.value });
   }
 
-  async function validacaoDataBack(){
-    console.log("oi")
-    console.log(maskDataBack)
-    // if(maskDataBack === "Data Invalida"){
-    //   console.log("Data Invalida erro")
-    //   setErro({...erro, "dataBackInvalida": true})
-    // } else {
-    //   console.log("oi")
-    // }
+  const [erroDataBack, setErroDataBack] = useState(false);
+
+  async function validacaoData(e) {
+    const { value, name } = e.target;
+    if (value) {
+      setCamposVazios({ ...camposVazios, [name]: false });
+    }
+
+    if (name === "data_nascimento" && value.length < 10) {
+      setErro({ ...erro, [name]: true });
+      setErroDataBack(false);
+    } else if (maskDataBack(value) === "Data Invalida"){
+      setErro({ ...erro, [name]: true });
+      setErroDataBack(true);
+    } else {
+      setErro({ ...erro, [name]: false });
+    }
+
+    setEstado({ ...estado, [e.target.name]: maskData(e.target.value) });
+    setUsuario({ ...usuario, [name]: maskDataBack(value) });
   }
 
   function preenchendoDados(e) {
@@ -181,7 +195,7 @@ function Cadastro() {
     if (
       (name === "cpf" && value.length < 14) ||
       (name === "telefone" && value.length < 15) ||
-      (name === "data_nascimento" && value.length < 10) ||
+      //(name === "data_nascimento" && value.length < 10) ||
       ((name === "senha" || name === "senhaConfirmada") && value.length < 8)
     ) {
       setErro({ ...erro, [name]: true });
@@ -202,15 +216,10 @@ function Cadastro() {
       setEstado({ ...estado, [e.target.name]: maskTelefone(e.target.value) });
       setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
     }
-    if (e.target.name === "data_nascimento") {
-      setEstado({ ...estado, [e.target.name]: maskData(e.target.value) });
-      setUsuario({ ...usuario, [name]: maskDataBack(value) });
-      // if(maskDataBack(value) === "Data Invalida"){
-      //   console.log("eerrooo")
-      // } else {
-      //   setUsuario({ ...usuario, [name]: maskDataBack(value) });
-      // }
-    }
+    // if (e.target.name === "data_nascimento") {
+    //   setEstado({ ...estado, [e.target.name]: maskData(e.target.value) });
+    //   setUsuario({ ...usuario, [name]: maskDataBack(value) });
+    // }
     if (e.target.name === "cpf") {
       setEstado({ ...estado, [e.target.name]: maskCPF(e.target.value) });
       setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
@@ -261,9 +270,7 @@ function Cadastro() {
   return (
     <div>
       <Body>
-        <button onClick={() => validacaoDataBack()}>
-          click me
-        </button>
+        <button onClick={() => validacaoData()}>click me</button>
         <DadosCadastro>
           <Logo>
             <img
@@ -338,13 +345,20 @@ function Cadastro() {
                 marginTop="2%"
                 name="data_nascimento"
                 value={estado.data_nascimento}
-                onChange={preenchendoDados}
+                onChange={validacaoData}
                 erro={erro.data_nascimento}
                 camposVazios={camposVazios.dataNascimento}
               ></Input>
 
               {erro.data_nascimento && (
-                <Rotulo>Digite uma data no formato xx/xx/xxxx</Rotulo>
+                <>
+                {/* <Rotulo>Digite uma data válida.</Rotulo> */}
+                  {erroDataBack ? (
+                    <Rotulo>Digite uma data válida.</Rotulo>
+                  ) : (
+                    <Rotulo>Digite uma data no formato xx/xx/xxxx</Rotulo>
+                  )}
+                </>
               )}
             </RotuloColuna>
           </InputMesmaLinha>
