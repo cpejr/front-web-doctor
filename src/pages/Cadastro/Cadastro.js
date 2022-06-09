@@ -60,7 +60,7 @@ const maskData = (value) => {
 };
 
 const maskDataBack = (value) => {
-  brParaPadrao(value);
+  return brParaPadrao(value);
 };
 
 const maskApenasLetras = (value) => {
@@ -115,7 +115,6 @@ function Cadastro() {
   }
 
   async function requisicaoCadastro() {
-    console.log(usuario.data_nascimento);
     if (!usuario.nome) errors.nome = true;
     if (!usuario.telefone) errors.telefone = true;
     if (!usuario.tipo) errors.tipo = true;
@@ -148,8 +147,6 @@ function Cadastro() {
     }
   }
 
-  const [dataInvalida, setDataInvalida] = useState(false)
-
   async function validacaoEmail(e) {
     const { value, name } = e.target;
     if (value) {
@@ -164,6 +161,17 @@ function Cadastro() {
     }
 
     setUsuario({ ...usuario, [e.target.name]: e.target.value });
+  }
+
+  async function validacaoDataBack(){
+    console.log("oi")
+    console.log(maskDataBack)
+    // if(maskDataBack === "Data Invalida"){
+    //   console.log("Data Invalida erro")
+    //   setErro({...erro, "dataBackInvalida": true})
+    // } else {
+    //   console.log("oi")
+    // }
   }
 
   function preenchendoDados(e) {
@@ -197,6 +205,11 @@ function Cadastro() {
     if (e.target.name === "data_nascimento") {
       setEstado({ ...estado, [e.target.name]: maskData(e.target.value) });
       setUsuario({ ...usuario, [name]: maskDataBack(value) });
+      // if(maskDataBack(value) === "Data Invalida"){
+      //   console.log("eerrooo")
+      // } else {
+      //   setUsuario({ ...usuario, [name]: maskDataBack(value) });
+      // }
     }
     if (e.target.name === "cpf") {
       setEstado({ ...estado, [e.target.name]: maskCPF(e.target.value) });
@@ -248,6 +261,9 @@ function Cadastro() {
   return (
     <div>
       <Body>
+        <button onClick={() => validacaoDataBack()}>
+          click me
+        </button>
         <DadosCadastro>
           <Logo>
             <img
