@@ -43,18 +43,17 @@ function ModalExcluirUsuario(props) {
           Tem certeza que quer excluir esse usuário?
         </ConteudoModalExcluir>
         <ContainerFooterModalExcluir>
-          {/* <Button
+          <Button
             color={Cores.azulEscuro}
             fontWeight="normal"
             borderColor={Cores.cinza[3]}
             height="28px"
             width="25%"
             fontSize="13px"
-            //onClick={() => setModalDeletarUsuario(false)}
-            // onClick={() => window.location.href="/web/perfilpaciente"}
+            onClick={props.fecharModal}
           >
             Cancelar
-          </Button> */}
+          </Button>
           <Button
             backgroundColor={Cores.lilas[2]}
             color={Cores.azulEscuro}

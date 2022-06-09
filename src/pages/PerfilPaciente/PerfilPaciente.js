@@ -47,6 +47,7 @@ import AddToast from "../../components/AddToast/AddToast";
 import { recebeTipo, usuarioAutenticado } from "../../services/auth";
 import { toast } from "react-toastify";
 import ModalExcluirUsuario from "../../components/ModalExcluirUsuario";
+import { redirecionamento, sleep } from "../../utils/sleep";
 
 function PerfilPaciente(props) {
   const history = useHistory();
@@ -103,6 +104,10 @@ function PerfilPaciente(props) {
 
   async function fechandoModalAgendamento() {
     setModalAgendamento(false);
+  }
+
+  function fechandoModalDeletarUsuario(){
+    setModalDeletarUsuario(false)
   }
 
   return (
@@ -289,7 +294,10 @@ function PerfilPaciente(props) {
         centered={true}
         footer={null}
       >
-        <ModalExcluirUsuario usuario={usuario} />
+        <ModalExcluirUsuario
+          usuario={usuario}
+          fecharModal={() => fechandoModalDeletarUsuario()}
+        />
       </Modal>
       <AddToast />
     </div>
