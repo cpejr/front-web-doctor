@@ -40,6 +40,22 @@ function ListaUsuarios() {
   const [modalAdicionarCodigo, setModalAdicionarCodigo] = useState(false);
   const [email, setEmail] = useState();
 
+  const [busca, setBusca] = useState("");
+
+  const lowerBusca = busca.toLowerCase();
+
+  const usuariosFiltrados = usuarios.filter((usuario) => {
+    if (lowerBusca === "") {
+      return usuarios;
+    } else {
+      return (
+        usuario?.nome?.toLowerCase().includes(lowerBusca) ||
+        usuario?.codigo?.toLowerCase().includes(lowerBusca) ||
+        usuario?.telefone?.includes(lowerBusca)
+      );
+    }
+  });
+
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const emailLogado = sessionStorage.getItem("@doctorapp-Email");
 
@@ -50,7 +66,7 @@ function ListaUsuarios() {
 
   useEffect(() => {
     pegandoDadosUsuarios();
-  }, [tipoUsuarioLogado]);
+  }, []);
 
   useEffect(() => {
     pegandoTipoUsuarioLogado();
@@ -64,10 +80,10 @@ function ListaUsuarios() {
     } else {
       resposta.forEach((usuario) => {
         if (usuario.tipo === "PACIENTE") {
-          usuarios.push(usuario);
+          setUsuarios((usuarios) => [...usuarios, usuario]);
+          setCarregando(false);
         }
       });
-      setCarregando(false);
     }
   }
 
@@ -108,14 +124,19 @@ function ListaUsuarios() {
       <ContainerListadeUsuarios>
         <TopoPagina>
           <BarraPesquisa>
-            <Search placeholder="BUSCAR" style={{ width: 400 }} />
+            <Search
+              placeholder="BUSCAR"
+              style={{ width: 400 }}
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+            />
           </BarraPesquisa>
           <Filtros>
             {tipoUsuarioLogado === "MASTER" ? (
               <FiltroUsuario>
                 <Select
                   defaultValue="Todos os Usuários"
-                  style={{ color: "green", width: 200 }}
+                  style={{ width: 200 }}
                 ></Select>
               </FiltroUsuario>
             ) : (
@@ -124,7 +145,7 @@ function ListaUsuarios() {
             <FiltroDatas>
               <Select
                 defaultValue="Todas as datas"
-                style={{ color: "green", width: 200 }}
+                style={{ width: 200 }}
               ></Select>
             </FiltroDatas>
           </Filtros>
@@ -139,7 +160,7 @@ function ListaUsuarios() {
           <CaixaVazia></CaixaVazia>
         </DadosUsuario>
         <ContainerUsuarios>
-          {usuarios?.map((value) => (
+          {usuariosFiltrados?.map((value) => (
             <Usuario key={value.id}>
               <Imagem>{value.avatar_url}</Imagem>
               <Nome>

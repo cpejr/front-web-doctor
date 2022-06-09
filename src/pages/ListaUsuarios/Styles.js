@@ -23,12 +23,7 @@ export const BarraPesquisa = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  .ant-input {
-    background-color: green ;
-  }
-  .ant-btn.ant-btn-default.ant-btn-icon-only.ant-input-search-button{
-    background-color: green ;
-  }
+
   @media (max-width: 920px) {
     width: 100%;
     justify-content: center;
