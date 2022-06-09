@@ -1,5 +1,7 @@
 import styled from "styled-components";
+import { Input } from "antd";
 import { Cores, Fontes } from "../../variaveis";
+const { TextArea } = Input;
 
 export const Container = styled.div`
   display: flex;
@@ -122,13 +124,22 @@ export const TextoCheckbox = styled.h3`
   }
 `;
 
+export const TextAreaDescricao = styled(TextArea)`
+  border-color: ${Cores.preto};
+  border-width: 1px;
+  color:${Cores.preto};
+  ::placeholder{
+    color:${Cores.preto};  }
+`
+
 export const DoisSelect = styled.h3`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  background-color: green;
+  font-family: ${Fontes.barlow};
+  font-size: 1em;
 
   @media (max-width: 560px) {
     flex-direction: column;
@@ -141,14 +152,18 @@ export const DoisSelect = styled.h3`
   }
 `;
 
+export const Select = styled.select`
+  border-color: ${Cores.preto};
+  border-width: 1px;
+`;
+
 export const TamanhoInput = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
   justify-content: center;
   width: 40%;
-
-  background-color: green;
+  height: 40px;
 
   @media (max-width: 560px) {
     width: 100%;
@@ -157,6 +172,43 @@ export const TamanhoInput = styled.div`
   @media (max-width: 1260px) and (min-width: 800px) {
     width: 90%;
     margin-bottom: 5%;
+  }
+`;
+
+export const InputHora = styled.input`
+  width: 100%;
+  height: 100%;
+  font-family: ${Fontes.barlow};
+  font-weight: 500;
+  font-size: 1em;
+  color: ${Cores.preto};
+  padding-left: 5%;
+  border-color: ${Cores.preto};
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 1px;
+  ::placeholder {
+    color:${Cores.preto};
+  };
+`;
+
+export const InputDuracao = styled(Input)`
+  width: 100%;
+  height: 100%;
+  color: ${Cores.preto};
+  font-family: ${Fontes.barlow};
+  font-weight: 500;
+  font-size: 0.9em;
+  padding-left: 5%;
+  border-color: ${Cores.preto};
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 1px;
+
+  .ant-input {
+    ::placeholder {
+      color:${Cores.preto}
+    }
   }
 `;
 
@@ -176,8 +228,6 @@ export const SelecioneUmaData = styled.h3`
   align-items: start;
   justify-content: center;
   width: 90%;
-
-  background-color: green;
 
   @media (max-width: 560px) {
     width: 100%;
