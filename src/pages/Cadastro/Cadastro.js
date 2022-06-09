@@ -82,6 +82,7 @@ function Cadastro() {
 
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
+  const [erroDataBack, setErroDataBack] = useState(false);
 
   const [enderecoBack, setEnderecoBack] = useState({});
   const [estado, setEstado] = useState({});
@@ -166,8 +167,6 @@ function Cadastro() {
     setUsuario({ ...usuario, [e.target.name]: e.target.value });
   }
 
-  const [erroDataBack, setErroDataBack] = useState(false);
-
   async function validacaoData(e) {
     const { value, name } = e.target;
     if (value) {
@@ -177,7 +176,7 @@ function Cadastro() {
     if (name === "data_nascimento" && value.length < 10) {
       setErro({ ...erro, [name]: true });
       setErroDataBack(false);
-    } else if (maskDataBack(value) === "Data Invalida"){
+    } else if (maskDataBack(value) === "Data Invalida") {
       setErro({ ...erro, [name]: true });
       setErroDataBack(true);
     } else {
@@ -195,7 +194,6 @@ function Cadastro() {
     if (
       (name === "cpf" && value.length < 14) ||
       (name === "telefone" && value.length < 15) ||
-      //(name === "data_nascimento" && value.length < 10) ||
       ((name === "senha" || name === "senhaConfirmada") && value.length < 8)
     ) {
       setErro({ ...erro, [name]: true });
@@ -216,10 +214,6 @@ function Cadastro() {
       setEstado({ ...estado, [e.target.name]: maskTelefone(e.target.value) });
       setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
     }
-    // if (e.target.name === "data_nascimento") {
-    //   setEstado({ ...estado, [e.target.name]: maskData(e.target.value) });
-    //   setUsuario({ ...usuario, [name]: maskDataBack(value) });
-    // }
     if (e.target.name === "cpf") {
       setEstado({ ...estado, [e.target.name]: maskCPF(e.target.value) });
       setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
@@ -352,7 +346,6 @@ function Cadastro() {
 
               {erro.data_nascimento && (
                 <>
-                {/* <Rotulo>Digite uma data válida.</Rotulo> */}
                   {erroDataBack ? (
                     <Rotulo>Digite uma data válida.</Rotulo>
                   ) : (
