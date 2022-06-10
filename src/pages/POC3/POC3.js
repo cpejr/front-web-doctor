@@ -12,6 +12,10 @@ function POC3() {
   const [schema, setSchema] = useState("");
   const [estado, setEstado] = useState({});
 
+  const TirandoCabecalho = {
+    showFormHead: false,
+  }
+
   function mudancasForm(newSchema, newUiSchema) {
     setEstado({ ...estado, perguntas: newSchema });
     setSchema(newSchema);
@@ -23,7 +27,6 @@ function POC3() {
   }
 
   async function requisicaoFormularios() {
-    console.log(estado)
     await managerService.CriarFormulario(estado);
     }
 
@@ -101,6 +104,9 @@ function POC3() {
         schema={schema}
         uischema={uiSchema}
         onChange={mudancasForm}
+        mods={
+          TirandoCabecalho
+        }
       />
       <p>{estado.perguntas}</p>
 

@@ -346,3 +346,39 @@ export const DeletarFormulario = async (id) => {
 
   return false;
 };
+
+export const updatePerguntasFormulario = async (
+  id,
+  perguntas
+) => {
+  await requesterService
+    .updatePerguntasFormulario(id, perguntas)
+    .then(() => {
+      alert("Campo apagado com sucesso.");
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = "/"));
+      return false;
+    });
+
+  return false;
+};
+
+export const UpdateFormularios = async (
+  id,
+  campos
+) => {
+  await requesterService
+    .updateCampos(id, campos)
+    .then(() => {
+      alert("Usuário atualizado com sucesso.");
+      window.location.href = "/web/formularioespecifico";
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = "/web/formularioespecifico"));
+      return false;
+    });
+
+  return false;
+};
