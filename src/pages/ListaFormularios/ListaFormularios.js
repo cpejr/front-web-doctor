@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import { useHistory } from "react-router-dom";
-import Form from "@rjsf/antd";
 import {
   ContainerListadeUsuarios,
   DadosUsuario,

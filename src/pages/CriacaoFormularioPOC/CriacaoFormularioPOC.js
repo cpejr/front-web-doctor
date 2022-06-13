@@ -7,7 +7,7 @@ import Select from "../../styles/Select/Select";
 import Button from "../../styles/Button";
 import * as managerService from "../../services/ManagerService/managerService";
 
-function POC3() {
+function CriacaoFormularioPOC() {
   const [uiSchema, setUiSchema] = useState("");
   const [schema, setSchema] = useState("");
   const [estado, setEstado] = useState({});
@@ -114,4 +114,4 @@ function POC3() {
   );
 }
 
-export default POC3;
+export default CriacaoFormularioPOC;
