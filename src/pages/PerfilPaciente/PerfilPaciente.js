@@ -30,6 +30,9 @@ import {
   DataFormulario,
   TipoFormulario,
   UrgenciaFormulario,
+  ContainerModalExcluir,
+  ConteudoModalExcluir,
+  ContainerFooterModalExcluir,
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
@@ -40,18 +43,28 @@ import Button from "../../styles/Button";
 import { useHistory } from "react-router-dom";
 import ModalAgendamento from "../../components/ModalAgendamento/ModalAgendamento";
 import { Cores } from "../../variaveis";
+import AddToast from "../../components/AddToast/AddToast";
+import { recebeTipo, usuarioAutenticado } from "../../services/auth";
+import { toast } from "react-toastify";
+import ModalExcluirUsuario from "../../components/ModalExcluirUsuario";
+import { redirecionamento, sleep } from "../../utils/sleep";
 
 function PerfilPaciente(props) {
   const history = useHistory();
 
   const [modalAgendamento, setModalAgendamento] = useState(false);
+  const [modalDeletarUsuario, setModalDeletarUsuario] = useState(false);
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
   const [telefone, setTelefone] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [carregando, setCarregando] = useState(true);
+  const [carregandoDeletar, setCarregandoDeletar] = useState(false);
   const antIcon = (
-    <LoadingOutlined style={{ fontSize: 45, color: Cores.azul }} spin />
+    <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
+  );
+  const antIconModal = (
+    <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin />
   );
 
   async function pegandoDados() {
@@ -65,8 +78,20 @@ function PerfilPaciente(props) {
     setEndereco(resposta.dadosEndereco);
     setCarregando(false);
   }
+
   async function deletarUsuario() {
-    await managerService.DeletarUsuario(usuario.id);
+    if (usuarioAutenticado() && recebeTipo() === "MASTER") {
+      setCarregandoDeletar(true);
+      await managerService.DeletarUsuario(usuario.id);
+      setModalDeletarUsuario(false);
+      await sleep(3000);
+      redirecionamento("/web/listadeusuarios");
+      setCarregandoDeletar(false);
+    } else {
+      toast.error("Usuário não autenticado.");
+      await sleep(3000);
+      redirecionamento("/login");
+    }
   }
 
   useEffect(() => {
@@ -77,8 +102,12 @@ function PerfilPaciente(props) {
     setModalAgendamento(true);
   }
 
-  async function fechandoModal() {
+  async function fechandoModalAgendamento() {
     setModalAgendamento(false);
+  }
+
+  function fechandoModalDeletarUsuario(){
+    setModalDeletarUsuario(false)
   }
 
   return (
@@ -153,21 +182,23 @@ function PerfilPaciente(props) {
                       Agendamentos
                     </Button>
                   </Botao>
-                  <Botao>
-                    <Button
-                      backgroundColor={Cores.lilas[2]}
-                      color={Cores.azulEscuro}
-                      fontWeight="bold"
-                      borderColor={Cores.azulEscuro}
-                      height="40px"
-                      width="100%"
-                      fontSize="1.3em"
-                      fontSizeMedia=""
-                      onClick={() => deletarUsuario()}
-                    >
-                      Excluir Paciente
-                    </Button>
-                  </Botao>
+                  {recebeTipo() === "MASTER" && (
+                    <Botao>
+                      <Button
+                        backgroundColor={Cores.lilas[2]}
+                        color={Cores.azulEscuro}
+                        fontWeight="bold"
+                        borderColor={Cores.azulEscuro}
+                        height="40px"
+                        width="100%"
+                        fontSize="1.3em"
+                        fontSizeMedia=""
+                        onClick={() => setModalDeletarUsuario(true)}
+                      >
+                        Excluir Usuário
+                      </Button>
+                    </Botao>
+                  )}
                 </Botoes>
               </PerfilDireita>
             </>
@@ -247,13 +278,28 @@ function PerfilPaciente(props) {
 
       <Modal
         visible={modalAgendamento}
-        onCancel={fechandoModal}
+        onCancel={fechandoModalAgendamento}
         footer={null}
         width={"70%"}
         centered={true}
       >
         <ModalAgendamento id_usuario={usuario.id} email={usuario.email} />
       </Modal>
+
+      <Modal
+        visible={modalDeletarUsuario}
+        onCancel={() => setModalDeletarUsuario(false)}
+        style={{ maxWidth: "450px", minWidth: "250px" }}
+        width={"50%"}
+        centered={true}
+        footer={null}
+      >
+        <ModalExcluirUsuario
+          usuario={usuario}
+          fecharModal={() => fechandoModalDeletarUsuario()}
+        />
+      </Modal>
+      <AddToast />
     </div>
   );
 }

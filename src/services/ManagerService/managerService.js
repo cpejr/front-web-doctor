@@ -11,7 +11,7 @@ export const requisicaoLogin = async (email, senha) => {
     try {
       const resposta = await requesterService.logarUsuario(email, senha);
       alert("Bem vindo");
-      login(resposta.data.token, resposta.data.email);
+      login(resposta.data.token, resposta.data.email, resposta.data.tipo);
       window.location.href = "/";
     } catch (error) {
       requisicaoErro(error, () => (window.location.href = "/login"));
@@ -73,7 +73,7 @@ export const GetDadosConsultasExamesMarcados = async (id_usuario) => {
       requisicaoErro(error);
     });
 
-    await requesterService
+  await requesterService
     .requisicaoExamesMarcados(id_usuario)
     .then((res) => {
       dadosExamesMarcados = res.data;
@@ -82,7 +82,7 @@ export const GetDadosConsultasExamesMarcados = async (id_usuario) => {
       requisicaoErro(error);
     });
 
-  return { dadosConsultas, dadosExamesMarcados};
+  return { dadosConsultas, dadosExamesMarcados };
 };
 
 export const GetDadosExame = async (id) => {
@@ -196,15 +196,11 @@ export const UpdateDadosUsuario = async (
   return false;
 };
 
-export const UpdateCodigo = async (
-  id_usuario,
-  codigo
-) => {
+export const UpdateCodigo = async (id_usuario, codigo) => {
   await requesterService
     .updateCodigo(id_usuario, codigo)
     .then(() => {
       toast.success("Código adicionado com sucesso.");
-      
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));
@@ -218,8 +214,7 @@ export const DeletarUsuario = async (id) => {
   await requesterService
     .deletarUsuario(id)
     .then(() => {
-      alert("Usuário deletado com sucesso.");
-      window.location.href = "/web/listadeusuarios";
+      toast.success("Usuário deletado com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(
@@ -246,7 +241,7 @@ export const GetDadosConsultasExamesMarcadosGeral = async () => {
       requisicaoErro(error);
     });
 
-    await requesterService
+  await requesterService
     .requisicaoExamesMarcados()
     .then((res) => {
       dadosExamesMarcados = res.data;
@@ -255,9 +250,8 @@ export const GetDadosConsultasExamesMarcadosGeral = async () => {
       requisicaoErro(error);
     });
 
-  return { dadosConsultas, dadosExamesMarcados};
+  return { dadosConsultas, dadosExamesMarcados };
 };
-
 
 export const DeletarConsulta = async (id) => {
   await requesterService
