@@ -27,7 +27,7 @@ import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 import { Cores } from "../../variaveis";
-function ListaUsuariosSecretaria() {
+function Agendamentos () {
  
   const { Search } = Input;
   const [modalAgendamento, setModalAgendamento] = useState(false);
@@ -196,4 +196,4 @@ function ListaUsuariosSecretaria() {
   );
 }
 
-export default ListaUsuariosSecretaria;
+export default Agendamentos ;

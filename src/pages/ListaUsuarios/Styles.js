@@ -151,12 +151,6 @@ export const Telefone = styled.div`
     width: 20%;
   }
   @media (max-width: 700px) {
-    width: 25%;
-  }
-  @media (max-width: 600px) {
-    width: 33%;
-  }
-  @media (max-width: 500px) {
     display: none;
   }
 `;
@@ -175,7 +169,7 @@ export const UltimaVisita = styled.div`
     display: none;
   }
 `;
-export const AdicionarCodigo = styled.div`
+export const BotaoAdicionar = styled.div`
   width: 18%;
   display: flex;
   justify-content: center;
@@ -193,6 +187,7 @@ export const AdicionarCodigo = styled.div`
     width: 50%;
   }
 `;
+
 export const CódigoPaciente = styled.div`
   width: 18%;
   display: flex;
@@ -202,6 +197,12 @@ export const CódigoPaciente = styled.div`
     width: 20%;
   }
   @media (max-width: 700px) {
+    width: 25%;
+  }
+  @media (max-width: 600px) {
+    width: 33%;
+  }
+  @media (max-width: 500px) {
     display: none;
   }
 `;

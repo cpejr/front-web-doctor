@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
@@ -22,6 +22,7 @@ import {
 import "react-toastify/dist/ReactToastify.min.css";
 import AddToast from "../../components/AddToast/AddToast";
 import { toast } from "react-toastify";
+import { brParaPadrao } from "../../utils/date";
 
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
@@ -60,6 +61,10 @@ const maskData = (value) => {
     .replace(/(\d{4})(\d)/, "$1");
 };
 
+const maskDataBack = (value) => {
+  return brParaPadrao(value);
+};
+
 const maskApenasLetras = (value) => {
   return value.replace(/[0-9!@#¨$%^&*)(+=._-]+/g, "");
 };
@@ -79,6 +84,7 @@ function Cadastro() {
 
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
+  const [erroDataBack, setErroDataBack] = useState(false);
 
   const [enderecoBack, setEnderecoBack] = useState({});
   const [estado, setEstado] = useState({});
@@ -149,9 +155,8 @@ function Cadastro() {
       if (!usuario.convenio) errors.convenio = true;
     }
 
-    console.log(errors.convenio);
-    console.log(usuario.convenio);
-    console.log(camposVazios.convenio);
+    if (erro.data_nascimento === true) errors.data_nascimento = true;
+    if (erro.email === true) errors.email = true;
 
     setCamposVazios({ ...camposVazios, ...errors });
 
@@ -185,6 +190,26 @@ function Cadastro() {
     setUsuario({ ...usuario, [e.target.name]: e.target.value });
   }
 
+  async function validacaoData(e) {
+    const { value, name } = e.target;
+    if (value) {
+      setCamposVazios({ ...camposVazios, [name]: false });
+    }
+
+    if (name === "data_nascimento" && value.length < 10) {
+      setErro({ ...erro, [name]: true });
+      setErroDataBack(false);
+    } else if (maskDataBack(value) === "Data Invalida") {
+      setErro({ ...erro, [name]: true });
+      setErroDataBack(true);
+    } else {
+      setErro({ ...erro, [name]: false });
+    }
+
+    setEstado({ ...estado, [e.target.name]: maskData(e.target.value) });
+    setUsuario({ ...usuario, [name]: maskDataBack(value) });
+  }
+
   function preenchendoDados(e) {
     const { value, name } = e.target;
 
@@ -193,7 +218,6 @@ function Cadastro() {
     if (
       (name === "cpf" && value.length < 14) ||
       (name === "telefone" && value.length < 15) ||
-      (name === "data_nascimento" && value.length < 10) ||
       ((name === "senha" || name === "senhaConfirmada") && value.length < 8)
     ) {
       setErro({ ...erro, [name]: true });
@@ -223,10 +247,6 @@ function Cadastro() {
     if (e.target.name === "telefone_cuidador") {
       setEstado({ ...estado, [e.target.name]: maskTelefone(e.target.value) });
       setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
-    }
-    if (e.target.name === "data_nascimento") {
-      setEstado({ ...estado, [e.target.name]: maskData(e.target.value) });
-      setUsuario({ ...usuario, [name]: maskData(value) });
     }
     if (e.target.name === "cpf") {
       setEstado({ ...estado, [e.target.name]: maskCPF(e.target.value) });
@@ -278,6 +298,7 @@ function Cadastro() {
   return (
     <div>
       <Body>
+        <button onClick={() => validacaoData()}>click me</button>
         <DadosCadastro>
           <Logo>
             <img
@@ -302,7 +323,7 @@ function Cadastro() {
           >
             <option value="">Tipo de Usuário</option>
             <option value="SECRETARIA(O)" borderColor={Cores.azul}>
-              Secretária
+              Secretária(o)
             </option>
             <option value="PACIENTE" borderColor={Cores.azul}>
               Paciente
@@ -352,13 +373,19 @@ function Cadastro() {
                 marginTop="2%"
                 name="data_nascimento"
                 value={estado.data_nascimento}
-                onChange={preenchendoDados}
+                onChange={validacaoData}
                 erro={erro.data_nascimento}
                 camposVazios={camposVazios.data_nascimento}
               ></Input>
 
               {erro.data_nascimento && (
-                <Rotulo>Digite uma data no formato xx/xx/xxxx</Rotulo>
+                <>
+                  {erroDataBack ? (
+                    <Rotulo>Digite uma data válida.</Rotulo>
+                  ) : (
+                    <Rotulo>Digite uma data no formato xx/xx/xxxx</Rotulo>
+                  )}
+                </>
               )}
             </RotuloColuna>
           </InputMesmaLinha>

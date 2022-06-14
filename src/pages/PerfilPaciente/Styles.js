@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Cores } from "../../variaveis";
+import { Cores, Fontes } from "../../variaveis";
 
 export const ContainerPerfil = styled.div`
   display: flex;
@@ -362,3 +362,4 @@ export const TituloReceita = styled.div`
   color: ${(props) => props.color};
   font-size: ${(props) => props.fontSize};
 `;
+
