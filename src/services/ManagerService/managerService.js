@@ -290,3 +290,17 @@ export const DeletarExameMarcado = async (id) => {
 
   return false;
 };
+
+export const EnviandoFormularioPaciente = async (formulario_paciente) => {
+  await requesterService
+    .enviarFormularioPaciente(formulario_paciente)
+    .then(() => {
+      alert("Consulta criada com sucesso.");
+      window.location.href = "/web/agendamentos";
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return;
+};

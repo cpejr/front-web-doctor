@@ -4,7 +4,6 @@ import { Fontes, Cores } from "../../variaveis";
 export const ContainerModalCodigo = styled.div`
   display: flex;
   flex-direction: column;
-
   justify-content: space-around;
   align-items: center;
   width: 100%;
@@ -41,9 +40,18 @@ export const TextoCheckbox = styled.h3`
   font-family: ${Fontes.barlow};
   font-weight: 600;
   font-size: 1.2em;
+  margin-top: 20%;
   color: ${Cores.azulEscuro};
 
   @media (max-width: 560px) {
     font-size: 1em;
   }
+`;
+
+export const SelectUsuarios = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 2% 0% 2% 0%;
+  justify-content: space-between;
 `;
