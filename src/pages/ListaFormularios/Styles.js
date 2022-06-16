@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Cores } from "../../variaveis";
 
-export const ContainerListadeUsuarios = styled.div`
+export const ContainerListadeFormularios = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -9,6 +9,7 @@ export const ContainerListadeUsuarios = styled.div`
   min-height: 100vh;
   padding: 2% 5% 2% 5%;
 `;
+
 export const TopoPagina = styled.div`
   display: flex;
   flex-direction: row;
@@ -19,15 +20,15 @@ export const TopoPagina = styled.div`
   }
 `;
 export const BarraPesquisa = styled.div`
-  width: 50%;
+  width: 30%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   .ant-input {
-    background-color: green ;
+    background-color: green;
   }
-  .ant-btn.ant-btn-default.ant-btn-icon-only.ant-input-search-button{
-    background-color: green ;
+  .ant-btn.ant-btn-default.ant-btn-icon-only.ant-input-search-button {
+    background-color: green;
   }
   @media (max-width: 920px) {
     width: 100%;
@@ -35,10 +36,10 @@ export const BarraPesquisa = styled.div`
   }
 `;
 export const Filtros = styled.div`
-  width: 50%;
+  width: 45%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-around;
   gap: 2%;
   @media (max-width: 920px) {
     margin-top: 2%;
@@ -53,12 +54,8 @@ export const Filtros = styled.div`
     align-items: center;
   }
 `;
-export const FiltroUsuario = styled.div`
-  @media (max-width: 480px) {
-    margin-top: 2%;
-  }
-`;
-export const FiltroDatas = styled.div`
+
+export const FiltroEspecifico = styled.div`
   @media (max-width: 480px) {
     margin-top: 2%;
   }
@@ -71,158 +68,13 @@ export const BarraEstetica = styled.div`
   width: 100%;
   background-color: ${Cores.azul};
 `;
-export const DadosUsuario = styled.div`
-  color: ${Cores.azul};
-  justify-content: space-around;
-  display: flex;
-  flex-direction: row;
-`;
 
-export const ContainerUsuarios = styled.div`
+export const ContainerFormulario = styled.div`
   padding: 2% 0% 2% 0%;
   display: flex;
   flex-direction: column;
   width: 100%;
 `;
-export const Usuario = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  height: 80px;
-  padding: 0% 1% 0% 1%;
-  border-color: ${Cores.preto};
-  border-style: solid;
-  border-radius: 3px;
-  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
-  margin-bottom: 2%;
-`;
-
-export const Titulo = styled.div`
-  width: 30px;
-  display: flex;
-  justify-content: center;
-  @media (max-width: 880px) {
-    display: none;
-  }
-`;
-export const Imagem = styled.div`
-  justify-content: center;
-  object-fit: fill;
-  width: 10%;
-  width: 40px;
-  display: flex;
-  @media (max-width: 880px) {
-    display: none;
-  }
-`;
-export const Nome = styled.div`
-  width: 18%;
-  justify-content: center;
-
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-
-  :hover {
-    overflow: visible;
-    cursor: pointer;
-  }
-
-  @media (max-width: 880px) {
-    width: 20%;
-  }
-  @media (max-width: 700px) {
-    width: 25%;
-  }
-  @media (max-width: 600px) {
-    width: 33%;
-  }
-  @media (max-width: 500px) {
-    width: 50%;
-  }
-`;
-export const Telefone = styled.div`
-  width: 18%;
-  justify-content: center;
-  display: flex;
-  @media (max-width: 880px) {
-    width: 20%;
-  }
-  @media (max-width: 700px) {
-    display: none;
-  }
-`;
-export const UltimaVisita = styled.div`
-  width: 18%;
-  display: flex;
-  justify-content: center;
-  color: green;
-  @media (max-width: 880px) {
-    width: 20%;
-  }
-  @media (max-width: 700px) {
-    width: 25%;
-  }
-  @media (max-width: 600px) {
-    display: none;
-  }
-`;
-export const BotaoAdicionar = styled.div`
-  width: 18%;
-  display: flex;
-  justify-content: center;
-  color: green;
-  @media (max-width: 880px) {
-    width: 20%;
-  }
-  @media (max-width: 700px) {
-    width: 25%;
-  }
-  @media (max-width: 600px) {
-    width: 33%;
-  }
-  @media (max-width: 500px) {
-    width: 50%;
-  }
-`;
-
-export const CódigoPaciente = styled.div`
-  width: 18%;
-  display: flex;
-  justify-content: center;
-  color: green;
-  @media (max-width: 880px) {
-    width: 20%;
-  }
-  @media (max-width: 700px) {
-    width: 25%;
-  }
-  @media (max-width: 600px) {
-    width: 33%;
-  }
-  @media (max-width: 500px) {
-    display: none;
-  }
-`;
-export const CaixaVazia = styled.div`
-  width: 18%;
-
-  @media (max-width: 880px) {
-    width: 20%;
-  }
-  @media (max-width: 700px) {
-    width: 25%;
-  }
-  @media (max-width: 600px) {
-    width: 33%;
-  }
-  @media (max-width: 500px) {
-    width: 50%;
-  }
-`;
-
 export const DadosFormulario = styled.div`
   display: flex;
   flex-direction: row;
@@ -238,7 +90,7 @@ export const DadosFormulario = styled.div`
   }
 `;
 export const Formulario = styled.div`
-  width: 83%;
+  width: 85%;
   min-height: 20vh;
   display: flex;
   flex-direction: column;
@@ -249,15 +101,35 @@ export const Formulario = styled.div`
   justify-content: center;
   padding: 0% 2% 2% 2%;
   background-color: ${Cores.azulClaro};
-  
 `;
 
 export const BotoesVertical = styled.div`
-  width: 15%;
+  width: 10%;
   display: flex;
   min-height: 20vh;
   justify-content: space-between;
   flex-direction: column;
+  @media (max-width: 920px) {
+    flex-direction: row;
+    width: 85%;
+  }
+  @media (max-width: 450px) {
+    flex-direction: column;
+  }
+`;
+export const BotaoFinal = styled.div`
+  width: 98%;
+  display: flex;
+  min-height: 20vh;
+  justify-content: end;
+  @media (max-width: 920px) {
+    width: 100%;
+    justify-content: center;
+  }
+  @media (max-width: 560px) {
+    margin: 0% 10% 0% 10%;
+    width: 80%;
+  }
 `;
 
 export const ContainerFormularioEspecifico = styled.div`
@@ -268,6 +140,13 @@ export const ContainerFormularioEspecifico = styled.div`
   justify-content: space-around;
   align-items: center;
   margin: 2% 0% 2% 0%;
+  @media (max-width: 920px) {
+    flex-direction: column;
+    justify-content: center;
+  }
+  @media (max-width: 450px) {
+    margin: 5% 0% 5% 0%;
+  }
 `;
 
 export const TituloFormulario = styled.div`
@@ -279,24 +158,12 @@ export const TituloFormulario = styled.div`
     font-size: 1.3em;
   }
   @media (max-width: 560px) {
-    font-size: 1.1em;
-  }
-`;
-export const DataFormulario = styled.div`
-  font-size: 1.2em;
-  color: ${Cores.lilas[1]};
-
-  @media (max-width: 780px) {
-    display: none;
+    font-size: 1.4em;
   }
 `;
 export const TipoFormulario = styled.div`
   font-size: 1.2em;
   color: ${Cores.lilas[1]};
-
-  @media (max-width: 560px) {
-    display: none;
-  }
 `;
 export const UrgenciaFormulario = styled.div`
   font-size: 1.2em;
