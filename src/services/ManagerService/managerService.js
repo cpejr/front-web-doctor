@@ -229,8 +229,7 @@ export const DeletarUsuario = async (id) => {
   await requesterService
     .deletarUsuario(id)
     .then(() => {
-      alert("Usuário deletado com sucesso.");
-      window.location.href = "/web/listadeusuarios";
+      toast.success("Usuário deletado com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(
