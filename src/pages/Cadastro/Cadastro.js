@@ -97,19 +97,11 @@ function Cadastro() {
 
   function funcaoConvenio() {
     setConvenio(!convenio);
-
-    if (convenio === true) {
-      teste.convenio = true;
-      setCamposVazios({ ...camposVazios, convenio: true });
-    }
   }
   function funcaoCuidador() {
     setCuidador(!cuidador);
-    if (cuidador === true) {
-      teste.nome_cuidador = true;
-      teste.telefone_cuidador = true;
-    }
   }
+
   const errors = {};
   const teste = {
     tipo: false,
@@ -151,10 +143,6 @@ function Cadastro() {
     if (!enderecoBack.numero) errors.numero = true;
     if (!usuario.senha) errors.senha = true;
     if (!usuario.senhaConfirmada) errors.senhaConfirmada = true;
-    if (convenio === true) {
-      if (!usuario.convenio) errors.convenio = true;
-    }
-
     if (erro.data_nascimento === true) errors.data_nascimento = true;
     if (erro.email === true) errors.email = true;
 
@@ -172,6 +160,11 @@ function Cadastro() {
     } else {
       toast.error("Preencha todos os campos obrigatórios");
     }
+
+    console.log(usuario);
+    console.log(teste);
+    console.log(camposVazios);
+    
   }
 
   async function validacaoEmail(e) {
@@ -213,8 +206,9 @@ function Cadastro() {
   function preenchendoDados(e) {
     const { value, name } = e.target;
 
-    if (value) setCamposVazios({ ...camposVazios, [name]: false });
-
+    if (name !== "convenio") {
+      if (value) setCamposVazios({ ...camposVazios, [name]: false });
+    }
     if (
       (name === "cpf" && value.length < 14) ||
       (name === "telefone" && value.length < 15) ||
@@ -298,7 +292,6 @@ function Cadastro() {
   return (
     <div>
       <Body>
-        <button onClick={() => validacaoData()}>click me</button>
         <DadosCadastro>
           <Logo>
             <img
@@ -434,10 +427,8 @@ function Cadastro() {
               fontSize="1em"
               width="100%"
               marginTop="2%"
-              value={estado.convenio}
+              
               name="convenio"
-              error={erro.convenio}
-              camposVazios={camposVazios.convenio}
               onChange={preenchendoDados}
             ></Input>
           )}
