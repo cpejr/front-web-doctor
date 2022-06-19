@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { Cores } from "../../variaveis";
 
-export const ContainerModalCodigo = styled.div`
+export const ContainerModalFormulario = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -8,7 +9,7 @@ export const ContainerModalCodigo = styled.div`
   align-items: center;
   width: 100%;
   height: 50%;
-  padding: 2% 20% 2% 20%;
+  padding: 2% 7% 2% 7%;
 
   @media (max-width: 950px) and (min-width: 560px) {
     padding: 2% 10% 2% 10%;
@@ -25,7 +26,7 @@ export const Titulo = styled.div`
   text-align: center;
   font-family: "Roboto Condensed", sans-serif;
   font-size: 2em;
-  color: #0a0e3c;
+  color: ${Cores.preto};
   margin-top: 2%;
   @media (max-width: 950px) and (min-width: 560px) {
     font-size: 1.5em;

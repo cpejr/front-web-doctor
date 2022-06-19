@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Form from "@rjsf/antd";
+import { ContainerModalFormulario, Titulo } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalFormulario(props) {
   const [schema, setSchema] = useState();
-  const [foi, setFoi] = useState(false);
+
+  const uiSchema = {
+    "ui:submitButtonOptions": { norender: true },
+  };
 
   useEffect(() => {
     pegandoDados();
@@ -15,10 +19,19 @@ function ModalFormulario(props) {
       props.idFormularioPaciente
     );
     setSchema(resposta.respostas);
-    setFoi(true);
   }
-  
-  return <>{foi ? <Form schema={schema}></Form> : <></>}</>;
+
+  return (
+    <ContainerModalFormulario>
+      <Titulo>{props.titulo}</Titulo>
+      <Form
+        uiSchema={uiSchema}
+        schema={props.perguntas}
+        formData={schema}
+        disabled
+      />
+    </ContainerModalFormulario>
+  );
 }
 
 export default ModalFormulario;

@@ -63,6 +63,8 @@ function PerfilPaciente(props) {
   const [dataNascimento, setDataNascimento] = useState("");
   const [carregando, setCarregando] = useState(true);
   const [respostas, setRespostas] = useState([]);
+  const [perguntas, setPerguntas] = useState();
+  const [titulo, setTitulo] = useState();
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
@@ -125,8 +127,10 @@ function PerfilPaciente(props) {
     setModalDeletarUsuario(false);
   }
 
-  async function abrindoModalFormulario(id) {
-    setIdFormularioPaciente(id)
+  async function abrindoModalFormulario(id, perguntas, titulo) {
+    setPerguntas(perguntas);
+    setTitulo(titulo);
+    setIdFormularioPaciente(id);
     setModalFormulario(true);
   }
 
@@ -233,7 +237,15 @@ function PerfilPaciente(props) {
               {respostas?.map((value) => (
                 <Formulario>
                   <DadosFormulario>
-                    <TituloFormulario onClick={() => abrindoModalFormulario(value.id)}>
+                    <TituloFormulario
+                      onClick={() =>
+                        abrindoModalFormulario(
+                          value.id,
+                          value.perguntas,
+                          value.titulo
+                        )
+                      }
+                    >
                       {value.titulo}
                     </TituloFormulario>
                     <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
@@ -260,19 +272,23 @@ function PerfilPaciente(props) {
                       )}
                     </UrgenciaFormulario>
                   </DadosFormulario>
-                  <RespostaPendente>
-                    <Resposta>Resposta Pendente</Resposta>
-                    <Button
-                      backgroundColor="green"
-                      color={Cores.azulEscuro}
-                      fontWeight="bold"
-                      borderColor={Cores.azulEscuro}
-                      height="40px"
-                      width="25%"
-                    >
-                      ENVIAR LEMBRETE
-                    </Button>
-                  </RespostaPendente>
+                  {value.status === true ? (
+                    <></>
+                  ) : (
+                    <RespostaPendente>
+                      <Resposta>Resposta Pendente</Resposta>
+                      <Button
+                        backgroundColor="green"
+                        color={Cores.azulEscuro}
+                        fontWeight="bold"
+                        borderColor={Cores.azulEscuro}
+                        height="40px"
+                        width="25%"
+                      >
+                        ENVIAR LEMBRETE
+                      </Button>
+                    </RespostaPendente>
+                  )}
                 </Formulario>
               ))}
             </>
@@ -346,7 +362,11 @@ function PerfilPaciente(props) {
         centered={true}
         footer={null}
       >
-        <ModalFormulario idFormularioPaciente={idFormularioPaciente}/>
+        <ModalFormulario
+          idFormularioPaciente={idFormularioPaciente}
+          perguntas={perguntas}
+          titulo={titulo}
+        />
       </Modal>
 
       <AddToast />
