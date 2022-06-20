@@ -1,20 +1,35 @@
 import { login } from "../../services/auth";
 import requisicaoErro from "../../utils/HttpErros";
 import * as requesterService from "../RequesterService/requesterService";
-import AddToast from "../../components/AddToast/AddToast";
 import { toast } from "react-toastify";
 
 export const requisicaoLogin = async (email, senha) => {
-  if (email.lenght === 0 || senha.lenght === 0) {
-    alert("Preencha os campos email e senha!");
+  const sleep = (milliseconds) => {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  };
+
+  if (email === "" || senha === "") {
+    toast.warn("Preencha os campos email e senha!");
   } else {
     try {
       const resposta = await requesterService.logarUsuario(email, senha);
-      alert("Bem vindo");
-      login(resposta.data.token, resposta.data.email, resposta.data.tipo);
-      window.location.href = "/";
+      if (resposta.data.tipo === "PACIENTE") {
+        toast.error("Paciente não pode fazer login no sistema!");
+      } else {
+        login(resposta.data.token, resposta.data.email, resposta.data.tipo);
+
+        if (resposta.data.tipo === "MASTER") {
+          toast.success("Login realizado com sucesso!");
+          await sleep(1500);
+          window.location.href = "/web/homemedico";
+        } else {
+          toast.success("Login realizado com sucesso!");
+          await sleep(1500);
+          window.location.href = "/web/homesecretaria";
+        }
+      }
     } catch (error) {
-      requisicaoErro(error, () => (window.location.href = "/login"));
+      requisicaoErro(error);
     }
   }
   return;
