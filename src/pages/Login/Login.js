@@ -18,6 +18,7 @@ import {
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService"
 import { Cores } from "../../variaveis";
+import AddToast from "../../components/AddToast/AddToast";
 
 function Login() {
   const history = useHistory();
@@ -149,6 +150,7 @@ function Login() {
           </Button>
         </BotoesAlternativos>
       </Body>
+      <AddToast/>
     </div>
   );
 }
