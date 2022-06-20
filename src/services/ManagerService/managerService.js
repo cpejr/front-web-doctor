@@ -290,3 +290,50 @@ export const DeletarExameMarcado = async (id) => {
 
   return false;
 };
+
+export const GetFormularios = async () => {
+  let dadosFormularios = {};
+  await requesterService
+    .requisicaoFormularios()
+    .then((res) => {
+      dadosFormularios = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosFormularios;
+};
+
+export const GetFormularioEspecifico = async (id) => {
+  let dadosFormulario = {};
+
+  await requesterService
+    .requisicaoFormularioEspecifico(id)
+
+    .then((res) => {
+      dadosFormulario = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosFormulario;
+};
+
+export const DeletarFormulario = async (id) => {
+  await requesterService
+    .deletarFormulario(id)
+    .then(() => {
+      alert("Formulario deletado com sucesso.");
+      window.location.href = "/web/listaformularios";
+    })
+    .catch((error) => {
+      requisicaoErro(
+        error,
+        () => (window.location.href = "/web/perfildopaciente")
+      );
+
+      return false;
+    });
+
+  return false;
+};

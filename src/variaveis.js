@@ -16,6 +16,7 @@ export const Cores = {
   },
 
   azul: "#151B57",
+  azulClaro: "#EAECFF",
   azulEscuro: "#0A0E3C",
   preto: "black",
   branco: "white",
