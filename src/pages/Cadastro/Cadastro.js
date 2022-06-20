@@ -160,11 +160,6 @@ function Cadastro() {
     } else {
       toast.error("Preencha todos os campos obrigatórios");
     }
-
-    console.log(usuario);
-    console.log(teste);
-    console.log(camposVazios);
-    
   }
 
   async function validacaoEmail(e) {
@@ -206,8 +201,18 @@ function Cadastro() {
   function preenchendoDados(e) {
     const { value, name } = e.target;
 
-    if (name !== "convenio") {
+    if (
+      name !== "convenio" &&
+      name !== "nome_cuidador" &&
+      name !== "telefone_cuidador"
+    ) {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
+    }
+    if (name === "nome_cuidador") {
+      e.target.value = maskApenasLetras(value);
+    }
+    if (name === "telefone_cuidador") {
+      e.target.value = maskTelefone(value);
     }
     if (
       (name === "cpf" && value.length < 14) ||
@@ -228,11 +233,8 @@ function Cadastro() {
         [e.target.name]: maskApenasLetras(e.target.value),
       });
     }
-    if (e.target.name === "nome_cuidador") {
-      setEstado({
-        ...estado,
-        [e.target.name]: maskApenasLetras(e.target.value),
-      });
+    if (name === "nome_cuidador") {
+      e.target.value = maskApenasLetras(e.target.value);
     }
     if (e.target.name === "telefone") {
       setEstado({ ...estado, [e.target.name]: maskTelefone(e.target.value) });
@@ -427,7 +429,6 @@ function Cadastro() {
               fontSize="1em"
               width="100%"
               marginTop="2%"
-              
               name="convenio"
               onChange={preenchendoDados}
             ></Input>
@@ -448,7 +449,6 @@ function Cadastro() {
                 fontSize="1em"
                 width="100%"
                 marginTop="2%"
-                value={estado.nome_cuidador}
                 name="nome_cuidador"
                 onChange={preenchendoDados}
               ></Input>
@@ -460,7 +460,6 @@ function Cadastro() {
                 fontSize="1em"
                 width="100%"
                 marginTop="2%"
-                value={estado.telefone_cuidador}
                 name="telefone_cuidador"
                 onChange={preenchendoDados}
               ></Input>
