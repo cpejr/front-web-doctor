@@ -51,3 +51,9 @@ export const requisicaoDadosConsultorios = () => api.get(`/consultorios`);
 export const deletarConsulta = (id) => api.delete(`/consultas/${id}`);
 
 export const deletarExameMarcado = (id) => api.delete(`/exame_marcados/${id}`);
+
+export const requisicaoFormularios = () => api.get(`/formularios/`);
+
+export const requisicaoFormularioEspecifico = (id) => api.get(`/formularios/${id}`);
+
+export const deletarFormulario = (id) => api.delete(`/formularios/${id}`);
