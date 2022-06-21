@@ -352,3 +352,32 @@ export const DeletarFormulario = async (id) => {
 
   return false;
 };
+export const GetRespostaFormularioIdUsuario = async (id_usuario) => {
+  let dadosResposta = {};
+
+  await requesterService
+    .requisicaoRespostaFormularioIdUsuario(id_usuario)
+
+    .then((res) => {
+      dadosResposta = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosResposta;
+};
+
+export const GetResposta = async (id) => {
+  let dadosResposta = {};
+
+  await requesterService
+    .requisicaoRespostaFormulario(id)
+
+    .then((res) => {
+      dadosResposta = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosResposta;
+};
