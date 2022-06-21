@@ -52,4 +52,17 @@ export const deletarConsulta = (id) => api.delete(`/consultas/${id}`);
 
 export const deletarExameMarcado = (id) => api.delete(`/exame_marcados/${id}`);
 
-export const enviarFormularioPaciente = (formulario_paciente) => api.post("/formularios_pacientes", formulario_paciente);
+export const requisicaoFormularios = () => api.get(`/formularios/`);
+
+export const requisicaoFormularioEspecifico = (id) =>
+  api.get(`/formularios/${id}`);
+
+export const deletarFormulario = (id) => api.delete(`/formularios/${id}`);
+export const requisicaoRespostaFormularioIdUsuario = (id_usuario) =>
+  api.get(`/formularios_pacientes_usuario/${id_usuario}`);
+
+export const requisicaoRespostaFormulario = (id) =>
+  api.get(`/formularios_pacientes/${id}`);
+
+export const enviarFormularioPaciente = (status, id_formulario, id_usuario) =>
+  api.post("/formularios_pacientes", { status, id_formulario, id_usuario });

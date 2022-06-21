@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 
 function traducaoErro(erroCodigo) {
   const erroPadrao = "Erro inesperado";
@@ -25,5 +26,5 @@ export default function requisicaoErro(error, retorno = () => {}) {
   retorno(error);
   
   const mensagemErro = traducaoErro(statusCodigo);
-  return alert(mensagemErro);
+  return toast.error(mensagemErro);
 }

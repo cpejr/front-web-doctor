@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 import { Dropdown, Menu } from "antd";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 import * as managerService from "../../services/ManagerService/managerService";
-import{Cores} from "../../variaveis";
+import { Cores } from "../../variaveis";
 
 function Header(props) {
   const email = sessionStorage.getItem("@doctorapp-Email");
@@ -75,7 +75,7 @@ function Header(props) {
           <Button
             backgroundColor="transparent"
             borderColor="transparent"
-            color={Cores.branco}
+            color={Cores.preto}
             fontSize="1rem"
             height="50px"
             onClick={() => {
@@ -86,39 +86,38 @@ function Header(props) {
           </Button>
         </Menu.Item>
       )}
-      <Menu.Item>
-        {tipo === "MASTER" ? (
-          <Menu.Item>
-            <Button
-              backgroundColor="transparent"
-              borderColor="transparent"
-              color={Cores.preto}
-              fontSize="1rem"
-              height="50px"
-              onClick={() => {
-                history.push("/web/listadeusuarios");
-              }}
-            >
-              Lista de Usuários
-            </Button>
-          </Menu.Item>
-        ) : (
-          <Menu.Item>
-            <Button
-              backgroundColor="transparent"
-              borderColor="transparent"
-              color={Cores.preto}
-              fontSize="1rem"
-              height="50px"
-              onClick={() => {
-                history.push("/web/listadeusuarios");
-              }}
-            >
-              Lista de Usuários
-            </Button>
-          </Menu.Item>
-        )}
-      </Menu.Item>
+      {tipo === "MASTER" ? (
+        <Menu.Item>
+          <Button
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color={Cores.preto}
+            fontSize="1rem"
+            height="50px"
+            onClick={() => {
+              history.push("/web/listadeusuarios");
+            }}
+          >
+            Lista de Usuários
+          </Button>
+        </Menu.Item>
+      ) : (
+        <Menu.Item>
+          <Button
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color={Cores.preto}
+            fontSize="1rem"
+            height="50px"
+            onClick={() => {
+              history.push("/web/listadeusuarios");
+            }}
+          >
+            Lista de Usuários
+          </Button>
+        </Menu.Item>
+      )}
+
       <Menu.Item>
         <Button
           backgroundColor="transparent"
@@ -159,7 +158,7 @@ function Header(props) {
             overlay={menu}
             placement={"bottom"}
           >
-            <MenuOutlined style={{ color: Cores.branco , fontSize: "1.5em" }} />
+            <MenuOutlined style={{ color: Cores.branco, fontSize: "1.5em" }} />
           </Dropdown>
         </MenuHeader>
         <Logo>
@@ -230,7 +229,7 @@ function Header(props) {
               fontSizeMedia1080="1rem"
               backgroundColor="transparent"
               borderColor="transparent"
-              color={Cores.cinza[7]}
+              color={Cores.branco}
               fontSize="1.1rem"
               height="50px"
               onClick={() => {
@@ -244,7 +243,7 @@ function Header(props) {
               fontSizeMedia1080="1rem"
               backgroundColor="transparent"
               borderColor="transparent"
-              color={Cores.cinza[7]}
+              color={Cores.branco}
               fontSize="1.1rem"
               height="50px"
               onClick={() => {

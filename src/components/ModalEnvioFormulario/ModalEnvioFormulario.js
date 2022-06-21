@@ -15,29 +15,25 @@ import Select from "../../styles/Select";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalEnvioFormulario(props) {
-  const [usuarios, setUsuarios] = useState([]);
   const [formularioPaciente, setFormularioPaciente] = useState();
+  const [carregando, setCarregando] = useState(false);
 
-  useEffect(() => {
-    pegandoDadosUsuarios();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const antIcon = (
+    <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
+  );
 
-  async function pegandoDadosUsuarios() {
-    const resposta = await managerService.GetDadosPessoais();
-    resposta.forEach((usuario) => {
-      if (usuario.tipo === "PACIENTE") {
-        usuarios.push(usuario);
-      }
-    });
+  async function enviandoFormularioPaciente() {
+    setCarregando(true)
+    const resposta = await managerService.EnviandoFormularioPaciente(
+      false,
+      props.idFormulario,
+      formularioPaciente
+    );
+    setCarregando(false)
   }
 
-  // async function enviandoFormularioPaciente() {
-  //   const resposta = await managerService.EnviandoFormularioPaciente();
-  // }
-
   async function preenchendoDados(e) {
-    setFormularioPaciente({...formularioPaciente, [e.target.name]: e.target.value})
+    setFormularioPaciente(e.target.value);
   }
 
   return (
@@ -45,27 +41,27 @@ function ModalEnvioFormulario(props) {
       <ContainerModalCodigo>
         <Titulo>Enviar formulário para:</Titulo>
         <SelectUsuarios>
-        <Select
-          id="id_usuario"
-          backgroundColor={Cores.cinza[7]}
-          color={Cores.preto}
-          width="100%"
-          name="id_usuario"
-          onChange={preenchendoDados}
-        >
-          {usuarios?.map((valor) => (
-            <>
-              <option value="" disabled selected>
-                Escolha um paciente:
-              </option>
-              <option value={valor.id}>{valor.nome}</option>
-            </>
-          ))}
-        </Select>
+          <Select
+            id="id_usuario"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            width="100%"
+            name="id_usuario"
+            onChange={preenchendoDados}
+          >
+            {props.usuarios?.map((valor) => (
+              <>
+                <option value="" disabled selected>
+                  Escolha um paciente:
+                </option>
+                <option value={valor.id}>{valor.nome}</option>
+              </>
+            ))}
+          </Select>
 
-        <Checkbox>
-          <TextoCheckbox>Notificar paciente</TextoCheckbox>
-        </Checkbox>
+          <Checkbox>
+            <TextoCheckbox>Notificar paciente</TextoCheckbox>
+          </Checkbox>
         </SelectUsuarios>
         <Button
           width="100%"
@@ -76,9 +72,9 @@ function ModalEnvioFormulario(props) {
           fontSize="1.5em"
           fontWeight="bold"
           fontSizeMedia="1.2em"
+          onClick={() => enviandoFormularioPaciente()}
         >
-          {/* {carregando ? <Spin indicator={antIcon} /> : "CONFIRMAR"} */}
-          Enviar
+          {carregando ? <Spin indicator={antIcon} /> : "ENVIAR"}
         </Button>
       </ContainerModalCodigo>
       <AddToast />
