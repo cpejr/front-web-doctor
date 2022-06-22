@@ -3,11 +3,11 @@ import requisicaoErro from "../../utils/HttpErros";
 import * as requesterService from "../RequesterService/requesterService";
 import { toast } from "react-toastify";
 
-export const requisicaoLogin = async (email, senha) => {
-  const sleep = (milliseconds) => {
-    return new Promise((resolve) => setTimeout(resolve, milliseconds));
-  };
+const sleep = (milliseconds) => {
+  return new Promise((resolve) => setTimeout(resolve, milliseconds));
+};
 
+export const requisicaoLogin = async (email, senha) => {
   if (email === "" || senha === "") {
     toast.warn("Preencha os campos email e senha!");
   } else {
@@ -40,6 +40,7 @@ export const Cadastrando = async (usuario, endereco) => {
     .criarUsuario(endereco, usuario)
     .then(() => {
       alert("Usuário cadastrado com sucesso.");
+      sleep(1500);
       window.location.href = "/login";
     })
     .catch((error) => {

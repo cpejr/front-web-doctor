@@ -97,9 +97,11 @@ function Cadastro() {
 
   function funcaoConvenio() {
     setConvenio(!convenio);
+    setUsuario({ ...usuario, convenio: null });
   }
   function funcaoCuidador() {
     setCuidador(!cuidador);
+    setUsuario({ ...usuario, nome_cuidador: null, telefone_cuidador: null });
   }
 
   const errors = {};
@@ -169,13 +171,13 @@ function Cadastro() {
     }
 
     const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
-    if (!regEx.test(e.target.value)) {
-      setErro({ ...erro, [e.target.name]: true });
+    if (!regEx.test(value)) {
+      setErro({ ...erro, [name]: true });
     } else {
-      setErro({ ...erro, [e.target.name]: false });
+      setErro({ ...erro, [name]: false });
     }
 
-    setUsuario({ ...usuario, [e.target.name]: e.target.value });
+    setUsuario({ ...usuario, [name]: value });
   }
 
   async function validacaoData(e) {
@@ -194,13 +196,12 @@ function Cadastro() {
       setErro({ ...erro, [name]: false });
     }
 
-    setEstado({ ...estado, [e.target.name]: maskData(e.target.value) });
+    setEstado({ ...estado, [name]: maskData(value) });
     setUsuario({ ...usuario, [name]: maskDataBack(value) });
   }
 
   function preenchendoDados(e) {
     const { value, name } = e.target;
-
     if (
       name !== "convenio" &&
       name !== "nome_cuidador" &&
@@ -225,29 +226,39 @@ function Cadastro() {
     }
 
     setUsuario({ ...usuario, [name]: value });
-    setEstado({ ...estado, [e.target.name]: e.target.value });
+    setEstado({ ...estado, [name]: value });
 
-    if (e.target.name === "nome") {
+    if (name === "nome") {
       setEstado({
         ...estado,
-        [e.target.name]: maskApenasLetras(e.target.value),
+        [name]: maskApenasLetras(value),
       });
     }
-    if (name === "nome_cuidador") {
-      e.target.value = maskApenasLetras(e.target.value);
-    }
-    if (e.target.name === "telefone") {
-      setEstado({ ...estado, [e.target.name]: maskTelefone(e.target.value) });
+  
+    if (name === "telefone") {
+      setEstado({ ...estado, [name]: maskTelefone(value) });
       setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
     }
-    if (e.target.name === "telefone_cuidador") {
-      setEstado({ ...estado, [e.target.name]: maskTelefone(e.target.value) });
+    if (name === "telefone_cuidador") {
+      setEstado({ ...estado, [name]: maskTelefone(value) });
       setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
     }
-    if (e.target.name === "cpf") {
-      setEstado({ ...estado, [e.target.name]: maskCPF(e.target.value) });
+    if (name === "cpf") {
+      setEstado({ ...estado, [name]: maskCPF(value) });
       setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
     }
+    if (name === "tipo") {
+      setUsuario({
+        ...usuario,
+        [name]: value,
+        nome_cuidador: null,
+        telefone_cuidador: null,
+        convenio: null,
+      });
+      setConvenio(false);
+      setCuidador(false);
+    }
+    console.log(usuario);
   }
 
   function preenchendoEndereco(e) {
@@ -261,32 +272,32 @@ function Cadastro() {
     } else {
       setErro({ ...erro, [name]: false });
     }
-    setEndereco({ ...endereco, [e.target.name]: e.target.value });
-    setEnderecoBack({ ...enderecoBack, [e.target.name]: e.target.value });
+    setEndereco({ ...endereco, [name]: value });
+    setEnderecoBack({ ...enderecoBack, [name]: value });
 
-    if (e.target.name === "cep") {
-      setEndereco({ ...endereco, [e.target.name]: maskCEP(e.target.value) });
+    if (name === "cep") {
+      setEndereco({ ...endereco, [name]: maskCEP(value) });
       setEnderecoBack({
         ...enderecoBack,
-        [e.target.name]: maskApenasNumerosCep(e.target.value),
+        [name]: maskApenasNumerosCep(value),
       });
     }
-    if (e.target.name === "pais") {
+    if (name === "pais") {
       setEndereco({
         ...endereco,
-        [e.target.name]: maskApenasLetras(e.target.value),
+        [name]: maskApenasLetras(value),
       });
     }
-    if (e.target.name === "cidade") {
+    if (name === "cidade") {
       setEndereco({
         ...endereco,
-        [e.target.name]: maskApenasLetras(e.target.value),
+        [name]: maskApenasLetras(value),
       });
     }
-    if (e.target.name === "numero") {
+    if (name === "numero") {
       setEndereco({
         ...endereco,
-        [e.target.name]: maskApenasNumeros(e.target.value),
+        [name]: maskApenasNumeros(value),
       });
     }
   }
@@ -414,14 +425,13 @@ function Cadastro() {
             <Rotulo>Digite um email no formato email@email.com</Rotulo>
           )}
 
-
           {usuario.tipo === "PACIENTE" && (
             <>
-          <PossuiConvenio>
-            {" "}
-            Possui Convênio?
-            <Switch onChange={funcaoConvenio}></Switch>
-          </PossuiConvenio>
+              <PossuiConvenio>
+                {" "}
+                Possui Convênio?
+                <Switch onChange={funcaoConvenio}></Switch>
+              </PossuiConvenio>
               {convenio && (
                 <Input
                   placeholder="Nome do Convênio"
