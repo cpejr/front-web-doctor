@@ -414,55 +414,59 @@ function Cadastro() {
             <Rotulo>Digite um email no formato email@email.com</Rotulo>
           )}
 
+
+          {usuario.tipo === "PACIENTE" && (
+            <>
           <PossuiConvenio>
             {" "}
             Possui Convênio?
             <Switch onChange={funcaoConvenio}></Switch>
           </PossuiConvenio>
+              {convenio && (
+                <Input
+                  placeholder="Nome do Convênio"
+                  backgroundColor={Cores.cinza[7]}
+                  borderColor={Cores.azul}
+                  color={Cores.preto}
+                  fontSize="1em"
+                  width="100%"
+                  marginTop="2%"
+                  name="convenio"
+                  onChange={preenchendoDados}
+                ></Input>
+              )}
 
-          {convenio && (
-            <Input
-              placeholder="Nome do Convênio"
-              backgroundColor={Cores.cinza[7]}
-              borderColor={Cores.azul}
-              color={Cores.preto}
-              fontSize="1em"
-              width="100%"
-              marginTop="2%"
-              name="convenio"
-              onChange={preenchendoDados}
-            ></Input>
-          )}
+              <PossuiCuidador>
+                {" "}
+                Possui Cuidador?<Switch onChange={funcaoCuidador}></Switch>
+              </PossuiCuidador>
 
-          <PossuiCuidador>
-            {" "}
-            Possui Cuidador?<Switch onChange={funcaoCuidador}></Switch>
-          </PossuiCuidador>
-
-          {cuidador && (
-            <>
-              <Input
-                placeholder="Nome Cuidador"
-                backgroundColor={Cores.cinza[7]}
-                borderColor={Cores.azul}
-                color={Cores.preto}
-                fontSize="1em"
-                width="100%"
-                marginTop="2%"
-                name="nome_cuidador"
-                onChange={preenchendoDados}
-              ></Input>
-              <Input
-                placeholder="Telefone Cuidador"
-                backgroundColor={Cores.cinza[7]}
-                borderColor={Cores.azul}
-                color={Cores.preto}
-                fontSize="1em"
-                width="100%"
-                marginTop="2%"
-                name="telefone_cuidador"
-                onChange={preenchendoDados}
-              ></Input>
+              {cuidador && (
+                <>
+                  <Input
+                    placeholder="Nome Cuidador"
+                    backgroundColor={Cores.cinza[7]}
+                    borderColor={Cores.azul}
+                    color={Cores.preto}
+                    fontSize="1em"
+                    width="100%"
+                    marginTop="2%"
+                    name="nome_cuidador"
+                    onChange={preenchendoDados}
+                  ></Input>
+                  <Input
+                    placeholder="Telefone Cuidador"
+                    backgroundColor={Cores.cinza[7]}
+                    borderColor={Cores.azul}
+                    color={Cores.preto}
+                    fontSize="1em"
+                    width="100%"
+                    marginTop="2%"
+                    name="telefone_cuidador"
+                    onChange={preenchendoDados}
+                  ></Input>
+                </>
+              )}
             </>
           )}
 

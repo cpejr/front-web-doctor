@@ -27,6 +27,7 @@ export const InputMesmaLinha = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin-bottom: 2%;
+  margin-top: 1% ;
   align-items: end;
   width: 100%;
   font-size: 1em;
