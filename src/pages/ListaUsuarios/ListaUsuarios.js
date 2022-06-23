@@ -31,6 +31,7 @@ import ModalAdicionarCodigo from "../../components/ModalAdicionarCodigo/ModalAdi
 function ListaUsuarios() {
   const history = useHistory();
 
+  const { Option } = Select;
   const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
   const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState([]);
@@ -39,23 +40,30 @@ function ListaUsuarios() {
   const [emailPaciente, setEmailPaciente] = useState(false);
   const [modalAdicionarCodigo, setModalAdicionarCodigo] = useState(false);
   const [email, setEmail] = useState();
+  const [tipoSelect, setTipoSelect] = useState("");
 
   const [busca, setBusca] = useState("");
 
   const lowerBusca = busca.toLowerCase();
 
   const usuariosFiltrados = usuarios.filter((usuario) => {
-    if (lowerBusca === "") {
+    console.log(usuarios);
+    if (lowerBusca === "" && tipoSelect === "") {
       return usuarios;
     } else {
       return (
         usuario?.nome?.toLowerCase().includes(lowerBusca) ||
         usuario?.codigo?.toLowerCase().includes(lowerBusca) ||
-        usuario?.telefone?.includes(lowerBusca)
+        usuario?.telefone?.includes(lowerBusca) ||
+        usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase())
       );
     }
   });
 
+  function secretariosFiltrados(value) {
+    setTipoSelect(value);
+    console.log(value);
+  }
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const emailLogado = sessionStorage.getItem("@doctorapp-Email");
 
@@ -135,9 +143,14 @@ function ListaUsuarios() {
             {tipoUsuarioLogado === "MASTER" ? (
               <FiltroUsuario>
                 <Select
-                  defaultValue="Todos os Usuários"
+                  defaultValue=""
                   style={{ width: 200 }}
-                ></Select>
+                  onChange={(value) => secretariosFiltrados(value)}
+                >
+                  <Option value="">Todos os Usuários</Option>
+                  <Option value="PACIENTE">Pacientes</Option>
+                  <Option value="SECRETARIA(O)">Secretárias(os)</Option>
+                </Select>
               </FiltroUsuario>
             ) : (
               <></>
