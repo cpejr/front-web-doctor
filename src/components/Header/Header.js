@@ -8,6 +8,10 @@ import { Dropdown, Menu } from "antd";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
+import { logout } from "../../services/auth";
+import { redirecionamento, sleep } from "../../utils/sleep";
+import AddToast from "../AddToast/AddToast";
+import { toast } from "react-toastify";
 
 function Header(props) {
   const email = sessionStorage.getItem("@doctorapp-Email");
@@ -21,7 +25,20 @@ function Header(props) {
   useEffect(() => {
     pegandoTipo();
   }, []);
+
+  async function handleLogout() {
+    try {
+      logout();
+      toast.success("Usuario deslogado com sucesso")
+      await sleep(1500);
+      redirecionamento("/login");
+    } catch (error) {
+      alert(error);
+    }
+  }
+
   const history = useHistory();
+
   const menu = (
     <Menu>
       {tipo === "MASTER" ? (
@@ -144,6 +161,67 @@ function Header(props) {
           }}
         >
           Chat
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => {
+            history.push("/web/perfil");
+          }}
+        >
+          Perfil
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => {
+            handleLogout();
+          }}
+        >
+          Sair
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
+
+  const menuPerfil = (
+    <Menu>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => {
+            history.push("/web/perfil");
+          }}
+        >
+          Perfil
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => {
+            handleLogout();
+          }}
+        >
+          Sair
         </Button>
       </Menu.Item>
     </Menu>
@@ -281,19 +359,23 @@ function Header(props) {
           </Button>
           <Button
             fontSizeMedia1080="1rem"
-            backgroundColor="green"
+            backgroundColor="transparent"
             borderColor="transparent"
             color={Cores.branco}
             height="50px"
-            onClick={() => {
-              history.push("/login");
-            }}
           >
-            <UserOutlined style={{ fontSize: "1.5em" }} />
+            <Dropdown
+              onClick={(e) => e.preventDefault()}
+              overlay={menuPerfil}
+              placement={"bottom"}
+            >
+              <UserOutlined style={{ fontSize: "1.5em" }} />
+            </Dropdown>
           </Button>
         </BotoesHeader>
       </ContainerHeader>
       {props.children}
+      <AddToast/>
     </div>
   );
 }

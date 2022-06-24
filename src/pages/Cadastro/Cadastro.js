@@ -258,7 +258,6 @@ function Cadastro() {
       setConvenio(false);
       setCuidador(false);
     }
-    console.log(usuario);
   }
 
   function preenchendoEndereco(e) {

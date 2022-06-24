@@ -15,4 +15,6 @@ export const login = (token, email, tipo) => {
 };
 export const logout = () => {
   sessionStorage.removeItem(CHAVE_TOKEN);
+  sessionStorage.removeItem(CHAVE_EMAIL);
+  sessionStorage.removeItem(CHAVE_TIPO);
 };
