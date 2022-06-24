@@ -8,30 +8,27 @@ const sleep = (milliseconds) => {
 };
 
 export const requisicaoLogin = async (email, senha) => {
-  if (email === "" || senha === "") {
-    toast.warn("Preencha os campos email e senha!");
-  } else {
-    try {
-      const resposta = await requesterService.logarUsuario(email, senha);
-      if (resposta.data.tipo === "PACIENTE") {
-        toast.error("Paciente não pode fazer login no sistema!");
-      } else {
-        login(resposta.data.token, resposta.data.email, resposta.data.tipo);
+  try {
+    const resposta = await requesterService.logarUsuario(email, senha);
+    if (resposta.data.tipo === "PACIENTE") {
+      toast.error("Paciente não pode fazer login no sistema!");
+    } else {
+      login(resposta.data.token, resposta.data.email, resposta.data.tipo);
 
-        if (resposta.data.tipo === "MASTER") {
-          toast.success("Login realizado com sucesso!");
-          await sleep(1500);
-          window.location.href = "/web/homemedico";
-        } else {
-          toast.success("Login realizado com sucesso!");
-          await sleep(1500);
-          window.location.href = "/web/homesecretaria";
-        }
+      if (resposta.data.tipo === "MASTER") {
+        toast.success("Login realizado com sucesso!");
+        await sleep(1500);
+        window.location.href = "/web/homemedico";
+      } else {
+        toast.success("Login realizado com sucesso!");
+        await sleep(1500);
+        window.location.href = "/web/homesecretaria";
       }
-    } catch (error) {
-      requisicaoErro(error);
     }
+  } catch (error) {
+    requisicaoErro(error);
   }
+
   return;
 };
 
