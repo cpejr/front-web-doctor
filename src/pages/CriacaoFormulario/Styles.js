@@ -8,13 +8,17 @@ export const Container = styled.div`
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  background-color: ${Cores.cinza[8]} ;
+  background-color: ${Cores.cinza[8]};
 `;
 
 export const CaixaInputs = styled.div`
-  display: flex ;
+  display: flex;
   flex-direction: column;
   align-self: center;
   margin-bottom: 2%;
   width: 40%;
+`;
+export const Formulario = styled.div`
+  display: block;
+  max-width: 100%;
 `;

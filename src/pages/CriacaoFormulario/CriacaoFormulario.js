@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FormBuilder } from "@ginkgo-bioworks/react-json-schema-form-builder";
 import Input from "../../styles/Input";
 import { Cores } from "../../variaveis";
-import { CaixaInputs, Container } from "./Styles";
+import { CaixaInputs, Container, Formulario } from "./Styles";
 import Select from "../../styles/Select/Select";
 import Button from "../../styles/Button";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -99,7 +99,7 @@ function CriacaoFormulario() {
         CRIAR
       </Button>
       </CaixaInputs>
-
+      <Formulario>
       <FormBuilder
         schema={schema}
         uischema={uiSchema}
@@ -108,7 +108,7 @@ function CriacaoFormulario() {
           TirandoCabecalho
         }
       />
-      <p>{estado.perguntas}</p>
+      </Formulario>
 
     </Container>
   );
