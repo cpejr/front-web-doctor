@@ -18,6 +18,54 @@ import PerfilPaciente from "./pages/PerfilPaciente";
 import RespostaFormulario from "./pages/RespostaFormulario";
 import EditarPerfil from "./pages/EditarPerfil";
 import Agendamentos from "./pages/Agendamentos";
+import { usuarioAutenticado, recebeTipo } from "./services/auth";
+
+const RotasPrivadas = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      usuarioAutenticado() ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{ pathname: "/login", state: { from: props.location } }}
+        />
+      )
+    }
+  />
+);
+const RotasPrivadasMedico = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      usuarioAutenticado() && recebeTipo() === "MASTER" ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{
+            pathname: "/web/homesecretaria",
+            state: { from: props.location },
+          }}
+        />
+      )
+    }
+  />
+);
+
+const RotasPrivadasSecretaria = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      usuarioAutenticado() && recebeTipo() === "SECRETARIA(O)" ? (
+        <Component {...props} />
+      ) : (
+        <Redirect
+          to={{ pathname: "/web/homemedico", state: { from: props.location } }}
+        />
+      )
+    }
+  />
+);
 
 function Routes() {
   return (
@@ -25,46 +73,91 @@ function Routes() {
       <Switch>
         <Route exact path="/login" component={Login} />
         <Route exact path="/cadastro" component={Cadastro} />
-        <Route exact path="/web" component={() => <Redirect to="/web/homemedico" />} />
-        <Route path="/web" component={UserHeader} />
-        <Route component={() => <Redirect to="/web/homemedico" />} />
+        <RotasPrivadasMedico
+          exact
+          path="/web"
+          component={() => <Redirect to="/web/homemedico" />}
+        />
+        <RotasPrivadas path="/web" component={UserHeader} />
+        <RotasPrivadasMedico
+          component={() => <Redirect to="/web/homemedico" />}
+        />
       </Switch>
     </BrowserRouter>
-  )
+  );
 }
 
 function UserHeader() {
   return (
     <Header>
       <Switch>
-        <Route exact path="/web/homemedico" component={HomeMedico} />
-        <Route exact path="/web/homesecretaria" component={HomeSecretaria} />
-        <Route exact path="/web/editarperfil" component={EditarPerfil} />
-        <Route exact path="/web/alterarsenha" component={AlterarSenha} />
-        <Route exact path="/web/areareceitas" component={AreaReceitas} />
-        <Route exact path="/web/agendamentos" component={Agendamentos} />
-        <Route exact path="/web/chat" component={Chat} />
-        <Route
+        <RotasPrivadasMedico
+          exact
+          path="/web/homemedico"
+          component={HomeMedico}
+        />
+        <RotasPrivadasSecretaria
+          exact
+          path="/web/homesecretaria"
+          component={HomeSecretaria}
+        />
+        <RotasPrivadas
+          exact
+          path="/web/editarperfil"
+          component={EditarPerfil}
+        />
+        <RotasPrivadas
+          exact
+          path="/web/alterarsenha"
+          component={AlterarSenha}
+        />
+        <RotasPrivadasMedico
+          path="/web/areareceitas"
+          component={AreaReceitas}
+        />
+        <RotasPrivadasSecretaria
+          exact
+          path="/web/agendamentos"
+          component={Agendamentos}
+        />
+        <RotasPrivadas exact path="/web/chat" component={Chat} />
+        <RotasPrivadasMedico
           exact
           path="/web/criacaoformulario"
           component={CriacaoFormulario}
         />
-        <Route exact path="/web/editarconteudo" component={EdicaoConteudo} />
-        <Route
+        <RotasPrivadasMedico
+          exact
+          path="/web/editarconteudo"
+          component={EdicaoConteudo}
+        />
+        <RotasPrivadas
           exact
           path="/web/listaformularios"
           component={ListaFormularios}
         />
-        <Route exact path="/web/listadeusuarios" component={ListaUsuarios} />
-        <Route exact path="/web/modeloreceitas" component={ModeloReceitas} />
-        <Route exact path="/web/perfil" component={Perfil} />
-        <Route exact path="/web/perfildopaciente" component={PerfilPaciente} />
-        <Route
+        <RotasPrivadas
+          exact
+          path="/web/listadeusuarios"
+          component={ListaUsuarios}
+        />
+        <RotasPrivadasMedico
+          exact
+          path="/web/modeloreceitas"
+          component={ModeloReceitas}
+        />
+        <RotasPrivadas exact path="/web/perfil" component={Perfil} />
+        <RotasPrivadas
+          exact
+          path="/web/perfildopaciente"
+          component={PerfilPaciente}
+        />
+        <RotasPrivadas
           exact
           path="/web/respostaformulario"
           component={RespostaFormulario}
         />
-        <Route component={() => <Redirect to="/web/homemedico" />} />
+        <RotasPrivadas component={() => <Redirect to="/web/homemedico" />} />
       </Switch>
     </Header>
   );

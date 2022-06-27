@@ -41,6 +41,8 @@ function Perfil(props) {
 
   const [perfilPessoal, setPerfilPessoal] = useState();
   const [perfilSelecionado, setPerfilSelecionado] = useState();
+  const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState("")
+  const [botaoVisivel, setBotaoVisivel] = useState(true)
 
   const [carregando, setCarregando] = useState(true);
   const antIcon = (
@@ -59,7 +61,18 @@ function Perfil(props) {
     }
   }
 
+  async function botaoExcluirVisivel() {
+    if (tipoUsuarioLogado === "MASTER") {
+      setBotaoVisivel(false)
+    }
+  }
+
+  useEffect(() => {
+    botaoExcluirVisivel();
+  }, [tipoUsuarioLogado]);
+
   async function pegandoDadosPerfilPessoal() {
+    console.log("Pessoal")
     const resposta = await managerService.GetDadosUsuario(email);
     const data = new Date(resposta.dadosUsuario.data_nascimento);
     setUsuario(resposta.dadosUsuario);
@@ -67,9 +80,11 @@ function Perfil(props) {
     setDataNascimento(data.toLocaleDateString());
     setEndereco(resposta.dadosEndereco);
     setCarregando(false);
+    setTipoUsuarioLogado(resposta.dadosUsuario.tipo);
   }
 
   async function pegandoDadosPerfilSelecionado() {
+    console.log("Selecionado")
     const resposta = await managerService.GetDadosUsuario(
       props.location.state.email
     );
@@ -196,9 +211,11 @@ function Perfil(props) {
                 </>
               )}
             </CaixaContato>
-            <ExcluirConta onClick={deletarUsuario}>
-              EXCLUIR CONTA
-            </ExcluirConta>
+            { botaoVisivel && (
+              <ExcluirConta onClick={deletarUsuario}>
+                EXCLUIR CONTA
+              </ExcluirConta>
+            )}
           </ContatoExcluirConta>
         </CaixaBaixo>
       </Conteudo>

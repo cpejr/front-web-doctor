@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Cores } from "../../variaveis";
+import { Cores, Fontes } from "../../variaveis";
 
 export const ContainerPerfil = styled.div`
   display: flex;
@@ -124,7 +124,7 @@ export const Formularios = styled.div`
   height: 30%;
   margin-bottom: 2%;
   padding: 2%;
-  background-color: green;
+  background-color: ${Cores.branco};
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
 
   @media (max-width: 1080px) {
@@ -282,6 +282,9 @@ export const Formulario = styled.div`
   border-radius: 3px;
   justify-content: center;
   padding: 0% 2% 2% 2%;
+  margin: 2% 0% 2% 0%;
+  background-color: ${Cores.azulClaro};
+
 `;
 export const Receita = styled.div`
   width: 100%;
@@ -309,6 +312,9 @@ export const TituloFormulario = styled.div`
   font-size: 1.5em;
   text-decoration: underline;
   color: ${Cores.preto};
+  :hover {
+    cursor: pointer;
+  }
 
   @media (max-width: 780px) {
     font-size: 1.3em;
@@ -362,3 +368,4 @@ export const TituloReceita = styled.div`
   color: ${(props) => props.color};
   font-size: ${(props) => props.fontSize};
 `;
+

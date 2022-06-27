@@ -7,7 +7,11 @@ import { useHistory } from "react-router-dom";
 import { Dropdown, Menu } from "antd";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 import * as managerService from "../../services/ManagerService/managerService";
-import{Cores} from "../../variaveis";
+import { Cores } from "../../variaveis";
+import { logout } from "../../services/auth";
+import { redirecionamento, sleep } from "../../utils/sleep";
+import AddToast from "../AddToast/AddToast";
+import { toast } from "react-toastify";
 
 function Header(props) {
   const email = sessionStorage.getItem("@doctorapp-Email");
@@ -21,7 +25,20 @@ function Header(props) {
   useEffect(() => {
     pegandoTipo();
   }, []);
+
+  async function handleLogout() {
+    try {
+      logout();
+      toast.success("Usuario deslogado com sucesso")
+      await sleep(1500);
+      redirecionamento("/login");
+    } catch (error) {
+      alert(error);
+    }
+  }
+
   const history = useHistory();
+
   const menu = (
     <Menu>
       {tipo === "MASTER" ? (
@@ -75,7 +92,7 @@ function Header(props) {
           <Button
             backgroundColor="transparent"
             borderColor="transparent"
-            color={Cores.branco}
+            color={Cores.preto}
             fontSize="1rem"
             height="50px"
             onClick={() => {
@@ -86,39 +103,38 @@ function Header(props) {
           </Button>
         </Menu.Item>
       )}
-      <Menu.Item>
-        {tipo === "MASTER" ? (
-          <Menu.Item>
-            <Button
-              backgroundColor="transparent"
-              borderColor="transparent"
-              color={Cores.preto}
-              fontSize="1rem"
-              height="50px"
-              onClick={() => {
-                history.push("/web/listadeusuarios");
-              }}
-            >
-              Lista de Usuários
-            </Button>
-          </Menu.Item>
-        ) : (
-          <Menu.Item>
-            <Button
-              backgroundColor="transparent"
-              borderColor="transparent"
-              color={Cores.preto}
-              fontSize="1rem"
-              height="50px"
-              onClick={() => {
-                history.push("/web/listadeusuarios");
-              }}
-            >
-              Lista de Usuários
-            </Button>
-          </Menu.Item>
-        )}
-      </Menu.Item>
+      {tipo === "MASTER" ? (
+        <Menu.Item>
+          <Button
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color={Cores.preto}
+            fontSize="1rem"
+            height="50px"
+            onClick={() => {
+              history.push("/web/listadeusuarios");
+            }}
+          >
+            Lista de Usuários
+          </Button>
+        </Menu.Item>
+      ) : (
+        <Menu.Item>
+          <Button
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color={Cores.preto}
+            fontSize="1rem"
+            height="50px"
+            onClick={() => {
+              history.push("/web/listadeusuarios");
+            }}
+          >
+            Lista de Usuários
+          </Button>
+        </Menu.Item>
+      )}
+
       <Menu.Item>
         <Button
           backgroundColor="transparent"
@@ -147,6 +163,67 @@ function Header(props) {
           Chat
         </Button>
       </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => {
+            history.push("/web/perfil");
+          }}
+        >
+          Perfil
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => {
+            handleLogout();
+          }}
+        >
+          Sair
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
+
+  const menuPerfil = (
+    <Menu>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => {
+            history.push("/web/perfil");
+          }}
+        >
+          Perfil
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => {
+            handleLogout();
+          }}
+        >
+          Sair
+        </Button>
+      </Menu.Item>
     </Menu>
   );
 
@@ -159,7 +236,7 @@ function Header(props) {
             overlay={menu}
             placement={"bottom"}
           >
-            <MenuOutlined style={{ color: Cores.branco , fontSize: "1.5em" }} />
+            <MenuOutlined style={{ color: Cores.branco, fontSize: "1.5em" }} />
           </Dropdown>
         </MenuHeader>
         <Logo>
@@ -230,7 +307,7 @@ function Header(props) {
               fontSizeMedia1080="1rem"
               backgroundColor="transparent"
               borderColor="transparent"
-              color={Cores.cinza[7]}
+              color={Cores.branco}
               fontSize="1.1rem"
               height="50px"
               onClick={() => {
@@ -244,7 +321,7 @@ function Header(props) {
               fontSizeMedia1080="1rem"
               backgroundColor="transparent"
               borderColor="transparent"
-              color={Cores.cinza[7]}
+              color={Cores.branco}
               fontSize="1.1rem"
               height="50px"
               onClick={() => {
@@ -282,19 +359,23 @@ function Header(props) {
           </Button>
           <Button
             fontSizeMedia1080="1rem"
-            backgroundColor="green"
+            backgroundColor="transparent"
             borderColor="transparent"
             color={Cores.branco}
             height="50px"
-            onClick={() => {
-              history.push("/login");
-            }}
           >
-            <UserOutlined style={{ fontSize: "1.5em" }} />
+            <Dropdown
+              onClick={(e) => e.preventDefault()}
+              overlay={menuPerfil}
+              placement={"bottom"}
+            >
+              <UserOutlined style={{ fontSize: "1.5em" }} />
+            </Dropdown>
           </Button>
         </BotoesHeader>
       </ContainerHeader>
       {props.children}
+      <AddToast/>
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import AddToast from "../AddToast/AddToast";
 import * as managerService from "../../services/ManagerService/managerService";
+import { redirecionamento, sleep } from "../../utils/sleep";
 
 function ModalAdicionarCodigo(props) {
   const [usuario, setUsuario] = useState({});
@@ -24,10 +25,6 @@ function ModalAdicionarCodigo(props) {
     setUsuario(resposta.dadosUsuario);
   }
 
-  const sleep = (milliseconds) => {
-    return new Promise(resolve => setTimeout(resolve, milliseconds))
-  }
-
   async function atualizarDados() {
     setCarregando(true);
     if (usuario.codigo) {
@@ -36,11 +33,8 @@ function ModalAdicionarCodigo(props) {
       await managerService.UpdateCodigo(usuario.id, codigo);
     }
     await sleep(3000);
-    redirecionamento();
+    redirecionamento("/web/listadeusuarios");
     setCarregando(false);
-  }
-  async function redirecionamento() {
-    window.location.href = "/web/listadeusuariosmedico";
   }
 
   function preenchendoDados(e) {
