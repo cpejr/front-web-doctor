@@ -34,27 +34,26 @@ function ListaUsuarios() {
   const { Option } = Select;
   const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
-  const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [emailPaciente, setEmailPaciente] = useState(false);
   const [modalAdicionarCodigo, setModalAdicionarCodigo] = useState(false);
   const [email, setEmail] = useState();
   const [tipoSelect, setTipoSelect] = useState("");
-
   const [busca, setBusca] = useState("");
 
   const lowerBusca = busca.toLowerCase();
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
 
   const usuariosFiltrados = usuarios.filter((usuario) => {
-    console.log(usuarios);
     if (lowerBusca === "" && tipoSelect === "") {
       return usuarios;
     } else {
       return (
-        usuario?.nome?.toLowerCase().includes(lowerBusca) ||
-        usuario?.codigo?.toLowerCase().includes(lowerBusca) ||
-        usuario?.telefone?.includes(lowerBusca) ||
+        (usuario?.nome?.toLowerCase().includes(lowerBusca) ||
+          usuario?.codigo?.toLowerCase().includes(lowerBusca) ||
+          usuario?.telefone?.includes(lowerBusca)) &&
         usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase())
       );
     }
@@ -62,22 +61,11 @@ function ListaUsuarios() {
 
   function secretariosFiltrados(value) {
     setTipoSelect(value);
-    console.log(value);
-  }
-  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const emailLogado = sessionStorage.getItem("@doctorapp-Email");
-
-  async function pegandoTipoUsuarioLogado() {
-    const resposta = await managerService.GetDadosUsuario(emailLogado);
-    setTipoUsuarioLogado(resposta.dadosUsuario.tipo);
   }
 
   useEffect(() => {
     pegandoDadosUsuarios();
-  }, []);
-
-  useEffect(() => {
-    pegandoTipoUsuarioLogado();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function pegandoDadosUsuarios() {
@@ -107,10 +95,6 @@ function ListaUsuarios() {
   async function abrindoModalCodigo(email) {
     setEmail(email);
     setModalAdicionarCodigo(true);
-  }
-
-  async function fechandoModalCodigo() {
-    setModalAdicionarCodigo(false);
   }
 
   async function verificandoSecretariaOuPaciente(tipo, email) {
