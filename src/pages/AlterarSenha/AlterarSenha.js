@@ -12,17 +12,17 @@ import {
   Titulo,
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
-import{Cores} from "../../variaveis";
+import { Cores } from "../../variaveis";
 
 function AlterarSenha() {
   const history = useHistory();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-
   const [confirmandoSenha, setConfirmandoSenha] = useState(true);
   const [confirmouSenha, setConfirmouSenha] = useState(false);
   const [alterador, setAlterador] = useState(true);
   const [carregando, setCarregando] = useState(false);
+  const [camposVazios, setCamposVazios] = useState(false);
 
   useEffect(() => {
     if (alterador === true) {
@@ -38,7 +38,7 @@ function AlterarSenha() {
   const email = sessionStorage.getItem("@doctorapp-Email");
 
   async function conferirSenha() {
-    //função que recebe como parâmetro a senha digitada e o email do usuário logado, 
+    //função que recebe como parâmetro a senha digitada e o email do usuário logado,
     //retorna true como valor para alterador se as senhas forem diferentes, e false se as senhas forem iguais;
     setCarregando(true);
     setAlterador(await managerService.ConferirSenha(email, senhaAtual));
@@ -49,7 +49,7 @@ function AlterarSenha() {
   const [confirmarSenha, setConfirmarSenha] = useState("");
 
   async function trocarSenha() {
-    //conferir se a "novaSenha" é igual a "confirmarSenha"; se for igual postar a nova senha do usuário; 
+    //conferir se a "novaSenha" é igual a "confirmarSenha"; se for igual postar a nova senha do usuário;
     //se não for igual alertar que as senhas digitadas não conferem
     if (novaSenha === confirmarSenha) {
       setCarregando(true);
@@ -58,7 +58,7 @@ function AlterarSenha() {
       setCarregando(false);
     } else {
       alert("As senhas digitadas são diferentes!");
-      setCarregando(false)
+      setCarregando(false);
     }
   }
 

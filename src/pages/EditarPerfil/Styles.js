@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import{Cores} from "../../variaveis";
+import { Cores } from "../../variaveis";
 
 export const ContainerEditarPerfil = styled.div`
   display: flex;
@@ -81,12 +81,13 @@ export const CaixaInputs = styled.div`
   height: 15%;
   padding-left: 2%;
   padding-right: 2%;
-  margin-bottom: 2%; ;
+
   gap: 2%;
 
   @media (max-width: 780px) {
     display: flex;
     flex-direction: column;
+    align-items: flex-end;
   }
 `;
 export const CaixaBotao = styled.div`
@@ -95,6 +96,10 @@ export const CaixaBotao = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  @media (max-width: 560px) {
+    padding: 2%;
+  }
 `;
 export const ImagemPerfil = styled.div`
   display: flex;
@@ -149,5 +154,3 @@ export const BlocoInferior = styled.div`
     margin-top: 5%;
   }
 `;
-
-

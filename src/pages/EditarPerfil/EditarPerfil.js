@@ -38,6 +38,51 @@ function EditarPerfil() {
   const [dataMasked, setDataMasked] = useState({});
   const [telMasked, setTelMasked] = useState({});
 
+  const maskCPF = (value) => {
+    return value
+      .replace(/\D/g, "")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})/, "$1-$2")
+      .replace(/(-\d{2})\d+?$/, "$1");
+  };
+
+  const maskTelefone = (value) => {
+    return value
+      .replace(/\D/g, "")
+      .replace(/(\d{2})(\d)/, "($1) $2")
+      .replace(/(\d{5})(\d)/, "$1-$2")
+      .replace(/(-\d{4})(\d+?)$/, "$1");
+  };
+  const maskApenasNumeros = (value) => {
+    return value.replace(/\D/g, "");
+  };
+  const maskApenasNumerosCpfTel = (value) => {
+    return value.replace(/\D/g, "").replace(/(\d{11})(\d)/, "$1");
+  };
+  const maskApenasNumerosCep = (value) => {
+    return value.replace(/\D/g, "").replace(/(\d{8})(\d)/, "$1");
+  };
+
+  const maskData = (value) => {
+    return value
+      .replace(/\D/g, "")
+      .replace(/(\d{2})(\d)/, "$1/$2")
+      .replace(/(\d{2})(\d)/, "$1/$2")
+      .replace(/(\d{4})(\d)/, "$1");
+  };
+
+  const maskApenasLetras = (value) => {
+    return value.replace(/[0-9!@#¨$%^&*)(+=._-]+/g, "");
+  };
+
+  const maskCEP = (value) => {
+    return value
+      .replace(/\D/g, "")
+      .replace(/(\d{5})(\d)/, "$1-$2")
+      .replace(/(-\d{3})(\d)/, "$1");
+  };
+
   async function pegandoDados() {
     const resposta = await managerService.GetDadosUsuario(email);
     setUsuario(resposta.dadosUsuario);
@@ -48,7 +93,7 @@ function EditarPerfil() {
     setComplemento(resposta.dadosEndereco.complemento);
     setCarregando(false);
   }
-  
+
   useEffect(() => {
     setCpfMasked(
       cpf.slice(+0, -8) +
@@ -91,11 +136,48 @@ function EditarPerfil() {
     setCarregando(false);
   }
   function preenchendoDados(e) {
+    const { name, value } = e.target;
+
     setEstado({ ...estado, [e.target.name]: e.target.value });
+
+    if (name === "nome") {
+      e.target.value = maskApenasLetras(value);
+    }
+    if (name === "cpf") {
+      e.target.value = maskCPF(value);
+    }
+    if (name === "telefone") {
+      e.target.value = maskTelefone(value);
+    }
+
+    if (name === "data_nascimento") {
+      e.target.value = maskData(value);
+    }
   }
 
   function preenchendoEndereco(e) {
+    const { name, value } = e.target;
+
     setEndereco({ ...endereco, [e.target.name]: e.target.value });
+
+    if (name === "cep") {
+      e.target.value = maskCEP(value);
+    }
+    if (name === "pais") {
+      e.target.value = maskApenasLetras(value);
+    }
+    if (name === "cidade") {
+      e.target.value = maskApenasLetras(value);
+    }
+    if (name === "bairro") {
+      e.target.value = maskApenasLetras(value);
+    }
+    if (name === "rua") {
+      e.target.value = maskApenasLetras(value);
+    }
+    if (name === "numero") {
+      e.target.value = maskApenasNumeros(value);
+    }
   }
 
   useEffect(() => {
@@ -169,6 +251,7 @@ function EditarPerfil() {
             fontSize="1em"
             width="50%"
             name="nome"
+            marginTop="2%"
             onChange={preenchendoDados}
           ></Input>
           <Input
@@ -181,6 +264,7 @@ function EditarPerfil() {
             fontSize="1em"
             width="50%"
             name="cpf"
+            marginTop="2%"
             onChange={preenchendoDados}
           ></Input>
         </CaixaInputs>
@@ -195,6 +279,7 @@ function EditarPerfil() {
             fontSize="1em"
             width="50%"
             name="email"
+            marginTop="2%"
             onChange={preenchendoDados}
           ></Input>
 
@@ -208,6 +293,7 @@ function EditarPerfil() {
             fontSize="1em"
             width="50%"
             name="telefone"
+            marginTop="2%"
             onChange={preenchendoDados}
           ></Input>
         </CaixaInputs>
@@ -222,6 +308,7 @@ function EditarPerfil() {
             fontSize="1em"
             width="50%"
             name="data_nascimento"
+            marginTop="2%"
             onChange={preenchendoDados}
           ></Input>
 
@@ -235,6 +322,7 @@ function EditarPerfil() {
             fontSize="1em"
             width="50%"
             name="cep"
+            marginTop="2%"
             onChange={preenchendoEndereco}
           ></Input>
         </CaixaInputs>
@@ -249,6 +337,7 @@ function EditarPerfil() {
             fontSize="1em"
             width="50%"
             name="pais"
+            marginTop="2%"
             onChange={preenchendoEndereco}
           ></Input>
           <Input
@@ -261,10 +350,24 @@ function EditarPerfil() {
             fontSize="1em"
             width="50%"
             name="estado"
+            marginTop="2%"
             onChange={preenchendoEndereco}
           ></Input>
         </CaixaInputs>
         <CaixaInputs>
+        <Input
+            placeholder={endereco.cidade}
+            backgroundColor={Cores.cinza[7]}
+            borderColor={Cores.preto}
+            boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+            borderWidth="1px"
+            color={Cores.preto}
+            fontSize="1em"
+            width="50%"
+            name="cidade"
+            marginTop="2%"
+            onChange={preenchendoEndereco}
+          ></Input>
           <Input
             placeholder={endereco.bairro}
             backgroundColor={Cores.cinza[7]}
@@ -275,35 +378,9 @@ function EditarPerfil() {
             fontSize="1em"
             width="50%"
             name="bairro"
+            marginTop="2%"
             onChange={preenchendoEndereco}
           ></Input>
-          {complemento === null ? (
-            <Input
-              placeholder="Complemento: "
-              backgroundColor={Cores.cinza[7]}
-              borderColor={Cores.preto}
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              borderWidth="1px"
-              color={Cores.preto}
-              fontSize="1em"
-              width="50%"
-              name="complemento"
-              onChange={preenchendoEndereco}
-            ></Input>
-          ) : (
-            <Input
-              placeholder={complemento}
-              backgroundColor={Cores.cinza[7]}
-              borderColor={Cores.preto}
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              borderWidth="1px"
-              color={Cores.preto}
-              fontSize="1em"
-              width="50%"
-              name="complemento"
-              onChange={preenchendoEndereco}
-            ></Input>
-          )}
         </CaixaInputs>
         <CaixaInputs>
           <Input
@@ -316,9 +393,10 @@ function EditarPerfil() {
             fontSize="1em"
             width="50%"
             name="rua"
+            marginTop="2%"
             onChange={preenchendoEndereco}
           ></Input>
-          <Input
+           <Input
             placeholder={endereco.numero}
             backgroundColor={Cores.cinza[7]}
             borderColor={Cores.preto}
@@ -328,8 +406,41 @@ function EditarPerfil() {
             fontSize="1em"
             width="50%"
             name="numero"
+            marginTop="2%"
             onChange={preenchendoEndereco}
           ></Input>
+        </CaixaInputs>
+        <CaixaInputs>
+         
+          {complemento === null ? (
+            <Input
+              placeholder="Complemento: "
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color={Cores.preto}
+              fontSize="1em"
+              width="49%"
+              name="complemento"
+              marginTop="2%"
+              onChange={preenchendoEndereco}
+            ></Input>
+          ) : (
+            <Input
+              placeholder={complemento}
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color={Cores.preto}
+              fontSize="1em"
+              width="49%"
+              name="complemento"
+              marginTop="2%"
+              onChange={preenchendoEndereco}
+            ></Input>
+          )}
         </CaixaInputs>
         <CaixaBotao>
           <Button
@@ -339,9 +450,12 @@ function EditarPerfil() {
             height="50px"
             color={Cores.branco}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+            fontSize="1.5em"
+            fontWeight="bold"
+            marginTop="2%"
             onClick={() => atualizarDados()}
           >
-            {carregando ? <Spin indicator={antIcon} /> : <p>CONFIRMAR</p>}
+            {carregando ? <Spin indicator={antIcon} /> : <>CONFIRMAR</>}
           </Button>
         </CaixaBotao>
       </ColunaDireita>
