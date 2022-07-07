@@ -57,12 +57,6 @@ function EditarPerfil() {
   const maskApenasNumeros = (value) => {
     return value.replace(/\D/g, "");
   };
-  const maskApenasNumerosCpfTel = (value) => {
-    return value.replace(/\D/g, "").replace(/(\d{11})(\d)/, "$1");
-  };
-  const maskApenasNumerosCep = (value) => {
-    return value.replace(/\D/g, "").replace(/(\d{8})(\d)/, "$1");
-  };
 
   const maskData = (value) => {
     return value
@@ -94,6 +88,11 @@ function EditarPerfil() {
     setCarregando(false);
   }
 
+  async function verificandoEnter(e) {
+    if (e.key === "Enter") {
+      atualizarDados();
+    }
+  }
   useEffect(() => {
     setCpfMasked(
       cpf.slice(+0, -8) +
@@ -170,9 +169,6 @@ function EditarPerfil() {
       e.target.value = maskApenasLetras(value);
     }
     if (name === "bairro") {
-      e.target.value = maskApenasLetras(value);
-    }
-    if (name === "rua") {
       e.target.value = maskApenasLetras(value);
     }
     if (name === "numero") {
@@ -425,6 +421,7 @@ function EditarPerfil() {
               name="complemento"
               marginTop="2%"
               onChange={preenchendoEndereco}
+              onKeyPress={verificandoEnter}
             ></Input>
           ) : (
             <Input
@@ -439,6 +436,7 @@ function EditarPerfil() {
               name="complemento"
               marginTop="2%"
               onChange={preenchendoEndereco}
+              onKeyPress={verificandoEnter}
             ></Input>
           )}
         </CaixaInputs>

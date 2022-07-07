@@ -71,3 +71,11 @@ export const BotoesMesmaLinha = styled.div`
     width: 80%;
   }
 `;
+
+export const Rotulo = styled.div`
+  width: 100%;
+  font-family: "Barlow", sans-serif;
+  font-weight: 400;
+  font-size: 1em;
+  color: ${Cores.vermelho};
+`;

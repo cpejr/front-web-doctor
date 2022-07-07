@@ -20,7 +20,6 @@ import {
   Rotulo,
 } from "./Styles";
 import _ from "lodash";
-import { isEqual } from "lodash";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function Login() {
