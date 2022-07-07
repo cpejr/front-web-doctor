@@ -5,6 +5,7 @@
   "dependencies": {
     "@ant-design/compatible": "^1.1.0",
     "@emotion/styled": "^11.8.1",
+    "@ginkgo-bioworks/react-json-schema-form-builder": "^2.9.0",
     "@mui/icons-material": "^5.4.2",
     "@mui/material": "^5.4.2",
     "@rjsf/antd": "^4.2.0",
