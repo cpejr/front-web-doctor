@@ -147,8 +147,8 @@ export const CaixaBaixo = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  height: 22em;
+  align-items: top;
+  height: auto;
   width: 70%;
   margin-top: 4%;
   @media (max-width: 560px) {
@@ -163,9 +163,9 @@ export const CaixaEndereco = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: start;
-  height: 100%;
+  height: auto;
   width: 48%;
-  padding: 4%;
+  padding: 3%;
   background-color: ${Cores.branco};
   border-style: solid;
   border-radius: 4px;
@@ -188,7 +188,7 @@ export const EnderecoContato = styled.div`
   font-size: 1.4em;
   @media (max-width: 1100px) and (min-width: 770px) {
     height: 15%;
-    margin-bottom: 9%;
+    margin-bottom: 5%;
   }
   @media (max-width: 770px) and (min-width: 560px) {
     font-size: 1.1em;
@@ -211,10 +211,10 @@ export const DadosEndereco = styled.div`
   font-weight: 400;
   font-size: 1.3em;
   @media (max-width: 1100px) and (min-width: 770px) {
-    font-size: 1.2em;
+    font-size: 1em;
   }
   @media (max-width: 770px) and (min-width: 560px) {
-    font-size: 1em;
+    font-size: 0.85em;
   }
   @media (max-width: 560px) {
     font-size: 0.9em;
@@ -222,7 +222,7 @@ export const DadosEndereco = styled.div`
 `;
 export const RuaNumeroComplemento = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   height: 20%;
   @media (max-width: 1100px) {
@@ -257,16 +257,15 @@ export const Rua = styled.div`
 
 export const Complemento = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: right;
-  align-items: center;
-  width: 30%;
+  flex-direction: row;
+  justify-content: start;
+  width: 100%;
   color: ${Cores.azul};
   font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1.2em;
   @media (max-width: 1100px) and (min-width: 770px) {
-    font-size: 1.2em;
+    font-size: 1em;
     justify-content: start;
     align-items: start;
     width: 100%;
@@ -284,6 +283,7 @@ export const Complemento = styled.div`
     align-items: start;
   }
 `;
+
 export const ContatoExcluirConta = styled.div`
   display: flex;
   flex-direction: column;
@@ -303,16 +303,16 @@ export const CaixaContato = styled.div`
   align-items: start;
   height: 100%;
   width: 100%;
-  padding: 7%;
+  padding: 5%;
   background-color: ${Cores.branco};
   border-style: solid;
   border-radius: 4px;
   border-color: ${Cores.cinza[3]};
   @media (max-width: 1100px) and (min-width: 560px) {
-    padding: 9%;
+    padding: 5%;
   }
   @media (max-width: 560px) {
-    padding: 4%;
+    padding: 5%;
   }
 `;
 export const DadosContato = styled.div`
@@ -331,7 +331,7 @@ export const DadosContato = styled.div`
     margin-bottom: 0.5%;
   }
   @media (max-width: 770px) and (min-width: 560px) {
-    font-size: 1em;
+    font-size: 0.85em;
     margin-bottom: 0.5%;
   }
   @media (max-width: 560px) {
@@ -350,6 +350,7 @@ export const ExcluirConta = styled.div`
   font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1.1em;
+  margin-top: 4%;
   @media (max-width: 1100px) and (min-width: 770px) {
     font-size: 1em;
   }

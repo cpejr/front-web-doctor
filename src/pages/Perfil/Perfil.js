@@ -179,17 +179,21 @@ function Perfil(props) {
             ) : (
               <>
                 <EnderecoContato>Endereço</EnderecoContato>
-                <DadosEndereco>{endereco.pais}</DadosEndereco>
-                <DadosEndereco>{endereco.cep}</DadosEndereco>
-                <DadosEndereco>{endereco.estado}</DadosEndereco>
-                <DadosEndereco>{endereco.cidade}</DadosEndereco>
-                <DadosEndereco>{endereco.bairro}</DadosEndereco>
-                <RuaNumeroComplemento>
+                <DadosEndereco>País: {endereco.pais}</DadosEndereco>
+                <DadosEndereco>CEP: {endereco.cep}</DadosEndereco>
+                <DadosEndereco>Estado: {endereco.estado}</DadosEndereco>
+                <DadosEndereco>Cidade: {endereco.cidade}</DadosEndereco>
+                <DadosEndereco>Bairro: {endereco.bairro}</DadosEndereco>
+                <DadosEndereco>Rua: {endereco.rua}, {endereco.numero}</DadosEndereco>
+                <DadosEndereco>Número: {endereco.numero}</DadosEndereco>
+                <DadosEndereco>Complemento: {endereco.complemento}</DadosEndereco>
+
+                {/* <RuaNumeroComplemento>
                   <Rua>
-                    {endereco.rua} {endereco.numero}
+                    Rua: {endereco.rua} {endereco.numero}
                   </Rua>
-                  <Complemento>{endereco.complemento}</Complemento>
-                </RuaNumeroComplemento>
+                  <Complemento>Complemento: {endereco.complemento}</Complemento>
+                </RuaNumeroComplemento> */}
               </>
             )}
           </CaixaEndereco>
