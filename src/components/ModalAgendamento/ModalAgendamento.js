@@ -17,6 +17,7 @@ import {
 } from "./Styles";
 import { LoadingOutlined } from "@ant-design/icons";
 import ModalAgendamentoEspecifico from "../ModalAgendamentoEspecifico";
+import ModalEditarAgendamentoEspecifico from "../ModalEditarAgendamentoEspecifico";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Modal, Spin } from "antd";
 import { Cores } from "../../variaveis";
@@ -24,6 +25,7 @@ import { Cores } from "../../variaveis";
 function ModalAgendamento(props) {
   const [consultas, setConsultas] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
+  const [modalEditarAgendamento, setModalEditarAgendamento] = useState(false);
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [quantidadeAgendamentos, setQuantidadeAgendamentos] = useState();
 
@@ -56,6 +58,14 @@ function ModalAgendamento(props) {
 
   async function fechandoModal() {
     setModalAgendamento(false);
+  }
+
+  async function editandoAgendamento(){
+    setModalEditarAgendamento(true);
+  }
+
+  async function fechandoModalEditarAgendamento(){
+    setModalEditarAgendamento(false);
   }
 
   async function excluirConsulta(id) {
@@ -107,6 +117,7 @@ function ModalAgendamento(props) {
                     fontSizeMedia="0.8em"
                     fontSizeMedia950="1em"
                     heightMedia560="30px"
+                    onClick={() => editandoAgendamento()}
                   >
                     EDITAR
                   </Button>
@@ -213,6 +224,18 @@ function ModalAgendamento(props) {
       >
         <ModalAgendamentoEspecifico emailUsuario={props.email} />
       </Modal>
+
+      <Modal
+        visible={modalEditarAgendamento}
+        onCancel={fechandoModalEditarAgendamento}
+        footer={null}
+        width={"70%"}
+        centered={true}
+      >
+        <ModalEditarAgendamentoEspecifico emailUsuario={props.email} />
+      </Modal>
+
+
     </Container>
   );
 }
