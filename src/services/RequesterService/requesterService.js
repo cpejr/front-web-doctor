@@ -13,6 +13,9 @@ export const criarUsuario = (endereco, usuario) =>
 
 export const criarConsulta = (consulta) => api.post("/consultas", consulta);
 
+export const updateConsulta = (id_consulta, consulta) =>
+  api.put(`/consultas/${id_consulta}`, consulta);
+
 export const updateDadosUsuario = (id_usuario, id_endereco, endereco, estado) =>
   api.put(`/enderecos/${id_endereco}`, endereco).then((res) => {
     api.put(`/usuarios/${id_usuario}`, { ...estado, id_endereco: res.data.id });

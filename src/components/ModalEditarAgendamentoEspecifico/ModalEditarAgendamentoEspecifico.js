@@ -36,6 +36,7 @@ function ModalEditarAgendamentoEspecifico(props) {
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const [consulta, setConsulta] = useState({
+    id_consulta: "",
     data_hora: "",
     duracao_em_minutos: "",
     descricao: "",
@@ -43,6 +44,7 @@ function ModalEditarAgendamentoEspecifico(props) {
     id_usuario: "",
     id_consultorio: "",
   });
+  const [idConsulta, setIdConsulta] = useState("");
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
   const [duracaoEmMinutos, setDuracaoEmMinutos] = useState("");
@@ -63,6 +65,14 @@ function ModalEditarAgendamentoEspecifico(props) {
     setCarregandoConsultorios(false)
   }
 
+ /*  async function pegandoDadosConsulta() {
+    const respostaConsultas = await managerService.GetDadosConsultasExamesMarcados(
+      props.id_usuario
+    );
+    setConsulta(respostaConsultas.dadosConsultas);
+    setCarregando(false);
+  } */
+
   useEffect(() => {
     pegandoDadosUsuario();
     //eslint-disable-next-line react-hooks/exhaustive-deps
@@ -72,13 +82,19 @@ function ModalEditarAgendamentoEspecifico(props) {
     pegandoConsultorios();
   }, []);
 
- /*  async function requisicaoCriarConsulta() {
+ /*  useEffect(() => {
+    pegandoDadosConsulta();
+  }, []);  */
+
+
+   /* async function requisicaoAtualizarConsulta() {
     setCarregandoCadastro(true);
     formatacaoDataHora();
     consulta.id_usuario = usuario.id;
-    await managerService.CriandoColsulta(consulta);
+    consulta.id_consulta = id.consulta;
+    await managerService.UpdateConsulta(id.consulta, consulta);
     setCarregandoCadastro(false);
-  } */
+  }  */
 
   function formatacaoDataHora() {
     try {

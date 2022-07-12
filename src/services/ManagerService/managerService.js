@@ -47,7 +47,7 @@ export const Cadastrando = async (usuario, endereco) => {
   return false;
 };
 
-export const CriandoColsulta = async (consulta) => {
+export const CriandoConsulta = async (consulta) => {
   await requesterService
     .criarConsulta(consulta)
     .then(() => {
@@ -60,6 +60,22 @@ export const CriandoColsulta = async (consulta) => {
     });
   return;
 };
+
+export const UpdateConsulta = async (id_consulta, consulta) => {
+  await requesterService
+    .updateConsulta(id_consulta, consulta)
+    .then(() => {
+      alert("Consulta atualizada com sucesso.");
+      window.location.href = "/web/agendamentos";
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return;
+};
+
+
 
 export const GetDadosPessoais = async () => {
   let dadosUsuario = {};
