@@ -24,8 +24,8 @@ import { Cores } from "../../variaveis";
 function ModalAgendamento(props) {
   const [consultas, setConsultas] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
-  const [modalAgendamento, setModalAgendamento] = useState(false);
   const [quantidadeAgendamentos, setQuantidadeAgendamentos] = useState();
+  const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] = useState(false);
 
   const [carregando, setCarregando] = useState(true);
   const antIcon = (
@@ -51,11 +51,11 @@ function ModalAgendamento(props) {
   }
 
   async function marcandoAgendamento() {
-    setModalAgendamento(true);
+    setModalAgendamentoEspecifico(true);
   }
 
-  async function fechandoModal() {
-    setModalAgendamento(false);
+  function fechandoModalAgendamentoEspecifico() {
+    setModalAgendamentoEspecifico(false);
   }
 
   async function excluirConsulta(id) {
@@ -205,13 +205,13 @@ function ModalAgendamento(props) {
         )}
       </Caixa>
       <Modal
-        visible={modalAgendamento}
-        onCancel={fechandoModal}
+        visible={modalAgendamentoEspecifico}
+        onCancel={() => setModalAgendamentoEspecifico(false)}
         footer={null}
         width={"70%"}
         centered={true}
       >
-        <ModalAgendamentoEspecifico emailUsuario={props.email} />
+        <ModalAgendamentoEspecifico emailUsuario={props.email} fechandoModal={() => fechandoModalAgendamentoEspecifico()} />
       </Modal>
     </Container>
   );

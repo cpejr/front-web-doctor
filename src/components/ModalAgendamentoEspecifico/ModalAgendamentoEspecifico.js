@@ -31,7 +31,6 @@ import AddToast from "../AddToast/AddToast";
 function ModalAgendamentoEspecifico(props) {
   const { Option } = Select;
   const [usuario, setUsuario] = useState({});
-  const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] = useState(false);
   const [consultorios, setConsultorios] = useState([]);
   const [carregando, setCarregando] = useState();
   const [carregandoCadastro, setCarregandoCadastro] = useState();
@@ -80,12 +79,8 @@ function ModalAgendamentoEspecifico(props) {
     consulta.id_usuario = usuario.id;
     await managerService.CriandoColsulta(consulta);
     setCarregandoCadastro(false);
-    setModalAgendamentoEspecifico(false);
+    props.fechandoModal();
   }
-  
- /* async function fecharModal() {
-    setModalAgendamentoEspecifico(false);
-  } */
 
   function formatacaoDataHora() {
     try {
