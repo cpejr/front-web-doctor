@@ -31,20 +31,15 @@ function ModalEditarAgendamentoEspecifico(props) {
   const { Option } = Select
   const [usuario, setUsuario] = useState({});
   const [consultorios, setConsultorios] = useState([]);
+
   const [carregando, setCarregando] = useState();
   const [carregandoCadastro, setCarregandoCadastro] = useState();
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
+
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const [consulta, setConsulta] = useState({
-    id_consulta: "",
-    data_hora: "",
-    duracao_em_minutos: "",
-    descricao: "",
-    avaliacao: "",
-    id_usuario: "",
-    id_consultorio: "",
-  });
-  const [idConsulta, setIdConsulta] = useState("");
+
+  const [consulta, setConsulta] = useState({});
+  
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
   const [duracaoEmMinutos, setDuracaoEmMinutos] = useState("");
@@ -65,13 +60,11 @@ function ModalEditarAgendamentoEspecifico(props) {
     setCarregandoConsultorios(false)
   }
 
- /*  async function pegandoDadosConsulta() {
-    const respostaConsultas = await managerService.GetDadosConsultasExamesMarcados(
-      props.id_usuario
-    );
-    setConsulta(respostaConsultas.dadosConsultas);
+  async function pegandoDadosConsulta() {
+    const resposta = await managerService.GetConsultaPorId(props.id);
+    setConsulta(resposta.dadosConsulta);
     setCarregando(false);
-  } */
+  } 
 
   useEffect(() => {
     pegandoDadosUsuario();
@@ -82,19 +75,19 @@ function ModalEditarAgendamentoEspecifico(props) {
     pegandoConsultorios();
   }, []);
 
- /*  useEffect(() => {
+  useEffect(() => {
     pegandoDadosConsulta();
-  }, []);  */
+  }, []);  
 
 
-   /* async function requisicaoAtualizarConsulta() {
-    setCarregandoCadastro(true);
+  async function requisicaoAtualizarConsulta() {
+    setCarregando(true);
     formatacaoDataHora();
     consulta.id_usuario = usuario.id;
-    consulta.id_consulta = id.consulta;
-    await managerService.UpdateConsulta(id.consulta, consulta);
-    setCarregandoCadastro(false);
-  }  */
+    consulta.id_consulta = consulta.id;
+    await managerService.UpdateConsulta(id_consulta, consulta);
+    setCarregando(false);
+  }  
 
   function formatacaoDataHora() {
     try {
@@ -267,8 +260,13 @@ function ModalEditarAgendamentoEspecifico(props) {
             fontWeight="bold"
             fontSizeMedia="0.9em"
             fontSizeMedia950="1.1em"
+            onClick={() => requisicaoAtualizarConsulta()}
           >
-            <div>Editar agendamento</div>
+            {carregando ? (
+              <Spin indicator={antIcon} />
+            ) : (
+              <div>Editar Agendamento</div>
+            )}
           </Button>
         </InfoEsquerdaEDireita>
       </Caixa>

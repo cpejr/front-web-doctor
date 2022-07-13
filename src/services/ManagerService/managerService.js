@@ -75,7 +75,20 @@ export const UpdateConsulta = async (id_consulta, consulta) => {
   return;
 };
 
+export const GetConsultaPorId = async (id) => {
+  let dadosConsulta = {};
 
+  await requesterService
+    .requisicaoConsultaPorId(id)
+
+    .then((res) => {
+      dadosConsulta = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConsulta;
+};
 
 export const GetDadosPessoais = async () => {
   let dadosUsuario = {};

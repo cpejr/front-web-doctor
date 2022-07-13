@@ -47,6 +47,8 @@ export const requisicaoExamesMarcados = () => api.get(`/exame_marcados/`);
 
 export const requisicaoConsultas = () => api.get(`/consultas/`);
 
+export const requisicaoConsultaPorId = (id) => get(`/consultas/${id}`);
+
 export const requisicaoExame = (id) => api.get(`/exames/${id}`);
 
 export const requisicaoDadosConsultorios = () => api.get(`/consultorios`);
