@@ -40,8 +40,14 @@ function AlterarSenha() {
   };
 
   const errors = {};
+  const errorsNovaSenha = {};
   const referenciaCamposNulos = {
+    senhaAtual: false
+  };
+  const referenciaCamposNulosNovaSenha = {
     senhaAtual: false,
+    senha: false,
+    confirmarSenha: false,
   };
 
   useEffect(() => {
@@ -87,6 +93,29 @@ function AlterarSenha() {
     setSenhaAtual(value);
   }
 
+  async function NovaSenha(e) {
+    const { value, name } = e.target;
+    setErro({ ...erro, [name]: false });
+
+    if (value) {
+      setCamposVazios({ ...camposVazios, [name]: false });
+    } else {
+      setCamposVazios({ ...camposVazios, [name]: true });
+    }
+
+    if (value.length < 8) {
+      setErro({ ...erro, [name]: true });
+    } else {
+      setErro({ ...erro, [name]: false });
+    }
+
+    if (name === "senha") {
+      setNovaSenha(value);
+    } else {
+      setConfirmarSenha(value);
+    }
+  }
+
   async function verificandoConferirSenha(e) {
     if (e.key === "Enter") {
       conferirSenha();
@@ -101,16 +130,30 @@ function AlterarSenha() {
   async function trocarSenha() {
     //conferir se a "novaSenha" é igual a "confirmarSenha"; se for igual postar a nova senha do usuário;
     //se não for igual alertar que as senhas digitadas não conferem
+    if (!novaSenha) errorsNovaSenha.senha = true;
+    if (!confirmarSenha) errorsNovaSenha.confirmarSenha = true;
+    setCamposVazios({ ...camposVazios, ...errorsNovaSenha });
+    setErro({ ...erro, ...errorsNovaSenha });
 
-    if (novaSenha === confirmarSenha) {
-      setCarregando(true);
-      const resposta = await managerService.GetDadosUsuario(email);
-      await managerService.AlterarSenha(novaSenha, resposta.dadosUsuario.id);
-      setCarregando(false);
+    if (_.isEqual(camposVazios, referenciaCamposNulosNovaSenha)) {
+      if (novaSenha === confirmarSenha) {
+        if (novaSenha !== "" || confirmarSenha !== "") {
+          setCarregando(true);
+          const resposta = await managerService.GetDadosUsuario(email);
+          await managerService.AlterarSenha(
+            novaSenha,
+            resposta.dadosUsuario.id
+          );
+          setCarregando(false);
+        } 
+      } else {
+        toast.error("As senhas digitadas são diferentes!");
+        await sleep(1500);
+        setCarregando(false);
+      }
     } else {
-      toast.error("As senhas digitadas são diferentes!");
-      await sleep(1500);
-      window.location.reload();
+      setCarregando(true);
+      toast.warn("Insira uma nova senha!");
       setCarregando(false);
     }
   }
@@ -184,28 +227,32 @@ function AlterarSenha() {
                 <Input
                   placeholder="Defina sua nova senha"
                   backgroundColor={Cores.cinza[7]}
-                  borderColor={Cores.azul}
                   color={Cores.preto}
                   fontSize="1em"
                   width="100%"
                   marginTop="2%"
                   type="password"
                   name="senha"
-                  onChange={(e) => setNovaSenha(e.target.value)}
+                  camposVazios={camposVazios.senha}
+                  erro={erro.senha}
+                  onChange={NovaSenha}
                 ></Input>
+                {erro.senha && <Rotulo>Insira uma nova senha com no minimo 8 digitos</Rotulo>}
                 <Input
                   placeholder="Confirme sua nova senha"
                   backgroundColor={Cores.cinza[7]}
-                  borderColor={Cores.azul}
                   color={Cores.preto}
                   fontSize="1em"
                   width="100%"
                   marginTop="5%"
                   type="password"
                   name="confirmarSenha"
-                  onChange={(e) => setConfirmarSenha(e.target.value)}
+                  camposVazios={camposVazios.confirmarSenha}
+                  erro={erro.confirmarSenha}
+                  onChange={NovaSenha}
                   onKeyPress={verificandoTrocarSenha}
                 ></Input>
+                {erro.confirmarSenha && <Rotulo>Confirme sua nova senha</Rotulo>}
               </InputVertical>
               <BotoesMesmaLinha>
                 <Button

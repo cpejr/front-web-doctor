@@ -183,12 +183,6 @@ export const AlterarSenha = async (novaSenha, id) => {
       toast.success("Senha alterada com sucesso!");
       window.location.href = "/web/perfil";
     })
-    .catch((error) => {
-      requisicaoErro(error, () => {
-        window.location.href = "/web/alterarsenha";
-      });
-      return false;
-    });
   return false;
 };
 
