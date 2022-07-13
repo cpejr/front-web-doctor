@@ -39,6 +39,8 @@ function ModalEditarAgendamentoEspecifico(props) {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const [consulta, setConsulta] = useState({});
+
+  const [consultorioPorId, setConsultorioPorId] = useState();
   
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
@@ -53,18 +55,29 @@ function ModalEditarAgendamentoEspecifico(props) {
     setCarregando(false);
   }
 
+  async function SetandoConsultorioPorId(){
+    const resposta = await managerService.GetConsultorioPorId(consulta.id_consultorio);
+    setConsultorioPorId(resposta.nome);
+    console.log(consultorioPorId);
+  }
+
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true)
     const res = await managerService.GetDadosConsultorios();
     setConsultorios(res.dadosConsultorios);
-    setCarregandoConsultorios(false)
+    setCarregandoConsultorios(false);
   }
 
-  async function pegandoDadosConsulta() {
-    const resposta = await managerService.GetConsultaPorId(props.id);
-    setConsulta(resposta.dadosConsulta);
+
+  async function setandoValoresConsulta(){
+    setCarregando(true);
+    setConsulta(props.consulta);
+    //separar data e hora por regex;
+    //setData e setHora
+    console.log(props.consulta)
     setCarregando(false);
-  } 
+  }
+
 
   useEffect(() => {
     pegandoDadosUsuario();
@@ -75,17 +88,21 @@ function ModalEditarAgendamentoEspecifico(props) {
     pegandoConsultorios();
   }, []);
 
-  useEffect(() => {
-    pegandoDadosConsulta();
-  }, []);  
+   useEffect(() => {
+    setandoValoresConsulta();
+  }, [props]);
 
+  useEffect(() => {
+    SetandoConsultorioPorId();
+  }, [props]);
+  
 
   async function requisicaoAtualizarConsulta() {
     setCarregando(true);
     formatacaoDataHora();
     consulta.id_usuario = usuario.id;
-    consulta.id_consulta = consulta.id;
-    await managerService.UpdateConsulta(id_consulta, consulta);
+    /* consulta.id_consulta = consulta.id; */
+    /* await managerService.UpdateConsulta(id_consulta, consulta); */
     setCarregando(false);
   }  
 
@@ -123,23 +140,6 @@ function ModalEditarAgendamentoEspecifico(props) {
               <Nome>{usuario.nome}</Nome>
             )}
           </Usuario>
-          <TipoAgendamento>
-            <TextoTipoAgendamento>
-              Selecione o Tipo de Agendamento:
-            </TextoTipoAgendamento>
-            <Row gutter={60} justify={"space-around"}>
-              <Col>
-                <Checkbox>
-                  <TextoCheckbox>Exame</TextoCheckbox>
-                </Checkbox>
-              </Col>
-              <Col>
-                <Checkbox>
-                  <TextoCheckbox>Consulta</TextoCheckbox>
-                </Checkbox>
-              </Col>
-            </Row>
-          </TipoAgendamento>
           <TextAreaDescricao
             placeholder="Adicione uma descrição"
             rows={4}
@@ -187,7 +187,7 @@ function ModalEditarAgendamentoEspecifico(props) {
                     preenchendoDadosConsulta(e);
                   }}
               >
-                <option value="" disabled selected >Tipo</option>
+                <option value="" disabled selected >{consulta.tipo}</option>
                 <option value="1">Tipo 1</option>
                 <option value="2">Tipo 2</option>
                 <option value="3">Tipo 3</option>
@@ -206,7 +206,7 @@ function ModalEditarAgendamentoEspecifico(props) {
                 size="large"
               >
                 <option value="" disabled selected >
-                    Consultório
+                    {consultorioPorId}
                   </option>
                 {consultorios.map((consultorio) => (
                   <>
@@ -239,6 +239,7 @@ function ModalEditarAgendamentoEspecifico(props) {
 
             <TamanhoInput>
               <InputDuracao
+                value={consulta.duracao_em_minutos}
                 placeholder="Duração"
                 name="duracao_em_minutos"
                 onChange={preenchendoDadosConsulta}

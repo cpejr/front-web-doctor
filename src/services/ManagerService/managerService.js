@@ -190,6 +190,21 @@ export const GetDadosConsultorios = async () => {
   return { dadosEndereco, dadosConsultorios };
 };
 
+export const GetConsultorioPorId = async (id) => {
+  let dadosConsultorio = {};
+
+  await requesterService
+    .requisicaoDadosConsultoriosPorId(id)
+
+    .then((res) => {
+      dadosConsultorio = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConsultorio;
+};
+
 export const ConferirSenha = async (email, senhaAtual) => {
   //comparar a senha do Email com a senha digitada
   //se as senhas forem iguais retornar true

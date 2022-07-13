@@ -47,11 +47,13 @@ export const requisicaoExamesMarcados = () => api.get(`/exame_marcados/`);
 
 export const requisicaoConsultas = () => api.get(`/consultas/`);
 
-export const requisicaoConsultaPorId = (id) => get(`/consultas/${id}`);
+export const requisicaoConsultaPorId = (id) => api.get(`/consultas-id/${id}`);
 
 export const requisicaoExame = (id) => api.get(`/exames/${id}`);
 
 export const requisicaoDadosConsultorios = () => api.get(`/consultorios`);
+
+export const requisicaoDadosConsultoriosPorId = (id) => api.get(`/consultorios/${id}`);
 
 export const deletarConsulta = (id) => api.delete(`/consultas/${id}`);
 
