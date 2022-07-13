@@ -5,12 +5,11 @@ import Button from "../../styles/Button";
 import {
   Container,
   Caixa,
-  InfoEsquerdaEDireita,
+  InfoEsquerda,
+  InfoDireita,
   Usuario,
   Imagem,
   Nome,
-  TipoAgendamento,
-  TextoTipoAgendamento,
   TextoCheckbox,
   DoisSelect,
   TamanhoInput,
@@ -131,7 +130,7 @@ function ModalEditarAgendamentoEspecifico(props) {
   return (
     <Container>
       <Caixa>
-        <InfoEsquerdaEDireita>
+        <InfoEsquerda>
           <Usuario>
             <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
             {carregando ? (
@@ -152,12 +151,13 @@ function ModalEditarAgendamentoEspecifico(props) {
               color: "black",
             }}
           />
-        </InfoEsquerdaEDireita>
-        <InfoEsquerdaEDireita>
+        </InfoEsquerda>
+        <InfoDireita>
           <SelecioneUmaData>
             <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
             <Input
               placeholder="Selecione uma data"
+              value={consulta.data_hora.slice(0,10)}
               type="date"
               size="large"
               name="data"
@@ -227,6 +227,7 @@ function ModalEditarAgendamentoEspecifico(props) {
           <DoisSelect>
             <TamanhoInput>
               <InputHora
+                value={consulta.data_hora.slice(14, 19)}
                 type="text"
                 onFocus={(e) => (e.target.type = "time")}
                 onBlur={(e) => (e.target.type = "text")}
@@ -269,7 +270,7 @@ function ModalEditarAgendamentoEspecifico(props) {
               <div>Editar Agendamento</div>
             )}
           </Button>
-        </InfoEsquerdaEDireita>
+        </InfoDireita>
       </Caixa>
     </Container>
   );

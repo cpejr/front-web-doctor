@@ -24,7 +24,7 @@ import { Cores } from "../../variaveis";
 
 function ModalAgendamento(props) {
   const [consultas, setConsultas] = useState([]);
-  const [teste, setTeste] = useState([]);
+  const [consultaEspecifica, setConsultaEspecifica] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
   const [modalEditarAgendamento, setModalEditarAgendamento] = useState(false);
   const [modalAgendamento, setModalAgendamento] = useState(false);
@@ -63,7 +63,7 @@ function ModalAgendamento(props) {
 
   async function editandoAgendamento(consulta) {
     setModalEditarAgendamento(true);
-    setTeste(consulta);
+    setConsultaEspecifica(consulta);
   }
 
   async function fechandoModalEditarAgendamento() {
@@ -234,7 +234,7 @@ function ModalAgendamento(props) {
         width={"70%"}
         centered={true}
       >
-        <ModalEditarAgendamentoEspecifico emailUsuario={props.email} consulta={teste}/>
+        <ModalEditarAgendamentoEspecifico emailUsuario={props.email} consulta={consultaEspecifica}/>
       </Modal>
 
 

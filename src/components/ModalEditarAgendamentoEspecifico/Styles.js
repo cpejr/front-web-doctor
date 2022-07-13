@@ -26,8 +26,24 @@ export const Caixa = styled.div`
     flex-direction: column;
   }
 `;
+export const InfoEsquerda = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+  min-height: 60vh;
+  padding: 5%;
+  margin-top: 5.5%;
+  margin-bottom: 5%;
 
-export const InfoEsquerdaEDireita = styled.div`
+  @media (max-width: 800px) {
+    width: 100%;
+  }
+`;
+
+export const InfoDireita = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -41,6 +57,7 @@ export const InfoEsquerdaEDireita = styled.div`
     width: 100%;
   }
 `;
+
 
 export const Usuario = styled.div`
   display: flex;
@@ -56,6 +73,7 @@ export const Usuario = styled.div`
   border-width: 1px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   margin-bottom: 2%;
+  
 
   @media (max-width: 500px) {
     flex-direction: column;
@@ -88,30 +106,7 @@ export const Nome = styled.div`
   }
 `;
 
-export const TipoAgendamento = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  width: 80%;
-  background-color: green;
-`;
 
-export const TextoTipoAgendamento = styled.h3`
-  font-family: ${Fontes.barlow};
-  font-weight: 600;
-  font-size: 1.4em;
-  color: ${Cores.azulEscuro};
-  text-align: center;
-
-  @media (max-width: 850px) and (min-width: 560px) {
-    font-size: 1.2em;
-  }
-
-  @media (max-width: 560px) {
-    font-size: 1.1em;
-  }
-`;
 
 export const TextoCheckbox = styled.h3`
   font-family: ${Fontes.barlow};
