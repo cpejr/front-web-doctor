@@ -99,18 +99,26 @@ export const CaixaInputs = styled.div`
 
 export const Rotulo = styled.label`
   margin-top: 4%;
+
+  @media (max-width: 930px) {
+    margin-top: 5%;
+  }
+
+  @media (max-width: 350px) {
+    font-size: 12px;
+  }
 `;
 
 export const CaixaBotao = styled.div`
   display: flex;
-  height: 20%;
   align-items: center;
   justify-content: center;
   margin-top: 2%;
   margin-bottom: 2%;
 
-  @media (max-width: 930px) {;
-    height: 10%;
+  @media (max-width: 560px) {
+    padding-left: 4%;
+    padding-right: 4%;
   }
 `;
 
