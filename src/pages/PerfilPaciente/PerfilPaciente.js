@@ -19,7 +19,9 @@ import {
   DadosFormulario,
   DadosContato,
   DadosGeo,
+  DadosPaciente,
   InfoContato,
+  InfoDadosPaciente,
   Receita,
   BotaoReceita,
   DadosReceita,
@@ -65,6 +67,8 @@ function PerfilPaciente(props) {
   const [respostas, setRespostas] = useState([]);
   const [perguntas, setPerguntas] = useState();
   const [titulo, setTitulo] = useState();
+  const [cpf, setCpf] = useState();
+  const [codigo, setCodigo] = useState();
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
@@ -83,7 +87,10 @@ function PerfilPaciente(props) {
     );
     const data = new Date(resposta.dadosUsuario.data_nascimento);
     setUsuario(resposta.dadosUsuario);
+    console.log(resposta)
     setTelefone(resposta.dadosUsuario.telefone);
+    setCpf(resposta.dadosUsuario.cpf);
+    setCodigo(resposta.dadosUsuario.codigo);
     setDataNascimento(data.toLocaleDateString());
     setEndereco(resposta.dadosEndereco);
     setCarregando(false);
@@ -153,7 +160,7 @@ function PerfilPaciente(props) {
                   </FotoPerfil>
                   <Dados>
                     <Nome>{usuario.nome}</Nome>
-                    <Data>{dataNascimento}</Data>
+                    <Data> Data de Nasc.: {dataNascimento}</Data>
                   </Dados>
                 </PerfilSuperior>
                 <PerfilInferior>
@@ -174,10 +181,15 @@ function PerfilPaciente(props) {
                     ({telefone.slice(0, -9)}) {telefone.slice(2, -4)}-
                     {telefone.slice(-4)}
                   </InfoContato>
-                  <InfoContato textDecoration="underline">
-                    {usuario.email}
+                    <InfoContato textDecoration="underline">
+                      Email: {usuario.email}
                   </InfoContato>
                 </DadosContato>
+                <DadosPaciente>
+                  <Titulo>Dados</Titulo>
+                  <InfoDadosPaciente>CPF: {usuario.cpf}</InfoDadosPaciente>
+                  <InfoDadosPaciente>Código: {usuario.codigo}</InfoDadosPaciente>
+                </DadosPaciente>
                 <Botoes>
                   <Botao>
                     <Button

@@ -272,6 +272,37 @@ export const InfoContato = styled.div`
   white-space: nowrap;
   overflow: hidden;
 `;
+
+export const DadosPaciente = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 2%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @media (max-width: 1080px) {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    display: block;
+    border-style: solid;
+    border-color: ${Cores.cinza[3]};
+    border-width: 2px;
+    border-radius: 3px;
+    box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
+  }
+`;
+
+export const InfoDadosPaciente = styled.div`
+  text-decoration: ${(props) => props.textDecoration};
+  font-size: 1.2em;
+  color: ${Cores.azul};
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+`;
+
 export const Formulario = styled.div`
   width: 100%;
   display: flex;
