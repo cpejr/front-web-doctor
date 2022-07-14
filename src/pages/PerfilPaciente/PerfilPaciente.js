@@ -87,9 +87,8 @@ function PerfilPaciente(props) {
     );
     const data = new Date(resposta.dadosUsuario.data_nascimento);
     setUsuario(resposta.dadosUsuario);
-    console.log(resposta)
     setTelefone(resposta.dadosUsuario.telefone);
-    setCpf(resposta.dadosUsuario.cpf);
+    setCpf(formatarCpf(resposta.dadosUsuario.cpf));
     setCodigo(resposta.dadosUsuario.codigo);
     setDataNascimento(data.toLocaleDateString());
     setEndereco(resposta.dadosEndereco);
@@ -141,6 +140,14 @@ function PerfilPaciente(props) {
     setModalFormulario(true);
   }
 
+  function formatarCpf(cpf) {
+    return cpf.replace(/\D/g, '')
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d)/, '$1.$2')
+      .replace(/(\d{3})(\d)/, '$1-$2')
+      .replace(/(-\d{2})\d+?$/, '$1')
+ }
+
   return (
     <div>
       <ContainerPerfil>
@@ -181,13 +188,15 @@ function PerfilPaciente(props) {
                     ({telefone.slice(0, -9)}) {telefone.slice(2, -4)}-
                     {telefone.slice(-4)}
                   </InfoContato>
-                    <InfoContato textDecoration="underline">
-                      Email: {usuario.email}
+                  <InfoContato textDecoration="underline">
+                      {usuario.email}
                   </InfoContato>
                 </DadosContato>
                 <DadosPaciente>
                   <Titulo>Dados</Titulo>
-                  <InfoDadosPaciente>CPF: {usuario.cpf}</InfoDadosPaciente>
+                  <InfoDadosPaciente>
+                    CPF: {cpf}
+                  </InfoDadosPaciente>
                   <InfoDadosPaciente>Código: {usuario.codigo}</InfoDadosPaciente>
                 </DadosPaciente>
                 <Botoes>
