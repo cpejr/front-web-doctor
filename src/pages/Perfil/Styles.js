@@ -94,7 +94,7 @@ export const ConjuntoDataCPF = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin-left: 10%;
-  width: 75%;
+  width: 80%;
   @media (max-width: 480px) {
     font-size: 0.8em;
     flex-direction: column;

@@ -124,8 +124,8 @@ function Perfil(props) {
               <NomeData>
                 <Nome>{usuario.nome}</Nome>
                 <ConjuntoDataCPF>
-                  <DataCPF>{dataNascimento}</DataCPF>
-                  <DataCPF>{usuario.cpf}</DataCPF>
+                  <DataCPF>Nascimento: {dataNascimento}</DataCPF>
+                  <DataCPF>CPF: {usuario.cpf}</DataCPF>
                 </ConjuntoDataCPF>
               </NomeData>
             </FotoNomeData>
