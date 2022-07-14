@@ -56,14 +56,17 @@ function ModalAgendamento(props) {
 
   function fechandoModalAgendamentoEspecifico() {
     setModalAgendamentoEspecifico(false);
+    pegandoDados();
   }
 
   async function excluirConsulta(id) {
     await managerService.DeletarConsulta(id);
+    pegandoDados();
   }
 
   async function excluirExameMarcado(id) {
     await managerService.DeletarExameMarcado(id);
+    pegandoDados();
   }
 
   return (

@@ -51,10 +51,8 @@ export const CriandoColsulta = async (consulta) => {
   await requesterService
     .criarConsulta(consulta)
     .then(() => {
-      //alert("Consulta criada com sucesso.");
       toast.success("Consulta criada com sucesso.");
       sleep(1500);
-      //window.location.href = "/web/agendamentos";
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -272,8 +270,7 @@ export const DeletarConsulta = async (id) => {
   await requesterService
     .deletarConsulta(id)
     .then(() => {
-      alert("Consulta deletada com sucesso.");
-      window.location.href = "/web/perfildopaciente";
+      toast.success("Consulta deletada com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(
@@ -291,8 +288,7 @@ export const DeletarExameMarcado = async (id) => {
   await requesterService
     .deletarExameMarcado(id)
     .then(() => {
-      alert("Exame deletado com sucesso.");
-      window.location.href = "/web/perfildopaciente";
+      toast.success("Exame deletada com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(

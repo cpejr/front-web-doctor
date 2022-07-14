@@ -76,10 +76,11 @@ export const Titulo = styled.div`
 export const InfoEsquerda = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
   align-items: start;
   width: 65%;
-  height: 100%;
+  height: 600px;
+  overflow: auto;
+  overflow-x: hidden;
 
   @media (max-width: 800px) {
     width: 100%;
@@ -94,6 +95,8 @@ export const InfoDireita = styled.div`
   width: 30%;
   height: 100%;
   min-height: 70vh;
+  margin-left: 4%;
+  margin-right: 4%;
 
   @media (max-width: 800px) {
     width: 80%;
@@ -141,7 +144,7 @@ export const Agendamento = styled.div`
   align-self: start;
   width: 94%;
   height: 100%;
-  margin: 0% 2% 0% 2%;
+  margin: 0% 0% 0% 6%;
 
   @media (max-width: 1100px) {
     flex-direction: column;
@@ -153,7 +156,6 @@ export const CaixaAgendamento = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: center;
-  margin-top: 2%;
   width: 65%;
   height: 40px;
   background-color: ${Cores.lilas[4]};
