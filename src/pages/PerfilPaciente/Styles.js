@@ -210,11 +210,12 @@ export const DadosGeo = styled.div`
   overflow: hidden;
 `;
 export const Botoes = styled.div`
-  margin-top: 15%;
+  //margin-top: 15%;
   display: flex;
   flex-direction: column;
   padding: 0% 20% 0% 0%;
   justify-content: start;
+  margin-top: ${(props) => props.marginTop};
 
   @media (max-width: 1080px) {
     padding: 0;

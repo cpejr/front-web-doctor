@@ -213,7 +213,9 @@ function PerfilPaciente(props) {
                 ) : ( 
                   <></>
                 )}
-                <Botoes>
+                <Botoes
+                  marginTop = {margemBotoes}
+                >
                   <Botao>
                     <Button
                       backgroundColor="green"
