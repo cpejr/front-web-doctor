@@ -70,6 +70,8 @@ function PerfilPaciente(props) {
   const [cpf, setCpf] = useState();
   const [codigo, setCodigo] = useState();
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
+  const [tipo, setTipo] = useState(false);
+
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
   );
@@ -93,6 +95,10 @@ function PerfilPaciente(props) {
     setDataNascimento(data.toLocaleDateString());
     setEndereco(resposta.dadosEndereco);
     setCarregando(false);
+      
+    if (resposta.dadosUsuario.tipo === "PACIENTE") {
+      setTipo(true);
+    }
   }
 
   useEffect(() => {
@@ -141,12 +147,13 @@ function PerfilPaciente(props) {
   }
 
   function formatarCpf(cpf) {
-    return cpf.replace(/\D/g, '')
-      .replace(/(\d{3})(\d)/, '$1.$2')
-      .replace(/(\d{3})(\d)/, '$1.$2')
-      .replace(/(\d{3})(\d)/, '$1-$2')
-      .replace(/(-\d{2})\d+?$/, '$1')
- }
+    return cpf
+      .replace(/\D/g, "")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1-$2")
+      .replace(/(-\d{2})\d+?$/, "$1");
+  }
 
   return (
     <div>
@@ -189,16 +196,20 @@ function PerfilPaciente(props) {
                     {telefone.slice(-4)}
                   </InfoContato>
                   <InfoContato textDecoration="underline">
-                      {usuario.email}
+                    {usuario.email}
                   </InfoContato>
                 </DadosContato>
-                <DadosPaciente>
-                  <Titulo>Dados</Titulo>
-                  <InfoDadosPaciente>
-                    CPF: {cpf}
-                  </InfoDadosPaciente>
-                  <InfoDadosPaciente>Código: {usuario.codigo}</InfoDadosPaciente>
-                </DadosPaciente>
+                {tipo ? (
+                  <DadosPaciente>
+                    <Titulo>Dados</Titulo>
+                    <InfoDadosPaciente>CPF: {cpf}</InfoDadosPaciente>
+                    <InfoDadosPaciente>
+                      Código: {usuario.codigo}
+                    </InfoDadosPaciente>
+                  </DadosPaciente>
+                ) : (
+                  <></>
+                )}
                 <Botoes>
                   <Botao>
                     <Button
