@@ -8,6 +8,8 @@ import {
   PerfilInferior,
   FotoPerfil,
   Dados,
+  DadosTeste,
+  DadosTeste2,
   Nome,
   Data,
   PerfilEsquerda,
@@ -78,6 +80,7 @@ function PerfilPaciente(props) {
   const antIconModal = (
     <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin />
   );
+  const margemBotoes = tipo ? "0px" : "15%";
 
   useEffect(() => {
     pegandoDados();
@@ -207,7 +210,7 @@ function PerfilPaciente(props) {
                       Código: {usuario.codigo}
                     </InfoDadosPaciente>
                   </DadosPaciente>
-                ) : (
+                ) : ( 
                   <></>
                 )}
                 <Botoes>

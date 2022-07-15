@@ -14,6 +14,7 @@ export const ContainerPerfil = styled.div`
   @media (max-width: 1080px) {
     padding: 2% 4% 2% 4%;
   }
+
 `;
 
 export const Perfil = styled.div`
@@ -30,6 +31,7 @@ export const Perfil = styled.div`
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   gap: 15%;
   margin-bottom: 2%;
+
 
   @media (max-width: 1080px) {
     width: 80%;
@@ -219,9 +221,10 @@ export const Botoes = styled.div`
     margin: 0;
     justify-content: center;
   }
+
 `;
 export const Botao = styled.div`
-  margin-bottom: 5%;
+  margin-bottom: 3%;
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -264,6 +267,23 @@ export const DadosContato = styled.div`
     box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   }
 `;
+
+export const DadosTeste = styled.div`
+
+  
+`;
+export const DadosTeste2 = styled.div`
+
+  
+    /* max-height:100px;
+    width: 100px;
+
+    @media (max-height: 150px) {
+    margin-bottom: 15%;
+  } */
+  
+`;
+
 export const InfoContato = styled.div`
   text-decoration: ${(props) => props.textDecoration};
   font-size: 1.2em;
