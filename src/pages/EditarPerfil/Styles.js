@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Cores } from "../../variaveis";
+import { Cores, Fontes } from "../../variaveis";
 
 export const ContainerEditarPerfil = styled.div`
   display: flex;
@@ -152,5 +152,24 @@ export const BlocoInferior = styled.div`
     width: 100%;
     gap: 2%;
     margin-top: 5%;
+  }
+`;
+
+export const Rotulo = styled.div`
+  width: 100%;
+  font-family: ${Fontes.barlow};
+  font-weight: 400;
+  font-size: 1em;
+  color: ${Cores.vermelho};
+`;
+
+export const RotuloColuna = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  width: 50%;
+  @media (max-width: 820px) {
+    width: 100%;
   }
 `;
