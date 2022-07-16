@@ -135,6 +135,32 @@ function PerfilPaciente(props) {
     setModalFormulario(true);
   }
 
+  function estrelaPreenchida(numEstrelasPreenc) {
+    if (numEstrelasPreenc !== 0) {
+      return (
+        <>
+          <StarFilled />
+          {estrelaPreenchida(numEstrelasPreenc - 1)}
+        </>
+      );
+    } else {
+      return;
+    }
+  }
+
+  function estrelaNaoPreenchida(numNaoPreenchido) {
+    if (numNaoPreenchido !== 0) {
+      return (
+        <>
+          <StarOutlined />
+          {estrelaNaoPreenchida(numNaoPreenchido - 1)}
+        </>
+      );
+    } else {
+      return;
+    }
+  }
+
   return (
     <div>
       <ContainerPerfil>
@@ -195,7 +221,7 @@ function PerfilPaciente(props) {
                   </Botao>
                   <Botao>
                     <Button
-                      backgroundColor="green"
+                      backgroundColor={Cores.lilas[2]}
                       color={Cores.azulEscuro}
                       fontWeight="bold"
                       borderColor={Cores.azulEscuro}
@@ -252,25 +278,8 @@ function PerfilPaciente(props) {
                     <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
                     <UrgenciaFormulario>
                       <>Urgência: </>
-                      {value.urgencia === 1 ? (
-                        <>
-                          <StarOutlined />
-                          <StarOutlined />
-                          <StarFilled />
-                        </>
-                      ) : value.urgencia === 2 ? (
-                        <>
-                          <StarOutlined />
-                          <StarFilled />
-                          <StarFilled />
-                        </>
-                      ) : (
-                        <>
-                          <StarFilled />
-                          <StarFilled />
-                          <StarFilled />
-                        </>
-                      )}
+                      {estrelaPreenchida(value.urgencia)}
+                      {estrelaNaoPreenchida(3 - value.urgencia)}
                     </UrgenciaFormulario>
                   </DadosFormulario>
                   {value.status === true ? (
