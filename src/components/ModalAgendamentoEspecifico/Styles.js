@@ -233,3 +233,22 @@ export const SelecioneUmaData = styled.h3`
     width: 100%;
   }
 `;
+
+export const Rotulo = styled.div`
+  width: 100%;
+  font-family: ${Fontes.barlow};
+  font-weight: 400;
+  font-size: 1em;
+  color: ${Cores.vermelho};
+`;
+
+export const RotuloColuna = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  width: 48%;
+  @media (max-width: 820px) {
+    width: 100%;
+  }
+`;

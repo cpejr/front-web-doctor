@@ -19,6 +19,8 @@ import {
   SelecioneUmaData,
   TextoSelecioneUmaData,
   TextAreaDescricao,
+  Rotulo,
+  RotuloColuna,
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 import logoGuilherme from "../../assets/logoGuilherme.png";
@@ -26,6 +28,10 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { Cores } from "../../variaveis";
 import moment from "moment";
+
+import { apenasNumeros } from "../../utils/masks";
+import { toast } from "react-toastify";
+import _ from "lodash";
 
 function ModalAgendamentoEspecifico(props) {
   const { Option } = Select;
@@ -47,7 +53,63 @@ function ModalAgendamentoEspecifico(props) {
   const [hora, setHora] = useState("");
   const [duracaoEmMinutos, setDuracaoEmMinutos] = useState("");
   // const [selectValue, setSelectValue] = useState("");
+
+  const [erro, setErro] = useState(false);
+  const [camposVazios, setCamposVazios] = useState(false);
+
   moment.locale("pt-br");
+
+  const errors = {};
+  const referenciaInputNulos = {
+    data: false,
+    hora: false,
+    duracao_em_minutos: false,
+    id_consultorio: false,
+    tipo: false,
+  };
+
+  async function validacaoData (e) {
+    const { value, name } = e.target;
+
+    if (value) {
+      setCamposVazios({ ...camposVazios, [name]: false });
+    } else {
+      setCamposVazios({ ...camposVazios, [name]: true });
+    }
+
+    setData(value);
+  }
+
+  async function validacaoHora(e) {
+    const { value, name } = e.target;
+
+    if (value) {
+      setCamposVazios({ ...camposVazios, [name]: false });
+    } else {
+      setCamposVazios({ ...camposVazios, [name]: true });
+    }
+
+    const regEx = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+    if (!regEx.test(value)) {
+      setErro({ ...erro, [name]: true });
+    } else {
+      setErro({ ...erro, [name]: false });
+    }
+
+    setHora(value);
+  }
+
+  async function validacaoDuracao(e) {
+    const { value, name } = e.target;
+
+    if (value) {
+      setCamposVazios({ ...camposVazios, [name]: false });
+    } else {
+      setCamposVazios({ ...camposVazios, [name]: true });
+    }
+
+    setConsulta({ ...consulta, [name]: apenasNumeros(value) });
+  }
 
   async function pegandoDadosUsuario() {
     setCarregando(true);
@@ -73,6 +135,24 @@ function ModalAgendamentoEspecifico(props) {
   }, []);
 
   async function requisicaoCriarConsulta() {
+    if (!data) errors.data = true;
+    if (!hora) errors.hora = true;
+    if (!consulta.duracao_em_minutos) errors.duracao_em_minutos= true;
+
+    setCamposVazios({ ...camposVazios, ...errors });
+
+    if (_.isEqual(camposVazios, referenciaInputNulos)) {
+      setCarregandoCadastro(true);
+      formatacaoDataHora();
+      consulta.id_usuario = usuario.id;
+      await managerService.CriandoColsulta(consulta);
+      setCarregandoCadastro(false);
+    } else {
+      setCarregando(true);
+      toast.warn("Preencha todos os campos");
+      setCarregando(false);
+    }
+
     setCarregandoCadastro(true);
     formatacaoDataHora();
     consulta.id_usuario = usuario.id;
@@ -153,14 +233,17 @@ function ModalAgendamentoEspecifico(props) {
               size="large"
               name="data"
               onChange={(e) => {
-                preenchendoDadosConsulta(e);
+                validacaoData(e);
               }}
               style={{
                 borderWidth: "1px",
                 borderColor: "black",
                 color: "black",
               }}
-            ></Input>
+            />
+            {camposVazios.data && (
+                <Rotulo>Digite uma data</Rotulo>
+              )} 
           </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
@@ -229,18 +312,26 @@ function ModalAgendamentoEspecifico(props) {
                 onBlur={(e) => (e.target.type = "text")}
                 placeholder="Horário"
                 name="hora"
-                onChange={preenchendoDadosConsulta}
+                onChange={validacaoHora}
                 style={{color:"black"}}
               />
+              {camposVazios.horas && (
+                <Rotulo>Digite um horário</Rotulo>
+              )} 
             </TamanhoInput>
 
             <TamanhoInput>
               <InputDuracao
+                value={consulta.duracao_em_minutos}
+                erro={consulta.duracao_em_minutos}
                 placeholder="Duração"
                 name="duracao_em_minutos"
-                onChange={preenchendoDadosConsulta}
+                onChange={validacaoDuracao}
                 suffix="min"
               />
+              {camposVazios.duracao_em_minutos && (
+                <Rotulo>Digite uma duração</Rotulo>
+              )}  
             </TamanhoInput>
           </DoisSelect>
           <Checkbox>
