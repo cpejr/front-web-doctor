@@ -8,8 +8,6 @@ import {
   PerfilInferior,
   FotoPerfil,
   Dados,
-  DadosTeste,
-  DadosTeste2,
   Nome,
   Data,
   PerfilEsquerda,
@@ -80,7 +78,9 @@ function PerfilPaciente(props) {
   const antIconModal = (
     <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin />
   );
+
   const margemBotoes = tipo ? "0px" : "15%";
+  const margemPerfil = tipo ? "2%" : "20%";
 
   useEffect(() => {
     pegandoDados();
@@ -161,7 +161,9 @@ function PerfilPaciente(props) {
   return (
     <div>
       <ContainerPerfil>
-        <Perfil>
+        <Perfil
+          marginBot = {margemPerfil}
+        >
           {carregando ? (
             <Spin indicator={antIcon} />
           ) : (
@@ -212,7 +214,8 @@ function PerfilPaciente(props) {
                   </DadosPaciente>
                 ) : ( 
                   <></>
-                )}
+                )
+                }
                 <Botoes
                   marginTop = {margemBotoes}
                 >
@@ -229,6 +232,7 @@ function PerfilPaciente(props) {
                       Iniciar Conversa
                     </Button>
                   </Botao>
+                  {tipo ? (
                   <Botao>
                     <Button
                       backgroundColor="green"
@@ -243,6 +247,10 @@ function PerfilPaciente(props) {
                       Agendamentos
                     </Button>
                   </Botao>
+                    ) : ( 
+                      <></>
+                    )
+                  }
                   {recebeTipo() === "MASTER" && (
                     <Botao>
                       <Button
@@ -265,6 +273,7 @@ function PerfilPaciente(props) {
             </>
           )}
         </Perfil>
+        {tipo ? (
         <Formularios>
           {carregando ? (
             <Spin indicator={antIcon} />
@@ -331,6 +340,10 @@ function PerfilPaciente(props) {
             </>
           )}
         </Formularios>
+        ) : ( 
+          <></>
+        )}
+        {tipo ? (
         <Receitas>
           {carregando ? (
             <Spin indicator={antIcon} />
@@ -366,6 +379,9 @@ function PerfilPaciente(props) {
             </>
           )}
         </Receitas>
+        ) : ( 
+          <></>
+        )}
       </ContainerPerfil>
 
       <Modal

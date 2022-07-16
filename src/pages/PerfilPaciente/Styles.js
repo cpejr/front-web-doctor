@@ -30,7 +30,7 @@ export const Perfil = styled.div`
   padding: 2%;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   gap: 15%;
-  margin-bottom: 2%;
+  margin-bottom: ${(props) => props.marginBot};
 
 
   @media (max-width: 1080px) {
