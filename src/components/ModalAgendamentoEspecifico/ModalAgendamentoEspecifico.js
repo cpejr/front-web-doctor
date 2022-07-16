@@ -36,14 +36,15 @@ function ModalAgendamentoEspecifico(props) {
   const [carregandoCadastro, setCarregandoCadastro] = useState();
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const [consulta, setConsulta] = useState({
+  const valoresIniciaisConsulta = {
     data_hora: "",
     duracao_em_minutos: "",
     descricao: "",
     avaliacao: "",
     id_usuario: "",
     id_consultorio: "",
-  });
+    tipo: ""};
+  const [consulta, setConsulta] = useState(valoresIniciaisConsulta);
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
   const [duracaoEmMinutos, setDuracaoEmMinutos] = useState("");
@@ -80,6 +81,9 @@ function ModalAgendamentoEspecifico(props) {
     await managerService.CriandoColsulta(consulta);
     setCarregandoCadastro(false);
     props.fechandoModal();
+    setData("");
+    setHora("");
+    setConsulta(valoresIniciaisConsulta);
   }
 
   function formatacaoDataHora() {
@@ -150,6 +154,7 @@ function ModalAgendamentoEspecifico(props) {
           <SelecioneUmaData>
             <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
             <Input
+              value={data}
               placeholder="Selecione uma data"
               type="date"
               size="large"
@@ -167,6 +172,7 @@ function ModalAgendamentoEspecifico(props) {
           <DoisSelect>
             <TamanhoInput>
               <Select
+                value={consulta.tipo}
                 style={{
                   width: "100%",
                   color:"black",
@@ -188,6 +194,7 @@ function ModalAgendamentoEspecifico(props) {
             </TamanhoInput>
             <TamanhoInput>
               <Select
+                value={consulta.id_consultorio}
                 id="id_consultorio"
                 name="id_consultorio"
                 style={{
@@ -226,6 +233,7 @@ function ModalAgendamentoEspecifico(props) {
           <DoisSelect>
             <TamanhoInput>
               <InputHora
+                value={hora}
                 type="text"
                 onFocus={(e) => (e.target.type = "time")}
                 onBlur={(e) => (e.target.type = "text")}
@@ -238,6 +246,7 @@ function ModalAgendamentoEspecifico(props) {
 
             <TamanhoInput>
               <InputDuracao
+                value={consulta.duracao_em_minutos}
                 placeholder="Duração"
                 name="duracao_em_minutos"
                 onChange={preenchendoDadosConsulta}

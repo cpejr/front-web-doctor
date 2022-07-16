@@ -54,7 +54,7 @@ function ModalAgendamento(props) {
     setModalAgendamentoEspecifico(true);
   }
 
-  function fechandoModalAgendamentoEspecifico() {
+  async function fechandoModalAgendamentoEspecifico() {
     setModalAgendamentoEspecifico(false);
     pegandoDados();
   }

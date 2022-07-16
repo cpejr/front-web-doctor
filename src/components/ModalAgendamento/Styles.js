@@ -144,7 +144,7 @@ export const Agendamento = styled.div`
   align-self: start;
   width: 94%;
   height: 100%;
-  margin: 0% 0% 0% 6%;
+  margin-left: 6%;
 
   @media (max-width: 1100px) {
     flex-direction: column;

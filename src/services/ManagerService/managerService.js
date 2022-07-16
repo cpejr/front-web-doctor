@@ -52,7 +52,6 @@ export const CriandoColsulta = async (consulta) => {
     .criarConsulta(consulta)
     .then(() => {
       toast.success("Consulta criada com sucesso.");
-      sleep(1500);
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -288,7 +287,7 @@ export const DeletarExameMarcado = async (id) => {
   await requesterService
     .deletarExameMarcado(id)
     .then(() => {
-      toast.success("Exame deletada com sucesso.");
+      toast.success("Exame deletado com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(
