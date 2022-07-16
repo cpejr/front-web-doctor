@@ -38,6 +38,7 @@ function ModalEditarAgendamentoEspecifico(props) {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const [consulta, setConsulta] = useState({});
+  const [newConsulta, setNewConsulta] = useState();
 
   const [consultorioPorId, setConsultorioPorId] = useState();
   
@@ -57,7 +58,18 @@ function ModalEditarAgendamentoEspecifico(props) {
   async function SetandoConsultorioPorId(){
     const resposta = await managerService.GetConsultorioPorId(consulta.id_consultorio);
     setConsultorioPorId(resposta.nome);
-    console.log(consultorioPorId);
+
+  }
+
+  function setandoDataEHora(){
+    let data = String(consulta.data_hora);
+    let data2 = data.slice(0, 10);
+    let hora = String(consulta.data_hora);
+    let hora2 = hora.slice(14, 19);
+   /*  console.log(data2);
+    console.log(hora2); */
+    setData(data2);
+    setHora(hora2);
   }
 
   async function pegandoConsultorios() {
@@ -71,9 +83,7 @@ function ModalEditarAgendamentoEspecifico(props) {
   async function setandoValoresConsulta(){
     setCarregando(true);
     setConsulta(props.consulta);
-    //separar data e hora por regex;
-    //setData e setHora
-    console.log(props.consulta)
+    setandoDataEHora();
     setCarregando(false);
   }
 
@@ -98,10 +108,11 @@ function ModalEditarAgendamentoEspecifico(props) {
 
   async function requisicaoAtualizarConsulta() {
     setCarregando(true);
-    formatacaoDataHora();
     consulta.id_usuario = usuario.id;
-    /* consulta.id_consulta = consulta.id; */
-    /* await managerService.UpdateConsulta(id_consulta, consulta); */
+    formatacaoDataHora(); 
+    consulta.id_usuario = usuario.id;
+    await managerService.UpdateConsulta(consulta.id, consulta); 
+    console.log(consulta);
     setCarregando(false);
   }  
 
@@ -157,7 +168,7 @@ function ModalEditarAgendamentoEspecifico(props) {
             <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
             <Input
               placeholder="Selecione uma data"
-              value={consulta.data_hora.slice(0,10)}
+              value={data} 
               type="date"
               size="large"
               name="data"
@@ -195,6 +206,7 @@ function ModalEditarAgendamentoEspecifico(props) {
             </TamanhoInput>
             <TamanhoInput>
               <Select
+                value={consultorioPorId}
                 id="id_consultorio"
                 name="id_consultorio"
                 style={{
@@ -227,7 +239,7 @@ function ModalEditarAgendamentoEspecifico(props) {
           <DoisSelect>
             <TamanhoInput>
               <InputHora
-                value={consulta.data_hora.slice(14, 19)}
+                value={hora} 
                 type="text"
                 onFocus={(e) => (e.target.type = "time")}
                 onBlur={(e) => (e.target.type = "text")}
@@ -277,3 +289,5 @@ function ModalEditarAgendamentoEspecifico(props) {
 }
 
 export default ModalEditarAgendamentoEspecifico;
+
+
