@@ -32,20 +32,17 @@ function ModalEditarAgendamentoEspecifico(props) {
   const [consultorios, setConsultorios] = useState([]);
 
   const [carregando, setCarregando] = useState();
-  const [carregandoCadastro, setCarregandoCadastro] = useState();
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const [consulta, setConsulta] = useState({});
-  const [newConsulta, setNewConsulta] = useState();
 
   const [consultorioPorId, setConsultorioPorId] = useState();
   
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
-  const [duracaoEmMinutos, setDuracaoEmMinutos] = useState("");
-  // const [selectValue, setSelectValue] = useState("");
+
   moment.locale("pt-br");
 
   async function pegandoDadosUsuario() {
@@ -55,21 +52,22 @@ function ModalEditarAgendamentoEspecifico(props) {
     setCarregando(false);
   }
 
-  async function SetandoConsultorioPorId(){
+  async function setandoNomeConsultorioPorId(){
+    setCarregando(true);
     const resposta = await managerService.GetConsultorioPorId(consulta.id_consultorio);
     setConsultorioPorId(resposta.nome);
-
+    setCarregando(false);
   }
 
   function setandoDataEHora(){
-    let data = String(consulta.data_hora);
-    let data2 = data.slice(0, 10);
-    let hora = String(consulta.data_hora);
-    let hora2 = hora.slice(14, 19);
-   /*  console.log(data2);
-    console.log(hora2); */
-    setData(data2);
-    setHora(hora2);
+    setCarregando(true);
+    let dataString = String(consulta.data_hora);
+    let dataFormatada = dataString.slice(0, 10);
+    let horaString = String(consulta.data_hora);
+    let horaFormatada = horaString.slice(14, 19);
+    setData(dataFormatada);
+    setHora(horaFormatada);
+    setCarregando(false);
   }
 
   async function pegandoConsultorios() {
@@ -83,8 +81,8 @@ function ModalEditarAgendamentoEspecifico(props) {
   async function setandoValoresConsulta(){
     setCarregando(true);
     setConsulta(props.consulta);
-    setandoDataEHora();
     setCarregando(false);
+
   }
 
 
@@ -101,18 +99,23 @@ function ModalEditarAgendamentoEspecifico(props) {
     setandoValoresConsulta();
   }, [props]);
 
+
   useEffect(() => {
-    SetandoConsultorioPorId();
-  }, [props]);
+    setandoDataEHora();
+  }, [consulta]);
+
+   useEffect(() => {
+    setandoNomeConsultorioPorId();
+  }, [consulta]); 
   
 
   async function requisicaoAtualizarConsulta() {
     setCarregando(true);
     consulta.id_usuario = usuario.id;
+    console.log(consulta.id_consultorio);
+    console.log(consultorioPorId);
     formatacaoDataHora(); 
-    consulta.id_usuario = usuario.id;
     await managerService.UpdateConsulta(consulta.id, consulta); 
-    console.log(consulta);
     setCarregando(false);
   }  
 
@@ -206,7 +209,6 @@ function ModalEditarAgendamentoEspecifico(props) {
             </TamanhoInput>
             <TamanhoInput>
               <Select
-                value={consultorioPorId}
                 id="id_consultorio"
                 name="id_consultorio"
                 style={{
@@ -216,9 +218,12 @@ function ModalEditarAgendamentoEspecifico(props) {
                   color:"black"
                 }}
                 size="large"
+                onChange={(e) => {
+                  setConsultorioPorId(e.target.value);
+                }}
               >
                 <option value="" disabled selected >
-                    {consultorioPorId}
+                    {consultorioPorId} 
                   </option>
                 {consultorios.map((consultorio) => (
                   <>

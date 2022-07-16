@@ -53,6 +53,7 @@ function ModalAgendamentoEspecifico(props) {
     setCarregando(true);
     const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
     setUsuario(resposta.dadosUsuario);
+    console.log(usuario.nome);
     setCarregando(false);
   }
 
