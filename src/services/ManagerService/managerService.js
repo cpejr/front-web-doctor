@@ -195,7 +195,8 @@ export const UpdateDadosUsuario = async (
   await requesterService
     .updateDadosUsuario(id_usuario, id_endereco, endereco, estado)
     .then(() => {
-      alert("Usuário atualizado com sucesso.");
+      toast.success("Dados alterados com sucesso.")
+      sleep(1500);
       window.location.href = "/web/perfil";
     })
     .catch((error) => {

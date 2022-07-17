@@ -72,7 +72,6 @@ function Perfil(props) {
   }, [tipoUsuarioLogado]);
 
   async function pegandoDadosPerfilPessoal() {
-    console.log("Pessoal")
     const resposta = await managerService.GetDadosUsuario(email);
     const data = new Date(resposta.dadosUsuario.data_nascimento);
     setUsuario(resposta.dadosUsuario);
@@ -84,7 +83,6 @@ function Perfil(props) {
   }
 
   async function pegandoDadosPerfilSelecionado() {
-    console.log("Selecionado")
     const resposta = await managerService.GetDadosUsuario(
       props.location.state.email
     );

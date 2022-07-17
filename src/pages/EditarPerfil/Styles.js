@@ -169,6 +169,7 @@ export const RotuloColuna = styled.div`
   justify-content: space-around;
   align-items: flex-start;
   width: 50%;
+  height: 90px;
   @media (max-width: 820px) {
     width: 100%;
   }
