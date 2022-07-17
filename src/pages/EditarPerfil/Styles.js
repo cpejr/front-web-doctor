@@ -87,7 +87,7 @@ export const CaixaInputs = styled.div`
   @media (max-width: 780px) {
     display: flex;
     flex-direction: column;
-    align-items: flex-end;
+    
   }
 `;
 
