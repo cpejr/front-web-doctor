@@ -224,6 +224,7 @@ function EditarPerfil() {
             name="data_nascimento"
             onChange={preenchendoDados}
           ></Input>
+      
 
           <Input
             placeholder={endereco.cep}
