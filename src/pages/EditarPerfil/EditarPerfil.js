@@ -9,6 +9,7 @@ import {
   ImagemPerfil,
   BlocoSuperior,
   BlocoInferior,
+  EspaçoInput
 } from "./Styles";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
@@ -171,6 +172,7 @@ function EditarPerfil() {
             name="nome"
             onChange={preenchendoDados}
           ></Input>
+          <EspaçoInput/>
           <Input
             placeholder={cpfMasked}
             backgroundColor={Cores.cinza[7]}
@@ -197,7 +199,7 @@ function EditarPerfil() {
             name="email"
             onChange={preenchendoDados}
           ></Input>
-
+          <EspaçoInput/>
           <Input
             placeholder={telMasked}
             backgroundColor={Cores.cinza[7]}
@@ -224,8 +226,7 @@ function EditarPerfil() {
             name="data_nascimento"
             onChange={preenchendoDados}
           ></Input>
-      
-
+          <EspaçoInput/>
           <Input
             placeholder={endereco.cep}
             backgroundColor={Cores.cinza[7]}
@@ -252,6 +253,7 @@ function EditarPerfil() {
             name="pais"
             onChange={preenchendoEndereco}
           ></Input>
+          <EspaçoInput/>
           <Input
             placeholder={endereco.estado}
             backgroundColor={Cores.cinza[7]}
@@ -278,6 +280,7 @@ function EditarPerfil() {
             name="bairro"
             onChange={preenchendoEndereco}
           ></Input>
+          <EspaçoInput/>
           {complemento === null ? (
             <Input
               placeholder="Complemento: "
@@ -319,6 +322,7 @@ function EditarPerfil() {
             name="rua"
             onChange={preenchendoEndereco}
           ></Input>
+          <EspaçoInput/>
           <Input
             placeholder={endereco.numero}
             backgroundColor={Cores.cinza[7]}
