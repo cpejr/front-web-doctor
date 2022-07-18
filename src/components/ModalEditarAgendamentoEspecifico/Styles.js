@@ -33,10 +33,9 @@ export const InfoEsquerda = styled.div`
   align-items: center;
   width: 50%;
   height: 100%;
-  min-height: 60vh;
+  min-height: 70vh;
   padding: 5%;
-  margin-top: 5.5%;
-  margin-bottom: 5%;
+  margin-top: 5%;
 
   @media (max-width: 800px) {
     width: 100%;
