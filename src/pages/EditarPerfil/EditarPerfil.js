@@ -196,12 +196,7 @@ function EditarPerfil() {
   }, [dataNascimento]);
 
   useEffect(() => {
-    if (
-      estadoBack.nome === null ||
-      estadoBack.nome === undefined ||
-      estadoBack.nome === ""
-    )
-      errors.nome = true;
+    if (!estadoBack.nome) errors.nome = true;
     if (!estadoBack.telefone) errors.telefone = true;
     if (!estadoBack.data_nascimento) errors.data_nascimento = true;
     if (!estadoBack.cpf) errors.cpf = true;
