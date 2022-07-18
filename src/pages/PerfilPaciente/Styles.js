@@ -210,10 +210,9 @@ export const DadosGeo = styled.div`
   overflow: hidden;
 `;
 export const Botoes = styled.div`
-  //margin-top: 15%;
   display: flex;
   flex-direction: column;
-  padding: 0% 20% 0% 0%;
+  padding: 2% 20% 0% 0%;
   justify-content: start;
   margin-top: ${(props) => props.marginTop};
 
@@ -225,7 +224,7 @@ export const Botoes = styled.div`
 
 `;
 export const Botao = styled.div`
-  margin-bottom: 3%;
+  margin-bottom: 1.5%;
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -269,22 +268,6 @@ export const DadosContato = styled.div`
   }
 `;
 
-export const DadosTeste = styled.div`
-
-  
-`;
-export const DadosTeste2 = styled.div`
-
-  
-    /* max-height:100px;
-    width: 100px;
-
-    @media (max-height: 150px) {
-    margin-bottom: 15%;
-  } */
-  
-`;
-
 export const InfoContato = styled.div`
   text-decoration: ${(props) => props.textDecoration};
   font-size: 1.2em;
@@ -312,6 +295,7 @@ export const DadosPaciente = styled.div`
     border-width: 2px;
     border-radius: 3px;
     box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
+    margin-top: 2.5%;
   }
 `;
 

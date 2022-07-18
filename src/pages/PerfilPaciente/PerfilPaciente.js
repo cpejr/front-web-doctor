@@ -79,7 +79,7 @@ function PerfilPaciente(props) {
     <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin />
   );
 
-  const margemBotoes = tipo ? "0px" : "15%";
+  const margemBotoes = tipo ? "0px" : "8%";
   const margemPerfil = tipo ? "2%" : "20%";
 
   useEffect(() => {
@@ -204,18 +204,17 @@ function PerfilPaciente(props) {
                     {usuario.email}
                   </InfoContato>
                 </DadosContato>
-                {tipo ? (
                   <DadosPaciente>
                     <Titulo>Dados</Titulo>
                     <InfoDadosPaciente>CPF: {cpf}</InfoDadosPaciente>
+                    {tipo ? (
                     <InfoDadosPaciente>
                       Código: {usuario.codigo}
                     </InfoDadosPaciente>
-                  </DadosPaciente>
-                ) : ( 
-                  <></>
-                )
-                }
+                    ) : ( 
+                      <></>
+                    )}
+                </DadosPaciente>
                 <Botoes
                   marginTop = {margemBotoes}
                 >
