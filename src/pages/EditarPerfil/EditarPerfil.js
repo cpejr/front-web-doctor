@@ -195,8 +195,13 @@ function EditarPerfil() {
     );
   }, [dataNascimento]);
 
-  async function atualizarDados() {
-    if(estadoBack.nome === null || estadoBack.nome === undefined) errors.nome = true;
+  useEffect(() => {
+    if (
+      estadoBack.nome === null ||
+      estadoBack.nome === undefined ||
+      estadoBack.nome === ""
+    )
+      errors.nome = true;
     if (!estadoBack.telefone) errors.telefone = true;
     if (!estadoBack.data_nascimento) errors.data_nascimento = true;
     if (!estadoBack.cpf) errors.cpf = true;
@@ -210,10 +215,11 @@ function EditarPerfil() {
     if (!enderecoBack.numero) errors.numero = true;
 
     setTudoNulo({ ...tudoNulo, ...errors });
+  }, [estadoBack]);
 
+  async function atualizarDados() {
     setCarregando(true);
-    console.log(tudoNulo, referenciaTudoNulo);
-    if (!(_.isEqual(tudoNulo, referenciaTudoNulo))) {
+    if (!_.isEqual(tudoNulo, referenciaTudoNulo)) {
       if (_.isEqual(erro, referenciaFormatacao)) {
         await managerService.UpdateDadosUsuario(
           usuario.id,
@@ -311,6 +317,9 @@ function EditarPerfil() {
 
   function preenchendoEndereco(e) {
     const { name, value } = e.target;
+    if (value) {
+      setTudoNulo({ ...tudoNulo, [name]: false });
+    }
 
     if (name === "cep" && value.length <= 8 && value.length > 0) {
       setErro({ ...erro, [name]: true });
