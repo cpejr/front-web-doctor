@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Input, Select, Modal } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import {
@@ -28,10 +29,13 @@ import * as managerService from "../../services/ManagerService/managerService";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 import { Cores } from "../../variaveis";
 function Agendamentos () {
+  const history = useHistory();
  
   const { Search } = Input;
+  const [usuarios, setUsuarios] = useState([]);
   const [modalAgendamento, setModalAgendamento] = useState(false);
-  const [email, setEmail] = useState(false);
+  const [email, setEmail] = useState();
+  const [codigo, setCodigo] = useState();
   const [carregando, setCarregando] = useState(true);
   const [consultas, setConsultas] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
@@ -40,6 +44,11 @@ function Agendamentos () {
   useEffect(() => {
     pegandoDados();
   }, [email]);
+
+  useEffect(() => {
+    pegandoDadosPessoais();
+  }, [email]);
+
 
   async function marcandoAgendamento(email) {
     setEmail(email);
@@ -57,6 +66,32 @@ function Agendamentos () {
     setExamesMarcados(respostaConsultas.dadosExamesMarcados);
 
     setCarregando(false);
+  }
+
+  async function pegandoDadosPessoais() {
+    const resposta = await managerService.GetDadosPessoais();
+      resposta.forEach((usuario) => {
+        if (usuario.tipo === "PACIENTE") {
+          setUsuarios((usuarios) => [...usuarios, usuario]);
+
+          setCarregando(false);
+        }
+      });
+  }
+
+  async function pegaDadosUsuario(id_usuario) {
+    let pegaUsuario = usuarios.filter(value => {return (value.id === id_usuario);});
+    let pegaEmail = pegaUsuario.map((value) => (value.email));
+    let pegaCodigo = pegaUsuario.map((value) => (value.codigo));
+    setCodigo(pegaCodigo);
+    setEmail(pegaEmail);
+    console.log(pegaUsuario);
+
+
+    // history.push({
+    //   pathname: "/web/perfildopaciente",
+    //   state: { email },
+    // });
   }
 
   return (
@@ -98,7 +133,13 @@ function Agendamentos () {
                 {carregando ? (
                   <Spin indicator={antIcon} />
                 ) : (
-                  <div>{value.nome}</div>
+                  <div
+                    onClick={() =>
+                    pegaDadosUsuario(value.id_usuario)
+                    }
+                  >
+                    {value.nome}
+                  </div>
                 )}
               </Nome>
               <Telefone>
@@ -122,7 +163,7 @@ function Agendamentos () {
                 {carregando ? (
                   <Spin indicator={antIcon} />
                 ) : (
-                  <div>XXXXXX-XXXXX</div>
+                  <div>{codigo}</div>
                 )}
               </CódigoPaciente>
             </Usuario>
