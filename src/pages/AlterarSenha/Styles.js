@@ -72,10 +72,10 @@ export const BotoesMesmaLinha = styled.div`
   }
   @media (min-width: 561px) and (max-width: 690px)
   {
-    font-size:0.72em;    
+    font-size:0.75em;    
   } 
   @media (min-width: 690px) and (max-width: 780px)
   {
-    font-size:0.85em;    
+    font-size:0.9em;    
   } 
 `;
