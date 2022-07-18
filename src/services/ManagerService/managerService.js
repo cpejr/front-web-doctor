@@ -36,7 +36,7 @@ export const Cadastrando = async (usuario, endereco) => {
   await requesterService
     .criarUsuario(endereco, usuario)
     .then(() => {
-      alert("Usuário cadastrado com sucesso.");
+      toast.success("Usuário cadastrado com sucesso.");
       sleep(1500);
       window.location.href = "/login";
     })
