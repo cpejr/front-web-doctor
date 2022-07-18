@@ -82,7 +82,6 @@ function ModalEditarAgendamentoEspecifico(props) {
     setCarregando(true);
     setConsulta(props.consulta);
     setCarregando(false);
-
   }
 
 
@@ -107,13 +106,15 @@ function ModalEditarAgendamentoEspecifico(props) {
    useEffect(() => {
     setandoNomeConsultorioPorId();
   }, [consulta]); 
+
+
+
   
 
   async function requisicaoAtualizarConsulta() {
     setCarregando(true);
     consulta.id_usuario = usuario.id;
     console.log(consulta.id_consultorio);
-    console.log(consultorioPorId);
     formatacaoDataHora(); 
     await managerService.UpdateConsulta(consulta.id, consulta); 
     setCarregando(false);
@@ -140,6 +141,7 @@ function ModalEditarAgendamentoEspecifico(props) {
       return consulta;
     }
   }  
+
 
   return (
     <Container>
@@ -219,7 +221,7 @@ function ModalEditarAgendamentoEspecifico(props) {
                 }}
                 size="large"
                 onChange={(e) => {
-                  setConsultorioPorId(e.target.value);
+                  preenchendoDadosConsulta(e);
                 }}
               >
                 <option value="" disabled selected >

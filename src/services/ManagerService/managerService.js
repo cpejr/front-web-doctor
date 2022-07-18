@@ -62,11 +62,12 @@ export const CriandoConsulta = async (consulta) => {
 };
 
 export const UpdateConsulta = async (id_consulta, consulta) => {
+  console.log(consulta);
   await requesterService
     .updateConsulta(id_consulta, consulta)
     .then(() => {
       alert("Consulta atualizada com sucesso.");
-      /* window.location.href = "/web/agendamentos";  */
+      window.location.href = "/web/agendamentos";   
     })
     .catch((error) => {
       requisicaoErro(error);
