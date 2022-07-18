@@ -76,11 +76,11 @@ export const Titulo = styled.div`
 export const InfoEsquerda = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: start;
+  justify-content: flex-start;
+  align-items: center;
   width: 65%;
-  height: 600px;
+  height: 550px;
   overflow: auto;
-  overflow-x: hidden;
 
   @media (max-width: 800px) {
     width: 100%;
@@ -138,16 +138,17 @@ export const NumeroAgendamentos = styled.div`
 
 export const Agendamento = styled.div`
   display: flex;
-  align-items: end;
+  align-items: center;
   flex-direction: row;
   justify-content: start;
   align-self: start;
   width: 94%;
-  height: 100%;
   margin-left: 6%;
+  margin-top: 2%;
 
   @media (max-width: 1100px) {
     flex-direction: column;
+    margin-left: 3%;
   }
 `;
 
@@ -163,6 +164,7 @@ export const CaixaAgendamento = styled.div`
   border-color:${Cores.lilas[3]};
   border-width: 0.2em;
   border-radius: 6px;
+  margin-top: 5px;
 
   @media (max-width: 1100px) {
     width: 98%;
@@ -184,6 +186,7 @@ export const BotoesEditarExcluir = styled.div`
   @media (max-width: 1100px) and (min-width: 560px) {
     width: 98%;
     justify-content: space-between;
+    align-items: start;
   }
   @media (max-width: 800px) {
     width: 98%;

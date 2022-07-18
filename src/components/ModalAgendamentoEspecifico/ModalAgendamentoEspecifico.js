@@ -26,7 +26,6 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { Cores } from "../../variaveis";
 import moment from "moment";
-import AddToast from "../AddToast/AddToast";
 
 function ModalAgendamentoEspecifico(props) {
   const { Option } = Select;
@@ -278,7 +277,6 @@ function ModalAgendamentoEspecifico(props) {
           </Button>
         </InfoEsquerdaEDireita>
       </Caixa>
-      <AddToast />
     </Container>
   );
 }
