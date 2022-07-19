@@ -99,6 +99,7 @@ function ListaUsuarios() {
 
   async function fechandoModalCodigo(){
     setModalAdicionarCodigo(false);
+    pegandoDadosUsuarios();
   }
 
   async function verificandoSecretariaOuPaciente(tipo, email) {
@@ -248,7 +249,7 @@ function ListaUsuarios() {
         width={"70%"}
         centered={true}
       >
-        <ModalAdicionarCodigo emailUsuario={email} />
+        <ModalAdicionarCodigo emailUsuario={email} fechandoModal = {() => fechandoModalCodigo()}/>
       </Modal>
     </div>
   );

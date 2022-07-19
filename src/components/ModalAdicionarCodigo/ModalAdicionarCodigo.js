@@ -38,9 +38,7 @@ function ModalAdicionarCodigo(props) {
     } else {
       await managerService.UpdateCodigo(usuario.id, codigo);
     }
-    await sleep(3000);
-    /* redirecionamento("/web/listadeusuarios"); 
-    setCarregando(false); */
+    props.fechandoModal();
   }
 
   function preenchendoDados(e) {
