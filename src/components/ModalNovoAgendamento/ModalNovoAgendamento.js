@@ -127,19 +127,19 @@ function ModalNovoAgendamento() {
                                     placeholder="Tipo"
                                 >
                                     <option value="" disabled selected >
-                                        Nome do Paciente
+                                        Paciente
                                     </option>
 
                                     {usuarios.map((usuario) => (
                                         <>
-                                    {carregando ? (
-                                        <Spin indicator={antIcon} />
-                                    ) : (
-                                      <option key={usuario.id} value={usuario.id} color="red">
-                                        {usuario.nome}
-                                      </option>
-                                    )}
-                                    </>
+                                            {carregando ? (
+                                                <Spin indicator={antIcon} />
+                                            ) : (
+                                                <option key={usuario.id} value={usuario.id} color="red">
+                                                    {usuario.nome}
+                                                </option>
+                                            )}
+                                        </>
                                     ))}
                                 </Select>
                             </Nome>

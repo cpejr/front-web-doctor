@@ -72,7 +72,7 @@ export const Imagem = styled.img`
 `;
 
 export const Nome = styled.div`
-  width: 40%;
+  width: 50%;
   display: flex;
   justify-content: start;
   font-family: ${Fontes.barlow};
