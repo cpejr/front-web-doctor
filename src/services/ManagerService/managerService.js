@@ -210,10 +210,11 @@ export const UpdateDadosUsuario = async (
 };
 
 export const UpdateCodigo = async (id_usuario, codigo) => {
+  console.log("chegou");
   await requesterService
     .updateCodigo(id_usuario, codigo)
     .then(() => {
-      toast.success("Código adicionado com sucesso.");
+      toast.success("Código atualizado com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));

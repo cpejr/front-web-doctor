@@ -203,7 +203,7 @@ function ListaUsuarios() {
                   <Button
                     backgroundColor="transparent"
                     borderColor="transparent"
-                    color="green"
+                    color="blue"
                     fontSize="1em"
                     textDecoration="underline"
                     height="50px"
