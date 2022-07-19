@@ -45,11 +45,6 @@ function Agendamentos () {
     pegandoDados();
   }, [email]);
 
-  useEffect(() => {
-    pegandoDadosPessoais();
-  }, [email]);
-
-
   async function marcandoAgendamento(email) {
     setEmail(email);
     setModalAgendamento(true);
@@ -68,30 +63,12 @@ function Agendamentos () {
     setCarregando(false);
   }
 
-  async function pegandoDadosPessoais() {
-    const resposta = await managerService.GetDadosPessoais();
-      resposta.forEach((usuario) => {
-        if (usuario.tipo === "PACIENTE") {
-          setUsuarios((usuarios) => [...usuarios, usuario]);
-
-          setCarregando(false);
-        }
-      });
-  }
-
-  async function pegaDadosUsuario(id_usuario) {
-    let pegaUsuario = usuarios.filter(value => {return (value.id === id_usuario);});
-    let pegaEmail = pegaUsuario.map((value) => (value.email));
-    let pegaCodigo = pegaUsuario.map((value) => (value.codigo));
-    setCodigo(pegaCodigo);
-    setEmail(pegaEmail);
-    console.log(pegaUsuario);
-
-
-    // history.push({
-    //   pathname: "/web/perfildopaciente",
-    //   state: { email },
-    // });
+  async function abrindoPerfilPaciente(email) {
+    
+    history.push({
+      pathname: "/web/perfildopaciente",
+      state: { email },
+    });
   }
 
   return (
@@ -135,7 +112,7 @@ function Agendamentos () {
                 ) : (
                   <div
                     onClick={() =>
-                    pegaDadosUsuario(value.id_usuario)
+                    abrindoPerfilPaciente(value.email)
                     }
                   >
                     {value.nome}
@@ -163,7 +140,7 @@ function Agendamentos () {
                 {carregando ? (
                   <Spin indicator={antIcon} />
                 ) : (
-                  <div>{codigo}</div>
+                  <div>{value.codigo}</div>
                 )}
               </CódigoPaciente>
             </Usuario>
@@ -199,7 +176,7 @@ function Agendamentos () {
                 {carregando ? (
                   <Spin indicator={antIcon} />
                 ) : (
-                  <div>XXXXXX-XXXXX</div>
+                  <div>{value.codigo}</div>
                 )}
               </CódigoPaciente>
             </Usuario>

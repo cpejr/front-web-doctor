@@ -195,7 +195,7 @@ export const CódigoPaciente = styled.div`
   width: 18%;
   display: flex;
   justify-content: center;
-  color: green;
+  color: ${Cores.azul};
   @media (max-width: 880px) {
     width: 20%;
   }
