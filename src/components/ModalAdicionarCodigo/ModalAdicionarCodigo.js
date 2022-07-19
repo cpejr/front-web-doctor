@@ -25,16 +25,22 @@ function ModalAdicionarCodigo(props) {
     setUsuario(resposta.dadosUsuario);
   }
 
+  function setandoCodigo() {
+    setCarregando(true);
+    setCodigo(usuario.codigo);
+    setCarregando(false);
+  }
+
   async function atualizarDados() {
     setCarregando(true);
-    if (usuario.codigo) {
-      await managerService.UpdateCodigo(usuario.id, usuario.codigo + "/" + codigo)
+    if (codigo === "") {
+      await managerService.UpdateCodigo(usuario.id, null);
     } else {
       await managerService.UpdateCodigo(usuario.id, codigo);
     }
     await sleep(3000);
-    redirecionamento("/web/listadeusuarios");
-    setCarregando(false);
+    /* redirecionamento("/web/listadeusuarios"); 
+    setCarregando(false); */
   }
 
   function preenchendoDados(e) {
@@ -46,24 +52,49 @@ function ModalAdicionarCodigo(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
+  useEffect(() => {
+    setandoCodigo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [usuario]);
+
 
   return (
     <>
     <ContainerModalCodigo>
       <Titulo>Insira um codigo</Titulo>
-      <Input
-        placeholder="Codigo"
-        backgroundColor="#E4E6F4"
-        borderColor="#151B57"
-        color="black"
-        fontSize="1em"
-        width="100%"
-        marginTop="2%"
-        name="codigo"
-        onKeyPress={verificandoEnter}
-        onChange={preenchendoDados}
+
+      {codigo === null?(
+        <Input
+          value = ""
+          placeholder="Codigo"
+          backgroundColor="#E4E6F4"
+          borderColor="#151B57"
+          color="black"
+          fontSize="1em"
+          width="100%"
+          marginTop="2%"
+          name="codigo"
+          onKeyPress={verificandoEnter}
+          onChange={preenchendoDados}
+      ></Input>
+          
+      ): (
+        <Input
+          value = {codigo}
+          placeholder="Codigo"
+          backgroundColor="#E4E6F4"
+          borderColor="#151B57"
+          color="black"
+          fontSize="1em"
+          width="100%"
+          marginTop="2%"
+          name="codigo"
+          onKeyPress={verificandoEnter}
+          onChange={preenchendoDados}
       ></Input>
 
+      )}
+   
       <Button
         width="100%"
         height="50px"
