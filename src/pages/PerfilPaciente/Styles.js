@@ -234,7 +234,7 @@ export const DadosFormulario = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  align-items: flex-end;
+  align-items: flex-start;
   margin-bottom: 2%;
 
 
@@ -309,7 +309,7 @@ export const BotaoReceita = styled.div`
   width: 100%;
 `;
 export const TituloFormulario = styled.div`
-  font-size: 1.4em;
+  font-size: 1.3em;
   text-decoration: underline;
   color: ${Cores.preto};
   display:flex;
@@ -322,10 +322,16 @@ export const TituloFormulario = styled.div`
 
   @media (max-width: 780px) {
     font-size: 1.2em;
+    display:flex;
+    justify-content: flex-start;
+    align-items:center;
     
   }
   @media (max-width: 560px) {
     font-size: 1.1em;
+    display:flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
   }
 `;
@@ -347,6 +353,8 @@ export const TipoFormulario = styled.div`
 
   @media (max-width: 780px) {
     font-size: 1.1em;
+    align-content: center;
+    text-align: center;
     
   }
 
@@ -387,4 +395,8 @@ export const TituloReceita = styled.div`
   text-decoration: ${(props) => props.textDecoration};
   color: ${(props) => props.color};
   font-size: ${(props) => props.fontSize};
+`;
+
+export const TextoUrgencia = styled.div`
+  margin-right: 2%;
 `;

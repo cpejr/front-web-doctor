@@ -34,6 +34,7 @@ import {
   ContainerModalExcluir,
   ConteudoModalExcluir,
   ContainerFooterModalExcluir,
+  TextoUrgencia,
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
@@ -277,7 +278,7 @@ function PerfilPaciente(props) {
                     </TituloFormulario>
                     <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
                     <UrgenciaFormulario>
-                      <>Urgência: </>
+                      <TextoUrgencia>Urgência:</TextoUrgencia>
                       {estrelaPreenchida(value.urgencia)}
                       {estrelaNaoPreenchida(3 - value.urgencia)}
                     </UrgenciaFormulario>
