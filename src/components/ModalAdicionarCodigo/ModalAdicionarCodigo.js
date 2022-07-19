@@ -50,7 +50,7 @@ function ModalAdicionarCodigo(props) {
   return (
     <>
     <ContainerModalCodigo>
-      <Titulo>Adicione um codigo</Titulo>
+      <Titulo>Insira um codigo</Titulo>
       <Input
         placeholder="Codigo"
         backgroundColor="#E4E6F4"

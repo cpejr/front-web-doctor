@@ -208,7 +208,7 @@ function ListaUsuarios() {
                     height="50px"
                     onClick={() => abrindoModalCodigo(value.email)}
                   >
-                    Adicionar Código
+                    Editar Código
                   </Button>
                 </BotaoAdicionar>
               ) : (
