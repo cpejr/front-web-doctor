@@ -26,6 +26,8 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { Cores } from "../../variaveis";
 import moment from "moment";
+import { TiposDeConsulta } from "./TiposDeConsulta";
+import { forEach } from "lodash";
 
 function ModalNovoAgendamento() {
     const { Option } = Select;
@@ -43,6 +45,7 @@ function ModalNovoAgendamento() {
         id_usuario: "",
         id_consultorio: "",
     });
+
     const [data, setData] = useState("");
     const [hora, setHora] = useState("");
     const [duracaoEmMinutos, setDuracaoEmMinutos] = useState("");
@@ -66,6 +69,7 @@ function ModalNovoAgendamento() {
         setConsultorios(res.dadosConsultorios);
         setCarregandoConsultorios(false)
     }
+
 
     useEffect(() => {
         pegandoDadosUsuarios();
@@ -123,8 +127,11 @@ function ModalNovoAgendamento() {
                                         borderWidth: "1px",
                                     }}
                                     size="large"
-                                    name="tipo"
-                                    placeholder="Tipo"
+                                    name="id_usuario"
+                                    placeholder="Selecione um paciente"
+                                    onChange={(e) => {
+                                        preenchendoDadosConsulta(e);
+                                    }}
                                 >
                                     <option value="" disabled selected >
                                         Paciente
@@ -209,10 +216,21 @@ function ModalNovoAgendamento() {
                                     preenchendoDadosConsulta(e);
                                 }}
                             >
-                                <option value="" disabled selected >Tipo</option>
-                                <option value="1">Tipo 1</option>
-                                <option value="2">Tipo 2</option>
-                                <option value="3">Tipo 3</option>
+                                <option value="" disabled selected >
+                                    Tipo
+                                </option>
+                                {TiposDeConsulta.map((tipo) => (
+                                    <>
+                                        {carregando ? (
+                                            <Spin indicator={antIcon} />
+                                        ) : (
+                                            <option key={tipo} value={tipo} color="red">
+                                                {tipo}
+                                            </option>
+                                        )}
+                                    </>
+                                ))}
+
                             </Select>
                         </TamanhoInput>
                         <TamanhoInput>
@@ -245,8 +263,6 @@ function ModalNovoAgendamento() {
                                         )}
                                     </>
                                 ))}
-
-
 
                             </Select>
                         </TamanhoInput>
