@@ -20,7 +20,7 @@ import {
   TextoSelecioneUmaData,
   TextAreaDescricao,
   Rotulo,
-  RotuloColuna,
+  InputData,
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 import logoGuilherme from "../../assets/logoGuilherme.png";
@@ -69,55 +69,7 @@ function ModalAgendamentoEspecifico(props) {
     tipo: false,
   };
 
-  async function validacaoData (e) {
-    const { value, name } = e.target;
-
-    if (value) {
-      setCamposVazios({ ...camposVazios, [name]: false });
-    } else {
-      setCamposVazios({ ...camposVazios, [name]: true });
-    }
-
-    setData(value);
-  }
-
-  async function validacaoHora(e) {
-    const { value, name } = e.target;
-
-    if (value) {
-      setCamposVazios({ ...camposVazios, [name]: false });
-    } else {
-      setCamposVazios({ ...camposVazios, [name]: true });
-    }
-
-    setHora(value);
-  }
-
-  async function validacaoDuracao(e) {
-    const { value, name } = e.target;
-
-    if (value) {
-      setCamposVazios({ ...camposVazios, [name]: false });
-    } else {
-      setCamposVazios({ ...camposVazios, [name]: true });
-    }
-
-    setConsulta({ ...consulta, [name]: apenasNumeros(value) });
-  }
-
-  async function validacaoConsultorio(e) {
-    const { value, name } = e.target;
-
-    if (value) {
-      setCamposVazios({ ...camposVazios, [name]: false });
-    } else {
-      setCamposVazios({ ...camposVazios, [name]: true });
-    }
-
-    setConsulta({ ...consulta, [name]: value });
-  }
-
-  async function validacaoTipo(e) {
+  async function validacaoCampos(e) {
     const { value, name } = e.target;
 
     if (value) {
@@ -241,17 +193,12 @@ function ModalAgendamentoEspecifico(props) {
         <InfoEsquerdaEDireita>
           <SelecioneUmaData>
             <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
-            <Input
+            <InputData
               placeholder="Selecione uma data"
               type="date"
               size="large"
               name="data"
-              onChange={validacaoData}
-              style={{
-                borderWidth: "1px",
-                borderColor: "black",
-                color: "black",
-              }}
+              onChange={validacaoCampos}
               value={data}
               camposVazios={camposVazios.data}
             />
@@ -271,7 +218,7 @@ function ModalAgendamentoEspecifico(props) {
                 name="tipo"
                 placeholder="Tipo"
                 onChange={(e) => {
-                  validacaoTipo(e);
+                  validacaoCampos(e);
                 }}
                 value={consulta.tipo}
                 camposVazios={camposVazios.tipo}
@@ -296,7 +243,7 @@ function ModalAgendamentoEspecifico(props) {
                 }}
                 size="large"
                 onChange={(e) => {
-                  validacaoConsultorio(e);
+                  validacaoCampos(e);
                 }}
                 value={consulta.id_consultorio}
                 camposVazios={camposVazios.id_consultorio}
@@ -335,9 +282,10 @@ function ModalAgendamentoEspecifico(props) {
                 placeholder="Horário"
                 name="hora"
                 onChange={(e) => {
-                  validacaoHora(e);
+                  validacaoCampos(e);
                 }}
                 style={{color:"black"}}
+                value={hora}
 
               />
               {camposVazios.hora && (
@@ -350,7 +298,7 @@ function ModalAgendamentoEspecifico(props) {
                 value={consulta.duracao_em_minutos}
                 placeholder="Duração"
                 name="duracao_em_minutos"
-                onChange={validacaoDuracao}
+                onChange={validacaoCampos}
                 suffix="min"
                 camposVazios={camposVazios.duracao_em_minutos}
               />

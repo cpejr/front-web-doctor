@@ -175,6 +175,33 @@ export const TamanhoInput = styled.div`
   }
 `;
 
+export const InputData = styled.input`
+  width: 100%;
+  height: 36px;
+  color: ${Cores.preto};
+  font-family: ${Fontes.barlow};
+  font-weight: 500;
+  font-size: 0.9em;
+  padding-left: 2%;
+  padding-right: 2%;
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 1px;
+  border-color: ${(props) => {
+    let cor;
+    if (!props.borderColor) {
+      if(props.camposVazios){
+        cor = Cores.vermelho;
+      } else {
+        cor = Cores.azul;
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
+`;
+
 export const InputHora = styled.input`
   width: 100%;
   height: 100%;
@@ -183,10 +210,23 @@ export const InputHora = styled.input`
   font-size: 1em;
   color: ${Cores.preto};
   padding-left: 5%;
-  border-color: ${Cores.preto};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
+  border-color: ${(props) => {
+    let cor;
+    if (!props.borderColor) {
+      if(props.camposVazios){
+        cor = Cores.vermelho;
+      } else {
+        cor = Cores.azul;
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
+
   ::placeholder {
     color:${Cores.preto};
   };
@@ -200,10 +240,22 @@ export const InputDuracao = styled(Input)`
   font-weight: 500;
   font-size: 0.9em;
   padding-left: 5%;
-  border-color: ${Cores.preto};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
+  border-color: ${(props) => {
+    let cor;
+    if (!props.borderColor) {
+      if(props.camposVazios){
+        cor = Cores.vermelho;
+      } else {
+        cor = Cores.azul;
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
 
   .ant-input {
     ::placeholder {
@@ -240,15 +292,4 @@ export const Rotulo = styled.div`
   font-weight: 400;
   font-size: 1em;
   color: ${Cores.vermelho};
-`;
-
-export const RotuloColuna = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: flex-start;
-  width: 48%;
-  @media (max-width: 820px) {
-    width: 100%;
-  }
 `;
