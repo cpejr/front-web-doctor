@@ -78,7 +78,7 @@ export const GetDadosConsultasExamesMarcados = async (id_usuario) => {
   let dadosExamesMarcados = {};
 
   await requesterService
-    .requisicaoConsultas(id_usuario)
+    .requisicaoConsultaUsuario(id_usuario)
     .then((res) => {
       dadosConsultas = res.data;
     })
@@ -87,7 +87,7 @@ export const GetDadosConsultasExamesMarcados = async (id_usuario) => {
     });
 
   await requesterService
-    .requisicaoExamesMarcados(id_usuario)
+    .requisicaoExamesMarcadosUsuario(id_usuario)
     .then((res) => {
       dadosExamesMarcados = res.data;
     })
