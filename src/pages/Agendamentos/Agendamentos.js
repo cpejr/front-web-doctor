@@ -25,7 +25,7 @@ import Button from "../../styles/Button";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
-import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
+import ModalNovoAgendamento from "../../components/ModalNovoAgendamento";
 import { Cores } from "../../variaveis";
 function Agendamentos () {
  
@@ -190,7 +190,7 @@ function Agendamentos () {
         width={"70%"}
         centered={true}
       >
-        <ModalAgendamentoEspecifico emailUsuario={email} />
+        <ModalNovoAgendamento />
       </Modal>
     </div>
   );
