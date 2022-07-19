@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Checkbox, Row, Col, Input } from "antd";
+import { sleep } from "../../utils/sleep";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
 import {
@@ -78,6 +79,9 @@ function ModalAgendamentoEspecifico(props) {
     consulta.id_usuario = usuario.id;
     await managerService.CriandoColsulta(consulta);
     setCarregandoCadastro(false);
+
+    await sleep(1500);
+    window.location.href = "/web/agendamentos";
   }
 
   function formatacaoDataHora() {

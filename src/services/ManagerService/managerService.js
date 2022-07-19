@@ -51,8 +51,7 @@ export const CriandoColsulta = async (consulta) => {
   await requesterService
     .criarConsulta(consulta)
     .then(() => {
-      alert("Consulta criada com sucesso.");
-      window.location.href = "/web/agendamentos";
+      toast.success("Consulta criada com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(error);
