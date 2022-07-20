@@ -20,6 +20,7 @@ import {
   TextoSelecioneUmaData,
   TextAreaDescricao,
   Rotulo,
+  RotuloColuna,
   InputData,
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -78,7 +79,19 @@ function ModalAgendamentoEspecifico(props) {
       setCamposVazios({ ...camposVazios, [name]: true });
     }
 
-    setConsulta({ ...consulta, [name]: value });
+    if (e.target.name === "hora") {
+      setHora(e.target.value);
+      return hora;
+    } else if (e.target.name === "data") {
+      setData(e.target.value)
+      return data;
+    } else if (e.target.name === "duracao_em_minutos") {
+      setConsulta({ ...consulta, [e.target.name]: apenasNumeros(e.target.value) });
+      return consulta;
+    } else {
+      setConsulta({ ...consulta, [e.target.name]: e.target.value });
+      return consulta;
+    }
   }
 
   async function pegandoDadosUsuario() {
@@ -116,6 +129,7 @@ function ModalAgendamentoEspecifico(props) {
     if (_.isEqual(camposVazios, referenciaInputNulos)) {
       setCarregandoCadastro(true);
       formatacaoDataHora();
+      console.log(consulta)
       consulta.id_usuario = usuario.id;
       await managerService.CriandoColsulta(consulta);
       setCarregandoCadastro(false);
@@ -136,16 +150,8 @@ function ModalAgendamentoEspecifico(props) {
   }
 
   function preenchendoDadosConsulta(e) {
-    if (e.target.name === "hora") {
-      setHora(e.target.value);
-      return hora;
-    } else if (e.target.name === "data") {
-      setData(e.target.value)
-      return data;
-    } else {
-      setConsulta({ ...consulta, [e.target.name]: e.target.value });
-      return consulta;
-    }
+    setConsulta({ ...consulta, [e.target.name]: e.target.value });
+    return consulta;
   }
 
   return (
@@ -185,7 +191,7 @@ function ModalAgendamentoEspecifico(props) {
             onChange={preenchendoDadosConsulta}
             style={{
               borderWidth: "1px",
-              borderColor: "black",
+              borderColor: Cores.azul,
               color: "black",
             }}
           />
@@ -214,6 +220,8 @@ function ModalAgendamentoEspecifico(props) {
                   color:"black",
                   borderWidth: "1px",
                 }}
+                paddingTop="8px"
+                paddingBottom="8px"
                 size="large"
                 name="tipo"
                 placeholder="Tipo"
@@ -239,8 +247,10 @@ function ModalAgendamentoEspecifico(props) {
                 style={{
                   width: "100%",
                   borderWidth: "1px",
-                  color:"black"
+                  color:"black",
                 }}
+                paddingTop="8px"
+                paddingBottom="8px"
                 size="large"
                 onChange={(e) => {
                   validacaoCampos(e);
@@ -281,11 +291,9 @@ function ModalAgendamentoEspecifico(props) {
                 onBlur={(e) => (e.target.type = "text")}
                 placeholder="Horário"
                 name="hora"
-                onChange={(e) => {
-                  validacaoCampos(e);
-                }}
-                style={{color:"black"}}
+                onChange={validacaoCampos}
                 value={hora}
+                camposVazios={camposVazios.hora}
 
               />
               {camposVazios.hora && (

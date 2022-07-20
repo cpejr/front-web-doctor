@@ -50,7 +50,7 @@ export const Usuario = styled.div`
   width: 100%;
   height: 60px;
   padding: 0% 1% 0% 1%;
-  border-color: ${Cores.preto};
+  border-color: ${Cores.azul};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
@@ -143,12 +143,12 @@ export const DoisSelect = styled.h3`
 
   @media (max-width: 560px) {
     flex-direction: column;
-    height: 100%;
+    height: 120px;
   }
 
   @media (max-width: 1260px) and (min-width: 800px) {
     flex-direction: column;
-    height: 100%;
+    height: 120px;
   }
 `;
 
@@ -181,7 +181,7 @@ export const InputData = styled.input`
   color: ${Cores.preto};
   font-family: ${Fontes.barlow};
   font-weight: 500;
-  font-size: 0.9em;
+  font-size: 15px;
   padding-left: 2%;
   padding-right: 2%;
   border-style: solid;
@@ -202,13 +202,15 @@ export const InputData = styled.input`
   }};
 `;
 
-export const InputHora = styled.input`
+export const InputHora = styled(Input)`
   width: 100%;
-  height: 100%;
+  height: 35px;
+  color: ${Cores.preto};
   font-family: ${Fontes.barlow};
   font-weight: 500;
-  font-size: 1em;
-  color: ${Cores.preto};
+  font-size: 15px;
+  padding-top: 11px;
+  padding-bottom: 11px;
   padding-left: 5%;
   border-style: solid;
   border-radius: 3px;
@@ -228,17 +230,17 @@ export const InputHora = styled.input`
   }};
 
   ::placeholder {
-    color:${Cores.preto};
-  };
+    color:${Cores.preto}
+  }
 `;
 
 export const InputDuracao = styled(Input)`
   width: 100%;
-  height: 100%;
+  height: 35px;
   color: ${Cores.preto};
   font-family: ${Fontes.barlow};
   font-weight: 500;
-  font-size: 0.9em;
+  font-size: 15px;
   padding-left: 5%;
   border-style: solid;
   border-radius: 3px;
@@ -288,6 +290,8 @@ export const SelecioneUmaData = styled.h3`
 
 export const Rotulo = styled.div`
   width: 100%;
+  height: 10px;
+  margin-bottom: 10px;
   font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1em;
