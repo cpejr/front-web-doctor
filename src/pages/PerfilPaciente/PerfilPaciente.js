@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-/* comentario */
 import {
   ContainerPerfil,
   Perfil,
@@ -253,7 +252,7 @@ function PerfilPaciente(props) {
                   {tipoUsuario ? (
                     <Botao>
                       <Button
-                      backgroundColor={Cores.lilas[2]}
+                        backgroundColor={Cores.lilas[2]}
                         color={Cores.azulEscuro}
                         fontWeight="bold"
                         borderColor={Cores.azulEscuro}
@@ -313,11 +312,11 @@ function PerfilPaciente(props) {
                           {value.titulo}
                         </TituloFormulario>
                         <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
-                    <UrgenciaFormulario>
-                      <>Urgência: </>
-                      {estrelaPreenchida(value.urgencia)}
-                      {estrelaNaoPreenchida(3 - value.urgencia)}
-                    </UrgenciaFormulario>
+                        <UrgenciaFormulario>
+                          <>Urgência: </>
+                          {estrelaPreenchida(value.urgencia)}
+                          {estrelaNaoPreenchida(3 - value.urgencia)}
+                        </UrgenciaFormulario>
                       </DadosFormulario>
                       {value.status === true ? (
                         <></>
