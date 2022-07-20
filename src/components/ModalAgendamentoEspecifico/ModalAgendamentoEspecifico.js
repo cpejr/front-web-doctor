@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, Row, Col, Input } from "antd";
+import { Checkbox, Row, Col } from "antd";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
 import {
@@ -20,7 +20,6 @@ import {
   TextoSelecioneUmaData,
   TextAreaDescricao,
   Rotulo,
-  RotuloColuna,
   InputData,
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -56,7 +55,6 @@ function ModalAgendamentoEspecifico(props) {
   const [duracaoEmMinutos, setDuracaoEmMinutos] = useState("");
   // const [selectValue, setSelectValue] = useState("");
 
-  const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
 
   moment.locale("pt-br");
@@ -129,7 +127,6 @@ function ModalAgendamentoEspecifico(props) {
     if (_.isEqual(camposVazios, referenciaInputNulos)) {
       setCarregandoCadastro(true);
       formatacaoDataHora();
-      console.log(consulta)
       consulta.id_usuario = usuario.id;
       await managerService.CriandoColsulta(consulta);
       setCarregandoCadastro(false);
