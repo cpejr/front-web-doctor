@@ -203,49 +203,8 @@ function EditarPerfil() {
               name="data_nascimento"
               onChange={preenchendoDados}
             ></Input>
-
-            <Rotulo>País:</Rotulo>
-            <Input
-              placeholder={endereco.pais}
-              backgroundColor={Cores.cinza[7]}
-              borderColor={Cores.preto}
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              borderWidth="1px"
-              color={Cores.preto}
-              fontSize="1em"
-              width="90%"
-              name="pais"
-              onChange={preenchendoEndereco}
-            ></Input>
-
-            <Rotulo>Bairro:</Rotulo>
-            <Input
-              placeholder={endereco.bairro}
-              backgroundColor={Cores.cinza[7]}
-              borderColor={Cores.preto}
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              borderWidth="1px"
-              color={Cores.preto}
-              fontSize="1em"
-              width="90%"
-              name="bairro"
-              onChange={preenchendoEndereco}
-            ></Input>
-
-            <Rotulo>Rua:</Rotulo>
-            <Input
-              placeholder={endereco.rua}
-              backgroundColor={Cores.cinza[7]}
-              borderColor={Cores.preto}
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              borderWidth="1px"
-              color={Cores.preto}
-              fontSize="1em"
-              width="90%"
-              name="rua"
-              onChange={preenchendoEndereco}
-            ></Input>
           </CaixaInputs>
+
           <CaixaInputs>
             <Rotulo>CPF:</Rotulo>
             <Input
@@ -288,6 +247,24 @@ function EditarPerfil() {
               name="cep"
               onChange={preenchendoEndereco}
             ></Input>
+          </CaixaInputs>
+        </Preenchimento>    
+
+        <Preenchimento>
+          <CaixaInputs>
+            <Rotulo>País:</Rotulo>
+            <Input
+              placeholder={endereco.pais}
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color={Cores.preto}
+              fontSize="1em"
+              width="90%"
+              name="pais"
+              onChange={preenchendoEndereco}
+            ></Input>
 
             <Rotulo>Estado:</Rotulo>
             <Input
@@ -300,6 +277,50 @@ function EditarPerfil() {
               fontSize="1em"
               width="90%"
               name="estado"
+              onChange={preenchendoEndereco}
+            ></Input>
+
+            <Rotulo>Bairro:</Rotulo>
+            <Input
+              placeholder={endereco.bairro}
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color={Cores.preto}
+              fontSize="1em"
+              width="90%"
+              name="bairro"
+              onChange={preenchendoEndereco}
+            ></Input>
+          </CaixaInputs>
+
+          <CaixaInputs>
+            <Rotulo>Rua:</Rotulo>
+            <Input
+              placeholder={endereco.rua}
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color={Cores.preto}
+              fontSize="1em"
+              width="90%"
+              name="rua"
+              onChange={preenchendoEndereco}
+            ></Input>
+
+            <Rotulo>Número:</Rotulo>
+            <Input
+              placeholder={endereco.numero}
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color={Cores.preto}
+              fontSize="1em"
+              width="90%"
+              name="numero"
               onChange={preenchendoEndereco}
             ></Input>
 
@@ -332,20 +353,6 @@ function EditarPerfil() {
                     onChange={preenchendoEndereco}
                 ></Input></>
             )}
-
-            <Rotulo>Número:</Rotulo>
-            <Input
-              placeholder={endereco.numero}
-              backgroundColor={Cores.cinza[7]}
-              borderColor={Cores.preto}
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              borderWidth="1px"
-              color={Cores.preto}
-              fontSize="1em"
-              width="90%"
-              name="numero"
-              onChange={preenchendoEndereco}
-            ></Input>
           </CaixaInputs>
         </Preenchimento>
         <CaixaBotao>

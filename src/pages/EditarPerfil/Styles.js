@@ -78,7 +78,12 @@ export const AlterarDados = styled.div`
 export const Preenchimento = styled.div`
   display: flex;
   flex-direction: row;
-  height: 80%;
+  height: 50%;
+  margin-bottom: 0px;
+
+  @media (max-width: 520px) {
+    flex-direction: column;
+  }
 `;
 
 export const CaixaInputs = styled.div`
@@ -88,17 +93,22 @@ export const CaixaInputs = styled.div`
   height: 100%;
   padding-left: 2%;
   padding-right: 2%;
-  margin-bottom: 3%; ;
+  margin-bottom: 0;
   gap: 1%;
 
   @media (max-width: 780px) {
     display: flex;
     flex-direction: column;
   }
+
+  @media (max-width: 560px) {
+    padding-left: 4%;
+    padding-right: 4%;
+  }
 `;
 
 export const Rotulo = styled.label`
-  margin-top: 4%;
+  margin-top: 5%;
 
   @media (max-width: 930px) {
     margin-top: 5%;
@@ -113,12 +123,13 @@ export const CaixaBotao = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 2%;
+  margin-top: 3%;
   margin-bottom: 2%;
 
   @media (max-width: 560px) {
     padding-left: 4%;
     padding-right: 4%;
+    margin-top: 5%;
   }
 `;
 
