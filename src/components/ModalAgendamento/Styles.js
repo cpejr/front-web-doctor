@@ -79,11 +79,17 @@ export const InfoEsquerda = styled.div`
   justify-content: flex-start;
   align-items: center;
   width: 65%;
-  height: 550px;
+  height: 530px;
   overflow: auto;
 
   @media (max-width: 800px) {
     width: 100%;
+  }
+  @media (max-height: 820px) {
+    height: 400px;
+  }
+  @media (max-height: 820px) {
+    height: 300px;
   }
 `;
 
@@ -168,6 +174,7 @@ export const CaixaAgendamento = styled.div`
 
   @media (max-width: 1100px) {
     width: 98%;
+    height: 60px;
   }
   @media (max-width: 480px) {
     flex-direction: column;
