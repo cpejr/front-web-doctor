@@ -95,6 +95,7 @@ export const ConjuntoDataCPF = styled.div`
   justify-content: space-between;
   margin-left: 10%;
   width: 80%;
+  gap: 4%;
   @media (max-width: 480px) {
     font-size: 0.8em;
     flex-direction: column;
@@ -179,7 +180,7 @@ export const EnderecoContato = styled.div`
   flex-direction: row;
   justify-content: start;
   align-items: start;
-  margin-bottom: 8%;
+  margin-bottom: 5%;
   height: 20%;
   width: 100%;
   color: ${Cores.azul};
@@ -188,15 +189,14 @@ export const EnderecoContato = styled.div`
   font-size: 1.4em;
   @media (max-width: 1100px) and (min-width: 770px) {
     height: 15%;
-    margin-bottom: 5%;
   }
   @media (max-width: 770px) and (min-width: 560px) {
-    font-size: 1.1em;
+    font-size: 1.3em;
   }
   @media (max-width: 560px) {
-    font-size: 1em;
+    font-size: 1.5em;
     height: 15%;
-    margin-bottom: 9%;
+    margin-bottom: 2%;
   }
 `;
 export const DadosEndereco = styled.div`
@@ -217,7 +217,7 @@ export const DadosEndereco = styled.div`
     font-size: 0.85em;
   }
   @media (max-width: 560px) {
-    font-size: 0.9em;
+    font-size: 1em;
   }
 `;
 export const RuaNumeroComplemento = styled.div`
@@ -335,7 +335,7 @@ export const DadosContato = styled.div`
     margin-bottom: 0.5%;
   }
   @media (max-width: 560px) {
-    font-size: 0.8em;
+    font-size: 1em;
   }
 `;
 export const ExcluirConta = styled.div`

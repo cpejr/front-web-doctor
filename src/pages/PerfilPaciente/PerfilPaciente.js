@@ -60,6 +60,8 @@ function PerfilPaciente(props) {
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
   const [telefone, setTelefone] = useState("");
+  const [cuidador, setCuidador] = useState();
+  const [telefoneCuidador, setTelefoneCuidador] = useState();
   const [dataNascimento, setDataNascimento] = useState("");
   const [carregando, setCarregando] = useState(true);
   const [respostas, setRespostas] = useState([]);
@@ -67,6 +69,7 @@ function PerfilPaciente(props) {
   const [titulo, setTitulo] = useState();
   const [cpf, setCpf] = useState();
   const [codigo, setCodigo] = useState();
+  const [convenio, setConvenio] = useState();
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
   const [tipoUsuario, setTipoUsuario] = useState(false);
 
@@ -91,6 +94,9 @@ function PerfilPaciente(props) {
     setCodigo(resposta.dadosUsuario.codigo);
     setDataNascimento(data.toLocaleDateString());
     setEndereco(resposta.dadosEndereco);
+    setCuidador(resposta.dadosUsuario.nome_cuidador);
+    setTelefoneCuidador(resposta.dadosUsuario.telefone_cuidador);
+    setConvenio(resposta.dadosUsuario.convenio);
     setCarregando(false);
 
     if (resposta.dadosUsuario.tipo === "PACIENTE") {
@@ -175,7 +181,7 @@ function PerfilPaciente(props) {
                   </FotoPerfil>
                   <Dados>
                     <Nome>{usuario.nome}</Nome>
-                    <Data> Data de Nasc.: {dataNascimento}</Data>
+                    <Data> Nascimento: {dataNascimento}</Data>
                   </Dados>
                 </PerfilSuperior>
                 <PerfilInferior>
@@ -196,15 +202,28 @@ function PerfilPaciente(props) {
                     ({telefone.slice(0, -9)}) {telefone.slice(2, -4)}-
                     {telefone.slice(-4)}
                   </InfoContato>
-                  <InfoContato textDecoration="underline">
+                  <InfoContato textDecoration="underline" style={{ wordBreak: "break-word",}}>
                     {usuario.email}
                   </InfoContato>
+                  {tipoUsuario ? (
+                    <> 
+                      <InfoContato 
+                        style={{ marginTop: "0.4%",}}>Cuidador: {cuidador}</InfoContato>
+                      <InfoContato
+                        style={{ marginTop: "0.4%",}}>Telefone do Cuidador: {telefoneCuidador}</InfoContato>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </DadosContato>
                 <DadosPaciente>
                   <Titulo>Dados</Titulo>
                   <InfoDadosPaciente>CPF: {cpf}</InfoDadosPaciente>
                   {tipoUsuario ? (
-                    <InfoDadosPaciente>Código: {codigo}</InfoDadosPaciente>
+                    <> 
+                      <InfoDadosPaciente>Código: {codigo}</InfoDadosPaciente>
+                      <InfoDadosPaciente>Convênio: {convenio}</InfoDadosPaciente>
+                    </>
                   ) : (
                     <></>
                   )}

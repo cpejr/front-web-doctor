@@ -174,7 +174,11 @@ export const Nome = styled.div`
   font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: pre-line;
+
+  @media (max-width: 300px){
+    font-size: 1.5em;
+  }
 `;
 export const DataAnos = styled.div`
   display: flex;
@@ -187,6 +191,10 @@ export const Data = styled.div`
   font-size: 1.2em;
   justify-content: flex-start;
   color: ${Cores.azul};
+
+  @media (max-width: 460px) {
+    font-size: 1em;
+  } 
 `;
 export const Anos = styled.div`
   font-size: 1.2em;
@@ -197,6 +205,10 @@ export const Titulo = styled.div`
   color: ${Cores.azul};
   font-weight: bold;
   margin: 0% 0% 2% 0%;
+
+  @media (max-width: 560px){
+    font-size: 1.3em;
+  }
 `;
 export const DadosGeo = styled.div`
   font-size: 1.2em;
@@ -204,8 +216,12 @@ export const DadosGeo = styled.div`
   margin-bottom: 2%;
   text-decoration: ${(props) => props.textDecoration};
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: pre-line;
   overflow: hidden;
+
+  @media (max-width: 560px) {
+    font-size: 1em;
+  }
 `;
 export const Botoes = styled.div`
   display: flex;
@@ -270,8 +286,13 @@ export const InfoContato = styled.div`
   font-size: 1.2em;
   color: ${Cores.azul};
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: pre-line;
   overflow: hidden;
+
+  @media (max-width: 560px) {
+    font-size: 1em;
+    margin-bottom: 2%;
+  }
 `;
 
 export const DadosPaciente = styled.div`
@@ -301,8 +322,13 @@ export const InfoDadosPaciente = styled.div`
   font-size: 1.2em;
   color: ${Cores.azul};
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: pre-line;
   overflow: hidden;
+
+  @media (max-width: 560px) {
+    font-size: 1em;
+    margin-bottom: 2%;
+  }
 `;
 
 export const Formulario = styled.div`

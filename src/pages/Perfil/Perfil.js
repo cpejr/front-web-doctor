@@ -184,7 +184,7 @@ function Perfil(props) {
                 <DadosEndereco>Estado: {endereco.estado}</DadosEndereco>
                 <DadosEndereco>Cidade: {endereco.cidade}</DadosEndereco>
                 <DadosEndereco>Bairro: {endereco.bairro}</DadosEndereco>
-                <DadosEndereco>Rua: {endereco.rua}, {endereco.numero}</DadosEndereco>
+                <DadosEndereco>Rua: {endereco.rua}</DadosEndereco>
                 <DadosEndereco>Número: {endereco.numero}</DadosEndereco>
                 <DadosEndereco>Complemento: {endereco.complemento}</DadosEndereco>
 
@@ -211,7 +211,7 @@ function Perfil(props) {
                     ({telefone.slice(0, -9)}) {telefone.slice(2, -4)}-
                     {telefone.slice(-4)}
                   </DadosContato>
-                  <DadosContato>{usuario.email}</DadosContato>
+                  <DadosContato style={{ wordBreak: "break-word",}}>{usuario.email}</DadosContato>
                 </>
               )}
             </CaixaContato>
