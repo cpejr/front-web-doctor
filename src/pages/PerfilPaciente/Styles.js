@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Cores, Fontes } from "../../variaveis";
+import { Cores } from "../../variaveis";
 
 export const ContainerPerfil = styled.div`
   display: flex;
@@ -14,7 +14,6 @@ export const ContainerPerfil = styled.div`
   @media (max-width: 1080px) {
     padding: 2% 4% 2% 4%;
   }
-
 `;
 
 export const Perfil = styled.div`
@@ -30,8 +29,7 @@ export const Perfil = styled.div`
   padding: 2%;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   gap: 15%;
-  margin-bottom: ${(props) => props.marginBot};
-
+  margin-bottom: ${(props) => props.marginBottom};
 
   @media (max-width: 1080px) {
     width: 80%;
@@ -221,7 +219,6 @@ export const Botoes = styled.div`
     margin: 0;
     justify-content: center;
   }
-
 `;
 export const Botao = styled.div`
   margin-bottom: 1.5%;
@@ -320,7 +317,6 @@ export const Formulario = styled.div`
   padding: 0% 2% 2% 2%;
   margin: 2% 0% 2% 0%;
   background-color: ${Cores.azulClaro};
-
 `;
 export const Receita = styled.div`
   width: 100%;
@@ -404,4 +400,3 @@ export const TituloReceita = styled.div`
   color: ${(props) => props.color};
   font-size: ${(props) => props.fontSize};
 `;
-
