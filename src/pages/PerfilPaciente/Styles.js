@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Cores, Fontes } from "../../variaveis";
+import { Cores } from "../../variaveis";
 
 export const ContainerPerfil = styled.div`
   display: flex;
@@ -29,7 +29,7 @@ export const Perfil = styled.div`
   padding: 2%;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   gap: 15%;
-  margin-bottom: 2%;
+  margin-bottom: ${(props) => props.marginBottom};
 
   @media (max-width: 1080px) {
     width: 80%;
@@ -208,11 +208,11 @@ export const DadosGeo = styled.div`
   overflow: hidden;
 `;
 export const Botoes = styled.div`
-  margin-top: 15%;
   display: flex;
   flex-direction: column;
-  padding: 0% 20% 0% 0%;
+  padding: 2% 20% 0% 0%;
   justify-content: start;
+  margin-top: ${(props) => props.marginTop};
 
   @media (max-width: 1080px) {
     padding: 0;
@@ -221,7 +221,7 @@ export const Botoes = styled.div`
   }
 `;
 export const Botao = styled.div`
-  margin-bottom: 5%;
+  margin-bottom: 1.5%;
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -265,6 +265,7 @@ export const DadosContato = styled.div`
     box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   }
 `;
+
 export const InfoContato = styled.div`
   text-decoration: ${(props) => props.textDecoration};
   font-size: 1.2em;
@@ -273,6 +274,38 @@ export const InfoContato = styled.div`
   white-space: nowrap;
   overflow: hidden;
 `;
+
+export const DadosPaciente = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 2%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @media (max-width: 1080px) {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    display: block;
+    border-style: solid;
+    border-color: ${Cores.cinza[3]};
+    border-width: 2px;
+    border-radius: 3px;
+    box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
+    margin-top: 2.5%;
+  }
+`;
+
+export const InfoDadosPaciente = styled.div`
+  text-decoration: ${(props) => props.textDecoration};
+  font-size: 1.2em;
+  color: ${Cores.azul};
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+`;
+
 export const Formulario = styled.div`
   width: 100%;
   display: flex;
