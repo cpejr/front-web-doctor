@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
+import { useHistory } from "react-router-dom";
 import {
   ContainerEditarPerfil,
   ColunaEsquerda,
@@ -11,15 +14,13 @@ import {
   ImagemPerfil,
   BlocoSuperior,
   BlocoInferior,
+  EspaçoInput,
 } from "./Styles";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
-import { useHistory } from "react-router-dom";
-import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function EditarPerfil() {
   const history = useHistory();
@@ -32,10 +33,8 @@ function EditarPerfil() {
   const [complemento, setComplemento] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [carregando, setCarregando] = useState(true);
-
   const [estado, setEstado] = useState({});
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
   const [cpfMasked, setCpfMasked] = useState({});
   const [dataMasked, setDataMasked] = useState({});
   const [telMasked, setTelMasked] = useState({});
@@ -51,6 +50,10 @@ function EditarPerfil() {
     setCarregando(false);
   }
   
+  useEffect(() => {
+    pegandoDados();
+  }, []);
+
   useEffect(() => {
     setCpfMasked(
       cpf.slice(+0, -8) +
@@ -92,6 +95,7 @@ function EditarPerfil() {
     );
     setCarregando(false);
   }
+
   function preenchendoDados(e) {
     setEstado({ ...estado, [e.target.name]: e.target.value });
   }
@@ -99,10 +103,6 @@ function EditarPerfil() {
   function preenchendoEndereco(e) {
     setEndereco({ ...endereco, [e.target.name]: e.target.value });
   }
-
-  useEffect(() => {
-    pegandoDados();
-  }, []);
 
   return (
     <ContainerEditarPerfil>

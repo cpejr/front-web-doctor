@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import{Cores} from "../../variaveis";
+import { Cores } from "../../variaveis";
 
 export const ContainerEditarPerfil = styled.div`
   display: flex;
@@ -141,6 +141,7 @@ export const ImagemPerfil = styled.div`
     }
   }
 `;
+
 export const BlocoSuperior = styled.div`
   display: flex;
   flex-direction: column;
