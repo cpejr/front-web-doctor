@@ -24,6 +24,7 @@ import logoGuilherme from "../../assets/logoGuilherme.png";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { Cores } from "../../variaveis";
+import { sleep } from "../../utils/sleep";
 import moment from "moment";
 
 function ModalEditarAgendamentoEspecifico(props) {
@@ -115,6 +116,7 @@ function ModalEditarAgendamentoEspecifico(props) {
     consulta.id_usuario = usuario.id;
     formatacaoDataHora(); 
     await managerService.UpdateConsulta(consulta.id, consulta); 
+    sleep(3000);
     setCarregandoUpdate(false);
   }  
 
