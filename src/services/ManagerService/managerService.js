@@ -2,6 +2,7 @@ import { login } from "../../services/auth";
 import requisicaoErro from "../../utils/HttpErros";
 import * as requesterService from "../RequesterService/requesterService";
 import { toast } from "react-toastify";
+import { redirecionamento } from "../../utils/sleep";
 
 const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -61,13 +62,14 @@ export const CriandoConsulta = async (consulta) => {
   return;
 };
 
+
 export const UpdateConsulta = async (id_consulta, consulta) => {
-  console.log(consulta);
   await requesterService
     .updateConsulta(id_consulta, consulta)
     .then(() => {
-      alert("Consulta atualizada com sucesso.");
-      window.location.href = "/web/agendamentos";   
+      toast.success("Consulta atualizada com sucesso!");
+      sleep(3000);
+      redirecionamento("/web/agendamentos");
     })
     .catch((error) => {
       requisicaoErro(error);

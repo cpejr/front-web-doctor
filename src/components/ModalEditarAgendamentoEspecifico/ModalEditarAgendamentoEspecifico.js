@@ -33,6 +33,8 @@ function ModalEditarAgendamentoEspecifico(props) {
 
   const [carregando, setCarregando] = useState();
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
+  const [carregandoUpdate, setCarregandoUpdate] = useState();
+  
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -53,21 +55,18 @@ function ModalEditarAgendamentoEspecifico(props) {
   }
 
   async function setandoNomeConsultorioPorId(){
-    setCarregando(true);
     const resposta = await managerService.GetConsultorioPorId(consulta.id_consultorio);
     setConsultorioPorId(resposta.nome);
-    setCarregando(false);
+
   }
 
   function setandoDataEHora(){
-    setCarregando(true);
     let dataString = String(consulta.data_hora);
     let dataFormatada = dataString.slice(0, 10);
     let horaString = String(consulta.data_hora);
     let horaFormatada = horaString.slice(14, 19);
     setData(dataFormatada);
     setHora(horaFormatada);
-    setCarregando(false);
   }
 
   async function pegandoConsultorios() {
@@ -101,7 +100,7 @@ function ModalEditarAgendamentoEspecifico(props) {
 
   useEffect(() => {
     setandoDataEHora();
-  }, [consulta]);
+  }, [consulta.data_hora]);
 
    useEffect(() => {
     setandoNomeConsultorioPorId();
@@ -112,12 +111,11 @@ function ModalEditarAgendamentoEspecifico(props) {
   
 
   async function requisicaoAtualizarConsulta() {
-    setCarregando(true);
+    setCarregandoUpdate(true);
     consulta.id_usuario = usuario.id;
-    console.log(consulta.id_consultorio);
     formatacaoDataHora(); 
     await managerService.UpdateConsulta(consulta.id, consulta); 
-    setCarregando(false);
+    setCarregandoUpdate(false);
   }  
 
   function formatacaoDataHora() {
@@ -283,7 +281,7 @@ function ModalEditarAgendamentoEspecifico(props) {
             fontSizeMedia950="1.1em"
             onClick={() => requisicaoAtualizarConsulta()}
           >
-            {carregando ? (
+            {carregandoUpdate ? (
               <Spin indicator={antIcon} />
             ) : (
               <div>Editar Agendamento</div>

@@ -111,9 +111,9 @@ function ModalAgendamento(props) {
                     <Button
                       width="45%"
                       height="40px"
-                      backgroundColor="green"
+                      backgroundColor={Cores.cinza[6]}
                       borderColor={Cores.lilas[3]}
-                      color={Cores.cinza[1]}
+                      color={Cores.cinza[2]}
                       fontSize="0.9em"
                       fontWeight="bold"
                       fontSizeMedia="0.8em"
