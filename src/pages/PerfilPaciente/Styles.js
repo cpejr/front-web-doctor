@@ -237,10 +237,11 @@ export const DadosFormulario = styled.div`
   align-items: flex-end;
   margin-bottom: 2%;
 
+
   @media (max-width: 560px) {
-    gap: 2%;
+    
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
   }
 `;
@@ -341,18 +342,24 @@ export const BotaoReceita = styled.div`
   width: 100%;
 `;
 export const TituloFormulario = styled.div`
-  font-size: 1.5em;
+  font-size: 1.4em;
   text-decoration: underline;
   color: ${Cores.preto};
+  display:flex;
+  justify-content: center;
+  width: 33%;
+
   :hover {
     cursor: pointer;
   }
 
   @media (max-width: 780px) {
-    font-size: 1.3em;
+    font-size: 1.2em;
+    
   }
   @media (max-width: 560px) {
     font-size: 1.1em;
+    width: 100%;
   }
 `;
 export const DataFormulario = styled.div`
@@ -366,6 +373,15 @@ export const DataFormulario = styled.div`
 export const TipoFormulario = styled.div`
   font-size: 1.2em;
   color: ${Cores.lilas[1]};
+  display: flex;
+  justify-content: center;
+  width: 33%;
+  
+
+  @media (max-width: 780px) {
+    font-size: 1.1em;
+    
+  }
 
   @media (max-width: 560px) {
     display: none;
@@ -374,8 +390,13 @@ export const TipoFormulario = styled.div`
 export const UrgenciaFormulario = styled.div`
   font-size: 1.2em;
   color: ${Cores.lilas[1]};
+  display: flex;
+  justify-content: center;
+  width: 33%;
+  align-items: center;
   @media (max-width: 780px) {
-    font-size: 1.3em;
+    font-size: 1em;
+    
   }
 `;
 export const Resposta = styled.div`
