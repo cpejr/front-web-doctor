@@ -19,6 +19,7 @@ import {
   SelecioneUmaData,
   TextoSelecioneUmaData,
   TextAreaDescricao,
+  NomePaciente,
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 import logoGuilherme from "../../assets/logoGuilherme.png";
@@ -26,10 +27,12 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { Cores } from "../../variaveis";
 import moment from "moment";
+import { TiposDeConsulta } from "./TiposDeConsulta";
 
 function ModalAgendamentoEspecifico(props) {
   const { Option } = Select;
   const [usuario, setUsuario] = useState({});
+  const [usuarios, setUsuarios] = useState([]);
   const [consultorios, setConsultorios] = useState([]);
   const [carregando, setCarregando] = useState();
   const [carregandoCadastro, setCarregandoCadastro] = useState();
@@ -56,6 +59,16 @@ function ModalAgendamentoEspecifico(props) {
     setCarregando(false);
   }
 
+  async function pegandoPacientes() {
+    const resposta = await managerService.GetDadosPessoais();
+    resposta.forEach((usuario) => {
+        if (usuario.tipo === "PACIENTE") {
+            setUsuarios((usuarios) => [...usuarios, usuario]);
+
+        }
+    });
+}
+
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true)
     const res = await managerService.GetDadosConsultorios();
@@ -63,6 +76,11 @@ function ModalAgendamentoEspecifico(props) {
     setCarregandoConsultorios(false)
   }
 
+
+  useEffect(() => {
+    pegandoPacientes();
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+}, []);
   useEffect(() => {
     pegandoDadosUsuario();
     //eslint-disable-next-line react-hooks/exhaustive-deps
@@ -75,7 +93,9 @@ function ModalAgendamentoEspecifico(props) {
   async function requisicaoCriarConsulta() {
     setCarregandoCadastro(true);
     formatacaoDataHora();
-    consulta.id_usuario = usuario.id;
+    if(props.peloUsuario === true){
+      consulta.id_usuario = usuario.id;
+    }
     await managerService.CriandoColsulta(consulta);
     setCarregandoCadastro(false);
   }
@@ -106,14 +126,58 @@ function ModalAgendamentoEspecifico(props) {
     <Container>
       <Caixa>
         <InfoEsquerdaEDireita>
-          <Usuario>
-            <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
-            {carregando ? (
-              <Spin indicator={antIcon} />
-            ) : (
-              <Nome>{usuario.nome}</Nome>
-            )}
-          </Usuario>
+          {props.peloUsuario === true ? (
+            <Usuario>
+              <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
+              {carregando ? (
+                <Spin indicator={antIcon} />
+              ) : (
+                <Nome>{usuario.nome}</Nome>
+              )}
+            </Usuario>
+          ) : (
+            <Usuario>
+              <NomePaciente>
+                <Select
+                  style={{
+                    width: "100%",
+                    color: "black",
+                    borderColor: "black",
+                    borderWidth: "0px",
+                    paddingLeft: "2.5em",
+                  }}
+                  size="large"
+                  name="id_usuario"
+                  placeholder="Selecione um paciente"
+                  onChange={(e) => {
+                    preenchendoDadosConsulta(e);
+                  }}
+                >
+                  <option value="" disabled selected >
+                    Paciente
+                  </option>
+
+                  {usuarios.map((usuario) => (
+                    <>
+                      {carregando ? (
+                        <Spin indicator={antIcon} />
+                      ) : (
+                        <option key={usuario.id} value={usuario.id} color="red">
+                          {usuario.nome}
+                        </option>
+                      )}
+                    </>
+                  ))}
+                </Select>
+              </NomePaciente>
+
+            </Usuario>
+
+
+
+
+          )}
+
           <TipoAgendamento>
             <TextoTipoAgendamento>
               Selecione o Tipo de Agendamento:
@@ -167,7 +231,7 @@ function ModalAgendamentoEspecifico(props) {
               <Select
                 style={{
                   width: "100%",
-                  color:"black",
+                  color: "black",
                   borderColor: "black",
                   borderWidth: "1px",
                 }}
@@ -178,10 +242,20 @@ function ModalAgendamentoEspecifico(props) {
                   preenchendoDadosConsulta(e);
                 }}
               >
-                <option value="" disabled selected >Tipo</option>
-                <option value="1">Tipo 1</option>
-                <option value="2">Tipo 2</option>
-                <option value="3">Tipo 3</option>
+                <option value="" disabled selected >
+                  Tipo
+                </option>
+                {TiposDeConsulta.map((tipo) => (
+                  <>
+                    {carregando ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <option key={tipo} value={tipo} color="red">
+                        {tipo}
+                      </option>
+                    )}
+                  </>
+                ))}
               </Select>
             </TamanhoInput>
             <TamanhoInput>
@@ -192,31 +266,31 @@ function ModalAgendamentoEspecifico(props) {
                   width: "100%",
                   borderColor: "black",
                   borderWidth: "1px",
-                  color:"black"
+                  color: "black"
                 }}
                 size="large"
                 onChange={(e) => {
                   preenchendoDadosConsulta(e);
                 }}
-                            
+
               >
                 <option value="" disabled selected >
-                    Consultório
-                  </option>
+                  Consultório
+                </option>
                 {consultorios.map((consultorio) => (
                   <>
-                {carregandoConsultorios ? (
-                  <Spin indicator={antIcon} />
-                ) : (
-                  <option key={consultorio.id} value={consultorio.id} color="red">
-                    {consultorio.nome}
-                  </option>
-                )}
-                </>
+                    {carregandoConsultorios ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <option key={consultorio.id} value={consultorio.id} color="red">
+                        {consultorio.nome}
+                      </option>
+                    )}
+                  </>
                 ))}
-                
-                  
-                
+
+
+
               </Select>
             </TamanhoInput>
           </DoisSelect>
@@ -230,7 +304,7 @@ function ModalAgendamentoEspecifico(props) {
                 placeholder="Horário"
                 name="hora"
                 onChange={preenchendoDadosConsulta}
-                style={{color:"black"}}
+                style={{ color: "black" }}
               />
             </TamanhoInput>
 

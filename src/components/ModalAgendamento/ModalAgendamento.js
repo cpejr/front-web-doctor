@@ -24,9 +24,10 @@ import { Cores } from "../../variaveis";
 function ModalAgendamento(props) {
   const [consultas, setConsultas] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
-  const [modalAgendamento, setModalAgendamento] = useState(false);
+  const [modalAgendamento, setModalAgendamento] = useState(false); 
   const [quantidadeAgendamentos, setQuantidadeAgendamentos] = useState();
 
+  const [peloUsuario, setPeloUsuario] = useState(true); // informa que o modal agendamento especifico foi aberto por meio do modal agendamento
   const [carregando, setCarregando] = useState(true);
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 45, color: Cores.azul}} spin />
@@ -211,7 +212,7 @@ function ModalAgendamento(props) {
         width={"70%"}
         centered={true}
       >
-        <ModalAgendamentoEspecifico emailUsuario={props.email} />
+        <ModalAgendamentoEspecifico emailUsuario={props.email} peloUsuario = {peloUsuario}/>
       </Modal>
     </Container>
   );

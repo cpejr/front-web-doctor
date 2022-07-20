@@ -41,6 +41,7 @@ function ListaUsuarios() {
   const [email, setEmail] = useState();
   const [tipoSelect, setTipoSelect] = useState("");
   const [busca, setBusca] = useState("");
+  const [peloUsuario, setPeloUsuario] = useState(true);
 
   const lowerBusca = busca.toLowerCase();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -234,7 +235,7 @@ function ListaUsuarios() {
         width={"70%"}
         centered={true}
       >
-        <ModalAgendamentoEspecifico emailUsuario={emailPaciente} />
+        <ModalAgendamentoEspecifico emailUsuario={emailPaciente} peloUsuario = {peloUsuario} />
       </Modal>
 
       <Modal

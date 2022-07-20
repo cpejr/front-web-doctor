@@ -25,7 +25,7 @@ import Button from "../../styles/Button";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
-import ModalNovoAgendamento from "../../components/ModalNovoAgendamento";
+import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 import { Cores } from "../../variaveis";
 function Agendamentos () {
  
@@ -36,6 +36,7 @@ function Agendamentos () {
   const [consultas, setConsultas] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const [peloUsuario, setPeloUsuario] = useState(false); // informa que o modal agendamento especifico foi aberto por meio da página de agendamentos
 
   useEffect(() => {
     pegandoDados();
@@ -190,7 +191,7 @@ function Agendamentos () {
         width={"70%"}
         centered={true}
       >
-        <ModalNovoAgendamento />
+        <ModalAgendamentoEspecifico emailUsuario={email} peloUsuario = {peloUsuario}/> 
       </Modal>
     </div>
   );
