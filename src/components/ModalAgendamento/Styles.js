@@ -85,10 +85,10 @@ export const InfoEsquerda = styled.div`
   @media (max-width: 800px) {
     width: 100%;
   }
-  @media (max-height: 820px) {
+  @media (max-height: 810px) {
     height: 400px;
   }
-  @media (max-height: 820px) {
+  @media (max-height: 600px) {
     height: 300px;
   }
 `;
