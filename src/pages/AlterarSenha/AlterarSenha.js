@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Input from "../../styles/Input";
 import { useHistory } from "react-router-dom";
-import Button from "../../styles/Button";
-import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import {
   Conteudo,
   Caixa,
@@ -11,18 +10,22 @@ import {
   BotoesMesmaLinha,
   Titulo,
 } from "./Styles";
+import Button from "../../styles/Button";
+import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
-import{Cores} from "../../variaveis";
 
 function AlterarSenha() {
   const history = useHistory();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-
   const [confirmandoSenha, setConfirmandoSenha] = useState(true);
   const [confirmouSenha, setConfirmouSenha] = useState(false);
   const [alterador, setAlterador] = useState(true);
   const [carregando, setCarregando] = useState(false);
+  const [senhaAtual, setSenhaAtual] = useState("");
+  const [novaSenha, setNovaSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
+  const email = sessionStorage.getItem("@doctorapp-Email");
 
   useEffect(() => {
     if (alterador === true) {
@@ -34,23 +37,13 @@ function AlterarSenha() {
     }
   }, [alterador]);
 
-  const [senhaAtual, setSenhaAtual] = useState("");
-  const email = sessionStorage.getItem("@doctorapp-Email");
-
   async function conferirSenha() {
-    //função que recebe como parâmetro a senha digitada e o email do usuário logado, 
-    //retorna true como valor para alterador se as senhas forem diferentes, e false se as senhas forem iguais;
     setCarregando(true);
     setAlterador(await managerService.ConferirSenha(email, senhaAtual));
     setCarregando(false);
   }
 
-  const [novaSenha, setNovaSenha] = useState("");
-  const [confirmarSenha, setConfirmarSenha] = useState("");
-
   async function trocarSenha() {
-    //conferir se a "novaSenha" é igual a "confirmarSenha"; se for igual postar a nova senha do usuário; 
-    //se não for igual alertar que as senhas digitadas não conferem
     if (novaSenha === confirmarSenha) {
       setCarregando(true);
       const resposta = await managerService.GetDadosUsuario(email);
@@ -58,7 +51,7 @@ function AlterarSenha() {
       setCarregando(false);
     } else {
       alert("As senhas digitadas são diferentes!");
-      setCarregando(false)
+      setCarregando(false);
     }
   }
 

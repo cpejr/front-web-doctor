@@ -87,17 +87,13 @@ export const CaixaInputs = styled.div`
   @media (max-width: 780px) {
     display: flex;
     flex-direction: column;
-    
   }
 `;
 
-export const EspaçoInput = styled.div `
-    
-    @media (max-width: 780px)
-    {
-      margin-top: 2%;
-    }
-  
+export const EspaçoInput = styled.div`
+  @media (max-width: 780px) {
+    margin-top: 2%;
+  }
 `;
 
 export const CaixaBotao = styled.div`
