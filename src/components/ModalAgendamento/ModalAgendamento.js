@@ -92,6 +92,7 @@ function ModalAgendamento(props) {
                   <DiaHorarioAgendamento>
                     {value.data_hora.slice(11, -11)}
                     {value.data_hora.slice(13, -8)}
+                    {` - `}{value.duracao_em_minutos} min
                   </DiaHorarioAgendamento>
                 </CaixaAgendamento>
 
