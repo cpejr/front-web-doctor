@@ -228,15 +228,20 @@ function PerfilPaciente(props) {
                     ({telefone.slice(0, -9)}) {telefone.slice(2, -4)}-
                     {telefone.slice(-4)}
                   </InfoContato>
-                  <InfoContato textDecoration="underline" style={{ wordBreak: "break-word",}}>
+                  <InfoContato
+                    textDecoration="underline"
+                    style={{ wordBreak: "break-word" }}
+                  >
                     {usuario.email}
                   </InfoContato>
                   {tipoUsuario ? (
-                    <> 
-                      <InfoContato 
-                        style={{ marginTop: "0.4%",}}>Cuidador: {cuidador}</InfoContato>
-                      <InfoContato
-                        style={{ marginTop: "0.4%",}}>Telefone do Cuidador: {telefoneCuidador}</InfoContato>
+                    <>
+                      <InfoContato style={{ marginTop: "0.4%" }}>
+                        Cuidador: {cuidador}
+                      </InfoContato>
+                      <InfoContato style={{ marginTop: "0.4%" }}>
+                        Telefone do Cuidador: {telefoneCuidador}
+                      </InfoContato>
                     </>
                   ) : (
                     <></>
@@ -246,9 +251,11 @@ function PerfilPaciente(props) {
                   <Titulo>Dados</Titulo>
                   <InfoDadosPaciente>CPF: {cpf}</InfoDadosPaciente>
                   {tipoUsuario ? (
-                    <> 
+                    <>
                       <InfoDadosPaciente>Código: {codigo}</InfoDadosPaciente>
-                      <InfoDadosPaciente>Convênio: {convenio}</InfoDadosPaciente>
+                      <InfoDadosPaciente>
+                        Convênio: {convenio}
+                      </InfoDadosPaciente>
                     </>
                   ) : (
                     <></>

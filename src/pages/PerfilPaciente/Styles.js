@@ -176,7 +176,7 @@ export const Nome = styled.div`
   text-overflow: ellipsis;
   white-space: pre-line;
 
-  @media (max-width: 300px){
+  @media (max-width: 300px) {
     font-size: 1.5em;
   }
 `;
@@ -194,7 +194,7 @@ export const Data = styled.div`
 
   @media (max-width: 460px) {
     font-size: 1em;
-  } 
+  }
 `;
 export const Anos = styled.div`
   font-size: 1.2em;
@@ -206,7 +206,7 @@ export const Titulo = styled.div`
   font-weight: bold;
   margin: 0% 0% 2% 0%;
 
-  @media (max-width: 560px){
+  @media (max-width: 560px) {
     font-size: 1.3em;
   }
 `;
@@ -253,9 +253,7 @@ export const DadosFormulario = styled.div`
   align-items: flex-end;
   margin-bottom: 2%;
 
-
   @media (max-width: 560px) {
-    
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -371,7 +369,7 @@ export const TituloFormulario = styled.div`
   font-size: 1.4em;
   text-decoration: underline;
   color: ${Cores.preto};
-  display:flex;
+  display: flex;
   justify-content: center;
   width: 33%;
 
@@ -381,7 +379,6 @@ export const TituloFormulario = styled.div`
 
   @media (max-width: 780px) {
     font-size: 1.2em;
-    
   }
   @media (max-width: 560px) {
     font-size: 1.1em;
@@ -402,11 +399,9 @@ export const TipoFormulario = styled.div`
   display: flex;
   justify-content: center;
   width: 33%;
-  
 
   @media (max-width: 780px) {
     font-size: 1.1em;
-    
   }
 
   @media (max-width: 560px) {
@@ -422,7 +417,6 @@ export const UrgenciaFormulario = styled.div`
   align-items: center;
   @media (max-width: 780px) {
     font-size: 1em;
-    
   }
 `;
 export const Resposta = styled.div`

@@ -47,9 +47,12 @@ function EditarPerfil() {
     setDataNascimento(resposta.dadosUsuario.data_nascimento);
     setEndereco(resposta.dadosEndereco);
     setComplemento(resposta.dadosEndereco.complemento);
+    if (complemento === "") {
+      setComplemento("Complemento");
+    }
     setCarregando(false);
   }
-  
+
   useEffect(() => {
     pegandoDados();
   }, []);
@@ -248,7 +251,7 @@ function EditarPerfil() {
               onChange={preenchendoEndereco}
             ></Input>
           </CaixaInputs>
-        </Preenchimento>    
+        </Preenchimento>
 
         <Preenchimento>
           <CaixaInputs>
@@ -324,35 +327,19 @@ function EditarPerfil() {
               onChange={preenchendoEndereco}
             ></Input>
 
-            {complemento === null ? (
-              <><Rotulo>Complemento:</Rotulo>
-                <Input
-                  placeholder="Complemento"
-                  backgroundColor={Cores.cinza[7]}
-                  borderColor={Cores.preto}
-                  boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-                  borderWidth="1px"
-                  color={Cores.preto}
-                  fontSize="1em"
-                  width="90%"
-                  name="complemento"
-                  onChange={preenchendoEndereco}
-                ></Input></>
-            ) : (
-              <><Rotulo>Complemento:</Rotulo>
-                <Input
-                    placeholder={complemento}
-                    backgroundColor={Cores.cinza[7]}
-                    borderColor={Cores.preto}
-                    boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-                    borderWidth="1px"
-                    color={Cores.preto}
-                    fontSize="1em"
-                    width="90%"
-                    name="complemento"
-                    onChange={preenchendoEndereco}
-                ></Input></>
-            )}
+            <Rotulo>Complemento:</Rotulo>
+            <Input
+              placeholder={complemento}
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color={Cores.preto}
+              fontSize="1em"
+              width="90%"
+              name="complemento"
+              onChange={preenchendoEndereco}
+            ></Input>
           </CaixaInputs>
         </Preenchimento>
         <CaixaBotao>
