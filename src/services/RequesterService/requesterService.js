@@ -42,7 +42,11 @@ export const deletarUsuario = (id) => api.delete(`/usuarios/${id}`);
 
 export const requisicaoExamesMarcados = () => api.get(`/exame_marcados/`);
 
+export const requisicaoExamesMarcadosUsuario = (id_usuario) => api.get(`/exame_marcados/${id_usuario}`);
+
 export const requisicaoConsultas = () => api.get(`/consultas/`);
+
+export const requisicaoConsultaUsuario = (id_usuario) => api.get(`/consultas/${id_usuario}`);
 
 export const requisicaoExame = (id) => api.get(`/exames/${id}`);
 
