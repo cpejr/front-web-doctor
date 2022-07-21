@@ -84,28 +84,29 @@ function ModalAgendamento(props) {
         <Titulo>Agendamentos Marcados:</Titulo>
 
         {carregando ? (
-          <Spin indicator={antIcon} />
-        ) : (
-          <CorpoCaixa>
-            <InfoEsquerda>
-              {consultas.map((value) => (
-                <Agendamento>
-                  <CaixaAgendamento key={value.id}>
-                    <DiaHorarioAgendamento>
-                      {value.data_hora.slice(8, -14)}/
-                      {value.data_hora.slice(5, -17)}/
-                      {value.data_hora.slice(0, -20)}
-                    </DiaHorarioAgendamento>
-                    <BarraEstetica></BarraEstetica>
-                    <TextoAgendamentoEspecifico>
-                      Consulta
-                    </TextoAgendamentoEspecifico>
-                    <BarraEstetica></BarraEstetica>
-                    <DiaHorarioAgendamento>
-                      {value.data_hora.slice(11, -11)}
-                      {value.data_hora.slice(13, -8)}
-                    </DiaHorarioAgendamento>
-                  </CaixaAgendamento>
+            <Spin indicator={antIcon} />
+          ) : (
+        <CorpoCaixa>
+          <InfoEsquerda>
+            {consultas.map((value) => (
+              <Agendamento>
+                <CaixaAgendamento key={value.id}>
+                  <DiaHorarioAgendamento>
+                    {value.data_hora.slice(8, -14)}/
+                    {value.data_hora.slice(5, -17)}/
+                    {value.data_hora.slice(0, -20)}
+                  </DiaHorarioAgendamento>
+                  <BarraEstetica></BarraEstetica>
+                  <TextoAgendamentoEspecifico>
+                    Consulta
+                  </TextoAgendamentoEspecifico>
+                  <BarraEstetica></BarraEstetica>
+                  <DiaHorarioAgendamento>
+                    {value.data_hora.slice(11, -11)}
+                    {value.data_hora.slice(13, -8)}
+                    {` - `}{value.duracao_em_minutos} min
+                  </DiaHorarioAgendamento>
+                </CaixaAgendamento>
 
                   <BotoesEditarExcluir>
                     <Button
