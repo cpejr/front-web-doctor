@@ -92,7 +92,7 @@ function ModalAgendamentoEspecifico(props) {
     if (props.abertoPeloUsuario === true) {
       consulta.id_usuario = usuario.id;
     }
-    await managerService.CriandoColsulta(consulta);
+    await managerService.CriandoConsulta(consulta);
     setCarregandoCadastro(false);
   }
 
