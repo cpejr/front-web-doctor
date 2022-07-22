@@ -26,6 +26,7 @@ import { Spin } from "antd";
 import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import moment from "moment";
+import { apenasNumeros } from "../../utils/masks";
 
 function ModalEditarAgendamentoEspecifico(props) {
   const { Option } = Select
@@ -35,14 +36,14 @@ function ModalEditarAgendamentoEspecifico(props) {
   const [carregando, setCarregando] = useState();
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
   const [carregandoUpdate, setCarregandoUpdate] = useState();
-  
+
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const [consulta, setConsulta] = useState({});
 
   const [consultorioPorId, setConsultorioPorId] = useState();
-  
+
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
 
@@ -55,13 +56,13 @@ function ModalEditarAgendamentoEspecifico(props) {
     setCarregando(false);
   }
 
-  async function setandoNomeConsultorioPorId(){
+  async function setandoNomeConsultorioPorId() {
     const resposta = await managerService.GetConsultorioPorId(consulta.id_consultorio);
     setConsultorioPorId(resposta.nome);
 
   }
 
-  function setandoDataEHora(){
+  function setandoDataEHora() {
     let dataString = String(consulta.data_hora);
     let dataFormatada = dataString.slice(0, 10);
     let horaString = String(consulta.data_hora);
@@ -78,7 +79,7 @@ function ModalEditarAgendamentoEspecifico(props) {
   }
 
 
-  async function setandoValoresConsulta(){
+  async function setandoValoresConsulta() {
     setCarregando(true);
     setConsulta(props.consulta);
     setCarregando(false);
@@ -94,7 +95,7 @@ function ModalEditarAgendamentoEspecifico(props) {
     pegandoConsultorios();
   }, []);
 
-   useEffect(() => {
+  useEffect(() => {
     setandoValoresConsulta();
   }, [props]);
 
@@ -103,23 +104,23 @@ function ModalEditarAgendamentoEspecifico(props) {
     setandoDataEHora();
   }, [consulta.data_hora]);
 
-   useEffect(() => {
+  useEffect(() => {
     setandoNomeConsultorioPorId();
-  }, [consulta]); 
+  }, [consulta]);
 
 
 
-  
+
 
   async function requisicaoAtualizarConsulta() {
     setCarregandoUpdate(true);
     consulta.id_usuario = usuario.id;
-    formatacaoDataHora(); 
-    await managerService.UpdateConsulta(consulta.id, consulta); 
+    formatacaoDataHora();
+    await managerService.UpdateConsulta(consulta.id, consulta);
     sleep(3000);
     setCarregandoUpdate(false);
     props.fechandoModal();
-  }  
+  }
 
   function formatacaoDataHora() {
     try {
@@ -137,11 +138,14 @@ function ModalEditarAgendamentoEspecifico(props) {
     } else if (e.target.name === "data") {
       setData(e.target.value)
       return data;
+    } else if (e.target.name == "duracao_em_minutos") {
+      setConsulta({ ...consulta, [e.target.name]: apenasNumeros(e.target.value) });
+      return consulta;
     } else {
       setConsulta({ ...consulta, [e.target.name]: e.target.value });
       return consulta;
     }
-  }  
+  }
 
 
   return (
@@ -174,7 +178,7 @@ function ModalEditarAgendamentoEspecifico(props) {
             <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
             <Input
               placeholder="Selecione uma data"
-              value={data} 
+              value={data}
               type="date"
               size="large"
               name="data"
@@ -193,7 +197,7 @@ function ModalEditarAgendamentoEspecifico(props) {
               <Select
                 style={{
                   width: "100%",
-                  color:"black",
+                  color: "black",
                   borderColor: "black",
                   borderWidth: "1px",
                 }}
@@ -201,8 +205,8 @@ function ModalEditarAgendamentoEspecifico(props) {
                 name="tipo"
                 placeholder="Tipo"
                 onChange={(e) => {
-                    preenchendoDadosConsulta(e);
-                  }}
+                  preenchendoDadosConsulta(e);
+                }}
               >
                 <option value="" disabled selected >{consulta.tipo}</option>
                 <option value="1">Tipo 1</option>
@@ -218,7 +222,7 @@ function ModalEditarAgendamentoEspecifico(props) {
                   width: "100%",
                   borderColor: "black",
                   borderWidth: "1px",
-                  color:"black"
+                  color: "black"
                 }}
                 size="large"
                 onChange={(e) => {
@@ -226,20 +230,20 @@ function ModalEditarAgendamentoEspecifico(props) {
                 }}
               >
                 <option value="" disabled selected >
-                    {consultorioPorId} 
-                  </option>
+                  {consultorioPorId}
+                </option>
                 {consultorios.map((consultorio) => (
                   <>
-                {carregandoConsultorios ? (
-                  <Spin indicator={antIcon} />
-                ) : (
-                  <option key={consultorio.id} value={consultorio.id} color="red">
-                    {consultorio.nome}
-                  </option>
-                )}
-                </>
+                    {carregandoConsultorios ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <option key={consultorio.id} value={consultorio.id} color="red">
+                        {consultorio.nome}
+                      </option>
+                    )}
+                  </>
                 ))}
-                   
+
               </Select>
             </TamanhoInput>
           </DoisSelect>
@@ -247,14 +251,14 @@ function ModalEditarAgendamentoEspecifico(props) {
           <DoisSelect>
             <TamanhoInput>
               <InputHora
-                value={hora} 
+                value={hora}
                 type="text"
                 onFocus={(e) => (e.target.type = "time")}
                 onBlur={(e) => (e.target.type = "text")}
                 placeholder="Horário"
                 name="hora"
                 onChange={preenchendoDadosConsulta}
-                style={{color:"black"}}
+                style={{ color: "black" }}
               />
             </TamanhoInput>
 
