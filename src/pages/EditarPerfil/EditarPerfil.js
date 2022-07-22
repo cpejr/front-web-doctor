@@ -222,8 +222,8 @@ function EditarPerfil() {
           enderecoBack,
           estadoBack
         );
-        sleep(9000);
-        redirecionamento("/web/perfil");
+        sleep(1500);
+        window.location.href = "/web/perfil";
       } else {
         toast.warn("Preencha os campos corretamente");
       }
@@ -259,9 +259,10 @@ function EditarPerfil() {
       setTudoNulo({ ...tudoNulo, [name]: false });
     }
 
-    if (name === "data_nascimento" && value.length < 10 && value.length > 0) {
+    if (name === "data_nascimento" && value.length < 10 && value.length > -1) {
       setErro({ ...erro, [name]: true });
       setErroDataBack(false);
+      if(value.length === 0) setErro({ ...erro, [name]: false });
     } else if (maskDataBack(value) === "Data Invalida") {
       setErro({ ...erro, [name]: true });
       setErroDataBack(true);
