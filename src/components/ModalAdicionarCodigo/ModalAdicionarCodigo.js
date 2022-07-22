@@ -107,7 +107,6 @@ function ModalAdicionarCodigo(props) {
         {carregando ? <Spin indicator={antIcon} /> : "CONFIRMAR"}
       </Button>
     </ContainerModalCodigo>
-    <AddToast />
     </>
   );
 }
