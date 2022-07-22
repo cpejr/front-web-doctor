@@ -19,7 +19,9 @@ import {
   DadosFormulario,
   DadosContato,
   DadosGeo,
+  DadosPaciente,
   InfoContato,
+  InfoDadosPaciente,
   Receita,
   BotaoReceita,
   DadosReceita,
@@ -34,25 +36,23 @@ import {
   ConteudoModalExcluir,
   ContainerFooterModalExcluir,
 } from "./Styles";
-import * as managerService from "../../services/ManagerService/managerService";
+
 import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
 import { Spin } from "antd";
 import { Modal } from "antd";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
-import { useHistory } from "react-router-dom";
-import ModalAgendamento from "../../components/ModalAgendamento/ModalAgendamento";
 import { Cores } from "../../variaveis";
 import AddToast from "../../components/AddToast/AddToast";
-import { recebeTipo, usuarioAutenticado } from "../../services/auth";
 import { toast } from "react-toastify";
-import ModalExcluirUsuario from "../../components/ModalExcluirUsuario";
+import { recebeTipo, usuarioAutenticado } from "../../services/auth";
 import { redirecionamento, sleep } from "../../utils/sleep";
+import ModalAgendamento from "../../components/ModalAgendamento/ModalAgendamento";
+import ModalExcluirUsuario from "../../components/ModalExcluirUsuario";
 import ModalFormulario from "../../components/ModalFormulario";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function PerfilPaciente(props) {
-  const history = useHistory();
-
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [modalFormulario, setModalFormulario] = useState(false);
   const [modalDeletarUsuario, setModalDeletarUsuario] = useState(false);
@@ -60,12 +60,19 @@ function PerfilPaciente(props) {
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
   const [telefone, setTelefone] = useState("");
+  const [cuidador, setCuidador] = useState();
+  const [telefoneCuidador, setTelefoneCuidador] = useState();
   const [dataNascimento, setDataNascimento] = useState("");
   const [carregando, setCarregando] = useState(true);
   const [respostas, setRespostas] = useState([]);
   const [perguntas, setPerguntas] = useState();
   const [titulo, setTitulo] = useState();
+  const [cpf, setCpf] = useState();
+  const [codigo, setCodigo] = useState();
+  const [convenio, setConvenio] = useState();
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
+  const [tipoUsuario, setTipoUsuario] = useState(false);
+
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
   );
@@ -73,9 +80,8 @@ function PerfilPaciente(props) {
     <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin />
   );
 
-  useEffect(() => {
-    pegandoDados();
-  }, []);
+  const margemBotoes = tipoUsuario ? "0px" : "8%";
+  const margemPerfil = tipoUsuario ? "2%" : "20%";
 
   async function pegandoDados() {
     const resposta = await managerService.GetDadosUsuario(
@@ -84,14 +90,23 @@ function PerfilPaciente(props) {
     const data = new Date(resposta.dadosUsuario.data_nascimento);
     setUsuario(resposta.dadosUsuario);
     setTelefone(resposta.dadosUsuario.telefone);
+    setCpf(formatarCpf(resposta.dadosUsuario.cpf));
+    setCodigo(resposta.dadosUsuario.codigo);
     setDataNascimento(data.toLocaleDateString());
     setEndereco(resposta.dadosEndereco);
+    setCuidador(resposta.dadosUsuario.nome_cuidador);
+    setTelefoneCuidador(resposta.dadosUsuario.telefone_cuidador);
+    setConvenio(resposta.dadosUsuario.convenio);
     setCarregando(false);
+
+    if (resposta.dadosUsuario.tipo === "PACIENTE") {
+      setTipoUsuario(true);
+    }
   }
 
   useEffect(() => {
-    pegandoListaFormularios();
-  }, [usuario]);
+    pegandoDados();
+  }, []);
 
   async function pegandoListaFormularios() {
     const resposta = await managerService.GetRespostaFormularioIdUsuario(
@@ -99,6 +114,10 @@ function PerfilPaciente(props) {
     );
     setRespostas(resposta);
   }
+
+  useEffect(() => {
+    pegandoListaFormularios();
+  }, [usuario]);
 
   async function deletarUsuario() {
     if (usuarioAutenticado() && recebeTipo() === "MASTER") {
@@ -134,10 +153,45 @@ function PerfilPaciente(props) {
     setModalFormulario(true);
   }
 
+  function estrelaPreenchida(numEstrelasPreenc) {
+    if (numEstrelasPreenc !== 0) {
+      return (
+        <>
+          <StarFilled />
+          {estrelaPreenchida(numEstrelasPreenc - 1)}
+        </>
+      );
+    } else {
+      return;
+    }
+  }
+
+  function estrelaNaoPreenchida(numNaoPreenchido) {
+    if (numNaoPreenchido !== 0) {
+      return (
+        <>
+          <StarOutlined />
+          {estrelaNaoPreenchida(numNaoPreenchido - 1)}
+        </>
+      );
+    } else {
+      return;
+    }
+  }
+
+  function formatarCpf(cpf) {
+    return cpf
+      .replace(/\D/g, "")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1-$2")
+      .replace(/(-\d{2})\d+?$/, "$1");
+  }
+
   return (
     <div>
       <ContainerPerfil>
-        <Perfil>
+        <Perfil marginBottom={margemPerfil}>
           {carregando ? (
             <Spin indicator={antIcon} />
           ) : (
@@ -153,7 +207,7 @@ function PerfilPaciente(props) {
                   </FotoPerfil>
                   <Dados>
                     <Nome>{usuario.nome}</Nome>
-                    <Data>{dataNascimento}</Data>
+                    <Data> Nascimento: {dataNascimento}</Data>
                   </Dados>
                 </PerfilSuperior>
                 <PerfilInferior>
@@ -174,11 +228,41 @@ function PerfilPaciente(props) {
                     ({telefone.slice(0, -9)}) {telefone.slice(2, -4)}-
                     {telefone.slice(-4)}
                   </InfoContato>
-                  <InfoContato textDecoration="underline">
+                  <InfoContato
+                    textDecoration="underline"
+                    style={{ wordBreak: "break-word" }}
+                  >
                     {usuario.email}
                   </InfoContato>
+                  {tipoUsuario ? (
+                    <>
+                      <InfoContato style={{ marginTop: "0.4%" }}>
+                        Cuidador: {cuidador}
+                      </InfoContato>
+                      <InfoContato style={{ marginTop: "0.4%" }}>
+                        Telefone do Cuidador: ({telefoneCuidador.slice(0, -9)}) {telefoneCuidador.slice(2, -4)}-
+                        {telefoneCuidador.slice(-4)}
+                      </InfoContato>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </DadosContato>
-                <Botoes>
+                <DadosPaciente>
+                  <Titulo>Dados</Titulo>
+                  <InfoDadosPaciente>CPF: {cpf}</InfoDadosPaciente>
+                  {tipoUsuario ? (
+                    <>
+                      <InfoDadosPaciente>Código: {codigo}</InfoDadosPaciente>
+                      <InfoDadosPaciente>
+                        Convênio: {convenio}
+                      </InfoDadosPaciente>
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </DadosPaciente>
+                <Botoes marginTop={margemBotoes}>
                   <Botao>
                     <Button
                       backgroundColor="green"
@@ -192,20 +276,24 @@ function PerfilPaciente(props) {
                       Iniciar Conversa
                     </Button>
                   </Botao>
-                  <Botao>
-                    <Button
-                      backgroundColor="green"
-                      color={Cores.azulEscuro}
-                      fontWeight="bold"
-                      borderColor={Cores.azulEscuro}
-                      height="40px"
-                      width="100%"
-                      fontSize="1.3em"
-                      onClick={() => marcandoAgendamento()}
-                    >
-                      Agendamentos
-                    </Button>
-                  </Botao>
+                  {tipoUsuario ? (
+                    <Botao>
+                      <Button
+                        backgroundColor={Cores.lilas[2]}
+                        color={Cores.azulEscuro}
+                        fontWeight="bold"
+                        borderColor={Cores.azulEscuro}
+                        height="40px"
+                        width="100%"
+                        fontSize="1.3em"
+                        onClick={() => marcandoAgendamento()}
+                      >
+                        Agendamentos
+                      </Button>
+                    </Botao>
+                  ) : (
+                    <></>
+                  )}
                   {recebeTipo() === "MASTER" && (
                     <Botao>
                       <Button
@@ -228,55 +316,77 @@ function PerfilPaciente(props) {
             </>
           )}
         </Perfil>
-        <Formularios>
-          {carregando ? (
-            <Spin indicator={antIcon} />
-          ) : (
-            <>
-              <Titulo>FORMULÁRIOS</Titulo>
-              {respostas?.map((value) => (
-                <Formulario>
-                  <DadosFormulario>
-                    <TituloFormulario
-                      onClick={() =>
-                        abrindoModalFormulario(
-                          value.id,
-                          value.perguntas,
-                          value.titulo
-                        )
-                      }
-                    >
-                      {value.titulo}
-                    </TituloFormulario>
-                    <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
-                    <UrgenciaFormulario>
-                      <>Urgência: </>
-                      {value.urgencia === 1 ? (
-                        <>
-                          <StarOutlined />
-                          <StarOutlined />
-                          <StarFilled />
-                        </>
-                      ) : value.urgencia === 2 ? (
-                        <>
-                          <StarOutlined />
-                          <StarFilled />
-                          <StarFilled />
-                        </>
+        {tipoUsuario ? (
+          <>
+            <Formularios>
+              {carregando ? (
+                <Spin indicator={antIcon} />
+              ) : (
+                <>
+                  <Titulo>FORMULÁRIOS</Titulo>
+                  {respostas?.map((value) => (
+                    <Formulario>
+                      <DadosFormulario>
+                        <TituloFormulario
+                          onClick={() =>
+                            abrindoModalFormulario(
+                              value.id,
+                              value.perguntas,
+                              value.titulo
+                            )
+                          }
+                        >
+                          {value.titulo}
+                        </TituloFormulario>
+                        <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
+                        <UrgenciaFormulario>
+                          <>Urgência: </>
+                          {estrelaPreenchida(value.urgencia)}
+                          {estrelaNaoPreenchida(3 - value.urgencia)}
+                        </UrgenciaFormulario>
+                      </DadosFormulario>
+                      {value.status === true ? (
+                        <></>
                       ) : (
-                        <>
-                          <StarFilled />
-                          <StarFilled />
-                          <StarFilled />
-                        </>
+                        <RespostaPendente>
+                          <Resposta>Resposta Pendente</Resposta>
+                          <Button
+                            backgroundColor="green"
+                            color={Cores.azulEscuro}
+                            fontWeight="bold"
+                            borderColor={Cores.azulEscuro}
+                            height="40px"
+                            width="25%"
+                          >
+                            ENVIAR LEMBRETE
+                          </Button>
+                        </RespostaPendente>
                       )}
-                    </UrgenciaFormulario>
-                  </DadosFormulario>
-                  {value.status === true ? (
-                    <></>
-                  ) : (
-                    <RespostaPendente>
-                      <Resposta>Resposta Pendente</Resposta>
+                    </Formulario>
+                  ))}
+                </>
+              )}
+            </Formularios>
+            <Receitas>
+              {carregando ? (
+                <Spin indicator={antIcon} />
+              ) : (
+                <>
+                  <Titulo>RECEITAS</Titulo>
+                  <Receita>
+                    <DadosReceita>
+                      <TituloReceita
+                        textDecoration="underline"
+                        color={Cores.preto}
+                        fontSize="1.5em"
+                      >
+                        Título
+                      </TituloReceita>
+                      <TituloReceita color={Cores.lilas[1]} fontSize="1.2em">
+                        xx/xx/2022
+                      </TituloReceita>
+                    </DadosReceita>
+                    <BotaoReceita>
                       <Button
                         backgroundColor="green"
                         color={Cores.azulEscuro}
@@ -285,50 +395,17 @@ function PerfilPaciente(props) {
                         height="40px"
                         width="25%"
                       >
-                        ENVIAR LEMBRETE
+                        DOWNLOAD
                       </Button>
-                    </RespostaPendente>
-                  )}
-                </Formulario>
-              ))}
-            </>
-          )}
-        </Formularios>
-        <Receitas>
-          {carregando ? (
-            <Spin indicator={antIcon} />
-          ) : (
-            <>
-              <Titulo>RECEITAS</Titulo>
-              <Receita>
-                <DadosReceita>
-                  <TituloReceita
-                    textDecoration="underline"
-                    color={Cores.preto}
-                    fontSize="1.5em"
-                  >
-                    Título
-                  </TituloReceita>
-                  <TituloReceita color={Cores.lilas[1]} fontSize="1.2em">
-                    xx/xx/2022
-                  </TituloReceita>
-                </DadosReceita>
-                <BotaoReceita>
-                  <Button
-                    backgroundColor="green"
-                    color={Cores.azulEscuro}
-                    fontWeight="bold"
-                    borderColor={Cores.azulEscuro}
-                    height="40px"
-                    width="25%"
-                  >
-                    DOWNLOAD
-                  </Button>
-                </BotaoReceita>
-              </Receita>
-            </>
-          )}
-        </Receitas>
+                    </BotaoReceita>
+                  </Receita>
+                </>
+              )}
+            </Receitas>
+          </>
+        ) : (
+          <></>
+        )}
       </ContainerPerfil>
 
       <Modal

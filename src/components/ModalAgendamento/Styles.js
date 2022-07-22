@@ -225,7 +225,7 @@ export const DiaHorarioAgendamento = styled.div`
   font-size: 1em;
   font-weight: medium;
   
-  @media (max-width: 1110px) {
+  @media (max-width: 1700px) {
     font-size: 0.8em;
   }
 `;

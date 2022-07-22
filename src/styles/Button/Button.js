@@ -9,8 +9,9 @@ const Button = styled.button`
   justify-content: center;
   /*Medidas*/
   border-radius: 3px;
-  margin-top: 2%;
+  margin-top: ${(props) => props.marginTop?? "2%"};
   margin-left: ${(props) => props.marginLeft};
+  padding-top: ${(props) => props.paddingTop};
   height: ${(props) => props.height};
   gap: ${(props) => props.gap};
   width: ${(props) => props.width};
