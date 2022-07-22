@@ -29,7 +29,7 @@ import { Spin } from "antd";
 import { Cores } from "../../variaveis";
 import moment from "moment";
 
-import { apenasNumeros } from "../../utils/masks";
+import { apenasNumeros, dataBack, data } from "../../utils/masks";
 import { toast } from "react-toastify";
 import _ from "lodash";
 
@@ -50,20 +50,21 @@ function ModalAgendamentoEspecifico(props) {
     id_consultorio: "",
     tipo: "",
   });
-  const [data, setData] = useState("");
+  const [dataConsulta, setDataConsulta] = useState("");
   const [hora, setHora] = useState("");
   const [duracaoEmMinutos, setDuracaoEmMinutos] = useState("");
   // const [selectValue, setSelectValue] = useState("");
 
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
-  const [dataValida, setDataValida] = useState(false);
+  const [erroDataBack, setErroDataBack] = useState(false);
+  const [estado, setEstado] = useState({});
 
   moment.locale("pt-br");
 
   const errors = {};
   const referenciaInputNulos = {
-    data: false,
+    dataConsulta: false,
     hora: false,
     duracao_em_minutos: false,
     id_consultorio: false,
@@ -100,14 +101,19 @@ function ModalAgendamentoEspecifico(props) {
       setCamposVazios({ ...camposVazios, [name]: false });
     }
 
-    if (name === "data" && value.length > 10) {
+    if (name === "data" && value.length < 10) {
       setErro({ ...erro, [name]: true });
+      setErroDataBack(false);
+    } else if (dataBack(value) === "Data Invalida") {
+      setErro({ ...erro, [name]: true });
+      setErroDataBack(true);
     } else {
       setErro({ ...erro, [name]: false });
-      setDataValida(true);
     }
 
-    setData(value);
+    setDataConsulta(data(value));
+    setDataConsulta(dataBack(value));
+    console.log(dataConsulta);
   }
 
   async function pegandoDadosUsuario() {
@@ -134,7 +140,7 @@ function ModalAgendamentoEspecifico(props) {
   }, []);
 
   async function requisicaoCriarConsulta() {
-    if (!data) errors.data = true;
+    if (!dataConsulta) errors.dataConsulta = true;
     if (!hora) errors.hora = true;
     if (!consulta.duracao_em_minutos) errors.duracao_em_minutos = true;
     if (!consulta.id_consultorio) errors.id_consultorio = true;
@@ -144,11 +150,9 @@ function ModalAgendamentoEspecifico(props) {
 
     if (_.isEqual(camposVazios, referenciaInputNulos)) {
       setCarregandoCadastro(true);
-      if (dataValida) {
-        formatacaoDataHora();
-        consulta.id_usuario = usuario.id;
-        await managerService.CriandoColsulta(consulta);
-      }
+      formatacaoDataHora();
+      consulta.id_usuario = usuario.id;
+      await managerService.CriandoColsulta(consulta);
       setCarregandoCadastro(false);
     } else {
       setCarregandoCadastro(true);
@@ -159,7 +163,7 @@ function ModalAgendamentoEspecifico(props) {
 
   function formatacaoDataHora() {
     try {
-      const dataHora = `${data} ${hora}:00`;
+      const dataHora = `${dataConsulta} ${hora}:00`;
       consulta.data_hora = dataHora;
     } catch {
       alert("DataHora inválida.");
@@ -218,18 +222,23 @@ function ModalAgendamentoEspecifico(props) {
             <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
             <InputData
               placeholder="Selecione uma data"
-              type="date"
               size="large"
               name="data"
               onChange={validacaoData}
-              value={data}
-              camposVazios={camposVazios.data}
-              erro={erro.data}
+              value={estado.dataConsulta}
+              camposVazios={camposVazios.dataConsulta}
+              erro={erro.dataConsulta}
             />
-            {erro.data && (
-              <Rotulo>Digite uma data no formato dd/mm/aaaa</Rotulo>
+            {erro.dataConsulta && (
+              <>
+                {erroDataBack ? (
+                  <Rotulo>Digite uma data válida.</Rotulo>
+                ) : (
+                  <Rotulo>Digite uma data no formato xx/xx/xxxx</Rotulo>
+                )}
+              </>
             )}
-            {camposVazios.data && <Rotulo>Digite uma data</Rotulo>}
+            {camposVazios.dataConsulta && <Rotulo>Digite uma data</Rotulo>}
           </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
