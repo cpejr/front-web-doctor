@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Checkbox, Row, Col, Input } from "antd";
-import Select from "../../styles/Select";
-import Button from "../../styles/Button";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
+import moment from "moment";
 import {
   Container,
   Caixa,
@@ -21,13 +22,12 @@ import {
   TextAreaDescricao,
   NomePaciente,
 } from "./Styles";
-import * as managerService from "../../services/ManagerService/managerService";
+import Select from "../../styles/Select";
+import Button from "../../styles/Button";
 import logoGuilherme from "../../assets/logoGuilherme.png";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
 import { Cores } from "../../variaveis";
-import moment from "moment";
 import { TiposDeConsulta } from "./TiposDeConsulta";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAgendamentoEspecifico(props) {
   const { Option } = Select;
@@ -59,32 +59,29 @@ function ModalAgendamentoEspecifico(props) {
     setCarregando(false);
   }
 
+  useEffect(() => {
+    pegandoDadosUsuario();
+  }, [props]);
+
   async function pegandoPacientes() {
     const resposta = await managerService.GetDadosPessoais();
     resposta.forEach((usuario) => {
-        if (usuario.tipo === "PACIENTE") {
-            setUsuarios((usuarios) => [...usuarios, usuario]);
-
-        }
+      if (usuario.tipo === "PACIENTE") {
+        setUsuarios((usuarios) => [...usuarios, usuario]);
+      }
     });
-}
-
-  async function pegandoConsultorios() {
-    setCarregandoConsultorios(true)
-    const res = await managerService.GetDadosConsultorios();
-    setConsultorios(res.dadosConsultorios);
-    setCarregandoConsultorios(false)
   }
-
 
   useEffect(() => {
     pegandoPacientes();
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-}, []);
-  useEffect(() => {
-    pegandoDadosUsuario();
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props]);
+  }, []);
+
+  async function pegandoConsultorios() {
+    setCarregandoConsultorios(true);
+    const res = await managerService.GetDadosConsultorios();
+    setConsultorios(res.dadosConsultorios);
+    setCarregandoConsultorios(false);
+  }
 
   useEffect(() => {
     pegandoConsultorios();
@@ -93,7 +90,7 @@ function ModalAgendamentoEspecifico(props) {
   async function requisicaoCriarConsulta() {
     setCarregandoCadastro(true);
     formatacaoDataHora();
-    if(props.peloUsuario === true){
+    if (props.peloUsuario === true) {
       consulta.id_usuario = usuario.id;
     }
     await managerService.CriandoColsulta(consulta);
@@ -114,7 +111,7 @@ function ModalAgendamentoEspecifico(props) {
       setHora(e.target.value);
       return hora;
     } else if (e.target.name === "data") {
-      setData(e.target.value)
+      setData(e.target.value);
       return data;
     } else {
       setConsulta({ ...consulta, [e.target.name]: e.target.value });
@@ -153,7 +150,7 @@ function ModalAgendamentoEspecifico(props) {
                     preenchendoDadosConsulta(e);
                   }}
                 >
-                  <option value="" disabled selected >
+                  <option value="" disabled selected>
                     Paciente
                   </option>
 
@@ -170,12 +167,7 @@ function ModalAgendamentoEspecifico(props) {
                   ))}
                 </Select>
               </NomePaciente>
-
             </Usuario>
-
-
-
-
           )}
 
           <TipoAgendamento>
@@ -242,7 +234,7 @@ function ModalAgendamentoEspecifico(props) {
                   preenchendoDadosConsulta(e);
                 }}
               >
-                <option value="" disabled selected >
+                <option value="" disabled selected>
                   Tipo
                 </option>
                 {TiposDeConsulta.map((tipo) => (
@@ -266,15 +258,14 @@ function ModalAgendamentoEspecifico(props) {
                   width: "100%",
                   borderColor: "black",
                   borderWidth: "1px",
-                  color: "black"
+                  color: "black",
                 }}
                 size="large"
                 onChange={(e) => {
                   preenchendoDadosConsulta(e);
                 }}
-
               >
-                <option value="" disabled selected >
+                <option value="" disabled selected>
                   Consultório
                 </option>
                 {consultorios.map((consultorio) => (
@@ -282,15 +273,16 @@ function ModalAgendamentoEspecifico(props) {
                     {carregandoConsultorios ? (
                       <Spin indicator={antIcon} />
                     ) : (
-                      <option key={consultorio.id} value={consultorio.id} color="red">
+                      <option
+                        key={consultorio.id}
+                        value={consultorio.id}
+                        color="red"
+                      >
                         {consultorio.nome}
                       </option>
                     )}
                   </>
                 ))}
-
-
-
               </Select>
             </TamanhoInput>
           </DoisSelect>
