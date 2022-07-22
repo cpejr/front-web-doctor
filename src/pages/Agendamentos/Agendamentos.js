@@ -36,7 +36,7 @@ function Agendamentos() {
   const [consultas, setConsultas] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const [peloUsuario, setPeloUsuario] = useState(false); // informa que o modal agendamento especifico foi aberto por meio da página de agendamentos
+  const abertoPeloUsuario = false;
 
   async function marcandoAgendamento(email) {
     setEmail(email);
@@ -193,7 +193,7 @@ function Agendamentos() {
       >
         <ModalAgendamentoEspecifico
           emailUsuario={email}
-          peloUsuario={peloUsuario}
+          abertoPeloUsuario={abertoPeloUsuario}
         />
       </Modal>
     </div>

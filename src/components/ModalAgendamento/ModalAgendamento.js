@@ -26,7 +26,7 @@ function ModalAgendamento(props) {
   const [examesMarcados, setExamesMarcados] = useState([]);
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [quantidadeAgendamentos, setQuantidadeAgendamentos] = useState();
-  const [peloUsuario, setPeloUsuario] = useState(true); // informa que o modal agendamento especifico foi aberto por meio do modal agendamento
+  const abertoPeloUsuario = true;
   const [carregando, setCarregando] = useState(true);
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 45, color: Cores.azul }} spin />
@@ -216,7 +216,7 @@ function ModalAgendamento(props) {
       >
         <ModalAgendamentoEspecifico
           emailUsuario={props.email}
-          peloUsuario={peloUsuario}
+          abertoPeloUsuario={abertoPeloUsuario}
         />
       </Modal>
     </Container>

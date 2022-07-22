@@ -90,7 +90,7 @@ function ModalAgendamentoEspecifico(props) {
   async function requisicaoCriarConsulta() {
     setCarregandoCadastro(true);
     formatacaoDataHora();
-    if (props.peloUsuario === true) {
+    if (props.abertoPeloUsuario === true) {
       consulta.id_usuario = usuario.id;
     }
     await managerService.CriandoColsulta(consulta);
@@ -123,7 +123,7 @@ function ModalAgendamentoEspecifico(props) {
     <Container>
       <Caixa>
         <InfoEsquerdaEDireita>
-          {props.peloUsuario === true ? (
+          {props.abertoPeloUsuario === true ? (
             <Usuario>
               <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
               {carregando ? (
@@ -141,7 +141,9 @@ function ModalAgendamentoEspecifico(props) {
                     color: "black",
                     borderColor: "black",
                     borderWidth: "0px",
+                    marginBottom: "0.5em",
                     paddingLeft: "2.5em",
+  
                   }}
                   size="large"
                   name="id_usuario"

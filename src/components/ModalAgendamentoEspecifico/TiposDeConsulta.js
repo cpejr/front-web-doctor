@@ -9,7 +9,3 @@ export const TiposDeConsulta = [
   "Retorno de consulta em Medicina do Sono",
   "Retorno de consulta em Neurologia Geral",
 ];
-
-export default {
-  TiposDeConsulta,
-}
