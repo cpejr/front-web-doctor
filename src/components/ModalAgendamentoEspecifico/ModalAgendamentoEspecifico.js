@@ -49,7 +49,6 @@ function ModalAgendamentoEspecifico(props) {
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
   const [duracaoEmMinutos, setDuracaoEmMinutos] = useState("");
-  // const [selectValue, setSelectValue] = useState("");
   moment.locale("pt-br");
 
   async function pegandoDadosUsuario() {

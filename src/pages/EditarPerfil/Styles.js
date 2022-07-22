@@ -74,35 +74,65 @@ export const AlterarDados = styled.div`
   align-items: flex-start;
   font-size: 1.5em;
 `;
-export const CaixaInputs = styled.div`
+
+export const Preenchimento = styled.div`
   display: flex;
   flex-direction: row;
+  height: 50%;
+  margin-bottom: 0px;
+
+  @media (max-width: 520px) {
+    flex-direction: column;
+  }
+`;
+
+export const CaixaInputs = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 15%;
+  height: 100%;
   padding-left: 2%;
   padding-right: 2%;
-  gap: 2%;
-  margin-bottom: 2%;
+  margin-bottom: 0;
+  gap: 1%;
 
   @media (max-width: 780px) {
     display: flex;
     flex-direction: column;
   }
+
+  @media (max-width: 560px) {
+    padding-left: 4%;
+    padding-right: 4%;
+  }
 `;
 
-export const EspaçoInput = styled.div`
-  @media (max-width: 780px) {
-    margin-top: 2%;
+export const Rotulo = styled.label`
+  margin-top: 5%;
+
+  @media (max-width: 930px) {
+    margin-top: 5%;
+  }
+
+  @media (max-width: 350px) {
+    font-size: 12px;
   }
 `;
 
 export const CaixaBotao = styled.div`
-  padding-top: 1%;
-  padding-bottom: 1%;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 3%;
+  margin-bottom: 2%;
+
+  @media (max-width: 560px) {
+    padding-left: 4%;
+    padding-right: 4%;
+    margin-top: 5%;
+  }
 `;
+
 export const ImagemPerfil = styled.div`
   display: flex;
   justify-content: center;

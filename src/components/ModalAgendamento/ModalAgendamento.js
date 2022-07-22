@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Modal, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import { Modal, Spin } from "antd";
 import {
   Container,
   Caixa,
@@ -19,11 +19,14 @@ import {
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../ModalAgendamentoEspecifico";
+import ModalEditarAgendamentoEspecifico from "../ModalEditarAgendamentoEspecifico";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAgendamento(props) {
   const [consultas, setConsultas] = useState([]);
+  const [consultaEspecifica, setConsultaEspecifica] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
+  const [modalEditarAgendamento, setModalEditarAgendamento] = useState(false);
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [quantidadeAgendamentos, setQuantidadeAgendamentos] = useState();
   const abertoPeloUsuario = true;
@@ -57,6 +60,16 @@ function ModalAgendamento(props) {
 
   async function fechandoModal() {
     setModalAgendamento(false);
+  }
+
+  async function editandoAgendamento(consulta) {
+    setModalEditarAgendamento(true);
+    setConsultaEspecifica(consulta);
+  }
+
+  async function fechandoModalEditarAgendamento() {
+    setModalEditarAgendamento(false);
+    pegandoDados();
   }
 
   async function excluirConsulta(id) {
@@ -102,14 +115,15 @@ function ModalAgendamento(props) {
                     <Button
                       width="45%"
                       height="40px"
-                      backgroundColor="green"
+                      backgroundColor={Cores.cinza[6]}
                       borderColor={Cores.lilas[3]}
-                      color={Cores.cinza[1]}
+                      color={Cores.cinza[2]}
                       fontSize="0.9em"
                       fontWeight="bold"
                       fontSizeMedia="0.8em"
                       fontSizeMedia950="1em"
                       heightMedia560="30px"
+                      onClick={() => editandoAgendamento(value)}
                     >
                       EDITAR
                     </Button>
@@ -217,6 +231,20 @@ function ModalAgendamento(props) {
         <ModalAgendamentoEspecifico
           emailUsuario={props.email}
           abertoPeloUsuario={abertoPeloUsuario}
+        />
+      </Modal>
+
+      <Modal
+        visible={modalEditarAgendamento}
+        onCancel={fechandoModalEditarAgendamento}
+        footer={null}
+        width={"70%"}
+        centered={true}
+      >
+        <ModalEditarAgendamentoEspecifico
+          emailUsuario={props.email}
+          consulta={consultaEspecifica}
+          fechandoModal={() => fechandoModalEditarAgendamento()}
         />
       </Modal>
     </Container>
