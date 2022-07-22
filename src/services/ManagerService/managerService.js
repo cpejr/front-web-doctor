@@ -68,7 +68,6 @@ export const UpdateConsulta = async (id_consulta, consulta) => {
     .updateConsulta(id_consulta, consulta)
     .then(() => {
       toast.success("Consulta atualizada com sucesso!");
-      window.location.href="/web/agendamentos";
     })
     .catch((error) => {
       requisicaoErro(error);

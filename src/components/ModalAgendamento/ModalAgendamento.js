@@ -68,6 +68,7 @@ function ModalAgendamento(props) {
 
   async function fechandoModalEditarAgendamento() {
     setModalEditarAgendamento(false);
+    pegandoDados();
   }
 
   async function excluirConsulta(id) {
@@ -235,7 +236,7 @@ function ModalAgendamento(props) {
         width={"70%"}
         centered={true}
       >
-        <ModalEditarAgendamentoEspecifico emailUsuario={props.email} consulta={consultaEspecifica}/>
+        <ModalEditarAgendamentoEspecifico emailUsuario={props.email} consulta={consultaEspecifica} fechandoModal = {() => fechandoModalEditarAgendamento()}/>
       </Modal>
 
 
