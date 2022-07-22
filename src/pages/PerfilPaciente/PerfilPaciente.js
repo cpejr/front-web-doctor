@@ -240,7 +240,8 @@ function PerfilPaciente(props) {
                         Cuidador: {cuidador}
                       </InfoContato>
                       <InfoContato style={{ marginTop: "0.4%" }}>
-                        Telefone do Cuidador: {telefoneCuidador}
+                        Telefone do Cuidador: ({telefoneCuidador.slice(0, -9)}) {telefoneCuidador.slice(2, -4)}-
+                        {telefoneCuidador.slice(-4)}
                       </InfoContato>
                     </>
                   ) : (
