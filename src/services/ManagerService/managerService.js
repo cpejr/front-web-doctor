@@ -81,7 +81,7 @@ export const GetConsultaPorId = async (id) => {
   let dadosConsulta = {};
 
   await requesterService
-    .requisicaoConsultaPorId(id)
+    .requisicaoConsultaUsuario(id)
 
     .then((res) => {
       dadosConsulta = res.data;
