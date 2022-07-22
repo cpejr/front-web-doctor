@@ -55,7 +55,9 @@ function ModalAgendamentoEspecifico(props) {
   const [duracaoEmMinutos, setDuracaoEmMinutos] = useState("");
   // const [selectValue, setSelectValue] = useState("");
 
+  const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
+  const [dataValida, setDataValida] = useState(false);
 
   moment.locale("pt-br");
 
@@ -80,16 +82,32 @@ function ModalAgendamentoEspecifico(props) {
     if (e.target.name === "hora") {
       setHora(e.target.value);
       return hora;
-    } else if (e.target.name === "data") {
-      setData(e.target.value)
-      return data;
     } else if (e.target.name === "duracao_em_minutos") {
-      setConsulta({ ...consulta, [e.target.name]: apenasNumeros(e.target.value) });
+      setConsulta({
+        ...consulta,
+        [e.target.name]: apenasNumeros(e.target.value),
+      });
       return consulta;
     } else {
       setConsulta({ ...consulta, [e.target.name]: e.target.value });
       return consulta;
     }
+  }
+
+  async function validacaoData(e) {
+    const { value, name } = e.target;
+    if (value) {
+      setCamposVazios({ ...camposVazios, [name]: false });
+    }
+
+    if (name === "data" && value.length > 10) {
+      setErro({ ...erro, [name]: true });
+    } else {
+      setErro({ ...erro, [name]: false });
+      setDataValida(true);
+    }
+
+    setData(value);
   }
 
   async function pegandoDadosUsuario() {
@@ -100,10 +118,10 @@ function ModalAgendamentoEspecifico(props) {
   }
 
   async function pegandoConsultorios() {
-    setCarregandoConsultorios(true)
+    setCarregandoConsultorios(true);
     const res = await managerService.GetDadosConsultorios();
     setConsultorios(res.dadosConsultorios);
-    setCarregandoConsultorios(false)
+    setCarregandoConsultorios(false);
   }
 
   useEffect(() => {
@@ -118,7 +136,7 @@ function ModalAgendamentoEspecifico(props) {
   async function requisicaoCriarConsulta() {
     if (!data) errors.data = true;
     if (!hora) errors.hora = true;
-    if (!consulta.duracao_em_minutos) errors.duracao_em_minutos= true;
+    if (!consulta.duracao_em_minutos) errors.duracao_em_minutos = true;
     if (!consulta.id_consultorio) errors.id_consultorio = true;
     if (!consulta.tipo) errors.tipo = true;
 
@@ -126,9 +144,11 @@ function ModalAgendamentoEspecifico(props) {
 
     if (_.isEqual(camposVazios, referenciaInputNulos)) {
       setCarregandoCadastro(true);
-      formatacaoDataHora();
-      consulta.id_usuario = usuario.id;
-      await managerService.CriandoColsulta(consulta);
+      if (dataValida) {
+        formatacaoDataHora();
+        consulta.id_usuario = usuario.id;
+        await managerService.CriandoColsulta(consulta);
+      }
       setCarregandoCadastro(false);
     } else {
       setCarregandoCadastro(true);
@@ -201,20 +221,22 @@ function ModalAgendamentoEspecifico(props) {
               type="date"
               size="large"
               name="data"
-              onChange={validacaoCampos}
+              onChange={validacaoData}
               value={data}
               camposVazios={camposVazios.data}
+              erro={erro.data}
             />
-            {camposVazios.data && (
-                <Rotulo>Digite uma data</Rotulo>
-              )} 
+            {erro.data && (
+              <Rotulo>Digite uma data no formato dd/mm/aaaa</Rotulo>
+            )}
+            {camposVazios.data && <Rotulo>Digite uma data</Rotulo>}
           </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
               <Select
                 style={{
                   width: "100%",
-                  color:"black",
+                  color: "black",
                   borderWidth: "1px",
                 }}
                 paddingTop="8px"
@@ -228,7 +250,9 @@ function ModalAgendamentoEspecifico(props) {
                 value={consulta.tipo}
                 camposVazios={camposVazios.tipo}
               >
-                <option value="" disabled selected >Tipo</option>
+                <option value="" disabled selected>
+                  Tipo
+                </option>
                 <option value="1">Tipo 1</option>
                 <option value="2">Tipo 2</option>
                 <option value="3">Tipo 3</option>
@@ -244,7 +268,7 @@ function ModalAgendamentoEspecifico(props) {
                 style={{
                   width: "100%",
                   borderWidth: "1px",
-                  color:"black",
+                  color: "black",
                 }}
                 paddingTop="8px"
                 paddingBottom="8px"
@@ -254,25 +278,25 @@ function ModalAgendamentoEspecifico(props) {
                 }}
                 value={consulta.id_consultorio}
                 camposVazios={camposVazios.id_consultorio}
-                            
               >
-                <option value="" disabled selected >
-                    Consultório
-                  </option>
+                <option value="" disabled selected>
+                  Consultório
+                </option>
                 {consultorios.map((consultorio) => (
                   <>
-                {carregandoConsultorios ? (
-                  <Spin indicator={antIcon} />
-                ) : (
-                  <option key={consultorio.id} value={consultorio.id} color="red">
-                    {consultorio.nome}
-                  </option>
-                )}
-                </>
+                    {carregandoConsultorios ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <option
+                        key={consultorio.id}
+                        value={consultorio.id}
+                        color="red"
+                      >
+                        {consultorio.nome}
+                      </option>
+                    )}
+                  </>
                 ))}
-                
-                  
-                
               </Select>
               {camposVazios.id_consultorio && (
                 <Rotulo>Selecione um consultório</Rotulo>
@@ -291,11 +315,8 @@ function ModalAgendamentoEspecifico(props) {
                 onChange={validacaoCampos}
                 value={hora}
                 camposVazios={camposVazios.hora}
-
               />
-              {camposVazios.hora && (
-                <Rotulo>Digite um horário</Rotulo>
-              )} 
+              {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
             </TamanhoInput>
 
             <TamanhoInput>
@@ -309,7 +330,7 @@ function ModalAgendamentoEspecifico(props) {
               />
               {camposVazios.duracao_em_minutos && (
                 <Rotulo>Digite uma duração</Rotulo>
-              )}  
+              )}
             </TamanhoInput>
           </DoisSelect>
           <Checkbox>

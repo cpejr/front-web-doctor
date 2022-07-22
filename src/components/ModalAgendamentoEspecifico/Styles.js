@@ -193,7 +193,7 @@ export const InputData = styled.input`
   border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
-      if(props.camposVazios){
+      if(props.erro || props.camposVazios){
         cor = Cores.vermelho;
       } else {
         cor = Cores.azul;
