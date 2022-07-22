@@ -57,7 +57,6 @@ export const InfoDireita = styled.div`
   }
 `;
 
-
 export const Usuario = styled.div`
   display: flex;
   flex-direction: row;
@@ -72,7 +71,6 @@ export const Usuario = styled.div`
   border-width: 1px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   margin-bottom: 2%;
-  
 
   @media (max-width: 500px) {
     flex-direction: column;
@@ -105,8 +103,6 @@ export const Nome = styled.div`
   }
 `;
 
-
-
 export const TextoCheckbox = styled.h3`
   font-family: ${Fontes.barlow};
   font-weight: 600;
@@ -121,10 +117,11 @@ export const TextoCheckbox = styled.h3`
 export const TextAreaDescricao = styled(TextArea)`
   border-color: ${Cores.preto};
   border-width: 1px;
-  color:${Cores.preto};
-  ::placeholder{
-    color:${Cores.preto};  }
-`
+  color: ${Cores.preto};
+  ::placeholder {
+    color: ${Cores.preto};
+  }
+`;
 
 export const DoisSelect = styled.h3`
   display: flex;
@@ -182,8 +179,8 @@ export const InputHora = styled.input`
   border-radius: 3px;
   border-width: 1px;
   ::placeholder {
-    color:${Cores.preto};
-  };
+    color: ${Cores.preto};
+  }
 `;
 
 export const InputDuracao = styled(Input)`
@@ -201,7 +198,7 @@ export const InputDuracao = styled(Input)`
 
   .ant-input {
     ::placeholder {
-      color:${Cores.preto}
+      color: ${Cores.preto};
     }
   }
 `;

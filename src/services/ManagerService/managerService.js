@@ -62,7 +62,6 @@ export const CriandoConsulta = async (consulta) => {
   return;
 };
 
-
 export const UpdateConsulta = async (id_consulta, consulta) => {
   await requesterService
     .updateConsulta(id_consulta, consulta)

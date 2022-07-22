@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, Row, Col, Input } from "antd";
-import Select from "../../styles/Select";
-import Button from "../../styles/Button";
+import { Checkbox, Input } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
+import moment from "moment";
+import { apenasNumeros } from "../../utils/masks";
 import {
   Container,
   Caixa,
@@ -19,35 +21,39 @@ import {
   TextoSelecioneUmaData,
   TextAreaDescricao,
 } from "./Styles";
-import * as managerService from "../../services/ManagerService/managerService";
+import Select from "../../styles/Select";
+import Button from "../../styles/Button";
 import logoGuilherme from "../../assets/logoGuilherme.png";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
 import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
-import moment from "moment";
-import { apenasNumeros } from "../../utils/masks";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalEditarAgendamentoEspecifico(props) {
-  const { Option } = Select
+  const { Option } = Select;
   const [usuario, setUsuario] = useState({});
   const [consultorios, setConsultorios] = useState([]);
-
   const [carregando, setCarregando] = useState();
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
   const [carregandoUpdate, setCarregandoUpdate] = useState();
-
-
-  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
   const [consulta, setConsulta] = useState({});
-
   const [consultorioPorId, setConsultorioPorId] = useState();
-
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
 
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
   moment.locale("pt-br");
+
+  async function pegandoConsultorios() {
+    setCarregandoConsultorios(true);
+    const res = await managerService.GetDadosConsultorios();
+    setConsultorios(res.dadosConsultorios);
+    setCarregandoConsultorios(false);
+  }
+
+  useEffect(() => {
+    pegandoConsultorios();
+  }, []);
 
   async function pegandoDadosUsuario() {
     setCarregando(true);
@@ -56,10 +62,22 @@ function ModalEditarAgendamentoEspecifico(props) {
     setCarregando(false);
   }
 
-  async function setandoNomeConsultorioPorId() {
-    const resposta = await managerService.GetConsultorioPorId(consulta.id_consultorio);
-    setConsultorioPorId(resposta.nome);
+  async function setandoValoresConsulta() {
+    setCarregando(true);
+    setConsulta(props.consulta);
+    setCarregando(false);
+  }
 
+  useEffect(() => {
+    pegandoDadosUsuario();
+    setandoValoresConsulta();
+  }, [props]);
+
+  async function setandoNomeConsultorioPorId() {
+    const resposta = await managerService.GetConsultorioPorId(
+      consulta.id_consultorio
+    );
+    setConsultorioPorId(resposta.nome);
   }
 
   function setandoDataEHora() {
@@ -71,46 +89,19 @@ function ModalEditarAgendamentoEspecifico(props) {
     setHora(horaFormatada);
   }
 
-  async function pegandoConsultorios() {
-    setCarregandoConsultorios(true)
-    const res = await managerService.GetDadosConsultorios();
-    setConsultorios(res.dadosConsultorios);
-    setCarregandoConsultorios(false);
-  }
-
-
-  async function setandoValoresConsulta() {
-    setCarregando(true);
-    setConsulta(props.consulta);
-    setCarregando(false);
-  }
-
-
-  useEffect(() => {
-    pegandoDadosUsuario();
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props]);
-
-  useEffect(() => {
-    pegandoConsultorios();
-  }, []);
-
-  useEffect(() => {
-    setandoValoresConsulta();
-  }, [props]);
-
-
-  useEffect(() => {
-    setandoDataEHora();
-  }, [consulta.data_hora]);
-
   useEffect(() => {
     setandoNomeConsultorioPorId();
+    setandoDataEHora();
   }, [consulta]);
 
-
-
-
+  function formatacaoDataHora() {
+    try {
+      const dataHora = `${data} ${hora}:00`;
+      consulta.data_hora = dataHora;
+    } catch {
+      alert("DataHora inválida.");
+    }
+  }
 
   async function requisicaoAtualizarConsulta() {
     setCarregandoUpdate(true);
@@ -122,31 +113,24 @@ function ModalEditarAgendamentoEspecifico(props) {
     props.fechandoModal();
   }
 
-  function formatacaoDataHora() {
-    try {
-      const dataHora = `${data} ${hora}:00`;
-      consulta.data_hora = dataHora;
-    } catch {
-      alert("DataHora inválida.");
-    }
-  }
-
   function preenchendoDadosConsulta(e) {
     if (e.target.name === "hora") {
       setHora(e.target.value);
       return hora;
     } else if (e.target.name === "data") {
-      setData(e.target.value)
+      setData(e.target.value);
       return data;
-    } else if (e.target.name == "duracao_em_minutos") {
-      setConsulta({ ...consulta, [e.target.name]: apenasNumeros(e.target.value) });
+    } else if (e.target.name === "duracao_em_minutos") {
+      setConsulta({
+        ...consulta,
+        [e.target.name]: apenasNumeros(e.target.value),
+      });
       return consulta;
     } else {
       setConsulta({ ...consulta, [e.target.name]: e.target.value });
       return consulta;
     }
   }
-
 
   return (
     <Container>
@@ -208,7 +192,9 @@ function ModalEditarAgendamentoEspecifico(props) {
                   preenchendoDadosConsulta(e);
                 }}
               >
-                <option value="" disabled selected >{consulta.tipo}</option>
+                <option value="" disabled selected>
+                  {consulta.tipo}
+                </option>
                 <option value="1">Tipo 1</option>
                 <option value="2">Tipo 2</option>
                 <option value="3">Tipo 3</option>
@@ -222,14 +208,14 @@ function ModalEditarAgendamentoEspecifico(props) {
                   width: "100%",
                   borderColor: "black",
                   borderWidth: "1px",
-                  color: "black"
+                  color: "black",
                 }}
                 size="large"
                 onChange={(e) => {
                   preenchendoDadosConsulta(e);
                 }}
               >
-                <option value="" disabled selected >
+                <option value="" disabled selected>
                   {consultorioPorId}
                 </option>
                 {consultorios.map((consultorio) => (
@@ -237,13 +223,16 @@ function ModalEditarAgendamentoEspecifico(props) {
                     {carregandoConsultorios ? (
                       <Spin indicator={antIcon} />
                     ) : (
-                      <option key={consultorio.id} value={consultorio.id} color="red">
+                      <option
+                        key={consultorio.id}
+                        value={consultorio.id}
+                        color="red"
+                      >
                         {consultorio.nome}
                       </option>
                     )}
                   </>
                 ))}
-
               </Select>
             </TamanhoInput>
           </DoisSelect>
@@ -301,5 +290,3 @@ function ModalEditarAgendamentoEspecifico(props) {
 }
 
 export default ModalEditarAgendamentoEspecifico;
-
-

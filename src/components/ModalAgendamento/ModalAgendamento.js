@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Button from "../../styles/Button";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Modal, Spin } from "antd";
 import {
   Container,
   Caixa,
@@ -15,12 +16,11 @@ import {
   BarraEstetica,
   BotoesEditarExcluir,
 } from "./Styles";
-import { LoadingOutlined } from "@ant-design/icons";
+import { Cores } from "../../variaveis";
+import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../ModalAgendamentoEspecifico";
 import ModalEditarAgendamentoEspecifico from "../ModalEditarAgendamentoEspecifico";
 import * as managerService from "../../services/ManagerService/managerService";
-import { Modal, Spin } from "antd";
-import { Cores } from "../../variaveis";
 
 function ModalAgendamento(props) {
   const [consultas, setConsultas] = useState([]);
@@ -40,14 +40,15 @@ function ModalAgendamento(props) {
   }, []);
 
   async function pegandoDados() {
-    const respostaConsultas = await managerService.GetDadosConsultasExamesMarcados(
-      props.id_usuario
-    );
+    const respostaConsultas =
+      await managerService.GetDadosConsultasExamesMarcados(props.id_usuario);
     setConsultas(respostaConsultas.dadosConsultas);
     setExamesMarcados(respostaConsultas.dadosExamesMarcados);
 
     let contador = 0;
-    contador = respostaConsultas.dadosConsultas.length + respostaConsultas.dadosExamesMarcados.length;
+    contador =
+      respostaConsultas.dadosConsultas.length +
+      respostaConsultas.dadosExamesMarcados.length;
     setQuantidadeAgendamentos(contador);
 
     setCarregando(false);
@@ -85,29 +86,30 @@ function ModalAgendamento(props) {
         <Titulo>Agendamentos Marcados:</Titulo>
 
         {carregando ? (
-            <Spin indicator={antIcon} />
-          ) : (
-        <CorpoCaixa>
-          <InfoEsquerda>
-            {consultas.map((value) => (
-              <Agendamento>
-                <CaixaAgendamento key={value.id}>
-                  <DiaHorarioAgendamento>
-                    {value.data_hora.slice(8, -14)}/
-                    {value.data_hora.slice(5, -17)}/
-                    {value.data_hora.slice(0, -20)}
-                  </DiaHorarioAgendamento>
-                  <BarraEstetica></BarraEstetica>
-                  <TextoAgendamentoEspecifico>
-                    Consulta
-                  </TextoAgendamentoEspecifico>
-                  <BarraEstetica></BarraEstetica>
-                  <DiaHorarioAgendamento>
-                    {value.data_hora.slice(11, -11)}
-                    {value.data_hora.slice(13, -8)}
-                    {` - `}{value.duracao_em_minutos} min
-                  </DiaHorarioAgendamento>
-                </CaixaAgendamento>
+          <Spin indicator={antIcon} />
+        ) : (
+          <CorpoCaixa>
+            <InfoEsquerda>
+              {consultas.map((value) => (
+                <Agendamento>
+                  <CaixaAgendamento key={value.id}>
+                    <DiaHorarioAgendamento>
+                      {value.data_hora.slice(8, -14)}/
+                      {value.data_hora.slice(5, -17)}/
+                      {value.data_hora.slice(0, -20)}
+                    </DiaHorarioAgendamento>
+                    <BarraEstetica></BarraEstetica>
+                    <TextoAgendamentoEspecifico>
+                      Consulta
+                    </TextoAgendamentoEspecifico>
+                    <BarraEstetica></BarraEstetica>
+                    <DiaHorarioAgendamento>
+                      {value.data_hora.slice(11, -11)}
+                      {value.data_hora.slice(13, -8)}
+                      {` - `}
+                      {value.duracao_em_minutos} min
+                    </DiaHorarioAgendamento>
+                  </CaixaAgendamento>
 
                   <BotoesEditarExcluir>
                     <Button
@@ -236,12 +238,12 @@ function ModalAgendamento(props) {
         width={"70%"}
         centered={true}
       >
-        <ModalEditarAgendamentoEspecifico emailUsuario={props.email} consulta={consultaEspecifica} fechandoModal = {() => fechandoModalEditarAgendamento()}/>
+        <ModalEditarAgendamentoEspecifico
+          emailUsuario={props.email}
+          consulta={consultaEspecifica}
+          fechandoModal={() => fechandoModalEditarAgendamento()}
+        />
       </Modal>
-
-
-
-
     </Container>
   );
 }

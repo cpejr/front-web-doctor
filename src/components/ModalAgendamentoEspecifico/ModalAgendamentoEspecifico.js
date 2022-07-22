@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Checkbox, Row, Col, Input } from "antd";
-import Select from "../../styles/Select";
-import Button from "../../styles/Button";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
+import moment from "moment";
 import {
   Container,
   Caixa,
@@ -20,12 +21,11 @@ import {
   TextoSelecioneUmaData,
   TextAreaDescricao,
 } from "./Styles";
-import * as managerService from "../../services/ManagerService/managerService";
+import Select from "../../styles/Select";
+import Button from "../../styles/Button";
 import logoGuilherme from "../../assets/logoGuilherme.png";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
 import { Cores } from "../../variaveis";
-import moment from "moment";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAgendamentoEspecifico(props) {
   const { Option } = Select;
@@ -46,22 +46,20 @@ function ModalAgendamentoEspecifico(props) {
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
   const [duracaoEmMinutos, setDuracaoEmMinutos] = useState("");
-  // const [selectValue, setSelectValue] = useState("");
   moment.locale("pt-br");
 
   async function pegandoDadosUsuario() {
     setCarregando(true);
     const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
     setUsuario(resposta.dadosUsuario);
-    console.log(usuario.nome);
     setCarregando(false);
   }
 
   async function pegandoConsultorios() {
-    setCarregandoConsultorios(true)
+    setCarregandoConsultorios(true);
     const res = await managerService.GetDadosConsultorios();
     setConsultorios(res.dadosConsultorios);
-    setCarregandoConsultorios(false)
+    setCarregandoConsultorios(false);
   }
 
   useEffect(() => {
@@ -95,7 +93,7 @@ function ModalAgendamentoEspecifico(props) {
       setHora(e.target.value);
       return hora;
     } else if (e.target.name === "data") {
-      setData(e.target.value)
+      setData(e.target.value);
       return data;
     } else {
       setConsulta({ ...consulta, [e.target.name]: e.target.value });
@@ -168,7 +166,7 @@ function ModalAgendamentoEspecifico(props) {
               <Select
                 style={{
                   width: "100%",
-                  color:"black",
+                  color: "black",
                   borderColor: "black",
                   borderWidth: "1px",
                 }}
@@ -179,7 +177,9 @@ function ModalAgendamentoEspecifico(props) {
                   preenchendoDadosConsulta(e);
                 }}
               >
-                <option value="" disabled selected >Tipo</option>
+                <option value="" disabled selected>
+                  Tipo
+                </option>
                 <option value="1">Tipo 1</option>
                 <option value="2">Tipo 2</option>
                 <option value="3">Tipo 3</option>
@@ -193,31 +193,31 @@ function ModalAgendamentoEspecifico(props) {
                   width: "100%",
                   borderColor: "black",
                   borderWidth: "1px",
-                  color:"black"
+                  color: "black",
                 }}
                 size="large"
                 onChange={(e) => {
                   preenchendoDadosConsulta(e);
                 }}
-                            
               >
-                <option value="" disabled selected >
-                    Consultório
-                  </option>
+                <option value="" disabled selected>
+                  Consultório
+                </option>
                 {consultorios.map((consultorio) => (
                   <>
-                {carregandoConsultorios ? (
-                  <Spin indicator={antIcon} />
-                ) : (
-                  <option key={consultorio.id} value={consultorio.id} color="red">
-                    {consultorio.nome}
-                  </option>
-                )}
-                </>
+                    {carregandoConsultorios ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <option
+                        key={consultorio.id}
+                        value={consultorio.id}
+                        color="red"
+                      >
+                        {consultorio.nome}
+                      </option>
+                    )}
+                  </>
                 ))}
-                
-                  
-                
               </Select>
             </TamanhoInput>
           </DoisSelect>
@@ -231,7 +231,7 @@ function ModalAgendamentoEspecifico(props) {
                 placeholder="Horário"
                 name="hora"
                 onChange={preenchendoDadosConsulta}
-                style={{color:"black"}}
+                style={{ color: "black" }}
               />
             </TamanhoInput>
 

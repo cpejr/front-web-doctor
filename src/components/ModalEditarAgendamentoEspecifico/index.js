@@ -1,1 +1,1 @@
-export {default} from "./ModalEditarAgendamentoEspecifico";
+export { default } from "./ModalEditarAgendamentoEspecifico";

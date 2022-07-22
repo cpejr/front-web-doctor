@@ -45,17 +45,20 @@ export const deletarUsuario = (id) => api.delete(`/usuarios/${id}`);
 
 export const requisicaoExamesMarcados = () => api.get(`/exame_marcados/`);
 
-export const requisicaoExamesMarcadosUsuario = (id_usuario) => api.get(`/exame_marcados/${id_usuario}`);
+export const requisicaoExamesMarcadosUsuario = (id_usuario) =>
+  api.get(`/exame_marcados/${id_usuario}`);
 
 export const requisicaoConsultas = () => api.get(`/consultas/`);
 
-export const requisicaoConsultaUsuario = (id_usuario) => api.get(`/consultas/${id_usuario}`);
+export const requisicaoConsultaUsuario = (id_usuario) =>
+  api.get(`/consultas/${id_usuario}`);
 
 export const requisicaoExame = (id) => api.get(`/exames/${id}`);
 
 export const requisicaoDadosConsultorios = () => api.get(`/consultorios`);
 
-export const requisicaoDadosConsultoriosPorId = (id) => api.get(`/consultorios/${id}`);
+export const requisicaoDadosConsultoriosPorId = (id) =>
+  api.get(`/consultorios/${id}`);
 
 export const deletarConsulta = (id) => api.delete(`/consultas/${id}`);
 
@@ -63,9 +66,12 @@ export const deletarExameMarcado = (id) => api.delete(`/exame_marcados/${id}`);
 
 export const requisicaoFormularios = () => api.get(`/formularios/`);
 
-export const requisicaoFormularioEspecifico = (id) => api.get(`/formularios/${id}`);
+export const requisicaoFormularioEspecifico = (id) =>
+  api.get(`/formularios/${id}`);
 
 export const deletarFormulario = (id) => api.delete(`/formularios/${id}`);
-export const requisicaoRespostaFormularioIdUsuario = (id_usuario) => api.get(`/formularios_pacientes_usuario/${id_usuario}`);
+export const requisicaoRespostaFormularioIdUsuario = (id_usuario) =>
+  api.get(`/formularios_pacientes_usuario/${id_usuario}`);
 
-export const requisicaoRespostaFormulario = (id) => api.get(`/formularios_pacientes/${id}`);
+export const requisicaoRespostaFormulario = (id) =>
+  api.get(`/formularios_pacientes/${id}`);
