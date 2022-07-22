@@ -83,6 +83,15 @@ function PerfilPaciente(props) {
   const margemBotoes = tipoUsuario ? "0px" : "8%";
   const margemPerfil = tipoUsuario ? "2%" : "20%";
 
+  function formatarCpf(cpf) {
+    return cpf
+      .replace(/\D/g, "")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1-$2")
+      .replace(/(-\d{2})\d+?$/, "$1");
+  }
+
   async function pegandoDados() {
     const resposta = await managerService.GetDadosUsuario(
       props.location.state.email
@@ -179,15 +188,6 @@ function PerfilPaciente(props) {
     }
   }
 
-  function formatarCpf(cpf) {
-    return cpf
-      .replace(/\D/g, "")
-      .replace(/(\d{3})(\d)/, "$1.$2")
-      .replace(/(\d{3})(\d)/, "$1.$2")
-      .replace(/(\d{3})(\d)/, "$1-$2")
-      .replace(/(-\d{2})\d+?$/, "$1");
-  }
-
   return (
     <div>
       <ContainerPerfil>
@@ -239,10 +239,17 @@ function PerfilPaciente(props) {
                       <InfoContato style={{ marginTop: "0.4%" }}>
                         Cuidador: {cuidador}
                       </InfoContato>
-                      <InfoContato style={{ marginTop: "0.4%" }}>
-                        Telefone do Cuidador: ({telefoneCuidador.slice(0, -9)}) {telefoneCuidador.slice(2, -4)}-
-                        {telefoneCuidador.slice(-4)}
-                      </InfoContato>
+                      {telefoneCuidador ? (
+                        <InfoContato style={{ marginTop: "0.4%" }}>
+                          Telefone do Cuidador: ({telefoneCuidador.slice(0, -9)}
+                          ) {telefoneCuidador.slice(2, -4)}-
+                          {telefoneCuidador.slice(-4)}
+                        </InfoContato>
+                      ) : (
+                        <InfoContato style={{ marginTop: "0.4%" }}>
+                          Telefone do Cuidador:
+                        </InfoContato>
+                      )}
                     </>
                   ) : (
                     <></>
