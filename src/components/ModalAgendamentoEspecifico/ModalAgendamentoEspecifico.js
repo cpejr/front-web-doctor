@@ -3,6 +3,7 @@ import { Checkbox, Row, Col, Input } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
+import { sleep } from "../../utils/sleep";
 import {
   Container,
   Caixa,
@@ -48,19 +49,7 @@ function ModalAgendamentoEspecifico(props) {
   });
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
-  const [duracaoEmMinutos, setDuracaoEmMinutos] = useState("");
   moment.locale("pt-br");
-
-  async function pegandoDadosUsuario() {
-    setCarregando(true);
-    const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
-    setUsuario(resposta.dadosUsuario);
-    setCarregando(false);
-  }
-
-  useEffect(() => {
-    pegandoDadosUsuario();
-  }, [props]);
 
   async function pegandoPacientes() {
     const resposta = await managerService.GetDadosPessoais();
@@ -86,6 +75,17 @@ function ModalAgendamentoEspecifico(props) {
     pegandoConsultorios();
   }, []);
 
+  async function pegandoDadosUsuario() {
+    setCarregando(true);
+    const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
+    setUsuario(resposta.dadosUsuario);
+    setCarregando(false);
+  }
+
+  useEffect(() => {
+    pegandoDadosUsuario();
+  }, [props]);
+
   async function requisicaoCriarConsulta() {
     setCarregandoCadastro(true);
     formatacaoDataHora();
@@ -94,6 +94,9 @@ function ModalAgendamentoEspecifico(props) {
     }
     await managerService.CriandoConsulta(consulta);
     setCarregandoCadastro(false);
+
+    await sleep(1500);
+    window.location.href = "/web/agendamentos";
   }
 
   function formatacaoDataHora() {
@@ -142,7 +145,6 @@ function ModalAgendamentoEspecifico(props) {
                     borderWidth: "0px",
                     marginBottom: "0.5em",
                     paddingLeft: "2.5em",
-  
                   }}
                   size="large"
                   name="id_usuario"

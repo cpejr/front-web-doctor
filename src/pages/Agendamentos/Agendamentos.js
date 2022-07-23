@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Input, Select, Modal } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -29,14 +30,28 @@ import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function Agendamentos() {
+  const history = useHistory();
   const { Search } = Input;
   const [modalAgendamento, setModalAgendamento] = useState(false);
-  const [email, setEmail] = useState(false);
+  const [email, setEmail] = useState();
   const [carregando, setCarregando] = useState(true);
   const [consultas, setConsultas] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const abertoPeloUsuario = false;
+
+  async function pegandoDados() {
+    const resposta =
+      await managerService.GetDadosConsultasExamesMarcadosGeral();
+    setConsultas(resposta.dadosConsultas);
+    setExamesMarcados(resposta.dadosExamesMarcados);
+    console.log(resposta);
+    setCarregando(false);
+  }
+
+  useEffect(() => {
+    pegandoDados();
+  }, [email]);
 
   async function marcandoAgendamento(email) {
     setEmail(email);
@@ -47,18 +62,12 @@ function Agendamentos() {
     setModalAgendamento(false);
   }
 
-  async function pegandoDados() {
-    const respostaConsultas =
-      await managerService.GetDadosConsultasExamesMarcados();
-    setConsultas(respostaConsultas.dadosConsultas);
-    setExamesMarcados(respostaConsultas.dadosExamesMarcados);
-
-    setCarregando(false);
+  async function abrindoPerfilPaciente(email) {
+    history.push({
+      pathname: "/web/perfildopaciente",
+      state: { email },
+    });
   }
-
-  useEffect(() => {
-    pegandoDados();
-  }, [email]);
 
   return (
     <div>
@@ -99,7 +108,9 @@ function Agendamentos() {
                 {carregando ? (
                   <Spin indicator={antIcon} />
                 ) : (
-                  <div>{value.nome}</div>
+                  <div onClick={() => abrindoPerfilPaciente(value.email)}>
+                    {value.nome}
+                  </div>
                 )}
               </Nome>
               <Telefone>
@@ -123,7 +134,7 @@ function Agendamentos() {
                 {carregando ? (
                   <Spin indicator={antIcon} />
                 ) : (
-                  <div>XXXXXX-XXXXX</div>
+                  <div>{value.codigo}</div>
                 )}
               </CódigoPaciente>
             </Usuario>
@@ -159,7 +170,7 @@ function Agendamentos() {
                 {carregando ? (
                   <Spin indicator={antIcon} />
                 ) : (
-                  <div>XXXXXX-XXXXX</div>
+                  <div>{value.codigo}</div>
                 )}
               </CódigoPaciente>
             </Usuario>
