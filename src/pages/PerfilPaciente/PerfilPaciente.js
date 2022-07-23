@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-/* comentario */
+import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
+import { Spin } from "antd";
+import { Modal } from "antd";
+import { toast } from "react-toastify";
 import {
   ContainerPerfil,
   Perfil,
@@ -28,33 +31,22 @@ import {
   RespostaPendente,
   Resposta,
   TituloReceita,
-  DataFormulario,
   TipoFormulario,
   UrgenciaFormulario,
-  ContainerModalExcluir,
-  ConteudoModalExcluir,
-  ContainerFooterModalExcluir,
   TextoUrgencia,
 } from "./Styles";
-import * as managerService from "../../services/ManagerService/managerService";
-import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
-import { Spin } from "antd";
-import { Modal } from "antd";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
-import { useHistory } from "react-router-dom";
 import ModalAgendamento from "../../components/ModalAgendamento/ModalAgendamento";
 import { Cores } from "../../variaveis";
 import AddToast from "../../components/AddToast/AddToast";
 import { recebeTipo, usuarioAutenticado } from "../../services/auth";
-import { toast } from "react-toastify";
 import ModalExcluirUsuario from "../../components/ModalExcluirUsuario";
 import { redirecionamento, sleep } from "../../utils/sleep";
 import ModalFormulario from "../../components/ModalFormulario";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function PerfilPaciente(props) {
-  const history = useHistory();
-
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [modalFormulario, setModalFormulario] = useState(false);
   const [modalDeletarUsuario, setModalDeletarUsuario] = useState(false);
@@ -75,10 +67,6 @@ function PerfilPaciente(props) {
     <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin />
   );
 
-  useEffect(() => {
-    pegandoDados();
-  }, []);
-
   async function pegandoDados() {
     const resposta = await managerService.GetDadosUsuario(
       props.location.state.email
@@ -92,8 +80,8 @@ function PerfilPaciente(props) {
   }
 
   useEffect(() => {
-    pegandoListaFormularios();
-  }, [usuario]);
+    pegandoDados();
+  }, []);
 
   async function pegandoListaFormularios() {
     const resposta = await managerService.GetRespostaFormularioIdUsuario(
@@ -101,6 +89,10 @@ function PerfilPaciente(props) {
     );
     setRespostas(resposta);
   }
+
+  useEffect(() => {
+    pegandoListaFormularios();
+  }, [usuario]);
 
   async function deletarUsuario() {
     if (usuarioAutenticado() && recebeTipo() === "MASTER") {

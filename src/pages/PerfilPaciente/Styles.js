@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Cores, Fontes } from "../../variaveis";
+import { Cores } from "../../variaveis";
 
 export const ContainerPerfil = styled.div`
   display: flex;
@@ -237,9 +237,7 @@ export const DadosFormulario = styled.div`
   align-items: flex-start;
   margin-bottom: 2%;
 
-
   @media (max-width: 560px) {
-    
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -312,7 +310,7 @@ export const TituloFormulario = styled.div`
   font-size: 1.3em;
   text-decoration: underline;
   color: ${Cores.preto};
-  display:flex;
+  display: flex;
   justify-content: center;
   width: 33%;
 
@@ -322,14 +320,13 @@ export const TituloFormulario = styled.div`
 
   @media (max-width: 780px) {
     font-size: 1.2em;
-    display:flex;
+    display: flex;
     justify-content: flex-start;
-    align-items:center;
-    
+    align-items: center;
   }
   @media (max-width: 560px) {
     font-size: 1.1em;
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -349,13 +346,11 @@ export const TipoFormulario = styled.div`
   display: flex;
   justify-content: center;
   width: 33%;
-  
 
   @media (max-width: 780px) {
     font-size: 1.1em;
     align-content: center;
     text-align: center;
-    
   }
 
   @media (max-width: 560px) {
@@ -371,7 +366,6 @@ export const UrgenciaFormulario = styled.div`
   align-items: center;
   @media (max-width: 780px) {
     font-size: 1em;
-    
   }
 `;
 export const Resposta = styled.div`
