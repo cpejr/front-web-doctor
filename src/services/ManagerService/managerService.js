@@ -26,7 +26,6 @@ export const requisicaoLogin = async (email, senha) => {
       }
     }
   } catch (error) {
-    requisicaoErro(error);
   }
 
   return;
