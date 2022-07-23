@@ -20,6 +20,7 @@ import {
   SelecioneUmaData,
   TextoSelecioneUmaData,
   TextAreaDescricao,
+  Rotulo,
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
@@ -27,6 +28,7 @@ import logoGuilherme from "../../assets/logoGuilherme.png";
 import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
+
 
 function ModalEditarAgendamentoEspecifico(props) {
   const { Option } = Select;
@@ -39,6 +41,7 @@ function ModalEditarAgendamentoEspecifico(props) {
   const [consultorioPorId, setConsultorioPorId] = useState();
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
+  const [camposVazios, setCamposVazios] = useState(false);
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -114,6 +117,18 @@ function ModalEditarAgendamentoEspecifico(props) {
   }
 
   function preenchendoDadosConsulta(e) {
+
+    const { value, name } = e.target;
+
+    if(value != consulta.descricao){
+      if (value) {
+        setCamposVazios({ ...camposVazios, [name]: false });
+      }
+      else {
+        setCamposVazios({ ...camposVazios, [name]: true });
+      }
+    }
+
     if (e.target.name === "hora") {
       setHora(e.target.value);
       return hora;
@@ -259,6 +274,11 @@ function ModalEditarAgendamentoEspecifico(props) {
                 onChange={preenchendoDadosConsulta}
                 suffix="min"
               />
+              {camposVazios.duracao_em_minutos ? (
+                <Rotulo>Digite uma duração</Rotulo>
+              ) : (
+              <></>
+              )}
             </TamanhoInput>
           </DoisSelect>
           <Checkbox>

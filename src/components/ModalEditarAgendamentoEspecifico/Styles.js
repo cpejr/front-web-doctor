@@ -224,3 +224,13 @@ export const SelecioneUmaData = styled.h3`
     width: 100%;
   }
 `;
+
+export const Rotulo = styled.div`
+  width: 100%;
+  height: 10px;
+  margin-bottom: 10px;
+  font-family: ${Fontes.barlow};
+  font-weight: 400;
+  font-size: 1em;
+  color: ${Cores.vermelho};
+`;
