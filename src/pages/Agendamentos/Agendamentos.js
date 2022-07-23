@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Input, Select, Modal } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 import {
   TopoPagina,
   ContainerListadeUsuarios,
@@ -22,13 +24,11 @@ import {
   CódigoPaciente,
 } from "./Styles";
 import Button from "../../styles/Button";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
-import * as managerService from "../../services/ManagerService/managerService";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 import { Cores } from "../../variaveis";
-function Agendamentos () {
- 
+import * as managerService from "../../services/ManagerService/managerService";
+
+function Agendamentos() {
   const { Search } = Input;
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [email, setEmail] = useState(false);
@@ -36,10 +36,7 @@ function Agendamentos () {
   const [consultas, setConsultas] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
-  useEffect(() => {
-    pegandoDados();
-  }, [email]);
+  const abertoPeloUsuario = false;
 
   async function marcandoAgendamento(email) {
     setEmail(email);
@@ -58,6 +55,10 @@ function Agendamentos () {
 
     setCarregando(false);
   }
+
+  useEffect(() => {
+    pegandoDados();
+  }, [email]);
 
   return (
     <div>
@@ -190,10 +191,13 @@ function Agendamentos () {
         width={"70%"}
         centered={true}
       >
-        <ModalAgendamentoEspecifico emailUsuario={email} />
+        <ModalAgendamentoEspecifico
+          emailUsuario={email}
+          abertoPeloUsuario={abertoPeloUsuario}
+        />
       </Modal>
     </div>
   );
 }
 
-export default Agendamentos ;
+export default Agendamentos;

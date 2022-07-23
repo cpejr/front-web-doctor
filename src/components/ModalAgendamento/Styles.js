@@ -167,7 +167,7 @@ export const CaixaAgendamento = styled.div`
   height: 40px;
   background-color: ${Cores.lilas[4]};
   border-style: solid;
-  border-color:${Cores.lilas[3]};
+  border-color: ${Cores.lilas[3]};
   border-width: 0.2em;
   border-radius: 6px;
   margin-top: 5px;
@@ -224,7 +224,7 @@ export const DiaHorarioAgendamento = styled.div`
   font-family: ${Fontes.roboto};
   font-size: 1em;
   font-weight: medium;
-  
+
   @media (max-width: 1700px) {
     font-size: 0.8em;
   }
@@ -232,11 +232,11 @@ export const DiaHorarioAgendamento = styled.div`
 
 export const BarraEstetica = styled.div`
   display: flex;
-  background-color:${Cores.lilas[3]};
+  background-color: ${Cores.lilas[3]};
   height: 100%;
   width: 3px;
   border-style: solid;
-  border-color:${Cores.lilas[3]};
+  border-color: ${Cores.lilas[3]};
   border-width: 0.2em;
 
   @media (max-width: 480px) {
