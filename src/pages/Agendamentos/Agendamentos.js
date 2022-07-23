@@ -32,15 +32,26 @@ import * as managerService from "../../services/ManagerService/managerService";
 function Agendamentos() {
   const history = useHistory();
   const { Search } = Input;
-  const [usuarios, setUsuarios] = useState([]);
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [email, setEmail] = useState();
-  const [codigo, setCodigo] = useState();
   const [carregando, setCarregando] = useState(true);
   const [consultas, setConsultas] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const abertoPeloUsuario = false;
+
+  async function pegandoDados() {
+    const resposta =
+      await managerService.GetDadosConsultasExamesMarcadosGeral();
+    setConsultas(resposta.dadosConsultas);
+    setExamesMarcados(resposta.dadosExamesMarcados);
+    console.log(resposta);
+    setCarregando(false);
+  }
+
+  useEffect(() => {
+    pegandoDados();
+  }, [email]);
 
   async function marcandoAgendamento(email) {
     setEmail(email);
@@ -51,26 +62,12 @@ function Agendamentos() {
     setModalAgendamento(false);
   }
 
-  async function pegandoDados() {
-    const resposta =
-      await managerService.GetDadosConsultasExamesMarcadosGeral();
-    setConsultas(resposta.dadosConsultas);
-    setExamesMarcados(resposta.dadosExamesMarcados);
-    console.log(resposta)
-    setCarregando(false);
-  }
-
   async function abrindoPerfilPaciente(email) {
-    
     history.push({
       pathname: "/web/perfildopaciente",
       state: { email },
     });
   }
-
-  useEffect(() => {
-    pegandoDados();
-  }, [email]);
 
   return (
     <div>
@@ -111,11 +108,7 @@ function Agendamentos() {
                 {carregando ? (
                   <Spin indicator={antIcon} />
                 ) : (
-                  <div
-                    onClick={() =>
-                    abrindoPerfilPaciente(value.email)
-                    }
-                  >
+                  <div onClick={() => abrindoPerfilPaciente(value.email)}>
                     {value.nome}
                   </div>
                 )}

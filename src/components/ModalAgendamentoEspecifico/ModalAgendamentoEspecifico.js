@@ -49,19 +49,7 @@ function ModalAgendamentoEspecifico(props) {
   });
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
-  const [duracaoEmMinutos, setDuracaoEmMinutos] = useState("");
   moment.locale("pt-br");
-
-  async function pegandoDadosUsuario() {
-    setCarregando(true);
-    const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
-    setUsuario(resposta.dadosUsuario);
-    setCarregando(false);
-  }
-
-  useEffect(() => {
-    pegandoDadosUsuario();
-  }, [props]);
 
   async function pegandoPacientes() {
     const resposta = await managerService.GetDadosPessoais();
@@ -86,6 +74,17 @@ function ModalAgendamentoEspecifico(props) {
   useEffect(() => {
     pegandoConsultorios();
   }, []);
+
+  async function pegandoDadosUsuario() {
+    setCarregando(true);
+    const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
+    setUsuario(resposta.dadosUsuario);
+    setCarregando(false);
+  }
+
+  useEffect(() => {
+    pegandoDadosUsuario();
+  }, [props]);
 
   async function requisicaoCriarConsulta() {
     setCarregandoCadastro(true);
@@ -146,7 +145,6 @@ function ModalAgendamentoEspecifico(props) {
                     borderWidth: "0px",
                     marginBottom: "0.5em",
                     paddingLeft: "2.5em",
-  
                   }}
                   size="large"
                   name="id_usuario"
