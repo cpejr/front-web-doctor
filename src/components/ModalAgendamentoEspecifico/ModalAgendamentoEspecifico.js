@@ -78,6 +78,8 @@ function ModalAgendamentoEspecifico(props) {
     }
     if (consulta.duracao_em_minutos === "") {
       setErro({ ...erro, [name]: true });
+    } else {
+      setErro({ ...erro, [name]: false });
     }
 
     if (e.target.name === "hora") {
@@ -88,10 +90,6 @@ function ModalAgendamentoEspecifico(props) {
         ...consulta,
         [e.target.name]: apenasNumeros(e.target.value),
       });
-      console.log(
-        "🚀 ~ file: ModalAgendamentoEspecifico.js ~ line 86 ~ validacaoCampos ~ consulta",
-        consulta.duracao_em_minutos
-      );
       return consulta;
     } else {
       setConsulta({ ...consulta, [e.target.name]: e.target.value });
@@ -165,7 +163,6 @@ function ModalAgendamentoEspecifico(props) {
       toast.warn("Preencha todos os campos");
     } else {
       if (erro.data) {
-        setErro({});
         toast.warn("Preencha todos os campos corretamente");
       } else {
         if (_.isEqual(camposVazios, referenciaInputNulos)) {
@@ -364,8 +361,10 @@ function ModalAgendamentoEspecifico(props) {
                 <Rotulo>Digite uma duração</Rotulo>
               ) : (
                 <>
-                  {erro.duracao_em_minutos && (
+                  {erro.duracao_em_minutos ? (
                     <Rotulo>Digite uma duração</Rotulo>
+                  ) : (
+                    <></>
                   )}
                 </>
               )}
