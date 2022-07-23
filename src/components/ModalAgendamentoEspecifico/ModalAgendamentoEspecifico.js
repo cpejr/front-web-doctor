@@ -85,6 +85,13 @@ function ModalAgendamentoEspecifico(props) {
     setCarregando(false);
   }
 
+  async function pegandoConsultorios() {
+    setCarregandoConsultorios(true)
+    const res = await managerService.GetDadosConsultorios();
+    setConsultorios(res.dadosConsultorios);
+    setCarregandoConsultorios(false)
+  }
+
   useEffect(() => {
     pegandoDadosUsuario();
     //eslint-disable-next-line react-hooks/exhaustive-deps
