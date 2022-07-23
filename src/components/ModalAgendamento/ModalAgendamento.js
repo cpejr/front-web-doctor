@@ -27,7 +27,6 @@ function ModalAgendamento(props) {
   const [consultaEspecifica, setConsultaEspecifica] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
   const [modalEditarAgendamento, setModalEditarAgendamento] = useState(false);
-  const [modalAgendamento, setModalAgendamento] = useState(false);
   const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] = useState(false);
   const [quantidadeAgendamentos, setQuantidadeAgendamentos] = useState();
   const abertoPeloUsuario = true;

@@ -45,11 +45,11 @@ function ModalAgendamentoEspecifico(props) {
     avaliacao: "",
     id_usuario: "",
     id_consultorio: "",
-    tipo: ""};
+    tipo: "",
+  };
   const [consulta, setConsulta] = useState(valoresIniciaisConsulta);
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
-  const [duracaoEmMinutos, setDuracaoEmMinutos] = useState("");
   moment.locale("pt-br");
 
   async function pegandoDadosUsuario() {
@@ -147,7 +147,6 @@ function ModalAgendamentoEspecifico(props) {
                     borderWidth: "0px",
                     marginBottom: "0.5em",
                     paddingLeft: "2.5em",
-  
                   }}
                   size="large"
                   name="id_usuario"
