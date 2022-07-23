@@ -97,6 +97,11 @@ function ListaUsuarios() {
     setModalAdicionarCodigo(true);
   }
 
+  async function fechandoModalCodigo(){
+    setModalAdicionarCodigo(false);
+    pegandoDadosUsuarios();
+  }
+
   async function verificandoSecretariaOuPaciente(tipo, email) {
     if (tipo === "SECRETARIA") {
       history.push({
@@ -198,13 +203,13 @@ function ListaUsuarios() {
                   <Button
                     backgroundColor="transparent"
                     borderColor="transparent"
-                    color="green"
+                    color="black"
                     fontSize="1em"
                     textDecoration="underline"
                     height="50px"
                     onClick={() => abrindoModalCodigo(value.email)}
                   >
-                    Adicionar Código
+                    Editar Código
                   </Button>
                 </BotaoAdicionar>
               ) : (
@@ -242,12 +247,12 @@ function ListaUsuarios() {
 
       <Modal
         visible={modalAdicionarCodigo}
-        onCancel={fechandoModal}
+        onCancel={fechandoModalCodigo}
         footer={null}
         width={"70%"}
         centered={true}
       >
-        <ModalAdicionarCodigo emailUsuario={email} />
+        <ModalAdicionarCodigo emailUsuario={email} fechandoModal = {() => fechandoModalCodigo()}/>
       </Modal>
     </div>
   );
