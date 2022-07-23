@@ -242,13 +242,12 @@ function ListaUsuarios() {
         <ModalAgendamentoEspecifico
           emailUsuario={emailPaciente}
           abertoPeloUsuario={abertoPeloUsuario}
+          fechandoModal={() => fechandoModalAgendamentoEspecifico()}
         />
-        <ModalAgendamentoEspecifico emailUsuario={emailPaciente} fechandoModal={() => fechandoModalAgendamentoEspecifico()}/>
       </Modal>
 
       <Modal
         visible={modalAdicionarCodigo}
-        onCancel={fechandoModalAgendamentoEspecifico}
         onCancel={fechandoModalCodigo}
         footer={null}
         width={"70%"}

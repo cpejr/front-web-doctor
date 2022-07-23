@@ -28,6 +28,7 @@ function ModalAgendamento(props) {
   const [examesMarcados, setExamesMarcados] = useState([]);
   const [modalEditarAgendamento, setModalEditarAgendamento] = useState(false);
   const [modalAgendamento, setModalAgendamento] = useState(false);
+  const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] = useState(false);
   const [quantidadeAgendamentos, setQuantidadeAgendamentos] = useState();
   const abertoPeloUsuario = true;
   const [carregando, setCarregando] = useState(true);
@@ -234,8 +235,8 @@ function ModalAgendamento(props) {
         <ModalAgendamentoEspecifico
           emailUsuario={props.email}
           abertoPeloUsuario={abertoPeloUsuario}
+          fechandoModal={() => fechandoModalAgendamentoEspecifico()}
         />
-        <ModalAgendamentoEspecifico emailUsuario={props.email} fechandoModal={() => fechandoModalAgendamentoEspecifico()} />
       </Modal>
 
       <Modal
