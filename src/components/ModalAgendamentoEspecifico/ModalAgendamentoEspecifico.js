@@ -28,8 +28,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { Cores } from "../../variaveis";
 import moment from "moment";
-
-import { apenasNumeros, dataBack, data } from "../../utils/masks";
+import { apenasNumeros, data, dataAgendamentoBack } from "../../utils/masks";
 import { toast } from "react-toastify";
 import _ from "lodash";
 
@@ -51,20 +50,19 @@ function ModalAgendamentoEspecifico(props) {
     tipo: "",
   });
   const [dataConsulta, setDataConsulta] = useState("");
+  const [dataConsultaBack, setDataConsultaBack] = useState("");
   const [hora, setHora] = useState("");
-  const [duracaoEmMinutos, setDuracaoEmMinutos] = useState("");
-  // const [selectValue, setSelectValue] = useState("");
 
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [erroDataBack, setErroDataBack] = useState(false);
-  const [estado, setEstado] = useState({});
+  
 
   moment.locale("pt-br");
 
   const errors = {};
   const referenciaInputNulos = {
-    dataConsulta: false,
+    data: false,
     hora: false,
     duracao_em_minutos: false,
     id_consultorio: false,
@@ -94,26 +92,48 @@ function ModalAgendamentoEspecifico(props) {
       return consulta;
     }
   }
+  
+  // function formatarData(data_teste) {
+  //    const aux = new Date("2022-07-06");
+  //    console.log(aux)
+  //   const dia = '' + aux.getDate()
+  //   const mes = '' + (aux.getMonth() + 1)
+  //   const ano = aux.getFullYear();
+  //   if (mes < 10) {
+  //     var dataConsulta = dia + "/" + "0" + mes + "/" + ano;
+  //   } else if (mes >= 10) {
+  //     dataConsulta = dia + "/" + mes + "/" + ano;
+  //   }
+  //   console.log(dia);
+  //   console.log(mes);
+  //   console.log(ano);
+  //   return dataConsulta
+    
+  // }
 
   async function validacaoData(e) {
-    const { value, name } = e.target;
+    const { value, name } = e;
+    
     if (value) {
       setCamposVazios({ ...camposVazios, [name]: false });
     }
-
-    if (name === "data" && value.length < 10) {
+    if (value.toString().length < 10) {
       setErro({ ...erro, [name]: true });
       setErroDataBack(false);
-    } else if (dataBack(value) === "Data Invalida") {
+    } else if (dataAgendamentoBack(value) === "Data Invalida") {
       setErro({ ...erro, [name]: true });
       setErroDataBack(true);
     } else {
       setErro({ ...erro, [name]: false });
     }
-
-    setDataConsulta(data(value));
-    setDataConsulta(dataBack(value));
-    console.log(dataConsulta);
+    if (value.toString().length === 0) {
+      setErro({ ...erro, [name]: false });
+    } 
+    const aux = apenasNumeros(value);
+    
+    setDataConsulta(data(aux));
+    setDataConsultaBack(dataAgendamentoBack(value));
+    
   }
 
   async function pegandoDadosUsuario() {
@@ -140,30 +160,42 @@ function ModalAgendamentoEspecifico(props) {
   }, []);
 
   async function requisicaoCriarConsulta() {
-    if (!dataConsulta) errors.dataConsulta = true;
+    if (!dataConsulta) errors.data = true;
     if (!hora) errors.hora = true;
     if (!consulta.duracao_em_minutos) errors.duracao_em_minutos = true;
     if (!consulta.id_consultorio) errors.id_consultorio = true;
     if (!consulta.tipo) errors.tipo = true;
-
+    
     setCamposVazios({ ...camposVazios, ...errors });
-
-    if (_.isEqual(camposVazios, referenciaInputNulos)) {
-      setCarregandoCadastro(true);
-      formatacaoDataHora();
-      consulta.id_usuario = usuario.id;
-      await managerService.CriandoColsulta(consulta);
-      setCarregandoCadastro(false);
-    } else {
-      setCarregandoCadastro(true);
+    if((consulta.duracao_em_minutos === '' )||((dataConsulta === '' )))
+    {
       toast.warn("Preencha todos os campos");
-      setCarregandoCadastro(false);
+    } else {
+      if ((erro.data)) {
+        setErro({})
+        toast.warn("Preencha todos os campos corretamente");
+        
+      } else {
+        if (_.isEqual(camposVazios, referenciaInputNulos)) {
+          setCarregandoCadastro(true);
+          formatacaoDataHora();
+          consulta.id_usuario = usuario.id;
+          await managerService.CriandoColsulta(consulta);
+          setCarregandoCadastro(false);
+        } else {
+          setCarregandoCadastro(true);
+          toast.warn("Preencha todos os campos corretamente");
+          setCarregandoCadastro(false);
+        }
+      }
     }
+    console.log("dataConsulta: ",dataConsulta)
+    console.log("dataConsultaBack: ",dataConsultaBack)
   }
 
   function formatacaoDataHora() {
     try {
-      const dataHora = `${dataConsulta} ${hora}:00`;
+      const dataHora = `${dataConsultaBack} ${hora}:00`;
       consulta.data_hora = dataHora;
     } catch {
       alert("DataHora inválida.");
@@ -224,12 +256,12 @@ function ModalAgendamentoEspecifico(props) {
               placeholder="Selecione uma data"
               size="large"
               name="data"
-              onChange={validacaoData}
-              value={estado.dataConsulta}
-              camposVazios={camposVazios.dataConsulta}
-              erro={erro.dataConsulta}
+              onChange={(e) => validacaoData(e.target)}
+              value={dataConsulta}
+              camposVazios={camposVazios.data}
+              erro={erro.data}
             />
-            {erro.dataConsulta && (
+            {erro.data && (
               <>
                 {erroDataBack ? (
                   <Rotulo>Digite uma data válida.</Rotulo>
@@ -238,7 +270,7 @@ function ModalAgendamentoEspecifico(props) {
                 )}
               </>
             )}
-            {camposVazios.dataConsulta && <Rotulo>Digite uma data</Rotulo>}
+            {camposVazios.data && <Rotulo>Digite uma data</Rotulo>}
           </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
