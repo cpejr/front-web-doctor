@@ -52,11 +52,11 @@ function Agendamentos() {
   }
 
   async function pegandoDados() {
-    const respostaConsultas =
-      await managerService.GetDadosConsultasExamesMarcados();
-    setConsultas(respostaConsultas.dadosConsultas);
-    setExamesMarcados(respostaConsultas.dadosExamesMarcados);
-
+    const resposta =
+      await managerService.GetDadosConsultasExamesMarcadosGeral();
+    setConsultas(resposta.dadosConsultas);
+    setExamesMarcados(resposta.dadosExamesMarcados);
+    console.log(resposta)
     setCarregando(false);
   }
 
