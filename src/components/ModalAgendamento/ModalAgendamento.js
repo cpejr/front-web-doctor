@@ -28,6 +28,7 @@ function ModalAgendamento(props) {
   const [examesMarcados, setExamesMarcados] = useState([]);
   const [modalEditarAgendamento, setModalEditarAgendamento] = useState(false);
   const [modalAgendamento, setModalAgendamento] = useState(false);
+  const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] = useState(false);
   const [quantidadeAgendamentos, setQuantidadeAgendamentos] = useState();
   const abertoPeloUsuario = true;
   const [carregando, setCarregando] = useState(true);
@@ -55,11 +56,12 @@ function ModalAgendamento(props) {
   }, []);
 
   async function marcandoAgendamento() {
-    setModalAgendamento(true);
+    setModalAgendamentoEspecifico(true);
   }
 
-  async function fechandoModal() {
-    setModalAgendamento(false);
+  async function fechandoModalAgendamentoEspecifico() {
+    setModalAgendamentoEspecifico(false);
+    pegandoDados();
   }
 
   async function editandoAgendamento(consulta) {
@@ -74,10 +76,12 @@ function ModalAgendamento(props) {
 
   async function excluirConsulta(id) {
     await managerService.DeletarConsulta(id);
+    pegandoDados();
   }
 
   async function excluirExameMarcado(id) {
     await managerService.DeletarExameMarcado(id);
+    pegandoDados();
   }
 
   return (
@@ -222,8 +226,8 @@ function ModalAgendamento(props) {
         )}
       </Caixa>
       <Modal
-        visible={modalAgendamento}
-        onCancel={fechandoModal}
+        visible={modalAgendamentoEspecifico}
+        onCancel={() => setModalAgendamentoEspecifico(false)}
         footer={null}
         width={"70%"}
         centered={true}
@@ -231,6 +235,7 @@ function ModalAgendamento(props) {
         <ModalAgendamentoEspecifico
           emailUsuario={props.email}
           abertoPeloUsuario={abertoPeloUsuario}
+          fechandoModal={() => fechandoModalAgendamentoEspecifico()}
         />
       </Modal>
 

@@ -88,7 +88,7 @@ function ListaUsuarios() {
     setModalAgendamento(true);
   }
 
-  async function fechandoModal() {
+  async function fechandoModalAgendamentoEspecifico() {
     setModalAgendamento(false);
   }
 
@@ -234,7 +234,7 @@ function ListaUsuarios() {
 
       <Modal
         visible={modalAgendamento}
-        onCancel={fechandoModal}
+        onCancel={fechandoModalAgendamentoEspecifico}
         footer={null}
         width={"70%"}
         centered={true}
@@ -242,6 +242,7 @@ function ListaUsuarios() {
         <ModalAgendamentoEspecifico
           emailUsuario={emailPaciente}
           abertoPeloUsuario={abertoPeloUsuario}
+          fechandoModal={() => fechandoModalAgendamentoEspecifico()}
         />
       </Modal>
 

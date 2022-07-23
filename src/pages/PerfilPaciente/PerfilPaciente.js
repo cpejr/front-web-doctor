@@ -453,7 +453,7 @@ function PerfilPaciente(props) {
         />
       </Modal>
 
-      <AddToast />
+     <AddToast />
     </div>
   );
 }
