@@ -2,6 +2,7 @@ import { login } from "../../services/auth";
 import requisicaoErro from "../../utils/HttpErros";
 import * as requesterService from "../RequesterService/requesterService";
 import { toast } from "react-toastify";
+import { redirecionamento } from "../../utils/sleep";
 
 const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -47,7 +48,7 @@ export const Cadastrando = async (usuario, endereco) => {
   return false;
 };
 
-export const CriandoColsulta = async (consulta) => {
+export const CriandoConsulta = async (consulta) => {
   await requesterService
     .criarConsulta(consulta)
     .then(() => {
@@ -58,6 +59,34 @@ export const CriandoColsulta = async (consulta) => {
       return false;
     });
   return;
+};
+
+export const UpdateConsulta = async (id_consulta, consulta) => {
+  await requesterService
+    .updateConsulta(id_consulta, consulta)
+    .then(() => {
+      toast.success("Consulta atualizada com sucesso!");
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return;
+};
+
+export const GetConsultaPorId = async (id) => {
+  let dadosConsulta = {};
+
+  await requesterService
+    .requisicaoConsultaUsuario(id)
+
+    .then((res) => {
+      dadosConsulta = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConsulta;
 };
 
 export const GetDadosPessoais = async () => {
@@ -77,7 +106,7 @@ export const GetDadosConsultasExamesMarcados = async (id_usuario) => {
   let dadosExamesMarcados = {};
 
   await requesterService
-    .requisicaoConsultas(id_usuario)
+    .requisicaoConsultaUsuario(id_usuario)
     .then((res) => {
       dadosConsultas = res.data;
     })
@@ -86,7 +115,7 @@ export const GetDadosConsultasExamesMarcados = async (id_usuario) => {
     });
 
   await requesterService
-    .requisicaoExamesMarcados(id_usuario)
+    .requisicaoExamesMarcadosUsuario(id_usuario)
     .then((res) => {
       dadosExamesMarcados = res.data;
     })
@@ -160,6 +189,21 @@ export const GetDadosConsultorios = async () => {
   return { dadosEndereco, dadosConsultorios };
 };
 
+export const GetConsultorioPorId = async (id) => {
+  let dadosConsultorio = {};
+
+  await requesterService
+    .requisicaoDadosConsultoriosPorId(id)
+
+    .then((res) => {
+      dadosConsultorio = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConsultorio;
+};
+
 export const ConferirSenha = async (email, senhaAtual) => {
   //comparar a senha do Email com a senha digitada
   //se as senhas forem iguais retornar true
@@ -212,7 +256,7 @@ export const UpdateCodigo = async (id_usuario, codigo) => {
   await requesterService
     .updateCodigo(id_usuario, codigo)
     .then(() => {
-      toast.success("Código adicionado com sucesso.");
+      toast.success("Código atualizado com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));
