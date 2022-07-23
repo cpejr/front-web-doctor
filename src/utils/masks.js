@@ -31,7 +31,7 @@ export const data = (value) => {
     .replace(/\D/g, "")
     .replace(/(\d{2})(\d)/, "$1/$2")
     .replace(/(\d{2})(\d)/, "$1/$2")
-    .replace(/(\d{4})(\d)/, "$1")
+    .replace(/(\d{4})(\d)/, "$1");
 };
 
 export const dataBack = (value) => {
@@ -39,44 +39,21 @@ export const dataBack = (value) => {
 };
 
 export const dataAgendamentoBack = (value) => {
-  
-  const ano = value.replace(/\D/g, "").replace(/\d{4}/, "").replace(/(\d{4})(\d)/, "");
-  console.log("ano: ", ano)
-  const mes = value.replace(/\d{2}/, "").replace(/(\d{2})/, "-$1-").replace(/(\d)/, "");
-  console.log("mes: ",mes)
-  const dia = value.replace(/(\d{2})(\d)/, "$1");
-  console.log("dia: ",dia)
-  const data_formatada = ano.toString() + mes.toString() + dia.toString();
-  return data_formatada;
-  // const [dia, mes, ano] = value.split("/")
-  //   if (!dia?.length || !mes?.length || !ano?.length) throw new Error()
-  //   if (mes !== "02"){
-  //       if ( mes % 2 === 0 && dia > "30" )
-  //           return "Data Invalida"
-  //   } else {
-  //       if ( dia > "28" )
-  //           return "Data Invalida"
-  //   }
-  //   if (ano > new Date().getFullYear()){
-  //       return "Data Invalida"
-  //   }
-  //   const dataFormatada = `${ano.padStart(4,"00")}-${mes.padStart(2,"0")}-${dia.padStart(2,"0")}`
-  //   dataFormatada.replace(/\D/g, "")
-  //   .replace(/(\d{4})(\d)/, "$1-$2")
-  //   .replace(/(\d{2})(\d)/, "$1-$2")
-  //   .replace(/(\d{2})(\d)/, "$1");
-    
-    
-    
-  //   //isNaN false = existe
-  //   console.log("🚀 ~ file: date.js ~ line 23 ~ brParaPadrao ~ dataFormatada", dataFormatada)
-  //   if (isNaN(new Date(dataFormatada)) === false) { 
-  //       return dataFormatada 
-  //   } else {
-  //       return "Data Invalida" 
-  //   }
- 
-  
+  var [dia, mes, ano] = value.split("/");
+
+  if (ano.toString().length > 4) {
+    ano = ano.substring(0, ano.toString().length - (ano.toString().length - 4));
+  }
+  if (mes > 12 || dia > 31) {
+    return "Data Invalida";
+  }
+  const resposta = ano + "-" + mes + "-" + dia;
+  const dataAtual = new Date();
+  if (new Date(resposta) < dataAtual) {
+    return "Data Invalida";
+  }
+
+  return resposta;
 };
 
 export const apenasLetras = (value) => {

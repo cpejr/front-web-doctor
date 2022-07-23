@@ -56,7 +56,6 @@ function ModalAgendamentoEspecifico(props) {
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [erroDataBack, setErroDataBack] = useState(false);
-  
 
   moment.locale("pt-br");
 
@@ -77,6 +76,9 @@ function ModalAgendamentoEspecifico(props) {
     } else {
       setCamposVazios({ ...camposVazios, [name]: true });
     }
+    if (consulta.duracao_em_minutos === "") {
+      setErro({ ...erro, [name]: true });
+    }
 
     if (e.target.name === "hora") {
       setHora(e.target.value);
@@ -86,34 +88,29 @@ function ModalAgendamentoEspecifico(props) {
         ...consulta,
         [e.target.name]: apenasNumeros(e.target.value),
       });
+      console.log(
+        "🚀 ~ file: ModalAgendamentoEspecifico.js ~ line 86 ~ validacaoCampos ~ consulta",
+        consulta.duracao_em_minutos
+      );
       return consulta;
     } else {
       setConsulta({ ...consulta, [e.target.name]: e.target.value });
       return consulta;
     }
   }
-  
-  // function formatarData(data_teste) {
-  //    const aux = new Date("2022-07-06");
-  //    console.log(aux)
-  //   const dia = '' + aux.getDate()
-  //   const mes = '' + (aux.getMonth() + 1)
-  //   const ano = aux.getFullYear();
-  //   if (mes < 10) {
-  //     var dataConsulta = dia + "/" + "0" + mes + "/" + ano;
-  //   } else if (mes >= 10) {
-  //     dataConsulta = dia + "/" + mes + "/" + ano;
-  //   }
-  //   console.log(dia);
-  //   console.log(mes);
-  //   console.log(ano);
-  //   return dataConsulta
-    
-  // }
+
+  function foramatarDataConsultaFront(value) {
+    const aux = apenasNumeros(value);
+
+    setDataConsulta(data(aux));
+  }
+  function foramatarDataConsultaBack(data) {
+    setDataConsultaBack(dataAgendamentoBack(data));
+  }
 
   async function validacaoData(e) {
     const { value, name } = e;
-    
+
     if (value) {
       setCamposVazios({ ...camposVazios, [name]: false });
     }
@@ -128,12 +125,9 @@ function ModalAgendamentoEspecifico(props) {
     }
     if (value.toString().length === 0) {
       setErro({ ...erro, [name]: false });
-    } 
-    const aux = apenasNumeros(value);
-    
-    setDataConsulta(data(aux));
-    setDataConsultaBack(dataAgendamentoBack(value));
-    
+    }
+    foramatarDataConsultaFront(value);
+    foramatarDataConsultaBack(value);
   }
 
   async function pegandoDadosUsuario() {
@@ -165,16 +159,14 @@ function ModalAgendamentoEspecifico(props) {
     if (!consulta.duracao_em_minutos) errors.duracao_em_minutos = true;
     if (!consulta.id_consultorio) errors.id_consultorio = true;
     if (!consulta.tipo) errors.tipo = true;
-    
+
     setCamposVazios({ ...camposVazios, ...errors });
-    if((consulta.duracao_em_minutos === '' )||((dataConsulta === '' )))
-    {
+    if (consulta.duracao_em_minutos === "" || dataConsulta === "") {
       toast.warn("Preencha todos os campos");
     } else {
-      if ((erro.data)) {
-        setErro({})
+      if (erro.data) {
+        setErro({});
         toast.warn("Preencha todos os campos corretamente");
-        
       } else {
         if (_.isEqual(camposVazios, referenciaInputNulos)) {
           setCarregandoCadastro(true);
@@ -189,8 +181,6 @@ function ModalAgendamentoEspecifico(props) {
         }
       }
     }
-    console.log("dataConsulta: ",dataConsulta)
-    console.log("dataConsultaBack: ",dataConsultaBack)
   }
 
   function formatacaoDataHora() {
@@ -368,9 +358,16 @@ function ModalAgendamentoEspecifico(props) {
                 onChange={validacaoCampos}
                 suffix="min"
                 camposVazios={camposVazios.duracao_em_minutos}
+                erro={erro.duracao_em_minutos}
               />
-              {camposVazios.duracao_em_minutos && (
+              {camposVazios.duracao_em_minutos ? (
                 <Rotulo>Digite uma duração</Rotulo>
+              ) : (
+                <>
+                  {erro.duracao_em_minutos && (
+                    <Rotulo>Digite uma duração</Rotulo>
+                  )}
+                </>
               )}
             </TamanhoInput>
           </DoisSelect>
