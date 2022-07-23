@@ -29,15 +29,11 @@ function ModalAgendamento(props) {
   const [modalEditarAgendamento, setModalEditarAgendamento] = useState(false);
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [quantidadeAgendamentos, setQuantidadeAgendamentos] = useState();
-
+  const abertoPeloUsuario = true;
   const [carregando, setCarregando] = useState(true);
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 45, color: Cores.azul }} spin />
   );
-
-  useEffect(() => {
-    pegandoDados();
-  }, []);
 
   async function pegandoDados() {
     const respostaConsultas =
@@ -53,6 +49,10 @@ function ModalAgendamento(props) {
 
     setCarregando(false);
   }
+
+  useEffect(() => {
+    pegandoDados();
+  }, []);
 
   async function marcandoAgendamento() {
     setModalAgendamento(true);
@@ -228,7 +228,10 @@ function ModalAgendamento(props) {
         width={"70%"}
         centered={true}
       >
-        <ModalAgendamentoEspecifico emailUsuario={props.email} />
+        <ModalAgendamentoEspecifico
+          emailUsuario={props.email}
+          abertoPeloUsuario={abertoPeloUsuario}
+        />
       </Modal>
 
       <Modal

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Input, Select, Modal } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 import {
   TopoPagina,
   ContainerListadeUsuarios,
@@ -22,11 +24,9 @@ import {
   CaixaVazia,
 } from "./Styles";
 import Button from "../../styles/Button";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
-import * as managerService from "../../services/ManagerService/managerService";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 import ModalAdicionarCodigo from "../../components/ModalAdicionarCodigo/ModalAdicionarCodigo";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function ListaUsuarios() {
   const history = useHistory();
@@ -41,6 +41,7 @@ function ListaUsuarios() {
   const [email, setEmail] = useState();
   const [tipoSelect, setTipoSelect] = useState("");
   const [busca, setBusca] = useState("");
+  const abertoPeloUsuario = true;
 
   const lowerBusca = busca.toLowerCase();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -63,11 +64,6 @@ function ListaUsuarios() {
     setTipoSelect(value);
   }
 
-  useEffect(() => {
-    pegandoDadosUsuarios();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   async function pegandoDadosUsuarios() {
     const resposta = await managerService.GetDadosPessoais();
     if (tipoUsuarioLogado === "MASTER") {
@@ -82,6 +78,10 @@ function ListaUsuarios() {
       });
     }
   }
+
+  useEffect(() => {
+    pegandoDadosUsuarios();
+  }, []);
 
   async function marcandoAgendamento(emailPaciente) {
     setEmailPaciente(emailPaciente);
@@ -234,7 +234,10 @@ function ListaUsuarios() {
         width={"70%"}
         centered={true}
       >
-        <ModalAgendamentoEspecifico emailUsuario={emailPaciente} />
+        <ModalAgendamentoEspecifico
+          emailUsuario={emailPaciente}
+          abertoPeloUsuario={abertoPeloUsuario}
+        />
       </Modal>
 
       <Modal

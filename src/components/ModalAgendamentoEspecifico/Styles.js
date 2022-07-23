@@ -88,6 +88,21 @@ export const Nome = styled.div`
   }
 `;
 
+export const NomePaciente = styled.div`
+  width: 100%;
+  font-family: ${Fontes.barlow};
+  font-weight: 400;
+  font-size: 1.4em;
+  color: ${Cores.azulEscuro};
+
+  @media (max-width: 500px) {
+    width: 90%;
+    font-size: 1.1em;
+    justify-content: center;
+    text-align: center;
+  }
+`;
+
 export const TipoAgendamento = styled.div`
   display: flex;
   flex-direction: column;
@@ -127,10 +142,11 @@ export const TextoCheckbox = styled.h3`
 export const TextAreaDescricao = styled(TextArea)`
   border-color: ${Cores.preto};
   border-width: 1px;
-  color:${Cores.preto};
-  ::placeholder{
-    color:${Cores.preto};  }
-`
+  color: ${Cores.preto};
+  ::placeholder {
+    color: ${Cores.preto};
+  }
+`;
 
 export const DoisSelect = styled.h3`
   display: flex;
@@ -188,8 +204,8 @@ export const InputHora = styled.input`
   border-radius: 3px;
   border-width: 1px;
   ::placeholder {
-    color:${Cores.preto};
-  };
+    color: ${Cores.preto};
+  }
 `;
 
 export const InputDuracao = styled(Input)`
@@ -207,7 +223,7 @@ export const InputDuracao = styled(Input)`
 
   .ant-input {
     ::placeholder {
-      color:${Cores.preto}
+      color: ${Cores.preto};
     }
   }
 `;
