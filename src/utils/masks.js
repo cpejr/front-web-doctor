@@ -44,7 +44,7 @@ export const dataAgendamentoBack = (value) => {
   if (ano.toString().length > 4) {
     ano = ano.substring(0, ano.toString().length - (ano.toString().length - 4));
   }
-  if (mes > 12 || dia > 31) {
+  if (mes > 12 || dia > 31 || (mes === "02" && dia > "28")) {
     return "Data Invalida";
   }
   const resposta = ano + "-" + mes + "-" + dia;
