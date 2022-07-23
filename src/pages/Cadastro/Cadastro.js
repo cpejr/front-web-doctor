@@ -22,59 +22,10 @@ import {
 import "react-toastify/dist/ReactToastify.min.css";
 import AddToast from "../../components/AddToast/AddToast";
 import { toast } from "react-toastify";
-import { brParaPadrao } from "../../utils/date";
 
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
-
-const maskCPF = (value) => {
-  return value
-    .replace(/\D/g, "")
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d{1,2})/, "$1-$2")
-    .replace(/(-\d{2})\d+?$/, "$1");
-};
-
-const maskTelefone = (value) => {
-  return value
-    .replace(/\D/g, "")
-    .replace(/(\d{2})(\d)/, "($1) $2")
-    .replace(/(\d{5})(\d)/, "$1-$2")
-    .replace(/(-\d{4})(\d+?)$/, "$1");
-};
-const maskApenasNumeros = (value) => {
-  return value.replace(/\D/g, "");
-};
-const maskApenasNumerosCpfTel = (value) => {
-  return value.replace(/\D/g, "").replace(/(\d{11})(\d)/, "$1");
-};
-const maskApenasNumerosCep = (value) => {
-  return value.replace(/\D/g, "").replace(/(\d{8})(\d)/, "$1");
-};
-
-const maskData = (value) => {
-  return value
-    .replace(/\D/g, "")
-    .replace(/(\d{2})(\d)/, "$1/$2")
-    .replace(/(\d{2})(\d)/, "$1/$2")
-    .replace(/(\d{4})(\d)/, "$1");
-};
-
-const maskDataBack = (value) => {
-  return brParaPadrao(value);
-};
-
-const maskApenasLetras = (value) => {
-  return value.replace(/[0-9!@#¨$%^&*)(+=._-]+/g, "");
-};
-
-const maskCEP = (value) => {
-  return value
-    .replace(/\D/g, "")
-    .replace(/(\d{5})(\d)/, "$1-$2")
-    .replace(/(-\d{3})(\d)/, "$1");
-};
+import { cpf, apenasLetras, apenasNumeros, apenasNumerosCep, apenasNumerosCpfTel, cep, data, telefone, dataBack } from "../../utils/masks";
 
 function Cadastro() {
   const history = useHistory();
@@ -189,15 +140,15 @@ function Cadastro() {
     if (name === "data_nascimento" && value.length < 10) {
       setErro({ ...erro, [name]: true });
       setErroDataBack(false);
-    } else if (maskDataBack(value) === "Data Invalida") {
+    } else if (dataBack(value) === "Data Invalida") {
       setErro({ ...erro, [name]: true });
       setErroDataBack(true);
     } else {
       setErro({ ...erro, [name]: false });
     }
 
-    setEstado({ ...estado, [name]: maskData(value) });
-    setUsuario({ ...usuario, [name]: maskDataBack(value) });
+    setEstado({ ...estado, [name]: data(value) });
+    setUsuario({ ...usuario, [name]: dataBack(value) });
   }
 
   function preenchendoDados(e) {
@@ -210,10 +161,10 @@ function Cadastro() {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
     }
     if (name === "nome_cuidador") {
-      e.target.value = maskApenasLetras(value);
+      e.target.value = apenasLetras(value);
     }
     if (name === "telefone_cuidador") {
-      e.target.value = maskTelefone(value);
+      e.target.value = telefone(value);
     }
     if (
       (name === "cpf" && value.length < 14) ||
@@ -231,21 +182,21 @@ function Cadastro() {
     if (name === "nome") {
       setEstado({
         ...estado,
-        [name]: maskApenasLetras(value),
+        [name]: apenasLetras(value),
       });
     }
   
     if (name === "telefone") {
-      setEstado({ ...estado, [name]: maskTelefone(value) });
-      setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
+      setEstado({ ...estado, [name]: telefone(value) });
+      setUsuario({ ...usuario, [name]: apenasNumerosCpfTel(value) });
     }
     if (name === "telefone_cuidador") {
-      setEstado({ ...estado, [name]: maskTelefone(value) });
-      setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
+      setEstado({ ...estado, [name]: telefone(value) });
+      setUsuario({ ...usuario, [name]: apenasNumerosCpfTel(value) });
     }
     if (name === "cpf") {
-      setEstado({ ...estado, [name]: maskCPF(value) });
-      setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
+      setEstado({ ...estado, [name]: cpf(value) });
+      setUsuario({ ...usuario, [name]: apenasNumerosCpfTel(value) });
     }
     if (name === "tipo") {
       setUsuario({
@@ -275,28 +226,28 @@ function Cadastro() {
     setEnderecoBack({ ...enderecoBack, [name]: value });
 
     if (name === "cep") {
-      setEndereco({ ...endereco, [name]: maskCEP(value) });
+      setEndereco({ ...endereco, [name]: cep(value) });
       setEnderecoBack({
         ...enderecoBack,
-        [name]: maskApenasNumerosCep(value),
+        [name]: apenasNumerosCep(value),
       });
     }
     if (name === "pais") {
       setEndereco({
         ...endereco,
-        [name]: maskApenasLetras(value),
+        [name]: apenasLetras(value),
       });
     }
     if (name === "cidade") {
       setEndereco({
         ...endereco,
-        [name]: maskApenasLetras(value),
+        [name]: apenasLetras(value),
       });
     }
     if (name === "numero") {
       setEndereco({
         ...endereco,
-        [name]: maskApenasNumeros(value),
+        [name]: apenasNumeros(value),
       });
     }
   }
