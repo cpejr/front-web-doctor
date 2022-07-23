@@ -49,7 +49,8 @@ export const dataAgendamentoBack = (value) => {
   }
   const resposta = ano + "-" + mes + "-" + dia;
   const dataAtual = new Date();
-  if (new Date(resposta) < dataAtual) {
+  const aux = new Date(resposta);
+  if ((aux.getUTCDate() === 1 && dia === "31") || aux < dataAtual) {
     return "Data Invalida";
   }
 
