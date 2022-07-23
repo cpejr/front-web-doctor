@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Checkbox, Row, Col } from "antd";
-import Select from "../../styles/Select";
-import Button from "../../styles/Button";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
+import moment from "moment";
+import { toast } from "react-toastify";
+import _ from "lodash";
 import {
   Container,
   Caixa,
@@ -22,15 +25,12 @@ import {
   Rotulo,
   InputData,
 } from "./Styles";
-import * as managerService from "../../services/ManagerService/managerService";
+import Select from "../../styles/Select";
+import Button from "../../styles/Button";
 import logoGuilherme from "../../assets/logoGuilherme.png";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
 import { Cores } from "../../variaveis";
-import moment from "moment";
 import { apenasNumeros, data, dataAgendamentoBack } from "../../utils/masks";
-import { toast } from "react-toastify";
-import _ from "lodash";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAgendamentoEspecifico(props) {
   const { Option } = Select;
@@ -52,7 +52,6 @@ function ModalAgendamentoEspecifico(props) {
   const [dataConsulta, setDataConsulta] = useState("");
   const [dataConsultaBack, setDataConsultaBack] = useState("");
   const [hora, setHora] = useState("");
-
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [erroDataBack, setErroDataBack] = useState(false);
@@ -67,6 +66,29 @@ function ModalAgendamentoEspecifico(props) {
     id_consultorio: false,
     tipo: false,
   };
+
+  async function pegandoConsultorios() {
+    setCarregandoConsultorios(true);
+    const res = await managerService.GetDadosConsultorios();
+    setConsultorios(res.dadosConsultorios);
+    setCarregandoConsultorios(false);
+  }
+
+  useEffect(() => {
+    pegandoConsultorios();
+  }, []);
+
+  async function pegandoDadosUsuario() {
+    setCarregando(true);
+    const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
+    setUsuario(resposta.dadosUsuario);
+    setCarregando(false);
+  }
+
+  useEffect(() => {
+    pegandoDadosUsuario();
+    //eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props]);
 
   async function validacaoCampos(e) {
     const { value, name } = e.target;
@@ -128,28 +150,14 @@ function ModalAgendamentoEspecifico(props) {
     foramatarDataConsultaBack(value);
   }
 
-  async function pegandoDadosUsuario() {
-    setCarregando(true);
-    const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
-    setUsuario(resposta.dadosUsuario);
-    setCarregando(false);
+  function formatacaoDataHora() {
+    try {
+      const dataHora = `${dataConsultaBack} ${hora}:00`;
+      consulta.data_hora = dataHora;
+    } catch {
+      alert("DataHora inválida.");
+    }
   }
-
-  async function pegandoConsultorios() {
-    setCarregandoConsultorios(true);
-    const res = await managerService.GetDadosConsultorios();
-    setConsultorios(res.dadosConsultorios);
-    setCarregandoConsultorios(false);
-  }
-
-  useEffect(() => {
-    pegandoDadosUsuario();
-    //eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props]);
-
-  useEffect(() => {
-    pegandoConsultorios();
-  }, []);
 
   async function requisicaoCriarConsulta() {
     if (!dataConsulta) errors.data = true;
@@ -177,15 +185,6 @@ function ModalAgendamentoEspecifico(props) {
           setCarregandoCadastro(false);
         }
       }
-    }
-  }
-
-  function formatacaoDataHora() {
-    try {
-      const dataHora = `${dataConsultaBack} ${hora}:00`;
-      consulta.data_hora = dataHora;
-    } catch {
-      alert("DataHora inválida.");
     }
   }
 
