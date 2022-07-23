@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { ContainerModalCodigo, Titulo } from "./Styles";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
-import { ContainerModalCodigo, Titulo } from "./Styles";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
-import AddToast from "../AddToast/AddToast";
 import * as managerService from "../../services/ManagerService/managerService";
-import { redirecionamento, sleep } from "../../utils/sleep";
 
 function ModalAdicionarCodigo(props) {
   const [usuario, setUsuario] = useState({});
@@ -25,11 +23,21 @@ function ModalAdicionarCodigo(props) {
     setUsuario(resposta.dadosUsuario);
   }
 
+  useEffect(() => {
+    pegandoDados();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props]);
+
   function setandoCodigo() {
     setCarregando(true);
     setCodigo(usuario.codigo);
     setCarregando(false);
   }
+
+  useEffect(() => {
+    setandoCodigo();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [usuario]);
 
   async function atualizarDados() {
     setCarregando(true);
@@ -45,68 +53,55 @@ function ModalAdicionarCodigo(props) {
     setCodigo(e.target.value);
   }
 
-  useEffect(() => {
-    pegandoDados();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props]);
-
-  useEffect(() => {
-    setandoCodigo();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [usuario]);
-
-
   return (
     <>
-    <ContainerModalCodigo>
-      <Titulo>Insira um codigo</Titulo>
+      <ContainerModalCodigo>
+        <Titulo>Insira um codigo</Titulo>
 
-      {codigo === null?(
-        <Input
-          value = ""
-          placeholder="Codigo"
-          backgroundColor="#E4E6F4"
-          borderColor="#151B57"
-          color="black"
-          fontSize="1em"
-          width="100%"
-          marginTop="2%"
-          name="codigo"
-          onKeyPress={verificandoEnter}
-          onChange={preenchendoDados}
-      ></Input>
-          
-      ): (
-        <Input
-          value = {codigo}
-          placeholder="Codigo"
-          backgroundColor="#E4E6F4"
-          borderColor="#151B57"
-          color="black"
-          fontSize="1em"
-          width="100%"
-          marginTop="2%"
-          name="codigo"
-          onKeyPress={verificandoEnter}
-          onChange={preenchendoDados}
-      ></Input>
+        {codigo === null ? (
+          <Input
+            value=""
+            placeholder="Codigo"
+            backgroundColor="#E4E6F4"
+            borderColor="#151B57"
+            color="black"
+            fontSize="1em"
+            width="100%"
+            marginTop="2%"
+            name="codigo"
+            onKeyPress={verificandoEnter}
+            onChange={preenchendoDados}
+          ></Input>
+        ) : (
+          <Input
+            value={codigo}
+            placeholder="Codigo"
+            backgroundColor="#E4E6F4"
+            borderColor="#151B57"
+            color="black"
+            fontSize="1em"
+            width="100%"
+            marginTop="2%"
+            name="codigo"
+            onKeyPress={verificandoEnter}
+            onChange={preenchendoDados}
+          ></Input>
+        )}
 
-      )}
-   
-      <Button
-        width="100%"
-        height="50px"
-        backgroundColor="#434B97"
-        borderColor="#151B57"
-        color="white"
-        fontSize="1.5em"
-        fontWeight="bold"
-        fontSizeMedia="1.2em"
-        onClick={() => atualizarDados()}
-      >
-        {carregando ? <Spin indicator={antIcon} /> : "CONFIRMAR"}
-      </Button>
-    </ContainerModalCodigo>
+        <Button
+          width="100%"
+          height="50px"
+          backgroundColor="#434B97"
+          borderColor="#151B57"
+          color="white"
+          fontSize="1.5em"
+          fontWeight="bold"
+          fontSizeMedia="1.2em"
+          onClick={() => atualizarDados()}
+        >
+          {carregando ? <Spin indicator={antIcon} /> : "CONFIRMAR"}
+        </Button>
+      </ContainerModalCodigo>
     </>
   );
 }
