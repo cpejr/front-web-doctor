@@ -184,7 +184,7 @@ function ModalAgendamentoEspecifico(props) {
           setCarregandoCadastro(true);
           formatacaoDataHora();
           consulta.id_usuario = usuario.id;
-          await managerService.CriandoColsulta(consulta);
+          await managerService.CriandoConsulta(consulta);
           setCarregandoCadastro(false);
         } else {
           setCarregandoCadastro(true);
