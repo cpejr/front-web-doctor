@@ -16,6 +16,7 @@ import {
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 import { toast } from "react-toastify";
+import {sleep, redirecionamento} from "../../utils/sleep"
 
 function AlterarSenha() {
   const history = useHistory();
@@ -28,16 +29,13 @@ function AlterarSenha() {
 
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
+  const [camposVaziosTrocarSenha, setCamposVaziosTrocarSenha] = useState(false);
 
   const [novaSenha, setNovaSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
 
   const [senhaAtual, setSenhaAtual] = useState("");
   const email = sessionStorage.getItem("@doctorapp-Email");
-
-  const sleep = (milliseconds) => {
-    return new Promise((resolve) => setTimeout(resolve, milliseconds));
-  };
 
   const errors = {};
   const errorsNovaSenha = {};
@@ -46,7 +44,6 @@ function AlterarSenha() {
   };
   const referenciaCamposNulosNovaSenha = {
     senhaAtual: false,
-    senha: false,
     confirmarSenha: false,
   };
 
@@ -98,9 +95,9 @@ function AlterarSenha() {
     setErro({ ...erro, [name]: false });
 
     if (value) {
-      setCamposVazios({ ...camposVazios, [name]: false });
+      setCamposVaziosTrocarSenha({ ...camposVazios, [name]: false });
     } else {
-      setCamposVazios({ ...camposVazios, [name]: true });
+      setCamposVaziosTrocarSenha({ ...camposVazios, [name]: true });
     }
 
     if (value.length < 8) {
@@ -132,10 +129,10 @@ function AlterarSenha() {
     //se não for igual alertar que as senhas digitadas não conferem
     if (!novaSenha) errorsNovaSenha.senha = true;
     if (!confirmarSenha) errorsNovaSenha.confirmarSenha = true;
-    setCamposVazios({ ...camposVazios, ...errorsNovaSenha });
+    setCamposVaziosTrocarSenha({ ...camposVazios, ...errorsNovaSenha });
     setErro({ ...erro, ...errorsNovaSenha });
 
-    if (_.isEqual(camposVazios, referenciaCamposNulosNovaSenha)) {
+    if (_.isEqual(camposVaziosTrocarSenha, referenciaCamposNulosNovaSenha)) {
       if (novaSenha === confirmarSenha) {
         if (novaSenha !== "" || confirmarSenha !== "") {
           setCarregando(true);
@@ -144,6 +141,8 @@ function AlterarSenha() {
             novaSenha,
             resposta.dadosUsuario.id
           );
+          sleep(1500);
+          redirecionamento("/web/perfil");
           setCarregando(false);
         } 
       } else {
