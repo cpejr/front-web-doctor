@@ -146,7 +146,10 @@ function UserHeader() {
           path="/web/modeloreceitas"
           component={ModeloReceitas}
         />
-        <RotasPrivadas exact path="/web/perfil" component={Perfil} />
+        <RotasPrivadas exact 
+        path="/web/perfil" 
+        component={Perfil} />
+
         <RotasPrivadas
           exact
           path="/web/perfildopaciente"
@@ -156,11 +159,6 @@ function UserHeader() {
           exact
           path="/web/respostaformulario"
           component={RespostaFormulario}
-        />
-        <RotasPrivadas
-          exact
-          path="/web/cadastro"
-          component={Cadastro}
         />
         <RotasPrivadas component={() => <Redirect to="/web/homemedico" />} />
       </Switch>
