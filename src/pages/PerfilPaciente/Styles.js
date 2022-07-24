@@ -336,7 +336,7 @@ export const DataFormulario = styled.div`
   font-size: 1.2em;
   color: ${Cores.lilas[1]};
 
-  @media (max-width: 780px) {
+  @media (max-width: 820px) {
     display: none;
   }
 `;
@@ -347,7 +347,7 @@ export const TipoFormulario = styled.div`
   justify-content: center;
   width: 33%;
 
-  @media (max-width: 780px) {
+  @media (max-width: 820px) {
     font-size: 1.1em;
     align-content: center;
     text-align: center;
@@ -364,7 +364,7 @@ export const UrgenciaFormulario = styled.div`
   justify-content: center;
   width: 33%;
   align-items: center;
-  @media (max-width: 780px) {
+  @media (max-width: 820px) {
     font-size: 1em;
   }
 `;
