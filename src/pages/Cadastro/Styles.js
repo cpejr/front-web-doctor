@@ -80,7 +80,7 @@ export const Rotulo = styled.div`
   font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1em;
-  color: ${Cores.vermelho}
+  color: ${Cores.vermelho};
 `;
 
 export const RotuloColuna = styled.div`

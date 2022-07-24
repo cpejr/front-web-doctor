@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Cores } from "../../variaveis";
+import { Cores, Fontes } from "../../variaveis";
 
 export const ContainerEditarPerfil = styled.div`
   display: flex;
@@ -21,7 +21,7 @@ export const ColunaEsquerda = styled.div`
   display: flex;
   flex-direction: column;
   width: 30%;
-  height: 100vh;
+  height: 114vh;
   border-color: ${Cores.cinza[3]};
   border-radius: 3px;
   border-style: solid;
@@ -50,13 +50,12 @@ export const ColunaDireita = styled.div`
   display: flex;
   flex-direction: column;
   width: 70%;
-  height: 100vh;
+  height: 114vh;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   border-width: 2px;
   border-radius: 3px;
   border-color: ${Cores.cinza[3]};
   border-style: solid;
-
   @media (max-width: 930px) {
     margin-top: 5%;
     height: 100%;
@@ -80,7 +79,6 @@ export const Preenchimento = styled.div`
   flex-direction: row;
   height: 50%;
   margin-bottom: 0px;
-
   @media (max-width: 520px) {
     flex-direction: column;
   }
@@ -95,25 +93,21 @@ export const CaixaInputs = styled.div`
   padding-right: 2%;
   margin-bottom: 0;
   gap: 1%;
-
   @media (max-width: 780px) {
     display: flex;
     flex-direction: column;
   }
-
   @media (max-width: 560px) {
     padding-left: 4%;
     padding-right: 4%;
   }
 `;
 
-export const Rotulo = styled.label`
+export const Titulo = styled.label`
   margin-top: 5%;
-
   @media (max-width: 930px) {
     margin-top: 5%;
   }
-
   @media (max-width: 350px) {
     font-size: 12px;
   }
@@ -125,7 +119,6 @@ export const CaixaBotao = styled.div`
   justify-content: center;
   margin-top: 3%;
   margin-bottom: 2%;
-
   @media (max-width: 560px) {
     padding-left: 4%;
     padding-right: 4%;
@@ -136,12 +129,10 @@ export const CaixaBotao = styled.div`
 export const ImagemPerfil = styled.div`
   display: flex;
   justify-content: center;
-
   .fotoPerfil {
     border-radius: 3px;
     border-radius: 3px;
     box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
-
     @media (max-width: 930px) {
       width: 100%;
       height: 100%;
@@ -158,7 +149,6 @@ export const BlocoSuperior = styled.div`
   flex-direction: column;
   justify-content: center;
   height: 50vh;
-
   @media (max-width: 930px) {
     height: 100%;
     justify-content: center;
@@ -186,4 +176,20 @@ export const BlocoInferior = styled.div`
     gap: 2%;
     margin-top: 5%;
   }
+`;
+
+export const Rotulo = styled.div`
+  width: 100%;
+  font-family: ${Fontes.barlow};
+  font-weight: 400;
+  font-size: 1em;
+  color: ${Cores.vermelho};
+`;
+
+export const RotuloColuna = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: flex-start;
+  width: 100%;
 `;
