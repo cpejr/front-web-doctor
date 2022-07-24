@@ -6,7 +6,8 @@ import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import Select from "../../styles/Select/Select";
 import { Spin, Switch } from "antd";
-import { LoadingOutlined, LeftOutlined } from "@ant-design/icons";
+import { LoadingOutlined, bleLeftOutlined, RollbackOutlined } from "@ant-design/icons";
+import { BiArrowBack } from "react-icons/bi";
 import {
   Body,
   DadosCadastro,
@@ -79,6 +80,8 @@ const maskCEP = (value) => {
 function Cadastro() {
   const history = useHistory();
 
+  const email = sessionStorage.getItem("@doctorapp-Email");
+
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
 
@@ -94,6 +97,8 @@ function Cadastro() {
 
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
+
+  const [verificacaoLogado, setVerificacaoLogado] = useState("");
 
   function funcaoConvenio() {
     setConvenio(!convenio);
@@ -234,7 +239,7 @@ function Cadastro() {
         [name]: maskApenasLetras(value),
       });
     }
-  
+
     if (name === "telefone") {
       setEstado({ ...estado, [name]: maskTelefone(value) });
       setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
@@ -257,6 +262,27 @@ function Cadastro() {
       });
       setConvenio(false);
       setCuidador(false);
+    }
+  }
+
+  async function pegandoDadosPerfilPessoal() {
+    const resposta = await managerService.GetDadosUsuario(email);
+    setVerificacaoLogado(resposta.dadosUsuario.tipo);
+  }
+
+  useEffect(() => {
+    pegandoDadosPerfilPessoal();
+  }, []);
+
+  async function voltarLoginOuHome() {
+    if (verificacaoLogado === "SECRETARIA(O)") {
+      history.push("/web/homesecretaria");
+    } else {
+      if (verificacaoLogado === "MASTER") {
+        history.push("/web/homemedico");
+      } else {
+        history.push("/login");
+      }
     }
   }
 
@@ -314,8 +340,8 @@ function Cadastro() {
               height="100%"
             ></img>
           </Logo>
-          <Botao onClick={() => history.push("/login")}>
-            <LeftOutlined /> Voltar para login
+          <Botao onClick={() => voltarLoginOuHome()}>
+            <BiArrowBack/> Voltar
           </Botao>
           <Select
             id="tipos"

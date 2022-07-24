@@ -28,7 +28,7 @@ export const InputMesmaLinha = styled.div`
   justify-content: space-between;
   margin-bottom: 2%;
   margin-top: 1% ;
-  align-items: end;
+  align-items: flex-start;
   width: 100%;
   font-size: 1em;
   @media (max-width: 820px) {
@@ -73,6 +73,16 @@ export const Botao = styled.button`
   font-size: 1em;
   cursor: pointer;
   text-decoration: underline;
+
+  @media (max-width: 560px) and (min-width: 320px){
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
+
+  @media (max-width: 320px){
+    margin-top: 5%;
+    margin-bottom: 3%;
+  }
 `;
 
 export const Rotulo = styled.div`
