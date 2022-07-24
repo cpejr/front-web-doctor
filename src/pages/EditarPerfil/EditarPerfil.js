@@ -538,20 +538,6 @@ function EditarPerfil() {
 
         <Preenchimento>
           <CaixaInputs>
-            <Titulo>Cidade:</Titulo>
-            <Input
-              placeholder={endereco.cidade}
-              backgroundColor={Cores.cinza[7]}
-              borderColor={Cores.azul}
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              borderWidth="1px"
-              color={Cores.preto}
-              fontSize="1em"
-              width="90%"
-              name="pais"
-              onChange={preenchendoEndereco}
-            ></Input>
-
             <Titulo>Estado:</Titulo>
             <Select
               id="estado"
@@ -592,6 +578,20 @@ function EditarPerfil() {
               <option value="TO">Tocantins</option>
               <option value="EX">Estrangeiro</option>
             </Select>
+
+            <Titulo>Cidade:</Titulo>
+            <Input
+              placeholder={endereco.cidade}
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.azul}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color={Cores.preto}
+              fontSize="1em"
+              width="90%"
+              name="pais"
+              onChange={preenchendoEndereco}
+            ></Input>
 
             <Titulo>Bairro:</Titulo>
             <Input
