@@ -238,7 +238,7 @@ function EditarPerfil() {
         );
 
         sleep(1500);
-        window.location.href ="/web/perfil";
+        window.location.href = "/web/perfil";
       } else {
         toast.warn("Preencha os campos corretamente");
       }
@@ -434,22 +434,23 @@ function EditarPerfil() {
               onChange={preenchendoDados}
             ></Input>
 
-            <Titulo>Endereço de e-mail:</Titulo>
+            <Titulo>CPF:</Titulo>
             <RotuloColuna>
               <Input
-                placeholder={usuario.email}
+                placeholder={cpfMasked}
                 backgroundColor={Cores.cinza[7]}
                 boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
                 borderWidth="1px"
                 color={Cores.preto}
                 fontSize="1em"
                 width="90%"
-                name="email"
-                onChange={validacaoEmail}
-                erro={erro.email}
+                name="cpf"
+                erro={erro.cpf}
+                value={estado.cpf}
+                onChange={preenchendoDados}
               ></Input>
-              {erro.email && (
-                <Rotulo>Digite um email no formato email@email.com</Rotulo>
+              {erro.cpf && (
+                <Rotulo>Digite um CPF no formato xxx.xxx.xxx-xx</Rotulo>
               )}
             </RotuloColuna>
 
@@ -481,26 +482,6 @@ function EditarPerfil() {
           </CaixaInputs>
 
           <CaixaInputs>
-            <Titulo>CPF:</Titulo>
-            <RotuloColuna>
-              <Input
-                placeholder={cpfMasked}
-                backgroundColor={Cores.cinza[7]}
-                boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-                borderWidth="1px"
-                color={Cores.preto}
-                fontSize="1em"
-                width="90%"
-                name="cpf"
-                erro={erro.cpf}
-                value={estado.cpf}
-                onChange={preenchendoDados}
-              ></Input>
-              {erro.cpf && (
-                <Rotulo>Digite um CPF no formato xxx.xxx.xxx-xx</Rotulo>
-              )}
-            </RotuloColuna>
-
             <Titulo>Telefone:</Titulo>
             <RotuloColuna>
               <Input
@@ -538,14 +519,28 @@ function EditarPerfil() {
               ></Input>
               {erro.cep && <Rotulo>Digite um cep no formato xxxxx-xxx</Rotulo>}
             </RotuloColuna>
+
+            <Titulo>País:</Titulo>
+            <Input
+              placeholder={endereco.pais}
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.azul}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color={Cores.preto}
+              fontSize="1em"
+              width="90%"
+              name="pais"
+              onChange={preenchendoEndereco}
+            ></Input>
           </CaixaInputs>
         </Preenchimento>
 
         <Preenchimento>
           <CaixaInputs>
-            <Titulo>País:</Titulo>
+            <Titulo>Cidade:</Titulo>
             <Input
-              placeholder={endereco.pais}
+              placeholder={endereco.cidade}
               backgroundColor={Cores.cinza[7]}
               borderColor={Cores.azul}
               boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
