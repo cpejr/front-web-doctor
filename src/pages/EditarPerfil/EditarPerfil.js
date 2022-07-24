@@ -1,26 +1,28 @@
 import React, { useEffect, useState } from "react";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
+import { useHistory } from "react-router-dom";
 import {
   ContainerEditarPerfil,
   ColunaEsquerda,
   ColunaDireita,
   AlterarDados,
+  Preenchimento,
   CaixaInputs,
+  Rotulo,
   CaixaBotao,
   ImagemPerfil,
   BlocoSuperior,
   BlocoInferior,
-  Rotulo,
   RotuloColuna,
+  EspaçoInput,
 } from "./Styles";
 import Select from "../../styles/Select/Select";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
-import { useHistory } from "react-router-dom";
-import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
+import * as managerService from "../../services/ManagerService/managerService";
 import { brParaPadrao } from "../../utils/date";
 import { toast } from "react-toastify";
 import _ from "lodash";
@@ -66,7 +68,6 @@ function EditarPerfil() {
   const [estado, setEstado] = useState({});
   const [estadoBack, setEstadoBack] = useState({});
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
   const [cpfMasked, setCpfMasked] = useState({});
   const [dataMasked, setDataMasked] = useState({});
   const [telMasked, setTelMasked] = useState({});
@@ -153,6 +154,9 @@ function EditarPerfil() {
     setEndereco(resposta.dadosEndereco);
     setCep(resposta.dadosEndereco.cep);
     setComplemento(resposta.dadosEndereco.complemento);
+    if (complemento === "") {
+      setComplemento("Complemento");
+    }
     setCarregando(false);
   }
 
@@ -161,6 +165,11 @@ function EditarPerfil() {
       atualizarDados();
     }
   }
+
+  useEffect(() => {
+    pegandoDados();
+  }, []);
+
   useEffect(() => {
     setCpfMasked(
       cpf.slice(+0, -8) +
@@ -274,6 +283,7 @@ function EditarPerfil() {
     setEstadoBack({ ...estadoBack, [name]: maskDataBack(value) });
   }
 
+
   function preenchendoDados(e) {
     const { name, value } = e.target;
     if (value) {
@@ -347,10 +357,6 @@ function EditarPerfil() {
     }
   }
 
-  useEffect(() => {
-    pegandoDados();
-  }, []);
-
   return (
     <ContainerEditarPerfil>
       <ColunaEsquerda>
@@ -407,81 +413,58 @@ function EditarPerfil() {
       </ColunaEsquerda>
       <ColunaDireita>
         <AlterarDados>Alterar Dados:</AlterarDados>
-        <CaixaInputs>
-          <Input
-            placeholder={usuario.nome}
-            backgroundColor={Cores.cinza[7]}
-            borderColor={Cores.preto}
-            boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-            borderWidth="1px"
-            color={Cores.preto}
-            fontSize="1em"
-            width="50%"
-            name="nome"
-            marginTop="2%"
-            onChange={preenchendoDados}
-          ></Input>
-          <RotuloColuna>
-            <Input
-              placeholder={cpfMasked}
-              backgroundColor={Cores.cinza[7]}
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              borderWidth="1px"
-              color={Cores.preto}
-              fontSize="1em"
-              width="100%"
-              name="cpf"
-              erro={erro.cpf}
-              value={estado.cpf}
-              marginTop="2%"
-              onChange={preenchendoDados}
+            <Titulo>Nome:</Titulo>
+              width="90%"
+              marginTop:"2%"
             ></Input>
-            {erro.cpf && (
-              <Rotulo>Digite um CPF no formato xxx.xxx.xxx-xx</Rotulo>
-            )}
-          </RotuloColuna>
-        </CaixaInputs>
-        <CaixaInputs>
-          <RotuloColuna>
-            <Input
-              placeholder={usuario.email}
+
+            
+            <Titulo>Endereço de e-mail:</Titulo>
+            <RotuloColuna>
               backgroundColor={Cores.cinza[7]}
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              borderWidth="1px"
-              color={Cores.preto}
-              fontSize="1em"
-              width="100%"
-              name="email"
-              marginTop="2%"
-              onChange={validacaoEmail}
+              width="90%"
+              marginTop:"2%"
+              onChange={preenchendoDados}
               erro={erro.email}
             ></Input>
             {erro.email && (
               <Rotulo>Digite um email no formato email@email.com</Rotulo>
             )}
-          </RotuloColuna>
-          <RotuloColuna>
+            </RotuloColuna>
+            
+            <Titulo>Data de Nascimento:</Titulo>
+            <RotuloColuna>
+        <Preenchimento>
+          <CaixaInputs>
+            <Rotulo>Nome:</Rotulo>
             <Input
-              placeholder={telMasked}
+              placeholder={usuario.nome}
               backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
               boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
               borderWidth="1px"
               color={Cores.preto}
               fontSize="1em"
-              width="100%"
-              name="telefone"
-              erro={erro.telefone}
-              value={estado.telefone}
-              marginTop="2%"
+              width="90%"
+              name="nome"
               onChange={preenchendoDados}
             ></Input>
-            {erro.telefone && (
-              <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
-            )}
-          </RotuloColuna>
-        </CaixaInputs>
-        <CaixaInputs>
-          <RotuloColuna>
+
+            <Rotulo>Endereço de e-mail:</Rotulo>
+            <Input
+              placeholder={usuario.email}
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color={Cores.preto}
+              fontSize="1em"
+              width="90%"
+              name="email"
+              onChange={preenchendoDados}
+            ></Input>
+
+            <Rotulo>Data de Nascimento:</Rotulo>
             <Input
               placeholder={dataMasked}
               backgroundColor={Cores.cinza[7]}
@@ -489,8 +472,54 @@ function EditarPerfil() {
               borderWidth="1px"
               color={Cores.preto}
               fontSize="1em"
-              width="100%"
+              width="50%"
               name="data_nascimento"
+              width="90%"
+              name="data_nascimento"
+              onChange={preenchendoDados}
+            ></Input>
+          </CaixaInputs>
+
+          <CaixaInputs>
+            <Rotulo>CPF:</Rotulo>
+            <Input
+              placeholder={cpfMasked}
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color={Cores.preto}
+              fontSize="1em"
+              width="90%"
+              name="cpf"
+              onChange={preenchendoDados}
+            ></Input>
+
+            <Rotulo>Telefone:</Rotulo>
+            <Input
+              placeholder={telMasked}
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color={Cores.preto}
+              fontSize="1em"
+              width="90%"
+              name="telefone"
+              onChange={preenchendoDados}
+            ></Input>
+
+            <Rotulo>CEP:</Rotulo>
+            <Input
+              placeholder={endereco.cep}
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color={Cores.preto}
+              fontSize="1em"
+              width="90%"
+              name="cep"
               value={estado.data_nascimento}
               marginTop="2%"
               onChange={validacaoData}
@@ -505,40 +534,29 @@ function EditarPerfil() {
                 )}
               </>
             )}
-          </RotuloColuna>
-          <RotuloColuna>
+            </RotuloColuna>
+          </CaixaInputs>
+        </Preenchimento>
+
+        <Preenchimento>
+          <CaixaInputs>
+            <Titulo>País:</Titulo>
             <Input
-              placeholder={cepMasked}
+              placeholder={endereco.pais}
               backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
               boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
               borderWidth="1px"
               color={Cores.preto}
               fontSize="1em"
-              width="100%"
-              name="cep"
-              erro={erro.cep}
-              value={enderecoNovo.cep}
+              width="90%"
+              name="pais"
               marginTop="2%"
               onChange={preenchendoEndereco}
             ></Input>
-            {erro.cep && <Rotulo>Digite um cep no formato xxxxx-xxx</Rotulo>}
-          </RotuloColuna>
-        </CaixaInputs>
-        <CaixaInputs>
-          <Input
-            placeholder={endereco.pais}
-            backgroundColor={Cores.cinza[7]}
-            borderColor={Cores.preto}
-            boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-            borderWidth="1px"
-            color={Cores.preto}
-            fontSize="1em"
-            width="50%"
-            name="pais"
-            marginTop="2%"
-            onChange={preenchendoEndereco}
-          ></Input>
-          <Select
+
+            <Titulo>Estado:</Titulo>
+            <Select
             id="estado"
             name="estado"
             backgroundColor={Cores.cinza[7]}
@@ -578,84 +596,59 @@ function EditarPerfil() {
             <option value="TO">Tocantins</option>
             <option value="EX">Estrangeiro</option>
           </Select>
-        </CaixaInputs>
-        <CaixaInputs>
-          <Input
-            placeholder={endereco.cidade}
-            backgroundColor={Cores.cinza[7]}
-            borderColor={Cores.preto}
-            boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-            borderWidth="1px"
-            color={Cores.preto}
-            fontSize="1em"
-            width="50%"
-            name="cidade"
-            value={enderecoNovo.cidade}
-            marginTop="2%"
-            onChange={preenchendoEndereco}
-          ></Input>
-          <Input
-            placeholder={endereco.bairro}
-            backgroundColor={Cores.cinza[7]}
-            borderColor={Cores.preto}
-            boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-            borderWidth="1px"
-            color={Cores.preto}
-            fontSize="1em"
-            width="50%"
-            name="bairro"
-            value={enderecoNovo.bairro}
-            marginTop="2%"
-            onChange={preenchendoEndereco}
-          ></Input>
-        </CaixaInputs>
-        <CaixaInputs>
-          <Input
-            placeholder={endereco.rua}
-            backgroundColor={Cores.cinza[7]}
-            borderColor={Cores.preto}
-            boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-            borderWidth="1px"
-            color={Cores.preto}
-            fontSize="1em"
-            width="50%"
-            name="rua"
-            marginTop="2%"
-            onChange={preenchendoEndereco}
-          ></Input>
-          <Input
-            placeholder={endereco.numero}
-            backgroundColor={Cores.cinza[7]}
-            borderColor={Cores.preto}
-            boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-            borderWidth="1px"
-            color={Cores.preto}
-            fontSize="1em"
-            width="50%"
-            name="numero"
-            value={enderecoNovo.numero}
-            marginTop="2%"
-            onChange={preenchendoEndereco}
-          ></Input>
-        </CaixaInputs>
-        <CaixaInputs>
-          {complemento === null ? (
+
+            <Titulo>Bairro:</Titulo>
             <Input
-              placeholder="Complemento: "
+              placeholder={endereco.bairro}
               backgroundColor={Cores.cinza[7]}
               borderColor={Cores.preto}
               boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
               borderWidth="1px"
               color={Cores.preto}
               fontSize="1em"
-              width="49%"
-              name="complemento"
-              value={endereco.complemento}
+              width="90%"
+              name="bairro"
+              value={enderecoNovo.bairro}
+            marginTop="2%"
+              onChange={preenchendoEndereco}
+            ></Input>
+          </CaixaInputs>
+
+          <CaixaInputs>
+            <Titulo>Rua:</Titulo>
+            <Input
+              placeholder={endereco.rua}
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color={Cores.preto}
+              fontSize="1em"
+              width="90%"
+              name="rua"
               marginTop="2%"
               onChange={preenchendoEndereco}
-              onKeyPress={verificandoEnter}
             ></Input>
-          ) : (
+
+            <Titulo>Número:</Titulo>
+            <Input
+              placeholder={endereco.numero}
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color={Cores.preto}
+              fontSize="1em"
+              width="90%"
+              name="numero"
+              value={enderecoNovo.numero}
+            marginTop="2%"
+              onChange={preenchendoEndereco}
+            ></Input>
+             {complemento === null ? (
+
+
+            <Titulo>Complemento:</Titulo>
             <Input
               placeholder={complemento}
               backgroundColor={Cores.cinza[7]}
@@ -664,7 +657,7 @@ function EditarPerfil() {
               borderWidth="1px"
               color={Cores.preto}
               fontSize="1em"
-              width="49%"
+              width="50%"
               name="complemento"
               marginTop="2%"
               onChange={preenchendoEndereco}
@@ -672,6 +665,35 @@ function EditarPerfil() {
             ></Input>
           )}
         </CaixaInputs>
+        <CaixaInputs>
+          <Input
+            placeholder={endereco.rua}
+            backgroundColor={Cores.cinza[7]}
+            borderColor={Cores.preto}
+            boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+            borderWidth="1px"
+
+
+
+
+              borderWidth="1px"
+            <Titulo>Complemento:</Titulo>
+            <Input
+              placeholder={complemento}
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.preto}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              color={Cores.preto}
+              fontSize="1em"
+              width="90%"
+              name="complemento"
+              marginTop="2%"
+              onChange={preenchendoEndereco}
+              onKeyPress={verificandoEnter}
+            ></Input>
+          </CaixaInputs>
+        </Preenchimento>
         <CaixaBotao>
           <Button
             width="30%"
@@ -684,6 +706,8 @@ function EditarPerfil() {
             fontWeight="bold"
             marginTop="2%"
             onClick={() => atualizarDados()}
+            marginTop="0px"
+            paddingTop="1em"
           >
             {carregando ? <Spin indicator={antIcon} /> : <>CONFIRMAR</>}
           </Button>

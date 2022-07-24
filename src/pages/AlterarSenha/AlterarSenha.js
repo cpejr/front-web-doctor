@@ -26,16 +26,14 @@ function AlterarSenha() {
   const [confirmouSenha, setConfirmouSenha] = useState(false);
   const [alterador, setAlterador] = useState(true);
   const [carregando, setCarregando] = useState(false);
+  const [senhaAtual, setSenhaAtual] = useState("");
+  const [novaSenha, setNovaSenha] = useState("");
+  const [confirmarSenha, setConfirmarSenha] = useState("");
+  const email = sessionStorage.getItem("@doctorapp-Email");
 
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [camposVaziosTrocarSenha, setCamposVaziosTrocarSenha] = useState(false);
-
-  const [novaSenha, setNovaSenha] = useState("");
-  const [confirmarSenha, setConfirmarSenha] = useState("");
-
-  const [senhaAtual, setSenhaAtual] = useState("");
-  const email = sessionStorage.getItem("@doctorapp-Email");
 
   const errors = {};
   const errorsNovaSenha = {};
@@ -188,10 +186,10 @@ function AlterarSenha() {
                   backgroundColor={Cores.branco}
                   borderColor="rgba(255, 0, 0, 0.25)"
                   color={Cores.cinza[1]}
-                  fontSize="1.5em"
+                  fontSize="1.3em"
                   fontWeight="bold"
-                  fontSizeMedia="1.2em"
-                  fontSizeMedia950="1.1em"
+                  fontSizeMedia="1.1em"
+                  fontSizeMedia950="1.0em"
                   boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
                   onClick={() => history.push("/web/editarperfil")}
                 >
@@ -203,10 +201,10 @@ function AlterarSenha() {
                   backgroundColor={Cores.lilas[1]}
                   borderColor={Cores.azul}
                   color={Cores.branco}
-                  fontSize="1.5em"
+                  fontSize="1.3em"
                   fontWeight="bold"
-                  fontSizeMedia="1.2em"
-                  fontSizeMedia950="1.1em"
+                  fontSizeMedia="1.1em"
+                  fontSizeMedia950="1.0em"
                   boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
                   onClick={() => conferirSenha()}
                 >

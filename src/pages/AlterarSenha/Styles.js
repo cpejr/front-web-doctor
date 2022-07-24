@@ -70,6 +70,12 @@ export const BotoesMesmaLinha = styled.div`
     height: 130px;
     width: 80%;
   }
+  @media (min-width: 561px) and (max-width: 690px) {
+    font-size: 0.75em;
+  }
+  @media (min-width: 690px) and (max-width: 780px) {
+    font-size: 0.9em;
+  }
 `;
 
 export const Rotulo = styled.div`

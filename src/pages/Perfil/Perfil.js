@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import logoGuilherme from "./../../assets/logoGuilherme.png";
-import Button from "../../styles/Button";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import {
@@ -28,8 +26,10 @@ import {
   CaixaCimaCarregando,
   CaixaEnderecoCarregando,
 } from "./Styles";
-import * as managerService from "../../services/ManagerService/managerService";
+import logoGuilherme from "./../../assets/logoGuilherme.png";
+import Button from "../../styles/Button";
 import { Cores } from "../../variaveis";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function Perfil(props) {
   const history = useHistory();
@@ -41,15 +41,15 @@ function Perfil(props) {
 
   const [perfilPessoal, setPerfilPessoal] = useState();
   const [perfilSelecionado, setPerfilSelecionado] = useState();
-  const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState("")
-  const [botaoVisivel, setBotaoVisivel] = useState(true)
+  const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState("");
+  const [botaoVisivel, setBotaoVisivel] = useState(true);
 
   const [carregando, setCarregando] = useState(true);
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 45, color: Cores.azul }} spin />
   );
 
-  async function PerfilSecretariaOuMedico() {
+  async function PegandoTipoPerfil() {
     if (props.location.state === undefined) {
       setPerfilPessoal(true);
       setPerfilSelecionado(false);
@@ -60,16 +60,9 @@ function Perfil(props) {
       pegandoDadosPerfilSelecionado();
     }
   }
-
-  async function botaoExcluirVisivel() {
-    if (tipoUsuarioLogado === "MASTER") {
-      setBotaoVisivel(false)
-    }
-  }
-
   useEffect(() => {
-    botaoExcluirVisivel();
-  }, [tipoUsuarioLogado]);
+    PegandoTipoPerfil();
+  }, []);
 
   async function pegandoDadosPerfilPessoal() {
     const resposta = await managerService.GetDadosUsuario(email);
@@ -81,6 +74,15 @@ function Perfil(props) {
     setCarregando(false);
     setTipoUsuarioLogado(resposta.dadosUsuario.tipo);
   }
+  async function botaoExcluirVisivel() {
+    if (tipoUsuarioLogado === "MASTER") {
+      setBotaoVisivel(false);
+    }
+  }
+
+  useEffect(() => {
+    botaoExcluirVisivel();
+  }, [tipoUsuarioLogado]);
 
   async function pegandoDadosPerfilSelecionado() {
     const resposta = await managerService.GetDadosUsuario(
@@ -96,9 +98,6 @@ function Perfil(props) {
   async function deletarUsuario() {
     await managerService.DeletarUsuario(usuario.id);
   }
-  useEffect(() => {
-    PerfilSecretariaOuMedico();
-  }, []);
 
   return (
     <div>
@@ -122,8 +121,8 @@ function Perfil(props) {
               <NomeData>
                 <Nome>{usuario.nome}</Nome>
                 <ConjuntoDataCPF>
-                  <DataCPF>{dataNascimento}</DataCPF>
-                  <DataCPF>{usuario.cpf}</DataCPF>
+                  <DataCPF>Nascimento: {dataNascimento}</DataCPF>
+                  <DataCPF>CPF: {usuario.cpf}</DataCPF>
                 </ConjuntoDataCPF>
               </NomeData>
             </FotoNomeData>
@@ -177,17 +176,16 @@ function Perfil(props) {
             ) : (
               <>
                 <EnderecoContato>Endereço</EnderecoContato>
-                <DadosEndereco>{endereco.pais}</DadosEndereco>
-                <DadosEndereco>{endereco.cep}</DadosEndereco>
-                <DadosEndereco>{endereco.estado}</DadosEndereco>
-                <DadosEndereco>{endereco.cidade}</DadosEndereco>
-                <DadosEndereco>{endereco.bairro}</DadosEndereco>
-                <RuaNumeroComplemento>
-                  <Rua>
-                    {endereco.rua} {endereco.numero}
-                  </Rua>
-                  <Complemento>{endereco.complemento}</Complemento>
-                </RuaNumeroComplemento>
+                <DadosEndereco>País: {endereco.pais}</DadosEndereco>
+                <DadosEndereco>CEP: {endereco.cep}</DadosEndereco>
+                <DadosEndereco>Estado: {endereco.estado}</DadosEndereco>
+                <DadosEndereco>Cidade: {endereco.cidade}</DadosEndereco>
+                <DadosEndereco>Bairro: {endereco.bairro}</DadosEndereco>
+                <DadosEndereco>Rua: {endereco.rua}</DadosEndereco>
+                <DadosEndereco>Número: {endereco.numero}</DadosEndereco>
+                <DadosEndereco>
+                  Complemento: {endereco.complemento}
+                </DadosEndereco>
               </>
             )}
           </CaixaEndereco>
@@ -205,11 +203,13 @@ function Perfil(props) {
                     ({telefone.slice(0, -9)}) {telefone.slice(2, -4)}-
                     {telefone.slice(-4)}
                   </DadosContato>
-                  <DadosContato>{usuario.email}</DadosContato>
+                  <DadosContato style={{ wordBreak: "break-word" }}>
+                    {usuario.email}
+                  </DadosContato>
                 </>
               )}
             </CaixaContato>
-            { botaoVisivel && (
+            {botaoVisivel && (
               <ExcluirConta onClick={deletarUsuario}>
                 EXCLUIR CONTA
               </ExcluirConta>
