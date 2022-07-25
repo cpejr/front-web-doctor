@@ -3,6 +3,7 @@ import { Checkbox, Row, Col, Input } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
+import { sleep } from "../../utils/sleep";
 import {
   Container,
   Caixa,
@@ -52,17 +53,6 @@ function ModalAgendamentoEspecifico(props) {
   const [hora, setHora] = useState("");
   moment.locale("pt-br");
 
-  async function pegandoDadosUsuario() {
-    setCarregando(true);
-    const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
-    setUsuario(resposta.dadosUsuario);
-    setCarregando(false);
-  }
-
-  useEffect(() => {
-    pegandoDadosUsuario();
-  }, [props]);
-
   async function pegandoPacientes() {
     const resposta = await managerService.GetDadosPessoais();
     resposta.forEach((usuario) => {
@@ -86,6 +76,17 @@ function ModalAgendamentoEspecifico(props) {
   useEffect(() => {
     pegandoConsultorios();
   }, []);
+
+  async function pegandoDadosUsuario() {
+    setCarregando(true);
+    const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
+    setUsuario(resposta.dadosUsuario);
+    setCarregando(false);
+  }
+
+  useEffect(() => {
+    pegandoDadosUsuario();
+  }, [props]);
 
   async function requisicaoCriarConsulta() {
     setCarregandoCadastro(true);
