@@ -30,6 +30,18 @@ import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 
+let data = new Date();
+let dia = data.getDate();
+let mes = data.getMonth() + 1;
+let ano = data.getFullYear();
+
+
+
+var today = new Date();
+var dd = String(today.getDate()).padStart(2, '0');
+var mm = String(today.getMonth() + 1).padStart(2, '0');
+    var yyyy = today.getFullYear();
+
 
 function ModalEditarAgendamentoEspecifico(props) {
   const { Option } = Select;
@@ -42,6 +54,7 @@ function ModalEditarAgendamentoEspecifico(props) {
   const [consultorioPorId, setConsultorioPorId] = useState();
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
+  const [hoje, setHoje] = useState("");
   const [camposVazios, setCamposVazios] = useState({
     duracao_em_minutos: false,
     hora: false,
@@ -81,6 +94,14 @@ function ModalEditarAgendamentoEspecifico(props) {
     setandoValoresConsulta();
   }, [props]);
 
+  useEffect(() => {
+    setandoDiaAtual();
+  }, []);
+
+  useEffect(() => {
+    setandoDataMinima();
+  }, [hoje]);
+
   async function setandoNomeConsultorioPorId() {
     const resposta = await managerService.GetConsultorioPorId(
       consulta.id_consultorio
@@ -95,6 +116,22 @@ function ModalEditarAgendamentoEspecifico(props) {
     let horaFormatada = horaString.slice(14, 19);
     setData(dataFormatada);
     setHora(horaFormatada);
+  }
+
+  function setandoDiaAtual() {
+    if (dia < 10){
+      dia = "0" + dia;
+    }
+    if (mes < 10){
+      mes = "0" + mes;
+    }
+
+    setHoje(ano + "-" + mes + "-" + dia);
+    
+  }
+
+  function setandoDataMinima(){
+    document.getElementById("data").setAttribute("min", hoje);
   }
 
   useEffect(() => {
@@ -112,6 +149,7 @@ function ModalEditarAgendamentoEspecifico(props) {
   }
 
   async function requisicaoAtualizarConsulta() {
+    console.log(hoje);
     if (
       camposVazios.duracao_em_minutos === true ||
       camposVazios.hora === true ||
@@ -196,6 +234,7 @@ function ModalEditarAgendamentoEspecifico(props) {
             <Input
               placeholder="Selecione uma data"
               value={data}
+              id = "data"
               type="date"
               onKeyDown={(e) => e.preventDefault()}
               size="large"
