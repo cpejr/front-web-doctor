@@ -37,11 +37,6 @@ let ano = data.getFullYear();
 
 
 
-var today = new Date();
-var dd = String(today.getDate()).padStart(2, '0');
-var mm = String(today.getMonth() + 1).padStart(2, '0');
-    var yyyy = today.getFullYear();
-
 
 function ModalEditarAgendamentoEspecifico(props) {
   const { Option } = Select;
@@ -102,6 +97,16 @@ function ModalEditarAgendamentoEspecifico(props) {
     setandoDataMinima();
   }, [hoje]);
 
+  useEffect(() => {
+    setandoCamposVazios();
+  }, []);
+
+  useEffect(() => {
+    console.log(camposVazios);
+  }, [camposVazios]);
+
+
+
   async function setandoNomeConsultorioPorId() {
     const resposta = await managerService.GetConsultorioPorId(
       consulta.id_consultorio
@@ -132,6 +137,12 @@ function ModalEditarAgendamentoEspecifico(props) {
 
   function setandoDataMinima(){
     document.getElementById("data").setAttribute("min", hoje);
+  }
+
+  function setandoCamposVazios(){
+    camposVazios.duracao_em_minutos = false;
+    camposVazios.data = false;
+    camposVazios.hora = false;
   }
 
   useEffect(() => {
