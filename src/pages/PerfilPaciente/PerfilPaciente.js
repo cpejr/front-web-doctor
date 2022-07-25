@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
+import { Spin } from "antd";
+import { Modal } from "antd";
+import { toast } from "react-toastify";
 import {
   ContainerPerfil,
   Perfil,
@@ -29,27 +33,19 @@ import {
   RespostaPendente,
   Resposta,
   TituloReceita,
-  DataFormulario,
   TipoFormulario,
   UrgenciaFormulario,
-  ContainerModalExcluir,
-  ConteudoModalExcluir,
-  ContainerFooterModalExcluir,
+  TextoUrgencia,
 } from "./Styles";
-
-import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
-import { Spin } from "antd";
-import { Modal } from "antd";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
+import ModalAgendamento from "../../components/ModalAgendamento/ModalAgendamento";
 import { Cores } from "../../variaveis";
 import AddToast from "../../components/AddToast/AddToast";
-import { toast } from "react-toastify";
 import { recebeTipo, usuarioAutenticado } from "../../services/auth";
-import { redirecionamento, sleep } from "../../utils/sleep";
-import ModalAgendamento from "../../components/ModalAgendamento/ModalAgendamento";
 import ModalExcluirUsuario from "../../components/ModalExcluirUsuario";
 import ModalFormulario from "../../components/ModalFormulario";
+import { redirecionamento, sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function PerfilPaciente(props) {
