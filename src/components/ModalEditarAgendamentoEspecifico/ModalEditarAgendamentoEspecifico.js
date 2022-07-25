@@ -4,6 +4,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
 import { apenasNumeros } from "../../utils/masks";
+import { toast } from "react-toastify";
 import {
   Container,
   Caixa,
@@ -41,7 +42,11 @@ function ModalEditarAgendamentoEspecifico(props) {
   const [consultorioPorId, setConsultorioPorId] = useState();
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
-  const [camposVazios, setCamposVazios] = useState(false);
+  const [camposVazios, setCamposVazios] = useState({
+    duracao_em_minutos: false,
+    hora: false,
+    data: false,
+  });
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -107,6 +112,28 @@ function ModalEditarAgendamentoEspecifico(props) {
   }
 
   async function requisicaoAtualizarConsulta() {
+    if (
+      camposVazios.duracao_em_minutos === true ||
+      camposVazios.hora === true ||
+      camposVazios.data === true
+    ) {
+      console.log(camposVazios);
+      setCarregandoUpdate(true);
+      toast.warn("Preencha todos os campos corretamente");
+      setCarregandoUpdate(false);
+      return
+    } else {
+      console.log("chegou2");
+      setCarregandoUpdate(true);
+      consulta.id_usuario = usuario.id;
+      formatacaoDataHora();
+      await managerService.UpdateConsulta(consulta.id, consulta);
+      sleep(3000);
+      setCarregandoUpdate(false);
+      props.fechandoModal();
+      return
+    }
+
     setCarregandoUpdate(true);
     consulta.id_usuario = usuario.id;
     formatacaoDataHora();
@@ -120,7 +147,7 @@ function ModalEditarAgendamentoEspecifico(props) {
 
     const { value, name } = e.target;
 
-    if(value != consulta.descricao){
+    if (value != consulta.descricao) {
       if (value) {
         setCamposVazios({ ...camposVazios, [name]: false });
       }
@@ -190,6 +217,11 @@ function ModalEditarAgendamentoEspecifico(props) {
                 color: "black",
               }}
             ></Input>
+            {camposVazios.data ? (
+              <Rotulo>Digite uma data</Rotulo>
+            ) : (
+              <></>
+            )}
           </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
@@ -264,6 +296,11 @@ function ModalEditarAgendamentoEspecifico(props) {
                 onChange={preenchendoDadosConsulta}
                 style={{ color: "black" }}
               />
+              {camposVazios.hora ? (
+                <Rotulo>Digite um horário</Rotulo>
+              ) : (
+                <></>
+              )}
             </TamanhoInput>
 
             <TamanhoInput>
@@ -277,7 +314,7 @@ function ModalEditarAgendamentoEspecifico(props) {
               {camposVazios.duracao_em_minutos ? (
                 <Rotulo>Digite uma duração</Rotulo>
               ) : (
-              <></>
+                <></>
               )}
             </TamanhoInput>
           </DoisSelect>
