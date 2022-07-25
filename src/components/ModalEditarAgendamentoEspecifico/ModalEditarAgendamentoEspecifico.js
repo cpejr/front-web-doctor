@@ -123,7 +123,6 @@ function ModalEditarAgendamentoEspecifico(props) {
       setCarregandoUpdate(false);
       return
     } else {
-      console.log("chegou2");
       setCarregandoUpdate(true);
       consulta.id_usuario = usuario.id;
       formatacaoDataHora();
@@ -133,14 +132,6 @@ function ModalEditarAgendamentoEspecifico(props) {
       props.fechandoModal();
       return
     }
-
-    setCarregandoUpdate(true);
-    consulta.id_usuario = usuario.id;
-    formatacaoDataHora();
-    await managerService.UpdateConsulta(consulta.id, consulta);
-    sleep(3000);
-    setCarregandoUpdate(false);
-    props.fechandoModal();
   }
 
   function preenchendoDadosConsulta(e) {
@@ -206,6 +197,7 @@ function ModalEditarAgendamentoEspecifico(props) {
               placeholder="Selecione uma data"
               value={data}
               type="date"
+              onKeyDown={(e) => e.preventDefault()}
               size="large"
               name="data"
               onChange={(e) => {
