@@ -210,7 +210,7 @@ function ModalEditarAgendamentoEspecifico(props) {
               }}
             ></Input>
             {camposVazios.data ? (
-              <Rotulo>Digite uma data</Rotulo>
+              <Rotulo>Escolha uma data</Rotulo>
             ) : (
               <></>
             )}
