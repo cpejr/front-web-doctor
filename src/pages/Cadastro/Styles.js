@@ -66,6 +66,7 @@ export const Botao = styled.button`
   height: 10px;
   align-items: center;
   margin: 1%;
+  
   justify-content: flex-start;
   background-color: transparent;
   border-color: transparent;

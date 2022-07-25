@@ -6,7 +6,11 @@ import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import Select from "../../styles/Select/Select";
 import { Spin, Switch } from "antd";
-import { LoadingOutlined, bleLeftOutlined, RollbackOutlined } from "@ant-design/icons";
+import {
+  LoadingOutlined,
+  bleLeftOutlined,
+  RollbackOutlined,
+} from "@ant-design/icons";
 import { BiArrowBack } from "react-icons/bi";
 import {
   Body,
@@ -126,6 +130,9 @@ function Cadastro() {
     bairro: false,
     senha: false,
     senhaConfirmada: false,
+    telefone_cuidador: false,
+    nome_cuidador: false,
+    convenio: false,
   };
 
   async function verificandoEnter(e) {
@@ -152,6 +159,15 @@ function Cadastro() {
     if (!usuario.senhaConfirmada) errors.senhaConfirmada = true;
     if (erro.data_nascimento === true) errors.data_nascimento = true;
     if (erro.email === true) errors.email = true;
+
+    if (cuidador) {
+      if (!usuario.telefone_cuidador) errors.telefone_cuidador = true;
+      if (!usuario.nome_cuidador) errors.nome_cuidador = true;
+    }
+
+    if (convenio) {
+      if (!usuario.convenio) errors.convenio = true;
+    }
 
     setCamposVazios({ ...camposVazios, ...errors });
 
@@ -214,12 +230,7 @@ function Cadastro() {
     ) {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
     }
-    if (name === "nome_cuidador") {
-      e.target.value = maskApenasLetras(value);
-    }
-    if (name === "telefone_cuidador") {
-      e.target.value = maskTelefone(value);
-    }
+
     if (
       (name === "cpf" && value.length < 14) ||
       (name === "telefone" && value.length < 15) ||
@@ -244,10 +255,7 @@ function Cadastro() {
       setEstado({ ...estado, [name]: maskTelefone(value) });
       setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
     }
-    if (name === "telefone_cuidador") {
-      setEstado({ ...estado, [name]: maskTelefone(value) });
-      setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
-    }
+
     if (name === "cpf") {
       setEstado({ ...estado, [name]: maskCPF(value) });
       setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
@@ -263,6 +271,74 @@ function Cadastro() {
       setConvenio(false);
       setCuidador(false);
     }
+  }
+
+  async function validacaoCamposNaoGerais(e) {
+    const { value, name } = e.target;
+    /*  if (cuidador  === true) {
+      if (e.target.name === "telefone_cuidador") {
+        if (value.length < 15) {
+          setErro({ ...erro, [name]: true });
+        } else {
+          setErro({ ...erro, [name]: false });
+        }
+
+        setEstado({ ...estado, [name]: maskTelefone(e.target.value) });
+        setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(e.target.value) });
+      }
+
+      if (e.target.name === "nome_cuidador") {
+
+        if (e.target.value) setCamposVazios({ ...camposVazios, [name]: false });
+
+        setEstado({ ...estado, [e.target.name]: maskApenasLetras(e.target.value) });
+        setUsuario({ ...usuario, [name]: maskApenasLetras(e.target.value) });
+      }
+    } if (convenio === true) {
+      if (e.target.name === "convenio")
+      { 
+
+        if (value) setCamposVazios({ ...camposVazios, [name]: false });
+
+        setEstado({ ...estado, [name]: maskApenasLetras(e.target.value) });
+        setUsuario({ ...usuario, [name]: maskApenasLetras(e.target.value) });
+      }
+    } */
+    if (value) {
+      setCamposVazios({ ...camposVazios, [name]: false });
+    } else {
+      setCamposVazios({ ...camposVazios, [name]: true });
+    }
+
+    if (cuidador) {
+      if (e.target.name === "telefone_cuidador") {
+        if (value.length < 15) {
+          setErro({ ...erro, [name]: true });
+        } else {
+          setErro({ ...erro, [name]: false });
+        }
+      }
+
+      if (e.target.name === "telefone_cuidador") {
+        setEstado({ ...estado, [name]: maskTelefone(e.target.value) });
+        setUsuario({
+          ...usuario,
+          [name]: maskApenasNumerosCpfTel(e.target.value),
+        });
+      } else if (e.target.name === "nome_cuidador") {
+        setEstado({
+          ...estado,
+          [e.target.name]: maskApenasLetras(e.target.value),
+        });
+        setUsuario({ ...usuario, [name]: maskApenasLetras(e.target.value) });
+      }
+    }
+    if (convenio) {
+      if (e.target.name === "convenio") {
+        setEstado({ ...estado, [name]: maskApenasLetras(e.target.value) });
+        setUsuario({ ...usuario, [name]: maskApenasLetras(e.target.value) });
+      }
+    } 
   }
 
   async function pegandoDadosPerfilPessoal() {
@@ -341,7 +417,7 @@ function Cadastro() {
             ></img>
           </Logo>
           <Botao onClick={() => voltarLoginOuHome()}>
-            <BiArrowBack/> Voltar
+            <BiArrowBack /> Voltar
           </Botao>
           <Select
             id="tipos"
@@ -461,13 +537,15 @@ function Cadastro() {
                 <Input
                   placeholder="Nome do Convênio"
                   backgroundColor={Cores.cinza[7]}
-                  borderColor={Cores.azul}
                   color={Cores.preto}
                   fontSize="1em"
                   width="100%"
                   marginTop="2%"
                   name="convenio"
-                  onChange={preenchendoDados}
+                  value={estado.convenio}
+                  onChange={validacaoCamposNaoGerais}
+                  erro={erro.convenio}
+                  camposVazios={camposVazios.convenio}
                 ></Input>
               )}
 
@@ -481,25 +559,35 @@ function Cadastro() {
                   <Input
                     placeholder="Nome Cuidador"
                     backgroundColor={Cores.cinza[7]}
-                    borderColor={Cores.azul}
                     color={Cores.preto}
                     fontSize="1em"
                     width="100%"
                     marginTop="2%"
                     name="nome_cuidador"
-                    onChange={preenchendoDados}
+                    value={estado.nome_cuidador}
+                    onChange={validacaoCamposNaoGerais}
+                    erro={erro.nome_cuidador}
+                    camposVazios={camposVazios.nome_cuidador}
                   ></Input>
                   <Input
                     placeholder="Telefone Cuidador"
                     backgroundColor={Cores.cinza[7]}
-                    borderColor={Cores.azul}
                     color={Cores.preto}
                     fontSize="1em"
                     width="100%"
                     marginTop="2%"
                     name="telefone_cuidador"
-                    onChange={preenchendoDados}
+                    value={estado.telefone_cuidador}
+                    onChange={validacaoCamposNaoGerais}
+                    onKeyPress={verificandoEnter}
+                    erro={erro.telefone_cuidador}
+                    camposVazios={camposVazios.telefone_cuidador}
                   ></Input>
+                  {erro.telefone_cuidador && (
+                    <Rotulo>
+                      Digite um telefone no formato (xx)xxxxx-xxxx
+                    </Rotulo>
+                  )}
                 </>
               )}
             </>
@@ -676,6 +764,14 @@ function Cadastro() {
             fontWeight="bold"
           >
             {carregando ? <Spin indicator={antIcon} /> : "CADASTRAR"}
+          </Button>
+          <Button
+            onClick={() => {
+              console.log(usuario);
+            }}
+          >
+            {" "}
+            b
           </Button>
         </DadosCadastro>
       </Body>
