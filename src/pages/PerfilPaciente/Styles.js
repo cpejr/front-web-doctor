@@ -29,7 +29,7 @@ export const Perfil = styled.div`
   padding: 2%;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   gap: 15%;
-  margin-bottom: 2%;
+  margin-bottom: ${(props) => props.marginBottom};
 
   @media (max-width: 1080px) {
     width: 80%;
@@ -174,7 +174,11 @@ export const Nome = styled.div`
   font-weight: bold;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: pre-line;
+
+  @media (max-width: 300px) {
+    font-size: 1.5em;
+  }
 `;
 export const DataAnos = styled.div`
   display: flex;
@@ -187,6 +191,10 @@ export const Data = styled.div`
   font-size: 1.2em;
   justify-content: flex-start;
   color: ${Cores.azul};
+
+  @media (max-width: 460px) {
+    font-size: 1em;
+  }
 `;
 export const Anos = styled.div`
   font-size: 1.2em;
@@ -197,6 +205,10 @@ export const Titulo = styled.div`
   color: ${Cores.azul};
   font-weight: bold;
   margin: 0% 0% 2% 0%;
+
+  @media (max-width: 560px) {
+    font-size: 1.3em;
+  }
 `;
 export const DadosGeo = styled.div`
   font-size: 1.2em;
@@ -204,15 +216,19 @@ export const DadosGeo = styled.div`
   margin-bottom: 2%;
   text-decoration: ${(props) => props.textDecoration};
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: pre-line;
   overflow: hidden;
+
+  @media (max-width: 560px) {
+    font-size: 1em;
+  }
 `;
 export const Botoes = styled.div`
-  margin-top: 15%;
   display: flex;
   flex-direction: column;
-  padding: 0% 20% 0% 0%;
+  padding: 2% 20% 0% 0%;
   justify-content: start;
+  margin-top: ${(props) => props.marginTop};
 
   @media (max-width: 1080px) {
     padding: 0;
@@ -221,7 +237,7 @@ export const Botoes = styled.div`
   }
 `;
 export const Botao = styled.div`
-  margin-bottom: 5%;
+  margin-bottom: 1.5%;
   width: 100%;
   justify-content: center;
   align-items: center;
@@ -263,14 +279,57 @@ export const DadosContato = styled.div`
     box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   }
 `;
+
 export const InfoContato = styled.div`
   text-decoration: ${(props) => props.textDecoration};
   font-size: 1.2em;
   color: ${Cores.azul};
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: pre-line;
   overflow: hidden;
+
+  @media (max-width: 560px) {
+    font-size: 1em;
+    margin-bottom: 2%;
+  }
 `;
+
+export const DadosPaciente = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 2%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @media (max-width: 1080px) {
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    display: block;
+    border-style: solid;
+    border-color: ${Cores.cinza[3]};
+    border-width: 2px;
+    border-radius: 3px;
+    box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
+    margin-top: 2.5%;
+  }
+`;
+
+export const InfoDadosPaciente = styled.div`
+  text-decoration: ${(props) => props.textDecoration};
+  font-size: 1.2em;
+  color: ${Cores.azul};
+  text-overflow: ellipsis;
+  white-space: pre-line;
+  overflow: hidden;
+
+  @media (max-width: 560px) {
+    font-size: 1em;
+    margin-bottom: 2%;
+  }
+`;
+
 export const Formulario = styled.div`
   width: 100%;
   display: flex;

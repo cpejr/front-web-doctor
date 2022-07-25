@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Input, Select, Modal } from "antd";
 import { PlusCircleOutlined } from "@ant-design/icons";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 import {
   TopoPagina,
   ContainerListadeUsuarios,
@@ -22,20 +25,29 @@ import {
   CódigoPaciente,
 } from "./Styles";
 import Button from "../../styles/Button";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
-import * as managerService from "../../services/ManagerService/managerService";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 import { Cores } from "../../variaveis";
-function Agendamentos () {
- 
+import * as managerService from "../../services/ManagerService/managerService";
+
+function Agendamentos() {
+  const history = useHistory();
   const { Search } = Input;
   const [modalAgendamento, setModalAgendamento] = useState(false);
-  const [email, setEmail] = useState(false);
+  const [email, setEmail] = useState();
   const [carregando, setCarregando] = useState(true);
   const [consultas, setConsultas] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const abertoPeloUsuario = false;
+
+  async function pegandoDados() {
+    const resposta =
+      await managerService.GetDadosConsultasExamesMarcadosGeral();
+    setConsultas(resposta.dadosConsultas);
+    setExamesMarcados(resposta.dadosExamesMarcados);
+    console.log(resposta);
+    setCarregando(false);
+  }
 
   useEffect(() => {
     pegandoDados();
@@ -50,13 +62,11 @@ function Agendamentos () {
     setModalAgendamento(false);
   }
 
-  async function pegandoDados() {
-    const respostaConsultas =
-      await managerService.GetDadosConsultasExamesMarcados();
-    setConsultas(respostaConsultas.dadosConsultas);
-    setExamesMarcados(respostaConsultas.dadosExamesMarcados);
-
-    setCarregando(false);
+  async function abrindoPerfilPaciente(email) {
+    history.push({
+      pathname: "/web/perfildopaciente",
+      state: { email },
+    });
   }
 
   return (
@@ -98,7 +108,9 @@ function Agendamentos () {
                 {carregando ? (
                   <Spin indicator={antIcon} />
                 ) : (
-                  <div>{value.nome}</div>
+                  <div onClick={() => abrindoPerfilPaciente(value.email)}>
+                    {value.nome}
+                  </div>
                 )}
               </Nome>
               <Telefone>
@@ -122,7 +134,7 @@ function Agendamentos () {
                 {carregando ? (
                   <Spin indicator={antIcon} />
                 ) : (
-                  <div>XXXXXX-XXXXX</div>
+                  <div>{value.codigo}</div>
                 )}
               </CódigoPaciente>
             </Usuario>
@@ -158,7 +170,7 @@ function Agendamentos () {
                 {carregando ? (
                   <Spin indicator={antIcon} />
                 ) : (
-                  <div>XXXXXX-XXXXX</div>
+                  <div>{value.codigo}</div>
                 )}
               </CódigoPaciente>
             </Usuario>
@@ -190,10 +202,13 @@ function Agendamentos () {
         width={"70%"}
         centered={true}
       >
-        <ModalAgendamentoEspecifico emailUsuario={email} />
+        <ModalAgendamentoEspecifico
+          emailUsuario={email}
+          abertoPeloUsuario={abertoPeloUsuario}
+        />
       </Modal>
     </div>
   );
 }
 
-export default Agendamentos ;
+export default Agendamentos;
