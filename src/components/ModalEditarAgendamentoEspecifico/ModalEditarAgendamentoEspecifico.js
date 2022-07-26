@@ -30,13 +30,6 @@ import { sleep } from "../../utils/sleep";
 import { apenasNumeros } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
 
-let data = new Date();
-let dia = data.getDate();
-let mes = data.getMonth() + 1;
-let ano = data.getFullYear();
-
-
-
 
 function ModalEditarAgendamentoEspecifico(props) {
   const { Option } = Select;
@@ -56,34 +49,19 @@ function ModalEditarAgendamentoEspecifico(props) {
     data: false,
   });
 
+
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   moment.locale("pt-br");
-
-  async function pegandoConsultorios() {
-    setCarregandoConsultorios(true);
-    const res = await managerService.GetDadosConsultorios();
-    setConsultorios(res.dadosConsultorios);
-    setCarregandoConsultorios(false);
-  }
 
   useEffect(() => {
     pegandoConsultorios();
   }, []);
 
-  async function pegandoDadosUsuario() {
-    setCarregando(true);
-    setandoCamposVazios();
-    const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
-    setUsuario(resposta.dadosUsuario);
-    setCarregando(false);
-  }
-
-  async function setandoValoresConsulta() {
-    setCarregando(true);
-    setConsulta(props.consulta);
-    setCarregando(false);
-  }
+  useEffect(() => {
+    setandoNomeConsultorioPorId();
+    setandoDataEHora();
+  }, [consulta]);
 
   useEffect(() => {
     pegandoDadosUsuario();
@@ -99,8 +77,28 @@ function ModalEditarAgendamentoEspecifico(props) {
   }, [hoje]);
 
 
+  async function pegandoConsultorios() {
+    setCarregandoConsultorios(true);
+    const res = await managerService.GetDadosConsultorios();
+    setConsultorios(res.dadosConsultorios);
+    setCarregandoConsultorios(false);
+  }
 
 
+
+  async function pegandoDadosUsuario() {
+    setCarregando(true);
+    setandoCamposVazios();
+    const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
+    setUsuario(resposta.dadosUsuario);
+    setCarregando(false);
+  }
+
+  async function setandoValoresConsulta() {
+    setCarregando(true);
+    setConsulta(props.consulta);
+    setCarregando(false);
+  }
 
 
   async function setandoNomeConsultorioPorId() {
@@ -120,6 +118,12 @@ function ModalEditarAgendamentoEspecifico(props) {
   }
 
   function setandoDiaAtual() {
+
+    let data = new Date();
+    let dia = data.getDate();
+    let mes = data.getMonth() + 1;
+    let ano = data.getFullYear();
+    
     if (dia < 10){
       dia = "0" + dia;
     }
@@ -143,10 +147,6 @@ function ModalEditarAgendamentoEspecifico(props) {
     })
   }
 
-  useEffect(() => {
-    setandoNomeConsultorioPorId();
-    setandoDataEHora();
-  }, [consulta]);
 
   function formatacaoDataHora() {
     try {
