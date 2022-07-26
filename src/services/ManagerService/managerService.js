@@ -52,8 +52,7 @@ export const CriandoConsulta = async (consulta) => {
   await requesterService
     .criarConsulta(consulta)
     .then(() => {
-      alert("Consulta criada com sucesso.");
-      window.location.href = "/web/agendamentos";
+      toast.success("Consulta criada com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -257,7 +256,7 @@ export const UpdateCodigo = async (id_usuario, codigo) => {
   await requesterService
     .updateCodigo(id_usuario, codigo)
     .then(() => {
-      toast.success("Código adicionado com sucesso.");
+      toast.success("Código atualizado com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));
@@ -314,8 +313,7 @@ export const DeletarConsulta = async (id) => {
   await requesterService
     .deletarConsulta(id)
     .then(() => {
-      alert("Consulta deletada com sucesso.");
-      window.location.href = "/web/perfildopaciente";
+      toast.success("Consulta deletada com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(
@@ -333,8 +331,7 @@ export const DeletarExameMarcado = async (id) => {
   await requesterService
     .deletarExameMarcado(id)
     .then(() => {
-      alert("Exame deletado com sucesso.");
-      window.location.href = "/web/perfildopaciente";
+      toast.success("Exame deletado com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(

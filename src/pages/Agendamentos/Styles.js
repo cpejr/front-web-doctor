@@ -69,7 +69,7 @@ export const BarraEstetica = styled.div`
   margin-bottom: 1%;
   height: 2px;
   width: 100%;
-  background-color: ${Cores.azul}; 
+  background-color: ${Cores.azul};
 `;
 export const DadosUsuario = styled.div`
   color: ${Cores.azul};
@@ -162,7 +162,7 @@ export const Data = styled.div`
   width: 18%;
   display: flex;
   justify-content: center;
-  
+
   @media (max-width: 880px) {
     width: 20%;
   }
@@ -195,7 +195,6 @@ export const CódigoPaciente = styled.div`
   width: 18%;
   display: flex;
   justify-content: center;
-  color: green;
   @media (max-width: 880px) {
     width: 20%;
   }
@@ -206,5 +205,4 @@ export const CódigoPaciente = styled.div`
 export const BotaoNovoAgendamento = styled.div`
   display: flex;
   justify-content: end;
-  
 `;

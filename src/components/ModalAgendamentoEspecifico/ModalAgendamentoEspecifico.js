@@ -5,6 +5,7 @@ import { Spin } from "antd";
 import moment from "moment";
 import { toast } from "react-toastify";
 import _ from "lodash";
+import { sleep } from "../../utils/sleep";
 import {
   Container,
   Caixa,
@@ -24,17 +25,20 @@ import {
   TextAreaDescricao,
   Rotulo,
   InputData,
+  NomePaciente,
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import { Cores } from "../../variaveis";
+import { TiposDeConsulta } from "./TiposDeConsulta";
 import { apenasNumeros, data, dataAgendamentoBack } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAgendamentoEspecifico(props) {
   const { Option } = Select;
   const [usuario, setUsuario] = useState({});
+  const [usuarios, setUsuarios] = useState([]);
   const [consultorios, setConsultorios] = useState([]);
   const [carregando, setCarregando] = useState();
   const [carregandoCadastro, setCarregandoCadastro] = useState();
@@ -58,6 +62,13 @@ function ModalAgendamentoEspecifico(props) {
 
   moment.locale("pt-br");
 
+  async function pegandoPacientes() {
+    const resposta = await managerService.GetDadosPessoais();
+    resposta.forEach((usuario) => {
+      if (usuario.tipo === "PACIENTE") {
+        setUsuarios((usuarios) => [...usuarios, usuario]);
+      }
+    });
   const errors = {};
   const referenciaInputNulos = {
     data: false,
@@ -67,11 +78,17 @@ function ModalAgendamentoEspecifico(props) {
     tipo: false,
   };
 
+  }
+
+  useEffect(() => {
+    pegandoPacientes();
+  }, []);
+
   async function pegandoConsultorios() {
-    setCarregandoConsultorios(true);
+    setCarregandoConsultorios(true)
     const res = await managerService.GetDadosConsultorios();
     setConsultorios(res.dadosConsultorios);
-    setCarregandoConsultorios(false);
+    setCarregandoConsultorios(false)
   }
 
   useEffect(() => {
@@ -85,16 +102,8 @@ function ModalAgendamentoEspecifico(props) {
     setCarregando(false);
   }
 
-  async function pegandoConsultorios() {
-    setCarregandoConsultorios(true)
-    const res = await managerService.GetDadosConsultorios();
-    setConsultorios(res.dadosConsultorios);
-    setCarregandoConsultorios(false)
-  }
-
   useEffect(() => {
     pegandoDadosUsuario();
-    //eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props]);
 
   async function validacaoCampos(e) {
@@ -204,14 +213,54 @@ function ModalAgendamentoEspecifico(props) {
     <Container>
       <Caixa>
         <InfoEsquerdaEDireita>
-          <Usuario>
-            <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
-            {carregando ? (
-              <Spin indicator={antIcon} />
-            ) : (
-              <Nome>{usuario.nome}</Nome>
-            )}
-          </Usuario>
+          {props.abertoPeloUsuario === true ? (
+            <Usuario>
+              <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
+              {carregando ? (
+                <Spin indicator={antIcon} />
+              ) : (
+                <Nome>{usuario.nome}</Nome>
+              )}
+            </Usuario>
+          ) : (
+            <Usuario>
+              <NomePaciente>
+                <Select
+                  style={{
+                    width: "100%",
+                    color: "black",
+                    borderColor: "black",
+                    borderWidth: "0px",
+                    marginBottom: "0.5em",
+                    paddingLeft: "2.5em",
+                  }}
+                  size="large"
+                  name="id_usuario"
+                  placeholder="Selecione um paciente"
+                  onChange={(e) => {
+                    preenchendoDadosConsulta(e);
+                  }}
+                >
+                  <option value="" disabled selected>
+                    Paciente
+                  </option>
+
+                  {usuarios.map((usuario) => (
+                    <>
+                      {carregando ? (
+                        <Spin indicator={antIcon} />
+                      ) : (
+                        <option key={usuario.id} value={usuario.id} color="red">
+                          {usuario.nome}
+                        </option>
+                      )}
+                    </>
+                  ))}
+                </Select>
+              </NomePaciente>
+            </Usuario>
+          )}
+
           <TipoAgendamento>
             <TextoTipoAgendamento>
               Selecione o Tipo de Agendamento:
@@ -268,6 +317,7 @@ function ModalAgendamentoEspecifico(props) {
           <DoisSelect>
             <TamanhoInput>
               <Select
+                value={consulta.tipo}
                 style={{
                   width: "100%",
                   color: "black",
@@ -287,9 +337,17 @@ function ModalAgendamentoEspecifico(props) {
                 <option value="" disabled selected>
                   Tipo
                 </option>
-                <option value="1">Tipo 1</option>
-                <option value="2">Tipo 2</option>
-                <option value="3">Tipo 3</option>
+                {TiposDeConsulta.map((tipo) => (
+                  <>
+                    {carregando ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <option key={tipo} value={tipo} color="red">
+                        {tipo}
+                      </option>
+                    )}
+                  </>
+                ))}
               </Select>
               {camposVazios.tipo && (
                 <Rotulo>Selecione um tipo de consulta</Rotulo>
@@ -297,6 +355,7 @@ function ModalAgendamentoEspecifico(props) {
             </TamanhoInput>
             <TamanhoInput>
               <Select
+                value={consulta.id_consultorio}
                 id="id_consultorio"
                 name="id_consultorio"
                 style={{
@@ -341,6 +400,7 @@ function ModalAgendamentoEspecifico(props) {
           <DoisSelect>
             <TamanhoInput>
               <InputHora
+                value={hora}
                 type="text"
                 onFocus={(e) => (e.target.type = "time")}
                 onBlur={(e) => (e.target.type = "text")}
