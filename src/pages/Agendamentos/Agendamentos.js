@@ -37,8 +37,28 @@ function Agendamentos() {
   const [carregando, setCarregando] = useState(true);
   const [consultas, setConsultas] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
+  const [consultaOrdenada, setConsultaOrdenada] = useState({});
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const abertoPeloUsuario = false;
+
+
+  function comparandoData(a, b){
+    const data1 = getData(a);
+    const data2 = getData(b);
+
+    return data1 - data2;
+  }
+
+
+  function getData(element){
+    return element.data_hora.slice(11,16);
+  }
+
+  function setandoConsultaOrdenada(){
+    consultaOrdenada = consultas.sort(comparandoData);
+  }
+
+
 
 
   async function pegandoDados() {
@@ -46,13 +66,21 @@ function Agendamentos() {
       await managerService.GetDadosConsultasExamesMarcadosGeral();
     setConsultas(resposta.dadosConsultas);
     setExamesMarcados(resposta.dadosExamesMarcados);
-    console.log(resposta);
     setCarregando(false);
   }
 
   useEffect(() => {
     pegandoDados();
   }, [email]);
+
+ /*  useEffect(() => {
+    setandoConsultaOrdenada();
+  }, []); */
+
+  useEffect(() => {
+    console.log(consultas.telefone);
+  }, [consultas]);
+
 
   async function marcandoAgendamento(email) {
     setEmail(email);
@@ -69,6 +97,7 @@ function Agendamentos() {
       state: { email },
     });
   }
+
 
   return (
     <div>
