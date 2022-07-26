@@ -204,5 +204,6 @@ export const CódigoPaciente = styled.div`
 `;
 export const BotaoNovoAgendamento = styled.div`
   display: flex;
-  justify-content: end;
+  justify-content: center;
+  margin-bottom: 40px;
 `;

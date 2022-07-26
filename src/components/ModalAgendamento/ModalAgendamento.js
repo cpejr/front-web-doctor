@@ -216,6 +216,7 @@ function ModalAgendamento(props) {
                 fontWeight="bold"
                 fontSizeMedia="0.9em"
                 fontSizeMedia950="1.1em"
+                marginTop="18%"
                 onClick={() => marcandoAgendamento()}
               >
                 Cadastrar novo agendamento

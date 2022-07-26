@@ -51,7 +51,7 @@ export const CorpoCaixa = styled.div`
   height: 100%;
 
   @media (max-width: 800px) {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 `;
 
@@ -96,13 +96,14 @@ export const InfoEsquerda = styled.div`
 export const InfoDireita = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   width: 30%;
   height: 100%;
   min-height: 70vh;
   margin-left: 4%;
   margin-right: 4%;
+  margin-bottom: 1%;
 
   @media (max-width: 800px) {
     width: 80%;
@@ -122,6 +123,7 @@ export const NumeroAgendamentos = styled.div`
   border-style: solid;
   border-radius: 3px;
   padding: 10%;
+  margin-bottom: 18%;
 
   text-align: center;
   font-family: ${Fontes.roboto};

@@ -93,6 +93,23 @@ function Agendamentos() {
           </Filtros>
         </TopoPagina>
         <BarraEstetica></BarraEstetica>
+        <BotaoNovoAgendamento>
+          <Button
+            width="100%"
+            height="50px"
+            backgroundColor={Cores.lilas[2]}
+            borderColor={Cores.azulEscuro}
+            color={Cores.azul}
+            fontSize="1.8em"
+            fontWeight="bold"
+            fontSizeMedia950="1em"
+            fontSizeMedia1080="1.5em"
+            gap="1%"
+            onClick={() => marcandoAgendamento()}
+          >
+            Novo Agendamento <PlusCircleOutlined />
+          </Button>
+        </BotaoNovoAgendamento>
         <DadosUsuario>
           <Titulo></Titulo>
           <Nome>Nome do Usuário</Nome>
@@ -102,6 +119,7 @@ function Agendamentos() {
           <CódigoPaciente>Código do Paciente</CódigoPaciente>
         </DadosUsuario>
         <ContainerUsuarios>
+
           {consultas.map((value) => (
             <Usuario key={value.id_usuario}>
               <Imagem>{value.avatar_url}</Imagem>
@@ -182,23 +200,6 @@ function Agendamentos() {
             </Usuario>
           ))}
         </ContainerUsuarios>
-        <BotaoNovoAgendamento>
-          <Button
-            width="48%"
-            height="50px"
-            backgroundColor={Cores.lilas[2]}
-            borderColor={Cores.azulEscuro}
-            color={Cores.azul}
-            fontSize="1.8em"
-            fontWeight="bold"
-            fontSizeMedia950="1em"
-            fontSizeMedia1080="1.5em"
-            gap="1%"
-            onClick={() => marcandoAgendamento()}
-          >
-            Novo Agendamento <PlusCircleOutlined />
-          </Button>
-        </BotaoNovoAgendamento>
       </ContainerListadeUsuarios>
 
       <Modal
