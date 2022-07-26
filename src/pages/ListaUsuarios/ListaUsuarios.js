@@ -27,6 +27,7 @@ import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 import ModalAdicionarCodigo from "../../components/ModalAdicionarCodigo/ModalAdicionarCodigo";
 import * as managerService from "../../services/ManagerService/managerService";
+import { Cores } from "../../variaveis";
 
 function ListaUsuarios() {
   const history = useHistory();
@@ -88,7 +89,7 @@ function ListaUsuarios() {
     setModalAgendamento(true);
   }
 
-  async function fechandoModal() {
+  async function fechandoModalAgendamentoEspecifico() {
     setModalAgendamento(false);
   }
 
@@ -203,7 +204,7 @@ function ListaUsuarios() {
                   <Button
                     backgroundColor="transparent"
                     borderColor="transparent"
-                    color="black"
+                    color={Cores.preto}
                     fontSize="1em"
                     textDecoration="underline"
                     height="50px"
@@ -234,7 +235,7 @@ function ListaUsuarios() {
 
       <Modal
         visible={modalAgendamento}
-        onCancel={fechandoModal}
+        onCancel={fechandoModalAgendamentoEspecifico}
         footer={null}
         width={"70%"}
         centered={true}
@@ -242,6 +243,7 @@ function ListaUsuarios() {
         <ModalAgendamentoEspecifico
           emailUsuario={emailPaciente}
           abertoPeloUsuario={abertoPeloUsuario}
+          fechandoModal={() => fechandoModalAgendamentoEspecifico()}
         />
       </Modal>
 
