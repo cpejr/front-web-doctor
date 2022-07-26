@@ -69,6 +69,7 @@ function ModalAgendamentoEspecifico(props) {
         setUsuarios((usuarios) => [...usuarios, usuario]);
       }
     });
+  }
   const errors = {};
   const referenciaInputNulos = {
     data: false,
@@ -77,18 +78,15 @@ function ModalAgendamentoEspecifico(props) {
     id_consultorio: false,
     tipo: false,
   };
-
-  }
-
   useEffect(() => {
     pegandoPacientes();
   }, []);
 
   async function pegandoConsultorios() {
-    setCarregandoConsultorios(true)
+    setCarregandoConsultorios(true);
     const res = await managerService.GetDadosConsultorios();
     setConsultorios(res.dadosConsultorios);
-    setCarregandoConsultorios(false)
+    setCarregandoConsultorios(false);
   }
 
   useEffect(() => {
@@ -317,7 +315,6 @@ function ModalAgendamentoEspecifico(props) {
           <DoisSelect>
             <TamanhoInput>
               <Select
-                value={consulta.tipo}
                 style={{
                   width: "100%",
                   color: "black",
@@ -369,7 +366,6 @@ function ModalAgendamentoEspecifico(props) {
                 onChange={(e) => {
                   validacaoCampos(e);
                 }}
-                value={consulta.id_consultorio}
                 camposVazios={camposVazios.id_consultorio}
               >
                 <option value="" disabled selected>
@@ -407,7 +403,6 @@ function ModalAgendamentoEspecifico(props) {
                 placeholder="Horário"
                 name="hora"
                 onChange={validacaoCampos}
-                value={hora}
                 camposVazios={camposVazios.hora}
               />
               {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
