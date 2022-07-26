@@ -71,8 +71,8 @@ function Routes() {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/cadastro" component={Cadastro} />
+        <Route exact path="/login" component={Login}/>
+        <Route exact path="/cadastro" component={Cadastro}/>
         <RotasPrivadasMedico
           exact
           path="/web"
@@ -160,7 +160,16 @@ function UserHeader() {
           path="/web/respostaformulario"
           component={RespostaFormulario}
         />
+
+        <RotasPrivadas
+          exact
+          path="/web/cadastro"
+          component={Cadastro}
+        />
+        
+
         <RotasPrivadas component={() => <Redirect to="/web/homemedico" />} />
+        
       </Switch>
     </Header>
   );

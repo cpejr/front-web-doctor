@@ -151,7 +151,7 @@ function HomeMedico() {
             fontSize="1em"
             gap="1%"
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-            onClick={() => history.push("/cadastro")}
+            onClick={() => history.push("/web/cadastro")}
           >
             Cadastrar Novo Paciente
             <PlusCircleOutlined style={{ color: Cores.azul }} />
@@ -165,7 +165,7 @@ function HomeMedico() {
             fontSize="1em"
             gap="1%"
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-            onClick={() => history.push("/cadastro")}
+            onClick={() => history.push("/web/cadastro")}
           >
             Cadastrar Nova Secretária
             <PlusCircleOutlined style={{ color: Cores.azul }} />

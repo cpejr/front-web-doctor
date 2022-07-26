@@ -444,7 +444,7 @@ function HomeSecretaria() {
             fontSizeMedia="1em"
             fontSizeMedia950="1.2em"
             boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-            onClick={() => history.push("/cadastro")}
+            onClick={() => history.push("/web/cadastro")}
           >
             Cadastrar Novo Paciente
             <IconeAdicionar>
