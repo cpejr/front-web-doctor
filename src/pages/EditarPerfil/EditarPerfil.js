@@ -528,6 +528,7 @@ function EditarPerfil() {
               boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
               borderWidth="1px"
               color={Cores.preto}
+              value={enderecoNovo.pais}
               fontSize="1em"
               width="90%"
               name="pais"
@@ -587,9 +588,10 @@ function EditarPerfil() {
               boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
               borderWidth="1px"
               color={Cores.preto}
+              value={enderecoNovo.cidade}
               fontSize="1em"
               width="90%"
-              name="pais"
+              name="cidade"
               onChange={preenchendoEndereco}
             ></Input>
 
@@ -602,6 +604,7 @@ function EditarPerfil() {
               borderWidth="1px"
               color={Cores.preto}
               fontSize="1em"
+              value={enderecoNovo.bairro}
               width="90%"
               name="bairro"
               onChange={preenchendoEndereco}

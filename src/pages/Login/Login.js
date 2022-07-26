@@ -88,8 +88,6 @@ function Login() {
 
     if (_.isEqual(camposVazios, referenciaCamposNulos)) {
       setCarregando(true);
-      await managerService.ConferirSenha(email, senha);
-
       const resposta = await managerService.GetDadosPessoais();
       let procurandoEmail = 0;
       let contandoForEach = 0;
@@ -99,8 +97,10 @@ function Login() {
         if (usuario.email === email) {
           procurandoEmail++;
         }
-        if (quantidadeUsuarios === contandoForEach && procurandoEmail === 0) {
-          toast.error("Esse email não está cadastrado.");
+        if (quantidadeUsuarios === contandoForEach) {
+          if (procurandoEmail === 0)
+            toast.error("Esse email não está cadastrado.");
+          else managerService.ConferirSenha(email, senha);
         }
       });
 
