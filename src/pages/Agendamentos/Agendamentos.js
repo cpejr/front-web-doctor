@@ -37,26 +37,25 @@ function Agendamentos() {
   const [carregando, setCarregando] = useState(true);
   const [consultas, setConsultas] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
-  const [consultaOrdenada, setConsultaOrdenada] = useState({});
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const abertoPeloUsuario = false;
 
 
-  function comparandoData(a, b){
-    const data1 = getData(a);
-    const data2 = getData(b);
-
-    return data1 - data2;
+  function ordenaConsultas(){
+    for(var i = 0; i < consultas.length; i++){
+      for(var j = i + 1; j < consultas.length - 1; j++){
+        var dataAtual = new Date(consultas[j].data_hora)
+        var dataSeguinte = new Date(consultas[j + 1].data_hora)
+        console.log(dataAtual);
+        if(dataAtual > dataSeguinte){
+          var temp = consultas[j];
+          consultas[j] = consultas[j + 1];
+          consultas[j + 1] = temp;
+        }
+      }
+    }
   }
 
-
-  function getData(element){
-    return element.data_hora.slice(11,16);
-  }
-
-  function setandoConsultaOrdenada(){
-    consultaOrdenada = consultas.sort(comparandoData);
-  }
 
 
 
@@ -73,13 +72,13 @@ function Agendamentos() {
     pegandoDados();
   }, [email]);
 
- /*  useEffect(() => {
-    setandoConsultaOrdenada();
-  }, []); */
+   useEffect(() => {
+    ordenaConsultas();
+  }, [consultas]); 
+ 
 
-  useEffect(() => {
-    console.log(consultas.telefone);
-  }, [consultas]);
+
+
 
 
   async function marcandoAgendamento(email) {
