@@ -40,6 +40,7 @@ function Agendamentos() {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const abertoPeloUsuario = false;
 
+
   async function pegandoDados() {
     const resposta =
       await managerService.GetDadosConsultasExamesMarcadosGeral();
@@ -96,7 +97,7 @@ function Agendamentos() {
           <Titulo></Titulo>
           <Nome>Nome do Usuário</Nome>
           <Telefone>Telefone</Telefone>
-          <Data>Data</Data>
+          <Data>Data - Horário</Data>
           <Agendamento>Agendamento</Agendamento>
           <CódigoPaciente>Código do Paciente</CódigoPaciente>
         </DadosUsuario>
@@ -124,9 +125,14 @@ function Agendamentos() {
                 )}
               </Telefone>
               <Data>
-                {value.data_hora.slice(8, 10)}/{value.data_hora.slice(5, 7)}/
+                { parseInt(value.data_hora.slice(11, 16)) < 10 ?(
+                  value.data_hora.slice(12, 16) + " am"
+                ):(
+                  "teste"
+                )}
+                {/* {value.data_hora.slice(8, 10)}/{value.data_hora.slice(5, 7)}/
                 {value.data_hora.slice(0, 4)} - {value.data_hora.slice(11, 16)}:
-                {value.data_hora.slice(17, 19)}
+                {value.data_hora.slice(17, 19)} */}
               </Data>
 
               <Agendamento>Consulta</Agendamento>
