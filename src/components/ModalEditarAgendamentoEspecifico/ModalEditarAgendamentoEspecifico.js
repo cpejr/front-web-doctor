@@ -73,6 +73,7 @@ function ModalEditarAgendamentoEspecifico(props) {
 
   async function pegandoDadosUsuario() {
     setCarregando(true);
+    setandoCamposVazios();
     const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
     setUsuario(resposta.dadosUsuario);
     setCarregando(false);
@@ -97,13 +98,8 @@ function ModalEditarAgendamentoEspecifico(props) {
     setandoDataMinima();
   }, [hoje]);
 
-  useEffect(() => {
-    setandoCamposVazios();
-  }, []);
 
-  useEffect(() => {
-    console.log(camposVazios);
-  }, [camposVazios]);
+
 
 
 
@@ -140,9 +136,11 @@ function ModalEditarAgendamentoEspecifico(props) {
   }
 
   function setandoCamposVazios(){
-    camposVazios.duracao_em_minutos = false;
-    camposVazios.data = false;
-    camposVazios.hora = false;
+    setCamposVazios({
+      duracao_em_minutos: false,
+      data: false,
+      hora: false
+    })
   }
 
   useEffect(() => {
@@ -160,13 +158,11 @@ function ModalEditarAgendamentoEspecifico(props) {
   }
 
   async function requisicaoAtualizarConsulta() {
-    console.log(hoje);
     if (
       camposVazios.duracao_em_minutos === true ||
       camposVazios.hora === true ||
       camposVazios.data === true
     ) {
-      console.log(camposVazios);
       setCarregandoUpdate(true);
       toast.warn("Preencha todos os campos corretamente");
       setCarregandoUpdate(false);
@@ -259,12 +255,12 @@ function ModalEditarAgendamentoEspecifico(props) {
                 color: "black",
               }}
             ></Input>
-            {camposVazios.data ? (
-              <Rotulo>Escolha uma data</Rotulo>
-            ) : (
-              <></>
-            )}
-          </SelecioneUmaData>
+              {camposVazios.data ? (
+                <Rotulo>Escolha uma data</Rotulo>
+              ) : (
+                <></>
+              )}
+            </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
               <Select
