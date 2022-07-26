@@ -125,10 +125,10 @@ function Agendamentos() {
                 )}
               </Telefone>
               <Data>
-                { parseInt(value.data_hora.slice(11, 16)) < 10 ?(
-                  value.data_hora.slice(12, 16) + " am"
+                { parseInt(value.data_hora.slice(11, 13)) < 12 ?(
+                  parseInt(value.data_hora.slice(11, 13)) + ":"  +  value.data_hora.slice(14, 16) + " am"
                 ):(
-                  "teste"
+                  parseInt(value.data_hora.slice(11, 13) - 12) + ":" +  value.data_hora.slice(14, 16) + " pm"
                 )}
                 {/* {value.data_hora.slice(8, 10)}/{value.data_hora.slice(5, 7)}/
                 {value.data_hora.slice(0, 4)} - {value.data_hora.slice(11, 16)}:
