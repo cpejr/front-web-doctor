@@ -23,6 +23,7 @@ import {
   RotuloColuna,
   PossuiConvenio,
   PossuiCuidador,
+  TextoVoltar,
 } from "./Styles";
 import "react-toastify/dist/ReactToastify.min.css";
 import AddToast from "../../components/AddToast/AddToast";
@@ -31,6 +32,7 @@ import { brParaPadrao } from "../../utils/date";
 
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
+import { usuarioAutenticado } from "../../services/auth";
 
 const maskCPF = (value) => {
   return value
@@ -114,7 +116,7 @@ function Cadastro() {
   }
 
   const errors = {};
-  const teste = {
+  const testeOriginal = {
     tipo: false,
     nome: false,
     telefone: false,
@@ -130,10 +132,9 @@ function Cadastro() {
     bairro: false,
     senha: false,
     senhaConfirmada: false,
-    telefone_cuidador: false,
-    nome_cuidador: false,
-    convenio: false,
   };
+
+  let testeTemp = testeOriginal;
 
   async function verificandoEnter(e) {
     if (e.key === "Enter") {
@@ -163,15 +164,81 @@ function Cadastro() {
     if (cuidador) {
       if (!usuario.telefone_cuidador) errors.telefone_cuidador = true;
       if (!usuario.nome_cuidador) errors.nome_cuidador = true;
-    }
+    }else {
+      errors.telefone_cuidador = false;
+      errors.nome_cuidador = false;
+      setErro({ ...erro, telefone_cuidador: false });
+    }  
 
     if (convenio) {
       if (!usuario.convenio) errors.convenio = true;
+    } else {
+     errors.convenio = false; 
+    }
+
+    if (convenio && !cuidador) {
+     
+      delete camposVazios.nome_cuidador;
+      delete camposVazios.telefone_cuidador;
+      delete errors.telefone_cuidador;
+      delete errors.nome_cuidador;
+
+      testeTemp =
+        testeOriginal +
+        Object.defineProperty(testeTemp, "convenio", { value: false });
+
+        console.log("a");
+    }
+    else if (!convenio && cuidador)
+    {
+      delete camposVazios.convenio;
+      delete errors.convenio;
+
+      testeTemp =
+        testeOriginal +
+        Object.defineProperty(testeTemp, "telefone_cuidador", {
+          value: false,
+        }) +
+        Object.defineProperty(testeTemp, "nome_cuidador", {
+          value: false,
+        });
+
+        console.log("b");
+    }
+    else if( convenio && cuidador)
+    {
+      testeTemp =
+        testeOriginal +
+        Object.defineProperty(testeTemp, "telefone_cuidador", {
+          value: false,
+        }) +
+        Object.defineProperty(testeTemp, "nome_cuidador", {
+          value: false,
+        }) +
+        Object.defineProperty(testeTemp, "convenio", { value: false });
+
+        console.log("c");
+    }
+    else{
+      delete camposVazios.nome_cuidador;
+      delete camposVazios.telefone_cuidador;
+      delete camposVazios.convenio;
+      delete camposVazios.nome_cuidador;
+      delete camposVazios.telefone_cuidador;
+      delete errors.telefone_cuidador;
+      delete errors.nome_cuidador;
+      delete camposVazios.convenio;
+      delete errors.convenio;
+
+      console.log("d");
     }
 
     setCamposVazios({ ...camposVazios, ...errors });
 
-    if (_.isEqual(camposVazios, teste)) {
+    /* console.log(camposVazios)
+    console.log(testeOriginal);  */
+
+    if (_.isEqual(camposVazios, testeTemp)) {
       if (usuario.senha === usuario.senhaConfirmada) {
         setCarregando(true);
         await managerService.Cadastrando(usuario, enderecoBack);
@@ -183,6 +250,11 @@ function Cadastro() {
     } else {
       toast.error("Preencha todos os campos obrigatórios");
     }
+
+    console.log(camposVazios)
+    console.log(testeTemp); 
+
+    testeTemp = testeOriginal;
   }
 
   async function validacaoEmail(e) {
@@ -275,41 +347,12 @@ function Cadastro() {
 
   async function validacaoCamposNaoGerais(e) {
     const { value, name } = e.target;
-    /*  if (cuidador  === true) {
-      if (e.target.name === "telefone_cuidador") {
-        if (value.length < 15) {
-          setErro({ ...erro, [name]: true });
-        } else {
-          setErro({ ...erro, [name]: false });
-        }
 
-        setEstado({ ...estado, [name]: maskTelefone(e.target.value) });
-        setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(e.target.value) });
-      }
-
-      if (e.target.name === "nome_cuidador") {
-
-        if (e.target.value) setCamposVazios({ ...camposVazios, [name]: false });
-
-        setEstado({ ...estado, [e.target.name]: maskApenasLetras(e.target.value) });
-        setUsuario({ ...usuario, [name]: maskApenasLetras(e.target.value) });
-      }
-    } if (convenio === true) {
-      if (e.target.name === "convenio")
-      { 
-
-        if (value) setCamposVazios({ ...camposVazios, [name]: false });
-
-        setEstado({ ...estado, [name]: maskApenasLetras(e.target.value) });
-        setUsuario({ ...usuario, [name]: maskApenasLetras(e.target.value) });
-      }
-    } */
-    if (value) {
-      setCamposVazios({ ...camposVazios, [name]: false });
-    } else {
+    if (value.length === 0 || value === null) {
       setCamposVazios({ ...camposVazios, [name]: true });
+    } else {
+      setCamposVazios({ ...camposVazios, [name]: false });
     }
-
     if (cuidador) {
       if (e.target.name === "telefone_cuidador") {
         if (value.length < 15) {
@@ -317,9 +360,7 @@ function Cadastro() {
         } else {
           setErro({ ...erro, [name]: false });
         }
-      }
 
-      if (e.target.name === "telefone_cuidador") {
         setEstado({ ...estado, [name]: maskTelefone(e.target.value) });
         setUsuario({
           ...usuario,
@@ -338,7 +379,7 @@ function Cadastro() {
         setEstado({ ...estado, [name]: maskApenasLetras(e.target.value) });
         setUsuario({ ...usuario, [name]: maskApenasLetras(e.target.value) });
       }
-    } 
+    }
   }
 
   async function pegandoDadosPerfilPessoal() {
@@ -417,7 +458,7 @@ function Cadastro() {
             ></img>
           </Logo>
           <Botao onClick={() => voltarLoginOuHome()}>
-            <BiArrowBack /> Voltar
+            <BiArrowBack /> <TextoVoltar>Voltar</TextoVoltar>
           </Botao>
           <Select
             id="tipos"
@@ -760,14 +801,21 @@ function Cadastro() {
             color={Cores.branco}
             fontSize="1.5em"
             fontSizeMedia="1.2em"
-            onClick={() => requisicaoCadastro()}
+            onClick={() => {
+              requisicaoCadastro();
+            }}
             fontWeight="bold"
           >
             {carregando ? <Spin indicator={antIcon} /> : "CADASTRAR"}
           </Button>
           <Button
             onClick={() => {
-              console.log(usuario);
+              /* console.log(Object.defineProperty(testeSecretario,"banana", {value:2})); */
+              requisicaoCadastro();
+              console.log("testetemp:", testeTemp);
+              console.log("camposvazios:", camposVazios);
+          
+
             }}
           >
             {" "}

@@ -126,3 +126,7 @@ export const PossuiCuidador = styled.div`
     background-color: ${Cores.azul};
   }
 `;
+
+export const TextoVoltar = styled.div`
+    margin-left: 2%;
+`;
