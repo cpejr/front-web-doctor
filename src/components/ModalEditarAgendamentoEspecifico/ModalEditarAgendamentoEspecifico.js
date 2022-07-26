@@ -3,7 +3,6 @@ import { Checkbox, Input } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
-import { apenasNumeros } from "../../utils/masks";
 import { toast } from "react-toastify";
 import {
   Container,
@@ -28,6 +27,7 @@ import Button from "../../styles/Button";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
+import { apenasNumeros } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
 
 let data = new Date();
