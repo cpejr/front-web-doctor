@@ -173,6 +173,20 @@ function ModalAgendamentoEspecifico(props) {
     }
   }
 
+  // async function requisicaoCriarConsulta() {
+  //   setCarregandoCadastro(true);
+  //   formatacaoDataHora();
+    // if (props.abertoPeloUsuario === true) {
+    //   consulta.id_usuario = usuario.id;
+    // }
+  //   await managerService.CriandoConsulta(consulta);
+  //   setCarregandoCadastro(false);
+  //   props.fechandoModal();
+  //   setData("");
+  //   setHora("");
+  //   setConsulta(valoresIniciaisConsulta);
+  // }
+
   async function requisicaoCriarConsulta() {
     if (!dataConsulta) errors.data = true;
     if (!hora) errors.hora = true;
@@ -190,9 +204,12 @@ function ModalAgendamentoEspecifico(props) {
         if (_.isEqual(camposVazios, referenciaInputNulos)) {
           setCarregandoCadastro(true);
           formatacaoDataHora();
-          consulta.id_usuario = usuario.id;
+          if (props.abertoPeloUsuario === true) {
+            consulta.id_usuario = usuario.id;
+          }
           await managerService.CriandoConsulta(consulta);
           setCarregandoCadastro(false);
+          props.fechandoModal();
         } else {
           setCarregandoCadastro(true);
           toast.warn("Preencha todos os campos corretamente");
