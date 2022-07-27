@@ -184,8 +184,9 @@ export const Data = styled.div`
   }
   @media (max-width: 700px) {
     width: 25%;
+  
   }
-  @media (max-width: 600px) {
+  @media (max-width: 650px) {
     display: none;
   }
 `;
