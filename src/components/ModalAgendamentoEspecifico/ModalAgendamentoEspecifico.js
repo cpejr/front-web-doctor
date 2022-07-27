@@ -53,6 +53,15 @@ function ModalAgendamentoEspecifico(props) {
     id_consultorio: "",
     tipo: "",
   });
+  const valoresIniciaisConsulta = {
+    data_hora: "",
+    duracao_em_minutos: "",
+    descricao: "",
+    avaliacao: "",
+    id_usuario: "",
+    id_consultorio: "",
+    tipo: "",
+  };
   const [dataConsulta, setDataConsulta] = useState("");
   const [dataConsultaBack, setDataConsultaBack] = useState("");
   const [hora, setHora] = useState("");
@@ -176,9 +185,9 @@ function ModalAgendamentoEspecifico(props) {
   // async function requisicaoCriarConsulta() {
   //   setCarregandoCadastro(true);
   //   formatacaoDataHora();
-    // if (props.abertoPeloUsuario === true) {
-    //   consulta.id_usuario = usuario.id;
-    // }
+  // if (props.abertoPeloUsuario === true) {
+  //   consulta.id_usuario = usuario.id;
+  // }
   //   await managerService.CriandoConsulta(consulta);
   //   setCarregandoCadastro(false);
   //   props.fechandoModal();
@@ -210,6 +219,9 @@ function ModalAgendamentoEspecifico(props) {
           await managerService.CriandoConsulta(consulta);
           setCarregandoCadastro(false);
           props.fechandoModal();
+          setConsulta(valoresIniciaisConsulta);
+          setDataConsulta("");
+          setHora("");
         } else {
           setCarregandoCadastro(true);
           toast.warn("Preencha todos os campos corretamente");
@@ -308,9 +320,9 @@ function ModalAgendamentoEspecifico(props) {
         </InfoEsquerdaEDireita>
         <InfoEsquerdaEDireita>
           <SelecioneUmaData>
-            <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
+            <TextoSelecioneUmaData>Digite uma data:</TextoSelecioneUmaData>
             <InputData
-              placeholder="Selecione uma data"
+              placeholder="Digite uma data"
               size="large"
               name="data"
               onChange={(e) => validacaoData(e.target)}
