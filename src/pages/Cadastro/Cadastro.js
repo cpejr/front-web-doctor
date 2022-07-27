@@ -34,55 +34,6 @@ import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 import { usuarioAutenticado } from "../../services/auth";
 
-const maskCPF = (value) => {
-  return value
-    .replace(/\D/g, "")
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d)/, "$1.$2")
-    .replace(/(\d{3})(\d{1,2})/, "$1-$2")
-    .replace(/(-\d{2})\d+?$/, "$1");
-};
-
-const maskTelefone = (value) => {
-  return value
-    .replace(/\D/g, "")
-    .replace(/(\d{2})(\d)/, "($1) $2")
-    .replace(/(\d{5})(\d)/, "$1-$2")
-    .replace(/(-\d{4})(\d+?)$/, "$1");
-};
-const maskApenasNumeros = (value) => {
-  return value.replace(/\D/g, "");
-};
-const maskApenasNumerosCpfTel = (value) => {
-  return value.replace(/\D/g, "").replace(/(\d{11})(\d)/, "$1");
-};
-const maskApenasNumerosCep = (value) => {
-  return value.replace(/\D/g, "").replace(/(\d{8})(\d)/, "$1");
-};
-
-const maskData = (value) => {
-  return value
-    .replace(/\D/g, "")
-    .replace(/(\d{2})(\d)/, "$1/$2")
-    .replace(/(\d{2})(\d)/, "$1/$2")
-    .replace(/(\d{4})(\d)/, "$1");
-};
-
-const maskDataBack = (value) => {
-  return brParaPadrao(value);
-};
-
-const maskApenasLetras = (value) => {
-  return value.replace(/[0-9!@#¨$%^&*)(+=._-]+/g, "");
-};
-
-const maskCEP = (value) => {
-  return value
-    .replace(/\D/g, "")
-    .replace(/(\d{5})(\d)/, "$1-$2")
-    .replace(/(-\d{3})(\d)/, "$1");
-};
-
 function Cadastro() {
   const history = useHistory();
 
@@ -90,21 +41,64 @@ function Cadastro() {
 
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
-
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [erroDataBack, setErroDataBack] = useState(false);
-
   const [enderecoBack, setEnderecoBack] = useState({});
   const [estado, setEstado] = useState({});
-
   const [carregando, setCarregando] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
-
   const [verificacaoLogado, setVerificacaoLogado] = useState("");
+  const maskCPF = (value) => {
+    return value
+      .replace(/\D/g, "")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})/, "$1-$2")
+      .replace(/(-\d{2})\d+?$/, "$1");
+  };
+
+  const maskTelefone = (value) => {
+    return value
+      .replace(/\D/g, "")
+      .replace(/(\d{2})(\d)/, "($1) $2")
+      .replace(/(\d{5})(\d)/, "$1-$2")
+      .replace(/(-\d{4})(\d+?)$/, "$1");
+  };
+  const maskApenasNumeros = (value) => {
+    return value.replace(/\D/g, "");
+  };
+  const maskApenasNumerosCpfTel = (value) => {
+    return value.replace(/\D/g, "").replace(/(\d{11})(\d)/, "$1");
+  };
+  const maskApenasNumerosCep = (value) => {
+    return value.replace(/\D/g, "").replace(/(\d{8})(\d)/, "$1");
+  };
+
+  const maskData = (value) => {
+    return value
+      .replace(/\D/g, "")
+      .replace(/(\d{2})(\d)/, "$1/$2")
+      .replace(/(\d{2})(\d)/, "$1/$2")
+      .replace(/(\d{4})(\d)/, "$1");
+  };
+
+  const maskDataBack = (value) => {
+    return brParaPadrao(value);
+  };
+
+  const maskApenasLetras = (value) => {
+    return value.replace(/[0-9!@#¨$%^&*)(+=._-]+/g, "");
+  };
+
+  const maskCEP = (value) => {
+    return value
+      .replace(/\D/g, "")
+      .replace(/(\d{5})(\d)/, "$1-$2")
+      .replace(/(-\d{3})(\d)/, "$1");
+  };
 
   function funcaoConvenio() {
     setConvenio(!convenio);
@@ -164,20 +158,19 @@ function Cadastro() {
     if (cuidador) {
       if (!usuario.telefone_cuidador) errors.telefone_cuidador = true;
       if (!usuario.nome_cuidador) errors.nome_cuidador = true;
-    }else {
+    } else {
       errors.telefone_cuidador = false;
       errors.nome_cuidador = false;
       setErro({ ...erro, telefone_cuidador: false });
-    }  
+    }
 
     if (convenio) {
       if (!usuario.convenio) errors.convenio = true;
     } else {
-     errors.convenio = false; 
+      errors.convenio = false;
     }
 
     if (convenio && !cuidador) {
-     
       delete camposVazios.nome_cuidador;
       delete camposVazios.telefone_cuidador;
       delete errors.telefone_cuidador;
@@ -186,11 +179,7 @@ function Cadastro() {
       testeTemp =
         testeOriginal +
         Object.defineProperty(testeTemp, "convenio", { value: false });
-
-        console.log("a");
-    }
-    else if (!convenio && cuidador)
-    {
+    } else if (!convenio && cuidador) {
       delete camposVazios.convenio;
       delete errors.convenio;
 
@@ -202,11 +191,7 @@ function Cadastro() {
         Object.defineProperty(testeTemp, "nome_cuidador", {
           value: false,
         });
-
-        console.log("b");
-    }
-    else if( convenio && cuidador)
-    {
+    } else if (convenio && cuidador) {
       testeTemp =
         testeOriginal +
         Object.defineProperty(testeTemp, "telefone_cuidador", {
@@ -216,10 +201,7 @@ function Cadastro() {
           value: false,
         }) +
         Object.defineProperty(testeTemp, "convenio", { value: false });
-
-        console.log("c");
-    }
-    else{
+    } else {
       delete camposVazios.nome_cuidador;
       delete camposVazios.telefone_cuidador;
       delete camposVazios.convenio;
@@ -229,14 +211,9 @@ function Cadastro() {
       delete errors.nome_cuidador;
       delete camposVazios.convenio;
       delete errors.convenio;
-
-      console.log("d");
     }
 
     setCamposVazios({ ...camposVazios, ...errors });
-
-    /* console.log(camposVazios)
-    console.log(testeOriginal);  */
 
     if (_.isEqual(camposVazios, testeTemp)) {
       if (usuario.senha === usuario.senhaConfirmada) {
@@ -250,9 +227,6 @@ function Cadastro() {
     } else {
       toast.error("Preencha todos os campos obrigatórios");
     }
-
-    console.log(camposVazios)
-    console.log(testeTemp); 
 
     testeTemp = testeOriginal;
   }
@@ -300,7 +274,9 @@ function Cadastro() {
       name !== "nome_cuidador" &&
       name !== "telefone_cuidador"
     ) {
-      if (value) setCamposVazios({ ...camposVazios, [name]: false });
+      if (usuario.nome !== "") {
+        if (value) setCamposVazios({ ...camposVazios, [name]: false });
+      }
     }
 
     if (
@@ -321,6 +297,7 @@ function Cadastro() {
         ...estado,
         [name]: maskApenasLetras(value),
       });
+      setUsuario({ ...usuario, [name]: maskApenasLetras(value) });
     }
 
     if (name === "telefone") {
@@ -444,9 +421,112 @@ function Cadastro() {
     }
   }
 
+  function consolando() {
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 789 ~ Cadastro ~ usuario.nome",
+      usuario.nome
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 791 ~ Cadastro ~ usuario.telefone",
+      usuario.telefone
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 793 ~ Cadastro ~ usuario.tipo",
+      usuario.tipo
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 795 ~ Cadastro ~ usuario.data_nascimento",
+      usuario.data_nascimento
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 797 ~ Cadastro ~ usuario.cpf",
+      usuario.cpf
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 799 ~ Cadastro ~ usuario.email",
+      usuario.email
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 801 ~ Cadastro ~ enderecoBack.cep",
+      enderecoBack.cep
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 803 ~ Cadastro ~ enderecoBack.pais",
+      enderecoBack.pais
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 805 ~ Cadastro ~ enderecoBack.estado",
+      enderecoBack.estado
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 807 ~ Cadastro ~ enderecoBack.cidade",
+      enderecoBack.cidade
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 809 ~ Cadastro ~ enderecoBack.bairro",
+      enderecoBack.bairro
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 811 ~ Cadastro ~ enderecoBack.rua",
+      enderecoBack.rua
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 813 ~ Cadastro ~ enderecoBack.numero",
+      enderecoBack.numero
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 815 ~ Cadastro ~ usuario.senha",
+      usuario.senha
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 817 ~ Cadastro ~ usuario.senhaConfirmada",
+      usuario.senhaConfirmada
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 484 ~ Cadastro ~ cuidador",
+      cuidador
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 485 ~ Cadastro ~ convenio",
+      convenio
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 491 ~ Cadastro ~ usuario.nome_cuidador",
+      usuario.nome_cuidador
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 491 ~ Cadastro ~ usuario.telefone_cuidador",
+      usuario.telefone_cuidador
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 491 ~ Cadastro ~ usuario.convenio",
+      usuario.convenio
+    );
+
+    console.log(
+      "/////////////////////////////////////////////////////////////////////////////////////////////////"
+    );
+    console.log(
+      "/////////////////////////////////////////////////////////////////////////////////////////////////"
+    );
+    console.log(
+      "/////////////////////////////////////////////////////////////////////////////////////////////////"
+    );
+    console.log(
+      "/////////////////////////////////////////////////////////////////////////////////////////////////"
+    );
+  }
+
   return (
     <div>
       <Body>
+        <Button
+          onClick={() => {
+            consolando();
+          }}
+        >
+          Testando Teste
+        </Button>
         <DadosCadastro>
           <Logo>
             <img
@@ -807,19 +887,6 @@ function Cadastro() {
             fontWeight="bold"
           >
             {carregando ? <Spin indicator={antIcon} /> : "CADASTRAR"}
-          </Button>
-          <Button
-            onClick={() => {
-              /* console.log(Object.defineProperty(testeSecretario,"banana", {value:2})); */
-              requisicaoCadastro();
-              console.log("testetemp:", testeTemp);
-              console.log("camposvazios:", camposVazios);
-          
-
-            }}
-          >
-            {" "}
-            b
           </Button>
         </DadosCadastro>
       </Body>

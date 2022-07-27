@@ -39,10 +39,11 @@ export const Cadastrando = async (usuario, endereco) => {
     .then(() => {
       alert("Usuário cadastrado com sucesso.");
       sleep(1500);
-      window.location.href = "/login";
+      // window.location.href = "/login";
     })
     .catch((error) => {
-      requisicaoErro(error, () => (window.location.href = "/cadastro"));
+      // requisicaoErro(error, () => (window.location.href = "/cadastro"));
+      requisicaoErro(error);
       return false;
     });
   return false;
