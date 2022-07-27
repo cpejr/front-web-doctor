@@ -19,6 +19,7 @@ import RespostaFormulario from "./pages/RespostaFormulario";
 import EditarPerfil from "./pages/EditarPerfil";
 import Agendamentos from "./pages/Agendamentos";
 import { usuarioAutenticado, recebeTipo } from "./services/auth";
+import FormularioEspecifico from "./pages/FormularioEspecifico";
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
   <Route
@@ -157,6 +158,11 @@ function UserHeader() {
           path="/web/respostaformulario"
           component={RespostaFormulario}
         />
+        <RotasPrivadas
+          path="/web/formularioespecifico"
+          component={FormularioEspecifico}
+        />
+
         <RotasPrivadas component={() => <Redirect to="/web/homemedico" />} />
       </Switch>
     </Header>
