@@ -182,20 +182,6 @@ function ModalAgendamentoEspecifico(props) {
     }
   }
 
-  // async function requisicaoCriarConsulta() {
-  //   setCarregandoCadastro(true);
-  //   formatacaoDataHora();
-  // if (props.abertoPeloUsuario === true) {
-  //   consulta.id_usuario = usuario.id;
-  // }
-  //   await managerService.CriandoConsulta(consulta);
-  //   setCarregandoCadastro(false);
-  //   props.fechandoModal();
-  //   setData("");
-  //   setHora("");
-  //   setConsulta(valoresIniciaisConsulta);
-  // }
-
   async function requisicaoCriarConsulta() {
     if (!dataConsulta) errors.data = true;
     if (!hora) errors.hora = true;
