@@ -21,6 +21,7 @@ import {
   TextoSelecioneUmaData,
   TextAreaDescricao,
   Rotulo,
+  InputData,
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
@@ -238,7 +239,7 @@ function ModalEditarAgendamentoEspecifico(props) {
         <InfoDireita>
           <SelecioneUmaData>
             <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
-            <Input
+            <InputData
               placeholder="Selecione uma data"
               value={data}
               id = "data"
@@ -246,15 +247,11 @@ function ModalEditarAgendamentoEspecifico(props) {
               onKeyDown={(e) => e.preventDefault()}
               size="large"
               name="data"
+              camposVazios={camposVazios.data}
               onChange={(e) => {
                 preenchendoDadosConsulta(e);
               }}
-              style={{
-                borderWidth: "1px",
-                borderColor: "black",
-                color: "black",
-              }}
-            ></Input>
+            ></InputData>
               {camposVazios.data ? (
                 <Rotulo>Escolha uma data</Rotulo>
               ) : (
@@ -327,12 +324,14 @@ function ModalEditarAgendamentoEspecifico(props) {
               <InputHora
                 value={hora}
                 type="text"
+                onKeyDown={(e) => e.preventDefault()}
                 onFocus={(e) => (e.target.type = "time")}
                 onBlur={(e) => (e.target.type = "text")}
                 placeholder="Horário"
                 name="hora"
                 onChange={preenchendoDadosConsulta}
                 style={{ color: "black" }}
+                camposVazios={camposVazios.hora}
               />
               {camposVazios.hora ? (
                 <Rotulo>Digite um horário</Rotulo>
@@ -348,6 +347,7 @@ function ModalEditarAgendamentoEspecifico(props) {
                 name="duracao_em_minutos"
                 onChange={preenchendoDadosConsulta}
                 suffix="min"
+                camposVazios={camposVazios.duracao_em_minutos}
               />
               {camposVazios.duracao_em_minutos ? (
                 <Rotulo>Digite uma duração</Rotulo>
