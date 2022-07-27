@@ -23,6 +23,7 @@ import {
   Data,
   Agendamento,
   CódigoPaciente,
+  TopoPaginaEsquerda,
 } from "./Styles";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
@@ -39,23 +40,24 @@ function Agendamentos() {
   const [examesMarcados, setExamesMarcados] = useState([]);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const abertoPeloUsuario = false;
+  const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
 
 
 
 
-function comparaData(a, b){
-  
-  var data1 = new Date(a.data_hora);
-  var data2 = new Date(b.data_hora); 
+  function comparaData(a, b) {
 
-  if (data1 > data2){
-    return 1;
+    var data1 = new Date(a.data_hora);
+    var data2 = new Date(b.data_hora);
+
+    if (data1 > data2) {
+      return 1;
+    }
+    else {
+      return -1;
+    }
+
   }
-  else {
-    return -1;
-  }
-
-}
 
   async function pegandoDados() {
     const resposta =
@@ -74,10 +76,10 @@ function comparaData(a, b){
   }, [consultas]);  */
 
 
-/*   useEffect(() => {
-    console.log(consultasOrdenadas);
-  }, [consultasOrdenadas]);  */
- 
+  /*   useEffect(() => {
+      console.log(consultasOrdenadas);
+    }, [consultasOrdenadas]);  */
+
 
 
 
@@ -103,29 +105,34 @@ function comparaData(a, b){
   return (
     <div>
       <ContainerListadeUsuarios>
+
         <TopoPagina>
-          <BarraPesquisa>
-            <Search placeholder="BUSCAR" style={{ width: 400 }} />
-          </BarraPesquisa>
-          <Filtros>
-            <FiltroUsuario>
-              <Select
-                defaultValue="Todos os Usuários"
-                style={{ color: "green", width: 200 }}
-              ></Select>
-            </FiltroUsuario>
-            <FiltroDatas>
-              <Select
-                defaultValue="Todas as datas"
-                style={{ color: "green", width: 200 }}
-              ></Select>
-            </FiltroDatas>
-          </Filtros>
-        </TopoPagina>
-        <BarraEstetica></BarraEstetica>
-        <BotaoNovoAgendamento>
+          <TopoPaginaEsquerda>
+            <BarraPesquisa>
+              <Search placeholder="BUSCAR" style={{ width: 400 }} />
+            </BarraPesquisa>
+            <Filtros>
+              <FiltroUsuario>
+                {tipoUsuarioLogado === "MASTER" && (
+                  <Select
+                    defaultValue="Todos os Usuários"
+                    style={{ color: "green", width: 200 }}
+
+                  ></Select>
+                )}
+
+              </FiltroUsuario>
+              <FiltroDatas>
+                <Select
+                  defaultValue="Todas as datas"
+                  style={{ color: "green", width: 200 }}
+                ></Select>
+              </FiltroDatas>
+            </Filtros>
+          </TopoPaginaEsquerda>
           <Button
-            width="100%"
+            marginTop="0px"
+            width="30%"
             height="50px"
             backgroundColor={Cores.lilas[2]}
             borderColor={Cores.azulEscuro}
@@ -139,7 +146,8 @@ function comparaData(a, b){
           >
             Novo Agendamento <PlusCircleOutlined />
           </Button>
-        </BotaoNovoAgendamento>
+        </TopoPagina>
+        <BarraEstetica></BarraEstetica>
         <DadosUsuario>
           <Titulo></Titulo>
           <Nome>Nome do Usuário</Nome>
@@ -151,49 +159,49 @@ function comparaData(a, b){
         <ContainerUsuarios>
 
           {consultas
-          .sort(comparaData)
-          .map((value) => (
-            <Usuario key={value.id_usuario}>
-              <Imagem>{value.avatar_url}</Imagem>
-              <Nome>
-                {carregando ? (
-                  <Spin indicator={antIcon} />
-                ) : (
-                  <div onClick={() => abrindoPerfilPaciente(value.email)}>
-                    {value.nome}
-                  </div>
-                )}
-              </Nome>
-              <Telefone>
-                {carregando ? (
-                  <Spin indicator={antIcon} />
-                ) : (
-                  <>
-                    ({value.telefone.slice(0, -9)}){" "}
-                    {value.telefone.slice(2, -4)}-{value.telefone.slice(-4)}
-                  </>
-                )}
-              </Telefone>
-              <Data>
-                { parseInt(value.data_hora.slice(11, 13)) < 12 ?(
-                  value.data_hora.slice(8, 10) + "/" + value.data_hora.slice(5, 7) + "/" + value.data_hora.slice(0, 4) + " - " + 
-                  parseInt(value.data_hora.slice(11, 13)) + ":"  +  value.data_hora.slice(14, 16) + " am"
-                ):(
-                  value.data_hora.slice(8, 10) + "/" + value.data_hora.slice(5, 7) + "/" + value.data_hora.slice(0, 4) + " - " + 
-                  parseInt(value.data_hora.slice(11, 13) - 12) + ":" +  value.data_hora.slice(14, 16) + " pm"
-                )}
-              </Data>
+            .sort(comparaData)
+            .map((value) => (
+              <Usuario key={value.id_usuario}>
+                <Imagem>{value.avatar_url}</Imagem>
+                <Nome>
+                  {carregando ? (
+                    <Spin indicator={antIcon} />
+                  ) : (
+                    <div onClick={() => abrindoPerfilPaciente(value.email)}>
+                      {value.nome}
+                    </div>
+                  )}
+                </Nome>
+                <Telefone>
+                  {carregando ? (
+                    <Spin indicator={antIcon} />
+                  ) : (
+                    <>
+                      ({value.telefone.slice(0, -9)}){" "}
+                      {value.telefone.slice(2, -4)}-{value.telefone.slice(-4)}
+                    </>
+                  )}
+                </Telefone>
+                <Data>
+                  {parseInt(value.data_hora.slice(11, 13)) < 12 ? (
+                    value.data_hora.slice(8, 10) + "/" + value.data_hora.slice(5, 7) + "/" + value.data_hora.slice(0, 4) + " - " +
+                    parseInt(value.data_hora.slice(11, 13)) + ":" + value.data_hora.slice(14, 16) + " am"
+                  ) : (
+                    value.data_hora.slice(8, 10) + "/" + value.data_hora.slice(5, 7) + "/" + value.data_hora.slice(0, 4) + " - " +
+                    parseInt(value.data_hora.slice(11, 13) - 12) + ":" + value.data_hora.slice(14, 16) + " pm"
+                  )}
+                </Data>
 
-              <Agendamento>Consulta</Agendamento>
-              <CódigoPaciente>
-                {carregando ? (
-                  <Spin indicator={antIcon} />
-                ) : (
-                  <div>{value.codigo}</div>
-                )}
-              </CódigoPaciente>
-            </Usuario>
-          ))}
+                <Agendamento>Consulta</Agendamento>
+                <CódigoPaciente>
+                  {carregando ? (
+                    <Spin indicator={antIcon} />
+                  ) : (
+                    <div>{value.codigo}</div>
+                  )}
+                </CódigoPaciente>
+              </Usuario>
+            ))}
           {examesMarcados.map((value) => (
             <Usuario key={value.id_usuario}>
               <Imagem>{value.avatar_url}</Imagem>

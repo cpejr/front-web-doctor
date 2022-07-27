@@ -11,18 +11,33 @@ export const ContainerListadeUsuarios = styled.div`
 `;
 export const TopoPagina = styled.div`
   display: flex;
+  align-items: start;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   @media (max-width: 920px) {
     flex-direction: column;
     justify-content: center;
   }
 `;
+
+export const TopoPaginaEsquerda = styled.div`
+  display: flex;
+  align-items: start;
+  flex-direction: row;
+  width: 50%;
+  justify-content: space-between;
+  @media (max-width: 920px) {
+    width: 100%
+    flex-direction: column;
+    justify-content: space-between;
+  }
+`;
+
+
 export const BarraPesquisa = styled.div`
   width: 50%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
   @media (max-width: 920px) {
     width: 100%;
     justify-content: center;
@@ -41,7 +56,6 @@ export const Filtros = styled.div`
   justify-content: center;
   gap: 2%;
   @media (max-width: 920px) {
-    margin-top: 2%;
     width: 100%;
     justify-content: center;
   }
@@ -55,12 +69,14 @@ export const Filtros = styled.div`
 `;
 export const FiltroUsuario = styled.div`
   @media (max-width: 480px) {
-    margin-top: 2%;
   }
 `;
+
+
 export const FiltroDatas = styled.div`
-  @media (max-width: 480px) {
-    margin-top: 2%;
+
+  @media (max-width: 920px) {
+  
   }
 `;
 
@@ -204,6 +220,8 @@ export const CódigoPaciente = styled.div`
 `;
 export const BotaoNovoAgendamento = styled.div`
   display: flex;
-  justify-content: center;
+  justify-content: end;
   margin-bottom: 40px;
 `;
+
+
