@@ -75,3 +75,9 @@ export const requisicaoRespostaFormularioIdUsuario = (id_usuario) =>
 
 export const requisicaoRespostaFormulario = (id) =>
   api.get(`/formularios_pacientes/${id}`);
+
+export const updatePerguntasFormulario = (id, perguntas) =>
+  api.put(`/formularios/${id}`, { perguntas: perguntas });
+
+export const updateCampos = (id, campos) =>
+  api.put(`/formularios/${id}`, campos);

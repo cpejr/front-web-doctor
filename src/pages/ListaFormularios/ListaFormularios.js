@@ -33,10 +33,7 @@ function ListaFormularios() {
   const [carregando, setCarregando] = useState(true);
 
   const antIcon = (
-    <LoadingOutlined
-      style={{ fontSize: 40, color: Cores.azul}}
-      spin
-    />
+    <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
   );
 
   useEffect(() => {
@@ -48,6 +45,13 @@ function ListaFormularios() {
     const resposta = await managerService.GetFormularios();
     setFormularios(resposta);
     setCarregando(false);
+  }
+
+  async function editarFormulario(id) {
+    history.push({
+      pathname: "/web/editarformulario",
+      state: { id },
+    });
   }
 
   return (
@@ -134,6 +138,7 @@ function ListaFormularios() {
                       borderColor={Cores.azulEscuro}
                       height="37px"
                       width="90%"
+                      onClick={() => editarFormulario(value.id)}
                     >
                       EDITAR
                     </Button>
