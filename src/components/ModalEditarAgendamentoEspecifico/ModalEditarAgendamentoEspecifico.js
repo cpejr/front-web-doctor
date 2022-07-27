@@ -49,6 +49,7 @@ function ModalEditarAgendamentoEspecifico(props) {
     hora: false,
     data: false,
   });
+  const [editado, setEditado] = useState(false);
 
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -65,6 +66,7 @@ function ModalEditarAgendamentoEspecifico(props) {
   }, [consulta]);
 
   useEffect(() => {
+    setEditado(false);
     pegandoDadosUsuario();
     setandoValoresConsulta();
   }, [props]);
@@ -168,6 +170,11 @@ function ModalEditarAgendamentoEspecifico(props) {
       toast.warn("Preencha todos os campos corretamente");
       setCarregandoUpdate(false);
       return
+    } else if (editado === false) {
+      setCarregandoUpdate(true);
+      toast.warn("Edite algum campo");
+      setCarregandoUpdate(false);
+      return
     } else {
       setCarregandoUpdate(true);
       consulta.id_usuario = usuario.id;
@@ -195,6 +202,7 @@ function ModalEditarAgendamentoEspecifico(props) {
 
     if (e.target.name === "hora") {
       setHora(e.target.value);
+      setEditado(true);
       return hora;
     } else if (e.target.name === "data") {
       setData(e.target.value);
@@ -204,9 +212,11 @@ function ModalEditarAgendamentoEspecifico(props) {
         ...consulta,
         [e.target.name]: apenasNumeros(e.target.value),
       });
+      setEditado(true);
       return consulta;
     } else {
       setConsulta({ ...consulta, [e.target.name]: e.target.value });
+      setEditado(true);
       return consulta;
     }
   }
