@@ -40,7 +40,6 @@ function Agendamentos() {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const abertoPeloUsuario = false;
 
-  const consultasOrdenadas = [].concat(consultas);
 
 
 
@@ -57,27 +56,6 @@ function comparaData(a, b){
   }
 
 }
-
-
-function comparaTelefone(a, b){
-
-  if (a.telefone > b.telefone){
-    return 1;
-  }
-  else {
-    return -1;
-  }
-}
-
-
-function ordenadaConsultasPorData(){
-  const consultasOrdenadas = [].concat(consultas);
-  consultasOrdenadas.sort(comparaData)
-}
-
-
-
-
 
   async function pegandoDados() {
     const resposta =

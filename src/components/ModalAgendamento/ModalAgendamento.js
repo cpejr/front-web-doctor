@@ -50,6 +50,22 @@ function ModalAgendamento(props) {
     setCarregando(false);
   }
 
+
+  
+function comparaData(a, b){
+  
+  var data1 = new Date(a.data_hora);
+  var data2 = new Date(b.data_hora); 
+
+  if (data1 > data2){
+    return 1;
+  }
+  else {
+    return -1;
+  }
+
+}
+
   useEffect(() => {
     pegandoDados();
   }, []);
@@ -93,7 +109,9 @@ function ModalAgendamento(props) {
         ) : (
           <CorpoCaixa>
             <InfoEsquerda>
-              {consultas.map((value) => (
+              {consultas
+              .sort(comparaData)
+              .map((value) => (
                 <Agendamento>
                   <CaixaAgendamento key={value.id}>
                     <DiaHorarioAgendamento>
