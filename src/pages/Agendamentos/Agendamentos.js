@@ -40,21 +40,40 @@ function Agendamentos() {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const abertoPeloUsuario = false;
 
+  const consultasOrdenadas = [].concat(consultas);
 
-  function ordenaConsultas(){
-    for(var i = 0; i < consultas.length; i++){
-      for(var j = i + 1; j < consultas.length - 1; j++){
-        var dataAtual = new Date(consultas[j].data_hora)
-        var dataSeguinte = new Date(consultas[j + 1].data_hora)
-        console.log(dataAtual);
-        if(dataAtual > dataSeguinte){
-          var temp = consultas[j];
-          consultas[j] = consultas[j + 1];
-          consultas[j + 1] = temp;
-        }
-      }
-    }
+
+
+function comparaData(a, b){
+  
+  var data1 = new Date(a.data_hora);
+  var data2 = new Date(b.data_hora); 
+
+  if (data1 > data2){
+    return 1;
   }
+  else {
+    return -1;
+  }
+
+}
+
+
+function comparaTelefone(a, b){
+
+  if (a.telefone > b.telefone){
+    return 1;
+  }
+  else {
+    return -1;
+  }
+}
+
+
+function ordenadaConsultasPorData(){
+  const consultasOrdenadas = [].concat(consultas);
+  consultasOrdenadas.sort(comparaData)
+}
 
 
 
@@ -72,9 +91,14 @@ function Agendamentos() {
     pegandoDados();
   }, [email]);
 
-   useEffect(() => {
-    ordenaConsultas();
-  }, [consultas]); 
+  /*  useEffect(() => {
+    console.log(consultas);
+  }, [consultas]);  */
+
+
+/*   useEffect(() => {
+    console.log(consultasOrdenadas);
+  }, [consultasOrdenadas]);  */
  
 
 
@@ -148,7 +172,9 @@ function Agendamentos() {
         </DadosUsuario>
         <ContainerUsuarios>
 
-          {consultas.map((value) => (
+          {consultas
+          .sort(comparaData)
+          .map((value) => (
             <Usuario key={value.id_usuario}>
               <Imagem>{value.avatar_url}</Imagem>
               <Nome>
@@ -172,8 +198,10 @@ function Agendamentos() {
               </Telefone>
               <Data>
                 { parseInt(value.data_hora.slice(11, 13)) < 12 ?(
+                  value.data_hora.slice(8, 10) + "/" + value.data_hora.slice(5, 7) + "/" + value.data_hora.slice(0, 4) + " - " + 
                   parseInt(value.data_hora.slice(11, 13)) + ":"  +  value.data_hora.slice(14, 16) + " am"
                 ):(
+                  value.data_hora.slice(8, 10) + "/" + value.data_hora.slice(5, 7) + "/" + value.data_hora.slice(0, 4) + " - " + 
                   parseInt(value.data_hora.slice(11, 13) - 12) + ":" +  value.data_hora.slice(14, 16) + " pm"
                 )}
                 {/* {value.data_hora.slice(8, 10)}/{value.data_hora.slice(5, 7)}/
