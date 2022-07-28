@@ -3,7 +3,7 @@ import { Checkbox, Input } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
-import { apenasNumeros } from "../../utils/masks";
+import { toast } from "react-toastify";
 import {
   Container,
   Caixa,
@@ -20,12 +20,15 @@ import {
   SelecioneUmaData,
   TextoSelecioneUmaData,
   TextAreaDescricao,
+  Rotulo,
+  InputData,
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
+import { apenasNumeros } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalEditarAgendamentoEspecifico(props) {
@@ -39,6 +42,13 @@ function ModalEditarAgendamentoEspecifico(props) {
   const [consultorioPorId, setConsultorioPorId] = useState();
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
+  const [hoje, setHoje] = useState("");
+  const [camposVazios, setCamposVazios] = useState({
+    duracao_em_minutos: false,
+    hora: false,
+    data: false,
+  });
+  const [editado, setEditado] = useState(false);
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -57,6 +67,7 @@ function ModalEditarAgendamentoEspecifico(props) {
 
   async function pegandoDadosUsuario() {
     setCarregando(true);
+    setandoCamposVazios();
     const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
     setUsuario(resposta.dadosUsuario);
     setCarregando(false);
@@ -69,6 +80,7 @@ function ModalEditarAgendamentoEspecifico(props) {
   }
 
   useEffect(() => {
+    setEditado(false);
     pegandoDadosUsuario();
     setandoValoresConsulta();
   }, [props]);
@@ -94,6 +106,42 @@ function ModalEditarAgendamentoEspecifico(props) {
     setandoDataEHora();
   }, [consulta]);
 
+  function setandoDiaAtual() {
+    let data = new Date();
+    let dia = data.getDate();
+    let mes = data.getMonth() + 1;
+    let ano = data.getFullYear();
+
+    if (dia < 10) {
+      dia = "0" + dia;
+    }
+    if (mes < 10) {
+      mes = "0" + mes;
+    }
+
+    setHoje(ano + "-" + mes + "-" + dia);
+  }
+
+  useEffect(() => {
+    setandoDiaAtual();
+  }, []);
+
+  function setandoDataMinima() {
+    document.getElementById("data").setAttribute("min", hoje);
+  }
+
+  useEffect(() => {
+    setandoDataMinima();
+  }, [hoje]);
+
+  function setandoCamposVazios() {
+    setCamposVazios({
+      duracao_em_minutos: false,
+      data: false,
+      hora: false,
+    });
+  }
+
   function formatacaoDataHora() {
     try {
       const dataHora = `${data} ${hora}:00`;
@@ -104,18 +152,46 @@ function ModalEditarAgendamentoEspecifico(props) {
   }
 
   async function requisicaoAtualizarConsulta() {
-    setCarregandoUpdate(true);
-    consulta.id_usuario = usuario.id;
-    formatacaoDataHora();
-    await managerService.UpdateConsulta(consulta.id, consulta);
-    sleep(3000);
-    setCarregandoUpdate(false);
-    props.fechandoModal();
+    if (
+      camposVazios.duracao_em_minutos === true ||
+      camposVazios.hora === true ||
+      camposVazios.data === true
+    ) {
+      setCarregandoUpdate(true);
+      toast.warn("Preencha todos os campos corretamente");
+      setCarregandoUpdate(false);
+      return;
+    } else if (editado === false) {
+      setCarregandoUpdate(true);
+      toast.warn("Edite algum campo");
+      setCarregandoUpdate(false);
+      return;
+    } else {
+      setCarregandoUpdate(true);
+      consulta.id_usuario = usuario.id;
+      formatacaoDataHora();
+      await managerService.UpdateConsulta(consulta.id, consulta);
+      sleep(3000);
+      setCarregandoUpdate(false);
+      props.fechandoModal();
+      return;
+    }
   }
 
   function preenchendoDadosConsulta(e) {
+    const { value, name } = e.target;
+
+    if (value != consulta.descricao) {
+      if (value) {
+        setCamposVazios({ ...camposVazios, [name]: false });
+      } else {
+        setCamposVazios({ ...camposVazios, [name]: true });
+      }
+    }
+
     if (e.target.name === "hora") {
       setHora(e.target.value);
+      setEditado(true);
       return hora;
     } else if (e.target.name === "data") {
       setData(e.target.value);
@@ -125,9 +201,11 @@ function ModalEditarAgendamentoEspecifico(props) {
         ...consulta,
         [e.target.name]: apenasNumeros(e.target.value),
       });
+      setEditado(true);
       return consulta;
     } else {
       setConsulta({ ...consulta, [e.target.name]: e.target.value });
+      setEditado(true);
       return consulta;
     }
   }
@@ -160,21 +238,20 @@ function ModalEditarAgendamentoEspecifico(props) {
         <InfoDireita>
           <SelecioneUmaData>
             <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
-            <Input
+            <InputData
               placeholder="Selecione uma data"
               value={data}
+              id="data"
               type="date"
+              onKeyDown={(e) => e.preventDefault()}
               size="large"
               name="data"
+              camposVazios={camposVazios.data}
               onChange={(e) => {
                 preenchendoDadosConsulta(e);
               }}
-              style={{
-                borderWidth: "1px",
-                borderColor: "black",
-                color: "black",
-              }}
-            ></Input>
+            ></InputData>
+            {camposVazios.data ? <Rotulo>Escolha uma data</Rotulo> : <></>}
           </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
@@ -242,13 +319,16 @@ function ModalEditarAgendamentoEspecifico(props) {
               <InputHora
                 value={hora}
                 type="text"
+                onKeyDown={(e) => e.preventDefault()}
                 onFocus={(e) => (e.target.type = "time")}
                 onBlur={(e) => (e.target.type = "text")}
                 placeholder="Horário"
                 name="hora"
                 onChange={preenchendoDadosConsulta}
                 style={{ color: "black" }}
+                camposVazios={camposVazios.hora}
               />
+              {camposVazios.hora ? <Rotulo>Digite um horário</Rotulo> : <></>}
             </TamanhoInput>
 
             <TamanhoInput>
@@ -258,7 +338,13 @@ function ModalEditarAgendamentoEspecifico(props) {
                 name="duracao_em_minutos"
                 onChange={preenchendoDadosConsulta}
                 suffix="min"
+                camposVazios={camposVazios.duracao_em_minutos}
               />
+              {camposVazios.duracao_em_minutos ? (
+                <Rotulo>Digite uma duração</Rotulo>
+              ) : (
+                <></>
+              )}
             </TamanhoInput>
           </DoisSelect>
           <Checkbox>
