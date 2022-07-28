@@ -54,6 +54,10 @@ function ListaFormularios() {
     });
   }
 
+  async function deletarFormulario(id) {
+    await managerService.DeletarFormulario(id);
+  }
+
   return (
     <div>
       <ContainerListadeFormularios>
@@ -150,6 +154,7 @@ function ListaFormularios() {
                       borderColor="rgba(255, 0, 0, 0.25)"
                       height="37px"
                       width="90%"
+                      onClick={() => deletarFormulario(value.id)}
                     >
                       DELETAR
                     </Button>

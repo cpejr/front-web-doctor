@@ -18,3 +18,11 @@ export const CaixaInputs = styled.div`
   margin-bottom: 2%;
   width: 40%;
 `;
+
+export const EditarFormularioTitulo = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 2.1em;
+`;

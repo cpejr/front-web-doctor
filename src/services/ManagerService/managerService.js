@@ -373,7 +373,7 @@ export const GetFormularioEspecifico = async (id) => {
   return dadosFormulario;
 };
 
-export const DeletarFormulario = async (id) => {
+export const  DeletarFormulario = async (id) => {
   await requesterService
     .deletarFormulario(id)
     .then(() => {

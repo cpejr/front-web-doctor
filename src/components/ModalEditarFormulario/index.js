@@ -1,1 +1,1 @@
-export {default} from "./ModalEditarFormulario"
+export { default } from "./ModalEditarFormulario";
