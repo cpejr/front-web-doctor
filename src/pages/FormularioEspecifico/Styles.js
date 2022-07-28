@@ -5,12 +5,8 @@ export const ColunaDireita = styled.div`
   display: flex;
   flex-direction: column;
   width: 40%;
-  height: 100vh;
-  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
-  border-width: 2px;
-  border-radius: 3px;
-  border-color: ${Cores.cinza[3]};
-  border-style: solid;
+  height: 100%;
+ 
   padding: 2% 4% 2% 4%;
 
   @media (max-width: 720px) and (min-height: 500px)  {
@@ -28,10 +24,7 @@ export const ColunaEsquerda = styled.div`
   flex-direction: column;
   width: 50%;
   height: 100vh;
-  border-color: ${Cores.cinza[3]};
-  border-radius: 3px;
-  border-style: solid;
-  border-width: 2px;
+  
   padding: 2% 4% 2% 4%;
   
   @media (max-width: 720px) {
@@ -159,10 +152,9 @@ export const BarraRespostas = styled.div`
     border-radius: 5px;
     font-size: 1.2em;
     font-weight: bold;
-    height: 6vh;
+    height: 50px;
     width: 100%;
-    gap: 2%;
-    color: ${Cores.azulEscuro};
+    color: ${Cores.azul};
 `;
   
 
@@ -182,21 +174,10 @@ export const CamposFormularioCima = styled.div`
 
 `;
 
-export const RotuloBarraDeBuscaOpcoes = styled.button`
-
-    display: flex;
-    flex-direction: row;
-    border-style: solid;
-    justify-content: center;
-    align-items: center;
-    border-width: 2px;
-    font-size: 1.2em;
-    height: 6vh;
-    width: 15%;
-    flex-grow: 0;
-    gap: 2%;
-    cursor: pointer;
-    background-color: ${Cores.branco};
+export const RotuloBarraDeBuscaOpcoes = styled.div`
+  @media (max-width: 480px) {
+    margin-top: 2%;
+  }
 `;
 
 export const ContainerBarraDeBuscaOpcoes = styled.div`

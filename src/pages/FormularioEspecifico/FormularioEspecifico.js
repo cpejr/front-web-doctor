@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
-import { Spin } from "antd";
+import { Spin, Select } from "antd";
 import { useHistory } from "react-router-dom";
 import {
   ColunaDireita,
@@ -25,10 +25,13 @@ import * as managerService from "../../services/ManagerService/managerService";
 import { Titulo } from "../ListaUsuarios/Styles";
 
 function FormularioEspecifico() {
+  const { Search } = Input;
+  const { Option } = Select;
   const [formularios, setFormularios] = useState([]);
   const [formularioEspecifico, setFormularioEspecifico] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
   const [respostasFormularios, setRespostasFormularios] = useState([]);
+  const [busca, setBusca] = useState("");
 
   async function pegandoDadosFormularios() {
     const resposta = await managerService.GetFormularios(); //Especifico(formularios.id);
@@ -100,12 +103,32 @@ function FormularioEspecifico() {
         
         <ColunaEsquerda>
           <ContainerBarraDeBuscaOpcoes>
-            <BarraDePesquisa>Buscar</BarraDePesquisa>
+            <BarraDePesquisa>
+            {/* <Search
+              placeholder="BUSCAR"
+              style={{ width: 400 }}
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+            /> */}
+            </BarraDePesquisa>
             <RotuloBarraDeBuscaOpcoes>
-              Todos os pacientes
+              <Select
+                defaultValue="Todos os pacientes"
+                style={{ width: 200 }}
+              ></Select>
             </RotuloBarraDeBuscaOpcoes>
-            <RotuloBarraDeBuscaOpcoes>Todas as datas</RotuloBarraDeBuscaOpcoes>
-            <RotuloBarraDeBuscaOpcoes>Status</RotuloBarraDeBuscaOpcoes>
+            <RotuloBarraDeBuscaOpcoes>
+              <Select
+                defaultValue="Todas as datas"
+                style={{ width: 150 }}
+              ></Select>
+            </RotuloBarraDeBuscaOpcoes>
+            <RotuloBarraDeBuscaOpcoes>
+              <Select
+                defaultValue="Status"
+                style={{ width: 100 }}
+              ></Select>
+            </RotuloBarraDeBuscaOpcoes>
           </ContainerBarraDeBuscaOpcoes>
           <BarraEstetica></BarraEstetica>
           <BarraPaciente>
@@ -198,7 +221,7 @@ function FormularioEspecifico() {
             fontSize="1em"
             textDecoration="underline"
             height="10px"
-            marginTop="120%"
+            marginTop="10%"
             marginLeft="30%"
             onClick={() => {}}
           >
