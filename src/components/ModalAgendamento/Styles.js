@@ -67,6 +67,11 @@ export const Titulo = styled.div`
   @media (max-width: 950px) and (min-width: 560px) {
     font-size: 1.5em;
   }
+
+  @media (max-width: 800px) {
+    margin-bottom: 3%;
+  }
+
   @media (max-width: 560px) {
     font-size: 1.2em;
     margin-bottom: 8%;
@@ -107,7 +112,7 @@ export const InfoDireita = styled.div`
 
   @media (max-width: 800px) {
     width: 80%;
-    min-height: 40vh;
+    min-height: 40vh; 
   }
 `;
 
@@ -138,6 +143,7 @@ export const NumeroAgendamentos = styled.div`
   }
   @media (max-width: 800px) {
     width: 100%;
+    margin-bottom:0px;
   }
   @media (max-width: 560px) {
     font-size: 1em;

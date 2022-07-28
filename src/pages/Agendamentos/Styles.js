@@ -198,6 +198,9 @@ export const Data = styled.div`
     display: none;
   }
 `;
+
+
+
 export const Agendamento = styled.div`
   width: 18%;
   display: flex;
@@ -207,7 +210,7 @@ export const Agendamento = styled.div`
     width: 20%;
   }
   @media (max-width: 700px) {
-    width: 25%;
+    width: 27%;
   }
   @media (max-width: 600px) {
     width: 33%;
@@ -223,7 +226,7 @@ export const CódigoPaciente = styled.div`
   @media (max-width: 880px) {
     width: 20%;
   }
-  @media (max-width: 700px) {
+  @media (max-width: 770px) {
     display: none;
   }
 `;

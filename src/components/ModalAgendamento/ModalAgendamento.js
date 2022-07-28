@@ -235,6 +235,7 @@ function comparaData(a, b){
                 fontSizeMedia="0.9em"
                 fontSizeMedia950="1.1em"
                 marginTop="18%"
+                marginTopMedia="4%"
                 onClick={() => marcandoAgendamento()}
               >
                 Cadastrar novo agendamento
