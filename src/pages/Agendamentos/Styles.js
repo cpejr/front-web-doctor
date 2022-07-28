@@ -48,16 +48,17 @@ export const BarraPesquisa = styled.div`
   display: flex;
   flex-direction: row;
   @media (max-width: 920px) {
-    width: 100%;
-    justify-content: center;
+    width: 55%;
+    justify-content: start;
   }
   @media (max-width: 690px) {
-    width: 50%;
+    width: 280px;
     flex-direction: row;
     justify-content: space-between;
   }
   @media (max-width: 490px) {
     width: 100%;
+    margin-bottom: 5px;
   }
   
   .ant-input {
@@ -70,18 +71,18 @@ export const BarraPesquisa = styled.div`
 
 export const FiltroDatas = styled.div`
 
-  width: 50%;
+  width: 140px;
   display: flex;
   @media (max-width: 920px) {
-    width: 100%;
+    width: 240px;
     justify-content: end;
   }
 
   @media (max-width: 690px) {
-    width: 30%;
+    width: 140px;
   }
 
-  @media (max-width: 320px) {
+  @media (max-width: 490px) {
     justify-content: start;
     width: 100%;
   }

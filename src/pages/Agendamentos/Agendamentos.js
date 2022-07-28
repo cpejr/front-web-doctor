@@ -96,7 +96,7 @@ function Agendamentos() {
         <TopoPagina>
           <TopoPaginaEsquerda>
             <BarraPesquisa>
-              <Search placeholder="BUSCAR" style={{ width: 400 }} />
+              <Search placeholder="BUSCAR"/>
             </BarraPesquisa>
               <FiltroDatas>
                 <Select
@@ -117,6 +117,7 @@ function Agendamentos() {
             fontSizeMedia950="1em"
             fontSizeMedia1080="1.5em"
             gap="1%"
+            widthMedia="100%"
             onClick={() => marcandoAgendamento()}
           >
             Novo Agendamento <PlusCircleOutlined />
