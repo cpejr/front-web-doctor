@@ -65,11 +65,30 @@ function ListaUsuarios() {
     setTipoSelect(value);
   }
 
+  // async function pegandoDadosUsuarios() {
+  //   const resposta = await managerService.GetDadosPessoais();
+  //   if (tipoUsuarioLogado === "MASTER") {
+  //     setUsuarios(resposta);
+  //     setCarregando(false);
+  //   } else {
+  //     resposta.forEach((usuario) => {
+  //       if (usuario.tipo === "PACIENTE") {
+  //         setUsuarios((usuarios) => [...usuarios, usuario]);
+  //         setCarregando(false);
+  //       }
+  //     });
+  //   }
+  // }
+
   async function pegandoDadosUsuarios() {
     const resposta = await managerService.GetDadosPessoais();
     if (tipoUsuarioLogado === "MASTER") {
-      setUsuarios(resposta);
-      setCarregando(false);
+      resposta.forEach((usuario) => {
+        if ((usuario.tipo === "PACIENTE") || (usuario.tipo === "SECRETARIA(O)")) {
+          setUsuarios((usuarios) => [...usuarios, usuario]);
+          setCarregando(false);
+        }
+      });
     } else {
       resposta.forEach((usuario) => {
         if (usuario.tipo === "PACIENTE") {
@@ -198,41 +217,40 @@ function ListaUsuarios() {
                   <>{value.codigo}</>
                 )}
               </CódigoPaciente>
-
-              {tipoUsuarioLogado === "MASTER" ? (
-                <BotaoAdicionar>
-                  <Button
-                    backgroundColor="transparent"
-                    borderColor="transparent"
-                    color={Cores.preto}
-                    fontSize="1em"
-                    textDecoration="underline"
-                    height="50px"
-                    onClick={() => abrindoModalCodigo(value.email)}
-                  >
-                    Editar Código
-                  </Button>
-                </BotaoAdicionar>
-              ) : (
-                <BotaoAdicionar>
-                  <Button
-                    backgroundColor="transparent"
-                    borderColor="transparent"
-                    color="green"
-                    fontSize="1em"
-                    textDecoration="underline"
-                    height="50px"
-                    onClick={() => marcandoAgendamento(value.email)}
-                  >
-                    Marcar Agendamento
-                  </Button>
-                </BotaoAdicionar>
-              )}
+              
+                {tipoUsuarioLogado === "MASTER"? (
+                  <BotaoAdicionar>
+                    <Button
+                      backgroundColor="transparent"
+                      borderColor="transparent"
+                      color={Cores.preto}
+                      fontSize="1em"
+                      textDecoration="underline"
+                      height="50px"
+                      onClick={() => abrindoModalCodigo(value.email)}
+                    >
+                      Editar Código
+                    </Button>
+                  </BotaoAdicionar>
+                ) : (
+                  <BotaoAdicionar>
+                    <Button
+                      backgroundColor="transparent"
+                      borderColor="transparent"
+                      color="green"
+                      fontSize="1em"
+                      textDecoration="underline"
+                      height="50px"
+                      onClick={() => marcandoAgendamento(value.email)}
+                    >
+                      Marcar Agendamento
+                    </Button>
+                  </BotaoAdicionar>
+                )}
             </Usuario>
           ))}
         </ContainerUsuarios>
       </ContainerListadeUsuarios>
-
       <Modal
         visible={modalAgendamento}
         onCancel={fechandoModalAgendamentoEspecifico}
