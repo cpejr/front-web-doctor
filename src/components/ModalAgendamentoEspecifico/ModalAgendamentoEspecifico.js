@@ -32,7 +32,7 @@ import Button from "../../styles/Button";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import { Cores } from "../../variaveis";
 import { TiposDeConsulta } from "./TiposDeConsulta";
-import { apenasNumeros, data, dataAgendamentoBack } from "../../utils/masks";
+import { apenasNumeros, data } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAgendamentoEspecifico(props) {
@@ -59,6 +59,8 @@ function ModalAgendamentoEspecifico(props) {
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [erroDataBack, setErroDataBack] = useState(false);
+  const [hoje, setHoje] = useState("");
+  const [horarioAtual, setHorarioAtual] = useState("");
 
   moment.locale("pt-br");
 
@@ -133,16 +135,16 @@ function ModalAgendamentoEspecifico(props) {
     }
   }
 
-  function foramatarDataConsultaFront(value) {
+/*   function foramatarDataConsultaFront(value) {
     const aux = apenasNumeros(value);
 
     setDataConsulta(data(aux));
   }
   function foramatarDataConsultaBack(data) {
     setDataConsultaBack(dataAgendamentoBack(data));
-  }
+  } */
 
-  async function validacaoData(e) {
+/*   async function validacaoData(e) {
     const { value, name } = e;
 
     if (value) {
@@ -162,16 +164,113 @@ function ModalAgendamentoEspecifico(props) {
     }
     foramatarDataConsultaFront(value);
     foramatarDataConsultaBack(value);
+  } */
+
+  function preenchendoDadosConsulta(e) {
+
+    const { value, name } = e.target;
+
+    if (value != consulta.descricao) {
+      if (value) {
+        setCamposVazios({ ...camposVazios, [name]: false });
+      }
+      else {
+        setCamposVazios({ ...camposVazios, [name]: true });
+      }
+    }
+
+    if (e.target.name === "hora") {
+      setHora(e.target.value);
+      return hora;
+    } else if (e.target.name === "data") {
+      setDataConsulta(e.target.value);
+      return data;
+    } else if (e.target.name === "duracao_em_minutos") {
+      setConsulta({
+        ...consulta,
+        [e.target.name]: apenasNumeros(e.target.value),
+      });
+      return consulta;
+    } else {
+      setConsulta({ ...consulta, [e.target.name]: e.target.value });
+      return consulta;
+    }
   }
+
+  function setandoDiaAtual() {
+
+    let data = new Date();
+    let dia = data.getDate();
+    let mes = data.getMonth() + 1;
+    let ano = data.getFullYear();
+    
+    if (dia < 10){
+      dia = "0" + dia;
+    }
+    if (mes < 10){
+      mes = "0" + mes;
+    }
+
+    setHoje(ano + "-" + mes + "-" + dia);
+    
+  }
+
+  function setandoDataMinima(){
+    document.getElementById("data").setAttribute("min", hoje);
+  }
+
+  useEffect(() => {
+    setandoDiaAtual();
+  }, []);
+  
+  useEffect(() => {
+    setandoDataMinima();
+  }, [hoje]);
+
+  function setandoHoraAtual() {
+    
+    let horario = new Date();
+    let horaAtual = horario.getHours();
+    let minutos = horario.getMinutes();
+    
+    if (horaAtual < 10){
+      horaAtual = "0" + horaAtual; 
+    }
+    if (minutos < 10){
+      minutos = "0" + minutos;
+    }
+
+    setHorarioAtual(horaAtual + ":" + minutos);
+    console.log(horaAtual)
+    console.log(minutos)
+
+  }
+  
+  function setandoHorarioMinimo(){ 
+    if(new Date(consulta.data_hora) === horarioAtual){
+      document.getElementById("hora").setAttribute("min", horarioAtual);
+    }
+  }
+
+  useEffect(() => {
+    setandoHoraAtual();
+  }, []);
+  
+  useEffect(() => {
+    console.log(horarioAtual)
+    setandoHorarioMinimo();
+  }, [horarioAtual]);
+
 
   function formatacaoDataHora() {
     try {
-      const dataHora = `${dataConsultaBack} ${hora}:00`;
+      const dataHora = `${dataConsulta} ${hora}:00`;
       consulta.data_hora = dataHora;
     } catch {
       alert("DataHora inválida.");
     }
   }
+
 
   async function requisicaoCriarConsulta() {
     if (!dataConsulta) errors.data = true;
@@ -202,10 +301,10 @@ function ModalAgendamentoEspecifico(props) {
     }
   }
 
-  function preenchendoDadosConsulta(e) {
+ /*  function preenchendoDadosConsulta(e) {
     setConsulta({ ...consulta, [e.target.name]: e.target.value });
     return consulta;
-  }
+  } */
 
   return (
     <Container>
@@ -295,11 +394,14 @@ function ModalAgendamentoEspecifico(props) {
             <InputData
               placeholder="Selecione uma data"
               size="large"
+              type="date"
+              onKeyDown={(e) => e.preventDefault()}
               name="data"
-              onChange={(e) => validacaoData(e.target)}
+              onChange={(e) => preenchendoDadosConsulta(e)}
               value={dataConsulta}
               camposVazios={camposVazios.data}
               erro={erro.data}
+              id="data"
             />
             {erro.data && (
               <>
@@ -397,11 +499,13 @@ function ModalAgendamentoEspecifico(props) {
             <TamanhoInput>
               <InputHora
                 value={hora}
-                type="text"
-                onFocus={(e) => (e.target.type = "time")}
-                onBlur={(e) => (e.target.type = "text")}
+                type="time"
+               /*  onFocus={(e) => (e.target.type = "time")}
+                onBlur={(e) => (e.target.type = "text")} */
+                onKeyDown={(e) => e.preventDefault()}
                 placeholder="Horário"
                 name="hora"
+                id="hora"
                 onChange={validacaoCampos}
                 camposVazios={camposVazios.hora}
               />
