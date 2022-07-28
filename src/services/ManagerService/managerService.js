@@ -34,12 +34,22 @@ export const requisicaoLogin = async (email, senha) => {
 };
 
 export const Cadastrando = async (usuario, endereco) => {
+  const resposta = await requesterService.requisicaoDadosUsuario(usuario.email);
+
+  if (resposta.status != 204){
+    sleep(1500);
+    toast.error("E-mail já cadastrado");
+    return;
+  }
+
+
+
   await requesterService
     .criarUsuario(endereco, usuario)
     .then(() => {
       alert("Usuário cadastrado com sucesso.");
       sleep(1500);
-      window.location.href = "/login";
+      /* window.location.href = "/login"; */
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/cadastro"));
