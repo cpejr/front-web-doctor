@@ -4,7 +4,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
 import { toast } from "react-toastify";
-import _ from "lodash";
+import _, { set } from "lodash";
 import { sleep } from "../../utils/sleep";
 import {
   Container,
@@ -54,11 +54,11 @@ function ModalAgendamentoEspecifico(props) {
     tipo: "",
   });
   const [dataConsulta, setDataConsulta] = useState("");
-  const [dataConsultaBack, setDataConsultaBack] = useState("");
+  //const [dataConsultaBack, setDataConsultaBack] = useState("");
   const [hora, setHora] = useState("");
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
-  const [erroDataBack, setErroDataBack] = useState(false);
+  //const [erroDataBack, setErroDataBack] = useState(false);
   const [hoje, setHoje] = useState("");
   const [horarioAtual, setHorarioAtual] = useState("");
 
@@ -120,9 +120,12 @@ function ModalAgendamentoEspecifico(props) {
       setErro({ ...erro, [name]: false });
     }
 
-    if (e.target.name === "hora") {
+   /*  if (e.target.name === "hora") {
       setHora(e.target.value);
       return hora;
+    } else */ if (e.target.name === "data") {
+      setDataConsulta(e.target.value);
+      return dataConsulta;
     } else if (e.target.name === "duracao_em_minutos") {
       setConsulta({
         ...consulta,
@@ -165,37 +168,6 @@ function ModalAgendamentoEspecifico(props) {
     foramatarDataConsultaFront(value);
     foramatarDataConsultaBack(value);
   } */
-
-  function preenchendoDadosConsulta(e) {
-
-    const { value, name } = e.target;
-
-    if (value != consulta.descricao) {
-      if (value) {
-        setCamposVazios({ ...camposVazios, [name]: false });
-      }
-      else {
-        setCamposVazios({ ...camposVazios, [name]: true });
-      }
-    }
-
-    if (e.target.name === "hora") {
-      setHora(e.target.value);
-      return hora;
-    } else if (e.target.name === "data") {
-      setDataConsulta(e.target.value);
-      return data;
-    } else if (e.target.name === "duracao_em_minutos") {
-      setConsulta({
-        ...consulta,
-        [e.target.name]: apenasNumeros(e.target.value),
-      });
-      return consulta;
-    } else {
-      setConsulta({ ...consulta, [e.target.name]: e.target.value });
-      return consulta;
-    }
-  }
 
   function setandoDiaAtual() {
 
@@ -241,25 +213,42 @@ function ModalAgendamentoEspecifico(props) {
     }
 
     setHorarioAtual(horaAtual + ":" + minutos);
-    console.log(horaAtual)
-    console.log(minutos)
 
   }
   
-  function setandoHorarioMinimo(){ 
+/*   function setandoHorarioMinimo(){ 
     if(new Date(consulta.data_hora) === horarioAtual){
       document.getElementById("hora").setAttribute("min", horarioAtual);
     }
-  }
+  } */
 
   useEffect(() => {
     setandoHoraAtual();
   }, []);
   
-  useEffect(() => {
-    console.log(horarioAtual)
+/*   useEffect(() => {
     setandoHorarioMinimo();
-  }, [horarioAtual]);
+  }, [horarioAtual]); */
+
+  function validacaoHorario(e) {
+    const { value, name } = e.target;
+
+    if (value) {
+      setCamposVazios({ ...camposVazios, [name]: false });
+    } else {
+      setCamposVazios({ ...camposVazios, [name]: true });
+    }
+    if ( hora <= horarioAtual ){
+      setErro({ ...erro, [name]: true });
+    } else {
+      setErro({ ...erro, [name]: false });
+    }
+
+    if (e.target.name === "hora") {
+      setHora(e.target.value);
+      return hora;
+    }
+  }
 
 
   function formatacaoDataHora() {
@@ -335,7 +324,7 @@ function ModalAgendamentoEspecifico(props) {
                   name="id_usuario"
                   placeholder="Selecione um paciente"
                   onChange={(e) => {
-                    preenchendoDadosConsulta(e);
+                    validacaoCampos(e);
                   }}
                 >
                   <option value="" disabled selected>
@@ -380,7 +369,7 @@ function ModalAgendamentoEspecifico(props) {
             rows={4}
             name="descricao"
             value={consulta.descricao}
-            onChange={preenchendoDadosConsulta}
+            onChange={validacaoCampos}
             style={{
               borderWidth: "1px",
               borderColor: Cores.azul,
@@ -397,13 +386,13 @@ function ModalAgendamentoEspecifico(props) {
               type="date"
               onKeyDown={(e) => e.preventDefault()}
               name="data"
-              onChange={(e) => preenchendoDadosConsulta(e)}
+              onChange={(e) => validacaoCampos(e)}
               value={dataConsulta}
               camposVazios={camposVazios.data}
               erro={erro.data}
               id="data"
             />
-            {erro.data && (
+            {/* {erro.data && (
               <>
                 {erroDataBack ? (
                   <Rotulo>Digite uma data válida.</Rotulo>
@@ -411,8 +400,8 @@ function ModalAgendamentoEspecifico(props) {
                   <Rotulo>Digite uma data no formato xx/xx/xxxx</Rotulo>
                 )}
               </>
-            )}
-            {camposVazios.data && <Rotulo>Digite uma data</Rotulo>}
+            )} */}
+            {camposVazios.data && <Rotulo>Selecione uma data</Rotulo>}
           </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
@@ -500,15 +489,16 @@ function ModalAgendamentoEspecifico(props) {
               <InputHora
                 value={hora}
                 type="time"
-               /*  onFocus={(e) => (e.target.type = "time")}
-                onBlur={(e) => (e.target.type = "text")} */
                 onKeyDown={(e) => e.preventDefault()}
+                /* onFocus={(e) => (e.target.type = "time")}
+                onBlur={(e) => (e.target.type = "text")} */
                 placeholder="Horário"
                 name="hora"
                 id="hora"
-                onChange={validacaoCampos}
+                onChange={(e) => validacaoHorario(e)}
                 camposVazios={camposVazios.hora}
               />
+              {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
               {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
             </TamanhoInput>
 
