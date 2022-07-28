@@ -154,7 +154,6 @@ function Cadastro() {
     if (!usuario.senhaConfirmada) errors.senhaConfirmada = true;
     if (erro.data_nascimento === true) errors.data_nascimento = true;
     if (erro.email === true) errors.email = true;
-
     if (cuidador) {
       if (!usuario.telefone_cuidador) errors.telefone_cuidador = true;
       if (!usuario.nome_cuidador) errors.nome_cuidador = true;
@@ -267,61 +266,6 @@ function Cadastro() {
     setUsuario({ ...usuario, [name]: maskDataBack(value) });
   }
 
-  function preenchendoDados(e) {
-    const { value, name } = e.target;
-    if (
-      name !== "convenio" &&
-      name !== "nome_cuidador" &&
-      name !== "telefone_cuidador"
-    ) {
-      if (usuario.nome !== "") {
-        if (value) setCamposVazios({ ...camposVazios, [name]: false });
-      }
-    }
-
-    if (
-      (name === "cpf" && value.length < 14) ||
-      (name === "telefone" && value.length < 15) ||
-      ((name === "senha" || name === "senhaConfirmada") && value.length < 8)
-    ) {
-      setErro({ ...erro, [name]: true });
-    } else {
-      setErro({ ...erro, [name]: false });
-    }
-
-    setUsuario({ ...usuario, [name]: value });
-    setEstado({ ...estado, [name]: value });
-
-    if (name === "nome") {
-      setEstado({
-        ...estado,
-        [name]: maskApenasLetras(value),
-      });
-      setUsuario({ ...usuario, [name]: maskApenasLetras(value) });
-    }
-
-    if (name === "telefone") {
-      setEstado({ ...estado, [name]: maskTelefone(value) });
-      setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
-    }
-
-    if (name === "cpf") {
-      setEstado({ ...estado, [name]: maskCPF(value) });
-      setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
-    }
-    if (name === "tipo") {
-      setUsuario({
-        ...usuario,
-        [name]: value,
-        nome_cuidador: null,
-        telefone_cuidador: null,
-        convenio: null,
-      });
-      setConvenio(false);
-      setCuidador(false);
-    }
-  }
-
   async function validacaoCamposNaoGerais(e) {
     const { value, name } = e.target;
 
@@ -380,9 +324,70 @@ function Cadastro() {
     }
   }
 
+  function preenchendoDados(e) {
+    const { value, name } = e.target;
+    if (
+      name !== "convenio" &&
+      name !== "nome_cuidador" &&
+      name !== "telefone_cuidador" &&
+      name !== "nome"
+    ) {
+      if (value) setCamposVazios({ ...camposVazios, [name]: false });
+    }
+
+    if (
+      (name === "cpf" && value.length < 14) ||
+      (name === "telefone" && value.length < 15) ||
+      ((name === "senha" || name === "senhaConfirmada") && value.length < 8)
+    ) {
+      setErro({ ...erro, [name]: true });
+    } else {
+      setErro({ ...erro, [name]: false });
+    }
+
+    setUsuario({ ...usuario, [name]: value });
+    setEstado({ ...estado, [name]: value });
+
+    if (name === "nome") {
+      setEstado({
+        ...estado,
+        [name]: maskApenasLetras(value),
+      });
+      setUsuario({ ...usuario, [name]: maskApenasLetras(value) });
+    }
+
+    if (name === "telefone") {
+      setEstado({ ...estado, [name]: maskTelefone(value) });
+      setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
+    }
+
+    if (name === "cpf") {
+      setEstado({ ...estado, [name]: maskCPF(value) });
+      setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
+    }
+    if (name === "tipo") {
+      setUsuario({
+        ...usuario,
+        [name]: value,
+        nome_cuidador: null,
+        telefone_cuidador: null,
+        convenio: null,
+      });
+      setConvenio(false);
+      setCuidador(false);
+    }
+  }
+
+  useEffect(() => {
+    if (usuario.nome !== "" && usuario.nome !== undefined) {
+      setCamposVazios({ ...camposVazios, nome: false });
+    }
+  }, [usuario]);
+
   function preenchendoEndereco(e) {
     const { value, name } = e.target;
-    if (name !== "complemento") {
+
+    if (name !== "complemento" && name !== "pais" && name !== "numero") {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
     }
 
@@ -406,6 +411,10 @@ function Cadastro() {
         ...endereco,
         [name]: maskApenasLetras(value),
       });
+      setEnderecoBack({
+        ...enderecoBack,
+        [name]: maskApenasLetras(value),
+      });
     }
     if (name === "cidade") {
       setEndereco({
@@ -418,115 +427,27 @@ function Cadastro() {
         ...endereco,
         [name]: maskApenasNumeros(value),
       });
+      setEnderecoBack({
+        ...enderecoBack,
+        [name]: maskApenasNumeros(value),
+      });
     }
   }
 
-  function consolando() {
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 789 ~ Cadastro ~ usuario.nome",
-      usuario.nome
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 791 ~ Cadastro ~ usuario.telefone",
-      usuario.telefone
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 793 ~ Cadastro ~ usuario.tipo",
-      usuario.tipo
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 795 ~ Cadastro ~ usuario.data_nascimento",
-      usuario.data_nascimento
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 797 ~ Cadastro ~ usuario.cpf",
-      usuario.cpf
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 799 ~ Cadastro ~ usuario.email",
-      usuario.email
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 801 ~ Cadastro ~ enderecoBack.cep",
-      enderecoBack.cep
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 803 ~ Cadastro ~ enderecoBack.pais",
-      enderecoBack.pais
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 805 ~ Cadastro ~ enderecoBack.estado",
-      enderecoBack.estado
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 807 ~ Cadastro ~ enderecoBack.cidade",
-      enderecoBack.cidade
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 809 ~ Cadastro ~ enderecoBack.bairro",
-      enderecoBack.bairro
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 811 ~ Cadastro ~ enderecoBack.rua",
-      enderecoBack.rua
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 813 ~ Cadastro ~ enderecoBack.numero",
-      enderecoBack.numero
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 815 ~ Cadastro ~ usuario.senha",
-      usuario.senha
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 817 ~ Cadastro ~ usuario.senhaConfirmada",
-      usuario.senhaConfirmada
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 484 ~ Cadastro ~ cuidador",
-      cuidador
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 485 ~ Cadastro ~ convenio",
-      convenio
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 491 ~ Cadastro ~ usuario.nome_cuidador",
-      usuario.nome_cuidador
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 491 ~ Cadastro ~ usuario.telefone_cuidador",
-      usuario.telefone_cuidador
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 491 ~ Cadastro ~ usuario.convenio",
-      usuario.convenio
-    );
-
-    console.log(
-      "/////////////////////////////////////////////////////////////////////////////////////////////////"
-    );
-    console.log(
-      "/////////////////////////////////////////////////////////////////////////////////////////////////"
-    );
-    console.log(
-      "/////////////////////////////////////////////////////////////////////////////////////////////////"
-    );
-    console.log(
-      "/////////////////////////////////////////////////////////////////////////////////////////////////"
-    );
-  }
+  useEffect(() => {
+    if (enderecoBack.pais !== "" && enderecoBack.pais !== undefined) {
+      setCamposVazios({ ...camposVazios, pais: false });
+    }
+  }, [enderecoBack.pais]);
+  useEffect(() => {
+    if (enderecoBack.numero !== "" && enderecoBack.numero !== undefined) {
+      setCamposVazios({ ...camposVazios, numero: false });
+    }
+  }, [enderecoBack.numero]);
 
   return (
     <div>
       <Body>
-        <Button
-          onClick={() => {
-            consolando();
-          }}
-        >
-          Testando Teste
-        </Button>
         <DadosCadastro>
           <Logo>
             <img
