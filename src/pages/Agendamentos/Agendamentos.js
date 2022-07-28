@@ -71,19 +71,6 @@ function Agendamentos() {
     pegandoDados();
   }, [email]);
 
-  /*  useEffect(() => {
-    console.log(consultas);
-  }, [consultas]);  */
-
-
-  /*   useEffect(() => {
-      console.log(consultasOrdenadas);
-    }, [consultasOrdenadas]);  */
-
-
-
-
-
 
   async function marcandoAgendamento(email) {
     setEmail(email);
@@ -111,24 +98,12 @@ function Agendamentos() {
             <BarraPesquisa>
               <Search placeholder="BUSCAR" style={{ width: 400 }} />
             </BarraPesquisa>
-            <Filtros>
-              <FiltroUsuario>
-                {tipoUsuarioLogado === "MASTER" && (
-                  <Select
-                    defaultValue="Todos os Usuários"
-                    style={{ color: "green", width: 200 }}
-
-                  ></Select>
-                )}
-
-              </FiltroUsuario>
               <FiltroDatas>
                 <Select
                   defaultValue="Todas as datas"
-                  style={{ color: "green", width: 200 }}
+                  style={{ color: "green", width: "100%" }}
                 ></Select>
               </FiltroDatas>
-            </Filtros>
           </TopoPaginaEsquerda>
           <Button
             marginTop="0px"

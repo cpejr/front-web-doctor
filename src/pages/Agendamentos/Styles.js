@@ -15,8 +15,10 @@ export const TopoPagina = styled.div`
   flex-direction: row;
   justify-content: space-between;
   @media (max-width: 920px) {
+    width: 100%;
+    height: 70%;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
   }
 `;
 
@@ -26,11 +28,18 @@ export const TopoPaginaEsquerda = styled.div`
   flex-direction: row;
   width: 50%;
   justify-content: space-between;
+
   @media (max-width: 920px) {
-    width: 100%
-    flex-direction: column;
+    width: 100%;
+    flex-direction: row;
     justify-content: space-between;
+    margin-bottom: 2%;
   }
+  @media (max-width: 490px) {
+    flex-direction: column;
+    justify-content: center;
+  }
+
 `;
 
 
@@ -42,6 +51,15 @@ export const BarraPesquisa = styled.div`
     width: 100%;
     justify-content: center;
   }
+  @media (max-width: 690px) {
+    width: 50%;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  @media (max-width: 490px) {
+    width: 100%;
+  }
+  
   .ant-input {
     background-color: green;
   }
@@ -49,34 +67,23 @@ export const BarraPesquisa = styled.div`
     background-color: green;
   }
 `;
-export const Filtros = styled.div`
-  width: 50%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 2%;
-  @media (max-width: 920px) {
-    width: 100%;
-    justify-content: center;
-  }
-  @media (max-width: 450px) {
-    margin-top: 2%;
-    flex-direction: column;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-  }
-`;
-export const FiltroUsuario = styled.div`
-  @media (max-width: 480px) {
-  }
-`;
-
 
 export const FiltroDatas = styled.div`
 
+  width: 50%;
+  display: flex;
   @media (max-width: 920px) {
-  
+    width: 100%;
+    justify-content: end;
+  }
+
+  @media (max-width: 690px) {
+    width: 30%;
+  }
+
+  @media (max-width: 320px) {
+    justify-content: start;
+    width: 100%;
   }
 `;
 
