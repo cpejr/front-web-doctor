@@ -166,7 +166,7 @@ export const BarraRespostas = styled.div`
 `;
   
 
-export const RotuloFormularioCima = styled.div`
+export const CamposFormularioCima = styled.div`
 
     display: flex;
     justify-content: center;
