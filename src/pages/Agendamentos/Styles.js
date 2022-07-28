@@ -183,15 +183,15 @@ export const Telefone = styled.div`
   }
 `;
 export const Data = styled.div`
-  width: 18%;
+  width: 25%;
   display: flex;
   justify-content: center;
 
   @media (max-width: 880px) {
-    width: 20%;
+    width: 30%;
   }
   @media (max-width: 700px) {
-    width: 25%;
+    width: 30%;
   
   }
   @media (max-width: 650px) {
