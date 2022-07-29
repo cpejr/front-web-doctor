@@ -27,49 +27,23 @@ import * as managerService from "../../services/ManagerService/managerService";
 import { Titulo } from "../ListaUsuarios/Styles";
 import { Input } from "antd";
 
-function FormularioEspecifico() {
+function FormularioEspecifico(props) {
   const { Search } = Input;
-  const [formularios, setFormularios] = useState([]);
   const [formularioEspecifico, setFormularioEspecifico] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
   const [respostasFormularios, setRespostasFormularios] = useState([]);
   const [busca, setBusca] = useState("");
 
-  async function pegandoDadosFormularios() {
-    const resposta = await managerService.GetFormularios(); //Especifico(formularios.id);
-    setFormularios(resposta);
-  }
-  async function pegandoDadosFormularioEspecifico(id) {
-    const resposta = await managerService.GetFormularioEspecifico(
-      formularios.id
-    );
-    setFormularios(resposta);
-    for (var i = 0; i < formularios.length; i++) {
-      if (formularios[i].id === id) {
-        const resposta = await managerService.GetFormularioEspecifico(id);
-        setFormularioEspecifico(resposta);
-      }
-    }
+  async function pegandoDadosFormularioEspecifico() {
+    const resposta = await managerService.GetFormularioEspecifico(props.location.state.id);
+    setFormularioEspecifico(resposta);
   }
 
-  /*async function pegandoDadosUsuarios() {
-        const resposta = await managerService.GetDadosPessoais();
-        setUsuarios(resposta);
-    }
-        
-      
-    async function pegandoRespostasFormulariosEspecifico(){
-        const resposta = await managerService.GetRespostaFormularioIdUsuario(usuarios.id);
-        setRespostasFormularios(resposta);
-    }*/
 
   useEffect(() => {
-    pegandoDadosFormularios();
-  }, []);
+    pegandoDadosFormularioEspecifico();
+  }, [props]);
 
-  useEffect(() => {
-    pegandoDadosFormularioEspecifico("5395977c-1543-44bf-bc71-c7966d9e965d");
-  }, [formularios]);
 
   return (
     <>

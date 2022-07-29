@@ -189,6 +189,7 @@ export const RotuloBarraDeBuscaOpcoes = styled.div`
 
 export const SelectTipos = styled(Select)`
   color: ${Cores.azul};
+  font-weight: bold;
   .ant-select-arrow {
     color: ${Cores.azul};
   }

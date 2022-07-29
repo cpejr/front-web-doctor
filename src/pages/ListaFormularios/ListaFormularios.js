@@ -24,6 +24,7 @@ import Button from "../../styles/Button";
 import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
 import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
+import { OmitProps } from "antd/lib/transfer/ListBody";
 
 function ListaFormularios() {
   const history = useHistory();
@@ -48,6 +49,13 @@ function ListaFormularios() {
     const resposta = await managerService.GetFormularios();
     setFormularios(resposta);
     setCarregando(false);
+  }
+
+  async function verificandoFormularioPeloId(id){
+    history.push({
+      pathname: "/web/formularioespecifico",
+      state: { id },
+    });
   }
 
   return (
@@ -88,7 +96,13 @@ function ListaFormularios() {
                 <ContainerFormularioEspecifico>
                   <Formulario>
                     <DadosFormulario>
-                      <TituloFormulario>{value.titulo}</TituloFormulario>
+                      <Button 
+                        backgroundColor = "transparent" 
+                        borderColor = "transparent"
+                        onClick={() => verificandoFormularioPeloId(value.id)}
+                        >
+                          <TituloFormulario>{value.titulo}</TituloFormulario>
+                        </Button>
                       <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
                       <UrgenciaFormulario>
                         <>Urgência: </>
