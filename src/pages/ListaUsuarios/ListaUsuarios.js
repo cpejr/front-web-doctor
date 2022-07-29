@@ -65,21 +65,6 @@ function ListaUsuarios() {
     setTipoSelect(value);
   }
 
-  // async function pegandoDadosUsuarios() {
-  //   const resposta = await managerService.GetDadosPessoais();
-  //   if (tipoUsuarioLogado === "MASTER") {
-  //     setUsuarios(resposta);
-  //     setCarregando(false);
-  //   } else {
-  //     resposta.forEach((usuario) => {
-  //       if (usuario.tipo === "PACIENTE") {
-  //         setUsuarios((usuarios) => [...usuarios, usuario]);
-  //         setCarregando(false);
-  //       }
-  //     });
-  //   }
-  // }
-
   async function pegandoDadosUsuarios() {
     const resposta = await managerService.GetDadosPessoais();
     if (tipoUsuarioLogado === "MASTER") {
@@ -217,9 +202,9 @@ function ListaUsuarios() {
                   <>{value.codigo}</>
                 )}
               </CódigoPaciente>
-              
                 {tipoUsuarioLogado === "MASTER"? (
                   <BotaoAdicionar>
+                    {value.tipo === "PACIENTE"? (
                     <Button
                       backgroundColor="transparent"
                       borderColor="transparent"
@@ -231,6 +216,9 @@ function ListaUsuarios() {
                     >
                       Editar Código
                     </Button>
+                    ):(
+                      <></>
+                    )}
                   </BotaoAdicionar>
                 ) : (
                   <BotaoAdicionar>
@@ -246,7 +234,7 @@ function ListaUsuarios() {
                       Marcar Agendamento
                     </Button>
                   </BotaoAdicionar>
-                )}
+                )} 
             </Usuario>
           ))}
         </ContainerUsuarios>
