@@ -377,13 +377,11 @@ export const  DeletarFormulario = async (id) => {
   await requesterService
     .deletarFormulario(id)
     .then(() => {
-      alert("Formulario deletado com sucesso.");
+      toast.success("Formulario deletado com sucesso.");
       window.location.href = "/web/listaformularios";
     })
     .catch((error) => {
       requisicaoErro(
-        error,
-        () => (window.location.href = "/web/perfildopaciente")
       );
 
       return false;
@@ -428,8 +426,9 @@ export const updatePerguntasFormulario = async (
   await requesterService
     .updatePerguntasFormulario(id, perguntas)
     .then(() => {
-      alert("Campo apagado com sucesso.");
-      
+      toast.success("Pergunta alterada com sucesso.");
+      sleep(1500)
+      window.location.href = "/web/listaformularios";
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/"));
@@ -446,11 +445,11 @@ export const UpdateFormularios = async (
   await requesterService
     .updateCampos(id, campos)
     .then(() => {
-      alert("Usuário atualizado com sucesso.");
-      window.location.href = "/web/formularioespecifico";
+      toast.success("Formulario atualizado com sucesso.");
+      sleep(1500)
+      window.location.href = "/web/listaformularios";
     })
     .catch((error) => {
-      requisicaoErro(error, () => (window.location.href = "/web/formularioespecifico"));
       return false;
     });
 

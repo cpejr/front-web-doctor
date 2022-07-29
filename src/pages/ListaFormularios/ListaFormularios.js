@@ -135,8 +135,7 @@ function ListaFormularios() {
                       ENVIAR
                     </Button>
                     <Button
-                      backgroundColor="green"
-                      // {Cores.cinza[7]}
+                      backgroundColor={Cores.cinza[7]}
                       color={Cores.azulEscuro}
                       fontWeight="bold"
                       borderColor={Cores.azulEscuro}
@@ -147,8 +146,7 @@ function ListaFormularios() {
                       EDITAR
                     </Button>
                     <Button
-                      backgroundColor="green"
-                      // {Cores.branco}
+                      backgroundColor={Cores.branco}
                       color={Cores.cinza[2]}
                       fontWeight="bold"
                       borderColor="rgba(255, 0, 0, 0.25)"

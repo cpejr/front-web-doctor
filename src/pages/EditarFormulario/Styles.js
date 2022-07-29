@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Cores } from "../../variaveis";
+import { Cores, Fontes } from "../../variaveis";
 
 export const Container = styled.div`
   display: flex;
@@ -25,4 +25,6 @@ export const EditarFormularioTitulo = styled.div`
   justify-content: flex-start;
   align-items: center;
   font-size: 2.1em;
+  font-family:${Fontes.barlow};
+  color: ${Cores.azulEscuro};
 `;

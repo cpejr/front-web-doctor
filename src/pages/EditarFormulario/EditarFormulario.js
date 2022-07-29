@@ -32,8 +32,7 @@ function EditarFormulario(props) {
       props.location.state.id
     );
     setFormularios(resposta);
-    console.log(resposta.perguntas);
-    setPerguntas(Object.entries(resposta.perguntas));
+    setPerguntas(Object.entries(resposta.perguntas.properties));
     setPerguntasAlterar(resposta.perguntas);
     setCarregando(false);
   }
@@ -43,14 +42,13 @@ function EditarFormulario(props) {
   }, [props]);
 
   async function atualizarDados() {
-    await managerService.updatePerguntasFormulario(
-      formularios.id,
-      Object.assign(
-        auxiliar,
-        formularios.perguntas.properties,
-        estado.properties
-      )
+    let perguntas = Object.assign(
+      auxiliar,
+      formularios.perguntas.properties,
+      estado.properties
     );
+    estado.properties = perguntas;
+    await managerService.updatePerguntasFormulario(formularios.id, estado);
   }
 
   async function atualizarCamposQueNaoSaoPerguntas() {
@@ -138,9 +136,9 @@ function EditarFormulario(props) {
             <Button
               height="50px"
               width="100%"
-              backgroundColor={Cores.lilas[1]}
+              backgroundColor={Cores.lilas[4]}
               borderColor={Cores.azul}
-              color={Cores.branco}
+              color={Cores.azulEscuro}
               fontSize="1.5em"
               fontSizeMedia="1.2em"
               fontWeight="bold"
@@ -151,7 +149,7 @@ function EditarFormulario(props) {
             <Button
               height="50px"
               width="100%"
-              backgroundColor={Cores.cinza[7]}
+              backgroundColor={Cores.lilas[4]}
               borderColor={Cores.azulEscuro}
               color={Cores.azulEscuro}
               fontSize="1.5em"
@@ -159,7 +157,7 @@ function EditarFormulario(props) {
               fontWeight="bold"
               onClick={() => abrindoModal()}
             >
-              Apagar Pergunta especifica
+              Apagar pergunta especifica
             </Button>
           </>
         )}
@@ -174,9 +172,9 @@ function EditarFormulario(props) {
         <Button
           height="50px"
           width="100%"
-          backgroundColor={Cores.lilas[1]}
+          backgroundColor={Cores.lilas[4]}
           borderColor={Cores.azul}
-          color={Cores.branco}
+          color={Cores.azulEscuro}
           fontSize="1.5em"
           fontSizeMedia="1.2em"
           fontWeight="bold"
