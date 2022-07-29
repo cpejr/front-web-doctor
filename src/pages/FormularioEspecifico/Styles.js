@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Select } from "antd";
 import { Cores, Fontes } from "../../variaveis";
 
 export const ColunaDireita = styled.div`
@@ -78,23 +79,22 @@ export const BarraEstetica = styled.div`
   height: 5px;
   width: 100%;
   background-color: ${Cores.azul};
-`;
+  `;
 
 export const BarraPaciente = styled.div`
 //Estetica:
-  background-color: ${Cores.cinza[9]};
+background-color: ${Cores.cinza[9]};
   margin-top: 5%;
   margin-bottom: 1%;
-  height: 15vh;
+  height: 18%;
   width: 100%;
   border-color: ${Cores.azul};
   border-style: solid;
   border-width: 3px;
   padding: 1.5% 3% 1.5% 3%;
-//Conteudo dentro
+  //Conteudo dentro
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
 
   @media (max-width: 350px)  {
     display: flex;
@@ -102,19 +102,25 @@ export const BarraPaciente = styled.div`
     width: 100%;
     height: 100%;
   }
+  
+  `;
 
+export const BarraDireita = styled.div`
+  flex-direction: column;
+  width: 50%;
 `;
 
-export const TextoBarraPaciente = styled.div`
+export const BarraEsquerda = styled.div`
+  flex-direction: row;
+  width: 50%;
+`;
 
+export const TextoBarraPaciente = styled.text`
   font-size: ${(props) => props.fontSize};
   color: ${Cores.preto};
   font-weight: ${(props) => props.fontWeight};
   justify-content: ${(props) => props.justifyContent};
-  align-content: flex-start;
-  margin-left: 5%;
-  display: flex;
-  flex-direction: column;
+
   
   @media (max-width: 350px) {
     font-size: 0.9em;
@@ -122,10 +128,11 @@ export const TextoBarraPaciente = styled.div`
 `;
 
 export const ImagemPaciente = styled.div`
+ align-items: center;
+ 
   display: flex;
-  justify-content: flex-start;
   align-items: center;
-
+  width: auto;
   
   .fotoPerfil {
     border-radius: 3px;
@@ -136,7 +143,7 @@ export const ImagemPaciente = styled.div`
       height: 100%;
       margin-top:3%
     }
-  }
+  } 
 `;
 
 export const BarraRespostas = styled.div`
@@ -180,6 +187,13 @@ export const RotuloBarraDeBuscaOpcoes = styled.div`
   }
 `;
 
+export const SelectTipos = styled(Select)`
+  color: ${Cores.azul};
+  .ant-select-arrow {
+    color: ${Cores.azul};
+  }
+`;
+
 export const ContainerBarraDeBuscaOpcoes = styled.div`
   display: flex;
   flex-direction: row;
@@ -198,12 +212,14 @@ export const ContainerBarraDeBuscaOpcoes = styled.div`
 `;
 
 export const BarraDePesquisa = styled.div`
-  width: 40%;
-  height: 6vh;
+  width: 50%;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  border-width: 2px;
-  border-style: solid;
 
+  @media (max-width: 920px) {
+    width: 100%;
+    justify-content: center;
+  }
 `;
+

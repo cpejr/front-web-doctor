@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
-import { Spin, Select } from "antd";
+import { Spin } from "antd";
 import { useHistory } from "react-router-dom";
 import {
   ColunaDireita,
@@ -16,17 +16,19 @@ import {
   RotuloBarraDeBuscaOpcoes,
   BarraDePesquisa,
   ContainerBarraDeBuscaOpcoes,
+  SelectTipos,
+  BarraDireita,
+  BarraEsquerda
 } from "./Styles";
-import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Titulo } from "../ListaUsuarios/Styles";
+import { Input } from "antd";
 
 function FormularioEspecifico() {
   const { Search } = Input;
-  const { Option } = Select;
   const [formularios, setFormularios] = useState([]);
   const [formularioEspecifico, setFormularioEspecifico] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
@@ -104,71 +106,75 @@ function FormularioEspecifico() {
         <ColunaEsquerda>
           <ContainerBarraDeBuscaOpcoes>
             <BarraDePesquisa>
-            {/* <Search
+            <Search
               placeholder="BUSCAR"
               style={{ width: 400 }}
-              value={busca}
-              onChange={(e) => setBusca(e.target.value)}
-            /> */}
+            />
             </BarraDePesquisa>
             <RotuloBarraDeBuscaOpcoes>
-              <Select
+              <SelectTipos
                 defaultValue="Todos os pacientes"
-                style={{ width: 200 }}
-              ></Select>
+                bordered={false}
+                style={{ width: 170 }}
+              ></SelectTipos>
             </RotuloBarraDeBuscaOpcoes>
             <RotuloBarraDeBuscaOpcoes>
-              <Select
+              <SelectTipos
                 defaultValue="Todas as datas"
-                style={{ width: 150 }}
-              ></Select>
+                bordered={false}
+                style={{ width: 140 }}
+              ></SelectTipos>
             </RotuloBarraDeBuscaOpcoes>
             <RotuloBarraDeBuscaOpcoes>
-              <Select
+              <SelectTipos
                 defaultValue="Status"
-                style={{ width: 100 }}
-              ></Select>
+                bordered={false}
+                style={{ width: 90 }}
+              ></SelectTipos>
             </RotuloBarraDeBuscaOpcoes>
           </ContainerBarraDeBuscaOpcoes>
           <BarraEstetica></BarraEstetica>
           <BarraPaciente>
-            <ImagemPaciente>
+            <BarraEsquerda>
+              
               <img
                 src={fotoPerfil}
                 className="fotoPerfil"
                 alt="fotoPerfil"
-                width="140%"
-                height="90%"
+                width="120px"
+                height="120px"
               ></img>
-            </ImagemPaciente>
+            
             <TextoBarraPaciente
               fontSize="1.3em"
               fontWeight="bold"
-              justifyContent="flex-start"
             >
               Nome:{" "}
             </TextoBarraPaciente>
-
+            </BarraEsquerda>
+              
+            <BarraDireita>
             <TextoBarraPaciente
               fontSize="1.3em"
               fontWeight="bold"
               justifyContent="flex-start"
-            >
+              >
               Resposta Pendente{" "}
             </TextoBarraPaciente>
 
             <Button
-              width="28%"
+              width="24%"
               backgroundColor={Cores.lilas[2]}
               boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
               borderColor={Cores.azulEscuro}
               borderRadius="5px"
-              height="25%"
+              height="29%"
               color={Cores.preto}
               fontSize="1.1em"
             >
               ENVIAR LEMBRETE
             </Button>
+            </BarraDireita>
           </BarraPaciente>
 
           <BarraPaciente>
@@ -215,12 +221,15 @@ function FormularioEspecifico() {
           </BarraRespostas>
           <BarraRespostas> ____ usuários já responderam.</BarraRespostas>
           <Button
-            backgroundColor="transparent"
-            borderColor="transparent"
-            color="green"
-            fontSize="1em"
-            textDecoration="underline"
-            height="10px"
+            backgroundColor={Cores.azulClaro}
+            borderRadius="3px"
+            borderWidth="1px"
+            borderColor={Cores.preto}
+            boxShadow= "0px 4px 4px rgba(0, 0, 0, 0.25)"
+            color={Cores.preto}
+            fontSize="15px"
+            height="35px"
+            width="30%"
             marginTop="10%"
             marginLeft="30%"
             onClick={() => {}}
