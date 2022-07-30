@@ -18,72 +18,122 @@ import {
   ContainerBarraDeBuscaOpcoes,
   SelectTipos,
   BarraDireita,
-  BarraEsquerda
+  BarraEsquerda,
 } from "./Styles";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
-import { Titulo } from "../ListaUsuarios/Styles";
+import { Nome, Titulo } from "../ListaUsuarios/Styles";
 import { Input } from "antd";
 
 function FormularioEspecifico(props) {
   const { Search } = Input;
-  const [formularioEspecifico, setFormularioEspecifico] = useState([]);
-  const [usuarios, setUsuarios] = useState([]);
-  const [respostasFormularios, setRespostasFormularios] = useState([]);
-  const [busca, setBusca] = useState("");
+  const [formularioEspecifico, setFormularioEspecifico] = useState({});
+  const [formularioPacientes, setformularioPacientes] = useState([]);
+  //const [emailUsuarios, setEmailUsuarios] = useState([]);
+  const [nomeUsuarios, setNomeUsuarios] = useState([]);
+  const emailUsuarios = [];
 
   async function pegandoDadosFormularioEspecifico() {
-    const resposta = await managerService.GetFormularioEspecifico(props.location.state.id);
+    const resposta = await managerService.GetFormularioEspecifico(
+      props.location.state.id
+    );
     setFormularioEspecifico(resposta);
   }
 
+  async function pegandoFormularioPacientes() {
+    const respostaFormularios =
+      await managerService.GetFormularioPacientesPorFormulario(
+        props.location.state.id
+      );
+
+    setformularioPacientes(respostaFormularios);
+  }
+
+  function pegandoEmailUsuarios() {
+    console.log(formularioPacientes);
+    for (var i = 0; i < formularioPacientes.length; i++) {
+      let email = formularioPacientes[i].email
+      emailUsuarios[i] = email;
+    }
+  }
+  
+  async function setandoNomeUsuarios() {
+    const resposta = [];
+    
+
+    for (var i = 0; i < emailUsuarios.length; i++) {
+      resposta[i] = await managerService.GetDadosUsuario(emailUsuarios[i]);
+    }
+    for (var j = 0; j < resposta.length; j++) {
+      setNomeUsuarios(resposta[j].dadosUsuario.nome);
+    }
+  }
+
+  useEffect(() => {
+    pegandoEmailUsuarios();
+  }, [formularioPacientes]);
+  
+  useEffect(() => {
+    setandoNomeUsuarios();
+  }, [emailUsuarios]);
+
+  useEffect(() => {
+    pegandoFormularioPacientes();
+  }, [props.location.state.id]);
 
   useEffect(() => {
     pegandoDadosFormularioEspecifico();
-  }, [props]);
-
+  }, [props.location.state.id]);
 
   return (
     <>
       <ContainerFormularioEspecifico>
-        
-          <ContainerFormularioCima>
-            <CamposFormularioCima> {formularioEspecifico.titulo}</CamposFormularioCima>
-            <CamposFormularioCima> {formularioEspecifico.tipo} </CamposFormularioCima>
-            <CamposFormularioCima> {formularioEspecifico.data}</CamposFormularioCima>
-            <CamposFormularioCima> {formularioEspecifico.finalidade}</CamposFormularioCima>
-            <CamposFormularioCima>
-              {formularioEspecifico.urgencia === 1 ? (
-                <>
-                  <StarOutlined />
-                  <StarOutlined />
-                  <StarFilled />
-                </>
-              ) : formularioEspecifico.urgencia === 2 ? (
-                <>
-                  <StarOutlined />
-                  <StarFilled />
-                  <StarFilled />
-                </>
-              ) : (
-                <>
-                  <StarFilled />
-                  <StarFilled />
-                  <StarFilled />
-                </>
-              )}
-            </CamposFormularioCima>
-          </ContainerFormularioCima>
-        
+        <ContainerFormularioCima>
+          <CamposFormularioCima>
+            {" "}
+            {formularioEspecifico.titulo}
+          </CamposFormularioCima>
+          <CamposFormularioCima>
+            {" "}
+            {formularioEspecifico.tipo}{" "}
+          </CamposFormularioCima>
+          <CamposFormularioCima>
+            {" "}
+            {formularioEspecifico.data}
+          </CamposFormularioCima>
+          <CamposFormularioCima>
+            {" "}
+            {formularioEspecifico.finalidade}
+          </CamposFormularioCima>
+          <CamposFormularioCima>
+            {formularioEspecifico.urgencia === 1 ? (
+              <>
+                <StarOutlined />
+                <StarOutlined />
+                <StarFilled />
+              </>
+            ) : formularioEspecifico.urgencia === 2 ? (
+              <>
+                <StarOutlined />
+                <StarFilled />
+                <StarFilled />
+              </>
+            ) : (
+              <>
+                <StarFilled />
+                <StarFilled />
+                <StarFilled />
+              </>
+            )}
+          </CamposFormularioCima>
+        </ContainerFormularioCima>
+
         <ColunaEsquerda>
           <ContainerBarraDeBuscaOpcoes>
             <BarraDePesquisa>
-            <Search
-              placeholder="BUSCAR"
-              style={{ width: 400 }}
-            />
+              <Search placeholder="BUSCAR" style={{ width: 400 }} />
             </BarraDePesquisa>
             <RotuloBarraDeBuscaOpcoes>
               <SelectTipos
@@ -107,10 +157,11 @@ function FormularioEspecifico(props) {
               ></SelectTipos>
             </RotuloBarraDeBuscaOpcoes>
           </ContainerBarraDeBuscaOpcoes>
+
           <BarraEstetica></BarraEstetica>
+
           <BarraPaciente>
             <BarraEsquerda>
-              
               <img
                 src={fotoPerfil}
                 className="fotoPerfil"
@@ -118,75 +169,34 @@ function FormularioEspecifico(props) {
                 width="120px"
                 height="120px"
               ></img>
-            
-            <TextoBarraPaciente
-              fontSize="1.3em"
-              fontWeight="bold"
-            >
-              Nome:{" "}
-            </TextoBarraPaciente>
+
+              <TextoBarraPaciente fontSize="1.3em" fontWeight="bold">
+                Nome:{}
+              </TextoBarraPaciente>
             </BarraEsquerda>
-              
+
             <BarraDireita>
-            <TextoBarraPaciente
-              fontSize="1.3em"
-              fontWeight="bold"
-              justifyContent="flex-start"
+              <TextoBarraPaciente
+                fontSize="1.3em"
+                fontWeight="bold"
+                justifyContent="flex-start"
               >
-              Resposta Pendente{" "}
-            </TextoBarraPaciente>
+                Resposta Pendente{" "}
+              </TextoBarraPaciente>
 
-            <Button
-              width="24%"
-              backgroundColor={Cores.lilas[2]}
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              borderColor={Cores.azulEscuro}
-              borderRadius="5px"
-              height="29%"
-              color={Cores.preto}
-              fontSize="1.1em"
-            >
-              ENVIAR LEMBRETE
-            </Button>
+              <Button
+                width="24%"
+                backgroundColor={Cores.lilas[2]}
+                boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+                borderColor={Cores.azulEscuro}
+                borderRadius="5px"
+                height="29%"
+                color={Cores.preto}
+                fontSize="1.1em"
+              >
+                ENVIAR LEMBRETE
+              </Button>
             </BarraDireita>
-          </BarraPaciente>
-
-          <BarraPaciente>
-            <ImagemPaciente>
-              <img
-                src={fotoPerfil}
-                className="fotoPerfil"
-                alt="fotoPerfil"
-                width="110%"
-                height="90%"
-              ></img>
-            </ImagemPaciente>
-            <TextoBarraPaciente
-              fontSize="1.3em"
-              fontWeight="bold"
-              justifyContent="flex-start"
-            >
-              Nome:{" "}
-            </TextoBarraPaciente>
-          </BarraPaciente>
-
-          <BarraPaciente>
-            <ImagemPaciente>
-              <img
-                src={fotoPerfil}
-                className="fotoPerfil"
-                alt="fotoPerfil"
-                width="110%"
-                height="90%"
-              ></img>
-            </ImagemPaciente>
-            <TextoBarraPaciente
-              fontSize="1.3em"
-              fontWeight="bold"
-              justifyContent="flex-start"
-            >
-              Nome:{" "}
-            </TextoBarraPaciente>
           </BarraPaciente>
         </ColunaEsquerda>
         <ColunaDireita>
@@ -199,7 +209,7 @@ function FormularioEspecifico(props) {
             borderRadius="3px"
             borderWidth="1px"
             borderColor={Cores.preto}
-            boxShadow= "0px 4px 4px rgba(0, 0, 0, 0.25)"
+            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
             color={Cores.preto}
             fontSize="15px"
             height="35px"

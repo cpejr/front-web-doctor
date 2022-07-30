@@ -391,6 +391,7 @@ export const DeletarFormulario = async (id) => {
 
   return false;
 };
+
 export const GetRespostaFormularioIdUsuario = async (id_usuario) => {
   let dadosResposta = {};
 
@@ -411,6 +412,21 @@ export const GetResposta = async (id) => {
 
   await requesterService
     .requisicaoRespostaFormulario(id)
+
+    .then((res) => {
+      dadosResposta = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosResposta;
+};
+
+export const GetFormularioPacientesPorFormulario = async (id_formulario) => {
+  let dadosResposta = {};
+
+  await requesterService
+    .requisicaoFormularioPacientes(id_formulario)
 
     .then((res) => {
       dadosResposta = res.data;
