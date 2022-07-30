@@ -31,9 +31,6 @@ function FormularioEspecifico(props) {
   const { Search } = Input;
   const [formularioEspecifico, setFormularioEspecifico] = useState({});
   const [formularioPacientes, setformularioPacientes] = useState([]);
-  //const [emailUsuarios, setEmailUsuarios] = useState([]);
-  const [nomeUsuarios, setNomeUsuarios] = useState([]);
-  const emailUsuarios = [];
 
   async function pegandoDadosFormularioEspecifico() {
     const resposta = await managerService.GetFormularioEspecifico(
@@ -50,34 +47,6 @@ function FormularioEspecifico(props) {
 
     setformularioPacientes(respostaFormularios);
   }
-
-  function pegandoEmailUsuarios() {
-    console.log(formularioPacientes);
-    for (var i = 0; i < formularioPacientes.length; i++) {
-      let email = formularioPacientes[i].email
-      emailUsuarios[i] = email;
-    }
-  }
-  
-  async function setandoNomeUsuarios() {
-    const resposta = [];
-    
-
-    for (var i = 0; i < emailUsuarios.length; i++) {
-      resposta[i] = await managerService.GetDadosUsuario(emailUsuarios[i]);
-    }
-    for (var j = 0; j < resposta.length; j++) {
-      setNomeUsuarios(resposta[j].dadosUsuario.nome);
-    }
-  }
-
-  useEffect(() => {
-    pegandoEmailUsuarios();
-  }, [formularioPacientes]);
-  
-  useEffect(() => {
-    setandoNomeUsuarios();
-  }, [emailUsuarios]);
 
   useEffect(() => {
     pegandoFormularioPacientes();
@@ -160,44 +129,46 @@ function FormularioEspecifico(props) {
 
           <BarraEstetica></BarraEstetica>
 
-          <BarraPaciente>
-            <BarraEsquerda>
-              <img
-                src={fotoPerfil}
-                className="fotoPerfil"
-                alt="fotoPerfil"
-                width="120px"
-                height="120px"
-              ></img>
+          {formularioPacientes.map((value) => (
+            <BarraPaciente>
+              <BarraEsquerda>
+                <img
+                  src={fotoPerfil}
+                  className="fotoPerfil"
+                  alt="fotoPerfil"
+                  width="120px"
+                  height="120px"
+                ></img>
 
-              <TextoBarraPaciente fontSize="1.3em" fontWeight="bold">
-                Nome:{}
-              </TextoBarraPaciente>
-            </BarraEsquerda>
+                <TextoBarraPaciente fontSize="1.3em" fontWeight="bold">
+                  Nome:{value.nome}
+                </TextoBarraPaciente>
+              </BarraEsquerda>
 
-            <BarraDireita>
-              <TextoBarraPaciente
-                fontSize="1.3em"
-                fontWeight="bold"
-                justifyContent="flex-start"
-              >
-                Resposta Pendente{" "}
-              </TextoBarraPaciente>
+              <BarraDireita>
+                <TextoBarraPaciente
+                  fontSize="1.3em"
+                  fontWeight="bold"
+                  justifyContent="flex-start"
+                >
+                  Resposta Pendente{" "}
+                </TextoBarraPaciente>
 
-              <Button
-                width="24%"
-                backgroundColor={Cores.lilas[2]}
-                boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-                borderColor={Cores.azulEscuro}
-                borderRadius="5px"
-                height="29%"
-                color={Cores.preto}
-                fontSize="1.1em"
-              >
-                ENVIAR LEMBRETE
-              </Button>
-            </BarraDireita>
-          </BarraPaciente>
+                <Button
+                  width="24%"
+                  backgroundColor={Cores.lilas[2]}
+                  boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+                  borderColor={Cores.azulEscuro}
+                  borderRadius="5px"
+                  height="29%"
+                  color={Cores.preto}
+                  fontSize="1.1em"
+                >
+                  ENVIAR LEMBRETE
+                </Button>
+              </BarraDireita>
+            </BarraPaciente>
+          ))}
         </ColunaEsquerda>
         <ColunaDireita>
           <BarraRespostas>
