@@ -42,17 +42,17 @@ function EditarFormulario(props) {
   }, [props]);
 
   async function atualizarDados() {
-    let perguntas = Object.assign(
+    Object.assign(
       auxiliar,
       formularios.perguntas.properties,
       estado.properties
     );
-    estado.properties = perguntas;
-    await managerService.updatePerguntasFormulario(formularios.id, estado);
+    estado.properties = auxiliar;
+    await managerService.EditarPerguntasFormulario(formularios.id, estado);
   }
 
   async function atualizarCamposQueNaoSaoPerguntas() {
-    await managerService.UpdateFormularios(formularios.id, campos);
+    await managerService.EditarFormularios(formularios.id, campos);
   }
 
   function preenchendoDados(e) {

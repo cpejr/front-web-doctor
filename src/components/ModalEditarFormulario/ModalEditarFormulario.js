@@ -26,7 +26,7 @@ function ModalEditarFormulario(props) {
 
   async function deletarCampo(valor) {
     delete props.perguntasAlterar.properties[valor[0]]
-    await managerService.updatePerguntasFormulario(
+    await managerService.EditarPerguntasFormulario(
       props.formulario.id,
       props.perguntasAlterar
     );

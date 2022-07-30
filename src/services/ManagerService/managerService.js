@@ -419,12 +419,12 @@ export const GetResposta = async (id) => {
   return dadosResposta;
 };
 
-export const updatePerguntasFormulario = async (
+export const EditarPerguntasFormulario = async (
   id,
   perguntas
 ) => {
   await requesterService
-    .updatePerguntasFormulario(id, perguntas)
+    .editarPerguntasFormulario(id, perguntas)
     .then(() => {
       toast.success("Pergunta alterada com sucesso.");
       sleep(1500)
@@ -438,12 +438,12 @@ export const updatePerguntasFormulario = async (
   return false;
 };
 
-export const UpdateFormularios = async (
+export const EditarFormularios = async (
   id,
   campos
 ) => {
   await requesterService
-    .updateCampos(id, campos)
+    .editarCamposFormulario(id, campos)
     .then(() => {
       toast.success("Formulario atualizado com sucesso.");
       sleep(1500)
