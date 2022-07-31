@@ -5,6 +5,7 @@ import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import Select from "../../styles/Select/Select";
+import { usuarioAutenticado } from "../../services/auth";
 import { Spin, Switch } from "antd";
 import { LoadingOutlined, LeftOutlined } from "@ant-design/icons";
 import {
@@ -27,7 +28,7 @@ import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 import { cpf, apenasLetras, apenasNumeros, apenasNumerosCep, apenasNumerosCpfTel, cep, data, telefone, dataBack } from "../../utils/masks";
 
-function Cadastro() {
+function Cadastro(props) {
   const history = useHistory();
 
   const [usuario, setUsuario] = useState({});
@@ -46,18 +47,7 @@ function Cadastro() {
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
 
-  function funcaoConvenio() {
-    setConvenio(!convenio);
-    setUsuario({ ...usuario, convenio: null });
-  }
-  function funcaoCuidador() {
-    setCuidador(!cuidador);
-    setUsuario({ ...usuario, nome_cuidador: null, telefone_cuidador: null });
-  }
-
-  const errors = {};
-  const teste = {
-    tipo: false,
+  const [teste, setTeste] = useState({
     nome: false,
     telefone: false,
     email: false,
@@ -72,7 +62,42 @@ function Cadastro() {
     bairro: false,
     senha: false,
     senhaConfirmada: false,
-  };
+  })
+
+  function funcaoConvenio() {
+    setConvenio(!convenio);
+    setUsuario({ ...usuario, convenio: null });
+  }
+  function funcaoCuidador() {
+    setCuidador(!cuidador);
+    setUsuario({ ...usuario, nome_cuidador: null, telefone_cuidador: null });
+  }
+
+  function setandoTipoPorProps(){
+    if(usuarioAutenticado()){
+      setUsuario({
+        ...usuario,
+        tipo: props.location.state.tipo,
+        nome_cuidador: null,
+        telefone_cuidador: null,
+        convenio: null,
+      });
+      setConvenio(false);
+      setCuidador(false);
+    }
+    else{
+      setTeste({...teste, tipo: false})
+    }
+  }
+
+  
+
+  useEffect(() => {
+    setandoTipoPorProps();
+  }, [props]);
+
+  const errors = {};
+
 
   async function verificandoEnter(e) {
     if (e.key === "Enter") {
@@ -100,6 +125,8 @@ function Cadastro() {
     if (erro.email === true) errors.email = true;
 
     setCamposVazios({ ...camposVazios, ...errors });
+    console.log(camposVazios);
+    console.log(teste);
 
     if (_.isEqual(camposVazios, teste)) {
       if (usuario.senha === usuario.senhaConfirmada) {
@@ -268,7 +295,8 @@ function Cadastro() {
           <Botao onClick={() => history.push("/login")}>
             <LeftOutlined /> Voltar para login
           </Botao>
-          <Select
+          {usuarioAutenticado() === false ?(
+            <Select
             id="tipos"
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
@@ -285,6 +313,11 @@ function Cadastro() {
               Paciente
             </option>
           </Select>
+
+          ) : (
+            <></>
+          )}
+          
           <Input
             placeholder="Nome Completo"
             status="error"
