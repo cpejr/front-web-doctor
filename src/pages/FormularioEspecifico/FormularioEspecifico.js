@@ -19,6 +19,8 @@ import {
   SelectTipos,
   BarraDireita,
   BarraEsquerda,
+  BarraCentro,
+  Selects,
 } from "./Styles";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
@@ -79,15 +81,15 @@ function FormularioEspecifico(props) {
           <CamposFormularioCima>
             {formularioEspecifico.urgencia === 1 ? (
               <>
-                <StarOutlined />
-                <StarOutlined />
                 <StarFilled />
+                <StarOutlined />
+                <StarOutlined />
               </>
             ) : formularioEspecifico.urgencia === 2 ? (
               <>
+                <StarFilled />
+                <StarFilled />
                 <StarOutlined />
-                <StarFilled />
-                <StarFilled />
               </>
             ) : (
               <>
@@ -102,29 +104,31 @@ function FormularioEspecifico(props) {
         <ColunaEsquerda>
           <ContainerBarraDeBuscaOpcoes>
             <BarraDePesquisa>
-              <Search placeholder="BUSCAR" style={{ width: 400 }} />
+              <Search placeholder="BUSCAR" style={{ width: "100%"}} />
             </BarraDePesquisa>
-            <RotuloBarraDeBuscaOpcoes>
-              <SelectTipos
-                defaultValue="Todos os pacientes"
-                bordered={false}
-                style={{ width: 170 }}
-              ></SelectTipos>
-            </RotuloBarraDeBuscaOpcoes>
-            <RotuloBarraDeBuscaOpcoes>
-              <SelectTipos
-                defaultValue="Todas as datas"
-                bordered={false}
-                style={{ width: 140 }}
-              ></SelectTipos>
-            </RotuloBarraDeBuscaOpcoes>
-            <RotuloBarraDeBuscaOpcoes>
-              <SelectTipos
-                defaultValue="Status"
-                bordered={false}
-                style={{ width: 90 }}
-              ></SelectTipos>
-            </RotuloBarraDeBuscaOpcoes>
+            <Selects>
+              <RotuloBarraDeBuscaOpcoes>
+                <SelectTipos
+                  defaultValue="Todos os pacientes"
+                  bordered={false}
+                  style={{ width: 150 }}
+                ></SelectTipos>
+              </RotuloBarraDeBuscaOpcoes>
+              <RotuloBarraDeBuscaOpcoes>
+                <SelectTipos
+                  defaultValue="Todas as datas"
+                  bordered={false}
+                  style={{ width: 130 }}
+                ></SelectTipos>
+              </RotuloBarraDeBuscaOpcoes>
+              <RotuloBarraDeBuscaOpcoes>
+                <SelectTipos
+                  defaultValue="Status"
+                  bordered={false}
+                  style={{ width: 90 }}
+                ></SelectTipos>
+              </RotuloBarraDeBuscaOpcoes>
+            </Selects>
           </ContainerBarraDeBuscaOpcoes>
 
           <BarraEstetica></BarraEstetica>
@@ -132,22 +136,23 @@ function FormularioEspecifico(props) {
           {formularioPacientes.map((value) => (
             <BarraPaciente>
               <BarraEsquerda>
-                <img
+                <ImagemPaciente
                   src={fotoPerfil}
                   className="fotoPerfil"
                   alt="fotoPerfil"
-                  width="120px"
-                  height="120px"
-                ></img>
-
-                <TextoBarraPaciente fontSize="1.3em" fontWeight="bold">
-                  Nome:{value.nome}
-                </TextoBarraPaciente>
+                  width="80px"
+                  height="80px"
+                ></ImagemPaciente>
               </BarraEsquerda>
+              <BarraCentro>
+                <TextoBarraPaciente fontSize="1.2em" fontWeight="bold">
+                  Nome: {value.nome}
+                </TextoBarraPaciente>
+              </BarraCentro>
 
               <BarraDireita>
                 <TextoBarraPaciente
-                  fontSize="1.3em"
+                  fontSize="1em"
                   fontWeight="bold"
                   justifyContent="flex-start"
                 >
@@ -155,14 +160,16 @@ function FormularioEspecifico(props) {
                 </TextoBarraPaciente>
 
                 <Button
-                  width="24%"
+                  width="60%"
                   backgroundColor={Cores.lilas[2]}
                   boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
                   borderColor={Cores.azulEscuro}
                   borderRadius="5px"
-                  height="29%"
+                  height="38%"
                   color={Cores.preto}
-                  fontSize="1.1em"
+                  fontSize="0.8em"
+                  fontSizeMedia950="0.6em"
+                  heightMedia560="40%"
                 >
                   ENVIAR LEMBRETE
                 </Button>
@@ -183,10 +190,11 @@ function FormularioEspecifico(props) {
             boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
             color={Cores.preto}
             fontSize="15px"
-            height="35px"
-            width="30%"
+            height="45px"
+            width="50%"
             marginTop="10%"
-            marginLeft="30%"
+            marginLeft="0%"
+            fontSizeMedia950="0.9em"
             onClick={() => {}}
           >
             Gerar documento Word

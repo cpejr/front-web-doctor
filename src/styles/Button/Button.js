@@ -36,8 +36,9 @@ const Button = styled.button`
     width: 100%;
     height: ${(props) => props.heightMedia560};
   }
-  @media (max-width: 950px) and (min-width: 480px) {
+  @media (max-width: 960px) and (min-width: 480px) {
     font-size: ${(props) => props.fontSizeMedia950};
+    
   }
   @media (max-width: 1080px) {
     font-size: ${(props) => props.fontSizeMedia1080};
