@@ -20,6 +20,7 @@ import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../ModalAgendamentoEspecifico";
 import ModalEditarAgendamentoEspecifico from "../ModalEditarAgendamentoEspecifico";
+import { compararDataAgendamentos } from "../../utils/tratamentoErros";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAgendamento(props) {
@@ -51,20 +52,7 @@ function ModalAgendamento(props) {
   }
 
 
-  
-function comparaData(a, b){
-  
-  var data1 = new Date(a.data_hora);
-  var data2 = new Date(b.data_hora); 
 
-  if (data1 > data2){
-    return 1;
-  }
-  else {
-    return -1;
-  }
-
-}
 
   useEffect(() => {
     pegandoDados();
@@ -110,7 +98,7 @@ function comparaData(a, b){
           <CorpoCaixa>
             <InfoEsquerda>
               {consultas
-              .sort(comparaData)
+              .sort(compararDataAgendamentos)
               .map((value) => (
                 <Agendamento>
                   <CaixaAgendamento key={value.id}>

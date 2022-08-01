@@ -29,6 +29,7 @@ import {
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 import { Cores } from "../../variaveis";
+import { compararDataAgendamentos } from "../../utils/tratamentoErros";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function Agendamentos() {
@@ -46,19 +47,7 @@ function Agendamentos() {
 
 
 
-  function comparaData(a, b) {
-
-    var data1 = new Date(a.data_hora);
-    var data2 = new Date(b.data_hora);
-
-    if (data1 > data2) {
-      return 1;
-    }
-    else {
-      return -1;
-    }
-
-  }
+  
 
   async function pegandoDados() {
     const resposta =
@@ -136,7 +125,7 @@ function Agendamentos() {
         <ContainerUsuarios>
 
           {consultas
-            .sort(comparaData)
+            .sort(compararDataAgendamentos)
             .map((value) => (
               <Usuario key={value.id_usuario}>
                 <Imagem>{value.avatar_url}</Imagem>
