@@ -47,7 +47,6 @@ function Cadastro(props) {
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
 
-  const [acessadoPorBotao, setAcessadoPorBotao] = useState(false);
 
   const [teste, setTeste] = useState({
     nome: false,
@@ -82,11 +81,6 @@ function Cadastro(props) {
     }
   }
 
-  function verificaAcessoPorBotao(){
-    if(history.location.state != undefined){
-      setAcessadoPorBotao(true);
-    }
-  }
 
 
   function setandoTipoPorProps(){
@@ -158,8 +152,6 @@ function Cadastro(props) {
     if (erro.email === true) errors.email = true;
 
     setCamposVazios({ ...camposVazios, ...errors });
-    console.log(camposVazios);
-    console.log(teste);
 
     if (_.isEqual(camposVazios, teste)) {
       if (usuario.senha === usuario.senhaConfirmada) {
