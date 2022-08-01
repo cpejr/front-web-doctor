@@ -39,14 +39,15 @@ export const Cadastrando = async (usuario, endereco) => {
   await requesterService
     .criarUsuario(endereco, usuario)
     .then(() => {
-      alert("Usuário cadastrado com sucesso.");
+      toast.success("Usuário cadastrado com sucesso.");
       sleep(1500);
-      if(recebeTipo() === "MASTER"){
+      /* if(recebeTipo() === "MASTER"){
         window.location.href = "/web/homemedico";
       }
       else{
         window.location.href = "/web/homesecretaria";
-      }
+      } */
+      window.location.href = "/login";
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/cadastro"));

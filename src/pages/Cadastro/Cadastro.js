@@ -5,7 +5,7 @@ import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import Select from "../../styles/Select/Select";
-import { usuarioAutenticado } from "../../services/auth";
+import { recebeTipo, usuarioAutenticado } from "../../services/auth";
 import { Spin, Switch } from "antd";
 import { LoadingOutlined, LeftOutlined } from "@ant-design/icons";
 import {
@@ -47,6 +47,8 @@ function Cadastro(props) {
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
 
+  const [acessadoPorBotao, setAcessadoPorBotao] = useState(false);
+
   const [teste, setTeste] = useState({
     nome: false,
     telefone: false,
@@ -73,8 +75,23 @@ function Cadastro(props) {
     setUsuario({ ...usuario, nome_cuidador: null, telefone_cuidador: null });
   }
 
+
+  function verificaAutenticacao(){
+    if(usuarioAutenticado() === false){
+      window.location.href = "/login";
+    }
+  }
+
+  function verificaAcessoPorBotao(){
+    if(history.location.state != undefined){
+      setAcessadoPorBotao(true);
+    }
+  }
+
+
   function setandoTipoPorProps(){
-    if(usuarioAutenticado()){
+
+    if(history.location.state != undefined){
       setUsuario({
         ...usuario,
         tipo: props.location.state.tipo,
@@ -85,16 +102,32 @@ function Cadastro(props) {
       setConvenio(false);
       setCuidador(false);
     }
-    else{
+  
+    else if(history.location.state === undefined && recebeTipo() === "SECRETARIA(O)"){
+      setUsuario({
+        ...usuario,
+        tipo: "PACIENTE",
+        nome_cuidador: null,
+        telefone_cuidador: null,
+        convenio: null,
+      });
+      setConvenio(false);
+      setCuidador(false);
+    }
+
+    else if(history.location.state === undefined && recebeTipo() === "MASTER"){
       setTeste({...teste, tipo: false})
     }
   }
 
-  
-
   useEffect(() => {
     setandoTipoPorProps();
   }, [props]);
+
+
+  useEffect(() => {
+    verificaAutenticacao();
+  }, []);
 
   const errors = {};
 
@@ -295,7 +328,7 @@ function Cadastro(props) {
           <Botao onClick={() => history.push("/login")}>
             <LeftOutlined /> Voltar para login
           </Botao>
-          {usuarioAutenticado() === false ?(
+          {history.location.state === undefined && recebeTipo() === "MASTER" ?(
             <Select
             id="tipos"
             backgroundColor={Cores.cinza[7]}
