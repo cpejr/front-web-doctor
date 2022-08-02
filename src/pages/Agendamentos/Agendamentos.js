@@ -45,7 +45,6 @@ function Agendamentos() {
       await managerService.GetDadosConsultasExamesMarcadosGeral();
     setConsultas(resposta.dadosConsultas);
     setExamesMarcados(resposta.dadosExamesMarcados);
-    console.log(resposta);
     setCarregando(false);
   }
 

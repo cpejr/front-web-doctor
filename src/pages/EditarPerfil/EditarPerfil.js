@@ -236,9 +236,9 @@ function EditarPerfil() {
           enderecoBack,
           estadoBack
         );
-
-        sleep(1500);
+        await sleep(1500);
         window.location.href = "/web/perfil";
+        
       } else {
         toast.warn("Preencha os campos corretamente");
       }

@@ -16,7 +16,7 @@ import {
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 import { toast } from "react-toastify";
-import {sleep, redirecionamento} from "../../utils/sleep"
+import { sleep, redirecionamento } from "../../utils/sleep";
 
 function AlterarSenha() {
   const history = useHistory();
@@ -38,7 +38,7 @@ function AlterarSenha() {
   const errors = {};
   const errorsNovaSenha = {};
   const referenciaCamposNulos = {
-    senhaAtual: false
+    senhaAtual: false,
   };
   const referenciaCamposNulosNovaSenha = {
     senhaAtual: false,
@@ -56,8 +56,6 @@ function AlterarSenha() {
   }, [alterador]);
 
   async function conferirSenha() {
-    //função que recebe como parâmetro a senha digitada e o email do usuário logado,
-    //retorna true como valor para alterador se as senhas forem diferentes, e false se as senhas forem iguais;
     if (!senhaAtual) errors.senhaAtual = true;
     setCamposVazios({ ...camposVazios, ...errors });
 
@@ -123,8 +121,6 @@ function AlterarSenha() {
   }
 
   async function trocarSenha() {
-    //conferir se a "novaSenha" é igual a "confirmarSenha"; se for igual postar a nova senha do usuário;
-    //se não for igual alertar que as senhas digitadas não conferem
     if (!novaSenha) errorsNovaSenha.senha = true;
     if (!confirmarSenha) errorsNovaSenha.confirmarSenha = true;
     setCamposVaziosTrocarSenha({ ...camposVazios, ...errorsNovaSenha });
@@ -139,10 +135,10 @@ function AlterarSenha() {
             novaSenha,
             resposta.dadosUsuario.id
           );
-          sleep(1500);
+          await sleep(1500);
           redirecionamento("/web/perfil");
           setCarregando(false);
-        } 
+        }
       } else {
         toast.error("As senhas digitadas são diferentes!");
         await sleep(1500);
@@ -234,7 +230,9 @@ function AlterarSenha() {
                   erro={erro.senha}
                   onChange={NovaSenha}
                 ></Input>
-                {erro.senha && <Rotulo>Insira uma nova senha com no minimo 8 digitos</Rotulo>}
+                {erro.senha && (
+                  <Rotulo>Insira uma nova senha com no minimo 8 digitos</Rotulo>
+                )}
                 <Input
                   placeholder="Confirme sua nova senha"
                   backgroundColor={Cores.cinza[7]}
@@ -249,7 +247,9 @@ function AlterarSenha() {
                   onChange={NovaSenha}
                   onKeyPress={verificandoTrocarSenha}
                 ></Input>
-                {erro.confirmarSenha && <Rotulo>Confirme sua nova senha</Rotulo>}
+                {erro.confirmarSenha && (
+                  <Rotulo>Confirme sua nova senha</Rotulo>
+                )}
               </InputVertical>
               <BotoesMesmaLinha>
                 <Button
