@@ -33,6 +33,16 @@ export const requisicaoLogin = async (email, senha) => {
 };
 
 export const Cadastrando = async (usuario, endereco) => {
+  const resposta = await requesterService.requisicaoDadosUsuario(usuario.email);
+
+  if (resposta.status != 204){
+    sleep(1500);
+    toast.error("E-mail já cadastrado");
+    return;
+  }
+
+
+
   await requesterService
     .criarUsuario(endereco, usuario)
     .then(() => {
@@ -308,8 +318,7 @@ export const DeletarConsulta = async (id) => {
   await requesterService
     .deletarConsulta(id)
     .then(() => {
-      alert("Consulta deletada com sucesso.");
-      window.location.href = "/web/perfildopaciente";
+      toast.success("Consulta deletada com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(
@@ -327,8 +336,7 @@ export const DeletarExameMarcado = async (id) => {
   await requesterService
     .deletarExameMarcado(id)
     .then(() => {
-      alert("Exame deletado com sucesso.");
-      window.location.href = "/web/perfildopaciente";
+      toast.success("Exame deletado com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(
@@ -416,4 +424,17 @@ export const GetResposta = async (id) => {
       requisicaoErro(error);
     });
   return dadosResposta;
+};
+
+export const GetReceitas = async () => {
+  let dadosReceitas = {};
+  await requesterService
+    .requisicaoReceitas()
+    .then((res) => {
+      dadosReceitas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosReceitas;
 };

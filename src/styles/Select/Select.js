@@ -24,6 +24,8 @@ const Select = styled.select`
   border-width: ${(props) => props.borderWidth};
   height: 50px;
   padding-left: 2%;
+  padding-top: ${(props) => props.paddingTop?? "0px"};
+  padding-bottom: ${(props) => props.paddingTop?? "0px"};
   width: ${(props) => props.width};
   @media (max-width: 820px) {
     width: 100%;
