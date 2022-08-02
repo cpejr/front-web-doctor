@@ -430,3 +430,16 @@ export const GetResposta = async (id) => {
     });
   return dadosResposta;
 };
+
+export const GetReceitas = async () => {
+  let dadosReceitas = {};
+  await requesterService
+    .requisicaoReceitas()
+    .then((res) => {
+      dadosReceitas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosReceitas;
+};
