@@ -33,6 +33,8 @@ function FormularioEspecifico(props) {
   const { Search } = Input;
   const [formularioEspecifico, setFormularioEspecifico] = useState({});
   const [formularioPacientes, setformularioPacientes] = useState([]);
+  const [formularioRespostaPendente, setFormularioRespostaPendente] = useState(false);
+  const [formularioResposta, setFormularioResposta] = useState(false);
 
   async function pegandoDadosFormularioEspecifico() {
     const resposta = await managerService.GetFormularioEspecifico(
@@ -48,7 +50,15 @@ function FormularioEspecifico(props) {
       );
 
     setformularioPacientes(respostaFormularios);
+
+    const formularioRespostaPendente = respostaFormularios.filter(item => item.respostas === null);
+    setFormularioRespostaPendente(formularioRespostaPendente);
+    
+    const formularioResposta = respostaFormularios.filter(item => item.respostas !== null);
+    setFormularioResposta(formularioResposta);
+    
   }
+
 
   useEffect(() => {
     pegandoFormularioPacientes();
@@ -57,6 +67,7 @@ function FormularioEspecifico(props) {
   useEffect(() => {
     pegandoDadosFormularioEspecifico();
   }, [props.location.state.id]);
+
 
   return (
     <>
@@ -149,7 +160,7 @@ function FormularioEspecifico(props) {
                   Nome: {value.nome}
                 </TextoBarraPaciente>
               </BarraCentro>
-
+              {value.respostas !== null ? (<></>) : (
               <BarraDireita>
                 <TextoBarraPaciente
                   fontSize="1em"
@@ -173,15 +184,15 @@ function FormularioEspecifico(props) {
                 >
                   ENVIAR LEMBRETE
                 </Button>
-              </BarraDireita>
+              </BarraDireita>)}
             </BarraPaciente>
           ))}
         </ColunaEsquerda>
         <ColunaDireita>
           <BarraRespostas>
-            Aguardando respostas de ____ usuários.
+            Aguardando respostas de {formularioRespostaPendente.length} usuários.
           </BarraRespostas>
-          <BarraRespostas> ____ usuários já responderam.</BarraRespostas>
+          <BarraRespostas> {formularioResposta.length} usuários já responderam.</BarraRespostas>
           <Button
             backgroundColor={Cores.azulClaro}
             borderRadius="3px"

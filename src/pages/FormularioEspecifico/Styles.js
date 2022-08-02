@@ -229,10 +229,11 @@ export const CamposFormularioCima = styled.div`
   align-items: center;
   text-align: center;
   background-color: transparent;
-  border-color: ${Cores.cinza[2]};
+  border-color: ${Cores.cinza[3]};
   border-style: solid;
   border-width: 2px;
-  font-size: 1em;
+  font-size: 1.1em;
+  font-weight: bold;
   height: 10vh;
   width: 18%;
   gap: 2%;
