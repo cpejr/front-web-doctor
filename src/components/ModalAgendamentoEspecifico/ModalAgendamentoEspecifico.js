@@ -33,7 +33,6 @@ import logoGuilherme from "../../assets/logoGuilherme.png";
 import { Cores } from "../../variaveis";
 import { TiposDeConsulta } from "./TiposDeConsulta";
 import { apenasNumeros, data, dataAgendamentoBack } from "../../utils/masks";
-import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAgendamentoEspecifico(props) {
