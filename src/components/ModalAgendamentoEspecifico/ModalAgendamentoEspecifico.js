@@ -54,13 +54,10 @@ function ModalAgendamentoEspecifico(props) {
     tipo: "",
   });
   const [dataConsulta, setDataConsulta] = useState("");
-  //const [dataConsultaBack, setDataConsultaBack] = useState("");
   const [hora, setHora] = useState("");
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
-  //const [erroDataBack, setErroDataBack] = useState(false);
   const [hoje, setHoje] = useState("");
-  const [horarioAtual, setHorarioAtual] = useState("");
 
   moment.locale("pt-br");
 
@@ -80,6 +77,7 @@ function ModalAgendamentoEspecifico(props) {
     id_consultorio: false,
     tipo: false,
   };
+
   useEffect(() => {
     pegandoPacientes();
   }, []);
@@ -120,11 +118,12 @@ function ModalAgendamentoEspecifico(props) {
       setErro({ ...erro, [name]: false });
     }
 
-   /*  if (e.target.name === "hora") {
-      setHora(e.target.value);
-      return hora;
-    } else */ if (e.target.name === "data") {
+    if (e.target.name === "data") {
       setDataConsulta(e.target.value);
+      if (hora !== "" && hora !== undefined) {
+        validacaoHorario(hora, e.target.value);
+      }
+
       return dataConsulta;
     } else if (e.target.name === "duracao_em_minutos") {
       setConsulta({
@@ -138,118 +137,71 @@ function ModalAgendamentoEspecifico(props) {
     }
   }
 
-/*   function foramatarDataConsultaFront(value) {
-    const aux = apenasNumeros(value);
-
-    setDataConsulta(data(aux));
-  }
-  function foramatarDataConsultaBack(data) {
-    setDataConsultaBack(dataAgendamentoBack(data));
-  } */
-
-/*   async function validacaoData(e) {
-    const { value, name } = e;
-
-    if (value) {
-      setCamposVazios({ ...camposVazios, [name]: false });
-    }
-    if (value.toString().length < 10) {
-      setErro({ ...erro, [name]: true });
-      setErroDataBack(false);
-    } else if (dataAgendamentoBack(value) === "Data Invalida") {
-      setErro({ ...erro, [name]: true });
-      setErroDataBack(true);
-    } else {
-      setErro({ ...erro, [name]: false });
-    }
-    if (value.toString().length === 0) {
-      setErro({ ...erro, [name]: false });
-    }
-    foramatarDataConsultaFront(value);
-    foramatarDataConsultaBack(value);
-  } */
-
   function setandoDiaAtual() {
-
     let data = new Date();
     let dia = data.getDate();
     let mes = data.getMonth() + 1;
     let ano = data.getFullYear();
-    
-    if (dia < 10){
+
+    if (dia < 10) {
       dia = "0" + dia;
     }
-    if (mes < 10){
+    if (mes < 10) {
       mes = "0" + mes;
     }
 
     setHoje(ano + "-" + mes + "-" + dia);
-    
   }
 
-  function setandoDataMinima(){
+  function setandoDataMinima() {
     document.getElementById("data").setAttribute("min", hoje);
   }
 
   useEffect(() => {
     setandoDiaAtual();
   }, []);
-  
+
   useEffect(() => {
     setandoDataMinima();
   }, [hoje]);
 
   function setandoHoraAtual() {
-    
     let horario = new Date();
     let horaAtual = horario.getHours();
     let minutos = horario.getMinutes();
-    
-    if (horaAtual < 10){
-      horaAtual = "0" + horaAtual; 
+
+    if (horaAtual < 10) {
+      horaAtual = "0" + horaAtual;
     }
-    if (minutos < 10){
+    if (minutos < 10) {
       minutos = "0" + minutos;
     }
 
-    setHorarioAtual(horaAtual + ":" + minutos);
-
-  }
-  
-/*   function setandoHorarioMinimo(){ 
-    if(new Date(consulta.data_hora) === horarioAtual){
-      document.getElementById("hora").setAttribute("min", horarioAtual);
-    }
-  } */
-
-  useEffect(() => {
-    setandoHoraAtual();
-  }, []);
-  
-/*   useEffect(() => {
-    setandoHorarioMinimo();
-  }, [horarioAtual]); */
-
-  function validacaoHorario(e) {
-    const { value, name } = e.target;
-
-    if (value) {
-      setCamposVazios({ ...camposVazios, [name]: false });
-    } else {
-      setCamposVazios({ ...camposVazios, [name]: true });
-    }
-    if ( hora <= horarioAtual ){
-      setErro({ ...erro, [name]: true });
-    } else {
-      setErro({ ...erro, [name]: false });
-    }
-
-    if (e.target.name === "hora") {
-      setHora(e.target.value);
-      return hora;
-    }
+    const horarioAtual = horaAtual + ":" + minutos;
+    return horarioAtual;
   }
 
+  function validacaoHorario(horarioConsulta, dataConsulta) {
+    const horaAtual = setandoHoraAtual();
+
+    if (horarioConsulta) {
+      setCamposVazios({ ...camposVazios, hora: false });
+    } else {
+      setCamposVazios({ ...camposVazios, hora: true });
+    }
+
+    if (hoje === dataConsulta) {
+      if (horarioConsulta <= horaAtual) {
+        setErro({ ...erro, hora: true });
+      } else {
+        setErro({ ...erro, hora: false });
+      }
+    } else {
+      setErro({ ...erro, hora: false });
+    }
+
+    setHora(horarioConsulta);
+  }
 
   function formatacaoDataHora() {
     try {
@@ -260,7 +212,6 @@ function ModalAgendamentoEspecifico(props) {
     }
   }
 
-
   async function requisicaoCriarConsulta() {
     if (!dataConsulta) errors.data = true;
     if (!hora) errors.hora = true;
@@ -269,10 +220,15 @@ function ModalAgendamentoEspecifico(props) {
     if (!consulta.tipo) errors.tipo = true;
 
     setCamposVazios({ ...camposVazios, ...errors });
-    if (consulta.duracao_em_minutos === "" || dataConsulta === "") {
+
+    if (
+      consulta.duracao_em_minutos === "" ||
+      dataConsulta === "" ||
+      hora === ""
+    ) {
       toast.warn("Preencha todos os campos");
     } else {
-      if (erro.data) {
+      if (erro.hora) {
         toast.warn("Preencha todos os campos corretamente");
       } else {
         if (_.isEqual(camposVazios, referenciaInputNulos)) {
@@ -289,11 +245,6 @@ function ModalAgendamentoEspecifico(props) {
       }
     }
   }
-
- /*  function preenchendoDadosConsulta(e) {
-    setConsulta({ ...consulta, [e.target.name]: e.target.value });
-    return consulta;
-  } */
 
   return (
     <Container>
@@ -389,18 +340,8 @@ function ModalAgendamentoEspecifico(props) {
               onChange={(e) => validacaoCampos(e)}
               value={dataConsulta}
               camposVazios={camposVazios.data}
-              erro={erro.data}
               id="data"
             />
-            {/* {erro.data && (
-              <>
-                {erroDataBack ? (
-                  <Rotulo>Digite uma data válida.</Rotulo>
-                ) : (
-                  <Rotulo>Digite uma data no formato xx/xx/xxxx</Rotulo>
-                )}
-              </>
-            )} */}
             {camposVazios.data && <Rotulo>Selecione uma data</Rotulo>}
           </SelecioneUmaData>
           <DoisSelect>
@@ -490,13 +431,12 @@ function ModalAgendamentoEspecifico(props) {
                 value={hora}
                 type="time"
                 onKeyDown={(e) => e.preventDefault()}
-                /* onFocus={(e) => (e.target.type = "time")}
-                onBlur={(e) => (e.target.type = "text")} */
                 placeholder="Horário"
                 name="hora"
                 id="hora"
-                onChange={(e) => validacaoHorario(e)}
+                onChange={(e) => validacaoHorario(e.target.value, dataConsulta)}
                 camposVazios={camposVazios.hora}
+                erro={erro.hora}
               />
               {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
               {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
