@@ -28,6 +28,8 @@ import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 import { cpf, apenasLetras, apenasNumeros, apenasNumerosCep, apenasNumerosCpfTel, cep, data, telefone, dataBack } from "../../utils/masks";
 
+import { sleep } from "../../utils/sleep";
+
 function Cadastro(props) {
   const history = useHistory();
 
@@ -157,6 +159,7 @@ function Cadastro(props) {
       if (usuario.senha === usuario.senhaConfirmada) {
         setCarregando(true);
         await managerService.Cadastrando(usuario, enderecoBack);
+        sleep(3000);
         setCarregando(false);
       } else {
         toast.error("As senhas digitadas são diferentes.");

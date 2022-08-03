@@ -216,3 +216,30 @@ export const CaixaVazia = styled.div`
     width: 50%;
   }
 `;
+
+export const BotoesMedico = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    justify-content: center;
+  }
+`;
+
+
+export const BotaoSecretario = styled.div`
+  
+  position: relative;
+  left: 25%;
+  width: 50%;
+  margin-top: 1%;
+
+  @media (max-width: 920px) {
+    left: 0%;
+    width: 100%
+  }
+`;

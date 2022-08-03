@@ -40,7 +40,6 @@ export const Cadastrando = async (usuario, endereco) => {
     .criarUsuario(endereco, usuario)
     .then(() => {
       toast.success("Usuário cadastrado com sucesso.");
-      sleep(1500);
       /* if(recebeTipo() === "MASTER"){
         window.location.href = "/web/homemedico";
       }
