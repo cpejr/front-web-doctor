@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from "react";
 import Input from "../../styles/Input";
 import { useHistory } from "react-router-dom";
-import { Spin } from "antd";
+import Button from "../../styles/Button";
 import { LoadingOutlined } from "@ant-design/icons";
+import _ from "lodash";
+import { Spin } from "antd";
 import {
   Conteudo,
   Caixa,
   InputVertical,
   BotoesMesmaLinha,
   Titulo,
+  Rotulo,
 } from "./Styles";
-import Button from "../../styles/Button";
-import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
+import { Cores } from "../../variaveis";
+import { toast } from "react-toastify";
+import { sleep, redirecionamento } from "../../utils/sleep";
 
 function AlterarSenha() {
   const history = useHistory();
@@ -27,6 +31,20 @@ function AlterarSenha() {
   const [confirmarSenha, setConfirmarSenha] = useState("");
   const email = sessionStorage.getItem("@doctorapp-Email");
 
+  const [erro, setErro] = useState(false);
+  const [camposVazios, setCamposVazios] = useState(false);
+  const [camposVaziosTrocarSenha, setCamposVaziosTrocarSenha] = useState(false);
+
+  const errors = {};
+  const errorsNovaSenha = {};
+  const referenciaCamposNulos = {
+    senhaAtual: false,
+  };
+  const referenciaCamposNulosNovaSenha = {
+    senhaAtual: false,
+    confirmarSenha: false,
+  };
+
   useEffect(() => {
     if (alterador === true) {
       setConfirmandoSenha(true);
@@ -38,19 +56,97 @@ function AlterarSenha() {
   }, [alterador]);
 
   async function conferirSenha() {
-    setCarregando(true);
-    setAlterador(await managerService.ConferirSenha(email, senhaAtual));
-    setCarregando(false);
+    if (!senhaAtual) errors.senhaAtual = true;
+    setCamposVazios({ ...camposVazios, ...errors });
+
+    if (_.isEqual(camposVazios, referenciaCamposNulos)) {
+      setCarregando(true);
+      const resposta = await managerService.ConferirSenha(email, senhaAtual);
+      setAlterador(resposta);
+      if (resposta === true) {
+        setErro({ ...erro, senhaAtual: true });
+      }
+      setCarregando(false);
+    } else {
+      setErro({ ...erro, senhaAtual: true });
+      setCarregando(true);
+      toast.warn("Insira a senha atual!");
+      setCarregando(false);
+    }
+  }
+
+  async function ValidacaoSenhaAtual(e) {
+    const { value, name } = e.target;
+    setErro({ ...erro, senhaAtual: false });
+    if (value) {
+      setCamposVazios({ ...camposVazios, [name]: false });
+    } else {
+      setCamposVazios({ ...camposVazios, [name]: true });
+    }
+    setSenhaAtual(value);
+  }
+
+  async function NovaSenha(e) {
+    const { value, name } = e.target;
+    setErro({ ...erro, [name]: false });
+
+    if (value) {
+      setCamposVaziosTrocarSenha({ ...camposVazios, [name]: false });
+    } else {
+      setCamposVaziosTrocarSenha({ ...camposVazios, [name]: true });
+    }
+
+    if (value.length < 8) {
+      setErro({ ...erro, [name]: true });
+    } else {
+      setErro({ ...erro, [name]: false });
+    }
+
+    if (name === "senha") {
+      setNovaSenha(value);
+    } else {
+      setConfirmarSenha(value);
+    }
+  }
+
+  async function verificandoConferirSenha(e) {
+    if (e.key === "Enter") {
+      conferirSenha();
+    }
+  }
+  async function verificandoTrocarSenha(e) {
+    if (e.key === "Enter") {
+      trocarSenha();
+    }
   }
 
   async function trocarSenha() {
-    if (novaSenha === confirmarSenha) {
-      setCarregando(true);
-      const resposta = await managerService.GetDadosUsuario(email);
-      await managerService.AlterarSenha(novaSenha, resposta.dadosUsuario.id);
-      setCarregando(false);
+    if (!novaSenha) errorsNovaSenha.senha = true;
+    if (!confirmarSenha) errorsNovaSenha.confirmarSenha = true;
+    setCamposVaziosTrocarSenha({ ...camposVazios, ...errorsNovaSenha });
+    setErro({ ...erro, ...errorsNovaSenha });
+
+    if (_.isEqual(camposVaziosTrocarSenha, referenciaCamposNulosNovaSenha)) {
+      if (novaSenha === confirmarSenha) {
+        if (novaSenha !== "" || confirmarSenha !== "") {
+          setCarregando(true);
+          const resposta = await managerService.GetDadosUsuario(email);
+          await managerService.AlterarSenha(
+            novaSenha,
+            resposta.dadosUsuario.id
+          );
+          await sleep(1500);
+          redirecionamento("/web/perfil");
+          setCarregando(false);
+        }
+      } else {
+        toast.error("As senhas digitadas são diferentes!");
+        await sleep(1500);
+        setCarregando(false);
+      }
     } else {
-      alert("As senhas digitadas são diferentes!");
+      setCarregando(true);
+      toast.warn("Insira uma nova senha!");
       setCarregando(false);
     }
   }
@@ -66,15 +162,18 @@ function AlterarSenha() {
                 <Input
                   placeholder="Confirme sua senha atual"
                   backgroundColor={Cores.cinza[7]}
-                  borderColor={Cores.azul}
                   color={Cores.preto}
                   fontSize="1em"
                   width="100%"
                   marginTop="2%"
                   type="password"
-                  name="senhaatual"
-                  onChange={(e) => setSenhaAtual(e.target.value)}
+                  name="senhaAtual"
+                  camposVazios={camposVazios.senhaAtual}
+                  erro={erro.senhaAtual}
+                  onChange={ValidacaoSenhaAtual}
+                  onKeyPress={verificandoConferirSenha}
                 ></Input>
+                {erro.senhaAtual && <Rotulo>Insira sua senha atual!</Rotulo>}
               </InputVertical>
               <BotoesMesmaLinha>
                 <Button
@@ -121,27 +220,36 @@ function AlterarSenha() {
                 <Input
                   placeholder="Defina sua nova senha"
                   backgroundColor={Cores.cinza[7]}
-                  borderColor={Cores.azul}
                   color={Cores.preto}
                   fontSize="1em"
                   width="100%"
                   marginTop="2%"
                   type="password"
                   name="senha"
-                  onChange={(e) => setNovaSenha(e.target.value)}
+                  camposVazios={camposVazios.senha}
+                  erro={erro.senha}
+                  onChange={NovaSenha}
                 ></Input>
+                {erro.senha && (
+                  <Rotulo>Insira uma nova senha com no minimo 8 digitos</Rotulo>
+                )}
                 <Input
                   placeholder="Confirme sua nova senha"
                   backgroundColor={Cores.cinza[7]}
-                  borderColor={Cores.azul}
                   color={Cores.preto}
                   fontSize="1em"
                   width="100%"
                   marginTop="5%"
                   type="password"
                   name="confirmarSenha"
-                  onChange={(e) => setConfirmarSenha(e.target.value)}
+                  camposVazios={camposVazios.confirmarSenha}
+                  erro={erro.confirmarSenha}
+                  onChange={NovaSenha}
+                  onKeyPress={verificandoTrocarSenha}
                 ></Input>
+                {erro.confirmarSenha && (
+                  <Rotulo>Confirme sua nova senha</Rotulo>
+                )}
               </InputVertical>
               <BotoesMesmaLinha>
                 <Button

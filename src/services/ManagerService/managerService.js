@@ -28,13 +28,21 @@ export const requisicaoLogin = async (email, senha) => {
       }
     }
   } catch (error) {
-    requisicaoErro(error);
   }
 
   return;
 };
 
 export const Cadastrando = async (usuario, endereco) => {
+  const resposta = await requesterService.requisicaoDadosUsuario(usuario.email);
+
+  if (resposta.status != 204){
+    sleep(1500);
+    toast.error("E-mail já cadastrado");
+    return;
+  }
+
+
 
   await requesterService
     .criarUsuario(endereco, usuario)
@@ -216,10 +224,11 @@ export const ConferirSenha = async (email, senhaAtual) => {
   //se as senhas nao forem iguais retornar false
   try {
     await requesterService.requisicaoVerificar(email, senhaAtual);
+    await sleep(1500);
     return false;
   } catch (error) {
-    alert("Senha incorreta!");
-    window.location.href = "/web/alterarsenha";
+    toast.error("Senha incorreta!");
+    return true;  
   }
 };
 
@@ -228,13 +237,8 @@ export const AlterarSenha = async (novaSenha, id) => {
   await requesterService
     .alterarSenha(id, novaSenha)
     .then(() => {
-      alert("Senha alterada com sucesso!");
-      window.location.href = "/web/perfil";
+      toast.success("Senha alterada com sucesso!");
     })
-    .catch((error) => {
-      requisicaoErro(error, () => (window.location.href = "/web/alterarsenha"));
-      return false;
-    });
   return false;
 };
 
@@ -247,8 +251,8 @@ export const UpdateDadosUsuario = async (
   await requesterService
     .updateDadosUsuario(id_usuario, id_endereco, endereco, estado)
     .then(() => {
-      alert("Usuário atualizado com sucesso.");
-      window.location.href = "/web/perfil";
+      toast.success("Dados alterados com sucesso.");
+      
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));
@@ -425,4 +429,17 @@ export const GetResposta = async (id) => {
       requisicaoErro(error);
     });
   return dadosResposta;
+};
+
+export const GetReceitas = async () => {
+  let dadosReceitas = {};
+  await requesterService
+    .requisicaoReceitas()
+    .then((res) => {
+      dadosReceitas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosReceitas;
 };

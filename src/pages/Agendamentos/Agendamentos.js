@@ -23,10 +23,13 @@ import {
   Data,
   Agendamento,
   CódigoPaciente,
+  TopoPaginaEsquerda,
+  TextoData
 } from "./Styles";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 import { Cores } from "../../variaveis";
+import { compararDataAgendamentos } from "../../utils/tratamentoErros";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function Agendamentos() {
@@ -39,19 +42,25 @@ function Agendamentos() {
   const [examesMarcados, setExamesMarcados] = useState([]);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const abertoPeloUsuario = false;
+  const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
+
+
+
+
+  
 
   async function pegandoDados() {
     const resposta =
       await managerService.GetDadosConsultasExamesMarcadosGeral();
     setConsultas(resposta.dadosConsultas);
     setExamesMarcados(resposta.dadosExamesMarcados);
-    console.log(resposta);
     setCarregando(false);
   }
 
   useEffect(() => {
     pegandoDados();
   }, [email]);
+
 
   async function marcandoAgendamento(email) {
     setEmail(email);
@@ -69,76 +78,95 @@ function Agendamentos() {
     });
   }
 
+
   return (
     <div>
       <ContainerListadeUsuarios>
+
         <TopoPagina>
-          <BarraPesquisa>
-            <Search placeholder="BUSCAR" style={{ width: 400 }} />
-          </BarraPesquisa>
-          <Filtros>
-            <FiltroUsuario>
-              <Select
-                defaultValue="Todos os Usuários"
-                style={{ color: "green", width: 200 }}
-              ></Select>
-            </FiltroUsuario>
-            <FiltroDatas>
-              <Select
-                defaultValue="Todas as datas"
-                style={{ color: "green", width: 200 }}
-              ></Select>
-            </FiltroDatas>
-          </Filtros>
+          <TopoPaginaEsquerda>
+            <BarraPesquisa>
+              <Search placeholder="BUSCAR"/>
+            </BarraPesquisa>
+              <FiltroDatas>
+                <Select
+                  defaultValue="Todas as datas"
+                  style={{ color: "green", width: "100%" }}
+                ></Select>
+              </FiltroDatas>
+          </TopoPaginaEsquerda>
+          <Button
+            marginTop="0px"
+            width="30%"
+            height="50px"
+            backgroundColor={Cores.lilas[2]}
+            borderColor={Cores.azulEscuro}
+            color={Cores.azul}
+            fontSize="1.8em"
+            fontWeight="bold"
+            fontSizeMedia950="1em"
+            fontSizeMedia1080="1.5em"
+            gap="1%"
+            widthMedia="100%"
+            onClick={() => marcandoAgendamento()}
+          >
+            Novo Agendamento <PlusCircleOutlined />
+          </Button>
         </TopoPagina>
         <BarraEstetica></BarraEstetica>
         <DadosUsuario>
           <Titulo></Titulo>
           <Nome>Nome do Usuário</Nome>
           <Telefone>Telefone</Telefone>
-          <Data>Data</Data>
+          <Data>Data - Horário</Data>
           <Agendamento>Agendamento</Agendamento>
           <CódigoPaciente>Código do Paciente</CódigoPaciente>
         </DadosUsuario>
         <ContainerUsuarios>
-          {consultas.map((value) => (
-            <Usuario key={value.id_usuario}>
-              <Imagem>{value.avatar_url}</Imagem>
-              <Nome>
-                {carregando ? (
-                  <Spin indicator={antIcon} />
-                ) : (
-                  <div onClick={() => abrindoPerfilPaciente(value.email)}>
-                    {value.nome}
-                  </div>
-                )}
-              </Nome>
-              <Telefone>
-                {carregando ? (
-                  <Spin indicator={antIcon} />
-                ) : (
-                  <>
-                    ({value.telefone.slice(0, -9)}){" "}
-                    {value.telefone.slice(2, -4)}-{value.telefone.slice(-4)}
-                  </>
-                )}
-              </Telefone>
-              <Data>
-                {value.data_hora.slice(8, 10)}/{value.data_hora.slice(5, 7)}/
-                {value.data_hora.slice(0, 4)} - {value.data_hora.slice(11, 16)}:
-                {value.data_hora.slice(17, 19)}
-              </Data>
 
-              <Agendamento>Consulta</Agendamento>
-              <CódigoPaciente>
-                {carregando ? (
-                  <Spin indicator={antIcon} />
-                ) : (
-                  <div>{value.codigo}</div>
-                )}
-              </CódigoPaciente>
-            </Usuario>
-          ))}
+          {consultas
+            .sort(compararDataAgendamentos)
+            .map((value) => (
+              <Usuario key={value.id_usuario}>
+                <Imagem>{value.avatar_url}</Imagem>
+                <Nome>
+                  {carregando ? (
+                    <Spin indicator={antIcon} />
+                  ) : (
+                    <div onClick={() => abrindoPerfilPaciente(value.email)}>
+                      {value.nome}
+                    </div>
+                  )}
+                </Nome>
+                <Telefone>
+                  {carregando ? (
+                    <Spin indicator={antIcon} />
+                  ) : (
+                    <>
+                      ({value.telefone.slice(0, -9)}){" "}
+                      {value.telefone.slice(2, -4)}-{value.telefone.slice(-4)}
+                    </>
+                  )}
+                </Telefone>
+                <Data>
+                  {parseInt(value.data_hora.slice(11, 13)) < 12 ? (
+                    value.data_hora.slice(8, 10) + "/" + value.data_hora.slice(5, 7) + "/" + value.data_hora.slice(0, 4) + " - " +
+                    parseInt(value.data_hora.slice(11, 13)) + ":" + value.data_hora.slice(14, 16) + " am"
+                  ) : (
+                    value.data_hora.slice(8, 10) + "/" + value.data_hora.slice(5, 7) + "/" + value.data_hora.slice(0, 4) + " - " +
+                    parseInt(value.data_hora.slice(11, 13) - 12) + ":" + value.data_hora.slice(14, 16) + " pm")}
+                </Data>
+
+                <Agendamento>Consulta</Agendamento>
+                <CódigoPaciente>
+                  {carregando ? (
+                    <Spin indicator={antIcon} />
+                  ) : (
+                    <div>{value.codigo}</div>
+                  )}
+                </CódigoPaciente>
+              </Usuario>
+            ))}
           {examesMarcados.map((value) => (
             <Usuario key={value.id_usuario}>
               <Imagem>{value.avatar_url}</Imagem>
@@ -176,23 +204,6 @@ function Agendamentos() {
             </Usuario>
           ))}
         </ContainerUsuarios>
-        <BotaoNovoAgendamento>
-          <Button
-            width="48%"
-            height="50px"
-            backgroundColor={Cores.lilas[2]}
-            borderColor={Cores.azulEscuro}
-            color={Cores.azul}
-            fontSize="1.8em"
-            fontWeight="bold"
-            fontSizeMedia950="1em"
-            fontSizeMedia1080="1.5em"
-            gap="1%"
-            onClick={() => marcandoAgendamento()}
-          >
-            Novo Agendamento <PlusCircleOutlined />
-          </Button>
-        </BotaoNovoAgendamento>
       </ContainerListadeUsuarios>
 
       <Modal

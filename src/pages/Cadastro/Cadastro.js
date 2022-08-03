@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
@@ -329,6 +329,7 @@ function Cadastro(props) {
             id="tipos"
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
+            borderWidth="2px"
             width="100%"
             name="tipo"
             onChange={preenchendoDados}
@@ -524,6 +525,7 @@ function Cadastro(props) {
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
             width="100%"
+            borderWidth="2px"
             marginTop="2%"
             onChange={preenchendoEndereco}
             camposVazios={camposVazios.estado}
