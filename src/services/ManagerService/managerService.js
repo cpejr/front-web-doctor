@@ -46,7 +46,6 @@ export const Cadastrando = async (usuario, endereco) => {
       else{
         window.location.href = "/web/homesecretaria";
       } */
-      window.location.href = "/login";
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/cadastro"));

@@ -159,7 +159,8 @@ function Cadastro(props) {
       if (usuario.senha === usuario.senhaConfirmada) {
         setCarregando(true);
         await managerService.Cadastrando(usuario, enderecoBack);
-        sleep(3000);
+        await sleep(1500);
+        window.location.href = "/login";
         setCarregando(false);
       } else {
         toast.error("As senhas digitadas são diferentes.");
