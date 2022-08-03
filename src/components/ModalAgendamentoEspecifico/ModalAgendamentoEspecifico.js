@@ -78,18 +78,31 @@ function ModalAgendamentoEspecifico(props) {
       }
     });
   }
+
+  useEffect(() => {
+    pegandoPacientes();
+  }, []);
+
   const errors = {};
-  const referenciaInputNulos = {
+  const [referenciaInputNulos, setReferenciaInputNulos] = useState({
     data: false,
     hora: false,
     duracao_em_minutos: false,
     id_consultorio: false,
     tipo: false,
-  };
+  });
+
+  function verificandoIdUsuario() {
+    if (props.abertoPeloUsuario === false) {
+      setReferenciaInputNulos({ ...referenciaInputNulos, id_usuario: false });
+    } else {
+      setConsulta({ ...consulta, id_usuario: usuario.id });
+    }
+  }
 
   useEffect(() => {
-    pegandoPacientes();
-  }, []);
+    verificandoIdUsuario();
+  }, [props.abertoPeloUsuario]);
 
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true);
@@ -116,10 +129,12 @@ function ModalAgendamentoEspecifico(props) {
   async function validacaoCampos(e) {
     const { value, name } = e.target;
 
-    if (value) {
-      setCamposVazios({ ...camposVazios, [name]: false });
-    } else {
-      setCamposVazios({ ...camposVazios, [name]: true });
+    if (name !== "descricao") {
+      if (value) {
+        setCamposVazios({ ...camposVazios, [name]: false });
+      } else {
+        setCamposVazios({ ...camposVazios, [name]: true });
+      }
     }
     if (consulta.duracao_em_minutos === "") {
       setErro({ ...erro, [name]: true });
@@ -227,6 +242,7 @@ function ModalAgendamentoEspecifico(props) {
     if (!consulta.duracao_em_minutos) errors.duracao_em_minutos = true;
     if (!consulta.id_consultorio) errors.id_consultorio = true;
     if (!consulta.tipo) errors.tipo = true;
+    if (!consulta.id_usuario) errors.id_usuario = true;
 
     setCamposVazios({ ...camposVazios, ...errors });
 
@@ -243,11 +259,9 @@ function ModalAgendamentoEspecifico(props) {
         if (_.isEqual(camposVazios, referenciaInputNulos)) {
           setCarregandoCadastro(true);
           formatacaoDataHora();
-          if (props.abertoPeloUsuario === true) {
-            consulta.id_usuario = usuario.id;
-          }
           await managerService.CriandoConsulta(consulta);
           setCarregandoCadastro(false);
+          await sleep(1500);
           props.fechandoModal();
           setConsulta(valoresIniciaisConsulta);
           setDataConsulta("");
@@ -335,7 +349,7 @@ function ModalAgendamentoEspecifico(props) {
             rows={4}
             name="descricao"
             value={consulta.descricao}
-            onChange={validacaoCampos}
+            onChange={(e) => validacaoCampos(e)}
             style={{
               borderWidth: "1px",
               borderColor: Cores.azul,
