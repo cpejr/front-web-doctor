@@ -5,19 +5,26 @@ import { Cores, Fontes } from "../../variaveis";
 export const ColunaDireita = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
   width: 40%;
   height: 100%;
 
   padding: 2% 4% 2% 4%;
 
-  @media (max-width: 720px) and (min-height: 500px) {
+  
+
+  @media (max-width: 760px) and (min-height: 500px) {
     display: flex;
     justify-content: center;
     height: 50%;
-    width: 80%;
+    width: 98%;
     margin-top: 5%;
+    
+  }
+
+  @media (max-width: 520px) {
+    font-size: 1em;
   }
 `;
 
@@ -29,12 +36,13 @@ export const ColunaEsquerda = styled.div`
 
   padding: 2% 4% 2% 4%;
 
-  @media (max-width: 720px) {
+  @media (max-width: 760px) {
     display: flex;
     justify-content: center;
     height: 50%;
     width: 89%;
     padding: 0px;
+    
   }
 `;
 
@@ -49,7 +57,7 @@ export const ContainerFormularioEspecifico = styled.div`
   padding: 2% 5% 2% 5%;
   flex-wrap: wrap;
 
-  @media (max-width: 720px) {
+  @media (max-width: 760px) {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -98,6 +106,7 @@ export const BarraPaciente = styled.div`
 
   @media (max-width: 510px) {
     flex-direction: column;
+    height: 100%;
   }
 
   @media (max-width: 350px) {
@@ -113,13 +122,14 @@ export const BarraDireita = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 45%;
+  width: 48%;
 
   @media (max-width: 510px) {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+ 
   }
 `;
 
@@ -127,26 +137,42 @@ export const BarraEsquerda = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 25%;
+  width: 20%;
 
   @media (max-width: 510px) {
     width: 100%;
     display: flex;
     align-items: center;
+    justify-content: center;
+    margin-top: 5%;
   }
 `;
 
 export const BarraCentro = styled.div`
   display: flex;
-  justify-content: center; 
-  text-align: center;
-  margin-top: 3%;
-  width: 30%;
+  justify-content: flex-start;
+  text-align: left;
+  width: 32%;
+  height: 80px;
+
+  @media (min-width: 760px) and (max-width: 910px) {
+    margin-left: 5%;
+  }
 
   @media (max-width: 510px) {
     width: 100%;
     display: flex;
     justify-content: center;
+    height: 40px;
+
+  }
+`;
+
+export const MargemEstetica = styled.div`
+  height: 300%;
+
+  @media (max-width: 760px) {
+    height: 20%;
   }
 `;
 
@@ -169,35 +195,45 @@ export const ImagemPaciente = styled.img`
   align-items: center;
 
   @media (max-width: 510px) {
-    width: 100%;
+    width: 300px;
     height: 300px;
     display: flex;
     justify-content: center;
+    
   }
+
+  @media (max-width: 430px) {
+      width: 200px;
+      height: 200px;
+      
+    }
+
+    @media (max-width: 290px) {
+      width: 150px;
+      height: 150px;
+      margin-top: 5%;
+
+    }
+
 
   .fotoPerfil {
     border-radius: 3px;
 
-    @media (max-width: 350px) {
-      width: 25%;
-      height: 100%;
-      margin-top: 3%;
-    }
+    
   }
 `;
 
 export const Selects = styled.div`
-   display: flex;
-   flex-direction: row;
-   align-items: flex-start;
-   
-   @media (max-width: 850px) {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+
+  @media (max-width: 850px) {
     flex-direction: column;
     height: 15vh;
-   }
-
+  }
 `;
-
 
 export const BarraRespostas = styled.div`
   margin: 0% 0% 5% 0%;
@@ -216,11 +252,9 @@ export const BarraRespostas = styled.div`
   width: 100%;
   color: ${Cores.azul};
 
-  @media (max-width:300px) {
+  @media (max-width: 300px) {
     font-size: 0.8em;
   }
-
- 
 `;
 
 export const CamposFormularioCima = styled.div`
@@ -235,12 +269,16 @@ export const CamposFormularioCima = styled.div`
   font-size: 1.1em;
   font-weight: bold;
   height: 10vh;
-  width: 18%;
+  width: 24%;
   gap: 2%;
   padding: 2%;
 
-  @media (min-width: 691px) and (max-width: 880px) {
+  @media (min-width: 940) and (max-width: 970px) {
     font-size: 0.8em;
+  }
+
+  @media (min-width: 690px) and (max-width: 940px) {
+    font-size: 0.78em;
   }
 
   @media (max-width: 690px) {
@@ -252,7 +290,6 @@ export const CamposFormularioCima = styled.div`
 `;
 
 export const RotuloBarraDeBuscaOpcoes = styled.div`
-
   @media (max-width: 480px) {
     margin-top: 2%;
   }
@@ -267,29 +304,21 @@ export const SelectTipos = styled(Select)`
   .ant-select-arrow {
     color: ${Cores.azul};
   }
+
+  
 `;
 
 export const ContainerBarraDeBuscaOpcoes = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
   width: 100%;
   height: 10vh;
   font-family: ${Fontes.roboto};
   text-decoration: underline;
+  align-items: flex-start;
 
-  @media(max-width: 850px)
-  {
-    height: 15vh;
-  }
-
-  @media (max-width:480px) {
-    height: 23vh;
-  }
-
-  @media (max-width: 720px) {
-    justify-content: space-around;
-  }
+ 
 `;
 
 export const BarraDePesquisa = styled.div`
