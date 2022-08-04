@@ -21,6 +21,7 @@ import {
   BarraEsquerda,
   BarraCentro,
   Selects,
+  MargemEstetica,
 } from "./Styles";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
@@ -33,7 +34,8 @@ function FormularioEspecifico(props) {
   const { Search } = Input;
   const [formularioEspecifico, setFormularioEspecifico] = useState({});
   const [formularioPacientes, setformularioPacientes] = useState([]);
-  const [formularioRespostaPendente, setFormularioRespostaPendente] = useState(false);
+  const [formularioRespostaPendente, setFormularioRespostaPendente] =
+    useState(false);
   const [formularioResposta, setFormularioResposta] = useState(false);
 
   async function pegandoDadosFormularioEspecifico() {
@@ -51,14 +53,16 @@ function FormularioEspecifico(props) {
 
     setformularioPacientes(respostaFormularios);
 
-    const formularioRespostaPendente = respostaFormularios.filter(item => item.respostas === null);
+    const formularioRespostaPendente = respostaFormularios.filter(
+      (item) => item.respostas === null
+    );
     setFormularioRespostaPendente(formularioRespostaPendente);
-    
-    const formularioResposta = respostaFormularios.filter(item => item.respostas !== null);
-    setFormularioResposta(formularioResposta);
-    
-  }
 
+    const formularioResposta = respostaFormularios.filter(
+      (item) => item.respostas !== null
+    );
+    setFormularioResposta(formularioResposta);
+  }
 
   useEffect(() => {
     pegandoFormularioPacientes();
@@ -68,29 +72,24 @@ function FormularioEspecifico(props) {
     pegandoDadosFormularioEspecifico();
   }, [props.location.state.id]);
 
-
   return (
     <>
       <ContainerFormularioEspecifico>
         <ContainerFormularioCima>
           <CamposFormularioCima>
             {" "}
-            {formularioEspecifico.titulo}
+            Formulário: {formularioEspecifico.titulo}
           </CamposFormularioCima>
           <CamposFormularioCima>
             {" "}
-            {formularioEspecifico.tipo}{" "}
+            Tipo: {formularioEspecifico.tipo}{" "}
           </CamposFormularioCima>
           <CamposFormularioCima>
             {" "}
-            {formularioEspecifico.data}
+            Finalidade: {formularioEspecifico.finalidade}
           </CamposFormularioCima>
           <CamposFormularioCima>
-            {" "}
-            {formularioEspecifico.finalidade}
-          </CamposFormularioCima>
-          <CamposFormularioCima>
-            {formularioEspecifico.urgencia === 1 ? (
+            Urgência: {formularioEspecifico.urgencia === 1 ? (
               <>
                 <StarFilled />
                 <StarOutlined />
@@ -115,23 +114,9 @@ function FormularioEspecifico(props) {
         <ColunaEsquerda>
           <ContainerBarraDeBuscaOpcoes>
             <BarraDePesquisa>
-              <Search placeholder="BUSCAR" style={{ width: "100%"}} />
+              <Search placeholder="BUSCAR" style={{ width: "80%" }} />
             </BarraDePesquisa>
             <Selects>
-              <RotuloBarraDeBuscaOpcoes>
-                <SelectTipos
-                  defaultValue="Todos os pacientes"
-                  bordered={false}
-                  style={{ width: 150 }}
-                ></SelectTipos>
-              </RotuloBarraDeBuscaOpcoes>
-              <RotuloBarraDeBuscaOpcoes>
-                <SelectTipos
-                  defaultValue="Todas as datas"
-                  bordered={false}
-                  style={{ width: 130 }}
-                ></SelectTipos>
-              </RotuloBarraDeBuscaOpcoes>
               <RotuloBarraDeBuscaOpcoes>
                 <SelectTipos
                   defaultValue="Status"
@@ -156,43 +141,55 @@ function FormularioEspecifico(props) {
                 ></ImagemPaciente>
               </BarraEsquerda>
               <BarraCentro>
-                <TextoBarraPaciente fontSize="1.2em" fontWeight="bold">
-                  Nome: {value.nome}
-                </TextoBarraPaciente>
-              </BarraCentro>
-              {value.respostas !== null ? (<></>) : (
-              <BarraDireita>
                 <TextoBarraPaciente
-                  fontSize="1em"
+                  fontSize="1.1em"
                   fontWeight="bold"
                   justifyContent="flex-start"
                 >
-                  Resposta Pendente{" "}
+                   {value.nome}
                 </TextoBarraPaciente>
+              </BarraCentro>
+              {value.respostas !== null ? (
+                <></>
+              ) : (
+                <BarraDireita>
+                  <TextoBarraPaciente
+                    fontSize="1em"
+                    fontWeight="bold"
+                    justifyContent="flex-start"
+                  >
+                    Resposta Pendente{" "}
+                  </TextoBarraPaciente>
 
-                <Button
-                  width="60%"
-                  backgroundColor={Cores.lilas[2]}
-                  boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-                  borderColor={Cores.azulEscuro}
-                  borderRadius="5px"
-                  height="38%"
-                  color={Cores.preto}
-                  fontSize="0.8em"
-                  fontSizeMedia950="0.6em"
-                  heightMedia560="40%"
-                >
-                  ENVIAR LEMBRETE
-                </Button>
-              </BarraDireita>)}
+                  <Button
+                    width="70%"
+                    backgroundColor={Cores.lilas[2]}
+                    boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+                    borderColor={Cores.azulEscuro}
+                    borderRadius="5px"
+                    height="45%"
+                    color={Cores.preto}
+                    fontSize="0.8em"
+                    fontSizeMedia950="0.6em"
+                    heightMedia560="28px"
+                  >
+                    ENVIAR LEMBRETE
+                  </Button>
+                </BarraDireita>
+              )}
             </BarraPaciente>
           ))}
         </ColunaEsquerda>
         <ColunaDireita>
           <BarraRespostas>
-            Aguardando respostas de {formularioRespostaPendente.length} usuários.
+            Aguardando respostas de {formularioRespostaPendente.length}{" "}
+            usuários.
           </BarraRespostas>
-          <BarraRespostas> {formularioResposta.length} usuários já responderam.</BarraRespostas>
+          <BarraRespostas>
+            {" "}
+            {formularioResposta.length} usuários já responderam.
+          </BarraRespostas>
+          <MargemEstetica />
           <Button
             backgroundColor={Cores.azulClaro}
             borderRadius="3px"
@@ -201,8 +198,8 @@ function FormularioEspecifico(props) {
             boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
             color={Cores.preto}
             fontSize="15px"
-            height="45px"
-            width="50%"
+            height="50px"
+            width="60%"
             marginTop="10%"
             marginLeft="0%"
             fontSizeMedia950="0.9em"
