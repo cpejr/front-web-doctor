@@ -105,15 +105,19 @@ function Cadastro() {
   function funcaoConvenio() {
     setConvenio(!convenio);
     setUsuario({ ...usuario, convenio: null });
-    setEstado({...estado, convenio: null})
-    setCamposVazios({...camposVazios, convenio: false})
+    setEstado({ ...estado, convenio: null });
+    setCamposVazios({ ...camposVazios, convenio: false });
   }
   function funcaoCuidador() {
     setCuidador(!cuidador);
     setUsuario({ ...usuario, nome_cuidador: null, telefone_cuidador: null });
-    setEstado({...estado, nome_cuidador: null, telefone_cuidador: null})
-    setCamposVazios({...camposVazios, nome_cuidador: false, telefone_cuidador: false})
-    setErro({...erro, telefone_cuidador: false})
+    setEstado({ ...estado, nome_cuidador: null, telefone_cuidador: null });
+    setCamposVazios({
+      ...camposVazios,
+      nome_cuidador: false,
+      telefone_cuidador: false,
+    });
+    setErro({ ...erro, telefone_cuidador: false });
   }
 
   const errors = {};
@@ -178,37 +182,25 @@ function Cadastro() {
     }
 
     if (convenio && !cuidador) {
+      console.log("convenio && !cuidador");
       delete camposVazios.nome_cuidador;
       delete camposVazios.telefone_cuidador;
       delete errors.telefone_cuidador;
       delete errors.nome_cuidador;
-
-      testeTemp =
-        testeOriginal +
-        Object.defineProperty(testeTemp, "convenio", { value: false });
+      testeTemp.convenio = false;
     } else if (!convenio && cuidador) {
+      console.log("!convenio && cuidador");
       delete camposVazios.convenio;
       delete errors.convenio;
-
-      testeTemp =
-        testeOriginal +
-        Object.defineProperty(testeTemp, "telefone_cuidador", {
-          value: false,
-        }) +
-        Object.defineProperty(testeTemp, "nome_cuidador", {
-          value: false,
-        });
+      testeTemp.telefone_cuidador = false;
+      testeTemp.nome_cuidador = false;
     } else if (convenio && cuidador) {
-      testeTemp =
-        testeOriginal +
-        Object.defineProperty(testeTemp, "telefone_cuidador", {
-          value: false,
-        }) +
-        Object.defineProperty(testeTemp, "nome_cuidador", {
-          value: false,
-        }) +
-        Object.defineProperty(testeTemp, "convenio", { value: false });
+      console.log("convenio && cuidador");
+      testeTemp.convenio = false;
+      testeTemp.nome_cuidador = false;
+      testeTemp.telefone_cuidador = false;
     } else {
+      console.log("else");
       delete camposVazios.nome_cuidador;
       delete camposVazios.telefone_cuidador;
       delete camposVazios.convenio;
@@ -216,9 +208,23 @@ function Cadastro() {
       delete errors.nome_cuidador;
       delete errors.convenio;
     }
-
     setCamposVazios({ ...camposVazios, ...errors });
- 
+    console.log("/////////////////////////////");
+
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 463 ~ requisicaoCadastro ~ usuario",
+      usuario
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 457 ~ requisicaoCadastro ~ camposVazios",
+      camposVazios
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 236 ~ requisicaoCadastro ~ testeTemp",
+      testeTemp
+    );
+    console.log("/////////////////////////////");
+
     if (_.isEqual(camposVazios, testeTemp)) {
       if (usuario.senha === usuario.senhaConfirmada) {
         setCarregando(true);
@@ -229,10 +235,6 @@ function Cadastro() {
         setCarregando(false);
       }
     } else {
-      // console.log("Campos Vazios:", camposVazios);
-      // console.log("Teste Temp:", testeTemp);
-      // console.log("ERRORS:", errors);
-      // console.log("Erro:", erro);
       toast.error("Preencha todos os campos obrigatórios");
     }
 
@@ -461,6 +463,19 @@ function Cadastro() {
     }
   }, [enderecoBack.numero]);
 
+  function consolando() {
+    console.log("/////////////////////////////");
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 463 ~ Cadastro ~ usuario",
+      usuario
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 457 ~ useEffect ~ camposVazios",
+      camposVazios
+    );
+    console.log("/////////////////////////////");
+  }
+
   return (
     <div>
       <Body>
@@ -475,9 +490,9 @@ function Cadastro() {
             ></img>
           </Logo>
           <CaixaBotaoVoltar>
-          <Botao onClick={() => voltarLoginOuHome()}>
-            <BiArrowBack /> <TextoVoltar>Voltar</TextoVoltar>
-          </Botao>
+            <Botao onClick={() => voltarLoginOuHome()}>
+              <BiArrowBack /> <TextoVoltar>Voltar</TextoVoltar>
+            </Botao>
           </CaixaBotaoVoltar>
           <Select
             id="tipos"
@@ -827,9 +842,13 @@ function Cadastro() {
           >
             {carregando ? <Spin indicator={antIcon} /> : "CADASTRAR"}
           </Button>
-          <Button onClick={() => {
-              console.log("");
-            }}>console</Button>
+          <Button
+            onClick={() => {
+              consolando();
+            }}
+          >
+            console
+          </Button>
         </DadosCadastro>
       </Body>
       <AddToast />
