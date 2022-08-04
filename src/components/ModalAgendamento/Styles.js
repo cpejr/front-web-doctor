@@ -51,7 +51,7 @@ export const CorpoCaixa = styled.div`
   height: 100%;
 
   @media (max-width: 800px) {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 `;
 
@@ -67,6 +67,11 @@ export const Titulo = styled.div`
   @media (max-width: 950px) and (min-width: 560px) {
     font-size: 1.5em;
   }
+
+  @media (max-width: 800px) {
+    margin-bottom: 3%;
+  }
+
   @media (max-width: 560px) {
     font-size: 1.2em;
     margin-bottom: 8%;
@@ -96,17 +101,18 @@ export const InfoEsquerda = styled.div`
 export const InfoDireita = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   width: 30%;
   height: 100%;
   min-height: 70vh;
   margin-left: 4%;
   margin-right: 4%;
+  margin-bottom: 1%;
 
   @media (max-width: 800px) {
     width: 80%;
-    min-height: 40vh;
+    min-height: 40vh; 
   }
 `;
 
@@ -122,6 +128,7 @@ export const NumeroAgendamentos = styled.div`
   border-style: solid;
   border-radius: 3px;
   padding: 10%;
+  margin-bottom: 18%;
 
   text-align: center;
   font-family: ${Fontes.roboto};
@@ -136,6 +143,7 @@ export const NumeroAgendamentos = styled.div`
   }
   @media (max-width: 800px) {
     width: 100%;
+    margin-bottom:0px;
   }
   @media (max-width: 560px) {
     font-size: 1em;

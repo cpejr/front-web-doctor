@@ -78,3 +78,5 @@ export const requisicaoRespostaFormulario = (id) =>
 
 export const requisicaoFormularioPacientes = (id_formulario) =>
   api.get(`/formularios_pacientes_formularios/${id_formulario}`);
+
+  export const requisicaoReceitas = () => api.get(`/receitas/`);

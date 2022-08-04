@@ -20,7 +20,6 @@ import {
   Rotulo,
 } from "./Styles";
 import _ from "lodash";
-import { isEqual } from "lodash";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function Login() {
@@ -89,6 +88,22 @@ function Login() {
 
     if (_.isEqual(camposVazios, referenciaCamposNulos)) {
       setCarregando(true);
+      const resposta = await managerService.GetDadosPessoais();
+      let procurandoEmail = 0;
+      let contandoForEach = 0;
+      let quantidadeUsuarios = resposta.length;
+      resposta.forEach((usuario) => {
+        contandoForEach++;
+        if (usuario.email === email) {
+          procurandoEmail++;
+        }
+        if (quantidadeUsuarios === contandoForEach) {
+          if (procurandoEmail === 0)
+            toast.error("Esse email não está cadastrado.");
+          else managerService.ConferirSenha(email, senha);
+        }
+      });
+
       await managerService.requisicaoLogin(email, senha);
       setCarregando(false);
     } else {

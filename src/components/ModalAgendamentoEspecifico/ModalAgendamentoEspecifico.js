@@ -5,7 +5,6 @@ import { Spin } from "antd";
 import moment from "moment";
 import { toast } from "react-toastify";
 import _ from "lodash";
-import { sleep } from "../../utils/sleep";
 import {
   Container,
   Caixa,
@@ -33,6 +32,7 @@ import logoGuilherme from "../../assets/logoGuilherme.png";
 import { Cores } from "../../variaveis";
 import { TiposDeConsulta } from "./TiposDeConsulta";
 import { apenasNumeros, data, dataAgendamentoBack } from "../../utils/masks";
+import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAgendamentoEspecifico(props) {
@@ -53,6 +53,15 @@ function ModalAgendamentoEspecifico(props) {
     id_consultorio: "",
     tipo: "",
   });
+  const valoresIniciaisConsulta = {
+    data_hora: "",
+    duracao_em_minutos: "",
+    descricao: "",
+    avaliacao: "",
+    id_usuario: "",
+    id_consultorio: "",
+    tipo: "",
+  };
   const [dataConsulta, setDataConsulta] = useState("");
   const [dataConsultaBack, setDataConsultaBack] = useState("");
   const [hora, setHora] = useState("");
@@ -190,9 +199,15 @@ function ModalAgendamentoEspecifico(props) {
         if (_.isEqual(camposVazios, referenciaInputNulos)) {
           setCarregandoCadastro(true);
           formatacaoDataHora();
-          consulta.id_usuario = usuario.id;
+          if (props.abertoPeloUsuario === true) {
+            consulta.id_usuario = usuario.id;
+          }
           await managerService.CriandoConsulta(consulta);
           setCarregandoCadastro(false);
+          props.fechandoModal();
+          setConsulta(valoresIniciaisConsulta);
+          setDataConsulta("");
+          setHora("");
         } else {
           setCarregandoCadastro(true);
           toast.warn("Preencha todos os campos corretamente");
@@ -291,9 +306,9 @@ function ModalAgendamentoEspecifico(props) {
         </InfoEsquerdaEDireita>
         <InfoEsquerdaEDireita>
           <SelecioneUmaData>
-            <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
+            <TextoSelecioneUmaData>Digite uma data:</TextoSelecioneUmaData>
             <InputData
-              placeholder="Selecione uma data"
+              placeholder="Digite uma data"
               size="large"
               name="data"
               onChange={(e) => validacaoData(e.target)}
