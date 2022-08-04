@@ -33,6 +33,7 @@ import { brParaPadrao } from "../../utils/date";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 import { usuarioAutenticado } from "../../services/auth";
+import { sleep } from "../../utils/sleep";
 
 function Cadastro() {
   const history = useHistory();
@@ -103,10 +104,15 @@ function Cadastro() {
   function funcaoConvenio() {
     setConvenio(!convenio);
     setUsuario({ ...usuario, convenio: null });
+    setEstado({...estado, convenio: null})
+    setCamposVazios({...camposVazios, convenio: false})
   }
   function funcaoCuidador() {
     setCuidador(!cuidador);
     setUsuario({ ...usuario, nome_cuidador: null, telefone_cuidador: null });
+    setEstado({...estado, nome_cuidador: null, telefone_cuidador: null})
+    setCamposVazios({...camposVazios, nome_cuidador: false, telefone_cuidador: false})
+    setErro({...erro, telefone_cuidador: false})
   }
 
   const errors = {};
@@ -269,39 +275,46 @@ function Cadastro() {
   async function validacaoCamposNaoGerais(e) {
     const { value, name } = e.target;
 
-    if (value.length === 0 || value === null) {
-      setCamposVazios({ ...camposVazios, [name]: true });
-    } else {
-      setCamposVazios({ ...camposVazios, [name]: false });
-    }
     if (cuidador) {
-      if (e.target.name === "telefone_cuidador") {
+      if (name === "telefone_cuidador") {
+        setCamposVazios({ ...camposVazios, [name]: false });
         if (value.length < 15) {
           setErro({ ...erro, [name]: true });
         } else {
           setErro({ ...erro, [name]: false });
         }
 
-        setEstado({ ...estado, [name]: maskTelefone(e.target.value) });
+        setEstado({ ...estado, [name]: maskTelefone(value) });
         setUsuario({
           ...usuario,
-          [name]: maskApenasNumerosCpfTel(e.target.value),
+          [name]: maskApenasNumerosCpfTel(value),
         });
-      } else if (e.target.name === "nome_cuidador") {
+      } else if (name === "nome_cuidador") {
         setEstado({
           ...estado,
-          [e.target.name]: maskApenasLetras(e.target.value),
+          [name]: maskApenasLetras(value),
         });
-        setUsuario({ ...usuario, [name]: maskApenasLetras(e.target.value) });
+        setUsuario({ ...usuario, [name]: maskApenasLetras(value) });
       }
     }
     if (convenio) {
-      if (e.target.name === "convenio") {
-        setEstado({ ...estado, [name]: maskApenasLetras(e.target.value) });
-        setUsuario({ ...usuario, [name]: maskApenasLetras(e.target.value) });
+      if (name === "convenio") {
+        setEstado({ ...estado, [name]: maskApenasLetras(value) });
+        setUsuario({ ...usuario, [name]: maskApenasLetras(value) });
       }
     }
   }
+  useEffect(() => {
+    if (usuario.convenio) {
+      setCamposVazios({ ...camposVazios, convenio: false });
+    }
+  }, [usuario.convenio]);
+
+  useEffect(() => {
+    if (usuario.nome_cuidador) {
+      setCamposVazios({ ...camposVazios, nome_cuidador: false });
+    }
+  }, [usuario.nome_cuidador]);
 
   async function pegandoDadosPerfilPessoal() {
     const resposta = await managerService.GetDadosUsuario(email);
