@@ -19,6 +19,7 @@ import {
   InputMesmaLinha,
   Rotulo,
   InputMesmaLinha2,
+  CaixaBotaoVoltar,
   Botao,
   RotuloColuna,
   PossuiConvenio,
@@ -91,7 +92,7 @@ function Cadastro() {
   };
 
   const maskApenasLetras = (value) => {
-    return value.replace(/[0-9!@#¨$%^&*)(+=._-]+/g, "");
+    return value.replace(/[^A-Za-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÍÏÓÔÕÖÚÇÑ ]+/g, "");
   };
 
   const maskCEP = (value) => {
@@ -160,6 +161,7 @@ function Cadastro() {
     if (!usuario.senhaConfirmada) errors.senhaConfirmada = true;
     if (erro.data_nascimento === true) errors.data_nascimento = true;
     if (erro.email === true) errors.email = true;
+
     if (cuidador) {
       if (!usuario.telefone_cuidador) errors.telefone_cuidador = true;
       if (!usuario.nome_cuidador) errors.nome_cuidador = true;
@@ -210,16 +212,13 @@ function Cadastro() {
       delete camposVazios.nome_cuidador;
       delete camposVazios.telefone_cuidador;
       delete camposVazios.convenio;
-      delete camposVazios.nome_cuidador;
-      delete camposVazios.telefone_cuidador;
       delete errors.telefone_cuidador;
       delete errors.nome_cuidador;
-      delete camposVazios.convenio;
       delete errors.convenio;
     }
 
     setCamposVazios({ ...camposVazios, ...errors });
-
+ 
     if (_.isEqual(camposVazios, testeTemp)) {
       if (usuario.senha === usuario.senhaConfirmada) {
         setCarregando(true);
@@ -230,6 +229,10 @@ function Cadastro() {
         setCarregando(false);
       }
     } else {
+      // console.log("Campos Vazios:", camposVazios);
+      // console.log("Teste Temp:", testeTemp);
+      // console.log("ERRORS:", errors);
+      // console.log("Erro:", erro);
       toast.error("Preencha todos os campos obrigatórios");
     }
 
@@ -471,9 +474,11 @@ function Cadastro() {
               height="100%"
             ></img>
           </Logo>
+          <CaixaBotaoVoltar>
           <Botao onClick={() => voltarLoginOuHome()}>
             <BiArrowBack /> <TextoVoltar>Voltar</TextoVoltar>
           </Botao>
+          </CaixaBotaoVoltar>
           <Select
             id="tipos"
             backgroundColor={Cores.cinza[7]}
@@ -822,6 +827,9 @@ function Cadastro() {
           >
             {carregando ? <Spin indicator={antIcon} /> : "CADASTRAR"}
           </Button>
+          <Button onClick={() => {
+              console.log("");
+            }}>console</Button>
         </DadosCadastro>
       </Body>
       <AddToast />

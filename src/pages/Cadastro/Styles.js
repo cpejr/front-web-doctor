@@ -60,9 +60,16 @@ export const Logo = styled.div`
     border-radius: 15px;
   }
 `;
+
+export const CaixaBotaoVoltar = styled.div`
+  display: flex;
+  width:100%;
+  justify-content: flex-start;
+`;
+
 export const Botao = styled.button`
   display: flex;
-  width: 100%;
+  width: auto;
   height: 10px;
   align-items: center;
   margin: 1%;
