@@ -39,7 +39,7 @@ export const ColunaEsquerda = styled.div`
   @media (max-width: 760px) {
     display: flex;
     justify-content: center;
-    height: 50%;
+    height: 10%;
     width: 89%;
     padding: 0px;
     
@@ -51,7 +51,7 @@ export const ContainerFormularioEspecifico = styled.div`
   flex-direction: row;
   width: 100%;
   height: 100%;
-  min-height: 100vh;
+
   gap: 2%;
   justify-content: center;
   padding: 2% 5% 2% 5%;
@@ -68,21 +68,23 @@ export const ContainerFormularioEspecifico = styled.div`
 export const ContainerFormularioCima = styled.div`
   display: flex;
   flex-direction: row;
+  align-content: center;
   justify-content: space-between;
   width: 89%;
-  height: 7vh;
-  margin-bottom: 5%;
+  height: 7%;
+  
+  margin-bottom: 3%;
 
   @media (max-width: 690px) {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    height: auto;
+    
   }
 `;
 
 export const BarraEstetica = styled.div`
-  margin-top: 5%;
+  margin-top: 2%;
   margin-bottom: 1%;
   height: 5px;
   width: 100%;
@@ -122,7 +124,8 @@ export const BarraDireita = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 48%;
+  width: 38%;
+  text-align: center;
 
   @media (max-width: 510px) {
     width: 100%;
@@ -137,7 +140,7 @@ export const BarraEsquerda = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 20%;
+  width: 30%;
 
   @media (max-width: 510px) {
     width: 100%;
@@ -154,10 +157,7 @@ export const BarraCentro = styled.div`
   text-align: left;
   width: 32%;
   height: 80px;
-
-  @media (min-width: 760px) and (max-width: 910px) {
-    margin-left: 5%;
-  }
+  margin-top: 1.5%;
 
   @media (max-width: 510px) {
     width: 100%;
@@ -165,6 +165,10 @@ export const BarraCentro = styled.div`
     justify-content: center;
     height: 40px;
 
+  }
+
+  @media (min-width: 761px) and (max-width: 1200px) {
+    margin-left: 12%;
   }
 `;
 
@@ -197,6 +201,14 @@ export const ImagemPaciente = styled.img`
   @media (max-width: 510px) {
     width: 300px;
     height: 300px;
+    display: flex;
+    justify-content: center;
+    
+  }
+
+  @media (min-width: 761px) {
+    width: 120px;
+    height: 120px;
     display: flex;
     justify-content: center;
     
@@ -299,12 +311,15 @@ export const SelectTipos = styled(Select)`
   color: ${Cores.azul};
   font-weight: bold;
   font-size: 0.9em;
-  /* display: flex;
-  justify-content:end; */
+
   .ant-select-arrow {
     color: ${Cores.azul};
   }
 
+  @media (max-width: 760px) {
+    margin-top: 50%;
+  }
+ 
   
 `;
 
@@ -313,11 +328,16 @@ export const ContainerBarraDeBuscaOpcoes = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  height: 10vh;
+  height: 5%;
   font-family: ${Fontes.roboto};
   text-decoration: underline;
   align-items: flex-start;
 
+  @media (max-width: 760px) {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
  
 `;
 
