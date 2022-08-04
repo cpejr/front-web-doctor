@@ -102,7 +102,7 @@ function ModalAgendamentoEspecifico(props) {
 
   useEffect(() => {
     verificandoIdUsuario();
-  }, [props.abertoPeloUsuario]);
+  }, [usuario]);
 
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true);
