@@ -54,12 +54,12 @@ function FormularioEspecifico(props) {
     setformularioPacientes(respostaFormularios);
 
     const formularioRespostaPendente = respostaFormularios.filter(
-      (item) => item.respostas === null
+      (item) => item.status === false
     );
     setFormularioRespostaPendente(formularioRespostaPendente);
 
     const formularioResposta = respostaFormularios.filter(
-      (item) => item.respostas !== null
+      (item) => item.status !== false
     );
     setFormularioResposta(formularioResposta);
   }
@@ -142,14 +142,14 @@ function FormularioEspecifico(props) {
               </BarraEsquerda>
               <BarraCentro>
                 <TextoBarraPaciente
-                  fontSize="1.1em"
+                  fontSize="1.2em"
                   fontWeight="bold"
                   justifyContent="flex-start"
                 >
                    {value.nome}
                 </TextoBarraPaciente>
               </BarraCentro>
-              {value.respostas !== null ? (
+              {value.status !== false ? (
                 <></>
               ) : (
                 <BarraDireita>
@@ -184,11 +184,11 @@ function FormularioEspecifico(props) {
         <ColunaDireita>
           <BarraRespostas>
             Aguardando respostas de {formularioRespostaPendente.length}{" "}
-            usuários.
+            formulários.
           </BarraRespostas>
           <BarraRespostas>
             {" "}
-            {formularioResposta.length} usuários já responderam.
+            {formularioResposta.length} formulários já foram respondidos.
           </BarraRespostas>
           <MargemEstetica />
           <Button
