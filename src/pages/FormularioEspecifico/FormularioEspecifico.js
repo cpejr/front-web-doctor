@@ -11,6 +11,7 @@ import {
   BarraPaciente,
   BarraRespostas,
   CamposFormularioCima,
+  CamposFormularioCimaUrgencia,
   TextoBarraPaciente,
   ImagemPaciente,
   RotuloBarraDeBuscaOpcoes,
@@ -22,6 +23,7 @@ import {
   BarraCentro,
   Selects,
   MargemEstetica,
+  TextoCamposFormularios,
 } from "./Styles";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
@@ -37,21 +39,33 @@ function FormularioEspecifico(props) {
   const [formularioRespostaPendente, setFormularioRespostaPendente] =
     useState(false);
   const [formularioResposta, setFormularioResposta] = useState(false);
+  const [carregando, setCarregando] = useState(true);
+
+  const antIcon = (
+    <LoadingOutlined
+      style={{ fontSize: 40, color: Cores.azul}}
+      spin
+    />
+  );
 
   async function pegandoDadosFormularioEspecifico() {
+    setCarregando(true);
     const resposta = await managerService.GetFormularioEspecifico(
       props.location.state.id
     );
     setFormularioEspecifico(resposta);
+    setCarregando(false);
   }
 
   async function pegandoFormularioPacientes() {
+    setCarregando(true);
     const respostaFormularios =
       await managerService.GetFormularioPacientesPorFormulario(
         props.location.state.id
       );
 
     setformularioPacientes(respostaFormularios);
+    setCarregando(false);
 
     const formularioRespostaPendente = respostaFormularios.filter(
       (item) => item.status === false
@@ -75,20 +89,14 @@ function FormularioEspecifico(props) {
   return (
     <>
       <ContainerFormularioEspecifico>
+      {carregando ? (
+          <Spin indicator={antIcon} />
+        ) : (<>
         <ContainerFormularioCima>
-          <CamposFormularioCima>
-            {" "}
-            Formulário: {formularioEspecifico.titulo}
-          </CamposFormularioCima>
-          <CamposFormularioCima>
-            {" "}
-            Tipo: {formularioEspecifico.tipo}{" "}
-          </CamposFormularioCima>
-          <CamposFormularioCima>
-            {" "}
-            Finalidade: {formularioEspecifico.finalidade}
-          </CamposFormularioCima>
-          <CamposFormularioCima>
+          <CamposFormularioCima>Formulário: {formularioEspecifico.titulo}</CamposFormularioCima>
+          <CamposFormularioCima>Tipo: {formularioEspecifico.tipo}</CamposFormularioCima>
+          <CamposFormularioCima>Finalidade: {formularioEspecifico.finalidade}</CamposFormularioCima>
+          <CamposFormularioCimaUrgencia>
             Urgência: {formularioEspecifico.urgencia === 1 ? (
               <>
                 <StarFilled />
@@ -108,7 +116,7 @@ function FormularioEspecifico(props) {
                 <StarFilled />
               </>
             )}
-          </CamposFormularioCima>
+          </CamposFormularioCimaUrgencia>
         </ContainerFormularioCima>
 
         <ColunaEsquerda>
@@ -142,7 +150,7 @@ function FormularioEspecifico(props) {
               </BarraEsquerda>
               <BarraCentro>
                 <TextoBarraPaciente
-                  fontSize="1.2em"
+                  fontSize="1.1em"
                   fontWeight="bold"
                   justifyContent="flex-start"
                 >
@@ -163,14 +171,14 @@ function FormularioEspecifico(props) {
 
                   <Button
                     width="70%"
-                    backgroundColor={Cores.lilas[2]}
+                    backgroundColor= "green"
                     boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
                     borderColor={Cores.azulEscuro}
                     borderRadius="5px"
                     height="40%"
                     color={Cores.preto}
                     fontSize="0.8em"
-                    fontSizeMedia950="0.6em"
+                    fontSizeMedia950="0.75em"
                     fontWeight="bold"
                     heightMedia560="28px"
                   >
@@ -192,7 +200,7 @@ function FormularioEspecifico(props) {
           </BarraRespostas>
           <MargemEstetica />
           <Button
-            backgroundColor={Cores.azulClaro}
+            backgroundColor= "green"
             borderRadius="3px"
             borderWidth="1px"
             borderColor={Cores.preto}
@@ -208,7 +216,7 @@ function FormularioEspecifico(props) {
           >
             Gerar documento Word
           </Button>
-        </ColunaDireita>
+        </ColunaDireita></>)}
       </ContainerFormularioEspecifico>
     </>
   );
