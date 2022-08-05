@@ -41,6 +41,12 @@ function ListaFormularios() {
 
   useEffect(() => {
     pegandoDadosFormularios();
+    console.log("oi");
+
+
+
+
+    
   }, []);
 
   async function pegandoDadosFormularios() {

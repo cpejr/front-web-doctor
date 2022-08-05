@@ -43,6 +43,9 @@ function ListaUsuarios() {
   const [tipoSelect, setTipoSelect] = useState("");
   const [busca, setBusca] = useState("");
   const abertoPeloUsuario = true;
+  const [contador, setContador] = useState(0);
+  const [consultas, setConsultas] = useState([]);
+  
 
   const lowerBusca = busca.toLowerCase();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -66,26 +69,66 @@ function ListaUsuarios() {
   }
 
   async function pegandoDadosUsuarios() {
-    const resposta = await managerService.GetDadosPessoais();
-    if (tipoUsuarioLogado === "MASTER") {
-      resposta.forEach((usuario) => {
-        if ((usuario.tipo === "PACIENTE") || (usuario.tipo === "SECRETARIA(O)")) {
-          setUsuarios((usuarios) => [...usuarios, usuario]);
-          setCarregando(false);
-        }
-      });
-    } else {
-      resposta.forEach((usuario) => {
-        if (usuario.tipo === "PACIENTE") {
-          setUsuarios((usuarios) => [...usuarios, usuario]);
-          setCarregando(false);
-        }
-      });
+    if (contador < 1){
+      const resposta = await managerService.GetDadosPessoais();
+      if (tipoUsuarioLogado === "MASTER") {
+        resposta.forEach((usuario) => {
+          if ((usuario.tipo === "PACIENTE") || (usuario.tipo === "SECRETARIA(O)")) {
+            setUsuarios((usuarios) => [...usuarios, usuario]);
+            setCarregando(false);
+          }
+        });
+      } else {
+        resposta.forEach((usuario) => {
+          if (usuario.tipo === "PACIENTE") {
+            setUsuarios((usuarios) => [...usuarios, usuario]);
+            setCarregando(false);
+          }
+        });
+      }
+    }
+    setContador(contador + 1);
+  }
+
+  async function pegandoDadosConsultas() {
+    const resposta =
+      await managerService.GetDadosConsultasExamesMarcadosGeral();
+    setConsultas(resposta.dadosConsultas);
+
+  }
+
+  function comparaData(a, b) {
+
+    var data1 = new Date(a.data_hora);
+    var data2 = new Date(b.data_hora);
+
+    if (data1 > data2) {
+      return 1;
+    }
+    else {
+      return -1;
+    }
+
+  }
+
+  function comparaNomes(a, b) {
+
+    var nome1 = a.nome.toUpperCase();
+    var nome2 = b.nome.toUpperCase();
+
+    if (nome1 > nome2) {
+      return 1;
+    }
+    else {
+      return -1;
     }
   }
 
   useEffect(() => {
     pegandoDadosUsuarios();
+    pegandoDadosConsultas();
+    setandoUltimaConsulta();
+
   }, []);
 
   async function marcandoAgendamento(emailPaciente) {
@@ -120,6 +163,36 @@ function ListaUsuarios() {
       });
     }
   }
+
+
+    async function setandoUltimaConsulta(){
+      consultas.sort(comparaData);
+      usuariosFiltrados.forEach((usuario) => {
+        let dataHora = []
+        consultas.forEach((consulta) => {
+          if(consulta.id_usuario === usuario.id){ 
+            dataHora.push(consulta.data_hora); //funcionando
+          }
+        })
+        usuario.ultimaConsulta = dataHora[dataHora.length];
+
+        for(var i = 0; i < dataHora.length; i++){
+          if (new Date(dataHora[i]) > new Date()){
+            let aux = dataHora[i - 1];
+            usuario.ultimaConsulta = aux;
+            return;
+          }
+        }
+        if(dataHora.length != 0 && usuario.ultimaConsulta == undefined){
+          let aux = dataHora[dataHora.length - 1];
+          console.log(usuario.nome);
+          console.log(aux);
+          console.log("=-=-=-=-=-=");
+          usuario.ultimaConsulta = aux;
+
+        }
+      })
+    }
 
   return (
     <div>
@@ -167,7 +240,7 @@ function ListaUsuarios() {
           <CaixaVazia></CaixaVazia>
         </DadosUsuario>
         <ContainerUsuarios>
-          {usuariosFiltrados?.map((value) => (
+          {usuarios.sort(comparaNomes).map((value) => (
             <Usuario key={value.id}>
               <Imagem>{value.avatar_url}</Imagem>
               <Nome>
@@ -184,6 +257,7 @@ function ListaUsuarios() {
                 )}
               </Nome>
               <Telefone>
+                
                 {carregando ? (
                   <Spin indicator={antIcon} />
                 ) : (
@@ -193,7 +267,15 @@ function ListaUsuarios() {
                   </>
                 )}
               </Telefone>
-              <UltimaVisita>21/04/2022</UltimaVisita>
+              {value.ultimaConsulta === undefined ? 
+                (
+                  <UltimaVisita> - </UltimaVisita>
+                ) : (
+                   <UltimaVisita> 
+                        {value.ultimaConsulta.slice(8, 10) + "/" +  value.ultimaConsulta.slice(5, 7) + "/" +  value.ultimaConsulta.slice(0, 4)}
+                  </UltimaVisita>
+                )
+              }
 
               <CódigoPaciente>
                 {carregando ? (
