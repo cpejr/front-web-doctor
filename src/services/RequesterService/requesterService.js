@@ -80,3 +80,8 @@ export const requisicaoRespostaFormulario = (id) =>
   api.get(`/formularios_pacientes/${id}`);
 
   export const requisicaoReceitas = () => api.get(`/receitas/`);
+export const editarPerguntasFormulario = (id, perguntas) =>
+  api.put(`/formularios/${id}`, { perguntas: perguntas });
+
+export const editarCamposFormulario = (id, campos) =>
+  api.put(`/formularios/${id}`, campos);

@@ -19,6 +19,7 @@ import RespostaFormulario from "./pages/RespostaFormulario";
 import EditarPerfil from "./pages/EditarPerfil";
 import Agendamentos from "./pages/Agendamentos";
 import { usuarioAutenticado, recebeTipo } from "./services/auth";
+import EditarFormulario from "./pages/EditarFormulario/EditarFormulario";
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
   <Route
@@ -125,6 +126,11 @@ function UserHeader() {
           exact
           path="/web/criacaoformulario"
           component={CriacaoFormulario}
+        />
+        <RotasPrivadasMedico
+          exact
+          path="/web/editarformulario"
+          component={EditarFormulario}
         />
         <RotasPrivadasMedico
           exact
