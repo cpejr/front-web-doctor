@@ -176,7 +176,10 @@ function Cadastro() {
     }
 
     if (convenio) {
-      if (!usuario.convenio) errors.convenio = true;
+      if (!usuario.convenio) {
+        errors.convenio = true;
+        console.log("entrei aqui ");
+      }
     } else {
       errors.convenio = false;
     }
@@ -208,7 +211,15 @@ function Cadastro() {
       delete errors.nome_cuidador;
       delete errors.convenio;
     }
-    setCamposVazios({ ...camposVazios, ...errors });
+    for (const propriedade_errors in errors) {
+      if (errors[propriedade_errors] === true) {
+        for (const propriedade_campos in camposVazios) {
+          if (propriedade_campos === propriedade_errors) {
+            camposVazios[propriedade_campos] = true;
+          }
+        }
+      }
+    }
     console.log("/////////////////////////////");
 
     console.log(
