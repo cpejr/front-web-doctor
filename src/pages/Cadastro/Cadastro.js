@@ -227,25 +227,21 @@ function Cadastro() {
     }
 
     if (convenio && !cuidador) {
-      console.log("convenio && !cuidador");
       delete camposVazios.nome_cuidador;
       delete camposVazios.telefone_cuidador;
       delete errors.telefone_cuidador;
       delete errors.nome_cuidador;
       testeTemp.convenio = false;
     } else if (!convenio && cuidador) {
-      console.log("!convenio && cuidador");
       delete camposVazios.convenio;
       delete errors.convenio;
       testeTemp.telefone_cuidador = false;
       testeTemp.nome_cuidador = false;
     } else if (convenio && cuidador) {
-      console.log("convenio && cuidador");
       testeTemp.convenio = false;
       testeTemp.nome_cuidador = false;
       testeTemp.telefone_cuidador = false;
     } else {
-      console.log("else");
       delete camposVazios.nome_cuidador;
       delete camposVazios.telefone_cuidador;
       delete camposVazios.convenio;
@@ -253,12 +249,12 @@ function Cadastro() {
       delete errors.nome_cuidador;
       delete errors.convenio;
     }
-    console.log("🚀 ~ file: Cadastro.js ~ line 270 ~ requisicaoCadastro ~  camposVazios",  camposVazios)
-    console.log("🚀 ~ file: Cadastro.js ~ line 256 ~ requisicaoCadastro ~ testeTemp", testeTemp)
     if (_.isEqual(camposVazios, testeTemp)) {
       if (usuario.senha === usuario.senhaConfirmada) {
         await managerService.Cadastrando(usuario, enderecoBack);
+        await sleep(1500);
         setCarregando(false);
+        window.location.href = "/login";
       } else {
         toast.error("As senhas digitadas são diferentes.");
         setCarregando(false);
@@ -493,19 +489,6 @@ function Cadastro() {
       setCamposVazios({ ...camposVazios, numero: false });
     }
   }, [enderecoBack.numero]);
-
-  function consolando() {
-    console.log("/////////////////////////////");
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 463 ~ Cadastro ~ usuario",
-      usuario
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 457 ~ useEffect ~ camposVazios",
-      camposVazios
-    );
-    console.log("/////////////////////////////");
-  }
 
   return (
     <div>
@@ -870,13 +853,6 @@ function Cadastro() {
             fontWeight="bold"
           >
             {carregando ? <Spin indicator={antIcon} /> : "CADASTRAR"}
-          </Button>
-          <Button
-            onClick={() => {
-              consolando();
-            }}
-          >
-            console
           </Button>
         </DadosCadastro>
       </Body>
