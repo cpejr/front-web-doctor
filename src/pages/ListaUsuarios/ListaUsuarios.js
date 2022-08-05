@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Input, Select, Modal } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 import {
   TopoPagina,
   ContainerListadeUsuarios,
@@ -22,61 +24,76 @@ import {
   CaixaVazia,
 } from "./Styles";
 import Button from "../../styles/Button";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
-import * as managerService from "../../services/ManagerService/managerService";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 import ModalAdicionarCodigo from "../../components/ModalAdicionarCodigo/ModalAdicionarCodigo";
+import * as managerService from "../../services/ManagerService/managerService";
+import { Cores } from "../../variaveis";
 
 function ListaUsuarios() {
   const history = useHistory();
 
+  const { Option } = Select;
   const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
-  const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [emailPaciente, setEmailPaciente] = useState(false);
   const [modalAdicionarCodigo, setModalAdicionarCodigo] = useState(false);
   const [email, setEmail] = useState();
+  const [tipoSelect, setTipoSelect] = useState("");
+  const [busca, setBusca] = useState("");
+  const abertoPeloUsuario = true;
 
+  const lowerBusca = busca.toLowerCase();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const emailLogado = sessionStorage.getItem("@doctorapp-Email");
+  const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
 
-  async function pegandoTipoUsuarioLogado() {
-    const resposta = await managerService.GetDadosUsuario(emailLogado);
-    setTipoUsuarioLogado(resposta.dadosUsuario.tipo);
+  const usuariosFiltrados = usuarios.filter((usuario) => {
+    if (lowerBusca === "" && tipoSelect === "") {
+      return usuarios;
+    } else {
+      return (
+        (usuario?.nome?.toLowerCase().includes(lowerBusca) ||
+          usuario?.codigo?.toLowerCase().includes(lowerBusca) ||
+          usuario?.telefone?.includes(lowerBusca)) &&
+        usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase())
+      );
+    }
+  });
+
+  function secretariosFiltrados(value) {
+    setTipoSelect(value);
   }
-
-  useEffect(() => {
-    pegandoDadosUsuarios();
-  }, [tipoUsuarioLogado]);
-
-  useEffect(() => {
-    pegandoTipoUsuarioLogado();
-  }, []);
 
   async function pegandoDadosUsuarios() {
     const resposta = await managerService.GetDadosPessoais();
     if (tipoUsuarioLogado === "MASTER") {
-      setUsuarios(resposta);
-      setCarregando(false);
+      resposta.forEach((usuario) => {
+        if ((usuario.tipo === "PACIENTE") || (usuario.tipo === "SECRETARIA(O)")) {
+          setUsuarios((usuarios) => [...usuarios, usuario]);
+          setCarregando(false);
+        }
+      });
     } else {
       resposta.forEach((usuario) => {
         if (usuario.tipo === "PACIENTE") {
-          usuarios.push(usuario);
+          setUsuarios((usuarios) => [...usuarios, usuario]);
+          setCarregando(false);
         }
       });
-      setCarregando(false);
     }
   }
+
+  useEffect(() => {
+    pegandoDadosUsuarios();
+  }, []);
 
   async function marcandoAgendamento(emailPaciente) {
     setEmailPaciente(emailPaciente);
     setModalAgendamento(true);
   }
 
-  async function fechandoModal() {
+  async function fechandoModalAgendamentoEspecifico() {
     setModalAgendamento(false);
   }
 
@@ -85,8 +102,9 @@ function ListaUsuarios() {
     setModalAdicionarCodigo(true);
   }
 
-  async function fechandoModalCodigo() {
+  async function fechandoModalCodigo(){
     setModalAdicionarCodigo(false);
+    pegandoDadosUsuarios();
   }
 
   async function verificandoSecretariaOuPaciente(tipo, email) {
@@ -108,15 +126,25 @@ function ListaUsuarios() {
       <ContainerListadeUsuarios>
         <TopoPagina>
           <BarraPesquisa>
-            <Search placeholder="BUSCAR" style={{ width: 400 }} />
+            <Search
+              placeholder="BUSCAR"
+              style={{ width: 400 }}
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+            />
           </BarraPesquisa>
           <Filtros>
             {tipoUsuarioLogado === "MASTER" ? (
               <FiltroUsuario>
                 <Select
-                  defaultValue="Todos os Usuários"
-                  style={{ color: "green", width: 200 }}
-                ></Select>
+                  defaultValue=""
+                  style={{ width: 200 }}
+                  onChange={(value) => secretariosFiltrados(value)}
+                >
+                  <Option value="">Todos os Usuários</Option>
+                  <Option value="PACIENTE">Pacientes</Option>
+                  <Option value="SECRETARIA(O)">Secretárias(os)</Option>
+                </Select>
               </FiltroUsuario>
             ) : (
               <></>
@@ -124,7 +152,7 @@ function ListaUsuarios() {
             <FiltroDatas>
               <Select
                 defaultValue="Todas as datas"
-                style={{ color: "green", width: 200 }}
+                style={{ width: 200 }}
               ></Select>
             </FiltroDatas>
           </Filtros>
@@ -139,7 +167,7 @@ function ListaUsuarios() {
           <CaixaVazia></CaixaVazia>
         </DadosUsuario>
         <ContainerUsuarios>
-          {usuarios?.map((value) => (
+          {usuariosFiltrados?.map((value) => (
             <Usuario key={value.id}>
               <Imagem>{value.avatar_url}</Imagem>
               <Nome>
@@ -174,59 +202,65 @@ function ListaUsuarios() {
                   <>{value.codigo}</>
                 )}
               </CódigoPaciente>
-
-              {tipoUsuarioLogado === "MASTER" ? (
-                <BotaoAdicionar>
-                  <Button
-                    backgroundColor="transparent"
-                    borderColor="transparent"
-                    color="green"
-                    fontSize="1em"
-                    textDecoration="underline"
-                    height="50px"
-                    onClick={() => abrindoModalCodigo(value.email)}
-                  >
-                    Adicionar Código
-                  </Button>
-                </BotaoAdicionar>
-              ) : (
-                <BotaoAdicionar>
-                  <Button
-                    backgroundColor="transparent"
-                    borderColor="transparent"
-                    color="green"
-                    fontSize="1em"
-                    textDecoration="underline"
-                    height="50px"
-                    onClick={() => marcandoAgendamento(value.email)}
-                  >
-                    Marcar Agendamento
-                  </Button>
-                </BotaoAdicionar>
-              )}
+                {tipoUsuarioLogado === "MASTER"? (
+                  <BotaoAdicionar>
+                    {value.tipo === "PACIENTE"? (
+                    <Button
+                      backgroundColor="transparent"
+                      borderColor="transparent"
+                      color={Cores.preto}
+                      fontSize="1em"
+                      textDecoration="underline"
+                      height="50px"
+                      onClick={() => abrindoModalCodigo(value.email)}
+                    >
+                      Editar Código
+                    </Button>
+                    ):(
+                      <></>
+                    )}
+                  </BotaoAdicionar>
+                ) : (
+                  <BotaoAdicionar>
+                    <Button
+                      backgroundColor="transparent"
+                      borderColor="transparent"
+                      color="green"
+                      fontSize="1em"
+                      textDecoration="underline"
+                      height="50px"
+                      onClick={() => marcandoAgendamento(value.email)}
+                    >
+                      Marcar Agendamento
+                    </Button>
+                  </BotaoAdicionar>
+                )} 
             </Usuario>
           ))}
         </ContainerUsuarios>
       </ContainerListadeUsuarios>
-
       <Modal
         visible={modalAgendamento}
-        onCancel={fechandoModal}
+        onCancel={fechandoModalAgendamentoEspecifico}
         footer={null}
         width={"70%"}
         centered={true}
       >
-        <ModalAgendamentoEspecifico emailUsuario={emailPaciente} />
+        <ModalAgendamentoEspecifico
+          emailUsuario={emailPaciente}
+          abertoPeloUsuario={abertoPeloUsuario}
+          fechandoModal={() => fechandoModalAgendamentoEspecifico()}
+        />
       </Modal>
 
       <Modal
         visible={modalAdicionarCodigo}
-        onCancel={fechandoModal}
+        onCancel={fechandoModalCodigo}
         footer={null}
         width={"70%"}
         centered={true}
       >
-        <ModalAdicionarCodigo emailUsuario={email} />
+        <ModalAdicionarCodigo emailUsuario={email} fechandoModal = {() => fechandoModalCodigo()}/>
       </Modal>
     </div>
   );
