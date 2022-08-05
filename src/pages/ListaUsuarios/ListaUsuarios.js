@@ -54,10 +54,16 @@ function ListaUsuarios() {
   const usuariosFiltrados = usuarios.filter((usuario) => {
     if (lowerBusca === "" && tipoSelect === "") {
       return usuarios;
+    }
+    if (tipoSelect === "ultimaConsulta"){
+      return(
+        usuario?.ultimaConsulta !== undefined
+      );
     } else {
       return (
         (usuario?.nome?.toLowerCase().includes(lowerBusca) ||
           usuario?.codigo?.toLowerCase().includes(lowerBusca) ||
+          usuario?.ultimaConsulta !== undefined ||
           usuario?.telefone?.includes(lowerBusca)) &&
         usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase())
       );
@@ -185,9 +191,6 @@ function ListaUsuarios() {
         }
         if(dataHora.length != 0 && usuario.ultimaConsulta == undefined){
           let aux = dataHora[dataHora.length - 1];
-          console.log(usuario.nome);
-          console.log(aux);
-          console.log("=-=-=-=-=-=");
           usuario.ultimaConsulta = aux;
 
         }
@@ -226,7 +229,11 @@ function ListaUsuarios() {
               <Select
                 defaultValue="Todas as datas"
                 style={{ width: 200 }}
-              ></Select>
+                onChange={(value) => secretariosFiltrados(value)}
+              >
+                <Option value="">Todas as Datas</Option> 
+                <Option value="ultimaConsulta">Ultimas Visitas</Option>
+              </Select>
             </FiltroDatas>
           </Filtros>
         </TopoPagina>
@@ -240,7 +247,7 @@ function ListaUsuarios() {
           <CaixaVazia></CaixaVazia>
         </DadosUsuario>
         <ContainerUsuarios>
-          {usuarios.sort(comparaNomes).map((value) => (
+          {usuariosFiltrados?.sort(comparaNomes).map((value) => (
             <Usuario key={value.id}>
               <Imagem>{value.avatar_url}</Imagem>
               <Nome>
