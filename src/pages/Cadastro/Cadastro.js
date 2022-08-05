@@ -167,6 +167,8 @@ function Cadastro() {
   }
 
   async function requisicaoCadastro() {
+    setCarregando(true);
+
     if (!usuario.nome) errors.nome = true;
     if (!usuario.telefone) errors.telefone = true;
     if (!usuario.tipo) errors.tipo = true;
@@ -193,6 +195,7 @@ function Cadastro() {
       errors.nome_cuidador = false;
       setErro({ ...erro, telefone_cuidador: false });
     }
+    
 
     if (convenio) {
       if (!usuario.convenio) {
@@ -201,7 +204,7 @@ function Cadastro() {
     } else {
       errors.convenio = false;
     }
-
+    
     for (const propriedade_errors in errors) {
       if (errors[propriedade_errors] === true) {
         for (const propriedade_campos in camposVazios) {
@@ -211,7 +214,9 @@ function Cadastro() {
         }
       }
     }
-
+    await sleep(1500);
+    
+    
     if (usuario.tipo === "SECRETARIA(O)") {
       delete camposVazios.nome_cuidador;
       delete camposVazios.telefone_cuidador;
@@ -248,10 +253,10 @@ function Cadastro() {
       delete errors.nome_cuidador;
       delete errors.convenio;
     }
-
+    console.log("🚀 ~ file: Cadastro.js ~ line 270 ~ requisicaoCadastro ~  camposVazios",  camposVazios)
+    console.log("🚀 ~ file: Cadastro.js ~ line 256 ~ requisicaoCadastro ~ testeTemp", testeTemp)
     if (_.isEqual(camposVazios, testeTemp)) {
       if (usuario.senha === usuario.senhaConfirmada) {
-        setCarregando(true);
         await managerService.Cadastrando(usuario, enderecoBack);
         setCarregando(false);
       } else {
@@ -263,7 +268,9 @@ function Cadastro() {
     }
 
     testeTemp = testeOriginal;
+    setCarregando(false)
   }
+
 
   async function validacaoEmail(e) {
     const { value, name } = e.target;
@@ -643,7 +650,6 @@ function Cadastro() {
                   name="convenio"
                   value={estado.convenio}
                   onChange={validacaoCamposNaoGerais}
-                  erro={erro.convenio}
                   camposVazios={camposVazios.convenio}
                 ></Input>
               )}
@@ -665,7 +671,6 @@ function Cadastro() {
                     name="nome_cuidador"
                     value={estado.nome_cuidador}
                     onChange={validacaoCamposNaoGerais}
-                    erro={erro.nome_cuidador}
                     camposVazios={camposVazios.nome_cuidador}
                   ></Input>
                   <Input
