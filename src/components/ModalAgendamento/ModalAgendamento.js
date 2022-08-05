@@ -20,6 +20,7 @@ import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../ModalAgendamentoEspecifico";
 import ModalEditarAgendamentoEspecifico from "../ModalEditarAgendamentoEspecifico";
+import { compararDataAgendamentos } from "../../utils/tratamentoErros";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAgendamento(props) {
@@ -49,6 +50,9 @@ function ModalAgendamento(props) {
 
     setCarregando(false);
   }
+
+
+
 
   useEffect(() => {
     pegandoDados();
@@ -93,7 +97,9 @@ function ModalAgendamento(props) {
         ) : (
           <CorpoCaixa>
             <InfoEsquerda>
-              {consultas.map((value) => (
+              {consultas
+              .sort(compararDataAgendamentos)
+              .map((value) => (
                 <Agendamento>
                   <CaixaAgendamento key={value.id}>
                     <DiaHorarioAgendamento>
@@ -216,6 +222,8 @@ function ModalAgendamento(props) {
                 fontWeight="bold"
                 fontSizeMedia="0.9em"
                 fontSizeMedia950="1.1em"
+                marginTop="18%"
+                marginTopMedia="4%"
                 onClick={() => marcandoAgendamento()}
               >
                 Cadastrar novo agendamento
