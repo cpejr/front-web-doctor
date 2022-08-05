@@ -26,7 +26,6 @@ export const Caixa = styled.div`
     flex-direction: column;
   }
 `;
-
 export const InfoEsquerda = styled.div`
   display: flex;
   flex-direction: column;
@@ -135,15 +134,12 @@ export const DoisSelect = styled.h3`
 
   @media (max-width: 560px) {
     flex-direction: column;
-    height: 120px;
+    height: 100%;
   }
 
   @media (max-width: 1260px) and (min-width: 800px) {
     flex-direction: column;
-    height: 160px;
-  }
-  @media (max-width: 400px) {
-    height: 180px;
+    height: 100%;
   }
 `;
 
@@ -170,87 +166,35 @@ export const TamanhoInput = styled.div`
   }
 `;
 
-export const InputData = styled.input`
+export const InputHora = styled.input`
   width: 100%;
-  height: 40px;
-  color: ${Cores.preto};
+  height: 100%;
   font-family: ${Fontes.barlow};
   font-weight: 500;
-  font-size: 15px;
-  padding-left: 2%;
-  padding-right: 2%;
-  border-style: solid;
-  border-radius: 3px;
-  border-width: 1px;
-  border-color: ${(props) => {
-    let cor;
-      if(props.camposVazios){
-        cor = Cores.vermelho;
-      } else {
-        cor = Cores.azul;
-      }
-    return cor;
-  }};
-`;
-
-export const InputHora = styled(Input)`
-  width: 100%;
-  height: 35px;
+  font-size: 1em;
   color: ${Cores.preto};
-  font-family: ${Fontes.barlow};
-  font-weight: 500;
-  font-size: 15px;
-  padding-top: 8px;
-  padding-bottom: 8px;
   padding-left: 5%;
+  border-color: ${Cores.preto};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
-  border-color: ${(props) => {
-    let cor;
-    if (!props.borderColor) {
-      if(props.camposVazios){
-        cor = Cores.vermelho;
-      } else {
-        cor = Cores.azul;
-      }
-    } else {
-      cor = props.borderColor;
-    }
-    return cor;
-  }};
-
   ::placeholder {
-    color:${Cores.preto}
-  }
     color: ${Cores.preto};
   }
 `;
 
 export const InputDuracao = styled(Input)`
   width: 100%;
-  height: 35px;
+  height: 100%;
   color: ${Cores.preto};
   font-family: ${Fontes.barlow};
   font-weight: 500;
-  font-size: 15px;
+  font-size: 0.9em;
   padding-left: 5%;
+  border-color: ${Cores.preto};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
-  border-color: ${(props) => {
-    let cor;
-    if (!props.borderColor) {
-      if(props.camposVazios){
-        cor = Cores.vermelho;
-      } else {
-        cor = Cores.azul;
-      }
-    } else {
-      cor = props.borderColor;
-    }
-    return cor;
-  }};
 
   .ant-input {
     ::placeholder {
@@ -269,7 +213,7 @@ export const TextoSelecioneUmaData = styled.h3`
   align-items: center;
 `;
 
-export const SelecioneUmaData = styled.div`
+export const SelecioneUmaData = styled.h3`
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -279,14 +223,4 @@ export const SelecioneUmaData = styled.div`
   @media (max-width: 560px) {
     width: 100%;
   }
-`;
-
-export const Rotulo = styled.div`
-  width: 100%;
-  height: 10px;
-  margin-bottom: 10px;
-  font-family: ${Fontes.barlow};
-  font-weight: 400;
-  font-size: 1em;
-  color: ${Cores.vermelho};
 `;

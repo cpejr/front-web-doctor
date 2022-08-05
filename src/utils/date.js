@@ -17,5 +17,5 @@ export function brParaPadrao(strDataOriginal){
         return dataFormatada 
     } else {
         return "Data Invalida" 
-    }     
+    }
 }

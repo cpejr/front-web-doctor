@@ -27,7 +27,6 @@ import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 import ModalAdicionarCodigo from "../../components/ModalAdicionarCodigo/ModalAdicionarCodigo";
 import * as managerService from "../../services/ManagerService/managerService";
-import { Cores } from "../../variaveis";
 
 function ListaUsuarios() {
   const history = useHistory();
@@ -68,12 +67,8 @@ function ListaUsuarios() {
   async function pegandoDadosUsuarios() {
     const resposta = await managerService.GetDadosPessoais();
     if (tipoUsuarioLogado === "MASTER") {
-      resposta.forEach((usuario) => {
-        if ((usuario.tipo === "PACIENTE") || (usuario.tipo === "SECRETARIA(O)")) {
-          setUsuarios((usuarios) => [...usuarios, usuario]);
-          setCarregando(false);
-        }
-      });
+      setUsuarios(resposta);
+      setCarregando(false);
     } else {
       resposta.forEach((usuario) => {
         if (usuario.tipo === "PACIENTE") {
@@ -93,7 +88,7 @@ function ListaUsuarios() {
     setModalAgendamento(true);
   }
 
-  async function fechandoModalAgendamentoEspecifico() {
+  async function fechandoModal() {
     setModalAgendamento(false);
   }
 
@@ -202,46 +197,44 @@ function ListaUsuarios() {
                   <>{value.codigo}</>
                 )}
               </CódigoPaciente>
-                {tipoUsuarioLogado === "MASTER"? (
-                  <BotaoAdicionar>
-                    {value.tipo === "PACIENTE"? (
-                    <Button
-                      backgroundColor="transparent"
-                      borderColor="transparent"
-                      color={Cores.preto}
-                      fontSize="1em"
-                      textDecoration="underline"
-                      height="50px"
-                      onClick={() => abrindoModalCodigo(value.email)}
-                    >
-                      Editar Código
-                    </Button>
-                    ):(
-                      <></>
-                    )}
-                  </BotaoAdicionar>
-                ) : (
-                  <BotaoAdicionar>
-                    <Button
-                      backgroundColor="transparent"
-                      borderColor="transparent"
-                      color="green"
-                      fontSize="1em"
-                      textDecoration="underline"
-                      height="50px"
-                      onClick={() => marcandoAgendamento(value.email)}
-                    >
-                      Marcar Agendamento
-                    </Button>
-                  </BotaoAdicionar>
-                )} 
+
+              {tipoUsuarioLogado === "MASTER" ? (
+                <BotaoAdicionar>
+                  <Button
+                    backgroundColor="transparent"
+                    borderColor="transparent"
+                    color="black"
+                    fontSize="1em"
+                    textDecoration="underline"
+                    height="50px"
+                    onClick={() => abrindoModalCodigo(value.email)}
+                  >
+                    Editar Código
+                  </Button>
+                </BotaoAdicionar>
+              ) : (
+                <BotaoAdicionar>
+                  <Button
+                    backgroundColor="transparent"
+                    borderColor="transparent"
+                    color="green"
+                    fontSize="1em"
+                    textDecoration="underline"
+                    height="50px"
+                    onClick={() => marcandoAgendamento(value.email)}
+                  >
+                    Marcar Agendamento
+                  </Button>
+                </BotaoAdicionar>
+              )}
             </Usuario>
           ))}
         </ContainerUsuarios>
       </ContainerListadeUsuarios>
+
       <Modal
         visible={modalAgendamento}
-        onCancel={fechandoModalAgendamentoEspecifico}
+        onCancel={fechandoModal}
         footer={null}
         width={"70%"}
         centered={true}
@@ -249,7 +242,6 @@ function ListaUsuarios() {
         <ModalAgendamentoEspecifico
           emailUsuario={emailPaciente}
           abertoPeloUsuario={abertoPeloUsuario}
-          fechandoModal={() => fechandoModalAgendamentoEspecifico()}
         />
       </Modal>
 

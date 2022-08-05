@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, Row, Col } from "antd";
+import { Checkbox, Row, Col, Input } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
-import { toast } from "react-toastify";
-import _ from "lodash";
+import { sleep } from "../../utils/sleep";
 import {
   Container,
   Caixa,
@@ -22,8 +21,6 @@ import {
   SelecioneUmaData,
   TextoSelecioneUmaData,
   TextAreaDescricao,
-  Rotulo,
-  InputData,
   NomePaciente,
 } from "./Styles";
 import Select from "../../styles/Select";
@@ -31,8 +28,6 @@ import Button from "../../styles/Button";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import { Cores } from "../../variaveis";
 import { TiposDeConsulta } from "./TiposDeConsulta";
-import { apenasNumeros, data, dataAgendamentoBack } from "../../utils/masks";
-import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAgendamentoEspecifico(props) {
@@ -51,24 +46,9 @@ function ModalAgendamentoEspecifico(props) {
     avaliacao: "",
     id_usuario: "",
     id_consultorio: "",
-    tipo: "",
   });
-  const valoresIniciaisConsulta = {
-    data_hora: "",
-    duracao_em_minutos: "",
-    descricao: "",
-    avaliacao: "",
-    id_usuario: "",
-    id_consultorio: "",
-    tipo: "",
-  };
-  const [dataConsulta, setDataConsulta] = useState("");
-  const [dataConsultaBack, setDataConsultaBack] = useState("");
+  const [data, setData] = useState("");
   const [hora, setHora] = useState("");
-  const [erro, setErro] = useState(false);
-  const [camposVazios, setCamposVazios] = useState(false);
-  const [erroDataBack, setErroDataBack] = useState(false);
-
   moment.locale("pt-br");
 
   async function pegandoPacientes() {
@@ -79,14 +59,7 @@ function ModalAgendamentoEspecifico(props) {
       }
     });
   }
-  const errors = {};
-  const referenciaInputNulos = {
-    data: false,
-    hora: false,
-    duracao_em_minutos: false,
-    id_consultorio: false,
-    tipo: false,
-  };
+
   useEffect(() => {
     pegandoPacientes();
   }, []);
@@ -113,113 +86,39 @@ function ModalAgendamentoEspecifico(props) {
     pegandoDadosUsuario();
   }, [props]);
 
-  async function validacaoCampos(e) {
-    const { value, name } = e.target;
-
-    if (value) {
-      setCamposVazios({ ...camposVazios, [name]: false });
-    } else {
-      setCamposVazios({ ...camposVazios, [name]: true });
+  async function requisicaoCriarConsulta() {
+    setCarregandoCadastro(true);
+    formatacaoDataHora();
+    if (props.abertoPeloUsuario === true) {
+      consulta.id_usuario = usuario.id;
     }
-    if (consulta.duracao_em_minutos === "") {
-      setErro({ ...erro, [name]: true });
-    } else {
-      setErro({ ...erro, [name]: false });
-    }
+    await managerService.CriandoConsulta(consulta);
+    setCarregandoCadastro(false);
 
-    if (e.target.name === "hora") {
-      setHora(e.target.value);
-      return hora;
-    } else if (e.target.name === "duracao_em_minutos") {
-      setConsulta({
-        ...consulta,
-        [e.target.name]: apenasNumeros(e.target.value),
-      });
-      return consulta;
-    } else {
-      setConsulta({ ...consulta, [e.target.name]: e.target.value });
-      return consulta;
-    }
-  }
-
-  function foramatarDataConsultaFront(value) {
-    const aux = apenasNumeros(value);
-
-    setDataConsulta(data(aux));
-  }
-  function foramatarDataConsultaBack(data) {
-    setDataConsultaBack(dataAgendamentoBack(data));
-  }
-
-  async function validacaoData(e) {
-    const { value, name } = e;
-
-    if (value) {
-      setCamposVazios({ ...camposVazios, [name]: false });
-    }
-    if (value.toString().length < 10) {
-      setErro({ ...erro, [name]: true });
-      setErroDataBack(false);
-    } else if (dataAgendamentoBack(value) === "Data Invalida") {
-      setErro({ ...erro, [name]: true });
-      setErroDataBack(true);
-    } else {
-      setErro({ ...erro, [name]: false });
-    }
-    if (value.toString().length === 0) {
-      setErro({ ...erro, [name]: false });
-    }
-    foramatarDataConsultaFront(value);
-    foramatarDataConsultaBack(value);
+    await sleep(1500);
+    window.location.href = "/web/agendamentos";
   }
 
   function formatacaoDataHora() {
     try {
-      const dataHora = `${dataConsultaBack} ${hora}:00`;
+      const dataHora = `${data} ${hora}:00`;
       consulta.data_hora = dataHora;
     } catch {
       alert("DataHora inválida.");
     }
   }
 
-  async function requisicaoCriarConsulta() {
-    if (!dataConsulta) errors.data = true;
-    if (!hora) errors.hora = true;
-    if (!consulta.duracao_em_minutos) errors.duracao_em_minutos = true;
-    if (!consulta.id_consultorio) errors.id_consultorio = true;
-    if (!consulta.tipo) errors.tipo = true;
-
-    setCamposVazios({ ...camposVazios, ...errors });
-    if (consulta.duracao_em_minutos === "" || dataConsulta === "") {
-      toast.warn("Preencha todos os campos");
-    } else {
-      if (erro.data) {
-        toast.warn("Preencha todos os campos corretamente");
-      } else {
-        if (_.isEqual(camposVazios, referenciaInputNulos)) {
-          setCarregandoCadastro(true);
-          formatacaoDataHora();
-          if (props.abertoPeloUsuario === true) {
-            consulta.id_usuario = usuario.id;
-          }
-          await managerService.CriandoConsulta(consulta);
-          setCarregandoCadastro(false);
-          props.fechandoModal();
-          setConsulta(valoresIniciaisConsulta);
-          setDataConsulta("");
-          setHora("");
-        } else {
-          setCarregandoCadastro(true);
-          toast.warn("Preencha todos os campos corretamente");
-          setCarregandoCadastro(false);
-        }
-      }
-    }
-  }
-
   function preenchendoDadosConsulta(e) {
-    setConsulta({ ...consulta, [e.target.name]: e.target.value });
-    return consulta;
+    if (e.target.name === "hora") {
+      setHora(e.target.value);
+      return hora;
+    } else if (e.target.name === "data") {
+      setData(e.target.value);
+      return data;
+    } else {
+      setConsulta({ ...consulta, [e.target.name]: e.target.value });
+      return consulta;
+    }
   }
 
   return (
@@ -299,33 +198,28 @@ function ModalAgendamentoEspecifico(props) {
             onChange={preenchendoDadosConsulta}
             style={{
               borderWidth: "1px",
-              borderColor: Cores.azul,
+              borderColor: "black",
               color: "black",
             }}
           />
         </InfoEsquerdaEDireita>
         <InfoEsquerdaEDireita>
           <SelecioneUmaData>
-            <TextoSelecioneUmaData>Digite uma data:</TextoSelecioneUmaData>
-            <InputData
-              placeholder="Digite uma data"
+            <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
+            <Input
+              placeholder="Selecione uma data"
+              type="date"
               size="large"
               name="data"
-              onChange={(e) => validacaoData(e.target)}
-              value={dataConsulta}
-              camposVazios={camposVazios.data}
-              erro={erro.data}
-            />
-            {erro.data && (
-              <>
-                {erroDataBack ? (
-                  <Rotulo>Digite uma data válida.</Rotulo>
-                ) : (
-                  <Rotulo>Digite uma data no formato xx/xx/xxxx</Rotulo>
-                )}
-              </>
-            )}
-            {camposVazios.data && <Rotulo>Digite uma data</Rotulo>}
+              onChange={(e) => {
+                preenchendoDadosConsulta(e);
+              }}
+              style={{
+                borderWidth: "1px",
+                borderColor: "black",
+                color: "black",
+              }}
+            ></Input>
           </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
@@ -333,18 +227,15 @@ function ModalAgendamentoEspecifico(props) {
                 style={{
                   width: "100%",
                   color: "black",
+                  borderColor: "black",
                   borderWidth: "1px",
                 }}
-                paddingTop="8px"
-                paddingBottom="8px"
                 size="large"
                 name="tipo"
                 placeholder="Tipo"
                 onChange={(e) => {
-                  validacaoCampos(e);
+                  preenchendoDadosConsulta(e);
                 }}
-                value={consulta.tipo}
-                camposVazios={camposVazios.tipo}
               >
                 <option value="" disabled selected>
                   Tipo
@@ -361,27 +252,21 @@ function ModalAgendamentoEspecifico(props) {
                   </>
                 ))}
               </Select>
-              {camposVazios.tipo && (
-                <Rotulo>Selecione um tipo de consulta</Rotulo>
-              )}
             </TamanhoInput>
             <TamanhoInput>
               <Select
-                value={consulta.id_consultorio}
                 id="id_consultorio"
                 name="id_consultorio"
                 style={{
                   width: "100%",
+                  borderColor: "black",
                   borderWidth: "1px",
                   color: "black",
                 }}
-                paddingTop="8px"
-                paddingBottom="8px"
                 size="large"
                 onChange={(e) => {
-                  validacaoCampos(e);
+                  preenchendoDadosConsulta(e);
                 }}
-                camposVazios={camposVazios.id_consultorio}
               >
                 <option value="" disabled selected>
                   Consultório
@@ -402,48 +287,29 @@ function ModalAgendamentoEspecifico(props) {
                   </>
                 ))}
               </Select>
-              {camposVazios.id_consultorio && (
-                <Rotulo>Selecione um consultório</Rotulo>
-              )}
             </TamanhoInput>
           </DoisSelect>
 
           <DoisSelect>
             <TamanhoInput>
               <InputHora
-                value={hora}
                 type="text"
                 onFocus={(e) => (e.target.type = "time")}
                 onBlur={(e) => (e.target.type = "text")}
                 placeholder="Horário"
                 name="hora"
-                onChange={validacaoCampos}
-                camposVazios={camposVazios.hora}
+                onChange={preenchendoDadosConsulta}
+                style={{ color: "black" }}
               />
-              {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
             </TamanhoInput>
 
             <TamanhoInput>
               <InputDuracao
-                value={consulta.duracao_em_minutos}
                 placeholder="Duração"
                 name="duracao_em_minutos"
-                onChange={validacaoCampos}
+                onChange={preenchendoDadosConsulta}
                 suffix="min"
-                camposVazios={camposVazios.duracao_em_minutos}
-                erro={erro.duracao_em_minutos}
               />
-              {camposVazios.duracao_em_minutos ? (
-                <Rotulo>Digite uma duração</Rotulo>
-              ) : (
-                <>
-                  {erro.duracao_em_minutos ? (
-                    <Rotulo>Digite uma duração</Rotulo>
-                  ) : (
-                    <></>
-                  )}
-                </>
-              )}
             </TamanhoInput>
           </DoisSelect>
           <Checkbox>

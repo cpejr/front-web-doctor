@@ -106,7 +106,7 @@ function UserHeader() {
           path="/web/editarperfil"
           component={EditarPerfil}
         />
-        <Route
+        <RotasPrivadas
           exact
           path="/web/alterarsenha"
           component={AlterarSenha}

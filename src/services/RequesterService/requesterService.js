@@ -75,5 +75,3 @@ export const requisicaoRespostaFormularioIdUsuario = (id_usuario) =>
 
 export const requisicaoRespostaFormulario = (id) =>
   api.get(`/formularios_pacientes/${id}`);
-
-  export const requisicaoReceitas = () => api.get(`/receitas/`);
