@@ -70,8 +70,11 @@ export const requisicaoFormularioEspecifico = (id) =>
   api.get(`/formularios/${id}`);
 
 export const deletarFormulario = (id) => api.delete(`/formularios/${id}`);
+
 export const requisicaoRespostaFormularioIdUsuario = (id_usuario) =>
   api.get(`/formularios_pacientes_usuario/${id_usuario}`);
+
+export const criarFormulario = (estado) => api.post("/formularios", estado);
 
 export const requisicaoRespostaFormulario = (id) =>
   api.get(`/formularios_pacientes/${id}`);

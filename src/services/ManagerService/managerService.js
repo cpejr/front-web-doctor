@@ -426,6 +426,18 @@ export const GetResposta = async (id) => {
   return dadosResposta;
 };
 
+export const CriarFormulario = async (estado) => {
+  await requesterService
+    .criarFormulario(estado)
+    .then(() => {
+      alert("Usuário cadastrado com sucesso.");
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return false;
+};
 export const GetReceitas = async () => {
   let dadosReceitas = {};
   await requesterService
