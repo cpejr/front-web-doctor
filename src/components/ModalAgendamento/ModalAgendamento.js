@@ -20,6 +20,7 @@ import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../ModalAgendamentoEspecifico";
 import ModalEditarAgendamentoEspecifico from "../ModalEditarAgendamentoEspecifico";
+import { compararDataAgendamentos } from "../../utils/tratamentoErros";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAgendamento(props) {
@@ -27,7 +28,7 @@ function ModalAgendamento(props) {
   const [consultaEspecifica, setConsultaEspecifica] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
   const [modalEditarAgendamento, setModalEditarAgendamento] = useState(false);
-  const [modalAgendamento, setModalAgendamento] = useState(false);
+  const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] = useState(false);
   const [quantidadeAgendamentos, setQuantidadeAgendamentos] = useState();
   const abertoPeloUsuario = true;
   const [carregando, setCarregando] = useState(true);
@@ -50,16 +51,20 @@ function ModalAgendamento(props) {
     setCarregando(false);
   }
 
+
+
+
   useEffect(() => {
     pegandoDados();
   }, []);
 
   async function marcandoAgendamento() {
-    setModalAgendamento(true);
+    setModalAgendamentoEspecifico(true);
   }
 
-  async function fechandoModal() {
-    setModalAgendamento(false);
+  async function fechandoModalAgendamentoEspecifico() {
+    setModalAgendamentoEspecifico(false);
+    pegandoDados();
   }
 
   async function editandoAgendamento(consulta) {
@@ -74,10 +79,12 @@ function ModalAgendamento(props) {
 
   async function excluirConsulta(id) {
     await managerService.DeletarConsulta(id);
+    pegandoDados();
   }
 
   async function excluirExameMarcado(id) {
     await managerService.DeletarExameMarcado(id);
+    pegandoDados();
   }
 
   return (
@@ -90,7 +97,9 @@ function ModalAgendamento(props) {
         ) : (
           <CorpoCaixa>
             <InfoEsquerda>
-              {consultas.map((value) => (
+              {consultas
+              .sort(compararDataAgendamentos)
+              .map((value) => (
                 <Agendamento>
                   <CaixaAgendamento key={value.id}>
                     <DiaHorarioAgendamento>
@@ -213,6 +222,8 @@ function ModalAgendamento(props) {
                 fontWeight="bold"
                 fontSizeMedia="0.9em"
                 fontSizeMedia950="1.1em"
+                marginTop="18%"
+                marginTopMedia="4%"
                 onClick={() => marcandoAgendamento()}
               >
                 Cadastrar novo agendamento
@@ -222,8 +233,8 @@ function ModalAgendamento(props) {
         )}
       </Caixa>
       <Modal
-        visible={modalAgendamento}
-        onCancel={fechandoModal}
+        visible={modalAgendamentoEspecifico}
+        onCancel={() => setModalAgendamentoEspecifico(false)}
         footer={null}
         width={"70%"}
         centered={true}
@@ -231,6 +242,7 @@ function ModalAgendamento(props) {
         <ModalAgendamentoEspecifico
           emailUsuario={props.email}
           abertoPeloUsuario={abertoPeloUsuario}
+          fechandoModal={() => fechandoModalAgendamentoEspecifico()}
         />
       </Modal>
 

@@ -11,22 +11,56 @@ export const ContainerListadeUsuarios = styled.div`
 `;
 export const TopoPagina = styled.div`
   display: flex;
+  align-items: start;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   @media (max-width: 920px) {
+    width: 100%;
+    height: 70%;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+`;
+
+export const TopoPaginaEsquerda = styled.div`
+  display: flex;
+  align-items: start;
+  flex-direction: row;
+  width: 50%;
+  justify-content: space-between;
+
+  @media (max-width: 920px) {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-bottom: 2%;
+  }
+  @media (max-width: 490px) {
     flex-direction: column;
     justify-content: center;
   }
+
 `;
+
+
 export const BarraPesquisa = styled.div`
   width: 50%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
   @media (max-width: 920px) {
-    width: 100%;
-    justify-content: center;
+    width: 55%;
+    justify-content: start;
   }
+  @media (max-width: 690px) {
+    width: 280px;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  @media (max-width: 490px) {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  
   .ant-input {
     background-color: green;
   }
@@ -34,33 +68,23 @@ export const BarraPesquisa = styled.div`
     background-color: green;
   }
 `;
-export const Filtros = styled.div`
-  width: 50%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  gap: 2%;
-  @media (max-width: 920px) {
-    margin-top: 2%;
-    width: 100%;
-    justify-content: center;
-  }
-  @media (max-width: 450px) {
-    margin-top: 2%;
-    flex-direction: column;
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-  }
-`;
-export const FiltroUsuario = styled.div`
-  @media (max-width: 480px) {
-    margin-top: 2%;
-  }
-`;
+
 export const FiltroDatas = styled.div`
-  @media (max-width: 480px) {
-    margin-top: 2%;
+
+  width: 140px;
+  display: flex;
+  @media (max-width: 920px) {
+    width: 240px;
+    justify-content: end;
+  }
+
+  @media (max-width: 690px) {
+    width: 140px;
+  }
+
+  @media (max-width: 490px) {
+    justify-content: start;
+    width: 100%;
   }
 `;
 
@@ -159,20 +183,24 @@ export const Telefone = styled.div`
   }
 `;
 export const Data = styled.div`
-  width: 18%;
+  width: 25%;
   display: flex;
   justify-content: center;
 
   @media (max-width: 880px) {
-    width: 20%;
+    width: 30%;
   }
   @media (max-width: 700px) {
-    width: 25%;
+    width: 30%;
+  
   }
-  @media (max-width: 600px) {
+  @media (max-width: 650px) {
     display: none;
   }
 `;
+
+
+
 export const Agendamento = styled.div`
   width: 18%;
   display: flex;
@@ -182,7 +210,7 @@ export const Agendamento = styled.div`
     width: 20%;
   }
   @media (max-width: 700px) {
-    width: 25%;
+    width: 27%;
   }
   @media (max-width: 600px) {
     width: 33%;
@@ -198,11 +226,14 @@ export const CódigoPaciente = styled.div`
   @media (max-width: 880px) {
     width: 20%;
   }
-  @media (max-width: 700px) {
+  @media (max-width: 770px) {
     display: none;
   }
 `;
 export const BotaoNovoAgendamento = styled.div`
   display: flex;
   justify-content: end;
+  margin-bottom: 40px;
 `;
+
+

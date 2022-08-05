@@ -51,7 +51,7 @@ export const CorpoCaixa = styled.div`
   height: 100%;
 
   @media (max-width: 800px) {
-    flex-direction: column;
+    flex-direction: column-reverse;
   }
 `;
 
@@ -67,6 +67,11 @@ export const Titulo = styled.div`
   @media (max-width: 950px) and (min-width: 560px) {
     font-size: 1.5em;
   }
+
+  @media (max-width: 800px) {
+    margin-bottom: 3%;
+  }
+
   @media (max-width: 560px) {
     font-size: 1.2em;
     margin-bottom: 8%;
@@ -76,28 +81,38 @@ export const Titulo = styled.div`
 export const InfoEsquerda = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items: start;
+  justify-content: flex-start;
+  align-items: center;
   width: 65%;
-  height: 100%;
+  height: 530px;
+  overflow: auto;
 
   @media (max-width: 800px) {
     width: 100%;
+  }
+  @media (max-height: 810px) {
+    height: 400px;
+  }
+  @media (max-height: 600px) {
+    height: 300px;
   }
 `;
 
 export const InfoDireita = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   width: 30%;
   height: 100%;
   min-height: 70vh;
+  margin-left: 4%;
+  margin-right: 4%;
+  margin-bottom: 1%;
 
   @media (max-width: 800px) {
     width: 80%;
-    min-height: 40vh;
+    min-height: 40vh; 
   }
 `;
 
@@ -113,6 +128,7 @@ export const NumeroAgendamentos = styled.div`
   border-style: solid;
   border-radius: 3px;
   padding: 10%;
+  margin-bottom: 18%;
 
   text-align: center;
   font-family: ${Fontes.roboto};
@@ -127,6 +143,7 @@ export const NumeroAgendamentos = styled.div`
   }
   @media (max-width: 800px) {
     width: 100%;
+    margin-bottom:0px;
   }
   @media (max-width: 560px) {
     font-size: 1em;
@@ -135,16 +152,17 @@ export const NumeroAgendamentos = styled.div`
 
 export const Agendamento = styled.div`
   display: flex;
-  align-items: end;
+  align-items: center;
   flex-direction: row;
   justify-content: start;
   align-self: start;
   width: 94%;
-  height: 100%;
-  margin: 0% 2% 0% 2%;
+  margin-left: 6%;
+  margin-top: 2%;
 
   @media (max-width: 1100px) {
     flex-direction: column;
+    margin-left: 3%;
   }
 `;
 
@@ -153,7 +171,6 @@ export const CaixaAgendamento = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: center;
-  margin-top: 2%;
   width: 65%;
   height: 40px;
   background-color: ${Cores.lilas[4]};
@@ -161,9 +178,11 @@ export const CaixaAgendamento = styled.div`
   border-color: ${Cores.lilas[3]};
   border-width: 0.2em;
   border-radius: 6px;
+  margin-top: 5px;
 
   @media (max-width: 1100px) {
     width: 98%;
+    height: 60px;
   }
   @media (max-width: 480px) {
     flex-direction: column;
@@ -182,6 +201,7 @@ export const BotoesEditarExcluir = styled.div`
   @media (max-width: 1100px) and (min-width: 560px) {
     width: 98%;
     justify-content: space-between;
+    align-items: start;
   }
   @media (max-width: 800px) {
     width: 98%;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
@@ -29,7 +29,6 @@ import {
 import "react-toastify/dist/ReactToastify.min.css";
 import AddToast from "../../components/AddToast/AddToast";
 import { toast } from "react-toastify";
-import { brParaPadrao } from "../../utils/date";
 
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
@@ -293,15 +292,15 @@ function Cadastro() {
     if (name === "data_nascimento" && value.length < 10) {
       setErro({ ...erro, [name]: true });
       setErroDataBack(false);
-    } else if (maskDataBack(value) === "Data Invalida") {
+    } else if (dataBack(value) === "Data Invalida") {
       setErro({ ...erro, [name]: true });
       setErroDataBack(true);
     } else {
       setErro({ ...erro, [name]: false });
     }
 
-    setEstado({ ...estado, [name]: maskData(value) });
-    setUsuario({ ...usuario, [name]: maskDataBack(value) });
+    setEstado({ ...estado, [name]: data(value) });
+    setUsuario({ ...usuario, [name]: dataBack(value) });
   }
 
   async function validacaoCamposNaoGerais(e) {
@@ -396,19 +395,19 @@ function Cadastro() {
     if (name === "nome") {
       setEstado({
         ...estado,
-        [name]: maskApenasLetras(value),
+        [name]: apenasLetras(value),
       });
       setUsuario({ ...usuario, [name]: maskApenasLetras(value) });
     }
 
     if (name === "telefone") {
-      setEstado({ ...estado, [name]: maskTelefone(value) });
-      setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
+      setEstado({ ...estado, [name]: telefone(value) });
+      setUsuario({ ...usuario, [name]: apenasNumerosCpfTel(value) });
     }
 
     if (name === "cpf") {
-      setEstado({ ...estado, [name]: maskCPF(value) });
-      setUsuario({ ...usuario, [name]: maskApenasNumerosCpfTel(value) });
+      setEstado({ ...estado, [name]: cpf(value) });
+      setUsuario({ ...usuario, [name]: apenasNumerosCpfTel(value) });
     }
     if (name === "tipo") {
       setUsuario({
@@ -445,16 +444,16 @@ function Cadastro() {
     setEnderecoBack({ ...enderecoBack, [name]: value });
 
     if (name === "cep") {
-      setEndereco({ ...endereco, [name]: maskCEP(value) });
+      setEndereco({ ...endereco, [name]: cep(value) });
       setEnderecoBack({
         ...enderecoBack,
-        [name]: maskApenasNumerosCep(value),
+        [name]: apenasNumerosCep(value),
       });
     }
     if (name === "pais") {
       setEndereco({
         ...endereco,
-        [name]: maskApenasLetras(value),
+        [name]: apenasLetras(value),
       });
       setEnderecoBack({
         ...enderecoBack,
@@ -464,13 +463,13 @@ function Cadastro() {
     if (name === "cidade") {
       setEndereco({
         ...endereco,
-        [name]: maskApenasLetras(value),
+        [name]: apenasLetras(value),
       });
     }
     if (name === "numero") {
       setEndereco({
         ...endereco,
-        [name]: maskApenasNumeros(value),
+        [name]: apenasNumeros(value),
       });
       setEnderecoBack({
         ...enderecoBack,
@@ -512,6 +511,7 @@ function Cadastro() {
             id="tipos"
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
+            borderWidth="2px"
             width="100%"
             name="tipo"
             onChange={preenchendoDados}
@@ -712,6 +712,7 @@ function Cadastro() {
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
             width="100%"
+            borderWidth="2px"
             marginTop="2%"
             onChange={preenchendoEndereco}
             camposVazios={camposVazios.estado}
