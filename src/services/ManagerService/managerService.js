@@ -436,6 +436,7 @@ export const CriarFormulario = async (estado) => {
     });
   return false;
 };
+
 export const GetReceitas = async () => {
   let dadosReceitas = {};
   await requesterService
@@ -448,6 +449,7 @@ export const GetReceitas = async () => {
     });
   return dadosReceitas;
 };
+
 export const EditarPerguntasFormulario = async (
   id,
   perguntas
