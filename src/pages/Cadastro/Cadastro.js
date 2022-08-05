@@ -44,7 +44,26 @@ function Cadastro() {
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
   const [erro, setErro] = useState(false);
-  const [camposVazios, setCamposVazios] = useState(false);
+  const [camposVazios, setCamposVazios] = useState({
+    tipo: false,
+    nome: false,
+    telefone: false,
+    email: false,
+    cep: false,
+    pais: false,
+    estado: false,
+    cidade: false,
+    rua: false,
+    numero: false,
+    cpf: false,
+    data_nascimento: false,
+    bairro: false,
+    senha: false,
+    senhaConfirmada: false,
+    convenio: false,
+    nome_cuidador: false,
+    telefone_cuidador: false,
+  });
   const [erroDataBack, setErroDataBack] = useState(false);
   const [enderecoBack, setEnderecoBack] = useState({});
   const [estado, setEstado] = useState({});
@@ -178,10 +197,28 @@ function Cadastro() {
     if (convenio) {
       if (!usuario.convenio) {
         errors.convenio = true;
-        console.log("entrei aqui ");
       }
     } else {
       errors.convenio = false;
+    }
+
+    for (const propriedade_errors in errors) {
+      if (errors[propriedade_errors] === true) {
+        for (const propriedade_campos in camposVazios) {
+          if (propriedade_campos === propriedade_errors) {
+            camposVazios[propriedade_campos] = true;
+          }
+        }
+      }
+    }
+
+    if (usuario.tipo === "SECRETARIA(O)") {
+      delete camposVazios.nome_cuidador;
+      delete camposVazios.telefone_cuidador;
+      delete camposVazios.convenio;
+      delete errors.telefone_cuidador;
+      delete errors.nome_cuidador;
+      delete errors.convenio;
     }
 
     if (convenio && !cuidador) {
@@ -211,30 +248,6 @@ function Cadastro() {
       delete errors.nome_cuidador;
       delete errors.convenio;
     }
-    for (const propriedade_errors in errors) {
-      if (errors[propriedade_errors] === true) {
-        for (const propriedade_campos in camposVazios) {
-          if (propriedade_campos === propriedade_errors) {
-            camposVazios[propriedade_campos] = true;
-          }
-        }
-      }
-    }
-    console.log("/////////////////////////////");
-
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 463 ~ requisicaoCadastro ~ usuario",
-      usuario
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 457 ~ requisicaoCadastro ~ camposVazios",
-      camposVazios
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 236 ~ requisicaoCadastro ~ testeTemp",
-      testeTemp
-    );
-    console.log("/////////////////////////////");
 
     if (_.isEqual(camposVazios, testeTemp)) {
       if (usuario.senha === usuario.senhaConfirmada) {
@@ -322,13 +335,13 @@ function Cadastro() {
   }
   useEffect(() => {
     if (usuario.convenio) {
-      setCamposVazios({ ...camposVazios, convenio: false });
+      camposVazios.convenio = false;
     }
   }, [usuario.convenio]);
 
   useEffect(() => {
     if (usuario.nome_cuidador) {
-      setCamposVazios({ ...camposVazios, nome_cuidador: false });
+      camposVazios.nome_cuidador = false;
     }
   }, [usuario.nome_cuidador]);
 
