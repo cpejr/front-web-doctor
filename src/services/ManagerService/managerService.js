@@ -428,7 +428,8 @@ export const CriarFormulario = async (estado) => {
   await requesterService
     .criarFormulario(estado)
     .then(() => {
-      alert("Usuário cadastrado com sucesso.");
+      toast.success("Formulário criado com sucesso.");
+      window.location.href = "/web/listaformularios";
     })
     .catch((error) => {
       requisicaoErro(error);
