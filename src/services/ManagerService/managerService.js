@@ -19,11 +19,11 @@ export const requisicaoLogin = async (email, senha) => {
       if (resposta.data.tipo === "MASTER") {
         toast.success("Login realizado com sucesso!");
         await sleep(1500);
-        window.location.href = "/web/homemedico";
+        window.location.href = "/web/listadeusuarios";
       } else {
         toast.success("Login realizado com sucesso!");
         await sleep(1500);
-        window.location.href = "/web/homesecretaria";
+        window.location.href = "/web/listadeusuarios";
       }
     }
   } catch (error) {
@@ -48,7 +48,7 @@ export const Cadastrando = async (usuario, endereco) => {
     .then(() => {
       toast.success("Usuário cadastrado com sucesso.");
       sleep(1500);
-      window.location.href = "/login";
+      window.location.href = "/web/listadeusuario";
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/cadastro"));
