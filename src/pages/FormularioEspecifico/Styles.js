@@ -12,7 +12,7 @@ export const ColunaDireita = styled.div`
 
   padding: 2% 4% 2% 4%;
 
-  @media (max-width: 760px) and (min-height: 500px) {
+  @media (max-width: 760px) and (min-width: 500px) {
     display: flex;
     justify-content: center;
     height: 50%;
@@ -22,7 +22,11 @@ export const ColunaDireita = styled.div`
 
   @media (max-width: 520px) {
     font-size: 1em;
-    
+    display: flex;
+    justify-content: center;
+    height: 50%;
+    width: 98%;
+    margin-top: 5%;
   }
 `;
 
@@ -41,7 +45,6 @@ export const ColunaEsquerda = styled.div`
     width: 89%;
     padding: 0px;
     align-items: center;
- 
   }
 `;
 
@@ -136,8 +139,6 @@ export const BarraDireita = styled.div`
     width: 80%;
     display: flex;
     justify-content: center;
-  
-  
   }
 `;
 
@@ -176,7 +177,6 @@ export const BarraCentro = styled.div`
 
   @media (min-width: 761px) and (max-width: 1200px) {
     margin-left: 12%;
-
   }
 `;
 
@@ -209,7 +209,6 @@ export const ImagemPaciente = styled.img`
   @media (max-width: 510px) and (max-width: 730px) {
     width: 250px;
     height: 250px;
-
   }
 
   @media (min-width: 761px) {
@@ -242,6 +241,11 @@ export const Selects = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-left: 15px;
+
+  @media (max-width: 450px) {
+    margin-left: 0px;
+  }
 `;
 
 export const BarraRespostas = styled.div`
@@ -279,14 +283,9 @@ export const CamposFormularioCima = styled.div`
   width: 24%;
   overflow: auto;
   text-align: center;
-  /* padding-top: 30px;
-  padding-left: 2%;
-  padding-right: 2%; */
 
 
-
-  padding:12.5px 12px 7px 12px; 
- 
+  padding: 12.5px 12px 7px 12px;
 
   ::-webkit-scrollbar {
     width: 0px;
@@ -294,7 +293,6 @@ export const CamposFormularioCima = styled.div`
 
   @media (min-width: 940) and (max-width: 970px) {
     font-size: 0.8em;
-
   }
 
   @media (min-width: 690px) and (max-width: 940px) {
@@ -306,48 +304,9 @@ export const CamposFormularioCima = styled.div`
     height: 60px;
     font-size: 0.9em;
     margin-bottom: 2%;
-    padding:18px 15px 18px 15px; 
+    padding: 18px 15px 18px 15px;
   }
 `;
-
-/* export const TextoCamposFormularios = styled.div`
-    display: flex;
-  justify-content: center;
-  text-align: center;
-  background-color: transparent;
-  border-color: ${Cores.cinza[3]};
-  border-style: solid;
-  border-width: 2px;
-  font-size: 1.1em;
-  font-weight: bold;
-  height: 75px;
-  width: 24%;
-  overflow: auto;
-  /* padding-top: 30px;
-  padding-left: 2%;
-  padding-right: 2%; */
-
-  /* padding: 7px;
- 
-
-  ::-webkit-scrollbar {
-    width: 0px;
-  }
-
-  @media (min-width: 940) and (max-width: 970px) {
-    font-size: 0.8em;
-  }
-
-  @media (min-width: 690px) and (max-width: 940px) {
-    font-size: 0.78em;
-  }
-
-  @media (max-width: 690px) {
-    width: 100%;
-    height: 65px;
-    font-size: 0.9em;
-    margin-bottom: 2%;
-  } */
 
 
 export const CamposFormularioCimaUrgencia = styled.div`
@@ -367,7 +326,6 @@ export const CamposFormularioCimaUrgencia = styled.div`
   /* padding-left: 2%;
   padding-right: 2%; */
 
-
   @media (min-width: 940) and (max-width: 970px) {
     font-size: 0.8em;
   }
@@ -385,7 +343,7 @@ export const CamposFormularioCimaUrgencia = styled.div`
 `;
 
 export const RotuloBarraDeBuscaOpcoes = styled.div`
-  @media (max-width: 480px) {
+  @media (max-width: 450px) {
     margin-top: 2%;
   }
 `;
@@ -399,10 +357,6 @@ export const SelectTipos = styled(Select)`
   .ant-select-arrow {
     color: ${Cores.azul};
   }
-
-  /*  @media (max-width: 760px) {
-    margin-top: 50%;
-  } */
 `;
 
 export const ContainerBarraDeBuscaOpcoes = styled.div`
@@ -419,6 +373,14 @@ export const ContainerBarraDeBuscaOpcoes = styled.div`
     width: 100%;
     justify-content: center;
     align-items: center;
+  }
+
+  @media (max-width: 450px) {
+    width: 100%;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 20%;
   }
 `;
 
