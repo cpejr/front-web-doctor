@@ -128,13 +128,13 @@ export const Nome = styled.div`
   @media (max-width: 880px) {
     width: 20%;
   }
-  @media (max-width: 700px) {
+  @media (max-width: 740px) {
     width: 25%;
   }
-  @media (max-width: 600px) {
+  @media (max-width: 660px) {
     width: 33%;
   }
-  @media (max-width: 500px) {
+  @media (max-width: 560px) {
     width: 50%;
   }
 `;
@@ -143,59 +143,59 @@ export const Telefone = styled.div`
   justify-content: center;
   display: flex;
   @media (max-width: 880px) {
-    width: 20%;
+    width: 18%;
   }
-  @media (max-width: 700px) {
+  @media (max-width: 740px) {
     display: none;
   }
 `;
 export const UltimaVisita = styled.div`
-  width: 18%;
+  width: 14%;
   display: flex;
   justify-content: center;
   @media (max-width: 880px) {
-    width: 20%;
+    width: 14%;
   }
-  @media (max-width: 700px) {
-    width: 25%;
+  @media (max-width: 740px) {
+    width: 16%;
   }
-  @media (max-width: 600px) {
+  @media (max-width: 660px) {
     display: none;
   }
 `;
 export const BotaoAdicionar = styled.div`
   width: 18%;
   display: flex;
-  justify-content: center;
+  justify-content: end;
   color: green;
   @media (max-width: 880px) {
     width: 20%;
   }
-  @media (max-width: 700px) {
+  @media (max-width: 740px) {
     width: 25%;
   }
-  @media (max-width: 600px) {
+  @media (max-width: 660px) {
     width: 33%;
   }
-  @media (max-width: 500px) {
+  @media (max-width: 560px) {
     width: 50%;
   }
 `;
 
 export const CódigoPaciente = styled.div`
-  width: 18%;
+  width: 24%;
   display: flex;
   justify-content: center;
   @media (max-width: 880px) {
-    width: 20%;
+    width: 28%;
   }
-  @media (max-width: 700px) {
-    width: 25%;
+  @media (max-width: 740px) {
+    width: 30%;
   }
-  @media (max-width: 600px) {
-    width: 33%;
+  @media (max-width: 660px) {
+    width: 40%;
   }
-  @media (max-width: 500px) {
+  @media (max-width: 550px) {
     display: none;
   }
 `;
@@ -205,13 +205,13 @@ export const CaixaVazia = styled.div`
   @media (max-width: 880px) {
     width: 20%;
   }
-  @media (max-width: 700px) {
+  @media (max-width: 740px) {
     width: 25%;
   }
-  @media (max-width: 600px) {
+  @media (max-width: 660px) {
     width: 33%;
   }
-  @media (max-width: 500px) {
+  @media (max-width: 560px) {
     width: 50%;
   }
 `;
