@@ -40,12 +40,16 @@ function FormularioEspecifico(props) {
     useState(false);
   const [formularioResposta, setFormularioResposta] = useState(false);
   const [carregando, setCarregando] = useState(true);
+  const [statusSelect, setStatusSelect] = useState("");
+
+  const { Option } = SelectTipos;
+
+  const [busca, setBusca] = useState("");
+  const lowerBusca = busca.toLowerCase();
+  // const [usuariosParaRenderizar, setUsuariosParaRenderizar] = useState({});
 
   const antIcon = (
-    <LoadingOutlined
-      style={{ fontSize: 40, color: Cores.azul}}
-      spin
-    />
+    <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
   );
 
   async function pegandoDadosFormularioEspecifico() {
@@ -86,137 +90,189 @@ function FormularioEspecifico(props) {
     pegandoDadosFormularioEspecifico();
   }, [props.location.state.id]);
 
+
+
+  const usuariosFiltrados = formularioPacientes.filter(
+    (formularioPacientes) => {
+      if (lowerBusca === "" && statusSelect === "") {
+        return formularioPacientes;
+      } else {
+        if (statusSelect === "true") {
+          return (
+            formularioPacientes?.nome?.toLowerCase().includes(lowerBusca) &&
+            formularioPacientes.status
+          );
+        }
+        else if (statusSelect === "false")
+        {
+          return (
+            formularioPacientes?.nome?.toLowerCase().includes(lowerBusca) -
+            formularioPacientes.status
+          );
+        } else {
+          return (
+            formularioPacientes?.nome?.toLowerCase().includes(lowerBusca)
+          );
+        }
+      }
+    }
+  );
+
+  function usuariosFiltro(value) {
+    setStatusSelect(value);
+  }
+
   return (
     <>
       <ContainerFormularioEspecifico>
-      {carregando ? (
+        {carregando ? (
           <Spin indicator={antIcon} />
-        ) : (<>
-        <ContainerFormularioCima>
-          <CamposFormularioCima>Formulário: {formularioEspecifico.titulo}</CamposFormularioCima>
-          <CamposFormularioCima>Tipo: {formularioEspecifico.tipo}</CamposFormularioCima>
-          <CamposFormularioCima>Finalidade: {formularioEspecifico.finalidade}</CamposFormularioCima>
-          <CamposFormularioCimaUrgencia>
-            Urgência: {formularioEspecifico.urgencia === 1 ? (
-              <>
-                <StarFilled />
-                <StarOutlined />
-                <StarOutlined />
-              </>
-            ) : formularioEspecifico.urgencia === 2 ? (
-              <>
-                <StarFilled />
-                <StarFilled />
-                <StarOutlined />
-              </>
-            ) : (
-              <>
-                <StarFilled />
-                <StarFilled />
-                <StarFilled />
-              </>
-            )}
-          </CamposFormularioCimaUrgencia>
-        </ContainerFormularioCima>
+        ) : (
+          <>
+            <ContainerFormularioCima>
+              <CamposFormularioCima>
+                {formularioEspecifico.titulo}
+              </CamposFormularioCima>
+              <CamposFormularioCima>
+                Tipo: {formularioEspecifico.tipo}
+              </CamposFormularioCima>
+              <CamposFormularioCima>
+                Finalidade: {formularioEspecifico.finalidade}
+              </CamposFormularioCima>
+              <CamposFormularioCimaUrgencia>
+                Urgência:{" "}
+                {formularioEspecifico.urgencia === 1 ? (
+                  <>
+                    <StarFilled />
+                    <StarOutlined />
+                    <StarOutlined />
+                  </>
+                ) : formularioEspecifico.urgencia === 2 ? (
+                  <>
+                    <StarFilled />
+                    <StarFilled />
+                    <StarOutlined />
+                  </>
+                ) : (
+                  <>
+                    <StarFilled />
+                    <StarFilled />
+                    <StarFilled />
+                  </>
+                )}
+              </CamposFormularioCimaUrgencia>
+            </ContainerFormularioCima>
 
-        <ColunaEsquerda>
-          <ContainerBarraDeBuscaOpcoes>
-            <BarraDePesquisa>
-              <Search placeholder="BUSCAR" style={{ width: "80%" }} />
-            </BarraDePesquisa>
-            <Selects>
-              <RotuloBarraDeBuscaOpcoes>
-                <SelectTipos
-                  defaultValue="Status"
-                  bordered={false}
-                  style={{ width: 90 }}
-                ></SelectTipos>
-              </RotuloBarraDeBuscaOpcoes>
-            </Selects>
-          </ContainerBarraDeBuscaOpcoes>
+            <ColunaEsquerda>
+              <ContainerBarraDeBuscaOpcoes>
+                <BarraDePesquisa>
+                  <Search
+                    placeholder="BUSCAR"
+                    style={{ width: "100%" }}
+                    value={busca}
+                    onChange={(e) => setBusca(e.target.value)}
+                  />
+                </BarraDePesquisa>
+                <Selects>
+                  <RotuloBarraDeBuscaOpcoes>
+                    <SelectTipos
+                      defaultValue=""
+                      bordered={false}
+                      style={{ width: 150 }}
+                      onChange={(value) => usuariosFiltro(value)}
+                    >
+                      <Option value="">Todos os Usuários</Option>
+                      <Option value="true">Respondido</Option>
+                      <Option value="false">Resposta Pendente</Option>
+                    </SelectTipos>
+                  </RotuloBarraDeBuscaOpcoes>
+                </Selects>
+              </ContainerBarraDeBuscaOpcoes>
 
-          <BarraEstetica></BarraEstetica>
+              <BarraEstetica></BarraEstetica>
 
-          {formularioPacientes.map((value) => (
-            <BarraPaciente>
-              <BarraEsquerda>
-                <ImagemPaciente
-                  src={fotoPerfil}
-                  className="fotoPerfil"
-                  alt="fotoPerfil"
-                  width="80px"
-                  height="80px"
-                ></ImagemPaciente>
-              </BarraEsquerda>
-              <BarraCentro>
-                <TextoBarraPaciente
-                  fontSize="1.1em"
-                  fontWeight="bold"
-                  justifyContent="flex-start"
-                >
-                   {value.nome}
-                </TextoBarraPaciente>
-              </BarraCentro>
-              {value.status !== false ? (
-                <></>
-              ) : (
-                <BarraDireita>
-                  <TextoBarraPaciente
-                    fontSize="1em"
-                    fontWeight="bold"
-                    justifyContent="flex-start"
-                  >
-                    Resposta Pendente{" "}
-                  </TextoBarraPaciente>
+              {usuariosFiltrados?.map((value) => (
+                <BarraPaciente>
+                  <BarraEsquerda>
+                    <ImagemPaciente
+                      src={fotoPerfil}
+                      className="fotoPerfil"
+                      alt="fotoPerfil"
+                      width="80px"
+                      height="80px"
+                    ></ImagemPaciente>
+                  </BarraEsquerda>
+                  <BarraCentro>
+                    <TextoBarraPaciente
+                      fontSize="1.1em"
+                      fontWeight="bold"
+                      justifyContent="flex-start"
+                    >
+                      {value.nome}
+                    </TextoBarraPaciente>
+                  </BarraCentro>
+                  {value.status !== false ? (
+                    <></>
+                  ) : (
+                    <BarraDireita>
+                      <TextoBarraPaciente
+                        fontSize="1em"
+                        fontWeight="bold"
+                        justifyContent="flex-start"
+                      >
+                        Resposta Pendente{" "}
+                      </TextoBarraPaciente>
 
-                  <Button
-                    width="70%"
-                    backgroundColor= "green"
-                    boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-                    borderColor={Cores.azulEscuro}
-                    borderRadius="5px"
-                    height="40%"
-                    color={Cores.preto}
-                    fontSize="0.8em"
-                    fontSizeMedia950="0.75em"
-                    fontWeight="bold"
-                    heightMedia560="28px"
-                  >
-                    ENVIAR LEMBRETE
-                  </Button>
-                </BarraDireita>
-              )}
-            </BarraPaciente>
-          ))}
-        </ColunaEsquerda>
-        <ColunaDireita>
-          <BarraRespostas>
-            Aguardando respostas de {formularioRespostaPendente.length}{" "}
-            formulários.
-          </BarraRespostas>
-          <BarraRespostas>
-            {" "}
-            {formularioResposta.length} formulários já foram respondidos.
-          </BarraRespostas>
-          <MargemEstetica />
-          <Button
-            backgroundColor= "green"
-            borderRadius="3px"
-            borderWidth="1px"
-            borderColor={Cores.preto}
-            boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-            color={Cores.preto}
-            fontSize="15px"
-            height="50px"
-            width="60%"
-            marginTop="10%"
-            marginLeft="0%"
-            fontSizeMedia950="0.9em"
-            onClick={() => {}}
-          >
-            Gerar documento Word
-          </Button>
-        </ColunaDireita></>)}
+                      <Button
+                        width="70%"
+                        backgroundColor="green"
+                        boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+                        borderColor={Cores.azulEscuro}
+                        borderRadius="5px"
+                        height="40%"
+                        color={Cores.preto}
+                        fontSize="0.8em"
+                        fontSizeMedia950="0.75em"
+                        fontWeight="bold"
+                        heightMedia560="28px"
+                      >
+                        ENVIAR LEMBRETE
+                      </Button>
+                    </BarraDireita>
+                  )}
+                </BarraPaciente>
+              ))}
+            </ColunaEsquerda>
+            <ColunaDireita>
+              <BarraRespostas>
+                Aguardando respostas de {formularioRespostaPendente.length}{" "}
+                formulários.
+              </BarraRespostas>
+              <BarraRespostas>
+                {" "}
+                {formularioResposta.length} formulários já foram respondidos.
+              </BarraRespostas>
+              <MargemEstetica />
+              <Button
+                backgroundColor="green"
+                borderRadius="3px"
+                borderWidth="1px"
+                borderColor={Cores.preto}
+                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                color={Cores.preto}
+                fontSize="15px"
+                height="50px"
+                width="60%"
+                marginTop="10%"
+                marginLeft="0%"
+                fontSizeMedia950="0.9em"
+                onClick={() => {}}
+              >
+                Gerar documento Word
+              </Button>
+            </ColunaDireita>
+          </>
+        )}
       </ContainerFormularioEspecifico>
     </>
   );

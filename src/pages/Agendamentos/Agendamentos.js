@@ -35,6 +35,7 @@ import * as managerService from "../../services/ManagerService/managerService";
 function Agendamentos() {
   const history = useHistory();
   const { Search } = Input;
+  const { Option } = Select;
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [email, setEmail] = useState();
   const [carregando, setCarregando] = useState(true);
@@ -43,8 +44,23 @@ function Agendamentos() {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const abertoPeloUsuario = false;
   const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
+  const [tipoSelect, setTipoSelect] = useState("");
+  const [busca, setBusca] = useState("");
+  const lowerBusca = busca.toLowerCase();
 
+  const agendamentosFiltrados = consultas.filter((consultas) => {
+    if (lowerBusca === "") {
+      return consultas;
+    } else {
+      return (
+        consultas?.nome?.toLowerCase().includes(lowerBusca)
+      );
+    }
+  });
 
+  function agendamentosSelectFiltrados(value) {
+    setTipoSelect(value);
+  }
 
 
   
@@ -60,7 +76,6 @@ function Agendamentos() {
   useEffect(() => {
     pegandoDados();
   }, [email]);
-
 
   async function marcandoAgendamento(email) {
     setEmail(email);
@@ -86,13 +101,22 @@ function Agendamentos() {
         <TopoPagina>
           <TopoPaginaEsquerda>
             <BarraPesquisa>
-              <Search placeholder="BUSCAR"/>
+            <Search
+              placeholder="BUSCAR"
+              value={busca}
+              onChange={(e) => setBusca(e.target.value)}
+            />
             </BarraPesquisa>
               <FiltroDatas>
-                <Select
-                  defaultValue="Todas as datas"
-                  style={{ color: "green", width: "100%" }}
-                ></Select>
+              <Select
+                  defaultValue=""
+                  style={{ width: 200 }}
+                  onChange={(value) => agendamentosSelectFiltrados(value)}
+                >
+                  <Option value="">Todos os Usuários</Option>
+                  <Option value="PACIENTE">Pacientes</Option>
+                  <Option value="SECRETARIA(O)">Secretárias(os)</Option>
+                </Select>
               </FiltroDatas>
           </TopoPaginaEsquerda>
           <Button
@@ -124,9 +148,9 @@ function Agendamentos() {
         </DadosUsuario>
         <ContainerUsuarios>
 
-          {consultas
-            .sort(compararDataAgendamentos)
-            .map((value) => (
+          {agendamentosFiltrados
+            //.sort(compararDataAgendamentos)
+            ?.map((value) => (
               <Usuario key={value.id_usuario}>
                 <Imagem>{value.avatar_url}</Imagem>
                 <Nome>
@@ -167,7 +191,7 @@ function Agendamentos() {
                 </CódigoPaciente>
               </Usuario>
             ))}
-          {examesMarcados.map((value) => (
+          {/* {examesMarcados.map((value) => (
             <Usuario key={value.id_usuario}>
               <Imagem>{value.avatar_url}</Imagem>
               <Nome>
@@ -202,7 +226,7 @@ function Agendamentos() {
                 )}
               </CódigoPaciente>
             </Usuario>
-          ))}
+          ))} */}
         </ContainerUsuarios>
       </ContainerListadeUsuarios>
 
