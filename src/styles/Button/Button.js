@@ -9,8 +9,9 @@ const Button = styled.button`
   justify-content: center;
   /*Medidas*/
   border-radius: 3px;
-  margin-top: 2%;
+  margin-top: ${(props) => props.marginTop?? "2%"};
   margin-left: ${(props) => props.marginLeft};
+  padding-top: ${(props) => props.paddingTop};
   height: ${(props) => props.height};
   gap: ${(props) => props.gap};
   width: ${(props) => props.width};
@@ -35,6 +36,15 @@ const Button = styled.button`
     width: 100%;
     height: ${(props) => props.heightMedia560};
   }
+  @media (max-width: 920px) and (min-width: 560px){
+    width: ${(props) => props.widthMedia ?? props.width};
+  }
+
+  @media (max-width: 800px)
+  {
+    margin-top: ${(props) => props.marginTopMedia ?? ((props) => props.marginTop?? "2%")};
+  }
+  
   @media (max-width: 950px) and (min-width: 480px) {
     font-size: ${(props) => props.fontSizeMedia950};
   }

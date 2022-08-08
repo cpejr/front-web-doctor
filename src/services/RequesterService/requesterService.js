@@ -13,6 +13,9 @@ export const criarUsuario = (endereco, usuario) =>
 
 export const criarConsulta = (consulta) => api.post("/consultas", consulta);
 
+export const updateConsulta = (id_consulta, consulta) =>
+  api.put(`/consultas/${id_consulta}`, consulta);
+
 export const updateDadosUsuario = (id_usuario, id_endereco, endereco, estado) =>
   api.put(`/enderecos/${id_endereco}`, endereco).then((res) => {
     api.put(`/usuarios/${id_usuario}`, { ...estado, id_endereco: res.data.id });
@@ -42,11 +45,20 @@ export const deletarUsuario = (id) => api.delete(`/usuarios/${id}`);
 
 export const requisicaoExamesMarcados = () => api.get(`/exame_marcados/`);
 
+export const requisicaoExamesMarcadosUsuario = (id_usuario) =>
+  api.get(`/exame_marcados/${id_usuario}`);
+
 export const requisicaoConsultas = () => api.get(`/consultas/`);
+
+export const requisicaoConsultaUsuario = (id_usuario) =>
+  api.get(`/consultas/${id_usuario}`);
 
 export const requisicaoExame = (id) => api.get(`/exames/${id}`);
 
 export const requisicaoDadosConsultorios = () => api.get(`/consultorios`);
+
+export const requisicaoDadosConsultoriosPorId = (id) =>
+  api.get(`/consultorios/${id}`);
 
 export const deletarConsulta = (id) => api.delete(`/consultas/${id}`);
 
@@ -63,6 +75,8 @@ export const requisicaoRespostaFormularioIdUsuario = (id_usuario) =>
 
 export const requisicaoRespostaFormulario = (id) =>
   api.get(`/formularios_pacientes/${id}`);
+
+  export const requisicaoReceitas = () => api.get(`/receitas/`);
 
 export const enviarFormularioPaciente = (status, id_formulario, id_usuario) =>
   api.post("/formularios_pacientes", { status, id_formulario, id_usuario });
