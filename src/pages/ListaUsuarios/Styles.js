@@ -195,7 +195,7 @@ export const CódigoPaciente = styled.div`
   @media (max-width: 660px) {
     width: 40%;
   }
-  @media (max-width: 550px) {
+  @media (max-width: 560px) {
     display: none;
   }
 `;
