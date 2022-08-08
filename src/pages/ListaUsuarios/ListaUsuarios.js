@@ -51,7 +51,7 @@ function ListaUsuarios() {
 
   const lowerBusca = busca.toLowerCase();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const antIcon2 = <LoadingOutlined style={{ fontSize: 60 }} spin />;
+  const antIcon2 = <LoadingOutlined style={{ fontSize: 40 }} spin />;
   const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
 
   const usuariosFiltrados = usuarios.filter((usuario) => {
@@ -247,8 +247,8 @@ function ListaUsuarios() {
           <div
             style={{
               position: "absolute",
-              top: "30%",
-              left: "47%",
+              top: "50%",
+              left: "47.5%",
             }}
           >
             <Spin indicator={antIcon2} />
