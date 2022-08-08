@@ -24,7 +24,6 @@ import Button from "../../styles/Button";
 import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
 import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
-import { OmitProps } from "antd/lib/transfer/ListBody";
 
 function ListaFormularios() {
   const history = useHistory();
