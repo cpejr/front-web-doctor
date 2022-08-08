@@ -27,6 +27,7 @@ import {
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 import ModalAdicionarCodigo from "../../components/ModalAdicionarCodigo/ModalAdicionarCodigo";
+import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 
@@ -48,7 +49,6 @@ function ListaUsuarios() {
   const [contador, setContador] = useState(0);
   const [consultas, setConsultas] = useState([]);
 
-
   const lowerBusca = busca.toLowerCase();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const antIcon2 = <LoadingOutlined style={{ fontSize: 60 }} spin />;
@@ -59,9 +59,7 @@ function ListaUsuarios() {
       return usuarios;
     }
     if (tipoSelect === "ultimaConsulta") {
-      return (
-        usuario?.ultimaConsulta !== undefined
-      );
+      return usuario?.ultimaConsulta !== undefined;
     } else {
       return (
         (usuario?.nome?.toLowerCase().includes(lowerBusca) ||
@@ -82,7 +80,7 @@ function ListaUsuarios() {
       const resposta = await managerService.GetDadosPessoais();
       if (tipoUsuarioLogado === "MASTER") {
         resposta.forEach((usuario) => {
-          if ((usuario.tipo === "PACIENTE") || (usuario.tipo === "SECRETARIA(O)")) {
+          if (usuario.tipo === "PACIENTE" || usuario.tipo === "SECRETARIA(O)") {
             setUsuarios((usuarios) => [...usuarios, usuario]);
             setCarregando(false);
           }
@@ -103,32 +101,26 @@ function ListaUsuarios() {
     const resposta =
       await managerService.GetDadosConsultasExamesMarcadosGeral();
     setConsultas(resposta.dadosConsultas);
-
   }
 
   function comparaData(a, b) {
-
     var data1 = new Date(a.data_hora);
     var data2 = new Date(b.data_hora);
 
     if (data1 > data2) {
       return 1;
-    }
-    else {
+    } else {
       return -1;
     }
-
   }
 
   function comparaNomes(a, b) {
-
     var nome1 = a.nome.toUpperCase();
     var nome2 = b.nome.toUpperCase();
 
     if (nome1 > nome2) {
       return 1;
-    }
-    else {
+    } else {
       return -1;
     }
   }
@@ -136,8 +128,8 @@ function ListaUsuarios() {
   useEffect(() => {
     pegandoDadosUsuarios();
     pegandoDadosConsultas();
-
   }, []);
+
   useEffect(() => {
     setandoUltimaConsulta();
   }, [usuariosFiltrados]);
@@ -175,40 +167,36 @@ function ListaUsuarios() {
     }
   }
 
-
   async function setandoUltimaConsulta() {
-    if (contador == 1) {
-      consultas.sort(comparaData);
-      usuariosFiltrados.forEach((usuario) => {
-        let dataHora = []
-        consultas.forEach((consulta) => {
-          if (consulta.id_usuario === usuario.id) {
-            dataHora.push(consulta.data_hora); //funcionando
-          }
-        })
-        usuario.ultimaConsulta = dataHora[dataHora.length];
-
-        for (var i = 0; i < dataHora.length; i++) {
-          if (new Date(dataHora[i]) > new Date()) {
-            let aux = dataHora[i - 1];
-            usuario.ultimaConsulta = aux;
-            return;
-          }
+    consultas.sort(comparaData);
+    usuariosFiltrados.forEach((usuario) => {
+      let dataHora = [];
+      consultas.forEach((consulta) => {
+        if (consulta.id_usuario === usuario.id) {
+          dataHora.push(consulta.data_hora); //funcionando
         }
-        if (dataHora.length != 0 && usuario.ultimaConsulta == undefined) {
-          let aux = dataHora[dataHora.length - 1];
+      });
+      usuario.ultimaConsulta = dataHora[dataHora.length];
+
+      for (var i = 0; i < dataHora.length; i++) {
+        if (new Date(dataHora[i]) > new Date()) {
+          let aux = dataHora[i - 1];
           usuario.ultimaConsulta = aux;
-
+          return;
         }
-      })
-      setCarregandoPagina(false);
-      setContador(contador + 1);
-    }
+      }
+      if (dataHora.length != 0 && usuario.ultimaConsulta == undefined) {
+        let aux = dataHora[dataHora.length - 1];
+        usuario.ultimaConsulta = aux;
+      }
+    });
+    await sleep(3000);
+    setCarregandoPagina(false);
   }
 
   return (
     <div>
-        <ContainerListadeUsuarios>
+      <ContainerListadeUsuarios>
         <TopoPagina>
           <BarraPesquisa>
             <Search
@@ -257,99 +245,100 @@ function ListaUsuarios() {
         </DadosUsuario>
         {carregandoPagina ? (
           <div
-          style={{
-            position: "absolute",
-            top: "30%",
-            left: "47%",
-          }}
+            style={{
+              position: "absolute",
+              top: "30%",
+              left: "47%",
+            }}
           >
             <Spin indicator={antIcon2} />
           </div>
         ) : (
           <ContainerUsuarios>
-          {usuariosFiltrados?.sort(comparaNomes).map((value) => (
-            <Usuario key={value.id}>
-              <Imagem>{value.avatar_url}</Imagem>
-              <Nome>
-                {carregando ? (
-                  <Spin indicator={antIcon} />
-                ) : (
-                  <div
-                    onClick={() =>
-                      verificandoSecretariaOuPaciente(value.tipo, value.email)
-                    }
-                  >
-                    {value.nome}
-                  </div>
-                )}
-              </Nome>
-              <Telefone>
-
-                {carregando ? (
-                  <Spin indicator={antIcon} />
-                ) : (
-                  <>
-                    ({value.telefone.slice(0, -9)}){" "}
-                    {value.telefone.slice(2, -4)}-{value.telefone.slice(-4)}
-                  </>
-                )}
-              </Telefone>
-              {value.ultimaConsulta === undefined ?
-                (
+            {usuariosFiltrados?.sort(comparaNomes).map((value) => (
+              <Usuario key={value.id}>
+                <Imagem>{value.avatar_url}</Imagem>
+                <Nome>
+                  {carregando ? (
+                    <Spin indicator={antIcon} />
+                  ) : (
+                    <div
+                      onClick={() =>
+                        verificandoSecretariaOuPaciente(value.tipo, value.email)
+                      }
+                    >
+                      {value.nome}
+                    </div>
+                  )}
+                </Nome>
+                <Telefone>
+                  {carregando ? (
+                    <Spin indicator={antIcon} />
+                  ) : (
+                    <>
+                      ({value.telefone.slice(0, -9)}){" "}
+                      {value.telefone.slice(2, -4)}-{value.telefone.slice(-4)}
+                    </>
+                  )}
+                </Telefone>
+                {value.ultimaConsulta === undefined ? (
                   <UltimaVisita> - </UltimaVisita>
                 ) : (
                   <UltimaVisita>
-                    {value.ultimaConsulta.slice(8, 10) + "/" + value.ultimaConsulta.slice(5, 7) + "/" + value.ultimaConsulta.slice(0, 4)}
+                    {value.ultimaConsulta.slice(8, 10) +
+                      "/" +
+                      value.ultimaConsulta.slice(5, 7) +
+                      "/" +
+                      value.ultimaConsulta.slice(0, 4)}
                   </UltimaVisita>
-                )
-              }
-
-              <CódigoPaciente>
-                {carregando ? (
-                  <Spin indicator={antIcon} />
-                ) : (
-                  <>{value.codigo}</>
                 )}
-              </CódigoPaciente>
-              {tipoUsuarioLogado === "MASTER" ? (
-                <BotaoAdicionar>
-                  {value.tipo === "PACIENTE" ? (
+
+                <CódigoPaciente>
+                  {carregando ? (
+                    <Spin indicator={antIcon} />
+                  ) : (
+                    <>{value.codigo}</>
+                  )}
+                </CódigoPaciente>
+                {tipoUsuarioLogado === "MASTER" ? (
+                  <BotaoAdicionar>
+                    {value.tipo === "PACIENTE" ? (
+                      <Button
+                        backgroundColor="transparent"
+                        borderColor="transparent"
+                        color={Cores.preto}
+                        fontSize="1em"
+                        textDecoration="underline"
+                        height="50px"
+                        onClick={() => abrindoModalCodigo(value.email)}
+                      >
+                        Editar Código
+                      </Button>
+                    ) : (
+                      <></>
+                    )}
+                  </BotaoAdicionar>
+                ) : (
+                  <BotaoAdicionar>
                     <Button
                       backgroundColor="transparent"
                       borderColor="transparent"
-                      color={Cores.preto}
+                      color="green"
                       fontSize="1em"
                       textDecoration="underline"
                       height="50px"
-                      onClick={() => abrindoModalCodigo(value.email)}
+                      onClick={() => marcandoAgendamento(value.email)}
                     >
-                      Editar Código
+                      Marcar Agendamento
                     </Button>
-                  ) : (
-                    <></>
-                  )}
-                </BotaoAdicionar>
-              ) : (
-                <BotaoAdicionar>
-                  <Button
-                    backgroundColor="transparent"
-                    borderColor="transparent"
-                    color="green"
-                    fontSize="1em"
-                    textDecoration="underline"
-                    height="50px"
-                    onClick={() => marcandoAgendamento(value.email)}
-                  >
-                    Marcar Agendamento
-                  </Button>
-                </BotaoAdicionar>
-              )}
-            </Usuario>
-          ))}
-        </ContainerUsuarios>
-        )} 
+                  </BotaoAdicionar>
+                )}
+              </Usuario>
+            ))}
+          </ContainerUsuarios>
+        )}
       </ContainerListadeUsuarios>
-      
+
       <Modal
         visible={modalAgendamento}
         onCancel={fechandoModalAgendamentoEspecifico}
@@ -371,7 +360,10 @@ function ListaUsuarios() {
         width={"70%"}
         centered={true}
       >
-        <ModalAdicionarCodigo emailUsuario={email} fechandoModal={() => fechandoModalCodigo()} />
+        <ModalAdicionarCodigo
+          emailUsuario={email}
+          fechandoModal={() => fechandoModalCodigo()}
+        />
       </Modal>
     </div>
   );

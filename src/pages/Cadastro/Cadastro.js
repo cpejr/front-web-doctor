@@ -32,17 +32,13 @@ function Cadastro() {
 
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
-
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [erroDataBack, setErroDataBack] = useState(false);
-
   const [enderecoBack, setEnderecoBack] = useState({});
   const [estado, setEstado] = useState({});
-
   const [carregando, setCarregando] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
 
