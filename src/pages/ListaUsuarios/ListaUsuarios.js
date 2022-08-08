@@ -239,7 +239,7 @@ function ListaUsuarios() {
                 onChange={(value) => secretariosFiltrados(value)}
               >
                 <Option value="">Todas as Datas</Option>
-                <Option value="ultimaConsulta">Ultimas Visitas</Option>
+                <Option value="ultimaConsulta">Últimas Visitas</Option>
               </Select>
             </FiltroDatas>
           </Filtros>
