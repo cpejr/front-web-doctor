@@ -94,6 +94,7 @@ function ListaUsuarios() {
       }
     }
     setContador(contador + 1);
+    
   }
 
   async function pegandoDadosConsultas() {
@@ -133,9 +134,11 @@ function ListaUsuarios() {
   useEffect(() => {
     pegandoDadosUsuarios();
     pegandoDadosConsultas();
-    setandoUltimaConsulta();
 
   }, []);
+  useEffect(() => {
+    setandoUltimaConsulta();
+  }, [usuariosFiltrados]) ;
 
   async function marcandoAgendamento(emailPaciente) {
     setEmailPaciente(emailPaciente);
@@ -173,6 +176,7 @@ function ListaUsuarios() {
 
     async function setandoUltimaConsulta(){
       consultas.sort(comparaData);
+      console.log("entrou")
       usuariosFiltrados.forEach((usuario) => {
         let dataHora = []
         consultas.forEach((consulta) => {
@@ -195,6 +199,7 @@ function ListaUsuarios() {
 
         }
       })
+      console.log("saiu")
     }
 
   return (
