@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Input, Select, Modal } from "antd";
+import { PlusCircleOutlined } from "@ant-design/icons";
+import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
+import { Spin } from "antd";
 import {
   TopoPagina,
   ContainerListadeFormularios,
@@ -18,13 +21,10 @@ import {
   BotoesVertical,
   ContainerFormularioEspecifico,
 } from "./Styles";
-import { PlusCircleOutlined } from "@ant-design/icons";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
-import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
-import { Spin } from "antd";
-import * as managerService from "../../services/ManagerService/managerService";
 import ModalEnvioFormulario from "../../components/ModalEnvioFormulario";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function ListaFormularios() {
   const history = useHistory();
@@ -62,10 +62,7 @@ function ListaFormularios() {
     await managerService.DeletarFormulario(id);
   }
 
-  useEffect(() => {
-    pegandoDadosUsuarios();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  
 
   async function pegandoDadosUsuarios() {
     const resposta = await managerService.GetDadosPessoais();
@@ -75,6 +72,11 @@ function ListaFormularios() {
       }
     });
   }
+  
+  useEffect(() => {
+    pegandoDadosUsuarios();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function fechandoModal() {
     setModalEnvio(false);

@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
-import { Cores } from "../../variaveis";
-import Button from "../../styles/Button";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin, Checkbox } from "antd";
+import AddToast from "../AddToast/AddToast";
+import { toast } from "react-toastify";
 import {
   ContainerModalCodigo,
   Titulo,
   TextoCheckbox,
   SelectUsuarios,
 } from "./Styles";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin, Checkbox } from "antd";
-import AddToast from "../AddToast/AddToast";
-import { toast } from "react-toastify";
+import { Cores } from "../../variaveis";
+import Button from "../../styles/Button";
 import Select from "../../styles/Select";
 import * as managerService from "../../services/ManagerService/managerService";
 
@@ -23,16 +23,17 @@ function ModalEnvioFormulario(props) {
   );
 
   async function enviandoFormularioPaciente() {
-    setCarregando(true)
-    if(formularioPaciente){
-    const resposta = await managerService.EnviandoFormularioPaciente(
-      false,
-      props.idFormulario,
-      formularioPaciente
-    );} else {
-      toast.error("Escolha um paciente para enviar o formulario")
+    setCarregando(true);
+    if (formularioPaciente) {
+      await managerService.EnviandoFormularioPaciente(
+        false,
+        props.idFormulario,
+        formularioPaciente
+      );
+    } else {
+      toast.error("Escolha um paciente para enviar o formulario");
     }
-    setCarregando(false)
+    setCarregando(false);
   }
 
   async function preenchendoDados(e) {
