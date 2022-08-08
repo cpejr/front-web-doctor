@@ -4,7 +4,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
 import { toast } from "react-toastify";
-import _ from "lodash";
+import _, { set } from "lodash";
 import {
   Container,
   Caixa,
@@ -63,11 +63,10 @@ function ModalAgendamentoEspecifico(props) {
     tipo: "",
   };
   const [dataConsulta, setDataConsulta] = useState("");
-  const [dataConsultaBack, setDataConsultaBack] = useState("");
   const [hora, setHora] = useState("");
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
-  const [erroDataBack, setErroDataBack] = useState(false);
+  const [hoje, setHoje] = useState("");
 
   moment.locale("pt-br");
 
@@ -79,17 +78,31 @@ function ModalAgendamentoEspecifico(props) {
       }
     });
   }
+
+  useEffect(() => {
+    pegandoPacientes();
+  }, []);
+
   const errors = {};
-  const referenciaInputNulos = {
+  const [referenciaInputNulos, setReferenciaInputNulos] = useState({
     data: false,
     hora: false,
     duracao_em_minutos: false,
     id_consultorio: false,
     tipo: false,
-  };
+  });
+
+  function verificandoIdUsuario() {
+    if (props.abertoPeloUsuario === false) {
+      setReferenciaInputNulos({ ...referenciaInputNulos, id_usuario: false });
+    } else {
+      setConsulta({ ...consulta, id_usuario: usuario.id });
+    }
+  }
+
   useEffect(() => {
-    pegandoPacientes();
-  }, []);
+    verificandoIdUsuario();
+  }, [usuario]);
 
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true);
@@ -116,10 +129,12 @@ function ModalAgendamentoEspecifico(props) {
   async function validacaoCampos(e) {
     const { value, name } = e.target;
 
-    if (value) {
-      setCamposVazios({ ...camposVazios, [name]: false });
-    } else {
-      setCamposVazios({ ...camposVazios, [name]: true });
+    if (name !== "descricao") {
+      if (value) {
+        setCamposVazios({ ...camposVazios, [name]: false });
+      } else {
+        setCamposVazios({ ...camposVazios, [name]: true });
+      }
     }
     if (consulta.duracao_em_minutos === "") {
       setErro({ ...erro, [name]: true });
@@ -127,9 +142,13 @@ function ModalAgendamentoEspecifico(props) {
       setErro({ ...erro, [name]: false });
     }
 
-    if (e.target.name === "hora") {
-      setHora(e.target.value);
-      return hora;
+    if (e.target.name === "data") {
+      setDataConsulta(e.target.value);
+      if (hora !== "" && hora !== undefined) {
+        validacaoHorario(hora, e.target.value);
+      }
+
+      return dataConsulta;
     } else if (e.target.name === "duracao_em_minutos") {
       setConsulta({
         ...consulta,
@@ -142,40 +161,75 @@ function ModalAgendamentoEspecifico(props) {
     }
   }
 
-  function foramatarDataConsultaFront(value) {
-    const aux = apenasNumeros(value);
+  function setandoDiaAtual() {
+    let data = new Date();
+    let dia = data.getDate();
+    let mes = data.getMonth() + 1;
+    let ano = data.getFullYear();
 
-    setDataConsulta(data(aux));
-  }
-  function foramatarDataConsultaBack(data) {
-    setDataConsultaBack(dataAgendamentoBack(data));
-  }
-
-  async function validacaoData(e) {
-    const { value, name } = e;
-
-    if (value) {
-      setCamposVazios({ ...camposVazios, [name]: false });
+    if (dia < 10) {
+      dia = "0" + dia;
     }
-    if (value.toString().length < 10) {
-      setErro({ ...erro, [name]: true });
-      setErroDataBack(false);
-    } else if (dataAgendamentoBack(value) === "Data Invalida") {
-      setErro({ ...erro, [name]: true });
-      setErroDataBack(true);
+    if (mes < 10) {
+      mes = "0" + mes;
+    }
+
+    setHoje(ano + "-" + mes + "-" + dia);
+  }
+
+  function setandoDataMinima() {
+    document.getElementById("data").setAttribute("min", hoje);
+  }
+
+  useEffect(() => {
+    setandoDiaAtual();
+  }, []);
+
+  useEffect(() => {
+    setandoDataMinima();
+  }, [hoje]);
+
+  function setandoHoraAtual() {
+    let horario = new Date();
+    let horaAtual = horario.getHours();
+    let minutos = horario.getMinutes();
+
+    if (horaAtual < 10) {
+      horaAtual = "0" + horaAtual;
+    }
+    if (minutos < 10) {
+      minutos = "0" + minutos;
+    }
+
+    const horarioAtual = horaAtual + ":" + minutos;
+    return horarioAtual;
+  }
+
+  function validacaoHorario(horarioConsulta, dataConsulta) {
+    const horaAtual = setandoHoraAtual();
+
+    if (horarioConsulta) {
+      setCamposVazios({ ...camposVazios, hora: false });
     } else {
-      setErro({ ...erro, [name]: false });
+      setCamposVazios({ ...camposVazios, hora: true });
     }
-    if (value.toString().length === 0) {
-      setErro({ ...erro, [name]: false });
+
+    if (hoje === dataConsulta) {
+      if (horarioConsulta <= horaAtual) {
+        setErro({ ...erro, hora: true });
+      } else {
+        setErro({ ...erro, hora: false });
+      }
+    } else {
+      setErro({ ...erro, hora: false });
     }
-    foramatarDataConsultaFront(value);
-    foramatarDataConsultaBack(value);
+
+    setHora(horarioConsulta);
   }
 
   function formatacaoDataHora() {
     try {
-      const dataHora = `${dataConsultaBack} ${hora}:00`;
+      const dataHora = `${dataConsulta} ${hora}:00`;
       consulta.data_hora = dataHora;
     } catch {
       alert("DataHora inválida.");
@@ -188,22 +242,26 @@ function ModalAgendamentoEspecifico(props) {
     if (!consulta.duracao_em_minutos) errors.duracao_em_minutos = true;
     if (!consulta.id_consultorio) errors.id_consultorio = true;
     if (!consulta.tipo) errors.tipo = true;
+    if (!consulta.id_usuario) errors.id_usuario = true;
 
     setCamposVazios({ ...camposVazios, ...errors });
-    if (consulta.duracao_em_minutos === "" || dataConsulta === "") {
+
+    if (
+      consulta.duracao_em_minutos === "" ||
+      dataConsulta === "" ||
+      hora === ""
+    ) {
       toast.warn("Preencha todos os campos");
     } else {
-      if (erro.data) {
+      if (erro.hora) {
         toast.warn("Preencha todos os campos corretamente");
       } else {
         if (_.isEqual(camposVazios, referenciaInputNulos)) {
           setCarregandoCadastro(true);
           formatacaoDataHora();
-          if (props.abertoPeloUsuario === true) {
-            consulta.id_usuario = usuario.id;
-          }
           await managerService.CriandoConsulta(consulta);
           setCarregandoCadastro(false);
+          await sleep(1500);
           props.fechandoModal();
           setConsulta(valoresIniciaisConsulta);
           setDataConsulta("");
@@ -215,11 +273,6 @@ function ModalAgendamentoEspecifico(props) {
         }
       }
     }
-  }
-
-  function preenchendoDadosConsulta(e) {
-    setConsulta({ ...consulta, [e.target.name]: e.target.value });
-    return consulta;
   }
 
   return (
@@ -251,7 +304,7 @@ function ModalAgendamentoEspecifico(props) {
                   name="id_usuario"
                   placeholder="Selecione um paciente"
                   onChange={(e) => {
-                    preenchendoDadosConsulta(e);
+                    validacaoCampos(e);
                   }}
                 >
                   <option value="" disabled selected>
@@ -296,7 +349,7 @@ function ModalAgendamentoEspecifico(props) {
             rows={4}
             name="descricao"
             value={consulta.descricao}
-            onChange={preenchendoDadosConsulta}
+            onChange={(e) => validacaoCampos(e)}
             style={{
               borderWidth: "1px",
               borderColor: Cores.azul,
@@ -310,22 +363,15 @@ function ModalAgendamentoEspecifico(props) {
             <InputData
               placeholder="Digite uma data"
               size="large"
+              type="date"
+              onKeyDown={(e) => e.preventDefault()}
               name="data"
-              onChange={(e) => validacaoData(e.target)}
+              onChange={(e) => validacaoCampos(e)}
               value={dataConsulta}
               camposVazios={camposVazios.data}
-              erro={erro.data}
+              id="data"
             />
-            {erro.data && (
-              <>
-                {erroDataBack ? (
-                  <Rotulo>Digite uma data válida.</Rotulo>
-                ) : (
-                  <Rotulo>Digite uma data no formato xx/xx/xxxx</Rotulo>
-                )}
-              </>
-            )}
-            {camposVazios.data && <Rotulo>Digite uma data</Rotulo>}
+            {camposVazios.data && <Rotulo>Selecione uma data</Rotulo>}
           </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
@@ -412,14 +458,16 @@ function ModalAgendamentoEspecifico(props) {
             <TamanhoInput>
               <InputHora
                 value={hora}
-                type="text"
-                onFocus={(e) => (e.target.type = "time")}
-                onBlur={(e) => (e.target.type = "text")}
+                type="time"
+                onKeyDown={(e) => e.preventDefault()}
                 placeholder="Horário"
                 name="hora"
-                onChange={validacaoCampos}
+                id="hora"
+                onChange={(e) => validacaoHorario(e.target.value, dataConsulta)}
                 camposVazios={camposVazios.hora}
+                erro={erro.hora}
               />
+              {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
               {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
             </TamanhoInput>
 
