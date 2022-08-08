@@ -3,6 +3,7 @@ import requisicaoErro from "../../utils/HttpErros";
 import * as requesterService from "../RequesterService/requesterService";
 import { toast } from "react-toastify";
 import { redirecionamento } from "../../utils/sleep";
+import { recebeTipo } from "../../services/auth";
 
 const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -47,8 +48,12 @@ export const Cadastrando = async (usuario, endereco) => {
     .criarUsuario(endereco, usuario)
     .then(() => {
       toast.success("Usuário cadastrado com sucesso.");
-      sleep(1500);
-      window.location.href = "/login";
+      /* if(recebeTipo() === "MASTER"){
+        window.location.href = "/web/homemedico";
+      }
+      else{
+        window.location.href = "/web/homesecretaria";
+      } */
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/cadastro"));
