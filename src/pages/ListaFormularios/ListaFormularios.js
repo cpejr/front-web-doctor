@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Input, Select, Modal } from "antd";
+import { PlusCircleOutlined } from "@ant-design/icons";
+import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
+import { Spin } from "antd";
 import {
   TopoPagina,
   ContainerListadeFormularios,
@@ -18,11 +21,9 @@ import {
   BotoesVertical,
   ContainerFormularioEspecifico,
 } from "./Styles";
-import { PlusCircleOutlined } from "@ant-design/icons";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
-import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
-import { Spin } from "antd";
+import ModalEnvioFormulario from "../../components/ModalEnvioFormulario";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ListaFormularios() {
@@ -31,12 +32,12 @@ function ListaFormularios() {
   const { Search } = Input;
   const [formularios, setFormularios] = useState([]);
   const [carregando, setCarregando] = useState(true);
+  const [modalEnvio, setModalEnvio] = useState(false);
+  const [usuarios, setUsuarios] = useState([]);
+  const [idFormulario, setIdFormulario] = useState();
 
   const antIcon = (
-    <LoadingOutlined
-      style={{ fontSize: 40, color: Cores.azul}}
-      spin
-    />
+    <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
   );
 
   useEffect(() => {
@@ -48,6 +49,42 @@ function ListaFormularios() {
     const resposta = await managerService.GetFormularios();
     setFormularios(resposta);
     setCarregando(false);
+  }
+
+  async function editarFormulario(id) {
+    history.push({
+      pathname: "/web/editarformulario",
+      state: { id },
+    });
+  }
+
+  async function deletarFormulario(id) {
+    await managerService.DeletarFormulario(id);
+  }
+
+  
+
+  async function pegandoDadosUsuarios() {
+    const resposta = await managerService.GetDadosPessoais();
+    resposta.forEach((usuario) => {
+      if (usuario.tipo === "PACIENTE") {
+        usuarios.push(usuario);
+      }
+    });
+  }
+  
+  useEffect(() => {
+    pegandoDadosUsuarios();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function fechandoModal() {
+    setModalEnvio(false);
+  }
+
+  async function abrindoModal(id_formulario) {
+    setIdFormulario(id_formulario)
+    setModalEnvio(true);
   }
 
   return (
@@ -116,35 +153,35 @@ function ListaFormularios() {
                   </Formulario>
                   <BotoesVertical>
                     <Button
-                      backgroundColor="green"
-                      // {Cores.lilas[1]}
+                      backgroundColor={Cores.lilas[1]}
                       color={Cores.branco}
                       fontWeight="bold"
                       borderColor={Cores.azulEscuro}
                       height="37px"
                       width="90%"
+                      onClick={() => abrindoModal(value.id)}
                     >
                       ENVIAR
                     </Button>
                     <Button
-                      backgroundColor="green"
-                      // {Cores.cinza[7]}
+                      backgroundColor={Cores.cinza[7]}
                       color={Cores.azulEscuro}
                       fontWeight="bold"
                       borderColor={Cores.azulEscuro}
                       height="37px"
                       width="90%"
+                      onClick={() => editarFormulario(value.id)}
                     >
                       EDITAR
                     </Button>
                     <Button
-                      backgroundColor="green"
-                      // {Cores.branco}
+                      backgroundColor={Cores.branco}
                       color={Cores.cinza[2]}
                       fontWeight="bold"
                       borderColor="rgba(255, 0, 0, 0.25)"
                       height="37px"
                       width="90%"
+                      onClick={() => deletarFormulario(value.id)}
                     >
                       DELETAR
                     </Button>
@@ -171,6 +208,15 @@ function ListaFormularios() {
           </>
         )}
       </ContainerListadeFormularios>
+      <Modal
+        visible={modalEnvio}
+        onCancel={fechandoModal}
+        footer={null}
+        width={"70%"}
+        centered={true}
+      >
+        <ModalEnvioFormulario usuarios={usuarios} idFormulario={idFormulario}/>
+      </Modal>
     </div>
   );
 }
