@@ -41,6 +41,7 @@ export const TextoCheckbox = styled.h3`
   font-weight: 600;
   font-size: 1.2em;
   margin-top: 20%;
+  background-color: green;
   color: ${Cores.azulEscuro};
 
   @media (max-width: 560px) {
