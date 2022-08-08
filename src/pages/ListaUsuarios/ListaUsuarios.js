@@ -22,6 +22,7 @@ import {
   CódigoPaciente,
   BotaoAdicionar,
   CaixaVazia,
+  LogoCarregando,
 } from "./Styles";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
@@ -36,6 +37,7 @@ function ListaUsuarios() {
   const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
   const [carregando, setCarregando] = useState(true);
+  const [carregandoPagina, setCarregandoPagina] = useState(true);
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [emailPaciente, setEmailPaciente] = useState(false);
   const [modalAdicionarCodigo, setModalAdicionarCodigo] = useState(false);
@@ -45,18 +47,19 @@ function ListaUsuarios() {
   const abertoPeloUsuario = true;
   const [contador, setContador] = useState(0);
   const [consultas, setConsultas] = useState([]);
-  
+
 
   const lowerBusca = busca.toLowerCase();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const antIcon2 = <LoadingOutlined style={{ fontSize: 60 }} spin />;
   const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
 
   const usuariosFiltrados = usuarios.filter((usuario) => {
     if (lowerBusca === "" && tipoSelect === "") {
       return usuarios;
     }
-    if (tipoSelect === "ultimaConsulta"){
-      return(
+    if (tipoSelect === "ultimaConsulta") {
+      return (
         usuario?.ultimaConsulta !== undefined
       );
     } else {
@@ -75,7 +78,7 @@ function ListaUsuarios() {
   }
 
   async function pegandoDadosUsuarios() {
-    if (contador < 1){
+    if (contador < 1) {
       const resposta = await managerService.GetDadosPessoais();
       if (tipoUsuarioLogado === "MASTER") {
         resposta.forEach((usuario) => {
@@ -94,7 +97,6 @@ function ListaUsuarios() {
       }
     }
     setContador(contador + 1);
-    
   }
 
   async function pegandoDadosConsultas() {
@@ -138,7 +140,7 @@ function ListaUsuarios() {
   }, []);
   useEffect(() => {
     setandoUltimaConsulta();
-  }, [usuariosFiltrados]) ;
+  }, [usuariosFiltrados]);
 
   async function marcandoAgendamento(emailPaciente) {
     setEmailPaciente(emailPaciente);
@@ -154,7 +156,7 @@ function ListaUsuarios() {
     setModalAdicionarCodigo(true);
   }
 
-  async function fechandoModalCodigo(){
+  async function fechandoModalCodigo() {
     setModalAdicionarCodigo(false);
     pegandoDadosUsuarios();
   }
@@ -174,37 +176,39 @@ function ListaUsuarios() {
   }
 
 
-    async function setandoUltimaConsulta(){
+  async function setandoUltimaConsulta() {
+    if (contador == 1) {
       consultas.sort(comparaData);
-      console.log("entrou")
       usuariosFiltrados.forEach((usuario) => {
         let dataHora = []
         consultas.forEach((consulta) => {
-          if(consulta.id_usuario === usuario.id){ 
+          if (consulta.id_usuario === usuario.id) {
             dataHora.push(consulta.data_hora); //funcionando
           }
         })
         usuario.ultimaConsulta = dataHora[dataHora.length];
 
-        for(var i = 0; i < dataHora.length; i++){
-          if (new Date(dataHora[i]) > new Date()){
+        for (var i = 0; i < dataHora.length; i++) {
+          if (new Date(dataHora[i]) > new Date()) {
             let aux = dataHora[i - 1];
             usuario.ultimaConsulta = aux;
             return;
           }
         }
-        if(dataHora.length != 0 && usuario.ultimaConsulta == undefined){
+        if (dataHora.length != 0 && usuario.ultimaConsulta == undefined) {
           let aux = dataHora[dataHora.length - 1];
           usuario.ultimaConsulta = aux;
 
         }
       })
-      console.log("saiu")
+      setCarregandoPagina(false);
+      setContador(contador + 1);
     }
+  }
 
   return (
     <div>
-      <ContainerListadeUsuarios>
+        <ContainerListadeUsuarios>
         <TopoPagina>
           <BarraPesquisa>
             <Search
@@ -236,7 +240,7 @@ function ListaUsuarios() {
                 style={{ width: 200 }}
                 onChange={(value) => secretariosFiltrados(value)}
               >
-                <Option value="">Todas as Datas</Option> 
+                <Option value="">Todas as Datas</Option>
                 <Option value="ultimaConsulta">Ultimas Visitas</Option>
               </Select>
             </FiltroDatas>
@@ -251,7 +255,18 @@ function ListaUsuarios() {
           <CódigoPaciente>Código do Paciente</CódigoPaciente>
           <CaixaVazia></CaixaVazia>
         </DadosUsuario>
-        <ContainerUsuarios>
+        {carregandoPagina ? (
+          <div
+          style={{
+            position: "absolute",
+            top: "30%",
+            left: "47%",
+          }}
+          >
+            <Spin indicator={antIcon2} />
+          </div>
+        ) : (
+          <ContainerUsuarios>
           {usuariosFiltrados?.sort(comparaNomes).map((value) => (
             <Usuario key={value.id}>
               <Imagem>{value.avatar_url}</Imagem>
@@ -269,7 +284,7 @@ function ListaUsuarios() {
                 )}
               </Nome>
               <Telefone>
-                
+
                 {carregando ? (
                   <Spin indicator={antIcon} />
                 ) : (
@@ -279,12 +294,12 @@ function ListaUsuarios() {
                   </>
                 )}
               </Telefone>
-              {value.ultimaConsulta === undefined ? 
+              {value.ultimaConsulta === undefined ?
                 (
                   <UltimaVisita> - </UltimaVisita>
                 ) : (
-                   <UltimaVisita> 
-                        {value.ultimaConsulta.slice(8, 10) + "/" +  value.ultimaConsulta.slice(5, 7) + "/" +  value.ultimaConsulta.slice(0, 4)}
+                  <UltimaVisita>
+                    {value.ultimaConsulta.slice(8, 10) + "/" + value.ultimaConsulta.slice(5, 7) + "/" + value.ultimaConsulta.slice(0, 4)}
                   </UltimaVisita>
                 )
               }
@@ -296,9 +311,9 @@ function ListaUsuarios() {
                   <>{value.codigo}</>
                 )}
               </CódigoPaciente>
-                {tipoUsuarioLogado === "MASTER"? (
-                  <BotaoAdicionar>
-                    {value.tipo === "PACIENTE"? (
+              {tipoUsuarioLogado === "MASTER" ? (
+                <BotaoAdicionar>
+                  {value.tipo === "PACIENTE" ? (
                     <Button
                       backgroundColor="transparent"
                       borderColor="transparent"
@@ -310,29 +325,31 @@ function ListaUsuarios() {
                     >
                       Editar Código
                     </Button>
-                    ):(
-                      <></>
-                    )}
-                  </BotaoAdicionar>
-                ) : (
-                  <BotaoAdicionar>
-                    <Button
-                      backgroundColor="transparent"
-                      borderColor="transparent"
-                      color="green"
-                      fontSize="1em"
-                      textDecoration="underline"
-                      height="50px"
-                      onClick={() => marcandoAgendamento(value.email)}
-                    >
-                      Marcar Agendamento
-                    </Button>
-                  </BotaoAdicionar>
-                )} 
+                  ) : (
+                    <></>
+                  )}
+                </BotaoAdicionar>
+              ) : (
+                <BotaoAdicionar>
+                  <Button
+                    backgroundColor="transparent"
+                    borderColor="transparent"
+                    color="green"
+                    fontSize="1em"
+                    textDecoration="underline"
+                    height="50px"
+                    onClick={() => marcandoAgendamento(value.email)}
+                  >
+                    Marcar Agendamento
+                  </Button>
+                </BotaoAdicionar>
+              )}
             </Usuario>
           ))}
         </ContainerUsuarios>
+        )} 
       </ContainerListadeUsuarios>
+      
       <Modal
         visible={modalAgendamento}
         onCancel={fechandoModalAgendamentoEspecifico}
@@ -354,7 +371,7 @@ function ListaUsuarios() {
         width={"70%"}
         centered={true}
       >
-        <ModalAdicionarCodigo emailUsuario={email} fechandoModal = {() => fechandoModalCodigo()}/>
+        <ModalAdicionarCodigo emailUsuario={email} fechandoModal={() => fechandoModalCodigo()} />
       </Modal>
     </div>
   );
