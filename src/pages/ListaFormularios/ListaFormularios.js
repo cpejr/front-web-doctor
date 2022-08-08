@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Input, Select, Modal } from "antd";
+import { PlusCircleOutlined } from "@ant-design/icons";
+import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
+import { Spin } from "antd";
 import {
   TopoPagina,
   ContainerListadeFormularios,
@@ -19,11 +22,9 @@ import {
   BotaoVertical,
   ContainerFormularioEspecifico,
 } from "./Styles";
-import { PlusCircleOutlined } from "@ant-design/icons";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
-import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
-import { Spin } from "antd";
+import ModalEnvioFormulario from "../../components/ModalEnvioFormulario";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ListaFormularios() {
@@ -36,6 +37,9 @@ function ListaFormularios() {
   const [busca, setBusca] = useState("");
   const lowerBusca = busca.toLowerCase();
   const [tipoSelect, setTipoSelect] = useState("");
+  const [modalEnvio, setModalEnvio] = useState(false);
+  const [usuarios, setUsuarios] = useState([]);
+  const [idFormulario, setIdFormulario] = useState();
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
@@ -94,6 +98,31 @@ function ListaFormularios() {
 
   async function deletarFormulario(id) {
     await managerService.DeletarFormulario(id);
+  }
+
+  
+
+  async function pegandoDadosUsuarios() {
+    const resposta = await managerService.GetDadosPessoais();
+    resposta.forEach((usuario) => {
+      if (usuario.tipo === "PACIENTE") {
+        usuarios.push(usuario);
+      }
+    });
+  }
+  
+  useEffect(() => {
+    pegandoDadosUsuarios();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function fechandoModal() {
+    setModalEnvio(false);
+  }
+
+  async function abrindoModal(id_formulario) {
+    setIdFormulario(id_formulario)
+    setModalEnvio(true);
   }
 
   return (
@@ -163,13 +192,13 @@ function ListaFormularios() {
                   <BotoesVertical>
                     <BotaoVertical>
                     <Button
-                      backgroundColor="green"
-                      // {Cores.lilas[1]}
+                      backgroundColor={Cores.lilas[1]}
                       color={Cores.branco}
                       fontWeight="bold"
                       borderColor={Cores.azulEscuro}
                       height="37px"
                       width="90%"
+                      onClick={() => abrindoModal(value.id)}
                     >
                       ENVIAR
                     </Button></BotaoVertical>
@@ -221,6 +250,15 @@ function ListaFormularios() {
           </>
         )}
       </ContainerListadeFormularios>
+      <Modal
+        visible={modalEnvio}
+        onCancel={fechandoModal}
+        footer={null}
+        width={"70%"}
+        centered={true}
+      >
+        <ModalEnvioFormulario usuarios={usuarios} idFormulario={idFormulario}/>
+      </Modal>
     </div>
   );
 }
