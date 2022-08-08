@@ -346,6 +346,27 @@ export const DeletarExameMarcado = async (id) => {
   return false;
 };
 
+export const EnviandoFormularioPaciente = async (
+  status,
+  id_formulario,
+  id_usuario
+) => {
+  const sleep = (milliseconds) => {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  };
+   await requesterService
+    .enviarFormularioPaciente(status, id_formulario, id_usuario)
+    .then(() => {
+      toast.success("Formulario enviado com sucesso!");
+      sleep(1500).then(() => window.location.href = "/web/listaformularios")
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return;
+};
 export const GetFormularios = async () => {
   let dadosFormularios = {};
   await requesterService
@@ -374,17 +395,15 @@ export const GetFormularioEspecifico = async (id) => {
   return dadosFormulario;
 };
 
-export const DeletarFormulario = async (id) => {
+export const  DeletarFormulario = async (id) => {
   await requesterService
     .deletarFormulario(id)
     .then(() => {
-      alert("Formulario deletado com sucesso.");
+      toast.success("Formulario deletado com sucesso.");
       window.location.href = "/web/listaformularios";
     })
     .catch((error) => {
       requisicaoErro(
-        error,
-        () => (window.location.href = "/web/perfildopaciente")
       );
 
       return false;
@@ -420,4 +439,67 @@ export const GetResposta = async (id) => {
       requisicaoErro(error);
     });
   return dadosResposta;
+};
+
+export const CriarFormulario = async (estado) => {
+  await requesterService
+    .criarFormulario(estado)
+    .then(() => {
+      alert("Usuário cadastrado com sucesso.");
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return false;
+};
+
+export const GetReceitas = async () => {
+  let dadosReceitas = {};
+  await requesterService
+    .requisicaoReceitas()
+    .then((res) => {
+      dadosReceitas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosReceitas;
+};
+
+export const EditarPerguntasFormulario = async (
+  id,
+  perguntas
+) => {
+  await requesterService
+    .editarPerguntasFormulario(id, perguntas)
+    .then(() => {
+      toast.success("Pergunta alterada com sucesso.");
+      sleep(1500)
+      window.location.href = "/web/listaformularios";
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = "/"));
+      return false;
+    });
+
+  return false;
+};
+
+export const EditarFormularios = async (
+  id,
+  campos
+) => {
+  await requesterService
+    .editarCamposFormulario(id, campos)
+    .then(() => {
+      toast.success("Formulario atualizado com sucesso.");
+      sleep(1500)
+      window.location.href = "/web/listaformularios";
+    })
+    .catch((error) => {
+      return false;
+    });
+
+  return false;
 };
