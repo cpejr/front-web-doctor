@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Input, Select, Modal } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import {
   TopoPagina,
@@ -22,6 +22,9 @@ import {
   CódigoPaciente,
   BotaoAdicionar,
   CaixaVazia,
+  Botoes,
+  BotoesMedico,
+  BotaoSecretario,
   LogoCarregando,
 } from "./Styles";
 import Button from "../../styles/Button";
@@ -167,6 +170,13 @@ function ListaUsuarios() {
     }
   }
 
+  function passandoTipoParaCadastro(tipo) {
+    history.push({
+      pathname: "/cadastro",
+      state: { tipo },
+    });
+  }
+
   async function setandoUltimaConsulta() {
     consultas.sort(comparaData);
     usuariosFiltrados.forEach((usuario) => {
@@ -234,6 +244,66 @@ function ListaUsuarios() {
             </FiltroDatas>
           </Filtros>
         </TopoPagina>
+        {tipoUsuarioLogado === "MASTER" ? (
+          <BotoesMedico>
+            <Button
+              backgroundColor={Cores.cinza[7]}
+              color={Cores.azul}
+              width="45%"
+              height="50px"
+              borderColor={Cores.azul}
+              fontSize="1em"
+              gap="1%"
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              widthMedia600="100%"
+              onClick={() => passandoTipoParaCadastro("PACIENTE")}
+            >
+              Cadastrar Novo Paciente
+              <PlusCircleOutlined style={{ color: Cores.azul }} />
+            </Button>
+
+            <Button
+              backgroundColor={Cores.cinza[7]}
+              color={Cores.azul}
+              width="45%"
+              height="50px"
+              borderColor={Cores.azul}
+              fontSize="1em"
+              gap="1%"
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              widthMedia600="100%"
+              onClick={() => passandoTipoParaCadastro("SECRETARIA(O)")}
+            >
+              Cadastrar nova(o) Secretária(o)
+              <PlusCircleOutlined style={{ color: Cores.azul }} />
+            </Button>
+
+
+
+          </BotoesMedico>
+
+
+
+
+
+        ) : (
+          <BotaoSecretario>
+            <Button
+              backgroundColor={Cores.cinza[7]}
+              color={Cores.azul}
+              width="100%"
+              height="50px"
+              borderColor={Cores.azul}
+              fontSize="1em"
+              gap="1%"
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              onClick={() => passandoTipoParaCadastro("PACIENTE")}
+            >
+              Cadastrar Novo Paciente
+              <PlusCircleOutlined style={{ color: Cores.azul }} />
+            </Button>
+          </BotaoSecretario>
+        )}
         <BarraEstetica></BarraEstetica>
         <DadosUsuario>
           <Titulo></Titulo>
@@ -360,10 +430,7 @@ function ListaUsuarios() {
         width={"70%"}
         centered={true}
       >
-        <ModalAdicionarCodigo
-          emailUsuario={email}
-          fechandoModal={() => fechandoModalCodigo()}
-        />
+        <ModalAdicionarCodigo emailUsuario={email} fechandoModal={() => fechandoModalCodigo()} />
       </Modal>
     </div>
   );

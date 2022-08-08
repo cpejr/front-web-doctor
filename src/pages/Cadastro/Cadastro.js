@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
-import logoGuilherme from "./../../assets/logoGuilherme.png";
-import Input from "../../styles/Input";
-import Button from "../../styles/Button";
-import Select from "../../styles/Select/Select";
 import { Spin, Switch } from "antd";
 import { LoadingOutlined, LeftOutlined } from "@ant-design/icons";
+import "react-toastify/dist/ReactToastify.min.css";
+import AddToast from "../../components/AddToast/AddToast";
+import { toast } from "react-toastify";
 import {
   Body,
   DadosCadastro,
@@ -19,15 +18,27 @@ import {
   PossuiConvenio,
   PossuiCuidador,
 } from "./Styles";
-import "react-toastify/dist/ReactToastify.min.css";
-import AddToast from "../../components/AddToast/AddToast";
-import { toast } from "react-toastify";
-
-import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
-import { cpf, apenasLetras, apenasNumeros, apenasNumerosCep, apenasNumerosCpfTel, cep, data, telefone, dataBack } from "../../utils/masks";
+import {
+  cpf,
+  apenasLetras,
+  apenasNumeros,
+  apenasNumerosCep,
+  apenasNumerosCpfTel,
+  cep,
+  data,
+  telefone,
+  dataBack,
+} from "../../utils/masks";
+import { sleep } from "../../utils/sleep";
+import logoGuilherme from "./../../assets/logoGuilherme.png";
+import Input from "../../styles/Input";
+import Button from "../../styles/Button";
+import Select from "../../styles/Select/Select";
+import { recebeTipo, usuarioAutenticado } from "../../services/auth";
+import * as managerService from "../../services/ManagerService/managerService";
 
-function Cadastro() {
+function Cadastro(props) {
   const history = useHistory();
 
   const [usuario, setUsuario] = useState({});
@@ -42,18 +53,7 @@ function Cadastro() {
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
 
-  function funcaoConvenio() {
-    setConvenio(!convenio);
-    setUsuario({ ...usuario, convenio: null });
-  }
-  function funcaoCuidador() {
-    setCuidador(!cuidador);
-    setUsuario({ ...usuario, nome_cuidador: null, telefone_cuidador: null });
-  }
-
-  const errors = {};
-  const teste = {
-    tipo: false,
+  const [teste, setTeste] = useState({
     nome: false,
     telefone: false,
     email: false,
@@ -68,7 +68,64 @@ function Cadastro() {
     bairro: false,
     senha: false,
     senhaConfirmada: false,
-  };
+  });
+
+  function funcaoConvenio() {
+    setConvenio(!convenio);
+    setUsuario({ ...usuario, convenio: null });
+  }
+  function funcaoCuidador() {
+    setCuidador(!cuidador);
+    setUsuario({ ...usuario, nome_cuidador: null, telefone_cuidador: null });
+  }
+
+  function verificaAutenticacao() {
+    if (usuarioAutenticado() === false) {
+      window.location.href = "/login";
+    }
+  }
+
+  function setandoTipoPorProps() {
+    if (history.location.state != undefined) {
+      setUsuario({
+        ...usuario,
+        tipo: props.location.state.tipo,
+        nome_cuidador: null,
+        telefone_cuidador: null,
+        convenio: null,
+      });
+      setConvenio(false);
+      setCuidador(false);
+    } else if (
+      history.location.state === undefined &&
+      recebeTipo() === "SECRETARIA(O)"
+    ) {
+      setUsuario({
+        ...usuario,
+        tipo: "PACIENTE",
+        nome_cuidador: null,
+        telefone_cuidador: null,
+        convenio: null,
+      });
+      setConvenio(false);
+      setCuidador(false);
+    } else if (
+      history.location.state === undefined &&
+      recebeTipo() === "MASTER"
+    ) {
+      setTeste({ ...teste, tipo: false });
+    }
+  }
+
+  useEffect(() => {
+    setandoTipoPorProps();
+  }, [props]);
+
+  useEffect(() => {
+    verificaAutenticacao();
+  }, []);
+
+  const errors = {};
 
   async function verificandoEnter(e) {
     if (e.key === "Enter") {
@@ -101,6 +158,8 @@ function Cadastro() {
       if (usuario.senha === usuario.senhaConfirmada) {
         setCarregando(true);
         await managerService.Cadastrando(usuario, enderecoBack);
+        await sleep(1500);
+        window.location.href = "/login";
         setCarregando(false);
       } else {
         toast.error("As senhas digitadas são diferentes.");
@@ -181,7 +240,7 @@ function Cadastro() {
         [name]: apenasLetras(value),
       });
     }
-  
+
     if (name === "telefone") {
       setEstado({ ...estado, [name]: telefone(value) });
       setUsuario({ ...usuario, [name]: apenasNumerosCpfTel(value) });
@@ -264,24 +323,29 @@ function Cadastro() {
           <Botao onClick={() => history.push("/login")}>
             <LeftOutlined /> Voltar para login
           </Botao>
-          <Select
-            id="tipos"
-            backgroundColor={Cores.cinza[7]}
-            color={Cores.preto}
-            borderWidth="2px"
-            width="100%"
-            name="tipo"
-            onChange={preenchendoDados}
-            camposVazios={camposVazios.tipo}
-          >
-            <option value="">Tipo de Usuário</option>
-            <option value="SECRETARIA(O)" borderColor={Cores.azul}>
-              Secretária(o)
-            </option>
-            <option value="PACIENTE" borderColor={Cores.azul}>
-              Paciente
-            </option>
-          </Select>
+          {history.location.state === undefined && recebeTipo() === "MASTER" ? (
+            <Select
+              id="tipos"
+              backgroundColor={Cores.cinza[7]}
+              color={Cores.preto}
+              borderWidth="2px"
+              width="100%"
+              name="tipo"
+              onChange={preenchendoDados}
+              camposVazios={camposVazios.tipo}
+            >
+              <option value="">Tipo de Usuário</option>
+              <option value="SECRETARIA(O)" borderColor={Cores.azul}>
+                Secretária(o)
+              </option>
+              <option value="PACIENTE" borderColor={Cores.azul}>
+                Paciente
+              </option>
+            </Select>
+          ) : (
+            <></>
+          )}
+
           <Input
             placeholder="Nome Completo"
             status="error"
