@@ -14,51 +14,49 @@ export const TopoPagina = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  width: 100%;
   @media (max-width: 920px) {
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
+  }
+  @media (max-width: 480px) {
+    flex-direction: row;
+    justify-content: flex-end;
   }
 `;
 export const BarraPesquisa = styled.div`
-  width: 30%;
+  width: 35%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  .ant-input {
-    background-color: green;
-  }
-  .ant-btn.ant-btn-default.ant-btn-icon-only.ant-input-search-button {
-    background-color: green;
-  }
+  justify-content: flex-start;
+ 
   @media (max-width: 920px) {
+    display: flex;
     width: 100%;
-    justify-content: center;
+    justify-content: flex-start;
   }
 `;
 export const Filtros = styled.div`
   width: 45%;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   gap: 2%;
+
   @media (max-width: 920px) {
-    margin-top: 2%;
     width: 100%;
-    justify-content: center;
+    justify-content: flex-end;
   }
-  @media (max-width: 450px) {
-    margin-top: 2%;
-    flex-direction: column;
+  @media (max-width: 480px) {
+    display: flex;
+    flex-direction: row;
     width: 100%;
-    justify-content: center;
-    align-items: center;
+    justify-content: flex-end;
   }
 `;
 
 export const FiltroEspecifico = styled.div`
-  @media (max-width: 480px) {
-    margin-top: 2%;
-  }
+width: 20%;
 `;
 
 export const BarraEstetica = styled.div`
@@ -110,13 +108,38 @@ export const BotoesVertical = styled.div`
   justify-content: space-between;
   flex-direction: column;
   @media (max-width: 920px) {
+    display: flex;
+    flex-direction: row;
+    width: 87%;
+    margin-left: 2.5%;
+    //justify-content: space-between;
+  }
+
+  @media (max-width: 560px) {
+    display: flex;
     flex-direction: row;
     width: 85%;
+    margin-right: 2.5%;
   }
   @media (max-width: 450px) {
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 `;
+export const BotaoVertical = styled.div`
+
+@media (min-width: 451px) and (max-width: 920px){
+    width: 30%;
+  }
+
+@media (max-width: 450px) {
+    width: 100%;
+    margin-top: 2%;
+  }
+`;
+
+
 export const BotaoFinal = styled.div`
   width: 98%;
   display: flex;
