@@ -51,6 +51,13 @@ function ListaFormularios() {
     setCarregando(false);
   }
 
+  async function verificandoFormularioPeloId(id){
+    history.push({
+      pathname: "/web/formularioespecifico",
+      state: { id },
+    });
+  }
+
   async function editarFormulario(id) {
     history.push({
       pathname: "/web/editarformulario",
@@ -125,7 +132,13 @@ function ListaFormularios() {
                 <ContainerFormularioEspecifico>
                   <Formulario>
                     <DadosFormulario>
-                      <TituloFormulario>{value.titulo}</TituloFormulario>
+                      <Button 
+                        backgroundColor = "transparent" 
+                        borderColor = "transparent"
+                        onClick={() => verificandoFormularioPeloId(value.id)}
+                        >
+                          <TituloFormulario>{value.titulo}</TituloFormulario>
+                        </Button>
                       <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
                       <UrgenciaFormulario>
                         <>Urgência: </>
