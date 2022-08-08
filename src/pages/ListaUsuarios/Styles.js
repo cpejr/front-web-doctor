@@ -53,6 +53,7 @@ export const FiltroUsuario = styled.div`
     margin-top: 2%;
   }
 `;
+
 export const FiltroDatas = styled.div`
   @media (max-width: 480px) {
     margin-top: 2%;
