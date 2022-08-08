@@ -5,7 +5,6 @@ import { Spin } from "antd";
 import moment from "moment";
 import { toast } from "react-toastify";
 import _, { set } from "lodash";
-import { sleep } from "../../utils/sleep";
 import {
   Container,
   Caixa,
@@ -33,6 +32,7 @@ import logoGuilherme from "../../assets/logoGuilherme.png";
 import { Cores } from "../../variaveis";
 import { TiposDeConsulta } from "./TiposDeConsulta";
 import { apenasNumeros, data, dataAgendamentoBack } from "../../utils/masks";
+import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAgendamentoEspecifico(props) {
