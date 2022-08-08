@@ -67,7 +67,7 @@ function ListaFormularios() {
       }else{
         return(
           (formulario?.titulo?.toLowerCase().includes(lowerBusca) ||
-          formulario?.titulo?.toLowerCase().includes(lowerBusca))
+          formulario?.tipo?.toLowerCase().includes(lowerBusca))
         );
       }
     }
