@@ -90,8 +90,6 @@ function FormularioEspecifico(props) {
     pegandoDadosFormularioEspecifico();
   }, [props.location.state.id]);
 
-
-
   const usuariosFiltrados = formularioPacientes.filter(
     (formularioPacientes) => {
       if (lowerBusca === "" && statusSelect === "") {
@@ -100,19 +98,15 @@ function FormularioEspecifico(props) {
         if (statusSelect === "true") {
           return (
             formularioPacientes?.nome?.toLowerCase().includes(lowerBusca) &&
-            formularioPacientes.status
+            formularioPacientes.status === true
           );
-        }
-        else if (statusSelect === "false")
-        {
+        } else if (statusSelect === "false") {
           return (
-            formularioPacientes?.nome?.toLowerCase().includes(lowerBusca) -
-            formularioPacientes.status
+            formularioPacientes?.nome?.toLowerCase().includes(lowerBusca) &&
+            formularioPacientes.status === false
           );
         } else {
-          return (
-            formularioPacientes?.nome?.toLowerCase().includes(lowerBusca)
-          );
+          return formularioPacientes?.nome?.toLowerCase().includes(lowerBusca);
         }
       }
     }

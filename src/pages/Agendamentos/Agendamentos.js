@@ -24,7 +24,11 @@ import {
   Agendamento,
   CódigoPaciente,
   TopoPaginaEsquerda,
-  TextoData
+  TextoData,
+  InputData,
+  FiltroSelect,
+  FiltroInput,
+  SelectData,
 } from "./Styles";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
@@ -44,26 +48,37 @@ function Agendamentos() {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const abertoPeloUsuario = false;
   const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
-  const [tipoSelect, setTipoSelect] = useState("");
   const [busca, setBusca] = useState("");
   const lowerBusca = busca.toLowerCase();
+  const [dataInput, setDataInput] = useState("");
+  const [tipoSelect, setTipoSelect] = useState("");
 
   const agendamentosFiltrados = consultas.filter((consultas) => {
-    if (lowerBusca === "") {
+    if (lowerBusca === "" && tipoSelect === "") {
       return consultas;
     } else {
-      return (
-        consultas?.nome?.toLowerCase().includes(lowerBusca)
-      );
+      if (tipoSelect !== "") {
+        return (
+          consultas?.nome?.toLowerCase().includes(lowerBusca) &&
+          setandoData(consultas)
+        );
+      } else {
+        return consultas?.nome?.toLowerCase().includes(lowerBusca);
+      }
     }
   });
 
-  function agendamentosSelectFiltrados(value) {
-    setTipoSelect(value);
+  function setandoData(value) {
+    let dataString = String(value.data_hora);
+    let dataFormatada = dataString.slice(0, 10);
+    if (dataFormatada === dataInput) {
+      return value;
+    }
   }
 
-
-  
+  function dataFiltrada(value) {
+    setTipoSelect(value);
+  }
 
   async function pegandoDados() {
     const resposta =
@@ -93,31 +108,44 @@ function Agendamentos() {
     });
   }
 
-
   return (
     <div>
       <ContainerListadeUsuarios>
-
         <TopoPagina>
           <TopoPaginaEsquerda>
             <BarraPesquisa>
-            <Search
-              placeholder="BUSCAR"
-              value={busca}
-              onChange={(e) => setBusca(e.target.value)}
-            />
+              <Search
+                placeholder="BUSCAR"
+                value={busca}
+                onChange={(e) => setBusca(e.target.value)}
+              />
             </BarraPesquisa>
-              <FiltroDatas>
-              <Select
+            <Filtros>
+              <FiltroSelect>
+                <SelectData
                   defaultValue=""
-                  style={{ width: 200 }}
-                  onChange={(value) => agendamentosSelectFiltrados(value)}
+                  bordered={false}
+                  onChange={(value) => dataFiltrada(value)}
                 >
-                  <Option value="">Todos os Usuários</Option>
-                  <Option value="PACIENTE">Pacientes</Option>
-                  <Option value="SECRETARIA(O)">Secretárias(os)</Option>
-                </Select>
-              </FiltroDatas>
+                  <Option value="">Todos as datas</Option>
+                  <Option value="filtrado">Data filtrada</Option>
+                </SelectData>
+              </FiltroSelect>
+              {tipoSelect === "" ? (
+                <></>
+              ) : (
+                <FiltroInput>
+                  <InputData
+                    placeholder="Digite uma data"
+                    size="large"
+                    name="data"
+                    type="date"
+                    onChange={(e) => setDataInput(e.target.value)}
+                    value={dataInput}
+                  />
+                </FiltroInput>
+              )}
+            </Filtros>
           </TopoPaginaEsquerda>
           <Button
             marginTop="0px"
@@ -147,11 +175,10 @@ function Agendamentos() {
           <CódigoPaciente>Código do Paciente</CódigoPaciente>
         </DadosUsuario>
         <ContainerUsuarios>
-
           {agendamentosFiltrados
-            //.sort(compararDataAgendamentos)
-            ?.map((value) => (
-              <Usuario key={value.id_usuario}>
+            ?.sort(compararDataAgendamentos)
+            .map((value) => (
+              <Usuario /* key={value.id_usuario} */>
                 <Imagem>{value.avatar_url}</Imagem>
                 <Nome>
                   {carregando ? (
@@ -173,12 +200,27 @@ function Agendamentos() {
                   )}
                 </Telefone>
                 <Data>
-                  {parseInt(value.data_hora.slice(11, 13)) < 12 ? (
-                    value.data_hora.slice(8, 10) + "/" + value.data_hora.slice(5, 7) + "/" + value.data_hora.slice(0, 4) + " - " +
-                    parseInt(value.data_hora.slice(11, 13)) + ":" + value.data_hora.slice(14, 16) + " am"
-                  ) : (
-                    value.data_hora.slice(8, 10) + "/" + value.data_hora.slice(5, 7) + "/" + value.data_hora.slice(0, 4) + " - " +
-                    parseInt(value.data_hora.slice(11, 13) - 12) + ":" + value.data_hora.slice(14, 16) + " pm")}
+                  {parseInt(value.data_hora.slice(11, 13)) < 12
+                    ? value.data_hora.slice(8, 10) +
+                      "/" +
+                      value.data_hora.slice(5, 7) +
+                      "/" +
+                      value.data_hora.slice(0, 4) +
+                      " - " +
+                      parseInt(value.data_hora.slice(11, 13)) +
+                      ":" +
+                      value.data_hora.slice(14, 16) +
+                      " am"
+                    : value.data_hora.slice(8, 10) +
+                      "/" +
+                      value.data_hora.slice(5, 7) +
+                      "/" +
+                      value.data_hora.slice(0, 4) +
+                      " - " +
+                      parseInt(value.data_hora.slice(11, 13) - 12) +
+                      ":" +
+                      value.data_hora.slice(14, 16) +
+                      " pm"}
                 </Data>
 
                 <Agendamento>Consulta</Agendamento>
@@ -191,8 +233,8 @@ function Agendamentos() {
                 </CódigoPaciente>
               </Usuario>
             ))}
-          {/* {examesMarcados.map((value) => (
-            <Usuario key={value.id_usuario}>
+          {examesMarcados.map((value) => (
+            <Usuario /* key={value.id_usuario} */>
               <Imagem>{value.avatar_url}</Imagem>
               <Nome>
                 {carregando ? (
@@ -226,7 +268,7 @@ function Agendamentos() {
                 )}
               </CódigoPaciente>
             </Usuario>
-          ))} */}
+          ))}
         </ContainerUsuarios>
       </ContainerListadeUsuarios>
 

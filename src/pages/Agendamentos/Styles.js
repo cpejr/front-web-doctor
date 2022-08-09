@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { Cores } from "../../variaveis";
+import { Cores, Fontes } from "../../variaveis";
+import { Select } from "antd";
 
 export const ContainerListadeUsuarios = styled.div`
   display: flex;
@@ -11,7 +12,7 @@ export const ContainerListadeUsuarios = styled.div`
 `;
 export const TopoPagina = styled.div`
   display: flex;
-  align-items: start;
+  align-items: center;
   flex-direction: row;
   justify-content: space-between;
   @media (max-width: 920px) {
@@ -26,7 +27,7 @@ export const TopoPaginaEsquerda = styled.div`
   display: flex;
   align-items: start;
   flex-direction: row;
-  width: 50%;
+  width: 65%;
   justify-content: space-between;
 
   @media (max-width: 920px) {
@@ -35,7 +36,7 @@ export const TopoPaginaEsquerda = styled.div`
     justify-content: space-between;
     margin-bottom: 2%;
   }
-  @media (max-width: 490px) {
+  @media (max-width: 530px) {
     flex-direction: column;
     justify-content: center;
   }
@@ -44,7 +45,7 @@ export const TopoPaginaEsquerda = styled.div`
 
 
 export const BarraPesquisa = styled.div`
-  width: 50%;
+  width: 40%;
   display: flex;
   flex-direction: row;
   @media (max-width: 920px) {
@@ -56,16 +57,16 @@ export const BarraPesquisa = styled.div`
     flex-direction: row;
     justify-content: space-between;
   }
-  @media (max-width: 490px) {
+  @media (max-width: 530px) {
     width: 100%;
     margin-bottom: 5px;
   }
   
   .ant-input {
-    background-color: green;
+    height: 36px;
   }
   .ant-btn.ant-btn-default.ant-btn-icon-only.ant-input-search-button {
-    background-color: green;
+    height: 36px;
   }
 `;
 
@@ -235,5 +236,99 @@ export const BotaoNovoAgendamento = styled.div`
   justify-content: end;
   margin-bottom: 40px;
 `;
+export const InputData = styled.input`
+  width: 100%;
+  height: 36px;
+  color: ${Cores.preto};
+  font-family: ${Fontes.barlow};
+  font-weight: 500;
+  font-size: 15px;
+  padding-left: 4%;
+  padding-right: 2%;
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 1px;
+  border-color: ${(props) => {
+    let cor;
+    if (!props.borderColor) {
+      if(props.erro || props.camposVazios){
+        cor = Cores.vermelho;
+      } else {
+        cor = Cores.azul;
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
+`;
+export const SelectData = styled(Select)`
+  width: 160px;
+  height: 36px;
+  color: ${Cores.preto};
+  font-family: ${Fontes.barlow};
+  font-weight: 500;
+  font-size: 15px;
+  padding-left: 2%;
+  padding-right: 2%;
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 1px;
+  border-color: ${(props) => {
+    let cor;
+    if (!props.borderColor) {
+      if(props.erro || props.camposVazios){
+        cor = Cores.vermelho;
+      } else {
+        cor = Cores.azul;
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
 
+.ant-select-arrow {
+    color: ${Cores.azul};
+  }
+`;
+export const Filtros = styled.div`
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2%;
+  @media (max-width: 920px) {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  @media (max-width: 530px) {
+    margin-top: 2%;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  @media (max-width: 330px) {
+    margin-top: 2%;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+  }
+`;
+export const FiltroSelect = styled.div`
+  @media (max-width: 530px) {
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
+`;
+
+export const FiltroInput = styled.div`
+  @media (max-width: 530px) {
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
+`;
 
