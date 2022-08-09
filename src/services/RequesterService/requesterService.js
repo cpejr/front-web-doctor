@@ -79,9 +79,16 @@ export const criarFormulario = (estado) => api.post("/formularios", estado);
 export const requisicaoRespostaFormulario = (id) =>
   api.get(`/formularios_pacientes/${id}`);
 
+export const requisicaoFormularioPacientes = (id_formulario) =>
+  api.get(`/formularios_pacientes_formularios/${id_formulario}`);
+
   export const requisicaoReceitas = () => api.get(`/receitas/`);
 export const editarPerguntasFormulario = (id, perguntas) =>
   api.put(`/formularios/${id}`, { perguntas: perguntas });
 
 export const editarCamposFormulario = (id, campos) =>
   api.put(`/formularios/${id}`, campos);
+
+
+export const enviarFormularioPaciente = (status, id_formulario, id_usuario) =>
+  api.post("/formularios_pacientes", { status, id_formulario, id_usuario });

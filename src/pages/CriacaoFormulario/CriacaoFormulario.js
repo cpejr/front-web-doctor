@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { FormBuilder } from "@ginkgo-bioworks/react-json-schema-form-builder";
+import { Modal } from "antd";
+import { CaixaInputs, Container, Formulario } from "./Styles";
 import Input from "../../styles/Input";
 import { Cores } from "../../variaveis";
-import { CaixaInputs, Container, Formulario } from "./Styles";
 import Select from "../../styles/Select/Select";
 import Button from "../../styles/Button";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -14,7 +15,7 @@ function CriacaoFormulario() {
 
   const TirandoCabecalho = {
     showFormHead: false,
-  }
+  };
 
   function mudancasForm(newSchema, newUiSchema) {
     setEstado({ ...estado, perguntas: newSchema });
@@ -28,7 +29,7 @@ function CriacaoFormulario() {
 
   async function requisicaoFormularios() {
     await managerService.CriarFormulario(estado);
-    }
+  }
 
   return (
     <Container>
@@ -85,31 +86,28 @@ function CriacaoFormulario() {
             3
           </option>
         </Select>
-      <Button
-        height="50px"
-        width="100%"
-        backgroundColor={Cores.lilas[1]}
-        borderColor={Cores.azul}
-        color={Cores.branco}
-        fontSize="1.5em"
-        fontSizeMedia="1.2em"
-        onClick={() => requisicaoFormularios()}
-        fontWeight="bold"
-      >
-        CRIAR
-      </Button>
+        <Button
+          height="50px"
+          width="100%"
+          backgroundColor={Cores.lilas[1]}
+          borderColor={Cores.azul}
+          color={Cores.branco}
+          fontSize="1.5em"
+          fontSizeMedia="1.2em"
+          onClick={() => requisicaoFormularios()}
+          fontWeight="bold"
+        >
+          CRIAR
+        </Button>
       </CaixaInputs>
       <Formulario>
-      <FormBuilder
-        schema={schema}
-        uischema={uiSchema}
-        onChange={mudancasForm}
-        mods={
-          TirandoCabecalho
-        }
-      />
+        <FormBuilder
+          schema={schema}
+          uischema={uiSchema}
+          onChange={mudancasForm}
+          mods={TirandoCabecalho}
+        />
       </Formulario>
-
     </Container>
   );
 }

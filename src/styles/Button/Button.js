@@ -40,6 +40,10 @@ const Button = styled.button`
     width: ${(props) => props.widthMedia ?? props.width};
   }
 
+  @media (max-width: 600px) 
+    width: ${(props) => props.widthMedia600};
+  }
+
   @media (max-width: 800px)
   {
     margin-top: ${(props) => props.marginTopMedia ?? ((props) => props.marginTop?? "2%")};
@@ -47,6 +51,7 @@ const Button = styled.button`
   
   @media (max-width: 950px) and (min-width: 480px) {
     font-size: ${(props) => props.fontSizeMedia950};
+    
   }
   @media (max-width: 1080px) {
     font-size: ${(props) => props.fontSizeMedia1080};

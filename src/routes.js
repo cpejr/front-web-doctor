@@ -18,6 +18,7 @@ import EditarPerfil from "./pages/EditarPerfil";
 import Agendamentos from "./pages/Agendamentos";
 import { usuarioAutenticado, recebeTipo } from "./services/auth";
 import EditarFormulario from "./pages/EditarFormulario/EditarFormulario";
+import FormularioEspecifico from "./pages/FormularioEspecifico";
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
   <Route
@@ -152,6 +153,10 @@ function UserHeader() {
           component={RespostaFormulario}
         />
         <RotasPrivadas component={() => <Redirect to="/web/listadeusuarios" />} />
+        <RotasPrivadas
+          path="/web/formularioespecifico"
+          component={FormularioEspecifico}
+        />
       </Switch>
     </Header>
   );
