@@ -47,8 +47,6 @@ export const Cadastrando = async (usuario, endereco) => {
     .criarUsuario(endereco, usuario)
     .then(() => {
       toast.success("Usuário cadastrado com sucesso.");
-      sleep(1500);
-      window.location.href = "/web/listadeusuario";
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/cadastro"));

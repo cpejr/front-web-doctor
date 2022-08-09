@@ -19,6 +19,7 @@ import {
   PossuiConvenio,
   PossuiCuidador,
 } from "./Styles";
+import { sleep } from "../../utils/sleep";
 import "react-toastify/dist/ReactToastify.min.css";
 import AddToast from "../../components/AddToast/AddToast";
 import { toast } from "react-toastify";
@@ -129,6 +130,8 @@ function Cadastro() {
       if (usuario.senha === usuario.senhaConfirmada) {
         setCarregando(true);
         await managerService.Cadastrando(usuario, enderecoBack);
+        await sleep(1500);
+        window.location.href = "/web/listadeusuario";
         setCarregando(false);
       } else {
         toast.error("As senhas digitadas são diferentes.");
