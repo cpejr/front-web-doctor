@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
 import { Spin } from "antd";
-import { useHistory } from "react-router-dom";
+import { Input } from "antd";
 import {
   ColunaDireita,
   ColunaEsquerda,
@@ -23,14 +23,11 @@ import {
   BarraCentro,
   Selects,
   MargemEstetica,
-  TextoCamposFormularios,
 } from "./Styles";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
-import { Nome, Titulo } from "../ListaUsuarios/Styles";
-import { Input } from "antd";
 
 function FormularioEspecifico(props) {
   const { Search } = Input;

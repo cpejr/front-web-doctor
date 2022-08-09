@@ -25,7 +25,6 @@ import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
 import ModalEnvioFormulario from "../../components/ModalEnvioFormulario";
 import * as managerService from "../../services/ManagerService/managerService";
-import { OmitProps } from "antd/lib/transfer/ListBody";
 
 function ListaFormularios() {
   const history = useHistory();

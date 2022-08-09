@@ -13,8 +13,18 @@ import {
   IconeAdicionar,
 } from "./Styles";
 
+
+
+
 function HomeSecretaria() {
   const history = useHistory();
+
+  function passandoTipoParaCadastro(tipo){
+  history.push({
+    pathname: "/cadastro",
+    state: { tipo },
+  });
+}
 
   return (
     <div>
@@ -444,7 +454,7 @@ function HomeSecretaria() {
             fontSizeMedia="1em"
             fontSizeMedia950="1.2em"
             boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-            onClick={() => history.push("/cadastro")}
+            onClick={() => passandoTipoParaCadastro("PACIENTE")}
           >
             Cadastrar Novo Paciente
             <IconeAdicionar>
