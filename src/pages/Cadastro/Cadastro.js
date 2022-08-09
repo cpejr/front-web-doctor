@@ -37,8 +37,6 @@ import Button from "../../styles/Button";
 import Select from "../../styles/Select/Select";
 import { recebeTipo, usuarioAutenticado } from "../../services/auth";
 import * as managerService from "../../services/ManagerService/managerService";
-import { Cores } from "../../variaveis";
-import { cpf, apenasLetras, apenasNumeros, apenasNumerosCep, apenasNumerosCpfTel, cep, data, telefone, dataBack } from "../../utils/masks";
 
 function Cadastro(props) {
   const history = useHistory();
@@ -154,7 +152,6 @@ function Cadastro(props) {
     verificaAutenticacao();
   }, []);
 
-  const errors = {};
 
   async function verificandoEnter(e) {
     if (e.key === "Enter") {
