@@ -5,6 +5,7 @@ import Button from "../../styles/Button";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import { sleep } from "../../utils/sleep";
 
 function ModalEditarFormulario(props) {
   const [carregando, setCarregando] = useState(true);
@@ -30,7 +31,10 @@ function ModalEditarFormulario(props) {
       props.formulario.id,
       props.perguntasAlterar
     );
+    await sleep(1500)
+     window.location.href = "/web/listaformularios";
   }
+
 
   return (
     <Container>

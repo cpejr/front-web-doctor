@@ -500,8 +500,6 @@ export const EditarPerguntasFormulario = async (
     .editarPerguntasFormulario(id, perguntas)
     .then(() => {
       toast.success("Pergunta alterada com sucesso.");
-      sleep(1500)
-      window.location.href = "/web/listaformularios";
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/"));
