@@ -23,6 +23,7 @@ import {
   BarraCentro,
   Selects,
   MargemEstetica,
+  NomePaciente,
 } from "./Styles";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
@@ -155,8 +156,10 @@ function FormularioEspecifico(props) {
                       fontSize="1.1em"
                       fontWeight="bold"
                       justifyContent="flex-start"
-                    >
-                      {value.nome}
+                    > 
+                      <NomePaciente>
+                       {value.nome}
+                      </NomePaciente>
                     </TextoBarraPaciente>
                   </BarraCentro>
                   {value.status !== false ? (

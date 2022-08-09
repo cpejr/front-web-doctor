@@ -399,3 +399,30 @@ export const BarraDePesquisa = styled.div`
     justify-content: center;
   }
 `;
+
+export const NomePaciente = styled.div`
+  font-size: 1.0em;
+  font-family: ${Fontes.roboto};
+  text-decoration: underline;
+  color: ${Cores.preto};
+  display: flex;
+  justify-content: end;
+
+  :hover {
+    cursor: pointer;
+  }
+
+  @media (max-width: 780px) {
+    font-size: 1.2em;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  @media (max-width: 560px) {
+    font-size: 1.1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+`;
