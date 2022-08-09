@@ -22,7 +22,7 @@ const Input = styled.input`
   font-size: ${(props) => props.fontSize};
   margin-top: ${(props) => props.marginTop};
   border-style: solid;
-  height: 50px;
+  height: ${(props) => props.height};
   padding-left: 2%;
   box-shadow: ${(props) => props.boxShadow};
   border-width: ${(props) => props.borderWidth};
