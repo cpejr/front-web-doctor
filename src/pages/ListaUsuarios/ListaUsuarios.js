@@ -49,12 +49,11 @@ function ListaUsuarios() {
   const [tipoSelect, setTipoSelect] = useState("");
   const [busca, setBusca] = useState("");
   const abertoPeloUsuario = true;
-  const [contador, setContador] = useState(0);
   const [consultas, setConsultas] = useState([]);
 
   const lowerBusca = busca.toLowerCase();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const antIcon2 = <LoadingOutlined style={{ fontSize: 40 }} spin />;
+  const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
   const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
 
   const usuariosFiltrados = usuarios.filter((usuario) => {
@@ -79,25 +78,25 @@ function ListaUsuarios() {
   }
 
   async function pegandoDadosUsuarios() {
-    if (contador < 1) {
-      const resposta = await managerService.GetDadosPessoais();
-      if (tipoUsuarioLogado === "MASTER") {
-        resposta.forEach((usuario) => {
-          if (usuario.tipo === "PACIENTE" || usuario.tipo === "SECRETARIA(O)") {
-            setUsuarios((usuarios) => [...usuarios, usuario]);
-            setCarregando(false);
-          }
-        });
-      } else {
-        resposta.forEach((usuario) => {
-          if (usuario.tipo === "PACIENTE") {
-            setUsuarios((usuarios) => [...usuarios, usuario]);
-            setCarregando(false);
-          }
-        });
-      }
+    setCarregandoPagina(true);
+    setUsuarios([]);
+    const resposta = await managerService.GetDadosPessoais();
+    if (tipoUsuarioLogado === "MASTER") {
+      resposta.forEach((usuario) => {
+        if (usuario.tipo === "PACIENTE" || usuario.tipo === "SECRETARIA(O)") {
+          setUsuarios((usuarios) => [...usuarios, usuario]);
+          setCarregando(false);
+        }
+      });
+    } else {
+      resposta.forEach((usuario) => {
+        if (usuario.tipo === "PACIENTE") {
+          setUsuarios((usuarios) => [...usuarios, usuario]);
+          setCarregando(false);
+        }
+      });
     }
-    setContador(contador + 1);
+    setCarregandoPagina(false);
   }
 
   async function pegandoDadosConsultas() {
@@ -200,8 +199,6 @@ function ListaUsuarios() {
         usuario.ultimaConsulta = aux;
       }
     });
-    await sleep(3000);
-    setCarregandoPagina(false);
   }
 
   return (
@@ -277,15 +274,7 @@ function ListaUsuarios() {
               Cadastrar nova(o) Secretária(o)
               <PlusCircleOutlined style={{ color: Cores.azul }} />
             </Button>
-
-
-
           </BotoesMedico>
-
-
-
-
-
         ) : (
           <BotaoSecretario>
             <Button
@@ -321,7 +310,7 @@ function ListaUsuarios() {
               left: "47.5%",
             }}
           >
-            <Spin indicator={antIcon2} />
+            <Spin indicator={antIconPagina} />
           </div>
         ) : (
           <ContainerUsuarios>
@@ -430,7 +419,10 @@ function ListaUsuarios() {
         width={"70%"}
         centered={true}
       >
-        <ModalAdicionarCodigo emailUsuario={email} fechandoModal={() => fechandoModalCodigo()} />
+        <ModalAdicionarCodigo
+          emailUsuario={email}
+          fechandoModal={() => fechandoModalCodigo()}
+        />
       </Modal>
     </div>
   );
