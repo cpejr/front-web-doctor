@@ -19,12 +19,12 @@ import { LoadingOutlined } from "@ant-design/icons";
 import _ from "lodash";
 import { toast } from "react-toastify";
 import { sleep } from "../../utils/sleep";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function CriacaoFormulario() {
   const [uiSchema, setUiSchema] = useState("");
   const [schema, setSchema] = useState("");
   const [estado, setEstado] = useState({});
-  const [carregando, setCarregando] = useState(true);
   const [camposVazios, setCamposVazios] = useState(false);
   const [carregandoCriacao, setCarregandoCriacao] = useState();
 
@@ -70,29 +70,26 @@ function CriacaoFormulario() {
 
     setCamposVazios({ ...camposVazios, ...errors });
 
-    if (schema === "") {
-      toast.warn("Adicione alguma pergunta.");
-    } else {
       if (_.isEqual(camposVazios, referenciaInputNulos)) {
+        if( schema === "") {
+          toast.warn("Adicione alguma pergunta.");
+        } else {
         setCarregandoCriacao(true);
         await managerService.CriarFormulario(estado);
         await sleep(1500);
         setCarregandoCriacao(false);
+        window.location.href = "/web/listaformularios";
+        }
       } else {
         setCarregandoCriacao(true);
         toast.warn("Preencha todos os campos corretamente");
         setCarregandoCriacao(false);
       }
-    }
   }
 
   return (
     <Container>
       <CaixaInputs>
-        {/* {carregando ? (
-          <Spin indicator={antIcon} />
-        ) : (
-          <> */}
         <CriarFormularioTitulo>Criar Formulário</CriarFormularioTitulo>
         <TitulosInput>Título:</TitulosInput>
         <Input
@@ -130,6 +127,7 @@ function CriacaoFormulario() {
         <TitulosInput>Urgência:</TitulosInput>
         <Select
           id="urgencia"
+          borderWidth="2px"
           marginTop="0px"
           backgroundColor={Cores.cinza[7]}
           color={Cores.preto}
@@ -156,25 +154,20 @@ function CriacaoFormulario() {
           borderColor={Cores.azul}
           color={Cores.branco}
           fontSize="1.5em"
+          style={{ marginTop: "4%" }}
           fontSizeMedia="1.2em"
           onClick={() => requisicaoFormularios()}
           fontWeight="bold"
         >
-          {carregandoCriacao ? (
-              <Spin indicator={antIcon} />
-            ) : (
-          <div>CRIAR</div>
-          )}
+          {carregandoCriacao ? <Spin indicator={antIcon} /> : <div>CRIAR</div>}
         </Button>
-        {/* </>
-        )} */}
       </CaixaInputs>
       <Instrucao>
         <TextoInstrucao>
-          Aperte no + verde abaixo. Em seguida, clique em “Create”. Altere o
-          “Object Name” para um nome único e escreva a pergunta em “Display
-          Name”. Escolha o tipo do input em “Input Type”. Quando finalizar,
-          clique em “Criar”.
+          Aperte no + verde abaixo. Em seguida, clique em “Create”. Mantenha o
+          campo “Object Name” preenchido e escreva a pergunta em “Display Name”.
+          Escolha o tipo do input em “Input Type”. Quando finalizar, clique em
+          “Criar”.
         </TextoInstrucao>
       </Instrucao>
       <Formulario>

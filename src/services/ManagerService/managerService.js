@@ -429,7 +429,6 @@ export const CriarFormulario = async (estado) => {
     .criarFormulario(estado)
     .then(() => {
       toast.success("Formulário criado com sucesso.");
-      window.location.href = "/web/listaformularios";
     })
     .catch((error) => {
       requisicaoErro(error);
