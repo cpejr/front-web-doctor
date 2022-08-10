@@ -78,6 +78,8 @@ function Agendamentos() {
   }
 
   async function pegandoDados() {
+    setConsultas([])
+    setExamesMarcados([])
     const resposta =
       await managerService.GetDadosConsultasExamesMarcadosGeral();
     setConsultas(resposta.dadosConsultas);
@@ -96,7 +98,8 @@ function Agendamentos() {
 
   async function fechandoModalAgendamentoEspecifico() {
     setModalAgendamentoEspecifico(false);
-    document.location.reload();
+    pegandoDados()
+    // document.location.reload();
   }
 
   async function abrindoPerfilPaciente(email) {
