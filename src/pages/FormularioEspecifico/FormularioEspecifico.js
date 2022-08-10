@@ -38,13 +38,9 @@ function FormularioEspecifico(props) {
   const [formularioResposta, setFormularioResposta] = useState(false);
   const [carregando, setCarregando] = useState(true);
   const [statusSelect, setStatusSelect] = useState("");
-
   const { Option } = SelectTipos;
-
   const [busca, setBusca] = useState("");
   const lowerBusca = busca.toLowerCase();
-  // const [usuariosParaRenderizar, setUsuariosParaRenderizar] = useState({});
-
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
   );

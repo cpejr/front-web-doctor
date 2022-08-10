@@ -8,10 +8,7 @@ import {
   TopoPagina,
   ContainerListadeUsuarios,
   Filtros,
-  FiltroDatas,
-  FiltroUsuario,
   BarraPesquisa,
-  BotaoNovoAgendamento,
   BarraEstetica,
   DadosUsuario,
   Titulo,
@@ -24,7 +21,6 @@ import {
   Agendamento,
   CódigoPaciente,
   TopoPaginaEsquerda,
-  TextoData,
   InputData,
   FiltroSelect,
   FiltroInput,
@@ -39,19 +35,20 @@ import * as managerService from "../../services/ManagerService/managerService";
 function Agendamentos() {
   const history = useHistory();
   const { Search } = Input;
-  const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] = useState(false);
+  const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] =
+    useState(false);
   const { Option } = Select;
   const [email, setEmail] = useState();
   const [carregando, setCarregando] = useState(true);
   const [consultas, setConsultas] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
-  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const abertoPeloUsuario = false;
   const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
   const [busca, setBusca] = useState("");
-  const lowerBusca = busca.toLowerCase();
   const [dataInput, setDataInput] = useState("");
   const [tipoSelect, setTipoSelect] = useState("");
+  const lowerBusca = busca.toLowerCase();
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const abertoPeloUsuario = false;
 
   const agendamentosFiltrados = consultas.filter((consultas) => {
     if (lowerBusca === "" && tipoSelect === "") {
