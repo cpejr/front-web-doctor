@@ -103,6 +103,11 @@ function EditarFormulario(props) {
     if (e.target.value !== "") {
       setCamposVazios({ ...camposVazios, [e.target.name]: false });
     }
+    else{
+      setCamposVazios({ ...camposVazios, [e.target.name]: true });
+    }
+
+    
 
     setCampos({ ...campos, [e.target.name]: e.target.value });
   }

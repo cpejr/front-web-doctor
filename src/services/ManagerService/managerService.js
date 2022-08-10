@@ -499,6 +499,7 @@ export const EditarPerguntasFormulario = async (
   await requesterService
     .editarPerguntasFormulario(id, perguntas)
     .then(() => {
+      sleep(1500);
       toast.success("Ação realizada com sucesso.");
     })
     .catch((error) => {
