@@ -499,7 +499,7 @@ export const EditarPerguntasFormulario = async (
   await requesterService
     .editarPerguntasFormulario(id, perguntas)
     .then(() => {
-      toast.success("Pergunta alterada com sucesso.");
+      toast.success("Ação realizada com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/"));

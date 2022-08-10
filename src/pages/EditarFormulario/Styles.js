@@ -83,6 +83,7 @@ export const ContainerAdicionarPergunta = styled.div`
   justify-content: space-between;
   flex-direction: column;
   align-items: center;
+  margin-top: 5%;
   
 `;
 

@@ -20,6 +20,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import _ from "lodash";
 import { toast } from "react-toastify";
 import { sleep } from "../../utils/sleep";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function EditarFormulario(props) {
   const [formularios, setFormularios] = useState();
@@ -223,15 +224,13 @@ function EditarFormulario(props) {
               Apagar pergunta especifica
             </Button>
             <TextoOrientacao>Aperte o botão acima para selecionar uma pergunta do formulário e apagá-la.</TextoOrientacao>
-          </>
-        )}
-      </CaixaInputs>
-      <CaixaInputs>
+
+
         <ContainerAdicionarPergunta>
           <TituloContainer>Adicionar nova pergunta</TituloContainer>
       <TextoOrientacao>
         Aperte no + verde abaixo. Em seguida, clique em “Create”. Altere o
-        “Object Name” para um nome único e escreva a pergunta em “Display Name”.
+        “Object Name” para um nome único, não o deixe vazio, e escreva a pergunta em “Display Name”.
         Escolha o tipo do input em “Input Type”. Quando finalizar, clique em
         “Concluído”.
       </TextoOrientacao>
@@ -256,6 +255,8 @@ function EditarFormulario(props) {
           Concluído
         </Button>
         </ContainerAdicionarPergunta>
+        </>
+        )}
       </CaixaInputs>
 
       <Modal
