@@ -171,9 +171,11 @@ function abrindoModalFormulario(id, perguntas, titulo) {
                   <BarraCentro>
                     <TextoBarraPaciente
                       fontSize="1.1em"
-                      fontWeight="bold"
+                      fontWeight="400"
                       justifyContent="flex-start"
                     > 
+                      Nome: 
+                  </TextoBarraPaciente>
                       <NomePaciente
                       onClick={() =>
                         abrindoModalFormulario(
@@ -184,7 +186,6 @@ function abrindoModalFormulario(id, perguntas, titulo) {
                       }>
                        {value.nome}
                       </NomePaciente>
-                    </TextoBarraPaciente>
                   </BarraCentro>
                   {value.status !== false ? (
                     <></>

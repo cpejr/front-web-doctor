@@ -159,7 +159,7 @@ export const BarraEsquerda = styled.div`
 
 export const BarraCentro = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   text-align: left;
   width: 32%;
   height: 80px;
@@ -401,12 +401,13 @@ export const BarraDePesquisa = styled.div`
 `;
 
 export const NomePaciente = styled.div`
-  font-size: 1.0em;
+  font-size: 1.1em;
+  padding-top: 0.4%;
   font-family: ${Fontes.roboto};
+  font-weight: 400;
   text-decoration: underline;
   color: ${Cores.preto};
   display: flex;
-  justify-content: end;
 
   :hover {
     cursor: pointer;
