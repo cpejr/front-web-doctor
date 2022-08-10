@@ -84,6 +84,7 @@ function abrindoModalFormulario(id, perguntas, titulo) {
     setPerguntas(perguntas);
     setTitulo(titulo);
     setIdFormularioPaciente(id);
+    console.log(id);
     setModalFormulario(true);
   }
 
@@ -172,7 +173,7 @@ function abrindoModalFormulario(id, perguntas, titulo) {
                     <NomePaciente
                     onClick={() =>
                       abrindoModalFormulario(
-                        value.id_usuario,
+                        value.id,
                         value.perguntas,
                         value.titulo
                       )

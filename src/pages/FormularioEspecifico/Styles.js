@@ -406,7 +406,7 @@ export const BarraDePesquisa = styled.div`
 
 export const NomePaciente = styled.div`
   font-size: 1.1em;
-  padding-top: 0.4%;
+  margin-top: 6%;
   font-family: ${Fontes.roboto};
   font-weight: bold;
   text-decoration: underline;
@@ -419,6 +419,7 @@ export const NomePaciente = styled.div`
   }
 
   @media (max-width: 850px) {
+    margin-top: 0;
     margin-left: 0;
     justify-content: start;
   }
