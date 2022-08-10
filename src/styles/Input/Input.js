@@ -3,6 +3,7 @@ import { Cores } from "../../variaveis";
 
 const Input = styled.input`
   background-color: ${(props) => props.backgroundColor};
+  background-image: ${(props) => props.backgroundImage};
   text-align: left;
   border-color: ${(props) => {
     let cor;

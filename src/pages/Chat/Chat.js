@@ -4,15 +4,16 @@ import { useSelector } from "react-redux";
 import BarraLateralChat from "../../components/BarraLateralChat"
 import ConversaAberta from "../../components/ConversaAberta";
 import { Cores } from "../../variaveis";
+import { Container } from "./Styles";
 
 function Chat() {
 
   
   return (
-    <div>
+    <Container>
       <BarraLateralChat></BarraLateralChat>
       
-    </div>
+    </Container>
   );
 }
 
