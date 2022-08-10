@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
-import { Spin } from "antd";
-import { Input } from "antd";
+import { Spin, Modal, Input } from "antd";
+import ModalFormulario from "../../components/ModalFormulario";
 import {
   ColunaDireita,
   ColunaEsquerda,
@@ -37,6 +37,13 @@ function FormularioEspecifico(props) {
   const [formularioRespostaPendente, setFormularioRespostaPendente] =
     useState(false);
   const [formularioResposta, setFormularioResposta] = useState(false);
+
+  const [modalFormulario, setModalFormulario] = useState(false);
+  const [perguntas, setPerguntas] = useState();
+  const [titulo, setTitulo] = useState();
+  const [idFormularioPaciente, setIdFormularioPaciente] = useState();
+
+
   const [carregando, setCarregando] = useState(true);
 
   const antIcon = (
@@ -73,16 +80,26 @@ function FormularioEspecifico(props) {
     setFormularioResposta(formularioResposta);
   }
 
+function abrindoModalFormulario(id, perguntas, titulo) {
+    setPerguntas(perguntas);
+    setTitulo(titulo);
+    setIdFormularioPaciente(id);
+    setModalFormulario(true);
+  }
+
   useEffect(() => {
     pegandoFormularioPacientes();
+    console.log(formularioPacientes);
+
   }, [props.location.state.id]);
 
   useEffect(() => {
     pegandoDadosFormularioEspecifico();
+    console.log(formularioEspecifico);
   }, [props.location.state.id]);
 
   return (
-    <>
+    <div>
       <ContainerFormularioEspecifico>
         {carregando ? (
           <Spin indicator={antIcon} />
@@ -157,7 +174,14 @@ function FormularioEspecifico(props) {
                       fontWeight="bold"
                       justifyContent="flex-start"
                     > 
-                      <NomePaciente>
+                      <NomePaciente
+                      onClick={() =>
+                        abrindoModalFormulario(
+                          value.id_usuario,
+                          value.perguntas,
+                          value.titulo
+                        )
+                      }>
                        {value.nome}
                       </NomePaciente>
                     </TextoBarraPaciente>
@@ -225,7 +249,22 @@ function FormularioEspecifico(props) {
           </>
         )}
       </ContainerFormularioEspecifico>
-    </>
+
+      <Modal
+        visible={modalFormulario}
+        onCancel={() => setModalFormulario(false)}
+        width={"50%"}
+        centered={true}
+        footer={null}
+      >
+        <ModalFormulario
+          idFormularioPaciente={idFormularioPaciente}
+          perguntas={perguntas}
+          titulo={titulo}
+        />
+      </Modal>
+
+    </div>
   );
 }
 
