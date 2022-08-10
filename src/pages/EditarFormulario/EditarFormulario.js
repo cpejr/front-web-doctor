@@ -71,15 +71,20 @@ function EditarFormulario(props) {
   }, [props]);
 
   async function atualizarDados() {
-    Object.assign(
-      auxiliar,
-      formularios.perguntas.properties,
-      estado.properties
-    );
-    estado.properties = auxiliar;
-    await managerService.EditarPerguntasFormulario(formularios.id, estado);
-    await sleep(1500)
-    window.location.href = "/web/listaformularios";
+    if (schema === "") {
+      toast.error("Adicione uma pergunta para concluir esta ação.");
+    } else {
+      Object.assign(
+        auxiliar,
+        formularios.perguntas.properties,
+        estado.properties
+      );
+
+      estado.properties = auxiliar;
+      await managerService.EditarPerguntasFormulario(formularios.id, estado);
+      await sleep(1500);
+      window.location.href = "/web/listaformularios";
+    }
   }
 
   async function atualizarCamposQueNaoSaoPerguntas() {
@@ -209,7 +214,10 @@ function EditarFormulario(props) {
                 <>Atualizar campos</>
               )}
             </Button>
-            <TextoOrientacao>Aperte o botão acima para apagar os campos referentes ao formulário. </TextoOrientacao>
+            <TextoOrientacao>
+              Aperte o botão acima para modificar os campos já salvos referentes ao
+              formulário.{" "}
+            </TextoOrientacao>
             <Button
               height="50px"
               width="100%"
@@ -223,39 +231,41 @@ function EditarFormulario(props) {
             >
               Apagar pergunta especifica
             </Button>
-            <TextoOrientacao>Aperte o botão acima para selecionar uma pergunta do formulário e apagá-la.</TextoOrientacao>
+            <TextoOrientacao>
+              Aperte o botão acima para selecionar uma pergunta do formulário e
+              apagá-la.
+            </TextoOrientacao>
 
+            <ContainerAdicionarPergunta>
+              <TituloContainer>Adicionar nova pergunta</TituloContainer>
+              <TextoOrientacao>
+                Aperte no + verde abaixo. Em seguida, clique em “Create”. Altere
+                o “Object Name” para um nome único, não o deixe vazio, e escreva
+                a pergunta em “Display Name”. Escolha o tipo do input em “Input
+                Type”. Quando finalizar, clique em “Concluído”.
+              </TextoOrientacao>
+              <FormBuilder
+                schema={schema}
+                uischema={uiSchema}
+                onChange={mudancasForm}
+                mods={TirandoCabecalho}
+              />
 
-        <ContainerAdicionarPergunta>
-          <TituloContainer>Adicionar nova pergunta</TituloContainer>
-      <TextoOrientacao>
-        Aperte no + verde abaixo. Em seguida, clique em “Create”. Altere o
-        “Object Name” para um nome único, não o deixe vazio, e escreva a pergunta em “Display Name”.
-        Escolha o tipo do input em “Input Type”. Quando finalizar, clique em
-        “Concluído”.
-      </TextoOrientacao>
-      <FormBuilder
-        schema={schema}
-        uischema={uiSchema}
-        onChange={mudancasForm}
-        mods={TirandoCabecalho}
-      />
-      
-        <Button
-          height="50px"
-          width="50%"
-          backgroundColor={Cores.lilas[4]}
-          borderColor={Cores.azul}
-          color={Cores.azulEscuro}
-          fontSize="1em"
-          fontSizeMedia="0.7em"
-          fontWeight="bold"
-          onClick={() => atualizarDados()}
-        >
-          Concluído
-        </Button>
-        </ContainerAdicionarPergunta>
-        </>
+              <Button
+                height="50px"
+                width="50%"
+                backgroundColor={Cores.lilas[4]}
+                borderColor={Cores.azul}
+                color={Cores.azulEscuro}
+                fontSize="1.1em"
+                fontSizeMedia="0.9em"
+                fontWeight="bold"
+                onClick={() => atualizarDados()}
+              >
+                Concluído
+              </Button>
+            </ContainerAdicionarPergunta>
+          </>
         )}
       </CaixaInputs>
 

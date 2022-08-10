@@ -88,11 +88,16 @@ export const ContainerAdicionarPergunta = styled.div`
 `;
 
 export const TituloContainer = styled.div`
-  font-size: 1.2em;
+  font-size: 1.35em;
   color: ${Cores.azulEscuro};
   display: flex;
   justify-content: center;
   text-align: center;
   font-weight: bold;
   margin-bottom: 3%;
+
+  @media (max-width: 830px)
+  {
+    font-size: 1.2em;
+  }
 `;
