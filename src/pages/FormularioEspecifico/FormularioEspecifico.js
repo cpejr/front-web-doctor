@@ -84,19 +84,16 @@ function abrindoModalFormulario(id, perguntas, titulo) {
     setPerguntas(perguntas);
     setTitulo(titulo);
     setIdFormularioPaciente(id);
-    console.log(id);
     setModalFormulario(true);
   }
 
   useEffect(() => {
     pegandoFormularioPacientes();
-    console.log(formularioPacientes);
 
   }, [props.location.state.id]);
 
   useEffect(() => {
     pegandoDadosFormularioEspecifico();
-    console.log(formularioEspecifico);
   }, [props.location.state.id]);
 
   return (
