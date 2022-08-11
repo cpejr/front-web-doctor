@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import BarraLateralChat from "../../components/BarraLateralChat"
-// import ConversaAberta from "../../components/ConversaAberta";
-import { Container } from "./Styles";
+import ConversaAberta from "../../components/ConversaAberta";
+import { Container, MensagemInicialChat } from "./Styles";
 
 
 const Chat = () => {
@@ -21,20 +21,12 @@ const Chat = () => {
 
 const MensagemInicial = () => {
   return (
-      <div>
-        <h3></h3>
-        <p></p>
-      </div>
+      <MensagemInicialChat>
+        <h3>Bem vindo!</h3>
+        <p>Selecione um chat para iniciar uma conversa.</p>
+      </MensagemInicialChat>
   );
 };
 
-const ConversaAberta = () => {
-  return (
-      <div>
-        <h3></h3>
-        <p></p>
-      </div>
-  );
-};
 
 export default Chat;

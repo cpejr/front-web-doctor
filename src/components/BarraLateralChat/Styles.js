@@ -15,11 +15,11 @@ export const BarraLateral = styled.div`
   align-items: center;
   min-width:300px;
 
-  @media (max-width: 800px) {
+  @media (max-width: 821px) {
     margin-left: 0%;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 600px) {
     width: 100%;
     padding-top: 5%;
   }
