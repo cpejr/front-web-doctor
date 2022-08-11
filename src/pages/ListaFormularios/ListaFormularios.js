@@ -8,7 +8,7 @@ import {
   TopoPagina,
   ContainerListadeFormularios,
   Filtros,
-  FiltroEspecifico,
+  FiltroEspecificoUrgencia,
   BarraPesquisa,
   BarraEstetica,
   ContainerFormulario,
@@ -136,24 +136,24 @@ function ListaFormularios() {
               <BarraPesquisa>
                 <Search 
                   placeholder="BUSCAR" 
-                  style={{ width: "100%" }}
+                  style={{ width: 400 }}
                   value={busca}
                   onChange={(e) => setBusca(e.target.value)}
                 />
               </BarraPesquisa>
               <Filtros>
-                <FiltroEspecifico>
+                <FiltroEspecificoUrgencia>
                   <Select
                     defaultValue="Urgências"
-                    style={{ width: "100%" }}
+                    style={{ width: 200 }}
                     onChange={(value) => urgenciasFiltradas(value)}
                   >
-                    <Option value="">Todos as Urgências</Option>
+                    <Option value="">Todas as Urgências</Option>
                     <Option value="1">Urgência: 1</Option>
                     <Option value="2">Urgência: 2</Option>
                     <Option value="3">Urgência: 3</Option>
                   </Select>
-                </FiltroEspecifico>
+                </FiltroEspecificoUrgencia>
               </Filtros>
             </TopoPagina>
             <BarraEstetica />

@@ -15,48 +15,58 @@ export const TopoPagina = styled.div`
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
-  @media (max-width: 920px) {
-    flex-direction: row;
+  @media (min-width: 1200px) and (max-width: 1400px) {
     justify-content: center;
+    margin-left: 1%;
   }
-  @media (max-width: 480px) {
-    flex-direction: row;
-    justify-content: flex-end;
+  @media (min-width: 1090px) and (max-width: 1199px) {
+    justify-content: center;
+    margin-left: 3%;
+  }
+  @media (min-width: 921px) and (max-width: 1089px) {
+    justify-content: center;
+    margin-left: 4%;
+  }
+  @media (max-width: 920px) {
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 5%;
   }
 `;
 export const BarraPesquisa = styled.div`
-  width: 35%;
+  width: 50%;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
- 
+  justify-content: center;
+  
   @media (max-width: 920px) {
-    display: flex;
     width: 100%;
-    justify-content: flex-start;
+    justify-content: center;
   }
 `;
 export const Filtros = styled.div`
-  width: 45%;
+  width: 50%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   gap: 2%;
 
   @media (max-width: 920px) {
+    margin-top: 2%;
     width: 100%;
-    justify-content: flex-end;
+    justify-content: center;
   }
   @media (max-width: 480px) {
-    display: flex;
-    flex-direction: row;
+    margin-top: 2%;
+    flex-direction: column;
     width: 100%;
-    justify-content: flex-end;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
-export const FiltroEspecifico = styled.div`
-width: 20%;
+export const FiltroEspecificoUrgencia = styled.div`
+
 `;
 
 export const BarraEstetica = styled.div`
