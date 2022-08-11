@@ -13,6 +13,16 @@ export const BarraLateral = styled.div`
   background-color: white;
   justify-content: center;
   align-items: center;
+  min-width:300px;
+
+  @media (max-width: 800px) {
+    margin-left: 0%;
+  }
+
+  @media (max-width: 500px) {
+    width: 100%;
+    padding-top: 5%;
+  }
 `;
 
 export const HeaderBarraLateralChat = styled.div`
@@ -23,15 +33,23 @@ export const HeaderBarraLateralChat = styled.div`
   align-items: flex-start;
   padding-left: 9%;
   margin-bottom: 2%;
+
+  @media (max-width: 830px) and (min-width: 800px) {
+    height: 8%;
+  }
   `;
 
 export const ListaPessoasChat = styled.div`
-height: 600px;
+height: 75%;
 display: block;
 align-items: flex-start;
 justify-content: flex-start;
 overflow-y: scroll;
 ::-webkit-scrollbar{display:none;}
+
+@media (min-height: 736px)  {
+    height: 80%;
+  }
 `;
 
 export const PessoaChat = styled.button`

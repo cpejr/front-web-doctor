@@ -24,12 +24,17 @@ const Input = styled.input`
   margin-top: ${(props) => props.marginTop};
   border-style: solid;
   height: ${(props) => props.height};
+  min-height: ${(props) => props.minHeight};
+  max-height: ${(props) => props.maxHeight};
   padding-left: 2%;
   box-shadow: ${(props) => props.boxShadow};
   border-width: ${(props) => props.borderWidth};
   width: ${(props) => props.width};
   @media (max-width: 820px) {
     width: 100%;
+  }
+  @media (max-width: 281px) {
+    width: 80%;
   }
 `;
 

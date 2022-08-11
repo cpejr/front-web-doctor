@@ -40,7 +40,7 @@ const Button = styled.button`
     width: ${(props) => props.widthMedia ?? props.width};
   }
 
-  @media (max-width: 600px) 
+    @media (max-width: 600px) {
     width: ${(props) => props.widthMedia600};
   }
 
@@ -55,6 +55,12 @@ const Button = styled.button`
   }
   @media (max-width: 1080px) {
     font-size: ${(props) => props.fontSizeMedia1080};
+  }
+  @media (max-width: 376px) {
+    width: ${(props) => props.widthres};
+  }
+  @media (max-width: 571px) {
+    width: ${(props) => props.widthres};
   }
 `;
 export default Button;

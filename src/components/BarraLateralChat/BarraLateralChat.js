@@ -77,6 +77,8 @@ export default function BarraLateralChat(props) {
         borderColor={Cores.cinza[3]}
         width="80%"
         height="52%"
+        minHeight="30px"
+        maxHeight="40px"
         onChange={(event) => { setSearchTerm(event.target.value); }}
         >
         </Input>
@@ -85,6 +87,7 @@ export default function BarraLateralChat(props) {
         borderColor="transparent"
         color="#0A0E3C"
         width="18%"
+        widthres="15%"
         height="27%"
         onClick={() => {}}
         >

@@ -22,8 +22,8 @@ const Chat = () => {
 const MensagemInicial = () => {
   return (
       <div>
-        <h3>Bem vindo!</h3>
-        <p>Selecione um chat para iniciar uma conversa.</p>
+        <h3></h3>
+        <p></p>
       </div>
   );
 };
@@ -31,8 +31,8 @@ const MensagemInicial = () => {
 const ConversaAberta = () => {
   return (
       <div>
-        <h3>maria chata</h3>
-        <p>Selecione um chat para iniciar uma conversa.</p>
+        <h3></h3>
+        <p></p>
       </div>
   );
 };
