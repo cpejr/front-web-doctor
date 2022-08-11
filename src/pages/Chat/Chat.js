@@ -1,44 +1,39 @@
-import React from "react";
-import { Avatar } from "@mui/material";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
 import BarraLateralChat from "../../components/BarraLateralChat"
-import ConversaAberta from "../../components/ConversaAberta";
-import { Cores } from "../../variaveis";
+// import ConversaAberta from "../../components/ConversaAberta";
 import { Container } from "./Styles";
 
-function Chat() {
 
-  
+const Chat = () => {
+  const [usandoIdPessoa, setUsandoIdPessoa] = useState();
+
+  function funcaoPai(id) {
+    setUsandoIdPessoa(id)
+    console.log(id)
+  }
   return (
     <Container>
-      <BarraLateralChat></BarraLateralChat>
-      
+      <BarraLateralChat passandoIdPessoa={(id) => funcaoPai(id)}/>
+      {usandoIdPessoa ? <ConversaAberta /> : <MensagemInicial/>}
     </Container>
-  );
-}
-
-export const HomeComp = () => {
-  const { user } = useSelector((store) => store.user);
-  const { chatting } = useSelector((store) => store.chatting);
-
-
-  return (
-    <div className="home-cont">
-      <BarraLateralChat />
-      {chatting._id ? <ConversaAberta /> : <MensagemInicial {...user} />}
-    </div>
   );
 };
 
-const MensagemInicial = ({ pic }) => {
+const MensagemInicial = () => {
   return (
-    <div className="chattingpage start-msg">
       <div>
-        <Avatar src={pic} sx={{ width: 70, height: 70 }} />
         <h3>Bem vindo!</h3>
         <p>Selecione um chat para iniciar uma conversa.</p>
       </div>
-    </div>
+  );
+};
+
+const ConversaAberta = () => {
+  return (
+      <div>
+        <h3>maria chata</h3>
+        <p>Selecione um chat para iniciar uma conversa.</p>
+      </div>
   );
 };
 

@@ -34,10 +34,13 @@ overflow-y: scroll;
 ::-webkit-scrollbar{display:none;}
 `;
 
-export const PessoaChat = styled.div`
+export const PessoaChat = styled.button`
 display: flex;
 padding-left: 7%;
 padding-bottom: 10%;
+background-color: transparent;
+border-color: transparent;
+width: 100%;
 `;
 
 export const NomeMensagem = styled.div`

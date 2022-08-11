@@ -63,7 +63,7 @@ const pessoas = [
 
 
 
-export default function BarraLateralChat() {
+export default function BarraLateralChat(props) {
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -98,10 +98,14 @@ export default function BarraLateralChat() {
          } else if (val.nome.toLowerCase().includes(searchTerm.toLowerCase())) {
             return val
         }}).map((pessoa) => (
-          <PessoaChat key={pessoa.id}>
+          <PessoaChat 
+          key={pessoa.id}
+          onClick={() => {props.passandoIdPessoa(pessoa.id)}}
+           >
           <img src={pessoa.foto} alt="61" border-radius="3px" height="75px" width="81.3px"></img>
           <NomeMensagem>
-          <NomePessoa>{pessoa.nome}</NomePessoa>
+          <NomePessoa
+          >{pessoa.nome}</NomePessoa>
           <MensagemPessoa>{pessoa.mensagem}</MensagemPessoa>
           </NomeMensagem>
           </PessoaChat>
