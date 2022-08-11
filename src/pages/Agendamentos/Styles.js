@@ -36,7 +36,7 @@ export const TopoPaginaEsquerda = styled.div`
     justify-content: space-between;
     margin-bottom: 2%;
   }
-  @media (max-width: 530px) {
+  @media (max-width: 570px) {
     flex-direction: column;
     justify-content: center;
   }
@@ -57,7 +57,7 @@ export const BarraPesquisa = styled.div`
     flex-direction: row;
     justify-content: space-between;
   }
-  @media (max-width: 530px) {
+  @media (max-width: 570px) {
     width: 100%;
     margin-bottom: 5px;
   }
@@ -237,13 +237,13 @@ export const BotaoNovoAgendamento = styled.div`
   margin-bottom: 40px;
 `;
 export const InputData = styled.input`
-  width: 100%;
+  width: 160px;
   height: 36px;
   color: ${Cores.preto};
   font-family: ${Fontes.barlow};
   font-weight: 500;
   font-size: 15px;
-  padding-left: 4%;
+  padding-left: 12%;
   padding-right: 2%;
   border-style: solid;
   border-radius: 3px;
@@ -269,7 +269,7 @@ export const SelectData = styled(Select)`
   font-family: ${Fontes.barlow};
   font-weight: 500;
   font-size: 15px;
-  padding-left: 2%;
+  padding-left: 4%;
   padding-right: 2%;
   border-style: solid;
   border-radius: 3px;
@@ -303,7 +303,7 @@ export const Filtros = styled.div`
     width: 100%;
     justify-content: flex-end;
   }
-  @media (max-width: 530px) {
+  @media (max-width: 570px) {
     margin-top: 2%;
     width: 100%;
     justify-content: space-around;
@@ -319,14 +319,14 @@ export const Filtros = styled.div`
   }
 `;
 export const FiltroSelect = styled.div`
-  @media (max-width: 530px) {
+  @media (max-width: 570px) {
     margin-top: 2%;
     margin-bottom: 2%;
   }
 `;
 
 export const FiltroInput = styled.div`
-  @media (max-width: 530px) {
+  @media (max-width: 570px) {
     margin-top: 2%;
     margin-bottom: 2%;
   }
