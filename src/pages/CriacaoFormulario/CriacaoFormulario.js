@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { FormBuilder } from "@ginkgo-bioworks/react-json-schema-form-builder";
 import { Modal } from "antd";
-import { CaixaInputs, Container, Formulario } from "./Styles";
 import Input from "../../styles/Input";
 import { Cores } from "../../variaveis";
 import {
-  CaixaInputs,
   Container,
   Formulario,
   CriarFormularioTitulo,
   TitulosInput,
   TextoInstrucao,
   Instrucao,
+  CaixaInputs,
 } from "./Styles";
 import Select from "../../styles/Select/Select";
 import Button from "../../styles/Button";
