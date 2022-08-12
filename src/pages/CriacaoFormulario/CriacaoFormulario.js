@@ -20,6 +20,7 @@ import _ from "lodash";
 import { toast } from "react-toastify";
 import { sleep } from "../../utils/sleep";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useEffect } from "react";
 
 function CriacaoFormulario() {
   const [uiSchema, setUiSchema] = useState("");
@@ -27,6 +28,7 @@ function CriacaoFormulario() {
   const [estado, setEstado] = useState({});
   const [camposVazios, setCamposVazios] = useState(false);
   const [carregandoCriacao, setCarregandoCriacao] = useState();
+  const [campoPerguntas, setCampoPerguntas] = useState(false);
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
@@ -48,6 +50,12 @@ function CriacaoFormulario() {
     setEstado({ ...estado, perguntas: newSchema });
     setSchema(newSchema);
     setUiSchema(newUiSchema);
+    let aux = JSON.parse(newSchema)
+    if ( JSON.stringify(aux.properties) === "{}" ) {
+      setCampoPerguntas(false);
+    } else {
+      setCampoPerguntas(true);
+    }
   }
 
   function preenchendoDados(e) {
@@ -70,21 +78,21 @@ function CriacaoFormulario() {
 
     setCamposVazios({ ...camposVazios, ...errors });
 
-      if (_.isEqual(camposVazios, referenciaInputNulos)) {
-        if( schema === "") {
-          toast.warn("Adicione alguma pergunta.");
-        } else {
+    if (_.isEqual(camposVazios, referenciaInputNulos)) {
+      if ( campoPerguntas === false ) {
+        toast.warn("Adicione alguma pergunta.");
+      } else {
         setCarregandoCriacao(true);
         await managerService.CriarFormulario(estado);
         await sleep(1500);
         setCarregandoCriacao(false);
         window.location.href = "/web/listaformularios";
-        }
-      } else {
-        setCarregandoCriacao(true);
-        toast.warn("Preencha todos os campos corretamente");
-        setCarregandoCriacao(false);
       }
+    } else {
+      setCarregandoCriacao(true);
+      toast.warn("Preencha todos os campos corretamente");
+      setCarregandoCriacao(false);
+    }
   }
 
   return (
