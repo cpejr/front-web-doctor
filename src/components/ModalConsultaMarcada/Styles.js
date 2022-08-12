@@ -2,12 +2,8 @@ import styled from "styled-components";
 import { Cores, Fontes } from "../../variaveis";
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 40%;
-  height: 40%;
-  padding: 3% 2% 2% 2%;
+  width: 100%;
+  height: 100%;
   background-color: ${Cores.cinza[7]};
 
   @media (max-width: 560px) {
@@ -24,14 +20,13 @@ export const Caixa = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  margin-top: 15px;
+  padding: 5% 0% 5% 0%;
   align-items: center;
-  width: 97%;
-  height: 98%;
-  margin: 1% 1.5% 1% 1.5%;
-  min-height: 80vh;
+  width: 100%;
+  height: 90%;
   background-color: ${Cores.branco};
-  border-color: rgba(0, 0, 0, 0.1);
-  border-style: solid;
+  border: 15px solid ${Cores.cinza[7]};
   border-radius: 3px;
 
   @media (max-width: 560px) {
@@ -45,7 +40,7 @@ export const Caixa = styled.div`
 
 export const CaixaNome = styled.div`
   width: 90%;
-  height: 45px;
+  height: 20%;
   background-color: ${Cores.cinza[7]};
   display: flex;
   justify-content: start;
@@ -60,19 +55,23 @@ export const CaixaNome = styled.div`
 `;
 
 export const Texto = styled.div`
+
+  margin-left: 20%;
   font-family: ${Fontes.roboto};
   color: ${Cores.azulEscuro};
-  font-style: italic;
+  font-weight: 600;
+  font-size: 1.15em;
+  display: flex;
+  justify-content: center;
 `;
 
 export const TextoDescricao = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 8%;
+  margin-top: 5%;
   height: 40px;
   font-family: ${Fontes.roboto};
   color: ${Cores.azulEscuro};
-  font-style: italic;
   font-size: 1.2em;
   
 `;
@@ -105,7 +104,6 @@ export const FotoPerfil = styled.div`
   object-fit: fill;
   border-radius: 5px;
   justify-content: center;
-  margin-right: 20px;
 
 
   @media (max-width: 640px) {

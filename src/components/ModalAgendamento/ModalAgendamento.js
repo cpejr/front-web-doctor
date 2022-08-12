@@ -282,11 +282,10 @@ function ModalAgendamento(props) {
         visible={modalConsultaMarcada}
         onCancel={fechandoModalConsultaMarcada}
         footer={null}
-        width={"70%"}
+        width={"25%"}
         centered={true}
         style={{
-          color : "black",
-          width: "10px"
+          backgroundColor: "black"
         }}
       >
         <ModalConsultaMarcada
