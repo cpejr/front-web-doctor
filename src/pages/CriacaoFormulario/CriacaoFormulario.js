@@ -51,8 +51,8 @@ function CriacaoFormulario() {
     setEstado({ ...estado, perguntas: newSchema });
     setSchema(newSchema);
     setUiSchema(newUiSchema);
-    let aux = JSON.parse(newSchema)
-    if ( JSON.stringify(aux.properties) === "{}" ) {
+    let aux = JSON.parse(newSchema);
+    if (JSON.stringify(aux.properties) === "{}") {
       setCampoPerguntas(false);
     } else {
       setCampoPerguntas(true);
@@ -80,7 +80,7 @@ function CriacaoFormulario() {
     setCamposVazios({ ...camposVazios, ...errors });
 
     if (_.isEqual(camposVazios, referenciaInputNulos)) {
-      if ( campoPerguntas === false ) {
+      if (campoPerguntas === false) {
         toast.warn("Adicione alguma pergunta.");
       } else {
         setCarregandoCriacao(true);
@@ -174,9 +174,9 @@ function CriacaoFormulario() {
       <Instrucao>
         <TextoInstrucao>
           Aperte no + verde abaixo. Em seguida, clique em “Create”. Mantenha o
-          campo “Object Name” preenchido e escreva a pergunta em “Display Name”.
-          Escolha o tipo do input em “Input Type”. Quando finalizar, clique em
-          “Criar”.
+          campo “Object Name” preenchido com um nome específico e escreva a
+          pergunta em “Display Name”. Escolha o tipo do input em “Input Type”.
+          Quando finalizar, clique em “Criar”.
         </TextoInstrucao>
       </Instrucao>
       <Formulario>
