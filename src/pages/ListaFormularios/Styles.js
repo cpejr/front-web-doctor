@@ -30,7 +30,6 @@ export const TopoPagina = styled.div`
   @media (max-width: 920px) {
     flex-direction: column;
     justify-content: center;
-    margin-left: 5%;
   }
 `;
 export const BarraPesquisa = styled.div`
