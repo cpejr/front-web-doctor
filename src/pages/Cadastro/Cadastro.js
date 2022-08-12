@@ -90,7 +90,7 @@ function Cadastro(props) {
   }
 
   function setandoTipoPorProps() {
-    if (history.location.state != undefined) {
+    if (history.location.state !== undefined) {
       setUsuario({
         ...usuario,
         tipo: props.location.state.tipo,
