@@ -20,6 +20,15 @@ import { Cores } from "../../variaveis";
 
 function HomeMedico() {
   const history = useHistory();
+
+  function passandoTipoParaCadastro(tipo){
+    history.push({
+      pathname: "/cadastro",
+      state: { tipo },
+    });
+  }
+
+
   return (
     <ContainerHome>
       <ContainerSuperior>
@@ -151,7 +160,7 @@ function HomeMedico() {
             fontSize="1em"
             gap="1%"
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-            onClick={() => history.push("/cadastro")}
+            onClick={() => passandoTipoParaCadastro("PACIENTE")}
           >
             Cadastrar Novo Paciente
             <PlusCircleOutlined style={{ color: Cores.azul }} />
@@ -165,9 +174,9 @@ function HomeMedico() {
             fontSize="1em"
             gap="1%"
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-            onClick={() => history.push("/cadastro")}
+            onClick={() => passandoTipoParaCadastro("SECRETARIA(O)")}
           >
-            Cadastrar Nova Secretária
+            Cadastrar nova(o) Secretária(o)
             <PlusCircleOutlined style={{ color: Cores.azul }} />
           </Button>
         </Botoes>

@@ -3,6 +3,7 @@ import requisicaoErro from "../../utils/HttpErros";
 import * as requesterService from "../RequesterService/requesterService";
 import { toast } from "react-toastify";
 import { redirecionamento } from "../../utils/sleep";
+import { recebeTipo } from "../../services/auth";
 
 const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -47,8 +48,12 @@ export const Cadastrando = async (usuario, endereco) => {
     .criarUsuario(endereco, usuario)
     .then(() => {
       toast.success("Usuário cadastrado com sucesso.");
-      sleep(1500);
-      window.location.href = "/login";
+      /* if(recebeTipo() === "MASTER"){
+        window.location.href = "/web/homemedico";
+      }
+      else{
+        window.location.href = "/web/homesecretaria";
+      } */
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/cadastro"));
@@ -350,6 +355,27 @@ export const DeletarExameMarcado = async (id) => {
   return false;
 };
 
+export const EnviandoFormularioPaciente = async (
+  status,
+  id_formulario,
+  id_usuario
+) => {
+  const sleep = (milliseconds) => {
+    return new Promise((resolve) => setTimeout(resolve, milliseconds));
+  };
+   await requesterService
+    .enviarFormularioPaciente(status, id_formulario, id_usuario)
+    .then(() => {
+      toast.success("Formulario enviado com sucesso!");
+      sleep(1500).then(() => window.location.href = "/web/listaformularios")
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return;
+};
 export const GetFormularios = async () => {
   let dadosFormularios = {};
   await requesterService
@@ -394,6 +420,7 @@ export const  DeletarFormulario = async (id) => {
 
   return false;
 };
+
 export const GetRespostaFormularioIdUsuario = async (id_usuario) => {
   let dadosResposta = {};
 
@@ -414,6 +441,21 @@ export const GetResposta = async (id) => {
 
   await requesterService
     .requisicaoRespostaFormulario(id)
+
+    .then((res) => {
+      dadosResposta = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosResposta;
+};
+
+export const GetFormularioPacientesPorFormulario = async (id_formulario) => {
+  let dadosResposta = {};
+
+  await requesterService
+    .requisicaoFormularioPacientes(id_formulario)
 
     .then((res) => {
       dadosResposta = res.data;

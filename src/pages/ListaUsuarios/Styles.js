@@ -53,6 +53,7 @@ export const FiltroUsuario = styled.div`
     margin-top: 2%;
   }
 `;
+
 export const FiltroDatas = styled.div`
   @media (max-width: 480px) {
     margin-top: 2%;
@@ -214,5 +215,31 @@ export const CaixaVazia = styled.div`
   }
   @media (max-width: 500px) {
     width: 50%;
+  }
+`;
+
+export const BotoesMedico = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+  @media (max-width: 560px) {
+    flex-direction: column;
+  }
+`;
+
+
+export const BotaoSecretario = styled.div`
+  
+  position: relative;
+  left: 25%;
+  width: 50%;
+  margin-top: 1%;
+
+  @media (max-width: 920px) {
+    left: 0%;
+    width: 100%
   }
 `;

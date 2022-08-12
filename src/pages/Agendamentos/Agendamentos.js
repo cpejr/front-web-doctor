@@ -35,7 +35,7 @@ import * as managerService from "../../services/ManagerService/managerService";
 function Agendamentos() {
   const history = useHistory();
   const { Search } = Input;
-  const [modalAgendamento, setModalAgendamento] = useState(false);
+  const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] = useState(false);
   const [email, setEmail] = useState();
   const [carregando, setCarregando] = useState(true);
   const [consultas, setConsultas] = useState([]);
@@ -64,11 +64,12 @@ function Agendamentos() {
 
   async function marcandoAgendamento(email) {
     setEmail(email);
-    setModalAgendamento(true);
+    setModalAgendamentoEspecifico(true);
   }
 
-  async function fechandoModal() {
-    setModalAgendamento(false);
+  async function fechandoModalAgendamentoEspecifico() {
+    setModalAgendamentoEspecifico(false);
+    document.location.reload();
   }
 
   async function abrindoPerfilPaciente(email) {
@@ -207,8 +208,8 @@ function Agendamentos() {
       </ContainerListadeUsuarios>
 
       <Modal
-        visible={modalAgendamento}
-        onCancel={fechandoModal}
+        visible={modalAgendamentoEspecifico}
+        onCancel={() => fechandoModalAgendamentoEspecifico(false)}
         footer={null}
         width={"70%"}
         centered={true}
@@ -216,6 +217,7 @@ function Agendamentos() {
         <ModalAgendamentoEspecifico
           emailUsuario={email}
           abertoPeloUsuario={abertoPeloUsuario}
+          fechandoModal={() => fechandoModalAgendamentoEspecifico()}
         />
       </Modal>
     </div>
