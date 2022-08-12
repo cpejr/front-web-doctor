@@ -104,10 +104,10 @@ function EditarFormulario(props) {
       toast.error("Preencha algum campo para atualizar.");
       setCarregandoBotaoAtualizar(false);
     } else {
-      /* await managerService.EditarFormularios(formularios.id, campos);
+      await managerService.EditarFormularios(formularios.id, campos);
       await sleep(1500);
       window.location.href = "/web/listaformularios";
-      setCarregandoBotaoAtualizar(false); */
+      setCarregandoBotaoAtualizar(false);
       console.log("olha o schema");
     }
   }
