@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from "react";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
+import logoGuilherme from "./../../assets/logoGuilherme.png";
+import Input from "../../styles/Input";
+import Button from "../../styles/Button";
+import Select from "../../styles/Select/Select";
 import { Spin, Switch } from "antd";
-import { LoadingOutlined, LeftOutlined } from "@ant-design/icons";
-import "react-toastify/dist/ReactToastify.min.css";
-import AddToast from "../../components/AddToast/AddToast";
-import { toast } from "react-toastify";
+import {
+  LoadingOutlined,
+  bleLeftOutlined,
+  RollbackOutlined,
+  LeftOutlined,
+} from "@ant-design/icons";
+import { BiArrowBack } from "react-icons/bi";
 import {
   Body,
   DadosCadastro,
@@ -13,51 +20,43 @@ import {
   InputMesmaLinha,
   Rotulo,
   InputMesmaLinha2,
+  CaixaBotaoVoltar,
   Botao,
   RotuloColuna,
   PossuiConvenio,
   PossuiCuidador,
+  TextoVoltar,
 } from "./Styles";
+import "react-toastify/dist/ReactToastify.min.css";
+import AddToast from "../../components/AddToast/AddToast";
+import { toast } from "react-toastify";
+import { brParaPadrao } from "../../utils/date";
+import { recebeTipo, usuarioAutenticado } from "../../services/auth";
+import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
+import { sleep } from "../../utils/sleep";
 import {
-  cpf,
   apenasLetras,
   apenasNumeros,
   apenasNumerosCep,
   apenasNumerosCpfTel,
   cep,
+  cpf,
   data,
-  telefone,
   dataBack,
+  telefone,
 } from "../../utils/masks";
-import { sleep } from "../../utils/sleep";
-import logoGuilherme from "./../../assets/logoGuilherme.png";
-import Input from "../../styles/Input";
-import Button from "../../styles/Button";
-import Select from "../../styles/Select/Select";
-import { recebeTipo, usuarioAutenticado } from "../../services/auth";
-import * as managerService from "../../services/ManagerService/managerService";
 
 function Cadastro(props) {
   const history = useHistory();
 
+  const email = sessionStorage.getItem("@doctorapp-Email");
+
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
-
   const [erro, setErro] = useState(false);
-  const [camposVazios, setCamposVazios] = useState(false);
-  const [erroDataBack, setErroDataBack] = useState(false);
-
-  const [enderecoBack, setEnderecoBack] = useState({});
-  const [estado, setEstado] = useState({});
-
-  const [carregando, setCarregando] = useState(false);
-  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
-  const [convenio, setConvenio] = useState(false);
-  const [cuidador, setCuidador] = useState(false);
-
-  const [teste, setTeste] = useState({
+  const [camposVazios, setCamposVazios] = useState({
+    tipo: false,
     nome: false,
     telefone: false,
     email: false,
@@ -72,20 +71,61 @@ function Cadastro(props) {
     bairro: false,
     senha: false,
     senhaConfirmada: false,
+    convenio: false,
+    nome_cuidador: false,
+    telefone_cuidador: false,
   });
+  const [erroDataBack, setErroDataBack] = useState(false);
+  const [enderecoBack, setEnderecoBack] = useState({});
+  const [estado, setEstado] = useState({});
+  const [carregando, setCarregando] = useState(false);
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const [convenio, setConvenio] = useState(false);
+  const [cuidador, setCuidador] = useState(false);
+  const [verificacaoLogado, setVerificacaoLogado] = useState("");
 
   function funcaoConvenio() {
     setConvenio(!convenio);
     setUsuario({ ...usuario, convenio: null });
+    setEstado({ ...estado, convenio: null });
+    setCamposVazios({ ...camposVazios, convenio: false });
   }
   function funcaoCuidador() {
     setCuidador(!cuidador);
     setUsuario({ ...usuario, nome_cuidador: null, telefone_cuidador: null });
+    setEstado({ ...estado, nome_cuidador: null, telefone_cuidador: null });
+    setCamposVazios({
+      ...camposVazios,
+      nome_cuidador: false,
+      telefone_cuidador: false,
+    });
+    setErro({ ...erro, telefone_cuidador: false });
   }
 
-  function verificaAutenticacao() {
-    if (usuarioAutenticado() === false) {
-      window.location.href = "/login";
+  const errors = {};
+  const testeOriginal = {
+    tipo: false,
+    nome: false,
+    telefone: false,
+    email: false,
+    cep: false,
+    pais: false,
+    estado: false,
+    cidade: false,
+    rua: false,
+    numero: false,
+    cpf: false,
+    data_nascimento: false,
+    bairro: false,
+    senha: false,
+    senhaConfirmada: false,
+  };
+
+  let testeTemp = testeOriginal;
+
+  async function verificandoEnter(e) {
+    if (e.key === "Enter") {
+      requisicaoCadastro();
     }
   }
 
@@ -117,7 +157,7 @@ function Cadastro(props) {
       history.location.state === undefined &&
       recebeTipo() === "MASTER"
     ) {
-      setTeste({ ...teste, tipo: false });
+      testeTemp.tipo = false;
     }
   }
 
@@ -125,19 +165,19 @@ function Cadastro(props) {
     setandoTipoPorProps();
   }, [props]);
 
+  function verificaAutenticacao() {
+    if (usuarioAutenticado() === false) {
+      window.location.href = "/login";
+    }
+  }
+
   useEffect(() => {
     verificaAutenticacao();
   }, []);
 
-  const errors = {};
-
-  async function verificandoEnter(e) {
-    if (e.key === "Enter") {
-      requisicaoCadastro();
-    }
-  }
-
   async function requisicaoCadastro() {
+    setCarregando(true);
+
     if (!usuario.nome) errors.nome = true;
     if (!usuario.telefone) errors.telefone = true;
     if (!usuario.tipo) errors.tipo = true;
@@ -156,15 +196,80 @@ function Cadastro(props) {
     if (erro.data_nascimento === true) errors.data_nascimento = true;
     if (erro.email === true) errors.email = true;
 
-    setCamposVazios({ ...camposVazios, ...errors });
+    if (cuidador) {
+      if (!usuario.telefone_cuidador) errors.telefone_cuidador = true;
+      if (!usuario.nome_cuidador) errors.nome_cuidador = true;
+    } else {
+      errors.telefone_cuidador = false;
+      errors.nome_cuidador = false;
+      setErro({ ...erro, telefone_cuidador: false });
+    }
 
-    if (_.isEqual(camposVazios, teste)) {
+    if (convenio) {
+      if (!usuario.convenio) {
+        errors.convenio = true;
+      }
+    } else {
+      errors.convenio = false;
+    }
+
+    for (const propriedade_errors in errors) {
+      if (errors[propriedade_errors] === true) {
+        for (const propriedade_campos in camposVazios) {
+          if (propriedade_campos === propriedade_errors) {
+            camposVazios[propriedade_campos] = true;
+          }
+        }
+      }
+    }
+    await sleep(1500);
+
+    if (usuario.tipo === "SECRETARIA(O)") {
+      delete camposVazios.nome_cuidador;
+      delete camposVazios.telefone_cuidador;
+      delete camposVazios.convenio;
+      delete errors.telefone_cuidador;
+      delete errors.nome_cuidador;
+      delete errors.convenio;
+    }
+
+    if (convenio && !cuidador) {
+      delete camposVazios.nome_cuidador;
+      delete camposVazios.telefone_cuidador;
+      delete errors.telefone_cuidador;
+      delete errors.nome_cuidador;
+      testeTemp.convenio = false;
+    } else if (!convenio && cuidador) {
+      delete camposVazios.convenio;
+      delete errors.convenio;
+      testeTemp.telefone_cuidador = false;
+      testeTemp.nome_cuidador = false;
+    } else if (convenio && cuidador) {
+      testeTemp.convenio = false;
+      testeTemp.nome_cuidador = false;
+      testeTemp.telefone_cuidador = false;
+    } else {
+      delete camposVazios.nome_cuidador;
+      delete camposVazios.telefone_cuidador;
+      delete camposVazios.convenio;
+      delete errors.telefone_cuidador;
+      delete errors.nome_cuidador;
+      delete errors.convenio;
+    }
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 259 ~ requisicaoCadastro ~ camposVazios",
+      camposVazios
+    );
+    console.log(
+      "🚀 ~ file: Cadastro.js ~ line 259 ~ requisicaoCadastro ~ testeTemp",
+      testeTemp
+    );
+    if (_.isEqual(camposVazios, testeTemp)) {
       if (usuario.senha === usuario.senhaConfirmada) {
-        setCarregando(true);
         await managerService.Cadastrando(usuario, enderecoBack);
         await sleep(1500);
-        window.location.href = "/login";
         setCarregando(false);
+        window.location.href = "/login";
       } else {
         toast.error("As senhas digitadas são diferentes.");
         setCarregando(false);
@@ -172,6 +277,9 @@ function Cadastro(props) {
     } else {
       toast.error("Preencha todos os campos obrigatórios");
     }
+
+    testeTemp = testeOriginal;
+    setCarregando(false);
   }
 
   async function validacaoEmail(e) {
@@ -210,21 +318,82 @@ function Cadastro(props) {
     setUsuario({ ...usuario, [name]: dataBack(value) });
   }
 
+  async function validacaoCamposNaoGerais(e) {
+    const { value, name } = e.target;
+
+    if (cuidador) {
+      if (name === "telefone_cuidador") {
+        setCamposVazios({ ...camposVazios, [name]: false });
+        if (value.length < 15) {
+          setErro({ ...erro, [name]: true });
+        } else {
+          setErro({ ...erro, [name]: false });
+        }
+
+        setEstado({ ...estado, [name]: telefone(value) });
+        setUsuario({
+          ...usuario,
+          [name]: apenasNumerosCpfTel(value),
+        });
+      } else if (name === "nome_cuidador") {
+        setEstado({
+          ...estado,
+          [name]: apenasLetras(value),
+        });
+        setUsuario({ ...usuario, [name]: apenasLetras(value) });
+      }
+    }
+    if (convenio) {
+      if (name === "convenio") {
+        setEstado({ ...estado, [name]: apenasLetras(value) });
+        setUsuario({ ...usuario, [name]: apenasLetras(value) });
+      }
+    }
+  }
+  useEffect(() => {
+    if (usuario.convenio) {
+      camposVazios.convenio = false;
+    }
+  }, [usuario.convenio]);
+
+  useEffect(() => {
+    if (usuario.nome_cuidador) {
+      camposVazios.nome_cuidador = false;
+    }
+  }, [usuario.nome_cuidador]);
+
+  async function pegandoDadosPerfilPessoal() {
+    const resposta = await managerService.GetDadosUsuario(email);
+    setVerificacaoLogado(resposta.dadosUsuario.tipo);
+  }
+
+  useEffect(() => {
+    pegandoDadosPerfilPessoal();
+  }, []);
+
+  async function voltarLoginOuHome() {
+    if (verificacaoLogado === "SECRETARIA(O)") {
+      history.push("/web/homesecretaria");
+    } else {
+      if (verificacaoLogado === "MASTER") {
+        history.push("/web/homemedico");
+      } else {
+        history.push("/login");
+      }
+    }
+  }
+
   function preenchendoDados(e) {
     const { value, name } = e.target;
     if (
       name !== "convenio" &&
       name !== "nome_cuidador" &&
-      name !== "telefone_cuidador"
+      name !== "telefone_cuidador" &&
+      name !== "nome"
     ) {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
     }
-    if (name === "nome_cuidador") {
-      e.target.value = apenasLetras(value);
-    }
-    if (name === "telefone_cuidador") {
-      e.target.value = telefone(value);
-    }
+
     if (
       (name === "cpf" && value.length < 14) ||
       (name === "telefone" && value.length < 15) ||
@@ -243,16 +412,14 @@ function Cadastro(props) {
         ...estado,
         [name]: apenasLetras(value),
       });
+      setUsuario({ ...usuario, [name]: apenasLetras(value) });
     }
 
     if (name === "telefone") {
       setEstado({ ...estado, [name]: telefone(value) });
       setUsuario({ ...usuario, [name]: apenasNumerosCpfTel(value) });
     }
-    if (name === "telefone_cuidador") {
-      setEstado({ ...estado, [name]: telefone(value) });
-      setUsuario({ ...usuario, [name]: apenasNumerosCpfTel(value) });
-    }
+
     if (name === "cpf") {
       setEstado({ ...estado, [name]: cpf(value) });
       setUsuario({ ...usuario, [name]: apenasNumerosCpfTel(value) });
@@ -270,9 +437,16 @@ function Cadastro(props) {
     }
   }
 
+  useEffect(() => {
+    if (usuario.nome !== "" && usuario.nome !== undefined) {
+      setCamposVazios({ ...camposVazios, nome: false });
+    }
+  }, [usuario]);
+
   function preenchendoEndereco(e) {
     const { value, name } = e.target;
-    if (name !== "complemento") {
+
+    if (name !== "complemento" && name !== "pais" && name !== "numero") {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
     }
 
@@ -296,6 +470,10 @@ function Cadastro(props) {
         ...endereco,
         [name]: apenasLetras(value),
       });
+      setEnderecoBack({
+        ...enderecoBack,
+        [name]: apenasLetras(value),
+      });
     }
     if (name === "cidade") {
       setEndereco({
@@ -308,8 +486,23 @@ function Cadastro(props) {
         ...endereco,
         [name]: apenasNumeros(value),
       });
+      setEnderecoBack({
+        ...enderecoBack,
+        [name]: apenasNumeros(value),
+      });
     }
   }
+
+  useEffect(() => {
+    if (enderecoBack.pais !== "" && enderecoBack.pais !== undefined) {
+      setCamposVazios({ ...camposVazios, pais: false });
+    }
+  }, [enderecoBack.pais]);
+  useEffect(() => {
+    if (enderecoBack.numero !== "" && enderecoBack.numero !== undefined) {
+      setCamposVazios({ ...camposVazios, numero: false });
+    }
+  }, [enderecoBack.numero]);
 
   return (
     <div>
@@ -349,7 +542,6 @@ function Cadastro(props) {
           ) : (
             <></>
           )}
-
           <Input
             placeholder="Nome Completo"
             status="error"
@@ -451,13 +643,14 @@ function Cadastro(props) {
                 <Input
                   placeholder="Nome do Convênio"
                   backgroundColor={Cores.cinza[7]}
-                  borderColor={Cores.azul}
                   color={Cores.preto}
                   fontSize="1em"
                   width="100%"
                   marginTop="2%"
                   name="convenio"
-                  onChange={preenchendoDados}
+                  value={estado.convenio}
+                  onChange={validacaoCamposNaoGerais}
+                  camposVazios={camposVazios.convenio}
                 ></Input>
               )}
 
@@ -471,25 +664,34 @@ function Cadastro(props) {
                   <Input
                     placeholder="Nome Cuidador"
                     backgroundColor={Cores.cinza[7]}
-                    borderColor={Cores.azul}
                     color={Cores.preto}
                     fontSize="1em"
                     width="100%"
                     marginTop="2%"
                     name="nome_cuidador"
-                    onChange={preenchendoDados}
+                    value={estado.nome_cuidador}
+                    onChange={validacaoCamposNaoGerais}
+                    camposVazios={camposVazios.nome_cuidador}
                   ></Input>
                   <Input
                     placeholder="Telefone Cuidador"
                     backgroundColor={Cores.cinza[7]}
-                    borderColor={Cores.azul}
                     color={Cores.preto}
                     fontSize="1em"
                     width="100%"
                     marginTop="2%"
                     name="telefone_cuidador"
-                    onChange={preenchendoDados}
+                    value={estado.telefone_cuidador}
+                    onChange={validacaoCamposNaoGerais}
+                    onKeyPress={verificandoEnter}
+                    erro={erro.telefone_cuidador}
+                    camposVazios={camposVazios.telefone_cuidador}
                   ></Input>
+                  {erro.telefone_cuidador && (
+                    <Rotulo>
+                      Digite um telefone no formato (xx)xxxxx-xxxx
+                    </Rotulo>
+                  )}
                 </>
               )}
             </>
@@ -527,7 +729,6 @@ function Cadastro(props) {
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
             width="100%"
-            borderWidth="2px"
             marginTop="2%"
             onChange={preenchendoEndereco}
             camposVazios={camposVazios.estado}
@@ -663,7 +864,9 @@ function Cadastro(props) {
             color={Cores.branco}
             fontSize="1.5em"
             fontSizeMedia="1.2em"
-            onClick={() => requisicaoCadastro()}
+            onClick={() => {
+              requisicaoCadastro();
+            }}
             fontWeight="bold"
           >
             {carregando ? <Spin indicator={antIcon} /> : "CADASTRAR"}
