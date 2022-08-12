@@ -31,8 +31,10 @@ function EditarFormulario(props) {
   let auxiliar = {};
   const [uiSchema, setUiSchema] = useState("");
   const [schema, setSchema] = useState("");
-  const [estado, setEstado] = useState();
+  const [estado, setEstado] = useState({});
   const [campos, setCampos] = useState({});
+
+  const [botaoForms, setBotaoForms] = useState(false);
 
   const [carregandoBotaoAtualizar, setCarregandoBotaoAtualizar] =
     useState(false);
@@ -71,19 +73,27 @@ function EditarFormulario(props) {
   }, [props]);
 
   async function atualizarDados() {
-    if (schema === "") {
-      toast.error("Adicione uma pergunta para concluir esta ação.");
-    } else {
-      Object.assign(
-        auxiliar,
-        formularios.perguntas.properties,
-        estado.properties
-      );
+    if (botaoForms) {
+      let aux = JSON.parse(schema);
 
-      estado.properties = auxiliar;
-      await managerService.EditarPerguntasFormulario(formularios.id, estado);
-      await sleep(1500);
-      window.location.href = "/web/listaformularios";
+      if (JSON.stringify(aux.properties) === "{}") {
+        toast.error("Adicione uma pergunta para concluir esta ação.");
+      } else {
+        Object.assign(
+          auxiliar,
+          formularios.perguntas.properties,
+          estado.properties
+        );
+
+        console.log("cadastrou");
+
+        estado.properties = auxiliar;
+        await managerService.EditarPerguntasFormulario(formularios.id, estado);
+        await sleep(1500);
+        window.location.href = "/web/listaformularios";
+      }
+    } else {
+      toast.error("Adicione uma pergunta para concluir esta ação.");
     }
   }
 
@@ -94,22 +104,20 @@ function EditarFormulario(props) {
       toast.error("Preencha algum campo para atualizar.");
       setCarregandoBotaoAtualizar(false);
     } else {
-      await managerService.EditarFormularios(formularios.id, campos);
+      /* await managerService.EditarFormularios(formularios.id, campos);
       await sleep(1500);
       window.location.href = "/web/listaformularios";
-      setCarregandoBotaoAtualizar(false);
+      setCarregandoBotaoAtualizar(false); */
+      console.log("olha o schema");
     }
   }
 
   function preenchendoDados(e) {
     if (e.target.value !== "") {
       setCamposVazios({ ...camposVazios, [e.target.name]: false });
-    }
-    else{
+    } else {
       setCamposVazios({ ...camposVazios, [e.target.name]: true });
     }
-
-    
 
     setCampos({ ...campos, [e.target.name]: e.target.value });
   }
@@ -126,6 +134,8 @@ function EditarFormulario(props) {
     setEstado(JSON.parse(newSchema));
     setSchema(newSchema);
     setUiSchema(newUiSchema);
+
+    setBotaoForms(true);
   }
 
   return (
@@ -222,8 +232,8 @@ function EditarFormulario(props) {
               )}
             </Button>
             <TextoOrientacao>
-              Aperte o botão acima para modificar os campos já salvos referentes ao
-              formulário.{" "}
+              Aperte o botão acima para modificar os campos já salvos referentes
+              ao formulário.{" "}
             </TextoOrientacao>
             <Button
               height="50px"
