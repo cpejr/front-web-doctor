@@ -209,7 +209,7 @@ export const InputData = styled.input`
   border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
-      if(props.erro || props.camposVazios){
+      if(props.camposVazios){
         cor = Cores.vermelho;
       } else {
         cor = Cores.azul;
@@ -237,7 +237,7 @@ export const InputHora = styled(Input)`
   border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
-      if(props.camposVazios){
+      if(props.erro || props.camposVazios){
         cor = Cores.vermelho;
       } else {
         cor = Cores.azul;
@@ -252,7 +252,6 @@ export const InputHora = styled(Input)`
     color:${Cores.preto}
   }
     color: ${Cores.preto};
-  }
 `;
 
 export const InputDuracao = styled(Input)`

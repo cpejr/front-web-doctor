@@ -68,6 +68,7 @@ function PerfilPaciente(props) {
   const [convenio, setConvenio] = useState();
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
   const [tipoUsuario, setTipoUsuario] = useState(false);
+  const abertoPeloUsuario = true;
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
@@ -418,7 +419,7 @@ function PerfilPaciente(props) {
         width={"70%"}
         centered={true}
       >
-        <ModalAgendamento id_usuario={usuario.id} email={usuario.email} />
+        <ModalAgendamento abertoPeloUsuario={abertoPeloUsuario} id_usuario={usuario.id} email={usuario.email} />
       </Modal>
 
       <Modal
