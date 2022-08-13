@@ -8,7 +8,7 @@ import {
   TopoPagina,
   ContainerListadeFormularios,
   Filtros,
-  FiltroEspecifico,
+  FiltroEspecificoUrgencia,
   BarraPesquisa,
   BarraEstetica,
   ContainerFormulario,
@@ -19,6 +19,7 @@ import {
   Formulario,
   DadosFormulario,
   BotoesVertical,
+  BotaoVertical,
   ContainerFormularioEspecifico,
 } from "./Styles";
 import { Cores } from "../../variaveis";
@@ -30,8 +31,12 @@ function ListaFormularios() {
   const history = useHistory();
 
   const { Search } = Input;
+  const { Option } = Select;
   const [formularios, setFormularios] = useState([]);
   const [carregando, setCarregando] = useState(true);
+  const [busca, setBusca] = useState("");
+  const lowerBusca = busca.toLowerCase();
+  const [tipoSelect, setTipoSelect] = useState("");
   const [modalEnvio, setModalEnvio] = useState(false);
   const [usuarios, setUsuarios] = useState([]);
   const [idFormulario, setIdFormulario] = useState();
@@ -39,6 +44,39 @@ function ListaFormularios() {
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
   );
+
+  const formulariosFiltrados = formularios.filter((formulario) => {
+    if (lowerBusca === "" && tipoSelect === "") {
+      return formularios;
+    } else {
+      if (tipoSelect === "1") {
+      return (
+        (formulario?.titulo?.toLowerCase().includes(lowerBusca) ||
+        formulario?.tipo?.toLowerCase().includes(lowerBusca)) && formulario.urgencia === 1
+      ); 
+      }else if (tipoSelect === "2"){
+        return(
+        (formulario?.titulo?.toLowerCase().includes(lowerBusca) ||
+        formulario?.tipo?.toLowerCase().includes(lowerBusca)) && formulario.urgencia === 2
+      );
+      }else if (tipoSelect === "3"){
+        return(
+        (formulario?.titulo?.toLowerCase().includes(lowerBusca) ||
+        formulario?.tipo?.toLowerCase().includes(lowerBusca)) && formulario.urgencia === 3
+      );
+      }else{
+        return(
+          (formulario?.titulo?.toLowerCase().includes(lowerBusca) ||
+          formulario?.tipo?.toLowerCase().includes(lowerBusca))
+        );
+      }
+    }
+  });
+
+  function urgenciasFiltradas(value) {
+    setTipoSelect(value);
+  }
+
 
   useEffect(() => {
     pegandoDadosFormularios();
@@ -103,32 +141,31 @@ function ListaFormularios() {
           <>
             <TopoPagina>
               <BarraPesquisa>
-                <Search placeholder="BUSCAR" style={{ width: "100%" }} />
+                <Search 
+                  placeholder="BUSCAR" 
+                  style={{ width: 400 }}
+                  value={busca}
+                  onChange={(e) => setBusca(e.target.value)}
+                />
               </BarraPesquisa>
               <Filtros>
-                <FiltroEspecifico>
-                  <Select
-                    defaultValue="Tipos"
-                    style={{ color: "green", width: "100%" }}
-                  ></Select>
-                </FiltroEspecifico>
-                <FiltroEspecifico>
-                  <Select
-                    defaultValue="Finalidades"
-                    style={{ color: "green", width: "100%" }}
-                  ></Select>
-                </FiltroEspecifico>
-                <FiltroEspecifico>
+                <FiltroEspecificoUrgencia>
                   <Select
                     defaultValue="Urgências"
-                    style={{ color: "green", width: "100%" }}
-                  ></Select>
-                </FiltroEspecifico>
+                    style={{ width: 200 }}
+                    onChange={(value) => urgenciasFiltradas(value)}
+                  >
+                    <Option value="">Todas as Urgências</Option>
+                    <Option value="1">Urgência: 1</Option>
+                    <Option value="2">Urgência: 2</Option>
+                    <Option value="3">Urgência: 3</Option>
+                  </Select>
+                </FiltroEspecificoUrgencia>
               </Filtros>
             </TopoPagina>
             <BarraEstetica />
             <ContainerFormulario>
-              {formularios?.map((value) => (
+              {formulariosFiltrados?.map((value) => (
                 <ContainerFormularioEspecifico>
                   <Formulario>
                     <DadosFormulario>
@@ -144,15 +181,15 @@ function ListaFormularios() {
                         <>Urgência: </>
                         {value.urgencia === 1 ? (
                           <>
-                            <StarOutlined />
-                            <StarOutlined />
                             <StarFilled />
+                            <StarOutlined />
+                            <StarOutlined />
                           </>
                         ) : value.urgencia === 2 ? (
                           <>
+                            <StarFilled />
+                            <StarFilled />
                             <StarOutlined />
-                            <StarFilled />
-                            <StarFilled />
                           </>
                         ) : (
                           <>
@@ -164,7 +201,9 @@ function ListaFormularios() {
                       </UrgenciaFormulario>
                     </DadosFormulario>
                   </Formulario>
+                
                   <BotoesVertical>
+                    <BotaoVertical>
                     <Button
                       backgroundColor={Cores.lilas[1]}
                       color={Cores.branco}
@@ -175,7 +214,8 @@ function ListaFormularios() {
                       onClick={() => abrindoModal(value.id)}
                     >
                       ENVIAR
-                    </Button>
+                    </Button></BotaoVertical>
+                    <BotaoVertical>
                     <Button
                       backgroundColor={Cores.cinza[7]}
                       color={Cores.azulEscuro}
@@ -186,7 +226,8 @@ function ListaFormularios() {
                       onClick={() => editarFormulario(value.id)}
                     >
                       EDITAR
-                    </Button>
+                    </Button></BotaoVertical>
+                    <BotaoVertical>
                     <Button
                       backgroundColor={Cores.branco}
                       color={Cores.cinza[2]}
@@ -197,8 +238,9 @@ function ListaFormularios() {
                       onClick={() => deletarFormulario(value.id)}
                     >
                       DELETAR
-                    </Button>
+                    </Button></BotaoVertical>
                   </BotoesVertical>
+                 
                 </ContainerFormularioEspecifico>
               ))}
               <BotaoFinal>

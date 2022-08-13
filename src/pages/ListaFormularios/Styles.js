@@ -14,39 +14,48 @@ export const TopoPagina = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  width: 100%;
+  @media (min-width: 1200px) and (max-width: 1400px) {
+    justify-content: center;
+    margin-left: 1%;
+  }
+  @media (min-width: 1090px) and (max-width: 1199px) {
+    justify-content: center;
+    margin-left: 3%;
+  }
+  @media (min-width: 921px) and (max-width: 1089px) {
+    justify-content: center;
+    margin-left: 4%;
+  }
   @media (max-width: 920px) {
     flex-direction: column;
     justify-content: center;
   }
 `;
 export const BarraPesquisa = styled.div`
-  width: 30%;
+  width: 50%;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  .ant-input {
-    background-color: green;
-  }
-  .ant-btn.ant-btn-default.ant-btn-icon-only.ant-input-search-button {
-    background-color: green;
-  }
+  
   @media (max-width: 920px) {
     width: 100%;
     justify-content: center;
   }
 `;
 export const Filtros = styled.div`
-  width: 45%;
+  width: 50%;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   gap: 2%;
+
   @media (max-width: 920px) {
     margin-top: 2%;
     width: 100%;
     justify-content: center;
   }
-  @media (max-width: 450px) {
+  @media (max-width: 480px) {
     margin-top: 2%;
     flex-direction: column;
     width: 100%;
@@ -55,10 +64,8 @@ export const Filtros = styled.div`
   }
 `;
 
-export const FiltroEspecifico = styled.div`
-  @media (max-width: 480px) {
-    margin-top: 2%;
-  }
+export const FiltroEspecificoUrgencia = styled.div`
+
 `;
 
 export const BarraEstetica = styled.div`
@@ -110,13 +117,38 @@ export const BotoesVertical = styled.div`
   justify-content: space-between;
   flex-direction: column;
   @media (max-width: 920px) {
+    display: flex;
+    flex-direction: row;
+    width: 87%;
+    margin-left: 2.5%;
+    //justify-content: space-between;
+  }
+
+  @media (max-width: 560px) {
+    display: flex;
     flex-direction: row;
     width: 85%;
+    margin-right: 2.5%;
   }
   @media (max-width: 450px) {
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 `;
+export const BotaoVertical = styled.div`
+
+@media (min-width: 451px) and (max-width: 920px){
+    width: 30%;
+  }
+
+@media (max-width: 450px) {
+    width: 100%;
+    margin-top: 2%;
+  }
+`;
+
+
 export const BotaoFinal = styled.div`
   width: 98%;
   display: flex;
