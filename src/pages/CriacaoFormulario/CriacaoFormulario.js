@@ -1,8 +1,12 @@
 import React, { useState } from "react";
 import { FormBuilder } from "@ginkgo-bioworks/react-json-schema-form-builder";
 import { Modal } from "antd";
-import Input from "../../styles/Input";
-import { Cores } from "../../variaveis";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { useEffect } from "react";
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
+import _ from "lodash";
+import { toast } from "react-toastify";
 import {
   Container,
   Formulario,
@@ -12,16 +16,12 @@ import {
   Instrucao,
   CaixaInputs,
 } from "./Styles";
+import Input from "../../styles/Input";
+import { Cores } from "../../variaveis";
 import Select from "../../styles/Select/Select";
 import Button from "../../styles/Button";
-import * as managerService from "../../services/ManagerService/managerService";
-import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-import _ from "lodash";
-import { toast } from "react-toastify";
 import { sleep } from "../../utils/sleep";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { useEffect } from "react";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function CriacaoFormulario() {
   const [uiSchema, setUiSchema] = useState("");
