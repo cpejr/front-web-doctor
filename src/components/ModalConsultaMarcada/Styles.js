@@ -2,25 +2,33 @@ import styled from "styled-components";
 import { Cores, Fontes } from "../../variaveis";
 
 export const Container = styled.div`
-  width: 100%;
+  width: 22vw;
   height: 100%;
   background-color: ${Cores.cinza[7]};
 
-  @media (max-width: 560px) {
-    padding: 0% 0% 0% 0%;
-    width: 100%;
+  @media (max-width: 1101px) {
+    width: 25vw;
   }
-  @media (max-width: 1100px) and (min-width: 800px) {
-    padding: 0% 0% 0% 0%;
+  @media (max-width: 801px) {
+    width: 28vw;
+  }
+  @media (max-width: 801px) {
+    width: 30vw;
+  }
+  @media (max-width: 547px) {
+    width: 45vw;
+  }
+
+  @media (max-width: 360px) {
+    width: 50vw;
   }
 `;
-
 
 export const Caixa = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 15px;
+  margin-top: 10px;
   padding: 5% 0% 5% 0%;
   align-items: center;
   width: 100%;
@@ -29,12 +37,17 @@ export const Caixa = styled.div`
   border: 15px solid ${Cores.cinza[7]};
   border-radius: 3px;
 
-  @media (max-width: 560px) {
-    margin: 0% 0% 0% 0%;
-    width: 100%;
-  }
   @media (max-width: 1100px) and (min-width: 800px) {
     padding: 0% 0% 0% 0%;
+  }
+  @media (max-width: 547px) {
+    width: 45vw;
+  }
+  @media (max-width: 360px) {
+    width: 50vw;
+    border: 5px solid ${Cores.cinza[7]};
+    padding: 0% 0% 0% 0%;
+    justify-content: center;
   }
 `;
 
@@ -52,6 +65,18 @@ export const CaixaNome = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 3px;
 
+  @media (max-width: 1101px) {
+      margin-top: 5%;
+  }
+  @media (max-width: 700px) {
+      height: 65px;
+  }
+  @media (max-width: 360px) {
+
+      justify-content: center;
+      align-items: center;
+  }
+  
 `;
 
 export const Texto = styled.div`
@@ -63,6 +88,19 @@ export const Texto = styled.div`
   font-size: 1.15em;
   display: flex;
   justify-content: center;
+
+  @media (max-width: 700px) {
+    font-size: 1.1em;
+    margin-left: 15%;
+  }
+  @media (max-width: 580px) {
+    font-size: 1em;
+    margin-left: 8%;
+  }
+  @media (max-width: 360px) {
+    font-size: 0.9em;
+    margin-left: 8%;
+  }
 `;
 
 export const TextoDescricao = styled.div`
@@ -89,9 +127,17 @@ export const CaixaInformações = styled.div`
   height: 90px;
   display: flex;
   flex-direction: column;
-  Justify-content: space-between;
+  justify-content: space-between;
   align-items: start;
 
+  @media (max-width: 1101px) {
+    margin-bottom: 5%;
+  }
+  @media (max-width: 547px) {
+    height: 80px;
+    width: 90%;
+    justify-content: space-between;
+  }
 `;
 
 

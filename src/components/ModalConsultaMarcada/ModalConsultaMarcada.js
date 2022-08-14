@@ -6,12 +6,6 @@ import logoGuilherme from "../../assets/logoGuilherme.png";
 import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 
-
-
-
-
-
-
 function ModalConsultaMarcada (props) {
 
   const [consulta, setConsulta] = useState({});

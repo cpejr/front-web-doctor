@@ -217,6 +217,7 @@ export const TextoAgendamentoEspecifico = styled.div`
   height: 100%;
   font-family: ${Fontes.roboto};
   font-size: 1em;
+  cursor:pointer;
   @media (max-width: 950px) {
     font-size: 0.8em;
   }
@@ -232,6 +233,7 @@ export const DiaHorarioAgendamento = styled.div`
   font-family: ${Fontes.roboto};
   font-size: 1em;
   font-weight: medium;
+  cursor: pointer;
 
   @media (max-width: 1700px) {
     font-size: 0.8em;
