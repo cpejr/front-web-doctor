@@ -70,6 +70,8 @@ function EditarPerfil() {
   const [estadoBack, setEstadoBack] = useState({});
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
+  const [hoje, setHoje] = useState("");
+
   const [cpfMasked, setCpfMasked] = useState({});
   const [dataMasked, setDataMasked] = useState({});
   const [telMasked, setTelMasked] = useState({});
@@ -122,18 +124,6 @@ function EditarPerfil() {
   };
   const maskApenasNumerosCep = (value) => {
     return value.replace(/\D/g, "").replace(/(\d{8})(\d)/, "$1");
-  };
-
-  const maskData = (value) => {
-    return value
-      .replace(/\D/g, "")
-      .replace(/(\d{2})(\d)/, "$1/$2")
-      .replace(/(\d{2})(\d)/, "$1/$2")
-      .replace(/(\d{4})(\d)/, "$1");
-  };
-
-  const maskDataBack = (value) => {
-    return brParaPadrao(value);
   };
 
   const maskApenasLetras = (value) => {
@@ -226,6 +216,34 @@ function EditarPerfil() {
     setTudoNulo({ ...tudoNulo, ...errors });
   }, [estadoBack]);
 
+  useEffect(() => {
+    setandoDiaAtual();
+  }, []);
+
+  useEffect(() => {
+    setandoDataMinima();
+  }, [hoje]);
+
+  function setandoDiaAtual() {
+    let data = new Date();
+    let dia = data.getDate();
+    let mes = data.getMonth() + 1;
+    let ano = data.getFullYear();
+
+    if (dia < 10) {
+      dia = "0" + dia;
+    }
+    if (mes < 10) {
+      mes = "0" + mes;
+    }
+
+    setHoje(ano + "-" + mes + "-" + dia);
+  }
+
+  function setandoDataMinima() {
+    document.getElementById("data").setAttribute("max", hoje);
+  }
+
   async function atualizarDados() {
     setCarregando(true);
     if (!_.isEqual(tudoNulo, referenciaTudoNulo)) {
@@ -238,7 +256,6 @@ function EditarPerfil() {
         );
         await sleep(1500);
         window.location.href = "/web/perfil";
-        
       } else {
         toast.warn("Preencha os campos corretamente");
       }
@@ -274,19 +291,8 @@ function EditarPerfil() {
       setTudoNulo({ ...tudoNulo, [name]: false });
     }
 
-    if (name === "data_nascimento" && value.length < 10 && value.length > -1) {
-      setErro({ ...erro, [name]: true });
-      setErroDataBack(false);
-      if (value.length === 0) setErro({ ...erro, [name]: false });
-    } else if (maskDataBack(value) === "Data Invalida") {
-      setErro({ ...erro, [name]: true });
-      setErroDataBack(true);
-    } else {
-      setErro({ ...erro, [name]: false });
-    }
-
-    setEstado({ ...estado, [name]: maskData(value) });
-    setEstadoBack({ ...estadoBack, [name]: maskDataBack(value) });
+    setEstado({ ...estado, [name]: value });
+    setEstadoBack({ ...estadoBack, [name]: value });
   }
 
   function preenchendoDados(e) {
@@ -295,9 +301,6 @@ function EditarPerfil() {
       setTudoNulo({ ...tudoNulo, [name]: false });
     }
 
-    if (name === "data_nascimento") {
-      e.target.value = maskData(value);
-    }
     if (
       (name === "cpf" && value.length < 14 && value.length > 0) ||
       (name === "telefone" && value.length < 15 && value.length > 0)
@@ -328,9 +331,14 @@ function EditarPerfil() {
 
   function preenchendoEndereco(e) {
     const { name, value } = e.target;
-    if (value) {
-      setTudoNulo({ ...tudoNulo, [name]: false });
+    
+    if(name !== "numero" && name!== "pais" && name!=="cidade")
+    {
+      if (value) {
+        setTudoNulo({ ...tudoNulo, [name]: false });
+      }
     }
+   
 
     if (name === "cep" && value.length <= 8 && value.length > 0) {
       setErro({ ...erro, [name]: true });
@@ -353,12 +361,21 @@ function EditarPerfil() {
         ...enderecoNovo,
         [name]: maskApenasLetras(value),
       });
+      setEnderecoBack({
+        ...enderecoBack,
+        [name]: maskApenasLetras(value),
+      });
     }
     if (name === "numero") {
       setEnderecoNovo({
         ...enderecoNovo,
         [name]: maskApenasNumeros(value),
       });
+      setEnderecoBack({
+        ...enderecoBack,
+        [name]: maskApenasNumeros(value),
+      });
+
     }
   }
 
@@ -455,30 +472,24 @@ function EditarPerfil() {
             </RotuloColuna>
 
             <Titulo>Data de Nascimento:</Titulo>
-            <RotuloColuna>
-              <Input
-                placeholder={dataMasked}
-                backgroundColor={Cores.cinza[7]}
-                boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-                borderWidth="1px"
-                color={Cores.preto}
-                fontSize="1em"
-                width="90%"
-                name="data_nascimento"
-                value={estado.data_nascimento}
-                onChange={validacaoData}
-                erro={erro.data_nascimento}
-              ></Input>
-              {erro.data_nascimento && (
-                <>
-                  {erroDataBack ? (
-                    <Rotulo>Digite uma data válida.</Rotulo>
-                  ) : (
-                    <Rotulo>Digite uma data no formato xx/xx/xxxx</Rotulo>
-                  )}
-                </>
-              )}
-            </RotuloColuna>
+
+            <Input
+              placeholder={dataMasked}
+              id="data"
+              type="date"
+              onKeyDown={(e) => e.preventDefault()}
+              backgroundColor={Cores.cinza[7]}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              paddingRight="2%"
+              color={Cores.preto}
+              fontSize="1em"
+              width="90%"
+              name="data_nascimento"
+              value={estado.data_nascimento}
+              onChange={validacaoData}
+              erro={erro.data_nascimento}
+            ></Input>
           </CaixaInputs>
 
           <CaixaInputs>
@@ -532,6 +543,7 @@ function EditarPerfil() {
               fontSize="1em"
               width="90%"
               name="pais"
+              marginTop="2%"
               onChange={preenchendoEndereco}
             ></Input>
           </CaixaInputs>
@@ -547,6 +559,7 @@ function EditarPerfil() {
               color={Cores.preto}
               width="90%"
               borderWidth="1px"
+              marginTop="0px"
               onChange={preenchendoEndereco}
             >
               <option value="">{endereco.estado}</option>
