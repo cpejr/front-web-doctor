@@ -76,6 +76,7 @@ function Cadastro(props) {
   const [estado, setEstado] = useState({});
   const [carregando, setCarregando] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
   const [hoje, setHoje] = useState("");
@@ -503,15 +504,14 @@ function Cadastro(props) {
     <div>
       {carregandoPagina ? (
         <div
-          style={{
-            height: "700px",
-            justifyContent: "center",
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <Spin indicator={antIcon} />
-        </div>
+        style={{
+          position: "absolute",
+          top: "50%",
+          left: "47.5%",
+        }}
+      >
+        <Spin indicator={antIconPagina} />
+      </div>
       ) : (
         <>
           <Body>
