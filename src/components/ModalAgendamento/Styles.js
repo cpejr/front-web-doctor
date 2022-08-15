@@ -217,7 +217,7 @@ export const TextoAgendamentoEspecifico = styled.div`
   height: 100%;
   font-family: ${Fontes.roboto};
   font-size: 1em;
-  cursor:pointer;
+  cursor: pointer;
   @media (max-width: 950px) {
     font-size: 0.8em;
   }

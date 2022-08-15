@@ -186,6 +186,7 @@ export const Data = styled.div`
   width: 25%;
   display: flex;
   justify-content: center;
+  cursor: pointer;
 
   @media (max-width: 880px) {
     width: 30%;

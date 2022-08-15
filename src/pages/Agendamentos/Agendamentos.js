@@ -28,6 +28,7 @@ import {
 } from "./Styles";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
+import ModalConsultaMarcada from "../../components/ModalConsultaMarcada";
 import { Cores } from "../../variaveis";
 import { compararDataAgendamentos } from "../../utils/tratamentoErros";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -40,9 +41,12 @@ function Agendamentos() {
   const [carregando, setCarregando] = useState(true);
   const [consultas, setConsultas] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
+  const [consultaEspecifica, setConsultaEspecifica] = useState([]);
+  const [modalConsultaMarcada, setModalConsultaMarcada] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const abertoPeloUsuario = false;
   const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
+  
 
 
 
@@ -79,6 +83,15 @@ function Agendamentos() {
     });
   }
 
+  async function fechandoModalConsultaMarcada() {
+    setModalConsultaMarcada(false);
+    pegandoDados();
+  }
+
+  async function abreModalConsultaMarcada(consulta){
+    setModalConsultaMarcada(true);
+    setConsultaEspecifica(consulta);
+  }
 
   return (
     <div>
@@ -149,7 +162,9 @@ function Agendamentos() {
                     </>
                   )}
                 </Telefone>
-                <Data>
+                <Data
+                onClick={() => abreModalConsultaMarcada(value)}
+                >
                   {parseInt(value.data_hora.slice(11, 13)) < 12 ? (
                     value.data_hora.slice(8, 10) + "/" + value.data_hora.slice(5, 7) + "/" + value.data_hora.slice(0, 4) + " - " +
                     parseInt(value.data_hora.slice(11, 13)) + ":" + value.data_hora.slice(14, 16) + " am"
@@ -220,6 +235,24 @@ function Agendamentos() {
           fechandoModal={() => fechandoModalAgendamentoEspecifico()}
         />
       </Modal>
+
+      <Modal
+        visible={modalConsultaMarcada}
+        onCancel={fechandoModalConsultaMarcada}
+        footer={null}
+        width={"auto"}
+        centered={true}
+        style={{
+          backgroundColor: "black"
+        }}
+      >
+        <ModalConsultaMarcada
+          consulta={consultaEspecifica}
+          fechandoModal={() => fechandoModalConsultaMarcada()}
+        />
+      </Modal>
+
+  
     </div>
   );
 }
