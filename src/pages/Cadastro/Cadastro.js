@@ -42,8 +42,6 @@ import {
   apenasNumerosCpfTel,
   cep,
   cpf,
-  data,
-  dataBack,
   telefone,
 } from "../../utils/masks";
 
@@ -83,6 +81,7 @@ function Cadastro(props) {
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
   const [verificacaoLogado, setVerificacaoLogado] = useState("");
+  const [hoje, setHoje] = useState("");
 
   function funcaoConvenio() {
     setConvenio(!convenio);
@@ -165,6 +164,34 @@ function Cadastro(props) {
     setandoTipoPorProps();
   }, [props]);
 
+  useEffect(() => {
+    setandoDiaAtual();
+  }, []);
+
+  useEffect(() => {
+    setandoDataMinima();
+  }, [hoje]);
+
+  function setandoDiaAtual() {
+    let data = new Date();
+    let dia = data.getDate();
+    let mes = data.getMonth() + 1;
+    let ano = data.getFullYear();
+
+    if (dia < 10) {
+      dia = "0" + dia;
+    }
+    if (mes < 10) {
+      mes = "0" + mes;
+    }
+
+    setHoje(ano + "-" + mes + "-" + dia);
+  }
+
+  function setandoDataMinima() {
+    document.getElementById("data").setAttribute("max", hoje);
+  }
+
   function verificaAutenticacao() {
     if (usuarioAutenticado() === false) {
       window.location.href = "/login";
@@ -195,6 +222,7 @@ function Cadastro(props) {
     if (!usuario.senhaConfirmada) errors.senhaConfirmada = true;
     if (erro.data_nascimento === true) errors.data_nascimento = true;
     if (erro.email === true) errors.email = true;
+
 
     if (cuidador) {
       if (!usuario.telefone_cuidador) errors.telefone_cuidador = true;
@@ -256,14 +284,7 @@ function Cadastro(props) {
       delete errors.nome_cuidador;
       delete errors.convenio;
     }
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 259 ~ requisicaoCadastro ~ camposVazios",
-      camposVazios
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 259 ~ requisicaoCadastro ~ testeTemp",
-      testeTemp
-    );
+   
     if (_.isEqual(camposVazios, testeTemp)) {
       if (usuario.senha === usuario.senhaConfirmada) {
         await managerService.Cadastrando(usuario, enderecoBack);
@@ -304,18 +325,8 @@ function Cadastro(props) {
       setCamposVazios({ ...camposVazios, [name]: false });
     }
 
-    if (name === "data_nascimento" && value.length < 10) {
-      setErro({ ...erro, [name]: true });
-      setErroDataBack(false);
-    } else if (dataBack(value) === "Data Invalida") {
-      setErro({ ...erro, [name]: true });
-      setErroDataBack(true);
-    } else {
-      setErro({ ...erro, [name]: false });
-    }
-
-    setEstado({ ...estado, [name]: data(value) });
-    setUsuario({ ...usuario, [name]: dataBack(value) });
+    setEstado({ ...estado, [name]: value });
+    setUsuario({ ...usuario, [name]: value });
   }
 
   async function validacaoCamposNaoGerais(e) {
@@ -576,31 +587,23 @@ function Cadastro(props) {
                 <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
               )}
             </RotuloColuna>
-            <RotuloColuna>
               <Input
                 placeholder="Data de Nascimento"
+                id="data"
+                type="date"
+                onKeyDown={(e) => e.preventDefault()}
                 backgroundColor={Cores.cinza[7]}
                 color={Cores.preto}
                 fontSize="1em"
-                width="100%"
+                width="50%"
                 marginTop="2%"
                 name="data_nascimento"
                 value={estado.data_nascimento}
                 onChange={validacaoData}
                 erro={erro.data_nascimento}
+                paddingRight="2%"
                 camposVazios={camposVazios.data_nascimento}
               ></Input>
-
-              {erro.data_nascimento && (
-                <>
-                  {erroDataBack ? (
-                    <Rotulo>Digite uma data válida.</Rotulo>
-                  ) : (
-                    <Rotulo>Digite uma data no formato xx/xx/xxxx</Rotulo>
-                  )}
-                </>
-              )}
-            </RotuloColuna>
           </InputMesmaLinha>
 
           <Input
@@ -730,6 +733,7 @@ function Cadastro(props) {
             color={Cores.preto}
             width="100%"
             marginTop="2%"
+            borderWidth="2px"
             onChange={preenchendoEndereco}
             camposVazios={camposVazios.estado}
           >

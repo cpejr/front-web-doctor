@@ -359,9 +359,9 @@ function ModalAgendamentoEspecifico(props) {
         </InfoEsquerdaEDireita>
         <InfoEsquerdaEDireita>
           <SelecioneUmaData>
-            <TextoSelecioneUmaData>Digite uma data:</TextoSelecioneUmaData>
+            <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
             <InputData
-              placeholder="Digite uma data"
+              placeholder="Selecione uma data"
               size="large"
               type="date"
               onKeyDown={(e) => e.preventDefault()}
