@@ -7,20 +7,18 @@ export const Container = styled.div`
   background-color: ${Cores.cinza[7]};
 
   @media (max-width: 1101px) {
-    width: 25vw;
+    width: 26vw;
   }
-  @media (max-width: 801px) {
-    width: 28vw;
-  }
-  @media (max-width: 801px) {
+  @media (max-width: 830px) {
     width: 30vw;
   }
-  @media (max-width: 547px) {
+  @media (max-width: 670px) {
     width: 45vw;
   }
 
-  @media (max-width: 360px) {
+  @media (max-width: 400px) {
     width: 50vw;
+    height: auto;
   }
 `;
 
@@ -37,13 +35,13 @@ export const Caixa = styled.div`
   border: 15px solid ${Cores.cinza[7]};
   border-radius: 3px;
 
-  @media (max-width: 1100px) and (min-width: 800px) {
+  @media (max-width: 1100px) and (min-width: 830px) {
     padding: 0% 0% 0% 0%;
   }
-  @media (max-width: 547px) {
+  @media (max-width: 670px) {
     width: 45vw;
   }
-  @media (max-width: 360px) {
+  @media (max-width: 400px) {
     width: 50vw;
     border: 5px solid ${Cores.cinza[7]};
     padding: 0% 0% 0% 0%;
@@ -71,7 +69,7 @@ export const CaixaNome = styled.div`
   @media (max-width: 700px) {
       height: 65px;
   }
-  @media (max-width: 360px) {
+  @media (max-width: 400px) {
 
       justify-content: center;
       align-items: center;
@@ -89,7 +87,7 @@ export const Texto = styled.div`
   display: flex;
   justify-content: center;
 
-  @media (max-width: 700px) {
+  @media (max-width: 710px) {
     font-size: 1.1em;
     margin-left: 15%;
   }
@@ -97,20 +95,43 @@ export const Texto = styled.div`
     font-size: 1em;
     margin-left: 8%;
   }
-  @media (max-width: 360px) {
-    font-size: 0.9em;
-    margin-left: 8%;
+  @media (max-width: 400px) {
+    font-size: 0.85em;
+    margin-left: 7%;
   }
 `;
 
 export const TextoDescricao = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 5%;
-  height: 40px;
+  font-style: italic;
+  text-align: center;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  height: auto
   font-family: ${Fontes.roboto};
   color: ${Cores.azulEscuro};
-  font-size: 1.2em;
+  font-size: 1.15em;
+
+  @media (max-width: 1200px) {
+    font-size: 1.1em;
+    width: 80%;
+    
+    
+  }
+
+
+  @media (max-width: 710px) {
+    font-size: 1.05em;
+    width: 90%;
+    
+  } 
+
+  @media (max-width: 400px) {
+    font-size: 1em;
+    width: 90%;
+  }
+
   
 `;
 
@@ -133,7 +154,7 @@ export const CaixaInformações = styled.div`
   @media (max-width: 1101px) {
     margin-bottom: 5%;
   }
-  @media (max-width: 547px) {
+  @media (max-width: 710px) {
     height: 80px;
     width: 90%;
     justify-content: space-between;

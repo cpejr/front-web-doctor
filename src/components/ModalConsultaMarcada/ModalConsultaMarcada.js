@@ -34,8 +34,11 @@ function ModalConsultaMarcada (props) {
       {carregando ? (
         <div
         style={{
-          position: "absolute",
-          left: "45%"
+          display: "flex",
+          height:"30px",
+          justifyContent: "center",
+          alignItems: "center",
+
         }}
         >
             <Spin indicator={antIcon} />
