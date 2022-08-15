@@ -87,3 +87,17 @@ margin-top: 14%;
 export const Pessoa = styled.div`
 display: flex;
 `;
+
+export const BarraPesquisaChat = styled.div`
+width: 80%;
+height: 52%;
+min-height :30px;
+max-height :40px;
+border-width: 2px;
+border-style: solid;
+border-color: ${Cores.cinza[3]};
+background-color: ${Cores.cinza[5]};
+align-items: center;
+display: flex;
+border-radius: 3px;
+`;

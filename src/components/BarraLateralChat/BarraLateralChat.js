@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { NomeMensagem, MensagemPessoa, NomePessoa, HeaderBarraLateralChat, ListaPessoasChat, PessoaChat, BarraLateral, Pessoa } from "./Styles";
+import { BarraPesquisaChat, NomeMensagem, MensagemPessoa, NomePessoa, HeaderBarraLateralChat, ListaPessoasChat, PessoaChat, BarraLateral } from "./Styles";
 import Button from "../../styles/Button";
 import Input from "../../styles/Input";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import { Cores } from "../../variaveis";
+import SearchIcon from '@mui/icons-material/Search';
 import pato from "./../../assets/pato.jpeg";
 import patao from "./../../assets/patao.jpg";
 import patinho from "./../../assets/patinho.jpg";
@@ -11,7 +11,6 @@ import patobravo from "./../../assets/patobravo.jpg";
 import patomarreco from "./../../assets/patomarreco.jpg";
 import patopato from "./../../assets/patopato.jpg";
 import patotimido from "./../../assets/patotimido.jpg";
-import lupinha from "./../../assets/lupinha.png"
 
 
 
@@ -71,17 +70,17 @@ export default function BarraLateralChat(props) {
     <>
     <BarraLateral>
       <HeaderBarraLateralChat>
-        <Input
-        placeholder="Pesquisar conversa"
-        backgroundColor={Cores.cinza[5]}
-        borderColor={Cores.cinza[3]}
-        width="80%"
-        height="52%"
-        minHeight="30px"
-        maxHeight="40px"
-        onChange={(event) => { setSearchTerm(event.target.value); }}
-        >
-        </Input>
+        <BarraPesquisaChat>
+          <Input
+          placeholder="Pesquisar conversa"
+          backgroundColor="transparent"
+          borderColor="transparent"
+          width="90%"
+          height="100%"
+          onChange={(event) => { setSearchTerm(event.target.value); }}
+          />
+          <SearchIcon color="disabled"/>
+        </BarraPesquisaChat>
         <Button
         backgroundColor="transparent"
         borderColor="transparent"
@@ -91,7 +90,7 @@ export default function BarraLateralChat(props) {
         height="27%"
         onClick={() => {}}
         >
-        <AddCircleOutlineIcon></AddCircleOutlineIcon>
+        <AddCircleOutlineIcon/>
         </Button>
       </HeaderBarraLateralChat>
       <ListaPessoasChat >
