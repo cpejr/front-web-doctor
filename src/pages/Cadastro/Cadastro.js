@@ -6,10 +6,7 @@ import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import Select from "../../styles/Select/Select";
 import { Spin, Switch } from "antd";
-import {
-  LoadingOutlined,
-  LeftOutlined,
-} from "@ant-design/icons";
+import { LoadingOutlined, LeftOutlined } from "@ant-design/icons";
 import {
   Body,
   DadosCadastro,
@@ -554,23 +551,23 @@ function Cadastro(props) {
                 <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
               )}
             </RotuloColuna>
-              <Input
-                placeholder="Data de Nascimento"
-                id="data"
-                type="date"
-                onKeyDown={(e) => e.preventDefault()}
-                backgroundColor={Cores.cinza[7]}
-                color={Cores.preto}
-                fontSize="1em"
-                width="50%"
-                marginTop="2%"
-                name="data_nascimento"
-                value={estado.data_nascimento}
-                onChange={validacaoData}
-                erro={erro.data_nascimento}
-                paddingRight="2%"
-                camposVazios={camposVazios.data_nascimento}
-              ></Input>
+            <Input
+              placeholder="Data de Nascimento"
+              id="data"
+              type="date"
+              onKeyDown={(e) => e.preventDefault()}
+              backgroundColor={Cores.cinza[7]}
+              color={Cores.preto}
+              fontSize="1em"
+              width="50%"
+              marginTop="2%"
+              name="data_nascimento"
+              value={estado.data_nascimento}
+              onChange={validacaoData}
+              erro={erro.data_nascimento}
+              paddingRight="2%"
+              camposVazios={camposVazios.data_nascimento}
+            ></Input>
           </InputMesmaLinha>
           <Input
             placeholder="CPF"
