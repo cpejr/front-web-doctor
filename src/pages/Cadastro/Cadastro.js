@@ -8,11 +8,8 @@ import Select from "../../styles/Select/Select";
 import { Spin, Switch } from "antd";
 import {
   LoadingOutlined,
-  bleLeftOutlined,
-  RollbackOutlined,
   LeftOutlined,
 } from "@ant-design/icons";
-import { BiArrowBack } from "react-icons/bi";
 import {
   Body,
   DadosCadastro,
@@ -20,18 +17,15 @@ import {
   InputMesmaLinha,
   Rotulo,
   InputMesmaLinha2,
-  CaixaBotaoVoltar,
   Botao,
   RotuloColuna,
   PossuiConvenio,
   PossuiCuidador,
-  TextoVoltar,
 } from "./Styles";
 import "react-toastify/dist/ReactToastify.min.css";
 import AddToast from "../../components/AddToast/AddToast";
 import { toast } from "react-toastify";
 import { recebeTipo, usuarioAutenticado } from "../../services/auth";
-import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import {
@@ -43,15 +37,13 @@ import {
   cpf,
   telefone,
 } from "../../utils/masks";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function Cadastro(props) {
   const history = useHistory();
-  const email = sessionStorage.getItem("@doctorapp-Email");
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
   const [erro, setErro] = useState(false);
-  const [tipo, setTipo] = useState([]);
-  const [carregandoPagina, setCarregandoPagina] = useState();
   const [camposVazios, setCamposVazios] = useState({
     tipo: false,
     nome: false,
@@ -76,7 +68,6 @@ function Cadastro(props) {
   const [estado, setEstado] = useState({});
   const [carregando, setCarregando] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
   const [hoje, setHoje] = useState("");
@@ -125,20 +116,9 @@ function Cadastro(props) {
 
     setHoje(ano + "-" + mes + "-" + dia);
   }
-  
+
   useEffect(() => {
     setandoDiaAtual();
-  }, []);  
-
-  async function pegandoTipo() {
-    setCarregandoPagina(true)
-    const resposta = await managerService.GetDadosUsuario(email);
-    setTipo(resposta.dadosUsuario.tipo);
-    setCarregandoPagina(false);
-  }
-
-  useEffect(() => {
-    pegandoTipo();
   }, []);
 
   function setandoTipoPorProps() {
@@ -501,391 +481,368 @@ function Cadastro(props) {
   }, [enderecoBack.numero]);
 
   return (
-    <div>
-      {carregandoPagina ? (
-        <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "47.5%",
-        }}
-      >
-        <Spin indicator={antIconPagina} />
-      </div>
-      ) : (
-        <>
-          <Body>
-            <DadosCadastro>
-              <Logo>
-                <img
-                  src={logoGuilherme}
-                  className="logo"
-                  alt="logoGuilherme"
-                  width="100%"
-                  height="100%"
-                ></img>
-              </Logo>
-              {tipo !== "MASTER" && tipo !== "SECRETARIA(O)" && (
-                <Botao onClick={() => history.push("/login")}>
-                  <LeftOutlined /> Voltar para login
-                </Botao>
-              )}
-              {history.location.state === undefined &&
-              recebeTipo() === "MASTER" ? (
-                <Select
-                  id="tipos"
-                  backgroundColor={Cores.cinza[7]}
-                  color={Cores.preto}
-                  borderWidth="2px"
-                  width="100%"
-                  name="tipo"
-                  onChange={preenchendoDados}
-                  camposVazios={camposVazios.tipo}
-                >
-                  <option value="">Tipo de Usuário</option>
-                  <option value="SECRETARIA(O)" borderColor={Cores.azul}>
-                    Secretária(o)
-                  </option>
-                  <option value="PACIENTE" borderColor={Cores.azul}>
-                    Paciente
-                  </option>
-                </Select>
-              ) : (
-                <></>
-              )}
+    <>
+      <Body>
+        <DadosCadastro>
+          <Logo>
+            <img
+              src={logoGuilherme}
+              className="logo"
+              alt="logoGuilherme"
+              width="100%"
+              height="100%"
+            ></img>
+          </Logo>
+          {recebeTipo() !== "MASTER" && recebeTipo() !== "SECRETARIA(O)" && (
+            <Botao onClick={() => history.push("/login")}>
+              <LeftOutlined /> Voltar para login
+            </Botao>
+          )}
+          {history.location.state === undefined && recebeTipo() === "MASTER" ? (
+            <Select
+              id="tipos"
+              backgroundColor={Cores.cinza[7]}
+              color={Cores.preto}
+              borderWidth="2px"
+              width="100%"
+              name="tipo"
+              onChange={preenchendoDados}
+              camposVazios={camposVazios.tipo}
+            >
+              <option value="">Tipo de Usuário</option>
+              <option value="SECRETARIA(O)" borderColor={Cores.azul}>
+                Secretária(o)
+              </option>
+              <option value="PACIENTE" borderColor={Cores.azul}>
+                Paciente
+              </option>
+            </Select>
+          ) : (
+            <></>
+          )}
+          <Input
+            placeholder="Nome Completo"
+            status="error"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            fontSize="1em"
+            width="100%"
+            marginTop="2%"
+            name="nome"
+            value={estado.nome}
+            onChange={preenchendoDados}
+            erro={erro.nome}
+            camposVazios={camposVazios.nome}
+          ></Input>
+          <InputMesmaLinha>
+            <RotuloColuna>
               <Input
-                placeholder="Nome Completo"
-                status="error"
+                placeholder="Telefone"
                 backgroundColor={Cores.cinza[7]}
                 color={Cores.preto}
                 fontSize="1em"
-                width="100%"
                 marginTop="2%"
-                name="nome"
-                value={estado.nome}
+                width="100%"
+                name="telefone"
+                value={estado.telefone}
                 onChange={preenchendoDados}
-                erro={erro.nome}
-                camposVazios={camposVazios.nome}
+                onKeyPress={verificandoEnter}
+                erro={erro.telefone}
+                camposVazios={camposVazios.telefone}
               ></Input>
-              <InputMesmaLinha>
-                <RotuloColuna>
+              {erro.telefone && (
+                <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
+              )}
+            </RotuloColuna>
+              <Input
+                placeholder="Data de Nascimento"
+                id="data"
+                type="date"
+                onKeyDown={(e) => e.preventDefault()}
+                backgroundColor={Cores.cinza[7]}
+                color={Cores.preto}
+                fontSize="1em"
+                width="50%"
+                marginTop="2%"
+                name="data_nascimento"
+                value={estado.data_nascimento}
+                onChange={validacaoData}
+                erro={erro.data_nascimento}
+                paddingRight="2%"
+                camposVazios={camposVazios.data_nascimento}
+              ></Input>
+          </InputMesmaLinha>
+          <Input
+            placeholder="CPF"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            fontSize="1em"
+            width="100%"
+            name="cpf"
+            value={estado.cpf}
+            onChange={preenchendoDados}
+            erro={erro.cpf}
+            camposVazios={camposVazios.cpf}
+          ></Input>
+          {erro.cpf && <Rotulo>Digite um CPF no formato xxx.xxx.xxx-xx</Rotulo>}
+          <Input
+            placeholder="Endereço de e-mail"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            fontSize="1em"
+            width="100%"
+            marginTop="2%"
+            name="email"
+            onChange={validacaoEmail}
+            erro={erro.email}
+            camposVazios={camposVazios.email}
+          ></Input>
+          {erro.email && (
+            <Rotulo>Digite um email no formato email@email.com</Rotulo>
+          )}
+          {usuario.tipo === "PACIENTE" && (
+            <>
+              <PossuiConvenio>
+                {" "}
+                Possui Convênio?
+                <Switch onChange={funcaoConvenio}></Switch>
+              </PossuiConvenio>
+              {convenio && (
+                <Input
+                  placeholder="Nome do Convênio"
+                  backgroundColor={Cores.cinza[7]}
+                  color={Cores.preto}
+                  fontSize="1em"
+                  width="100%"
+                  marginTop="2%"
+                  name="convenio"
+                  value={estado.convenio}
+                  onChange={validacaoCamposNaoGerais}
+                  camposVazios={camposVazios.convenio}
+                ></Input>
+              )}
+              <PossuiCuidador>
+                {" "}
+                Possui Cuidador?<Switch onChange={funcaoCuidador}></Switch>
+              </PossuiCuidador>
+
+              {cuidador && (
+                <>
                   <Input
-                    placeholder="Telefone"
+                    placeholder="Nome Cuidador"
                     backgroundColor={Cores.cinza[7]}
                     color={Cores.preto}
                     fontSize="1em"
-                    marginTop="2%"
                     width="100%"
-                    name="telefone"
-                    value={estado.telefone}
-                    onChange={preenchendoDados}
-                    onKeyPress={verificandoEnter}
-                    erro={erro.telefone}
-                    camposVazios={camposVazios.telefone}
+                    marginTop="2%"
+                    name="nome_cuidador"
+                    value={estado.nome_cuidador}
+                    onChange={validacaoCamposNaoGerais}
+                    camposVazios={camposVazios.nome_cuidador}
                   ></Input>
-                  {erro.telefone && (
+                  <Input
+                    placeholder="Telefone Cuidador"
+                    backgroundColor={Cores.cinza[7]}
+                    color={Cores.preto}
+                    fontSize="1em"
+                    width="100%"
+                    marginTop="2%"
+                    name="telefone_cuidador"
+                    value={estado.telefone_cuidador}
+                    onChange={validacaoCamposNaoGerais}
+                    onKeyPress={verificandoEnter}
+                    erro={erro.telefone_cuidador}
+                    camposVazios={camposVazios.telefone_cuidador}
+                  ></Input>
+                  {erro.telefone_cuidador && (
                     <Rotulo>
                       Digite um telefone no formato (xx)xxxxx-xxxx
                     </Rotulo>
                   )}
-                </RotuloColuna>
-                <RotuloColuna>
-                  <Input
-                    placeholder="Data de Nascimento"
-                    id="data"
-                    type="date"
-                    onKeyDown={(e) => e.preventDefault()}
-                    backgroundColor={Cores.cinza[7]}
-                    color={Cores.preto}
-                    fontSize="1em"
-                    width="50%"
-                    marginTop="2%"
-                    name="data_nascimento"
-                    value={estado.data_nascimento}
-                    onChange={validacaoData}
-                    erro={erro.data_nascimento}
-                    paddingRight="2%"
-                    camposVazios={camposVazios.data_nascimento}
-                  ></Input>
-                </RotuloColuna>
-              </InputMesmaLinha>
-              <Input
-                placeholder="CPF"
-                backgroundColor={Cores.cinza[7]}
-                color={Cores.preto}
-                fontSize="1em"
-                width="100%"
-                name="cpf"
-                value={estado.cpf}
-                onChange={preenchendoDados}
-                erro={erro.cpf}
-                camposVazios={camposVazios.cpf}
-              ></Input>
-              {erro.cpf && (
-                <Rotulo>Digite um CPF no formato xxx.xxx.xxx-xx</Rotulo>
-              )}
-              <Input
-                placeholder="Endereço de e-mail"
-                backgroundColor={Cores.cinza[7]}
-                color={Cores.preto}
-                fontSize="1em"
-                width="100%"
-                marginTop="2%"
-                name="email"
-                onChange={validacaoEmail}
-                erro={erro.email}
-                camposVazios={camposVazios.email}
-              ></Input>
-              {erro.email && (
-                <Rotulo>Digite um email no formato email@email.com</Rotulo>
-              )}
-              {usuario.tipo === "PACIENTE" && (
-                <>
-                  <PossuiConvenio>
-                    {" "}
-                    Possui Convênio?
-                    <Switch onChange={funcaoConvenio}></Switch>
-                  </PossuiConvenio>
-                  {convenio && (
-                    <Input
-                      placeholder="Nome do Convênio"
-                      backgroundColor={Cores.cinza[7]}
-                      color={Cores.preto}
-                      fontSize="1em"
-                      width="100%"
-                      marginTop="2%"
-                      name="convenio"
-                      value={estado.convenio}
-                      onChange={validacaoCamposNaoGerais}
-                      camposVazios={camposVazios.convenio}
-                    ></Input>
-                  )}
-                  <PossuiCuidador>
-                    {" "}
-                    Possui Cuidador?<Switch onChange={funcaoCuidador}></Switch>
-                  </PossuiCuidador>
-
-                  {cuidador && (
-                    <>
-                      <Input
-                        placeholder="Nome Cuidador"
-                        backgroundColor={Cores.cinza[7]}
-                        color={Cores.preto}
-                        fontSize="1em"
-                        width="100%"
-                        marginTop="2%"
-                        name="nome_cuidador"
-                        value={estado.nome_cuidador}
-                        onChange={validacaoCamposNaoGerais}
-                        camposVazios={camposVazios.nome_cuidador}
-                      ></Input>
-                      <Input
-                        placeholder="Telefone Cuidador"
-                        backgroundColor={Cores.cinza[7]}
-                        color={Cores.preto}
-                        fontSize="1em"
-                        width="100%"
-                        marginTop="2%"
-                        name="telefone_cuidador"
-                        value={estado.telefone_cuidador}
-                        onChange={validacaoCamposNaoGerais}
-                        onKeyPress={verificandoEnter}
-                        erro={erro.telefone_cuidador}
-                        camposVazios={camposVazios.telefone_cuidador}
-                      ></Input>
-                      {erro.telefone_cuidador && (
-                        <Rotulo>
-                          Digite um telefone no formato (xx)xxxxx-xxxx
-                        </Rotulo>
-                      )}
-                    </>
-                  )}
                 </>
               )}
+            </>
+          )}
 
-              <Input
-                placeholder="CEP"
-                backgroundColor={Cores.cinza[7]}
-                color={Cores.preto}
-                fontSize="1em"
-                width="100%"
-                marginTop="2%"
-                name="cep"
-                value={endereco.cep}
-                onChange={preenchendoEndereco}
-                erro={erro.cep}
-                camposVazios={camposVazios.cep}
-              ></Input>
-              {erro.cep && <Rotulo>Digite um CEP no formato xx.xxx-xxx</Rotulo>}
-              <Input
-                placeholder="País"
-                backgroundColor={Cores.cinza[7]}
-                color={Cores.preto}
-                fontSize="1em"
-                width="100%"
-                marginTop="2%"
-                name="pais"
-                value={endereco.pais}
-                onChange={preenchendoEndereco}
-                camposVazios={camposVazios.pais}
-              ></Input>
-              <Select
-                id="estado"
-                name="estado"
-                backgroundColor={Cores.cinza[7]}
-                color={Cores.preto}
-                width="100%"
-                marginTop="2%"
-                borderWidth="2px"
-                onChange={preenchendoEndereco}
-                camposVazios={camposVazios.estado}
-              >
-                <option value="">Estado</option>
-                <option value="AC">Acre</option>
-                <option value="AL">Alagoas</option>
-                <option value="AP">Amapá</option>
-                <option value="AM">Amazonas</option>
-                <option value="BA">Bahia</option>
-                <option value="CE">Ceará</option>
-                <option value="DF">Distrito Federal</option>
-                <option value="ES">Espírito Santo</option>
-                <option value="GO">Goiás</option>
-                <option value="MA">Maranhão</option>
-                <option value="MT">Mato Grosso</option>
-                <option value="MS">Mato Grosso do Sul</option>
-                <option value="MG">Minas Gerais</option>
-                <option value="PA">Pará</option>
-                <option value="PB">Paraíba</option>
-                <option value="PR">Paraná</option>
-                <option value="PE">Pernambuco</option>
-                <option value="PI">Piauí</option>
-                <option value="RJ">Rio de Janeiro</option>
-                <option value="RN">Rio Grande do Norte</option>
-                <option value="RS">Rio Grande do Sul</option>
-                <option value="RO">Rondônia</option>
-                <option value="RR">Roraima</option>
-                <option value="SC">Santa Catarina</option>
-                <option value="SP">São Paulo</option>
-                <option value="SE">Sergipe</option>
-                <option value="TO">Tocantins</option>
-                <option value="EX">Estrangeiro</option>
-              </Select>
-              <Input
-                placeholder="Cidade"
-                backgroundColor={Cores.cinza[7]}
-                color={Cores.preto}
-                fontSize="1em"
-                width="100%"
-                marginTop="2%"
-                name="cidade"
-                value={endereco.cidade}
-                onChange={preenchendoEndereco}
-                camposVazios={camposVazios.cidade}
-              ></Input>
-              <Input
-                placeholder="Bairro"
-                backgroundColor={Cores.cinza[7]}
-                color={Cores.preto}
-                fontSize="1em"
-                width="100%"
-                marginTop="2%"
-                name="bairro"
-                onChange={preenchendoEndereco}
-                camposVazios={camposVazios.bairro}
-              ></Input>
-              <Input
-                placeholder="Rua"
-                backgroundColor={Cores.cinza[7]}
-                color={Cores.preto}
-                fontSize="1em"
-                width="100%"
-                marginTop="2%"
-                name="rua"
-                onChange={preenchendoEndereco}
-                camposVazios={camposVazios.rua}
-              ></Input>
-              <InputMesmaLinha2>
-                <Input
-                  placeholder="Número"
-                  backgroundColor={Cores.cinza[7]}
-                  color={Cores.preto}
-                  fontSize="1em"
-                  width="48%"
-                  name="numero"
-                  value={endereco.numero}
-                  onChange={preenchendoEndereco}
-                  camposVazios={camposVazios.numero}
-                ></Input>
-                <Input
-                  placeholder="Complemento"
-                  backgroundColor={Cores.cinza[7]}
-                  borderColor={Cores.azul}
-                  color={Cores.preto}
-                  fontSize="1em"
-                  width="48%"
-                  marginTop="2%"
-                  name="complemento"
-                  onChange={preenchendoEndereco}
-                ></Input>
-              </InputMesmaLinha2>
+          <Input
+            placeholder="CEP"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            fontSize="1em"
+            width="100%"
+            marginTop="2%"
+            name="cep"
+            value={endereco.cep}
+            onChange={preenchendoEndereco}
+            erro={erro.cep}
+            camposVazios={camposVazios.cep}
+          ></Input>
+          {erro.cep && <Rotulo>Digite um CEP no formato xx.xxx-xxx</Rotulo>}
+          <Input
+            placeholder="País"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            fontSize="1em"
+            width="100%"
+            marginTop="2%"
+            name="pais"
+            value={endereco.pais}
+            onChange={preenchendoEndereco}
+            camposVazios={camposVazios.pais}
+          ></Input>
+          <Select
+            id="estado"
+            name="estado"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            width="100%"
+            marginTop="2%"
+            borderWidth="2px"
+            onChange={preenchendoEndereco}
+            camposVazios={camposVazios.estado}
+          >
+            <option value="">Estado</option>
+            <option value="AC">Acre</option>
+            <option value="AL">Alagoas</option>
+            <option value="AP">Amapá</option>
+            <option value="AM">Amazonas</option>
+            <option value="BA">Bahia</option>
+            <option value="CE">Ceará</option>
+            <option value="DF">Distrito Federal</option>
+            <option value="ES">Espírito Santo</option>
+            <option value="GO">Goiás</option>
+            <option value="MA">Maranhão</option>
+            <option value="MT">Mato Grosso</option>
+            <option value="MS">Mato Grosso do Sul</option>
+            <option value="MG">Minas Gerais</option>
+            <option value="PA">Pará</option>
+            <option value="PB">Paraíba</option>
+            <option value="PR">Paraná</option>
+            <option value="PE">Pernambuco</option>
+            <option value="PI">Piauí</option>
+            <option value="RJ">Rio de Janeiro</option>
+            <option value="RN">Rio Grande do Norte</option>
+            <option value="RS">Rio Grande do Sul</option>
+            <option value="RO">Rondônia</option>
+            <option value="RR">Roraima</option>
+            <option value="SC">Santa Catarina</option>
+            <option value="SP">São Paulo</option>
+            <option value="SE">Sergipe</option>
+            <option value="TO">Tocantins</option>
+            <option value="EX">Estrangeiro</option>
+          </Select>
+          <Input
+            placeholder="Cidade"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            fontSize="1em"
+            width="100%"
+            marginTop="2%"
+            name="cidade"
+            value={endereco.cidade}
+            onChange={preenchendoEndereco}
+            camposVazios={camposVazios.cidade}
+          ></Input>
+          <Input
+            placeholder="Bairro"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            fontSize="1em"
+            width="100%"
+            marginTop="2%"
+            name="bairro"
+            onChange={preenchendoEndereco}
+            camposVazios={camposVazios.bairro}
+          ></Input>
+          <Input
+            placeholder="Rua"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            fontSize="1em"
+            width="100%"
+            marginTop="2%"
+            name="rua"
+            onChange={preenchendoEndereco}
+            camposVazios={camposVazios.rua}
+          ></Input>
+          <InputMesmaLinha2>
+            <Input
+              placeholder="Número"
+              backgroundColor={Cores.cinza[7]}
+              color={Cores.preto}
+              fontSize="1em"
+              width="48%"
+              name="numero"
+              value={endereco.numero}
+              onChange={preenchendoEndereco}
+              camposVazios={camposVazios.numero}
+            ></Input>
+            <Input
+              placeholder="Complemento"
+              backgroundColor={Cores.cinza[7]}
+              borderColor={Cores.azul}
+              color={Cores.preto}
+              fontSize="1em"
+              width="48%"
+              marginTop="2%"
+              name="complemento"
+              onChange={preenchendoEndereco}
+            ></Input>
+          </InputMesmaLinha2>
 
-              <Input
-                placeholder="Defina sua senha"
-                backgroundColor={Cores.cinza[7]}
-                color={Cores.preto}
-                width="100%"
-                marginTop="2%"
-                fontSize="1em"
-                name="senha"
-                id="senha"
-                type="password"
-                onChange={preenchendoDados}
-                erro={erro.senha}
-                camposVazios={camposVazios.senha}
-              ></Input>
-              {erro.senha && (
-                <Rotulo>A senha deve ter no minimo 8 digitos</Rotulo>
-              )}
-              <Input
-                placeholder="Confirme sua senha"
-                backgroundColor={Cores.cinza[7]}
-                color={Cores.preto}
-                width="100%"
-                marginTop="2%"
-                fontSize="1em"
-                name="senhaConfirmada"
-                id="senhaConfirmada"
-                type="password"
-                onChange={preenchendoDados}
-                onKeyPress={verificandoEnter}
-                erro={erro.senhaConfirmada}
-                camposVazios={camposVazios.senhaConfirmada}
-              ></Input>
-              {erro.senhaConfirmada && (
-                <Rotulo>A senha deve ter no minimo 8 digitos</Rotulo>
-              )}
+          <Input
+            placeholder="Defina sua senha"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            width="100%"
+            marginTop="2%"
+            fontSize="1em"
+            name="senha"
+            id="senha"
+            type="password"
+            onChange={preenchendoDados}
+            erro={erro.senha}
+            camposVazios={camposVazios.senha}
+          ></Input>
+          {erro.senha && <Rotulo>A senha deve ter no minimo 8 digitos</Rotulo>}
+          <Input
+            placeholder="Confirme sua senha"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            width="100%"
+            marginTop="2%"
+            fontSize="1em"
+            name="senhaConfirmada"
+            id="senhaConfirmada"
+            type="password"
+            onChange={preenchendoDados}
+            onKeyPress={verificandoEnter}
+            erro={erro.senhaConfirmada}
+            camposVazios={camposVazios.senhaConfirmada}
+          ></Input>
+          {erro.senhaConfirmada && (
+            <Rotulo>A senha deve ter no minimo 8 digitos</Rotulo>
+          )}
 
-              <Button
-                height="50px"
-                width="60%"
-                backgroundColor={Cores.lilas[1]}
-                borderColor={Cores.azul}
-                color={Cores.branco}
-                fontSize="1.5em"
-                fontSizeMedia="1.2em"
-                onClick={() => {
-                  requisicaoCadastro();
-                }}
-                fontWeight="bold"
-              >
-                {carregando ? <Spin indicator={antIcon} /> : "CADASTRAR"}
-              </Button>
-            </DadosCadastro>
-            <AddToast />
-          </Body>
-        </>
-      )}
-    </div>
+          <Button
+            height="50px"
+            width="60%"
+            backgroundColor={Cores.lilas[1]}
+            borderColor={Cores.azul}
+            color={Cores.branco}
+            fontSize="1.5em"
+            fontSizeMedia="1.2em"
+            onClick={() => {
+              requisicaoCadastro();
+            }}
+            fontWeight="bold"
+          >
+            {carregando ? <Spin indicator={antIcon} /> : "CADASTRAR"}
+          </Button>
+        </DadosCadastro>
+        <AddToast />
+      </Body>
+    </>
   );
 }
 
