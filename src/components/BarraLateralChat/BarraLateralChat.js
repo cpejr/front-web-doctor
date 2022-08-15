@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { BarraPesquisaChat, NomeMensagem, MensagemPessoa, NomePessoa, HeaderBarraLateralChat, ListaPessoasChat, PessoaChat, BarraLateral } from "./Styles";
+import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
 import Input from "../../styles/Input";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -84,7 +85,7 @@ export default function BarraLateralChat(props) {
         <Button
         backgroundColor="transparent"
         borderColor="transparent"
-        color="#0A0E3C"
+        color={Cores.azul}
         width="18%"
         widthres="15%"
         height="27%"
@@ -94,7 +95,7 @@ export default function BarraLateralChat(props) {
         </Button>
       </HeaderBarraLateralChat>
       <ListaPessoasChat >
-        {pessoas.filter((val)=> {
+        {pessoas.filter((val) => {
           if (searchTerm === "") {
             return val
          } else if (val.nome.toLowerCase().includes(searchTerm.toLowerCase())) {

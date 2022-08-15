@@ -9,12 +9,11 @@ const Chat = () => {
 
   function funcaoPai(id) {
     setUsandoIdPessoa(id)
-    console.log(id)
   }
   return (
     <Container>
       <BarraLateralChat passandoIdPessoa={(id) => funcaoPai(id)}/>
-      {usandoIdPessoa ? <ConversaAberta /> : <MensagemInicial/>}
+      {usandoIdPessoa ? <ConversaAberta idConversaAberta={usandoIdPessoa} /> : <MensagemInicial/>}
     </Container>
   );
 };

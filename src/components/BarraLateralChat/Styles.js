@@ -3,9 +3,9 @@ import { Cores } from "../../variaveis";
 
 export const BarraLateral = styled.div`
   position: fixed;
-  border-color: ${Cores.cinza[9]};
+  border-color: ${Cores.cinza[3]};
   border-top: 0ch;
-  border-style: groove;
+  border-style: solid;
   padding-top: 2%;
   margin-left: 10%;
   height: 100%;
@@ -100,4 +100,5 @@ background-color: ${Cores.cinza[5]};
 align-items: center;
 display: flex;
 border-radius: 3px;
+padding-right: 2%;
 `;
