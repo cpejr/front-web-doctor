@@ -27,6 +27,7 @@ const Input = styled.input`
   padding-left: 2%;
   box-shadow: ${(props) => props.boxShadow};
   border-width: ${(props) => props.borderWidth};
+  padding-right: ${(props) => props.paddingRight ?? "0px"};
   width: ${(props) => props.width};
   @media (max-width: 820px) {
     width: 100%;

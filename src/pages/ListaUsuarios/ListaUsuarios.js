@@ -32,6 +32,7 @@ import ModalAdicionarCodigo from "../../components/ModalAdicionarCodigo/ModalAdi
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 
+
 function ListaUsuarios() {
   const history = useHistory();
 
