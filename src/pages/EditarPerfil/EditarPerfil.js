@@ -214,8 +214,9 @@ function EditarPerfil() {
     if (!enderecoBack.rua) errors.rua = true;
     if (!enderecoBack.numero) errors.numero = true;
 
+
     setTudoNulo({ ...tudoNulo, ...errors });
-  }, [estadoBack]);
+  }, [estadoBack, enderecoBack]);
 
   useEffect(() => {
     setandoDiaAtual();
@@ -321,6 +322,9 @@ function EditarPerfil() {
         [name]: maskApenasLetras(value),
       });
     }
+
+    
+
     if (name === "cpf") {
       setEstado({ ...estado, [name]: maskCPF(value) });
       setEstadoBack({ ...estadoBack, [name]: maskApenasNumerosCpfTel(value) });
@@ -333,6 +337,8 @@ function EditarPerfil() {
 
   function preenchendoEndereco(e) {
     const { name, value } = e.target;
+
+
     
     if(name !== "numero" && name!== "pais" && name!=="cidade") {
 
