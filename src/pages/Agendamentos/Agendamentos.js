@@ -24,7 +24,7 @@ import {
   Agendamento,
   CódigoPaciente,
   TopoPaginaEsquerda,
-  TextoData
+  TextoData,
 } from "./Styles";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
@@ -36,7 +36,8 @@ import * as managerService from "../../services/ManagerService/managerService";
 function Agendamentos() {
   const history = useHistory();
   const { Search } = Input;
-  const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] = useState(false);
+  const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] =
+    useState(false);
   const [email, setEmail] = useState();
   const [carregando, setCarregando] = useState(true);
   const [consultas, setConsultas] = useState([]);
@@ -45,15 +46,11 @@ function Agendamentos() {
   const [modalConsultaMarcada, setModalConsultaMarcada] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const abertoPeloUsuario = false;
-  const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
-  
-
-
-
-
-  
 
   async function pegandoDados() {
+    setCarregando(true);
+    setConsultas([]);
+    setExamesMarcados([]);
     const resposta =
       await managerService.GetDadosConsultasExamesMarcadosGeral();
     setConsultas(resposta.dadosConsultas);
@@ -64,7 +61,6 @@ function Agendamentos() {
   useEffect(() => {
     pegandoDados();
   }, [email]);
-
 
   async function marcandoAgendamento(email) {
     setEmail(email);
@@ -88,7 +84,7 @@ function Agendamentos() {
     pegandoDados();
   }
 
-  async function abreModalConsultaMarcada(consulta){
+  async function abreModalConsultaMarcada(consulta) {
     setModalConsultaMarcada(true);
     setConsultaEspecifica(consulta);
   }
@@ -96,18 +92,17 @@ function Agendamentos() {
   return (
     <div>
       <ContainerListadeUsuarios>
-
         <TopoPagina>
           <TopoPaginaEsquerda>
             <BarraPesquisa>
-              <Search placeholder="BUSCAR"/>
+              <Search placeholder="BUSCAR" />
             </BarraPesquisa>
-              <FiltroDatas>
-                <Select
-                  defaultValue="Todas as datas"
-                  style={{ color: "green", width: "100%" }}
-                ></Select>
-              </FiltroDatas>
+            <FiltroDatas>
+              <Select
+                defaultValue="Todas as datas"
+                style={{ color: "green", width: "100%" }}
+              ></Select>
+            </FiltroDatas>
           </TopoPaginaEsquerda>
           <Button
             marginTop="0px"
@@ -137,52 +132,62 @@ function Agendamentos() {
           <CódigoPaciente>Código do Paciente</CódigoPaciente>
         </DadosUsuario>
         <ContainerUsuarios>
+          {consultas.sort(compararDataAgendamentos).map((value) => (
+            <Usuario key={value.id_usuario}>
+              <Imagem>{value.avatar_url}</Imagem>
+              <Nome>
+                {carregando ? (
+                  <Spin indicator={antIcon} />
+                ) : (
+                  <div onClick={() => abrindoPerfilPaciente(value.email)}>
+                    {value.nome}
+                  </div>
+                )}
+              </Nome>
+              <Telefone>
+                {carregando ? (
+                  <Spin indicator={antIcon} />
+                ) : (
+                  <>
+                    ({value.telefone.slice(0, -9)}){" "}
+                    {value.telefone.slice(2, -4)}-{value.telefone.slice(-4)}
+                  </>
+                )}
+              </Telefone>
+              <Data onClick={() => abreModalConsultaMarcada(value)}>
+                {parseInt(value.data_hora.slice(11, 13)) < 12
+                  ? value.data_hora.slice(8, 10) +
+                    "/" +
+                    value.data_hora.slice(5, 7) +
+                    "/" +
+                    value.data_hora.slice(0, 4) +
+                    " - " +
+                    parseInt(value.data_hora.slice(11, 13)) +
+                    ":" +
+                    value.data_hora.slice(14, 16) +
+                    " am"
+                  : value.data_hora.slice(8, 10) +
+                    "/" +
+                    value.data_hora.slice(5, 7) +
+                    "/" +
+                    value.data_hora.slice(0, 4) +
+                    " - " +
+                    parseInt(value.data_hora.slice(11, 13) - 12) +
+                    ":" +
+                    value.data_hora.slice(14, 16) +
+                    " pm"}
+              </Data>
 
-          {consultas
-            .sort(compararDataAgendamentos)
-            .map((value) => (
-              <Usuario key={value.id_usuario}>
-                <Imagem>{value.avatar_url}</Imagem>
-                <Nome>
-                  {carregando ? (
-                    <Spin indicator={antIcon} />
-                  ) : (
-                    <div onClick={() => abrindoPerfilPaciente(value.email)}>
-                      {value.nome}
-                    </div>
-                  )}
-                </Nome>
-                <Telefone>
-                  {carregando ? (
-                    <Spin indicator={antIcon} />
-                  ) : (
-                    <>
-                      ({value.telefone.slice(0, -9)}){" "}
-                      {value.telefone.slice(2, -4)}-{value.telefone.slice(-4)}
-                    </>
-                  )}
-                </Telefone>
-                <Data
-                onClick={() => abreModalConsultaMarcada(value)}
-                >
-                  {parseInt(value.data_hora.slice(11, 13)) < 12 ? (
-                    value.data_hora.slice(8, 10) + "/" + value.data_hora.slice(5, 7) + "/" + value.data_hora.slice(0, 4) + " - " +
-                    parseInt(value.data_hora.slice(11, 13)) + ":" + value.data_hora.slice(14, 16) + " am"
-                  ) : (
-                    value.data_hora.slice(8, 10) + "/" + value.data_hora.slice(5, 7) + "/" + value.data_hora.slice(0, 4) + " - " +
-                    parseInt(value.data_hora.slice(11, 13) - 12) + ":" + value.data_hora.slice(14, 16) + " pm")}
-                </Data>
-
-                <Agendamento>Consulta</Agendamento>
-                <CódigoPaciente>
-                  {carregando ? (
-                    <Spin indicator={antIcon} />
-                  ) : (
-                    <div>{value.codigo}</div>
-                  )}
-                </CódigoPaciente>
-              </Usuario>
-            ))}
+              <Agendamento>Consulta</Agendamento>
+              <CódigoPaciente>
+                {carregando ? (
+                  <Spin indicator={antIcon} />
+                ) : (
+                  <div>{value.codigo}</div>
+                )}
+              </CódigoPaciente>
+            </Usuario>
+          ))}
           {examesMarcados.map((value) => (
             <Usuario key={value.id_usuario}>
               <Imagem>{value.avatar_url}</Imagem>
@@ -243,7 +248,7 @@ function Agendamentos() {
         width={"auto"}
         centered={true}
         style={{
-          backgroundColor: "black"
+          backgroundColor: "black",
         }}
       >
         <ModalConsultaMarcada
@@ -251,8 +256,6 @@ function Agendamentos() {
           fechandoModal={() => fechandoModalConsultaMarcada()}
         />
       </Modal>
-
-  
     </div>
   );
 }

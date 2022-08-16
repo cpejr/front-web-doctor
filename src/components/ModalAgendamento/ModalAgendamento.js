@@ -39,6 +39,8 @@ function ModalAgendamento(props) {
   );
 
   async function pegandoDados() {
+    setConsultas([])
+    setExamesMarcados([])
     const respostaConsultas =
       await managerService.GetDadosConsultasExamesMarcados(props.id_usuario);
     setConsultas(respostaConsultas.dadosConsultas);
