@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { HeaderConversaAberta, Conversa, NomePessoa, CorpoConversaAberta, FooterConversaAberta } from "./Styles";
+import { HeaderConversaAberta, Conversa, NomePessoa, CorpoConversaAberta, FooterConversaAberta, MensagemRecebida, MensagemEnviada, DataHoraMensagem } from "./Styles";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
 import Input from "../../styles/Input";
@@ -79,6 +79,9 @@ export default function ConversaAberta(props) {
           >{pessoas[props.idConversaAberta - 1].nome}</NomePessoa> 
         </HeaderConversaAberta>
         <CorpoConversaAberta>
+          <MensagemRecebida>Oii É preciso ter coragem para enfrentar os inimigos, e ainda mais para enfrentar os amigos.<DataHoraMensagem>15/05/2022 12:12</DataHoraMensagem></MensagemRecebida>
+          <MensagemEnviada>oiiii<DataHoraMensagem>15/05/2022 12:12</DataHoraMensagem></MensagemEnviada>
+          <MensagemEnviada>É preciso ter coragem para enfrentar os inimigos, e ainda mais para enfrentar os amigos.<DataHoraMensagem>15/05/2022 12:12</DataHoraMensagem></MensagemEnviada>
         </CorpoConversaAberta>
         <FooterConversaAberta>
           <Button
@@ -101,6 +104,7 @@ export default function ConversaAberta(props) {
             height="100%"
             minHeight="45px"
             maxHeight="40px"
+            paddingRight="2%"
           />
           <Button
             backgroundColor="transparent"

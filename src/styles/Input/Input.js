@@ -27,6 +27,7 @@ const Input = styled.input`
   min-height: ${(props) => props.minHeight};
   max-height: ${(props) => props.maxHeight};
   padding-left: 2%;
+  padding-right: ${(props) => props.paddingRight};
   box-shadow: ${(props) => props.boxShadow};
   border-width: ${(props) => props.borderWidth};
   width: ${(props) => props.width};
