@@ -452,12 +452,14 @@ function Cadastro(props) {
     if (usuario.nome !== "" && usuario.nome !== undefined) {
       setCamposVazios({ ...camposVazios, nome: false });
     }
+
+
   }, [usuario]);
 
   function preenchendoEndereco(e) {
     const { value, name } = e.target;
 
-    if (name !== "complemento" && name !== "pais" && name !== "numero") {
+    if (name !== "complemento" && name !== "pais" && name !== "numero" && name !== "cidade") {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
     }
 
@@ -477,6 +479,7 @@ function Cadastro(props) {
       });
     }
     if (name === "pais") {
+      console.log(camposVazios.pais);
       setEndereco({
         ...endereco,
         [name]: apenasLetras(value),
@@ -485,10 +488,15 @@ function Cadastro(props) {
         ...enderecoBack,
         [name]: apenasLetras(value),
       });
+      
     }
     if (name === "cidade") {
       setEndereco({
         ...endereco,
+        [name]: apenasLetras(value),
+      });
+      setEnderecoBack({
+        ...enderecoBack,
         [name]: apenasLetras(value),
       });
     }
@@ -509,11 +517,19 @@ function Cadastro(props) {
       setCamposVazios({ ...camposVazios, pais: false });
     }
   }, [enderecoBack.pais]);
+
   useEffect(() => {
     if (enderecoBack.numero !== "" && enderecoBack.numero !== undefined) {
       setCamposVazios({ ...camposVazios, numero: false });
     }
   }, [enderecoBack.numero]);
+
+  useEffect(() => {
+    if (enderecoBack.cidade !== "" && enderecoBack.cidade !== undefined) {
+      setCamposVazios({ ...camposVazios, cidade: false });
+    }
+  }, [enderecoBack.cidade]);
+
 
   return (
     <div>
@@ -737,7 +753,7 @@ function Cadastro(props) {
             onChange={preenchendoEndereco}
             camposVazios={camposVazios.estado}
           >
-            <option value="">Estado</option>
+            <option value="" disabled selected>Estado</option>
             <option value="AC">Acre</option>
             <option value="AL">Alagoas</option>
             <option value="AP">Amapá</option>
