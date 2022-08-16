@@ -479,7 +479,6 @@ function Cadastro(props) {
       });
     }
     if (name === "pais") {
-      console.log(camposVazios.pais);
       setEndereco({
         ...endereco,
         [name]: apenasLetras(value),

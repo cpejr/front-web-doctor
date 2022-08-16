@@ -70,7 +70,7 @@ function EditarPerfil() {
   const [estadoBack, setEstadoBack] = useState({});
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-  const [hoje, setHoje] = useState("");
+  const [ontem, setOntem] = useState("");
 
   const [cpfMasked, setCpfMasked] = useState({});
   const [dataMasked, setDataMasked] = useState({});
@@ -224,11 +224,11 @@ function EditarPerfil() {
 
   useEffect(() => {
     setandoDataMinima();
-  }, [hoje]);
+  }, [ontem]);
 
   function setandoDiaAtual() {
     let data = new Date();
-    let dia = data.getDate();
+    let dia = data.getDate() - 1;
     let mes = data.getMonth() + 1;
     let ano = data.getFullYear();
 
@@ -239,11 +239,11 @@ function EditarPerfil() {
       mes = "0" + mes;
     }
 
-    setHoje(ano + "-" + mes + "-" + dia);
+    setOntem(ano + "-" + mes + "-" + dia);
   }
 
   function setandoDataMinima() {
-    document.getElementById("data").setAttribute("max", hoje);
+    document.getElementById("data").setAttribute("max", ontem);
   }
 
   async function atualizarDados() {
