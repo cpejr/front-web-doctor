@@ -98,6 +98,7 @@ function EditarPerfil() {
     rua: true,
     numero: true,
     bairro: true,
+    complemento: true,
   };
 
   const maskCPF = (value) => {
@@ -213,6 +214,7 @@ function EditarPerfil() {
     if (!enderecoBack.bairro) errors.bairro = true;
     if (!enderecoBack.rua) errors.rua = true;
     if (!enderecoBack.numero) errors.numero = true;
+    if (!enderecoBack.complemento) errors.complemento = true;
 
 
     setTudoNulo({ ...tudoNulo, ...errors });
