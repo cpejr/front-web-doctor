@@ -30,6 +30,7 @@ import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import { apenasNumeros } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
+import { TiposDeConsulta } from "../listaTiposDeConsultas";
 
 
 function ModalEditarAgendamentoEspecifico(props) {
@@ -288,9 +289,17 @@ function ModalEditarAgendamentoEspecifico(props) {
                 <option value="" disabled selected>
                   {consulta.tipo}
                 </option>
-                <option value="1">Tipo 1</option>
-                <option value="2">Tipo 2</option>
-                <option value="3">Tipo 3</option>
+                {TiposDeConsulta.map((tipo) => (
+                  <>
+                    {carregando ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <option key={tipo} value={tipo} color="red">
+                        {tipo}
+                      </option>
+                    )}
+                  </>
+                ))}
               </Select>
             </TamanhoInput>
             <TamanhoInput>

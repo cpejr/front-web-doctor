@@ -30,7 +30,7 @@ import Select from "../../styles/Select";
 import Button from "../../styles/Button";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import { Cores } from "../../variaveis";
-import { TiposDeConsulta } from "./TiposDeConsulta";
+import { TiposDeConsulta } from "../listaTiposDeConsultas";
 import { apenasNumeros, data, dataAgendamentoBack } from "../../utils/masks";
 import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
