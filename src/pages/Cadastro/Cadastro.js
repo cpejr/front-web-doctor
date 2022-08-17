@@ -81,7 +81,7 @@ function Cadastro(props) {
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
   const [verificacaoLogado, setVerificacaoLogado] = useState("");
-  const [hoje, setHoje] = useState("");
+  const [ontem, setOntem] = useState("");
 
   function funcaoConvenio() {
     setConvenio(!convenio);
@@ -170,11 +170,11 @@ function Cadastro(props) {
 
   useEffect(() => {
     setandoDataMinima();
-  }, [hoje]);
+  }, [ontem]);
 
   function setandoDiaAtual() {
     let data = new Date();
-    let dia = data.getDate();
+    let dia = data.getDate() - 1;
     let mes = data.getMonth() + 1;
     let ano = data.getFullYear();
 
@@ -185,11 +185,11 @@ function Cadastro(props) {
       mes = "0" + mes;
     }
 
-    setHoje(ano + "-" + mes + "-" + dia);
+    setOntem(ano + "-" + mes + "-" + dia);
   }
 
   function setandoDataMinima() {
-    document.getElementById("data").setAttribute("max", hoje);
+    document.getElementById("data").setAttribute("max", ontem);
   }
 
   function verificaAutenticacao() {
