@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Cores } from "../../variaveis";
 
 export const BarraLateral = styled.div`
-  position: fixed;
+  position: absolute;
   border-color: ${Cores.cinza[3]};
   border-top: 0ch;
   border-style: solid;
@@ -15,11 +15,20 @@ export const BarraLateral = styled.div`
   align-items: center;
   min-width:300px;
 
+  @media (max-height: 741px) and (min-height: 739px) {
+      height:740px;
+  }
+
+  @media (max-height: 852px) and (min-height: 843px) {
+    height:850px;
+    border-bottom: 0ch;
+  }
+
   @media (max-width: 821px) {
     margin-left: 0%;
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 670px) {
     width: 100%;
     padding-top: 5%;
   }
@@ -40,16 +49,13 @@ export const HeaderBarraLateralChat = styled.div`
   `;
 
 export const ListaPessoasChat = styled.div`
-height: 75%;
+height: 80%;
 display: block;
 align-items: flex-start;
 justify-content: flex-start;
 overflow-y: scroll;
 ::-webkit-scrollbar{display:none;}
 
-@media (min-height: 736px)  {
-    height: 80%;
-  }
 `;
 
 export const PessoaChat = styled.button`
@@ -66,23 +72,48 @@ padding-left: 2.5%;
 `;
 
 export const NomePessoa = styled.div`
-display: flex;
+display: ruby;
 font-size: 25px;
 font-weight: 500;
 line-height: 29px;
 text-align: left;
-margin-top: -4%;
+margin-top: -1%;
+max-width: 15.5ch;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
 `;
 
+// export const BolaAzul = styled.div`
+// display: flex;
+// margin-top: -5%;
+// margin-left:30ch;
+// height: 13px;
+// width: 13px;
+// background-color: ${Cores.lilas[1]};
+// border-radius: 7px;
+// `;
+
 export const MensagemPessoa = styled.div`
-display: flex;
+display: ruby;
 font-size: 25px;
 font-weight: 400;
 line-height: 29px;
 text-align: left;
-margin-top: 14%;
-`;
+margin-top: 9.5%;
+max-width: 16ch;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
 
+@media (max-width: 1277px) {
+  max-width: 12ch;
+  }
+
+@media (max-width: 670px) {
+max-width: 15ch;
+}
+`;
 
 export const Pessoa = styled.div`
 display: flex;

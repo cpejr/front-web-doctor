@@ -4,7 +4,19 @@ export const Container = styled.div`
   display: flex;
   width: 100%;
   max-width:1800px;
-  height: 620px;
+  height: 621px;
+  position:fixed;
+
+  @media (max-height: 715px) {
+    position:relative;
+  }
+  @media (max-height: 1300px) and (min-height: 715px) {
+    height: 100%;
+  }
+
+  @media (min-height: 1301px) {
+    height: 95%;
+  }
 `;
 
 export const MensagemInicialChat = styled.div`
@@ -18,6 +30,7 @@ export const MensagemInicialChat = styled.div`
   height: 100%;
   padding-top:17%;
   padding-bottom:19%;
+  
   @media (max-width: 821px) {
     margin-left: 37%;
     width: 63%;

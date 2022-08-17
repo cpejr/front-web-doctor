@@ -4,9 +4,79 @@ import { Cores } from "../../variaveis";
 export const Conversa = styled.div`
   display: flex;
   flex-direction:column;
-  width: 100%;
+  width: 51%;
   height: 100%;
-`;
+  margin-left:37%;
+
+  // ajuste altura
+  @media (max-height: 859px) and (min-height: 715px) {
+      height: 88%;
+  }
+
+  @media (max-height: 1030px) and (min-height: 860px) {
+      height: 90%;
+  }
+
+  @media (max-height: 1180px) and (min-height: 1030px) {
+      height: 92%;
+  }
+  //
+  //ajuste largura
+  @media (max-width: 1053px) and (min-width: 1003px) {
+    margin-left: 38.5%;
+  }
+
+  @media (max-width: 1003px) and (min-width: 960px) {
+    margin-left: 40%;
+  }
+
+  @media (max-width: 960px) and (min-width: 920px) {
+    margin-left: 41.4%;
+  }
+
+  @media (max-width: 919px) and (min-width: 885px) {
+    margin-left: 43%;
+  }
+
+  @media (max-width: 885px) and (min-width: 846px) {
+    margin-left: 44%;
+  }
+
+  @media (max-width: 846px) and (min-width: 821px) {
+    margin-left: 45.5%;
+  }
+
+  @media (max-width: 821px) {
+    margin-left: 37%;
+    width: 63%;
+  }
+
+  @media (max-width: 790px) and (min-width: 760px) {
+    width:62%;
+    margin-left: 38%;
+  }
+
+  @media (max-width: 760px) and (min-width: 730px) {
+    width:61%;
+    margin-left: 39.5%;
+  }
+
+  @media (max-width: 730px) and (min-width: 705px) {
+    width:60%;
+    margin-left: 41%;
+  }
+
+  @media (max-width: 705px) and (min-width: 680px) {
+    width:59%;
+    margin-left: 43%;
+  }
+
+  @media (max-width: 680px) and (min-width: 600px) {
+    width:58%;
+    margin-left: 44%;
+  }
+  //
+  `;
 
 
 export const HeaderConversaAberta = styled.div`
@@ -16,20 +86,12 @@ export const HeaderConversaAberta = styled.div`
   justify-content: flex-start;
   align-items: center;
   background-color: white;
-  margin-left:37%;
-  width: 51%;
+  width: 100%;
   height: 17%;
   border-style:solid;
   border-color: ${Cores.cinza[3]};
   border-left: 0ch;
 
-  @media (max-width: 821px) {
-    margin-left: 37%;
-    width: 63%;
-  }
-  @media (max-width: 670px) and (min-width: 601px) {
-    padding-left:10%;
-  }
 `;
 
 export const NomePessoa = styled.div`
@@ -46,9 +108,8 @@ export const NomePessoa = styled.div`
 export const CorpoConversaAberta = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: #FDF1D1;
-  margin-left:37%;
-  width: 51%;
+  background-color: ${Cores.amarelo};
+  width: 100%;
   height: 70%;
   border-style:solid;
   border-color: ${Cores.cinza[3]};
@@ -57,13 +118,6 @@ export const CorpoConversaAberta = styled.div`
   border-bottom: 0ch;
   justify-content:flex-end;
 
-  @media (max-width: 821px) {
-    margin-left: 37%;
-    width: 63%;
-  }
-  @media (max-width: 670px) and (min-width: 601px) {
-    padding-left:10%;
-  }
 `;
 
 export const MensagemRecebida = styled.div`
@@ -96,7 +150,7 @@ export const MensagemEnviada = styled.div`
   font-weight: 400;
   line-height: 23px;
   border-radius: 5px;
-  background-color: #CFD3F8;
+  background-color: ${Cores.lilas[4]};
   align-self:flex-end;
   margin:2%;
   margin-top:0%;
@@ -120,18 +174,10 @@ export const FooterConversaAberta = styled.div`
   background-color: white;
   padding-top:1%;
   padding-bottom:1%;
-  margin-left:37%;
-  width: 51%;
+  width: 100%;
   height: 15%;
   border-style:solid;
   border-color: ${Cores.cinza[3]};
   border-left: 0ch;
 
-  @media (max-width: 821px) {
-    margin-left: 37%;
-    width: 63%;
-  }
-  @media (max-width: 670px) and (min-width: 601px) {
-    padding-left:10%;
-  }
 `;

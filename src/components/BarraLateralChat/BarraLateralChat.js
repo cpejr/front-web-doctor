@@ -20,44 +20,44 @@ const pessoas = [
       id: 1,
       foto: `${pato}`,
       nome: "Pato",
-      mensagem: "quack",
+      mensagem: "O importante não é vencer todos os dias, mas lutar sempre.",
       
   },
   {
       id: 2,
       foto:`${patao}`,
       nome: "Patão",
-      mensagem: "quackão",
+      mensagem: "Quackão",
   },
   {
       id: 3,
       foto:`${patinho}`,
       nome: "Patinho",
-      mensagem: "quack",
+      mensagem: "Quack quack quack quack",
   },
   {
     id: 4,
     foto:`${patobravo}`,
     nome: "Pato da silva",
-    mensagem: "quack",
+    mensagem: "Quack",
   },
   {
     id: 5,
     foto:`${patomarreco}`,
     nome: "Marreco",
-    mensagem: "quack",
+    mensagem: "Quack",
   },
   {
     id: 6,
     foto:`${patotimido}`,
     nome: "Patinho timido",
-    mensagem: "quack",
+    mensagem: "Quack",
   },
   {
     id: 7,
     foto:`${patopato}`,
     nome: "Pato Tirado",
-    mensagem: "quack",
+    mensagem: "Quack",
   },
 ]
 
@@ -109,6 +109,7 @@ export default function BarraLateralChat(props) {
           <NomeMensagem>
           <NomePessoa
           >{pessoa.nome}</NomePessoa>
+          {/* <BolaAzul/> */}
           <MensagemPessoa>{pessoa.mensagem}</MensagemPessoa>
           </NomeMensagem>
           </PessoaChat>
