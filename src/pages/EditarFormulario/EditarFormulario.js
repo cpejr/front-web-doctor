@@ -85,7 +85,6 @@ function EditarFormulario(props) {
           estado.properties
         );
 
-        console.log("cadastrou");
 
         estado.properties = auxiliar;
         await managerService.EditarPerguntasFormulario(formularios.id, estado);
@@ -108,7 +107,6 @@ function EditarFormulario(props) {
       await sleep(1500);
       window.location.href = "/web/listaformularios";
       setCarregandoBotaoAtualizar(false);
-      console.log("olha o schema");
     }
   }
 
