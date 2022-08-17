@@ -50,6 +50,7 @@ export const Caixa = styled.div`
 `;
 
 export const CaixaNome = styled.div`
+
   width: 90%;
   height: 20%;
   background-color: ${Cores.cinza[7]};
@@ -66,8 +67,11 @@ export const CaixaNome = styled.div`
   @media (max-width: 1101px) {
       margin-top: 5%;
   }
+  @media (max-width: 829px) {
+      margin-bottom: 2%;
+  }
   @media (max-width: 700px) {
-      height: 65px;
+      height: 75px;
   }
   @media (max-width: 400px) {
 
@@ -79,25 +83,32 @@ export const CaixaNome = styled.div`
 
 export const Texto = styled.div`
 
-  margin-left: 20%;
+  width: 87%;
+  padding: 0px 10px 0px 10px;
   font-family: ${Fontes.roboto};
   color: ${Cores.azulEscuro};
   font-weight: 600;
   font-size: 1.15em;
   display: flex;
   justify-content: center;
+  align-items: center;
+
+  @media (max-width: 829px) {
+    font-size: 1.1em;
+  }
 
   @media (max-width: 710px) {
     font-size: 1.1em;
-    margin-left: 15%;
+    margin-top: 3%;
+    margin-bottom: 3%;
   }
   @media (max-width: 580px) {
     font-size: 1em;
-    margin-left: 8%;
+   
   }
   @media (max-width: 400px) {
     font-size: 0.85em;
-    margin-left: 7%;
+
   }
 `;
 
@@ -106,9 +117,9 @@ export const TextoDescricao = styled.div`
   justify-content: center;
   font-style: italic;
   text-align: center;
-  margin-top: 10%;
-  margin-bottom: 10%;
-  height: auto
+  margin-top: ${(props) => props.marginTop};
+  margin-bottom: ${(props) => props.marginBottom};
+  height: auto;
   font-family: ${Fontes.roboto};
   color: ${Cores.azulEscuro};
   font-size: 1.15em;
@@ -119,7 +130,6 @@ export const TextoDescricao = styled.div`
     
     
   }
-
 
   @media (max-width: 710px) {
     font-size: 1.05em;
@@ -159,6 +169,15 @@ export const CaixaInformações = styled.div`
     width: 90%;
     justify-content: space-between;
   }
+
+  @media (max-width: 829px) {
+    margin-top: 2%;
+  }
+
+  @media (max-width: 400px) {
+    margin-bottom: 8%;
+  }
+
 `;
 
 

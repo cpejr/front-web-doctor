@@ -11,6 +11,8 @@ function ModalConsultaMarcada (props) {
   const [consulta, setConsulta] = useState({});
   const [carregando, setCarregando] = useState();
   const [dataHora, setDataHora] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [comparaDescricao, setComparaDescricao] = useState(false);
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 20, color: Cores.azul }} spin />
@@ -21,12 +23,21 @@ function ModalConsultaMarcada (props) {
     await sleep(1500);
     setConsulta(props.consulta);
     setDataHora(String(props.consulta.data_hora));
+    setDescricao(props.consulta.descricao);
     setCarregando(false);
+
+    if(props.consulta.descricao !== null)
+      setComparaDescricao(true);
+    else
+      setComparaDescricao(false);
   }
 
   useEffect(() => {
     setandoValoresConsulta();
   }, [props]);
+
+  const margemBottomDescricao = comparaDescricao ? "8%" : "5%";
+  const margemTopDescricao = comparaDescricao ? "10%" : "3%";
 
   return(
 
@@ -57,9 +68,15 @@ function ModalConsultaMarcada (props) {
             {consulta.nome}
           </Texto>
         </CaixaNome>
-        <TextoDescricao>
-          {consulta.descricao}
-        </TextoDescricao>
+        
+          <TextoDescricao 
+            marginBottom = {margemBottomDescricao}
+            marginTop = {margemTopDescricao}
+          >
+            {descricao}
+          </TextoDescricao> 
+           
+        
         <CaixaInformações>
           <TextoInformacoes>
             Data: {dataHora.slice(8,10)}/{dataHora.slice(5,7)}/{dataHora.slice(0,4)} 
