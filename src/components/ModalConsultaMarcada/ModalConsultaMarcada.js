@@ -36,8 +36,11 @@ function ModalConsultaMarcada (props) {
     setandoValoresConsulta();
   }, [props]);
 
-  const margemBottomDescricao = comparaDescricao ? "8%" : "5%";
-  const margemTopDescricao = comparaDescricao ? "10%" : "3%";
+  const margemBottomDescricao = comparaDescricao ? "8%" : "0%";
+  const margemTopDescricao = comparaDescricao ? "10%" : "0%";
+
+  const margemTopInformacoes = comparaDescricao ? "0%" : "8%";
+  const margemBottomInformacoes = comparaDescricao ? "0%" : "2%";
 
   return(
 
@@ -70,14 +73,17 @@ function ModalConsultaMarcada (props) {
         </CaixaNome>
         
           <TextoDescricao 
-            marginBottom = {margemBottomDescricao}
             marginTop = {margemTopDescricao}
+            marginBottom = {margemBottomDescricao}
           >
             {descricao}
           </TextoDescricao> 
            
         
-        <CaixaInformações>
+        <CaixaInformações
+          marginTop = {margemTopInformacoes}
+          marginBottom = {margemBottomInformacoes}
+        >
           <TextoInformacoes>
             Data: {dataHora.slice(8,10)}/{dataHora.slice(5,7)}/{dataHora.slice(0,4)} 
           </TextoInformacoes>

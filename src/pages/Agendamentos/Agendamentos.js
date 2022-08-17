@@ -53,7 +53,7 @@ function Agendamentos() {
   async function pegandoDados() {
     setCarregandoPagina(true);
     setCarregando(true);
-    await sleep(700);
+    await sleep(400);
     setConsultas([]);
     setExamesMarcados([]);
     const resposta =

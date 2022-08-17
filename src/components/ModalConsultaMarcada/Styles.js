@@ -71,7 +71,7 @@ export const CaixaNome = styled.div`
       margin-bottom: 2%;
   }
   @media (max-width: 700px) {
-      height: 75px;
+      height: auto;
   }
   @media (max-width: 400px) {
 
@@ -160,6 +160,8 @@ export const CaixaInformações = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: start;
+  margin-top: ${(props) => props.marginTop};
+  margin-bottom: ${(props) => props.marginBottom};
 
   @media (max-width: 1101px) {
     margin-bottom: 5%;
@@ -168,10 +170,6 @@ export const CaixaInformações = styled.div`
     height: 80px;
     width: 90%;
     justify-content: space-between;
-  }
-
-  @media (max-width: 829px) {
-    margin-top: 2%;
   }
 
   @media (max-width: 400px) {
