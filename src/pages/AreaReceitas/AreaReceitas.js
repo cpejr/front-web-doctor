@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { Input, Select, Modal } from "antd";
+import { Input, Select } from "antd";
 import { LoadingOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import {
@@ -15,56 +14,40 @@ import {
   Titulo,
   ContainerReceitas,
   Receita,
-  Imagem,
   Nome,
-  Telefone,
   DataCriacao,
   CódigoPaciente,
   BotaoAdicionar,
   CaixaVazia,
-  Botoes,
   BotaoMedico,
-  BotaoSecretario,
 } from "./Styles";
 import Button from "../../styles/Button";
-import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
-import ModalAdicionarCodigo from "../../components/ModalAdicionarCodigo/ModalAdicionarCodigo";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 
 function AreaReceitas() {
-  const history = useHistory();
-
   const { Option } = Select;
   const { Search } = Input;
   const [receitas, setReceitas] = useState([]);
   const [carregando, setCarregando] = useState(true);
-  const [modalAgendamento, setModalAgendamento] = useState(false);
-  const [emailPaciente, setEmailPaciente] = useState(false);
-  const [modalAdicionarCodigo, setModalAdicionarCodigo] = useState(false);
-  const [email, setEmail] = useState();
   const [tipoSelect, setTipoSelect] = useState("");
   const [busca, setBusca] = useState("");
   const [carregandoPagina, setCarregandoPagina] = useState(false);
-  const abertoPeloUsuario = true;
 
   const lowerBusca = busca.toLowerCase();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
   const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
 
-  // const usuariosFiltrados = usuarios.filter((usuario) => {
-  //   if (lowerBusca === "" && tipoSelect === "") {
-  //     return usuarios;
-  //   } else {
-  //     return (
-  //       (usuario?.nome?.toLowerCase().includes(lowerBusca) ||
-  //         usuario?.codigo?.toLowerCase().includes(lowerBusca) ||
-  //         usuario?.telefone?.includes(lowerBusca)) &&
-  //       usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase())
-  //     );
-  //   }
-  // });
+  const receitasFiltradas = receitas.filter((receita) => {
+    if (lowerBusca === "" && tipoSelect === "") {
+      console.log(receita)
+      return receita;
+    } else {
+      return (
+        receita?.titulo?.toLowerCase().includes(lowerBusca));
+    }
+  });
 
   function secretariosFiltrados(value) {
     setTipoSelect(value);
@@ -83,60 +66,12 @@ function AreaReceitas() {
         }
       });
     }
-    // else {
-    //   resposta.forEach((usuario) => {
-    //     if (usuario.tipo === "PACIENTE") {
-    //       setUsuarios((usuarios) => [...usuarios, usuario]);
-    //       setCarregando(false);
-    //     }
-    //   });
-    // }
     setCarregandoPagina(false);
   }
 
   useEffect(() => {
     pegandoDadosReceitas();
   }, []);
-
-  async function marcandoAgendamento(emailPaciente) {
-    setEmailPaciente(emailPaciente);
-    setModalAgendamento(true);
-  }
-
-  async function fechandoModalAgendamentoEspecifico() {
-    setModalAgendamento(false);
-  }
-
-  async function abrindoModalCodigo(email) {
-    setEmail(email);
-    setModalAdicionarCodigo(true);
-  }
-
-  async function fechandoModalCodigo() {
-    setModalAdicionarCodigo(false);
-    pegandoDadosReceitas();
-  }
-
-  async function verificandoSecretariaOuPaciente(tipo, email) {
-    if (tipo === "SECRETARIA") {
-      history.push({
-        pathname: "/web/perfil",
-        state: { email },
-      });
-    } else {
-      history.push({
-        pathname: "/web/perfildopaciente",
-        state: { email },
-      });
-    }
-  }
-
-  function passandoTipoParaCadastro(tipo) {
-    history.push({
-      pathname: "/cadastro",
-      state: { tipo },
-    });
-  }
 
   return (
     <div>
@@ -184,7 +119,6 @@ function AreaReceitas() {
               gap="1%"
               boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
               widthMedia600="100%"
-              onClick={() => passandoTipoParaCadastro("PACIENTE")}
             >
               Cadastrar Nova Receita
               <PlusCircleOutlined style={{ color: Cores.azul }} />
@@ -212,7 +146,7 @@ function AreaReceitas() {
         ) : (
           <>
             <ContainerReceitas>
-              {receitas.map((value) => (
+              {receitasFiltradas.map((value) => (
                 <Receita key={value.id}>
                   <Titulo>{value.titulo}</Titulo>
                   <DataCriacao>{value.data_criacao}</DataCriacao>
@@ -225,7 +159,6 @@ function AreaReceitas() {
                       fontSize="1em"
                       textDecoration="underline"
                       height="50px"
-                      onClick={() => abrindoModalCodigo(value.email)}
                     >
                       Editar Receita
                     </Button>
@@ -236,33 +169,6 @@ function AreaReceitas() {
           </>
         )}
       </ContainerListadeReceitas>
-
-      <Modal
-        visible={modalAgendamento}
-        onCancel={fechandoModalAgendamentoEspecifico}
-        footer={null}
-        width={"70%"}
-        centered={true}
-      >
-        <ModalAgendamentoEspecifico
-          emailUsuario={emailPaciente}
-          abertoPeloUsuario={abertoPeloUsuario}
-          fechandoModal={() => fechandoModalAgendamentoEspecifico()}
-        />
-      </Modal>
-
-      <Modal
-        visible={modalAdicionarCodigo}
-        onCancel={fechandoModalCodigo}
-        footer={null}
-        width={"70%"}
-        centered={true}
-      >
-        <ModalAdicionarCodigo
-          emailUsuario={email}
-          fechandoModal={() => fechandoModalCodigo()}
-        />
-      </Modal>
     </div>
   );
 }
