@@ -32,6 +32,7 @@ import ModalConsultaMarcada from "../../components/ModalConsultaMarcada";
 import { Cores } from "../../variaveis";
 import { compararDataAgendamentos } from "../../utils/tratamentoErros";
 import * as managerService from "../../services/ManagerService/managerService";
+import { sleep } from "../../utils/sleep";
 
 function Agendamentos() {
   const history = useHistory();
@@ -50,8 +51,9 @@ function Agendamentos() {
   const abertoPeloUsuario = false;
 
   async function pegandoDados() {
-    setCarregandoPagina(true)
+    setCarregandoPagina(true);
     setCarregando(true);
+    await sleep(700);
     setConsultas([]);
     setExamesMarcados([]);
     const resposta =
@@ -86,6 +88,7 @@ function Agendamentos() {
   async function fechandoModalConsultaMarcada() {
     setModalConsultaMarcada(false);
     pegandoDados();
+    
   }
 
   async function abreModalConsultaMarcada(consulta) {
@@ -170,7 +173,7 @@ function Agendamentos() {
                       </>
                     )}
                   </Telefone>
-                  <Data onClick={() => abreModalConsultaMarcada(value)}>
+                  <Data>
                     {parseInt(value.data_hora.slice(11, 13)) < 12
                       ? value.data_hora.slice(8, 10) +
                         "/" +
@@ -194,7 +197,7 @@ function Agendamentos() {
                         " pm"}
                   </Data>
 
-                  <Agendamento>Consulta</Agendamento>
+                  <Agendamento  onClick={() => abreModalConsultaMarcada(value)}>Consulta</Agendamento>
                   <CódigoPaciente>
                     {carregando ? (
                       <Spin indicator={antIcon} />

@@ -23,6 +23,7 @@ import ModalEditarAgendamentoEspecifico from "../ModalEditarAgendamentoEspecific
 import ModalConsultaMarcada from "../ModalConsultaMarcada";
 import { compararDataAgendamentos } from "../../utils/tratamentoErros";
 import * as managerService from "../../services/ManagerService/managerService";
+import { sleep } from "../../utils/sleep";
 
 function ModalAgendamento(props) {
   const [consultas, setConsultas] = useState([]);
@@ -39,7 +40,9 @@ function ModalAgendamento(props) {
   );
 
   async function pegandoDados() {
+    setCarregando(true);
     setConsultas([])
+    await sleep(700);
     setExamesMarcados([])
     const respostaConsultas =
       await managerService.GetDadosConsultasExamesMarcados(props.id_usuario);
