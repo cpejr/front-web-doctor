@@ -13,6 +13,7 @@ export const TopoPagina = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
+  margin-bottom: 1%;
   @media (max-width: 920px) {
     flex-direction: column;
     justify-content: center;
@@ -90,15 +91,6 @@ export const Receita = styled.div`
   border-radius: 3px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   margin-bottom: 2%;
-`;
-
-export const z = styled.div`
-  width: 30px;
-  display: flex;
-  justify-content: center;
-  @media (max-width: 880px) {
-    display: none;
-  }
 `;
 
 export const Titulo = styled.div`
@@ -248,6 +240,7 @@ export const BotaoAdicionar = styled.div`
   width: 50%;
   display: flex;
   justify-content: center;
+  margin-top: 0.3%;
 
   @media (max-width: 920px) {
     width: 100%

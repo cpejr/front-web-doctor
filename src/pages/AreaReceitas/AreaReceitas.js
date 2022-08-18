@@ -38,14 +38,12 @@ function AreaReceitas() {
   const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 
   const receitasFiltradas = receitas.filter((receita) => {
-    if (lowerBusca === "" && pacienteSelect === "") {
+    if (lowerBusca === "" && pacienteSelect === "")
       return receita;
-    } else if (lowerBusca === "" && pacienteSelect !== "") {
-      return receita?.nome?.toLowerCase().includes(pacienteSelect);
-    } else if (lowerBusca !== "" && pacienteSelect === "") {
-      return receita?.titulo?.toLowerCase().includes(lowerBusca);
-    } else {
-      return receita?.nome?.toLowerCase().includes(pacienteSelect) && receita?.titulo?.toLowerCase().includes(lowerBusca);
+    else {
+      return (
+        receita?.nome?.toLowerCase().includes(pacienteSelect)
+        && receita?.titulo?.toLowerCase().includes(lowerBusca));
     }
   });
 
@@ -118,11 +116,10 @@ function AreaReceitas() {
               color={Cores.verde}
               width="50%"
               display="flex"
-              height="50px"
+              height="32px"
               borderColor={Cores.verde}
               fontSize="1em"
               gap="1%"
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
               widthMedia600="100%"
             >
               Receita
@@ -130,7 +127,6 @@ function AreaReceitas() {
             </Button>
           </BotaoAdicionar>
         </TopoPagina>
-
         <BarraEstetica></BarraEstetica>
         <DadosReceita>
           <Titulo>Título</Titulo>
@@ -180,7 +176,7 @@ function AreaReceitas() {
                       borderColor={Cores.verde}
                       color={Cores.verde}
                       fontSize="1em"
-                      height="50px"
+                      height="30px"
                       width="50%"
                     >
                       Deletar

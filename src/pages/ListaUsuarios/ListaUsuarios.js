@@ -22,7 +22,6 @@ import {
   CodigoPaciente,
   BotaoAdicionar,
   CaixaVazia,
-  Botoes,
   BotoesMedico,
   BotaoSecretario,
 } from "./Styles";
