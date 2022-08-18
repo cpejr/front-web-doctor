@@ -83,6 +83,7 @@ function EditarFormulario(props) {
           estado.properties
         );
 
+
         estado.properties = auxiliar;
         await managerService.EditarPerguntasFormulario(formularios.id, estado);
         await sleep(1500);
