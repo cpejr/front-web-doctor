@@ -41,7 +41,9 @@ export const requisicaoVerificar = (email, senha) =>
 export const alterarSenha = (id, senha) =>
   api.put(`/usuarios/${id}`, { senha: senha });
 
-export const deletarUsuario = (id) => api.delete(`/usuarios/${id}`);
+
+
+export const deletarEnderecoEUsuario = (id_endereco) => api.delete(`/enderecos/${id_endereco}`);
 
 export const requisicaoExamesMarcados = () => api.get(`/exame_marcados/`);
 
@@ -82,13 +84,12 @@ export const requisicaoRespostaFormulario = (id) =>
 export const requisicaoFormularioPacientes = (id_formulario) =>
   api.get(`/formularios_pacientes_formularios/${id_formulario}`);
 
-  export const requisicaoReceitas = () => api.get(`/receitas/`);
+export const requisicaoReceitas = () => api.get(`/receitas/`);
 export const editarPerguntasFormulario = (id, perguntas) =>
   api.put(`/formularios/${id}`, { perguntas: perguntas });
 
 export const editarCamposFormulario = (id, campos) =>
   api.put(`/formularios/${id}`, campos);
-
 
 export const enviarFormularioPaciente = (status, id_formulario, id_usuario) =>
   api.post("/formularios_pacientes", { status, id_formulario, id_usuario });

@@ -30,6 +30,7 @@ import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
+import { sleep } from "../../utils/sleep";
 
 function Perfil(props) {
   const history = useHistory();
@@ -95,8 +96,10 @@ function Perfil(props) {
     setEndereco(resposta.dadosEndereco);
     setCarregando(false);
   }
-  async function deletarUsuario() {
-    await managerService.DeletarUsuario(usuario.id);
+  async function deletarEnderecoEUsuario() {
+    await managerService.DeletarEnderecoEUsuario(usuario.id_endereco);
+    await sleep(1500); 
+    window.location.href = "/login"
   }
 
   return (
@@ -210,7 +213,7 @@ function Perfil(props) {
               )}
             </CaixaContato>
             {botaoVisivel && (
-              <ExcluirConta onClick={deletarUsuario}>
+              <ExcluirConta onClick={deletarEnderecoEUsuario}>
                 EXCLUIR CONTA
               </ExcluirConta>
             )}

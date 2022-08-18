@@ -270,9 +270,10 @@ export const UpdateCodigo = async (id_usuario, codigo) => {
   return false;
 };
 
-export const DeletarUsuario = async (id) => {
+
+export const DeletarEnderecoEUsuario = async (id_endereco) => {
   await requesterService
-    .deletarUsuario(id)
+    .deletarEnderecoEUsuario(id_endereco)
     .then(() => {
       toast.success("Usuário deletado com sucesso.");
     })
@@ -285,8 +286,7 @@ export const DeletarUsuario = async (id) => {
       return false;
     });
 
-  return false;
-};
+}
 
 export const GetDadosConsultasExamesMarcadosGeral = async () => {
   let dadosConsultas = {};
