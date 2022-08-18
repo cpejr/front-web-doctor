@@ -55,8 +55,7 @@ function Agendamentos() {
   const [consultaEspecifica, setConsultaEspecifica] = useState([]);
   const [modalConsultaMarcada, setModalConsultaMarcada] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
-  const [carregandoPagina, setCarregandoPagina] = useState(false);
+
   const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
   const abertoPeloUsuario = false;
 
@@ -318,7 +317,7 @@ function Agendamentos() {
             ))}
           </ContainerUsuarios>
         )}
-          </>
+          
       </ContainerListadeUsuarios>
 
       <Modal
