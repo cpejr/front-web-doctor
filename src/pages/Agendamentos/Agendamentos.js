@@ -8,7 +8,8 @@ import {
   TopoPagina,
   ContainerListadeUsuarios,
   Filtros,
-  BarraPesquisa,
+  BarraPesquisaComUmInput,
+  BarraPesquisaComDoisInputs,
   BarraEstetica,
   DadosUsuario,
   Titulo,
@@ -117,13 +118,23 @@ function Agendamentos() {
       <ContainerListadeUsuarios>
         <TopoPagina>
           <TopoPaginaEsquerda>
-            <BarraPesquisa>
+          {tipoSelect === "" ? (
+                <BarraPesquisaComUmInput>
+                <Search
+                  placeholder="BUSCAR"
+                  value={busca}
+                  onChange={(e) => setBusca(e.target.value)}
+                />
+              </BarraPesquisaComUmInput>
+              ) : (
+                <BarraPesquisaComDoisInputs>
               <Search
                 placeholder="BUSCAR"
                 value={busca}
                 onChange={(e) => setBusca(e.target.value)}
               />
-            </BarraPesquisa>
+            </BarraPesquisaComDoisInputs>
+              )}
             <Filtros>
               <FiltroSelect>
                 <SelectData

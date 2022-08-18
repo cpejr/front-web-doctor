@@ -44,7 +44,38 @@ export const TopoPaginaEsquerda = styled.div`
 `;
 
 
-export const BarraPesquisa = styled.div`
+export const BarraPesquisaComUmInput = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  @media (max-width: 920px) {
+    width: 1000px;
+    justify-content: start;
+  }
+  @media (max-width: 840px) {
+    width: 780px;
+  }
+  @media (max-width: 750px) {
+    width: 640px;
+  }
+ 
+  @media (max-width: 630px) {
+    width: 590px;
+  }
+  @media (max-width: 570px) {
+    width: 100%;
+    margin-bottom: 5px;
+  }
+  
+  .ant-input {
+    height: 36px;
+  }
+  .ant-btn.ant-btn-default.ant-btn-icon-only.ant-input-search-button {
+    height: 36px;
+  }
+`;
+
+export const BarraPesquisaComDoisInputs = styled.div`
   width: 40%;
   display: flex;
   flex-direction: row;
