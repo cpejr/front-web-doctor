@@ -6,7 +6,6 @@ import {
   TopoPagina,
   ContainerListadeReceitas,
   Filtros,
-  FiltroDatas,
   FiltroReceita,
   BarraPesquisa,
   BarraEstetica,
@@ -28,49 +27,60 @@ import { Cores } from "../../variaveis";
 function AreaReceitas() {
   const { Option } = Select;
   const { Search } = Input;
+  const [pacientes, setPacientes] = useState([]);
   const [receitas, setReceitas] = useState([]);
   const [carregando, setCarregando] = useState(true);
-  const [tipoSelect, setTipoSelect] = useState("");
+  const [pacienteSelect, setPacienteSelect] = useState("");
   const [busca, setBusca] = useState("");
   const [carregandoPagina, setCarregandoPagina] = useState(false);
 
   const lowerBusca = busca.toLowerCase();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
-  const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
 
   const receitasFiltradas = receitas.filter((receita) => {
-    if (lowerBusca === "" && tipoSelect === "") {
-      console.log(receita)
+    if (lowerBusca === "" && pacienteSelect === "") {
       return receita;
-    } else {
-      return (
-        receita?.titulo?.toLowerCase().includes(lowerBusca));
+    } else if (lowerBusca === "" && pacienteSelect !== ""){
+      return receita?.nome?.toLowerCase().includes(pacienteSelect);
+    } else if (lowerBusca !== "" && pacienteSelect === ""){
+      return receita?.titulo?.toLowerCase().includes(lowerBusca);
+    } else{
+      return receita?.nome?.toLowerCase().includes(pacienteSelect) && receita?.titulo?.toLowerCase().includes(lowerBusca);
     }
   });
 
-  function secretariosFiltrados(value) {
-    setTipoSelect(value);
+  function pacientesFiltrados(value) {
+    setPacienteSelect(value);
   }
 
   async function pegandoDadosReceitas() {
     setCarregandoPagina(true);
     setReceitas([]);
     const resposta = await managerService.GetReceitas();
-    if (tipoUsuarioLogado === "MASTER") {
-      resposta.forEach((receita) => {
-        if (1) {
-          setReceitas((receitas) => [...receitas, receita]);
-          console.log(receita);
-          setCarregando(false);
-        }
-      });
-    }
+    resposta.forEach((receita) => {
+      setReceitas((receitas) => [...receitas, receita]);
+      console.log(receita);
+      setCarregando(false);
+    });
     setCarregandoPagina(false);
+  }
+
+  async function pegandoDadosPacientes() {
+    setCarregandoPagina(true);
+    setPacientes([]);
+    const resposta = await managerService.GetDadosPessoais();
+    resposta.forEach((usuario) => {
+      if (usuario.tipo === "PACIENTE") {
+        setPacientes((usuarios) => [...usuarios, usuario]);
+        setCarregando(false);
+      }
+    });
   }
 
   useEffect(() => {
     pegandoDadosReceitas();
+    pegandoDadosPacientes();
   }, []);
 
   return (
@@ -86,26 +96,18 @@ function AreaReceitas() {
             />
           </BarraPesquisa>
           <Filtros>
-            {tipoUsuarioLogado === "MASTER" ? (
-              <FiltroReceita>
-                <Select
-                  defaultValue=""
-                  style={{ width: 200 }}
-                  onChange={(value) => secretariosFiltrados(value)}
-                >
-                  <Option value="">Todos os Pacientes</Option>
-                  <Option value="PACIENTE">Pacientes</Option>
-                </Select>
-              </FiltroReceita>
-            ) : (
-              <></>
-            )}
-            <FiltroDatas>
+            <FiltroReceita>
               <Select
-                defaultValue="Todas as datas"
+                defaultValue=""
                 style={{ width: 200 }}
-              ></Select>
-            </FiltroDatas>
+                onChange={(value) => pacientesFiltrados(value)}
+              >
+                <Option value="">Todos os Pacientes</Option>
+                {pacientes.map((value) => (
+                  <Option value={value.nome.toLowerCase()} > {value.nome} </Option>
+                ))}
+              </Select>
+            </FiltroReceita>
           </Filtros>
           <BotaoMedico>
             <Button
@@ -148,9 +150,27 @@ function AreaReceitas() {
             <ContainerReceitas>
               {receitasFiltradas.map((value) => (
                 <Receita key={value.id}>
-                  <Titulo>{value.titulo}</Titulo>
-                  <DataCriacao>{value.data_criacao}</DataCriacao>
-                  <Nome>{value.nome}</Nome>
+                  <Titulo>
+                    {carregando ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <div>{value.titulo}</div>
+                    )}
+                  </Titulo>
+                  <DataCriacao>
+                    {carregando ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <div>{value.data_criacao}</div>
+                    )}
+                  </DataCriacao>
+                  <Nome>
+                    {carregando ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <div>{value.nome}</div>
+                    )}
+                  </Nome>
                   <BotaoAdicionar>
                     <Button
                       backgroundColor="transparent"
@@ -160,7 +180,7 @@ function AreaReceitas() {
                       textDecoration="underline"
                       height="50px"
                     >
-                      Editar Receita
+                      Deletar
                     </Button>
                   </BotaoAdicionar>
                 </Receita>
