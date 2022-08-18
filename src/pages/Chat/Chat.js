@@ -1,20 +1,27 @@
 import React, { useState } from "react";
 import BarraLateralChat from "../../components/BarraLateralChat"
 import ConversaAberta from "../../components/ConversaAberta";
-import { Container, MensagemInicialChat } from "./Styles";
+import { Container, MensagemInicialChat, ContainerMobile } from "./Styles";
 
 
 const Chat = () => {
   const [usandoIdPessoa, setUsandoIdPessoa] = useState();
 
+  
   function funcaoPai(id) {
     setUsandoIdPessoa(id)
   }
   return (
+    <>
     <Container>
       <BarraLateralChat passandoIdPessoa={(id) => funcaoPai(id)}/>
       {usandoIdPessoa ? <ConversaAberta idConversaAberta={usandoIdPessoa} /> : <MensagemInicial/>}
     </Container>
+
+    <ContainerMobile>
+      {usandoIdPessoa ? <ConversaAberta idConversaAberta={usandoIdPessoa} /> : <BarraLateralChat passandoIdPessoa={(id) => funcaoPai(id)}/>}
+    </ContainerMobile>
+    </>
   );
 };
 

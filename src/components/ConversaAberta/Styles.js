@@ -76,6 +76,11 @@ export const Conversa = styled.div`
     margin-left: 44%;
   }
   //
+
+  @media (max-width: 670px) {
+    width:100%;
+    margin-left: 0%;
+  }
   `;
 
 
@@ -91,7 +96,15 @@ export const HeaderConversaAberta = styled.div`
   border-style:solid;
   border-color: ${Cores.cinza[3]};
   border-left: 0ch;
+`;
 
+export const BotaoVoltar = styled.div`
+  padding-left: 5%;
+
+
+  @media (min-width: 671px) {
+    display: none;
+  }
 `;
 
 export const NomePessoa = styled.div`

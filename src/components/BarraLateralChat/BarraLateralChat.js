@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BarraPesquisaChat, NomeMensagem, MensagemPessoa, NomePessoa, HeaderBarraLateralChat, ListaPessoasChat, PessoaChat, BarraLateral } from "./Styles";
+import { BarraPesquisaChat, ImagemPessoa, NomeMensagem, BolaAzul, MensagemPessoa, NomePessoa, HeaderBarraLateralChat, ListaPessoasChat, PessoaChat, BarraLateral } from "./Styles";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
 import Input from "../../styles/Input";
@@ -91,7 +91,7 @@ export default function BarraLateralChat(props) {
         height="27%"
         onClick={() => {}}
         >
-        <AddCircleOutlineIcon/>
+        <AddCircleOutlineIcon fontSize="large"/>
         </Button>
       </HeaderBarraLateralChat>
       <ListaPessoasChat >
@@ -105,11 +105,12 @@ export default function BarraLateralChat(props) {
           key={pessoa.id}
           onClick={() => {props.passandoIdPessoa(pessoa.id)}}
            >
-          <img src={pessoa.foto} alt="61" border-radius="3px" height="75px" width="81.3px"></img>
+          <ImagemPessoa>
+          <img src={pessoa.foto} alt="61" border-radius="3px" height="75px" width="81.3px"></img></ImagemPessoa>
           <NomeMensagem>
           <NomePessoa
           >{pessoa.nome}</NomePessoa>
-          {/* <BolaAzul/> */}
+          <BolaAzul/>
           <MensagemPessoa>{pessoa.mensagem}</MensagemPessoa>
           </NomeMensagem>
           </PessoaChat>

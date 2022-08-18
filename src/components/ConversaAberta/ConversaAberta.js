@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { HeaderConversaAberta, Conversa, NomePessoa, CorpoConversaAberta, FooterConversaAberta, MensagemRecebida, MensagemEnviada, DataHoraMensagem } from "./Styles";
+import { HeaderConversaAberta, Conversa,  NomePessoa, BotaoVoltar, CorpoConversaAberta, FooterConversaAberta, MensagemRecebida, MensagemEnviada, DataHoraMensagem } from "./Styles";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
 import Input from "../../styles/Input";
@@ -12,6 +12,7 @@ import patopato from "./../../assets/patopato.jpg";
 import patotimido from "./../../assets/patotimido.jpg";
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import SendIcon from '@mui/icons-material/Send';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 const pessoas = [
   {
@@ -74,6 +75,20 @@ export default function ConversaAberta(props) {
       <>
       <Conversa>
         <HeaderConversaAberta>
+          <BotaoVoltar>
+          <Button
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color={Cores.lilas[1]}
+            width="10%"
+            widthres="15%"
+            height="10%"
+            marginTop="0%"
+            onClick={() => {window.location.reload()}}
+            >
+            <ArrowBackIcon fontSize="large"/>
+          </Button>
+          </BotaoVoltar>
           <img src={pessoas[props.idConversaAberta - 1].foto} alt="61"  height="70px" width="76px"></img>
           <NomePessoa
           >{pessoas[props.idConversaAberta - 1].nome}</NomePessoa> 
@@ -94,7 +109,7 @@ export default function ConversaAberta(props) {
             marginTop="0%"
             onClick={() => {}}
             >
-            <AttachFileIcon/>
+            <AttachFileIcon fontSize="large"/>
           </Button>
           <Input
             placeholder="Mensagem"
@@ -116,7 +131,7 @@ export default function ConversaAberta(props) {
             marginTop="0%"
             onClick={() => {}}
             >
-            <SendIcon/>
+            <SendIcon fontSize="large"/>
           </Button>
         </FooterConversaAberta>
       </Conversa>

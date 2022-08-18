@@ -84,15 +84,44 @@ text-overflow: ellipsis;
 white-space: nowrap;
 `;
 
-// export const BolaAzul = styled.div`
-// display: flex;
-// margin-top: -5%;
-// margin-left:30ch;
-// height: 13px;
-// width: 13px;
-// background-color: ${Cores.lilas[1]};
-// border-radius: 7px;
-// `;
+export const ImagemPessoa = styled.div`
+width:81.3px;
+height:75px;
+`;
+
+export const BolaAzul = styled.div`
+display: flex;
+margin-top: -2%;
+margin-left:30ch;
+height: 13px;
+width: 13px;
+background-color: ${Cores.lilas[1]};
+border-radius: 7px;
+
+@media (max-width: 1385px){
+    margin-left: 28ch;
+  }
+
+  @media (max-width: 1300px) and (min-width: 1211px){
+    margin-left: 25ch;
+  }
+
+  @media (max-width: 1212px) and (min-width: 669px){
+    margin-left: 21ch;
+  }
+
+  @media (max-width: 670px) and (min-width: 575px) {
+    margin-left: 55ch;
+  }
+
+  @media (max-width: 574px) and (min-width: 465px) {
+    margin-left: 40ch;
+  }
+
+  @media (max-width: 465px) and (min-width: 414px) {
+    margin-left: 34ch;
+  }
+`;
 
 export const MensagemPessoa = styled.div`
 display: ruby;
@@ -100,11 +129,15 @@ font-size: 25px;
 font-weight: 400;
 line-height: 29px;
 text-align: left;
-margin-top: 9.5%;
+margin-top: 6%;
 max-width: 16ch;
 overflow: hidden;
 text-overflow: ellipsis;
 white-space: nowrap;
+
+@media (max-width: 670px) and (min-width: 575px){
+  margin-top: 4%;
+}
 
 @media (max-width: 1277px) {
   max-width: 12ch;
