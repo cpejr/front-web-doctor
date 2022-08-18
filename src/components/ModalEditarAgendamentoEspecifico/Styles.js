@@ -223,8 +223,6 @@ export const InputHora = styled(Input)`
   ::placeholder {
     color:${Cores.preto}
   }
-    color: ${Cores.preto};
-  }
 `;
 
 export const InputDuracao = styled(Input)`

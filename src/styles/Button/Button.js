@@ -40,7 +40,7 @@ const Button = styled.button`
     width: ${(props) => props.widthMedia ?? props.width};
   }
 
-    @media (max-width: 600px) {
+  @media (max-width: 600px){ 
     width: ${(props) => props.widthMedia600};
   }
 

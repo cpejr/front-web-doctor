@@ -22,6 +22,7 @@ const Input = styled.input`
   border-radius: 3px;
   font-size: ${(props) => props.fontSize};
   margin-top: ${(props) => props.marginTop};
+  margin-bottom: ${(props) => props.marginBottom?? "0px"};
   border-style: solid;
   height: ${(props) => props.height};
   min-height: ${(props) => props.minHeight};
@@ -30,6 +31,7 @@ const Input = styled.input`
   padding-right: ${(props) => props.paddingRight};
   box-shadow: ${(props) => props.boxShadow};
   border-width: ${(props) => props.borderWidth};
+  padding-right: ${(props) => props.paddingRight ?? "0px"};
   width: ${(props) => props.width};
   @media (max-width: 820px) {
     width: 100%;
