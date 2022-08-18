@@ -11,3 +11,12 @@ export const compararDataRecente = (a, b) => {
 
   return data2 - data1;
 }
+
+export function FormatarDataShort(value) {
+  const date = new Date(value);
+  if (date.getMonth() < 10) {
+    return (date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear());
+  } else {
+    return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+  }
+}

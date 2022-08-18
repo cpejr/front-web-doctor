@@ -17,11 +17,12 @@ export const TopoPagina = styled.div`
   @media (max-width: 920px) {
     flex-direction: column;
     justify-content: center;
+    align-items: center;
   }
 `;
 export const BarraPesquisa = styled.div`
   width: 50%;
-  margin-top: 1%;
+  margin-top: 1.5%;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -33,18 +34,16 @@ export const BarraPesquisa = styled.div`
 `;
 export const FiltroPaciente = styled.div`
   width: 50%;
-  margin: 1% 0 0 1%;
+  margin: 1%;
   display: flex;
   flex-direction: row;
   justify-content: start;
   gap: 2%;
   @media (max-width: 920px) {
-    margin-top: 2%;
+    margin: 1% 0;
     width: 100%;
-    justify-content: center;
   }
   @media (max-width: 450px) {
-    margin-top: 2%;
     flex-direction: column;
     width: 100%;
     justify-content: center;
@@ -65,6 +64,7 @@ export const BarraEstetica = styled.div`
   width: 100%;
   background-color: ${Cores.azul};
 `;
+
 export const DadosReceita = styled.div`
   color: ${Cores.azul};
   justify-content: space-around;
@@ -91,6 +91,9 @@ export const Receita = styled.div`
   border-radius: 3px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   margin-bottom: 2%;
+  @media (max-width: 600px) {
+    padding: 0% 2% 0% 2%;;
+  }
 `;
 
 export const Titulo = styled.div`
@@ -196,9 +199,6 @@ export const BotaoDeletar = styled.div`
   @media (max-width: 600px) {
     width: 33%;
   }
-  @media (max-width: 500px) {
-    width: 50%;
-  }
 `;
 
 export const CodigoPaciente = styled.div`
@@ -240,10 +240,28 @@ export const BotaoAdicionar = styled.div`
   width: 50%;
   display: flex;
   justify-content: center;
-  margin-top: 0.3%;
-
-  @media (max-width: 920px) {
+  @media (max-width: 920px){
+    justify-content: flex-end;
     width: 100%
+  }
+  @media (max-width: 600px){
+
+  }
+`;
+
+export const Botoes = styled.div`
+  position: relative;
+  display: flex;
+  width: 50%;
+  margin: 1%;
+  justify-content: space-between;
+  @media (max-width: 920px){
+    width: 500px;
+  }
+  @media (max-width: 550px){
+    margin-top: 2%;
+    flex-direction:column;
+    width: 100%;
   }
 `;
 

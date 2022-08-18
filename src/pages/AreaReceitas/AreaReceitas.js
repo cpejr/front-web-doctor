@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Input, Select } from "antd";
 import { LoadingOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
-import { compararDataRecente } from "../../utils/tratamentoErros";
+import { compararDataRecente, FormatarDataShort } from "../../utils/tratamentoErros";
 import {
   TopoPagina,
   ContainerListadeReceitas,
@@ -19,6 +19,7 @@ import {
   BotaoDeletar,
   CaixaVazia,
   BotaoAdicionar,
+  Botoes,
 } from "./Styles";
 import Button from "../../styles/Button";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -57,8 +58,7 @@ function AreaReceitas() {
     setReceitas([]);
     const resposta = await managerService.GetReceitas();
     resposta.sort(compararDataRecente).forEach((receita) => {
-      const date = new Date(receita.data_criacao);
-      receita.data_criacao = (date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
+      receita.data_criacao = FormatarDataShort(receita.data_criacao);
       setReceitas((receitas) => [...receitas, receita]);
       setCarregando(false);
     });
@@ -94,34 +94,36 @@ function AreaReceitas() {
               onChange={(e) => setBusca(e.target.value)}
             />
           </BarraPesquisa>
-          <FiltroPaciente>
-            <Select
-              defaultValue=""
-              style={{ width: 200 }}
-              onChange={(value) => pacientesFiltrados(value)}
-            >
-              <Option value="">Todos os Pacientes</Option>
-              {pacientes.map((value) => (
-                <Option value={value.nome.toLowerCase()} > {value.nome} </Option>
-              ))}
-            </Select>
-          </FiltroPaciente>
-          <BotaoAdicionar>
-            <Button
-              backgroundColor={Cores.cinza[9]}
-              color={Cores.verde}
-              width="50%"
-              display="flex"
-              height="32px"
-              borderColor={Cores.verde}
-              fontSize="1em"
-              gap="1%"
-              widthMedia600="100%"
-            >
-              Receita
-              <PlusCircleOutlined style={{ color: Cores.azul }} />
-            </Button>
-          </BotaoAdicionar>
+          <Botoes>
+            <FiltroPaciente>
+              <Select
+                defaultValue=""
+                style={{ width: 200 }}
+                onChange={(value) => pacientesFiltrados(value)}
+              >
+                <Option value="">Todos os Pacientes</Option>
+                {pacientes.map((value) => (
+                  <Option value={value.nome.toLowerCase()} > {value.nome} </Option>
+                ))}
+              </Select>
+            </FiltroPaciente>
+            <BotaoAdicionar>
+              <Button
+                backgroundColor={Cores.cinza[9]}
+                color={Cores.verde}
+                width="50%"
+                display="flex"
+                height="32px"
+                borderColor={Cores.verde}
+                fontSize="1em"
+                gap="1%"
+                widthMedia600="100%"
+              >
+                Receita
+                <PlusCircleOutlined style={{ color: Cores.azul }} />
+              </Button>
+            </BotaoAdicionar>
+          </Botoes>
         </TopoPagina>
         <BarraEstetica></BarraEstetica>
         <DadosReceita>
