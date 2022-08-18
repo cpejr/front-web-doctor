@@ -22,6 +22,7 @@ import {
   Agendamento,
   CódigoPaciente,
   TopoPaginaEsquerda,
+  TextoData,
   InputData,
   FiltroSelect,
   FiltroInput,
@@ -29,9 +30,11 @@ import {
 } from "./Styles";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
+import ModalConsultaMarcada from "../../components/ModalConsultaMarcada";
 import { Cores } from "../../variaveis";
 import { compararDataAgendamentos } from "../../utils/tratamentoErros";
 import * as managerService from "../../services/ManagerService/managerService";
+import { sleep } from "../../utils/sleep";
 
 function Agendamentos() {
   const history = useHistory();
@@ -49,7 +52,11 @@ function Agendamentos() {
   const [tipoSelect, setTipoSelect] = useState("");
   const [carregandoPagina, setCarregandoPagina] = useState(false);
   const lowerBusca = busca.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const [consultaEspecifica, setConsultaEspecifica] = useState([]);
+  const [modalConsultaMarcada, setModalConsultaMarcada] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
+  const [carregandoPagina, setCarregandoPagina] = useState(false);
   const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
   const abertoPeloUsuario = false;
 
@@ -81,7 +88,9 @@ function Agendamentos() {
   }
 
   async function pegandoDados() {
-    setCarregandoPagina(true)
+    setCarregandoPagina(true);
+    setCarregando(true);
+    await sleep(400);
     setConsultas([]);
     setExamesMarcados([]);
     const resposta =
@@ -111,6 +120,17 @@ function Agendamentos() {
       pathname: "/web/perfildopaciente",
       state: { email },
     });
+  }
+
+  async function fechandoModalConsultaMarcada() {
+    setModalConsultaMarcada(false);
+    pegandoDados();
+    
+  }
+
+  async function abreModalConsultaMarcada(consulta) {
+    setModalConsultaMarcada(true);
+    setConsultaEspecifica(consulta);
   }
 
   return (
@@ -249,7 +269,7 @@ function Agendamentos() {
                         " pm"}
                   </Data>
 
-                  <Agendamento>Consulta</Agendamento>
+                  <Agendamento  onClick={() => abreModalConsultaMarcada(value)}>Consulta</Agendamento>
                   <CódigoPaciente>
                     {carregando ? (
                       <Spin indicator={antIcon} />
@@ -259,32 +279,32 @@ function Agendamentos() {
                   </CódigoPaciente>
                 </Usuario>
               ))}
-            {examesMarcados.map((value) => (
-              <Usuario /* key={value.id_usuario} */>
-                <Imagem>{value.avatar_url}</Imagem>
-                <Nome>
-                  {carregando ? (
-                    <Spin indicator={antIcon} />
-                  ) : (
-                    <div>{value.nome}</div>
-                  )}
-                </Nome>
-                <Telefone>
-                  {carregando ? (
-                    <Spin indicator={antIcon} />
-                  ) : (
-                    <>
-                      ({value.telefone.slice(0, -9)}){" "}
-                      {value.telefone.slice(2, -4)}-{value.telefone.slice(-4)}
-                    </>
-                  )}
-                </Telefone>
-                <Data>
-                  {value.data_hora.slice(8, 10)}/{value.data_hora.slice(5, 7)}/
-                  {value.data_hora.slice(0, 4)} -{" "}
-                  {value.data_hora.slice(11, 16)}:
-                  {value.data_hora.slice(17, 19)}
-                </Data>
+              {examesMarcados.map((value) => (
+                <Usuario key={value.id_usuario}>
+                  <Imagem>{value.avatar_url}</Imagem>
+                  <Nome>
+                    {carregando ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <div>{value.nome}</div>
+                    )}
+                  </Nome>
+                  <Telefone>
+                    {carregando ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <>
+                        ({value.telefone.slice(0, -9)}){" "}
+                        {value.telefone.slice(2, -4)}-{value.telefone.slice(-4)}
+                      </>
+                    )}
+                  </Telefone>
+                  <Data>
+                    {value.data_hora.slice(8, 10)}/{value.data_hora.slice(5, 7)}
+                    /{value.data_hora.slice(0, 4)} -{" "}
+                    {value.data_hora.slice(11, 16)}:
+                    {value.data_hora.slice(17, 19)}
+                  </Data>
 
                 <Agendamento>{value.titulo}</Agendamento>
                 <CódigoPaciente>
@@ -298,6 +318,7 @@ function Agendamentos() {
             ))}
           </ContainerUsuarios>
         )}
+          </>
       </ContainerListadeUsuarios>
 
       <Modal
@@ -311,6 +332,22 @@ function Agendamentos() {
           emailUsuario={email}
           abertoPeloUsuario={abertoPeloUsuario}
           fechandoModal={() => fechandoModalAgendamentoEspecifico()}
+        />
+      </Modal>
+
+      <Modal
+        visible={modalConsultaMarcada}
+        onCancel={fechandoModalConsultaMarcada}
+        footer={null}
+        width={"auto"}
+        centered={true}
+        style={{
+          backgroundColor: "black",
+        }}
+      >
+        <ModalConsultaMarcada
+          consulta={consultaEspecifica}
+          fechandoModal={() => fechandoModalConsultaMarcada()}
         />
       </Modal>
     </div>
