@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Input, Select } from "antd";
 import { LoadingOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import { compararDataRecente } from "../../utils/tratamentoErros";
 import {
   TopoPagina,
   ContainerListadeReceitas,
@@ -55,12 +56,7 @@ function AreaReceitas() {
     setCarregandoPagina(true);
     setReceitas([]);
     const resposta = await managerService.GetReceitas();
-    resposta.sort((a, b) => {
-      let da = new Date(a.data_criacao);
-      let db = new Date(b.data_criacao);
-      return db - da;
-    });
-    resposta.forEach((receita) => {
+    resposta.sort(compararDataRecente).forEach((receita) => {
       const date = new Date(receita.data_criacao);
       receita.data_criacao = (date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
       setReceitas((receitas) => [...receitas, receita]);

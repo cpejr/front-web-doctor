@@ -1,10 +1,13 @@
-export const compararDataAgendamentos = (a, b) => {
-  var data1 = new Date(a.data_hora);
-  var data2 = new Date(b.data_hora);
+export const compararDataAntiga = (a, b) => {
+  var data1 = new Date(a.data_hora || a.data_criacao);
+  var data2 = new Date(b.data_hora || b.data_criacao);
 
-  if (data1 > data2) {
-    return 1;
-  } else {
-    return -1;
-  }
-};
+  return data1 - data2;
+}
+
+export const compararDataRecente = (a, b) => {
+  var data1 = new Date(a.data_hora || a.data_criacao);
+  var data2 = new Date(b.data_hora || b.data_criacao);
+
+  return data2 - data1;
+}
