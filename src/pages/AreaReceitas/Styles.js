@@ -30,12 +30,12 @@ export const BarraPesquisa = styled.div`
     justify-content: center;
   }
 `;
-export const Filtros = styled.div`
+export const FiltroPaciente = styled.div`
   width: 50%;
-  margin-top: 1%;
+  margin: 1% 0 0 1%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: start;
   gap: 2%;
   @media (max-width: 920px) {
     margin-top: 2%;
@@ -48,11 +48,6 @@ export const Filtros = styled.div`
     width: 100%;
     justify-content: center;
     align-items: center;
-  }
-`;
-export const FiltroReceita = styled.div`
-  @media (max-width: 480px) {
-    margin-top: 2%;
   }
 `;
 
@@ -185,7 +180,6 @@ export const DataCriacao = styled.div`
   width: 18%;
   display: flex;
   justify-content: center;
-  color: green;
   @media (max-width: 880px) {
     width: 20%;
   }
@@ -196,7 +190,7 @@ export const DataCriacao = styled.div`
     display: none;
   }
 `;
-export const BotaoAdicionar = styled.div`
+export const BotaoDeletar = styled.div`
   width: 18%;
   display: flex;
   justify-content: center;
@@ -215,7 +209,7 @@ export const BotaoAdicionar = styled.div`
   }
 `;
 
-export const CódigoPaciente = styled.div`
+export const CodigoPaciente = styled.div`
   width: 18%;
   display: flex;
   justify-content: center;
@@ -249,7 +243,7 @@ export const CaixaVazia = styled.div`
   }
 `;
 
-export const BotaoMedico = styled.div`
+export const BotaoAdicionar = styled.div`
   position: relative;
   width: 50%;
   display: flex;

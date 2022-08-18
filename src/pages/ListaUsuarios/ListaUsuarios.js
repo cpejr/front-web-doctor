@@ -19,7 +19,7 @@ import {
   Nome,
   Telefone,
   UltimaVisita,
-  CódigoPaciente,
+  CodigoPaciente,
   BotaoAdicionar,
   CaixaVazia,
   Botoes,
@@ -231,7 +231,7 @@ function ListaUsuarios() {
           <Nome>Nome do Usuário</Nome>
           <Telefone>Telefone</Telefone>
           <UltimaVisita>Última Visita</UltimaVisita>
-          <CódigoPaciente>Código do Paciente</CódigoPaciente>
+          <CodigoPaciente>Código do Paciente</CodigoPaciente>
           <CaixaVazia></CaixaVazia>
         </DadosUsuario>
         {carregandoPagina ? (
@@ -278,13 +278,13 @@ function ListaUsuarios() {
                   </Telefone>
                   <UltimaVisita>21/04/2022</UltimaVisita>
 
-                  <CódigoPaciente>
+                  <CodigoPaciente>
                     {carregando ? (
                       <Spin indicator={antIcon} />
                     ) : (
                       <>{value.codigo}</>
                     )}
-                  </CódigoPaciente>
+                  </CodigoPaciente>
                   {tipoUsuarioLogado === "MASTER" ? (
                     <BotaoAdicionar>
                       {value.tipo === "PACIENTE" ? (

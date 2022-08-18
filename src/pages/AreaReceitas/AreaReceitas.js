@@ -5,8 +5,7 @@ import { Spin } from "antd";
 import {
   TopoPagina,
   ContainerListadeReceitas,
-  Filtros,
-  FiltroReceita,
+  FiltroPaciente,
   BarraPesquisa,
   BarraEstetica,
   DadosReceita,
@@ -15,10 +14,10 @@ import {
   Receita,
   Nome,
   DataCriacao,
-  CódigoPaciente,
-  BotaoAdicionar,
+  CodigoPaciente,
+  BotaoDeletar,
   CaixaVazia,
-  BotaoMedico,
+  BotaoAdicionar,
 } from "./Styles";
 import Button from "../../styles/Button";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -41,11 +40,11 @@ function AreaReceitas() {
   const receitasFiltradas = receitas.filter((receita) => {
     if (lowerBusca === "" && pacienteSelect === "") {
       return receita;
-    } else if (lowerBusca === "" && pacienteSelect !== ""){
+    } else if (lowerBusca === "" && pacienteSelect !== "") {
       return receita?.nome?.toLowerCase().includes(pacienteSelect);
-    } else if (lowerBusca !== "" && pacienteSelect === ""){
+    } else if (lowerBusca !== "" && pacienteSelect === "") {
       return receita?.titulo?.toLowerCase().includes(lowerBusca);
-    } else{
+    } else {
       return receita?.nome?.toLowerCase().includes(pacienteSelect) && receita?.titulo?.toLowerCase().includes(lowerBusca);
     }
   });
@@ -58,9 +57,15 @@ function AreaReceitas() {
     setCarregandoPagina(true);
     setReceitas([]);
     const resposta = await managerService.GetReceitas();
+    resposta.sort((a, b) => {
+      let da = new Date(a.data_criacao);
+      let db = new Date(b.data_criacao);
+      return db - da;
+    });
     resposta.forEach((receita) => {
+      const date = new Date(receita.data_criacao);
+      receita.data_criacao = (date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
       setReceitas((receitas) => [...receitas, receita]);
-      console.log(receita);
       setCarregando(false);
     });
     setCarregandoPagina(false);
@@ -90,49 +95,47 @@ function AreaReceitas() {
           <BarraPesquisa>
             <Search
               placeholder="BUSCAR"
-              style={{ width: 400 }}
+              style={{ width: 500 }}
               value={busca}
               onChange={(e) => setBusca(e.target.value)}
             />
           </BarraPesquisa>
-          <Filtros>
-            <FiltroReceita>
-              <Select
-                defaultValue=""
-                style={{ width: 200 }}
-                onChange={(value) => pacientesFiltrados(value)}
-              >
-                <Option value="">Todos os Pacientes</Option>
-                {pacientes.map((value) => (
-                  <Option value={value.nome.toLowerCase()} > {value.nome} </Option>
-                ))}
-              </Select>
-            </FiltroReceita>
-          </Filtros>
-          <BotaoMedico>
+          <FiltroPaciente>
+            <Select
+              defaultValue=""
+              style={{ width: 200 }}
+              onChange={(value) => pacientesFiltrados(value)}
+            >
+              <Option value="">Todos os Pacientes</Option>
+              {pacientes.map((value) => (
+                <Option value={value.nome.toLowerCase()} > {value.nome} </Option>
+              ))}
+            </Select>
+          </FiltroPaciente>
+          <BotaoAdicionar>
             <Button
-              backgroundColor={Cores.cinza[7]}
-              color={Cores.azul}
+              backgroundColor={Cores.cinza[9]}
+              color={Cores.verde}
               width="50%"
               display="flex"
               height="50px"
-              borderColor={Cores.azul}
+              borderColor={Cores.verde}
               fontSize="1em"
               gap="1%"
               boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
               widthMedia600="100%"
             >
-              Cadastrar Nova Receita
+              Receita
               <PlusCircleOutlined style={{ color: Cores.azul }} />
             </Button>
-          </BotaoMedico>
+          </BotaoAdicionar>
         </TopoPagina>
 
         <BarraEstetica></BarraEstetica>
         <DadosReceita>
           <Titulo>Título</Titulo>
+          <CodigoPaciente>Nome do Paciente</CodigoPaciente>
           <DataCriacao>Data de Criação</DataCriacao>
-          <CódigoPaciente>Nome do Paciente</CódigoPaciente>
           <CaixaVazia></CaixaVazia>
         </DadosReceita>
         {carregandoPagina ? (
@@ -157,13 +160,6 @@ function AreaReceitas() {
                       <div>{value.titulo}</div>
                     )}
                   </Titulo>
-                  <DataCriacao>
-                    {carregando ? (
-                      <Spin indicator={antIcon} />
-                    ) : (
-                      <div>{value.data_criacao}</div>
-                    )}
-                  </DataCriacao>
                   <Nome>
                     {carregando ? (
                       <Spin indicator={antIcon} />
@@ -171,18 +167,25 @@ function AreaReceitas() {
                       <div>{value.nome}</div>
                     )}
                   </Nome>
-                  <BotaoAdicionar>
+                  <DataCriacao>
+                    {carregando ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <div> {value.data_criacao} </div>
+                    )}
+                  </DataCriacao>
+                  <BotaoDeletar>
                     <Button
                       backgroundColor="transparent"
-                      borderColor="transparent"
-                      color={Cores.preto}
+                      borderColor={Cores.verde}
+                      color={Cores.verde}
                       fontSize="1em"
-                      textDecoration="underline"
                       height="50px"
+                      width="50%"
                     >
                       Deletar
                     </Button>
-                  </BotaoAdicionar>
+                  </BotaoDeletar>
                 </Receita>
               ))}
             </ContainerReceitas>

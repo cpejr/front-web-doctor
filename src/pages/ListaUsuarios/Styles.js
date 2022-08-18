@@ -184,7 +184,7 @@ export const BotaoAdicionar = styled.div`
   }
 `;
 
-export const CódigoPaciente = styled.div`
+export const CodigoPaciente = styled.div`
   width: 18%;
   display: flex;
   justify-content: center;
