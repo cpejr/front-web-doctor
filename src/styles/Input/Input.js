@@ -21,6 +21,7 @@ const Input = styled.input`
   border-radius: 3px;
   font-size: ${(props) => props.fontSize};
   margin-top: ${(props) => props.marginTop};
+  margin-bottom: ${(props) => props.marginBottom?? "0px"};
   border-style: solid;
   height: 50px;
   padding-left: 2%;

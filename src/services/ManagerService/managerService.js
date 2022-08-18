@@ -493,9 +493,8 @@ export const EditarPerguntasFormulario = async (
   await requesterService
     .editarPerguntasFormulario(id, perguntas)
     .then(() => {
-      toast.success("Pergunta alterada com sucesso.");
-      sleep(1500)
-      window.location.href = "/web/listaformularios";
+      sleep(1500);
+      toast.success("Ação realizada com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/"));
@@ -513,8 +512,6 @@ export const EditarFormularios = async (
     .editarCamposFormulario(id, campos)
     .then(() => {
       toast.success("Formulario atualizado com sucesso.");
-      sleep(1500)
-      window.location.href = "/web/listaformularios";
     })
     .catch((error) => {
       return false;
