@@ -47,7 +47,7 @@ function ListaUsuarios() {
   const [busca, setBusca] = useState("");
   const abertoPeloUsuario = true;
 
-  const lowerBusca = busca.toLowerCase();
+  const lowerBusca = busca.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
 
@@ -56,10 +56,10 @@ function ListaUsuarios() {
       return usuarios;
     } else {
       return (
-        (usuario?.nome?.toLowerCase().includes(lowerBusca) ||
+        (usuario?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca) ||
           usuario?.codigo?.toLowerCase().includes(lowerBusca) ||
           usuario?.telefone?.includes(lowerBusca)) &&
-        usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase())
+        usuario?.tipo?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(tipoSelect.toLowerCase())
       );
     }
   });

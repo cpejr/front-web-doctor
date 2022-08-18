@@ -23,6 +23,8 @@ import {
   BarraCentro,
   Selects,
   MargemEstetica,
+  CentralizandoSpin,
+  ContainerInterno
 } from "./Styles";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
@@ -40,7 +42,7 @@ function FormularioEspecifico(props) {
   const [statusSelect, setStatusSelect] = useState("");
   const { Option } = SelectTipos;
   const [busca, setBusca] = useState("");
-  const lowerBusca = busca.toLowerCase();
+  const lowerBusca = busca.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
   );
@@ -90,16 +92,16 @@ function FormularioEspecifico(props) {
       } else {
         if (statusSelect === "true") {
           return (
-            formularioPacientes?.nome?.toLowerCase().includes(lowerBusca) &&
+            formularioPacientes?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca) &&
             formularioPacientes.status === true
           );
         } else if (statusSelect === "false") {
           return (
-            formularioPacientes?.nome?.toLowerCase().includes(lowerBusca) &&
+            formularioPacientes?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca) &&
             formularioPacientes.status === false
           );
         } else {
-          return formularioPacientes?.nome?.toLowerCase().includes(lowerBusca);
+          return formularioPacientes?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca);
         }
       }
     }
@@ -113,7 +115,15 @@ function FormularioEspecifico(props) {
     <>
       <ContainerFormularioEspecifico>
         {carregando ? (
+          <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "49.5%",
+          }}
+        >
           <Spin indicator={antIcon} />
+        </div>
         ) : (
           <>
             <ContainerFormularioCima>

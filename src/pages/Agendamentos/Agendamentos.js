@@ -47,7 +47,7 @@ function Agendamentos() {
   const [dataInput, setDataInput] = useState("");
   const [tipoSelect, setTipoSelect] = useState("");
   const [carregandoPagina, setCarregandoPagina] = useState(false);
-  const lowerBusca = busca.toLowerCase();
+  const lowerBusca = busca.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
   const abertoPeloUsuario = false;
@@ -58,11 +58,11 @@ function Agendamentos() {
     } else {
       if (tipoSelect !== "") {
         return (
-          consultas?.nome?.toLowerCase().includes(lowerBusca) &&
+          consultas?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca) &&
           setandoData(consultas)
         );
       } else {
-        return consultas?.nome?.toLowerCase().includes(lowerBusca);
+        return consultas?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca);
       }
     }
   });

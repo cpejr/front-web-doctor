@@ -49,13 +49,22 @@ export const BarraPesquisa = styled.div`
   display: flex;
   flex-direction: row;
   @media (max-width: 920px) {
-    width: 55%;
+    width: 950px;
     justify-content: start;
   }
+  @media (max-width: 840px) {
+    width: 750px;
+  }
+  @media (max-width: 780px) {
+    width: 550px;
+  }
   @media (max-width: 690px) {
-    width: 280px;
+    width: 380px;
     flex-direction: row;
     justify-content: space-between;
+  }
+  @media (max-width: 630px) {
+    width: 280px;
   }
   @media (max-width: 570px) {
     width: 100%;
@@ -245,22 +254,12 @@ export const InputData = styled.input`
   font-size: 15px;
   padding-left: 12%;
   padding-right: 2%;
-  border-style: solid;
+  
   border-radius: 3px;
   border-width: 1px;
-  border-color: ${(props) => {
-    let cor;
-    if (!props.borderColor) {
-      if(props.erro || props.camposVazios){
-        cor = Cores.vermelho;
-      } else {
-        cor = Cores.azul;
-      }
-    } else {
-      cor = props.borderColor;
-    }
-    return cor;
-  }};
+  border-style: solid;
+  border-color: ${Cores.cinza[8]};
+  
 `;
 export const SelectData = styled(Select)`
   width: 160px;
@@ -271,26 +270,11 @@ export const SelectData = styled(Select)`
   font-size: 15px;
   padding-left: 4%;
   padding-right: 2%;
-  border-style: solid;
+
   border-radius: 3px;
   border-width: 1px;
-  border-color: ${(props) => {
-    let cor;
-    if (!props.borderColor) {
-      if(props.erro || props.camposVazios){
-        cor = Cores.vermelho;
-      } else {
-        cor = Cores.azul;
-      }
-    } else {
-      cor = props.borderColor;
-    }
-    return cor;
-  }};
-
-.ant-select-arrow {
-    color: ${Cores.azul};
-  }
+  border-style: solid;
+  border-color: ${Cores.cinza[8]};
 `;
 export const Filtros = styled.div`
   width: 50%;
