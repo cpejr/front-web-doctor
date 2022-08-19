@@ -51,7 +51,6 @@ function ListaUsuarios() {
   const [email, setEmail] = useState();
   const [tipoSelect, setTipoSelect] = useState("");
   const [busca, setBusca] = useState("");
-  const [carregandoPagina, setCarregandoPagina] = useState(false);
   const abertoPeloUsuario = true;
   const [consultas, setConsultas] = useState([]);
   const [pegouConsultas, setPegouConsultas] = useState(false);
