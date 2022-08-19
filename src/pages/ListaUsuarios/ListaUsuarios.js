@@ -198,27 +198,28 @@ function ListaUsuarios() {
         consultas.forEach((consulta) => {
           if (consulta.id_usuario === usuario.id) {
 
-            dataHora.push(consulta.data_hora); //funcionando
+            dataHora.push(consulta.data_hora); 
           }
         });
 
         const primeiraConsulta = dataHora[0];
+        const hoje = new Date(); 
         
 
         for (var i = 0; i < dataHora.length; i++) {
           
-          if (new Date(primeiraConsulta) > new Date()){
+          if (new Date(primeiraConsulta) > hoje){
             return;
           }
 
-          if (new Date(dataHora[i]) > new Date()) {
+          if (new Date(dataHora[i]) > hoje) {
             const consultaMaisRecente = dataHora[i - 1];
             Object.defineProperty(usuario, "ultimaConsulta", {value : consultaMaisRecente});
             return;
           }
         }
 
-          if (dataHora.length != 0 && usuario.ultimaConsulta === undefined && new Date(primeiraConsulta) < new Date()) {
+          if (dataHora.length != 0 && usuario.ultimaConsulta === undefined && new Date(primeiraConsulta) < hoje) {
             const consultaMaisRecente = dataHora[dataHora.length - 1];
             usuario.ultimaConsulta = consultaMaisRecente;
           } 
