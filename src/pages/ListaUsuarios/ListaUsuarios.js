@@ -26,6 +26,8 @@ import {
   BotoesMedico,
   BotaoSecretario,
   LogoCarregando,
+  ContainerSpin,
+  CaixaSpin,
 } from "./Styles";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
@@ -100,7 +102,7 @@ function ListaUsuarios() {
         }
       });
     }
-    await sleep(1500);
+    await sleep(700);
     setCarregandoPagina(false);
   }
 
@@ -185,33 +187,8 @@ function ListaUsuarios() {
     });
   }
 
-/*   async function setandoUltimaConsulta() {
-    consultas.sort(comparaData);
-    usuariosFiltrados.forEach((usuario) => {
-      let dataHora = [];
-      consultas.forEach((consulta) => {
-        if (consulta.id_usuario === usuario.id) {
-          dataHora.push(consulta.data_hora); //funcionando
-        }
-      });
-      usuario.ultimaConsulta = dataHora[dataHora.length];
-
-      for (var i = 0; i < dataHora.length; i++) {
-        if (new Date(dataHora[i]) > new Date()) {
-          let aux = dataHora[i - 1];
-          usuario.ultimaConsulta = aux;
-          return;
-        }
-      }
-      if (dataHora.length != 0 && usuario.ultimaConsulta === "-") {
-        let aux = dataHora[dataHora.length - 1];
-        usuario.ultimaConsulta = aux;
-      }
-      console.log("chegou");
-    });
-  } */
-
   async function setandoUltimaConsulta(usuario) {
+    
       if(pegouConsultas === true){
         if(usuario.tipo === "SECRETARIA(O)"){
           return;
@@ -341,33 +318,27 @@ function ListaUsuarios() {
           </BotaoSecretario>
         )}
         <BarraEstetica></BarraEstetica>
-        <DadosUsuario>
-          <Titulo></Titulo>
-          <Nome>Nome do Usuário</Nome>
-          <Telefone>Telefone</Telefone>
-          <UltimaVisita>Última Visita</UltimaVisita>
-          <CódigoPaciente>Código do Paciente</CódigoPaciente>
-          <CaixaVazia></CaixaVazia>
-        </DadosUsuario>
         {carregandoPagina ? (
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center"
-            }}
-          >
-            <Spin indicator={antIconPagina} />
-          </div>
+          <ContainerSpin>
+          <CaixaSpin>
+            <Spin indicator={antIconPagina}/>
+          </CaixaSpin>
+        </ContainerSpin>
         ) : (
-          <ContainerUsuarios>
-            {usuariosFiltrados?.sort(comparaNomes).map((value) => (
-              <Usuario key={value.id}>
-                <Imagem>{value.avatar_url}</Imagem>
-                <Nome>
-                  {carregando ? (
-                    <Spin indicator={antIcon} />
-                  ) : (
+        <>
+          <DadosUsuario>
+            <Titulo></Titulo>
+            <Nome>Nome do Usuário</Nome>
+            <Telefone>Telefone</Telefone>
+            <UltimaVisita>Última Visita</UltimaVisita>
+            <CódigoPaciente>Código do Paciente</CódigoPaciente>
+            <CaixaVazia></CaixaVazia>
+          </DadosUsuario>
+            <ContainerUsuarios>
+              {usuariosFiltrados?.sort(comparaNomes).map((value) => (
+                <Usuario key={value.id}>
+                  <Imagem>{value.avatar_url}</Imagem>
+                  <Nome> 
                     <div
                       onClick={() =>
                         verificandoSecretariaOuPaciente(value.tipo, value.email)
@@ -375,73 +346,63 @@ function ListaUsuarios() {
                     >
                       {value.nome}
                     </div>
-                  )}
-                </Nome>
-                <Telefone>
-                  {carregando ? (
-                    <Spin indicator={antIcon} />
+                  </Nome>
+                  <Telefone>
+                    ({value.telefone.slice(0, -9)}){" "}
+                    {value.telefone.slice(2, -4)}-{value.telefone.slice(-4)}
+                  </Telefone>
+                  {value.ultimaConsulta === undefined ? (
+                    <UltimaVisita> - </UltimaVisita>
                   ) : (
-                    <>
-                      ({value.telefone.slice(0, -9)}){" "}
-                      {value.telefone.slice(2, -4)}-{value.telefone.slice(-4)}
-                    </>
+                    <UltimaVisita>
+                      {value.ultimaConsulta.slice(8, 10) +
+                        "/" +
+                        value.ultimaConsulta.slice(5, 7) +
+                        "/" +
+                        value.ultimaConsulta.slice(0, 4)}
+                    </UltimaVisita>
                   )}
-                </Telefone>
-                {value.ultimaConsulta === undefined ? (
-                  <UltimaVisita> - </UltimaVisita>
-                ) : (
-                  <UltimaVisita>
-                    {value.ultimaConsulta.slice(8, 10) +
-                      "/" +
-                      value.ultimaConsulta.slice(5, 7) +
-                      "/" +
-                      value.ultimaConsulta.slice(0, 4)}
-                  </UltimaVisita>
-                )}
 
-                <CódigoPaciente>
-                  {carregando ? (
-                    <Spin indicator={antIcon} />
+                  <CódigoPaciente>
+                    {value.codigo}
+                  </CódigoPaciente>
+                  {tipoUsuarioLogado === "MASTER" ? (
+                    <BotaoAdicionar>
+                      {value.tipo === "PACIENTE" ? (
+                        <Button
+                          backgroundColor="transparent"
+                          borderColor="transparent"
+                          color={Cores.preto}
+                          fontSize="1em"
+                          textDecoration="underline"
+                          height="50px"
+                          onClick={() => abrindoModalCodigo(value.email)}
+                        >
+                          Editar Código
+                        </Button>
+                      ) : (
+                        <></>
+                      )}
+                    </BotaoAdicionar>
                   ) : (
-                    <>{value.codigo}</>
-                  )}
-                </CódigoPaciente>
-                {tipoUsuarioLogado === "MASTER" ? (
-                  <BotaoAdicionar>
-                    {value.tipo === "PACIENTE" ? (
+                    <BotaoAdicionar>
                       <Button
                         backgroundColor="transparent"
                         borderColor="transparent"
-                        color={Cores.preto}
+                        color="green"
                         fontSize="1em"
                         textDecoration="underline"
                         height="50px"
-                        onClick={() => abrindoModalCodigo(value.email)}
+                        onClick={() => marcandoAgendamento(value.email)}
                       >
-                        Editar Código
+                        Marcar Agendamento
                       </Button>
-                    ) : (
-                      <></>
-                    )}
-                  </BotaoAdicionar>
-                ) : (
-                  <BotaoAdicionar>
-                    <Button
-                      backgroundColor="transparent"
-                      borderColor="transparent"
-                      color="green"
-                      fontSize="1em"
-                      textDecoration="underline"
-                      height="50px"
-                      onClick={() => marcandoAgendamento(value.email)}
-                    >
-                      Marcar Agendamento
-                    </Button>
-                  </BotaoAdicionar>
-                )}
-              </Usuario>
-            ))}
-          </ContainerUsuarios>
+                    </BotaoAdicionar>
+                  )}
+                </Usuario>
+              ))}
+            </ContainerUsuarios>
+        </>
         )}
       </ContainerListadeUsuarios>
 

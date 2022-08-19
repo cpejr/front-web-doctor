@@ -241,3 +241,17 @@ export const BotaoSecretario = styled.div`
     width: 100%
   }
 `;
+
+export const ContainerSpin = styled.div`
+  padding: 2% 0% 2% 0%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+export const CaixaSpin = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+`;
