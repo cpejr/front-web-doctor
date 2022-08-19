@@ -20,11 +20,11 @@ export const requisicaoLogin = async (email, senha) => {
       if (resposta.data.tipo === "MASTER") {
         toast.success("Login realizado com sucesso!");
         await sleep(1500);
-        window.location.href = "/web/homemedico";
+        window.location.href = "/web/listadeusuarios";
       } else {
         toast.success("Login realizado com sucesso!");
         await sleep(1500);
-        window.location.href = "/web/homesecretaria";
+        window.location.href = "/web/listadeusuarios";
       }
     }
   } catch (error) {
@@ -48,12 +48,6 @@ export const Cadastrando = async (usuario, endereco) => {
     .criarUsuario(endereco, usuario)
     .then(() => {
       toast.success("Usuário cadastrado com sucesso.");
-      /* if(recebeTipo() === "MASTER"){
-        window.location.href = "/web/homemedico";
-      }
-      else{
-        window.location.href = "/web/homesecretaria";
-      } */
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/cadastro"));
@@ -420,6 +414,7 @@ export const  DeletarFormulario = async (id) => {
 
   return false;
 };
+
 export const GetRespostaFormularioIdUsuario = async (id_usuario) => {
   let dadosResposta = {};
 
@@ -440,6 +435,21 @@ export const GetResposta = async (id) => {
 
   await requesterService
     .requisicaoRespostaFormulario(id)
+
+    .then((res) => {
+      dadosResposta = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosResposta;
+};
+
+export const GetFormularioPacientesPorFormulario = async (id_formulario) => {
+  let dadosResposta = {};
+
+  await requesterService
+    .requisicaoFormularioPacientes(id_formulario)
 
     .then((res) => {
       dadosResposta = res.data;
@@ -483,9 +493,8 @@ export const EditarPerguntasFormulario = async (
   await requesterService
     .editarPerguntasFormulario(id, perguntas)
     .then(() => {
-      toast.success("Pergunta alterada com sucesso.");
-      sleep(1500)
-      window.location.href = "/web/listaformularios";
+      sleep(1500);
+      toast.success("Ação realizada com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/"));
@@ -503,8 +512,6 @@ export const EditarFormularios = async (
     .editarCamposFormulario(id, campos)
     .then(() => {
       toast.success("Formulario atualizado com sucesso.");
-      sleep(1500)
-      window.location.href = "/web/listaformularios";
     })
     .catch((error) => {
       return false;

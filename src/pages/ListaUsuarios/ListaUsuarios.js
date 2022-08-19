@@ -36,6 +36,7 @@ import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 
+
 function ListaUsuarios() {
   const history = useHistory();
 
@@ -50,6 +51,7 @@ function ListaUsuarios() {
   const [email, setEmail] = useState();
   const [tipoSelect, setTipoSelect] = useState("");
   const [busca, setBusca] = useState("");
+  const [carregandoPagina, setCarregandoPagina] = useState(false);
   const abertoPeloUsuario = true;
   const [consultas, setConsultas] = useState([]);
   const [pegouConsultas, setPegouConsultas] = useState(false);

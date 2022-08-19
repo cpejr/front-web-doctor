@@ -217,6 +217,7 @@ export const TextoAgendamentoEspecifico = styled.div`
   height: 100%;
   font-family: ${Fontes.roboto};
   font-size: 1em;
+  cursor: pointer;
   @media (max-width: 950px) {
     font-size: 0.8em;
   }
@@ -226,12 +227,13 @@ export const DiaHorarioAgendamento = styled.div`
   display: flex;
   align-items: center;
   flex-direction: row;
+  width: 40%;
   justify-content: center;
   text-align: center;
-  width: 25%;
   font-family: ${Fontes.roboto};
   font-size: 1em;
   font-weight: medium;
+  cursor: pointer;
 
   @media (max-width: 1700px) {
     font-size: 0.8em;
@@ -250,4 +252,25 @@ export const BarraEstetica = styled.div`
   @media (max-width: 480px) {
     display: none;
   }
+`;
+
+
+export const CaixaDataConsulta = styled.div`
+  align-items: center;
+  justify-content: center;
+  width: 40%;
+
+`;
+
+
+export const CaixaNomeConsulta = styled.div`
+  align-items: center;
+  justify-content: center;
+  width: 30%;
+`;
+
+export const CaixaHorarioConsulta = styled.div`
+  align-items: center;
+  justify-content: center;
+  width: 53%;
 `;
