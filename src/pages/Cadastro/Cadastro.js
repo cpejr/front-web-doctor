@@ -67,7 +67,7 @@ function Cadastro(props) {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
-  const [hoje, setHoje] = useState("");
+  const [ontem, setOntem] = useState("");
   const errors = {};
   const testeOriginal = {
     tipo: false,
@@ -97,22 +97,6 @@ function Cadastro(props) {
   useEffect(() => {
     verificaAutenticacao();
   }, []);
-
-  function setandoDiaAtual() {
-    let data = new Date();
-    let dia = data.getDate();
-    let mes = data.getMonth() + 1;
-    let ano = data.getFullYear();
-
-    if (dia < 10) {
-      dia = "0" + dia;
-    }
-    if (mes < 10) {
-      mes = "0" + mes;
-    }
-
-    setHoje(ano + "-" + mes + "-" + dia);
-  }
 
   useEffect(() => {
     setandoDiaAtual();
@@ -154,20 +138,34 @@ function Cadastro(props) {
     setandoTipoPorProps();
   }, [props]);
 
-  function setandoDataMinima() {
-    document.getElementById("data").setAttribute("max", hoje);
-  }
-
   useEffect(() => {
     setandoDataMinima();
-  }, [hoje]);
+  }, [ontem]);
 
   async function verificandoEnter(e) {
     if (e.key === "Enter") {
       requisicaoCadastro();
     }
   }
+  function setandoDiaAtual() {
+    let data = new Date();
+    let dia = data.getDate() - 1;
+    let mes = data.getMonth() + 1;
+    let ano = data.getFullYear();
 
+    if (dia < 10) {
+      dia = "0" + dia;
+    }
+    if (mes < 10) {
+      mes = "0" + mes;
+    }
+
+    setOntem(ano + "-" + mes + "-" + dia);
+  }
+
+  function setandoDataMinima() {
+    document.getElementById("data").setAttribute("max", ontem);
+  }
   function funcaoConvenio() {
     setConvenio(!convenio);
     setUsuario({ ...usuario, convenio: null });
@@ -419,7 +417,12 @@ function Cadastro(props) {
   function preenchendoEndereco(e) {
     const { value, name } = e.target;
 
-    if (name !== "complemento" && name !== "pais" && name !== "numero") {
+    if (
+      name !== "complemento" &&
+      name !== "pais" &&
+      name !== "numero" &&
+      name !== "cidade"
+    ) {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
     }
 
@@ -453,6 +456,10 @@ function Cadastro(props) {
         ...endereco,
         [name]: apenasLetras(value),
       });
+      setEnderecoBack({
+        ...enderecoBack,
+        [name]: apenasLetras(value),
+      });
     }
     if (name === "numero") {
       setEndereco({
@@ -471,11 +478,18 @@ function Cadastro(props) {
       setCamposVazios({ ...camposVazios, pais: false });
     }
   }, [enderecoBack.pais]);
+
   useEffect(() => {
     if (enderecoBack.numero !== "" && enderecoBack.numero !== undefined) {
       setCamposVazios({ ...camposVazios, numero: false });
     }
   }, [enderecoBack.numero]);
+
+  useEffect(() => {
+    if (enderecoBack.cidade !== "" && enderecoBack.cidade !== undefined) {
+      setCamposVazios({ ...camposVazios, cidade: false });
+    }
+  }, [enderecoBack.cidade]);
 
   return (
     <>
@@ -698,7 +712,9 @@ function Cadastro(props) {
             onChange={preenchendoEndereco}
             camposVazios={camposVazios.estado}
           >
-            <option value="">Estado</option>
+            <option value="" disabled selected>
+              Estado
+            </option>
             <option value="AC">Acre</option>
             <option value="AL">Alagoas</option>
             <option value="AP">Amapá</option>

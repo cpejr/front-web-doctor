@@ -45,12 +45,12 @@ export const alterarSenha = (id, senha) =>
 
 export const deletarEnderecoEUsuario = (id_endereco) => api.delete(`/enderecos/${id_endereco}`);
 
-export const requisicaoExamesMarcados = () => api.get(`/exame_marcados/`);
+export const requisicaoExamesMarcados = () => api.get(`/exame_marcados`);
 
 export const requisicaoExamesMarcadosUsuario = (id_usuario) =>
   api.get(`/exame_marcados/${id_usuario}`);
 
-export const requisicaoConsultas = () => api.get(`/consultas/`);
+export const requisicaoConsultas = () => api.get(`/consultas`);
 
 export const requisicaoConsultaUsuario = (id_usuario) =>
   api.get(`/consultas/${id_usuario}`);
