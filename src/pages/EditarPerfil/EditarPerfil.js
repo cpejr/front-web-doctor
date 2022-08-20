@@ -70,7 +70,7 @@ function EditarPerfil() {
   const [estadoBack, setEstadoBack] = useState({});
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
-  const [hoje, setHoje] = useState("");
+  const [ontem, setOntem] = useState("");
 
   const [cpfMasked, setCpfMasked] = useState({});
   const [dataMasked, setDataMasked] = useState({});
@@ -98,6 +98,7 @@ function EditarPerfil() {
     rua: true,
     numero: true,
     bairro: true,
+    complemento: true,
   };
 
   const maskCPF = (value) => {
@@ -191,13 +192,14 @@ function EditarPerfil() {
   }, [telefone]);
   useEffect(() => {
     setDataMasked(
-      dataNascimento.slice(8, -14) +
-        "/" +
-        dataNascimento.slice(5, -17) +
-        "/" +
-        dataNascimento.slice(0, -20)
+      dataNascimento.slice(0, 10) 
     );
   }, [dataNascimento]);
+
+
+
+
+
 
   useEffect(() => {
     if (!estadoBack.nome) errors.nome = true;
@@ -212,9 +214,11 @@ function EditarPerfil() {
     if (!enderecoBack.bairro) errors.bairro = true;
     if (!enderecoBack.rua) errors.rua = true;
     if (!enderecoBack.numero) errors.numero = true;
+    if (!enderecoBack.complemento) errors.complemento = true;
+
 
     setTudoNulo({ ...tudoNulo, ...errors });
-  }, [estadoBack]);
+  }, [estadoBack, enderecoBack]);
 
   useEffect(() => {
     setandoDiaAtual();
@@ -222,11 +226,11 @@ function EditarPerfil() {
 
   useEffect(() => {
     setandoDataMinima();
-  }, [hoje]);
+  }, [ontem]);
 
   function setandoDiaAtual() {
     let data = new Date();
-    let dia = data.getDate();
+    let dia = data.getDate() - 1;
     let mes = data.getMonth() + 1;
     let ano = data.getFullYear();
 
@@ -237,11 +241,11 @@ function EditarPerfil() {
       mes = "0" + mes;
     }
 
-    setHoje(ano + "-" + mes + "-" + dia);
+    setOntem(ano + "-" + mes + "-" + dia);
   }
 
   function setandoDataMinima() {
-    document.getElementById("data").setAttribute("max", hoje);
+    document.getElementById("data").setAttribute("max", ontem);
   }
 
   async function atualizarDados() {
@@ -292,6 +296,7 @@ function EditarPerfil() {
     }
 
     setEstado({ ...estado, [name]: value });
+    setDataMasked(value);
     setEstadoBack({ ...estadoBack, [name]: value });
   }
 
@@ -319,6 +324,9 @@ function EditarPerfil() {
         [name]: maskApenasLetras(value),
       });
     }
+
+    
+
     if (name === "cpf") {
       setEstado({ ...estado, [name]: maskCPF(value) });
       setEstadoBack({ ...estadoBack, [name]: maskApenasNumerosCpfTel(value) });
@@ -331,13 +339,23 @@ function EditarPerfil() {
 
   function preenchendoEndereco(e) {
     const { name, value } = e.target;
+
+
     
-    if(name !== "numero" && name!== "pais" && name!=="cidade")
-    {
+    if(name !== "numero" && name!== "pais" && name!=="cidade") {
+
       if (value) {
         setTudoNulo({ ...tudoNulo, [name]: false });
       }
+
+    } else if (name === "numero" && maskApenasNumeros(value) !== ""){
+      setTudoNulo({ ...tudoNulo, [name]: false });
+    } else if ((name === "pais" || name === "cidade") && maskApenasLetras(value) !== ""){
+      setTudoNulo({ ...tudoNulo, [name]: false });
     }
+
+    
+
    
 
     if (name === "cep" && value.length <= 8 && value.length > 0) {
@@ -356,7 +374,7 @@ function EditarPerfil() {
         [name]: maskApenasNumerosCep(value),
       });
     }
-    if (name === "pais" || name === "cidade" || name === "bairro") {
+    if (name === "pais" || name === "cidade") {
       setEnderecoNovo({
         ...enderecoNovo,
         [name]: maskApenasLetras(value),
@@ -474,10 +492,14 @@ function EditarPerfil() {
             <Titulo>Data de Nascimento:</Titulo>
 
             <Input
-              placeholder={dataMasked}
+              placeholder="Selecione uma data"
+              value={dataMasked}
               id="data"
               type="date"
+              name="data_nascimento"
               onKeyDown={(e) => e.preventDefault()}
+              onChange={validacaoData}
+              erro={erro.data_nascimento}
               backgroundColor={Cores.cinza[7]}
               boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
               borderWidth="1px"
@@ -485,10 +507,6 @@ function EditarPerfil() {
               color={Cores.preto}
               fontSize="1em"
               width="90%"
-              name="data_nascimento"
-              value={estado.data_nascimento}
-              onChange={validacaoData}
-              erro={erro.data_nascimento}
             ></Input>
           </CaixaInputs>
 
@@ -543,7 +561,6 @@ function EditarPerfil() {
               fontSize="1em"
               width="90%"
               name="pais"
-              marginTop="2%"
               onChange={preenchendoEndereco}
             ></Input>
           </CaixaInputs>
