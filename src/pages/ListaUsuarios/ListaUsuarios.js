@@ -36,7 +36,6 @@ import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 
-
 function ListaUsuarios() {
   const history = useHistory();
 
@@ -59,7 +58,6 @@ function ListaUsuarios() {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
   const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
-
 
   const usuariosFiltrados = usuarios.filter((usuario) => {
     if (lowerBusca === "" && tipoSelect === "") {
@@ -108,8 +106,9 @@ function ListaUsuarios() {
   }
 
   async function pegandoDadosConsultas() {
-    const resposta =
-      await managerService.GetDadosConsultasExamesMarcadosGeral();
+    const resposta = await managerService
+      .GetDadosConsultasExamesMarcadosGeral()
+      .then(pegandoDadosUsuarios());
     setConsultas(resposta.dadosConsultas);
     setPegouConsultas(true);
   }
@@ -139,14 +138,6 @@ function ListaUsuarios() {
   useEffect(() => {
     pegandoDadosConsultas();
   }, []);
-
-  useEffect(() => {
-    pegandoDadosUsuarios();
-  }, [pegouConsultas]);
-
-/*   useEffect(() => {
-    setandoUltimaConsulta();
-  }, [usuariosFiltrados]); */
 
   async function marcandoAgendamento(emailPaciente) {
     setEmailPaciente(emailPaciente);
@@ -189,42 +180,44 @@ function ListaUsuarios() {
   }
 
   async function setandoUltimaConsulta(usuario) {
-    
-      if(pegouConsultas === true){
-        if(usuario.tipo === "SECRETARIA(O)"){
+    if (pegouConsultas === true) {
+      if (usuario.tipo === "SECRETARIA(O)") {
+        return;
+      }
+      consultas.sort(comparaData);
+      let dataHora = [];
+      consultas.forEach((consulta) => {
+        if (consulta.id_usuario === usuario.id) {
+          dataHora.push(consulta.data_hora);
+        }
+      });
+
+      const primeiraConsulta = dataHora[0];
+      const hoje = new Date();
+
+      for (var i = 0; i < dataHora.length; i++) {
+        if (new Date(primeiraConsulta) > hoje) {
           return;
         }
-        consultas.sort(comparaData)
-        let dataHora = [];
-        consultas.forEach((consulta) => {
-          if (consulta.id_usuario === usuario.id) {
 
-            dataHora.push(consulta.data_hora); 
-          }
-        });
-
-        const primeiraConsulta = dataHora[0];
-        const hoje = new Date(); 
-        
-
-        for (var i = 0; i < dataHora.length; i++) {
-          
-          if (new Date(primeiraConsulta) > hoje){
-            return;
-          }
-
-          if (new Date(dataHora[i]) > hoje) {
-            const consultaMaisRecente = dataHora[i - 1];
-            Object.defineProperty(usuario, "ultimaConsulta", {value : consultaMaisRecente});
-            return;
-          }
+        if (new Date(dataHora[i]) > hoje) {
+          const consultaMaisRecente = dataHora[i - 1];
+          Object.defineProperty(usuario, "ultimaConsulta", {
+            value: consultaMaisRecente,
+          });
+          return;
         }
-
-          if (dataHora.length != 0 && usuario.ultimaConsulta === undefined && new Date(primeiraConsulta) < hoje) {
-            const consultaMaisRecente = dataHora[dataHora.length - 1];
-            usuario.ultimaConsulta = consultaMaisRecente;
-          } 
       }
+
+      if (
+        dataHora.length != 0 &&
+        usuario.ultimaConsulta === undefined &&
+        new Date(primeiraConsulta) < hoje
+      ) {
+        const consultaMaisRecente = dataHora[dataHora.length - 1];
+        usuario.ultimaConsulta = consultaMaisRecente;
+      }
+    }
   }
 
   return (
@@ -322,25 +315,25 @@ function ListaUsuarios() {
         <BarraEstetica></BarraEstetica>
         {carregandoPagina ? (
           <ContainerSpin>
-          <CaixaSpin>
-            <Spin indicator={antIconPagina}/>
-          </CaixaSpin>
-        </ContainerSpin>
+            <CaixaSpin>
+              <Spin indicator={antIconPagina} />
+            </CaixaSpin>
+          </ContainerSpin>
         ) : (
-        <>
-          <DadosUsuario>
-            <Titulo></Titulo>
-            <Nome>Nome do Usuário</Nome>
-            <Telefone>Telefone</Telefone>
-            <UltimaVisita>Última Visita</UltimaVisita>
-            <CódigoPaciente>Código do Paciente</CódigoPaciente>
-            <CaixaVazia></CaixaVazia>
-          </DadosUsuario>
+          <>
+            <DadosUsuario>
+              <Titulo></Titulo>
+              <Nome>Nome do Usuário</Nome>
+              <Telefone>Telefone</Telefone>
+              <UltimaVisita>Última Visita</UltimaVisita>
+              <CódigoPaciente>Código do Paciente</CódigoPaciente>
+              <CaixaVazia></CaixaVazia>
+            </DadosUsuario>
             <ContainerUsuarios>
               {usuariosFiltrados?.sort(comparaNomes).map((value) => (
                 <Usuario key={value.id}>
                   <Imagem>{value.avatar_url}</Imagem>
-                  <Nome> 
+                  <Nome>
                     <div
                       onClick={() =>
                         verificandoSecretariaOuPaciente(value.tipo, value.email)
@@ -365,9 +358,7 @@ function ListaUsuarios() {
                     </UltimaVisita>
                   )}
 
-                  <CódigoPaciente>
-                    {value.codigo}
-                  </CódigoPaciente>
+                  <CódigoPaciente>{value.codigo}</CódigoPaciente>
                   {tipoUsuarioLogado === "MASTER" ? (
                     <BotaoAdicionar>
                       {value.tipo === "PACIENTE" ? (
@@ -404,7 +395,7 @@ function ListaUsuarios() {
                 </Usuario>
               ))}
             </ContainerUsuarios>
-        </>
+          </>
         )}
       </ContainerListadeUsuarios>
 
