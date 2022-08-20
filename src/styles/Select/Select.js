@@ -19,7 +19,8 @@ const Select = styled.select`
   color: ${(props) => props.color};
   border-radius: 3px;
   font-size: 1em;
-  margin-top: 2%;
+  margin-top: ${(props) => props.marginTop?? "2%"};
+  margin-bottom: ${(props) => props.marginBottom?? "0px"};
   border-style: solid;
   border-width: ${(props) => props.borderWidth};
   height: 50px;

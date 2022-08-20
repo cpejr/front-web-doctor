@@ -20,11 +20,11 @@ export const requisicaoLogin = async (email, senha) => {
       if (resposta.data.tipo === "MASTER") {
         toast.success("Login realizado com sucesso!");
         await sleep(1500);
-        window.location.href = "/web/homemedico";
+        window.location.href = "/web/listadeusuarios";
       } else {
         toast.success("Login realizado com sucesso!");
         await sleep(1500);
-        window.location.href = "/web/homesecretaria";
+        window.location.href = "/web/listadeusuarios";
       }
     }
   } catch (error) {
@@ -48,12 +48,6 @@ export const Cadastrando = async (usuario, endereco) => {
     .criarUsuario(endereco, usuario)
     .then(() => {
       toast.success("Usuário cadastrado com sucesso.");
-      /* if(recebeTipo() === "MASTER"){
-        window.location.href = "/web/homemedico";
-      }
-      else{
-        window.location.href = "/web/homesecretaria";
-      } */
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/cadastro"));
@@ -219,9 +213,6 @@ export const GetConsultorioPorId = async (id) => {
 };
 
 export const ConferirSenha = async (email, senhaAtual) => {
-  //comparar a senha do Email com a senha digitada
-  //se as senhas forem iguais retornar true
-  //se as senhas nao forem iguais retornar false
   try {
     await requesterService.requisicaoVerificar(email, senhaAtual);
     await sleep(1500);
@@ -233,7 +224,6 @@ export const ConferirSenha = async (email, senhaAtual) => {
 };
 
 export const AlterarSenha = async (novaSenha, id) => {
-  //passar a "novaSenha" como senha do usuário que possui esse "email"
   await requesterService
     .alterarSenha(id, novaSenha)
     .then(() => {
@@ -499,9 +489,8 @@ export const EditarPerguntasFormulario = async (
   await requesterService
     .editarPerguntasFormulario(id, perguntas)
     .then(() => {
-      toast.success("Pergunta alterada com sucesso.");
-      sleep(1500)
-      window.location.href = "/web/listaformularios";
+      sleep(1500);
+      toast.success("Ação realizada com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/"));
@@ -519,8 +508,6 @@ export const EditarFormularios = async (
     .editarCamposFormulario(id, campos)
     .then(() => {
       toast.success("Formulario atualizado com sucesso.");
-      sleep(1500)
-      window.location.href = "/web/listaformularios";
     })
     .catch((error) => {
       return false;

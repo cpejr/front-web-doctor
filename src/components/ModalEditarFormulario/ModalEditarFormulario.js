@@ -1,10 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Cores } from "../../variaveis";
-import { Container, Pergunta, PerguntaBotao } from "./Styles";
-import Button from "../../styles/Button";
-import * as managerService from "../../services/ManagerService/managerService";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import {
+  Container,
+  Pergunta,
+  PerguntaBotao,
+  TextoSemPerguntas,
+} from "./Styles";
+import { Cores } from "../../variaveis";
+import Button from "../../styles/Button";
+import { sleep } from "../../utils/sleep";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalEditarFormulario(props) {
   const [carregando, setCarregando] = useState(true);
@@ -25,11 +31,13 @@ function ModalEditarFormulario(props) {
   }, [props]);
 
   async function deletarCampo(valor) {
-    delete props.perguntasAlterar.properties[valor[0]]
+    delete props.perguntasAlterar.properties[valor[0]];
     await managerService.EditarPerguntasFormulario(
       props.formulario.id,
       props.perguntasAlterar
     );
+    await sleep(1500);
+    window.location.href = "/web/listaformularios";
   }
 
   return (
@@ -38,6 +46,11 @@ function ModalEditarFormulario(props) {
         <Spin indicator={antIcon} />
       ) : (
         <>
+          {pergunta.length === 0 && (
+            <TextoSemPerguntas>
+              Esse formulário não possui perguntas
+            </TextoSemPerguntas>
+          )}
           {pergunta.map((valor) => (
             <PerguntaBotao>
               <Pergunta>{valor[1].title}</Pergunta>
@@ -47,8 +60,8 @@ function ModalEditarFormulario(props) {
                 backgroundColor={Cores.lilas[1]}
                 borderColor={Cores.azul}
                 color={Cores.branco}
-                fontSize="1.5em"
-                fontSizeMedia="1.2em"
+                fontSize="1.3em"
+                fontSizeMedia="1em"
                 fontWeight="bold"
                 onClick={() => deletarCampo(valor)}
               >
