@@ -42,8 +42,7 @@ function ListaUsuarios() {
   const { Option } = Select;
   const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
-  const [carregando, setCarregando] = useState(true);
-  const [carregandoPagina, setCarregandoPagina] = useState("");
+  const [carregandoPagina, setCarregandoPagina] = useState(true);
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [emailPaciente, setEmailPaciente] = useState(false);
   const [modalAdicionarCodigo, setModalAdicionarCodigo] = useState(false);
@@ -52,10 +51,8 @@ function ListaUsuarios() {
   const [busca, setBusca] = useState("");
   const abertoPeloUsuario = true;
   const [consultas, setConsultas] = useState([]);
-  const [pegouConsultas, setPegouConsultas] = useState(false);
 
   const lowerBusca = busca.toLowerCase();
-  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
   const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
 
@@ -80,7 +77,7 @@ function ListaUsuarios() {
     setTipoSelect(value);
   }
 
-  async function pegandoDadosUsuarios() {
+  async function pegandoDadosUsuarios(consultas) {
     setCarregandoPagina(true);
     setUsuarios([]);
     const resposta = await managerService.GetDadosPessoais();
@@ -88,16 +85,14 @@ function ListaUsuarios() {
       resposta.forEach((usuario) => {
         if (usuario.tipo === "PACIENTE" || usuario.tipo === "SECRETARIA(O)") {
           setUsuarios((usuarios) => [...usuarios, usuario]);
-          setandoUltimaConsulta(usuario);
-          setCarregando(false);
+          setandoUltimaConsulta(usuario, consultas);
         }
       });
     } else {
       resposta.forEach((usuario) => {
         if (usuario.tipo === "PACIENTE") {
           setUsuarios((usuarios) => [...usuarios, usuario]);
-          setandoUltimaConsulta(usuario);
-          setCarregando(false);
+          setandoUltimaConsulta(usuario, consultas);
         }
       });
     }
@@ -106,11 +101,10 @@ function ListaUsuarios() {
   }
 
   async function pegandoDadosConsultas() {
-    const resposta = await managerService
-      .GetDadosConsultasExamesMarcadosGeral()
-      .then(pegandoDadosUsuarios());
-    setConsultas(resposta.dadosConsultas);
-    setPegouConsultas(true);
+    await managerService.GetDadosConsultasExamesMarcadosGeral().then((res) => {
+      setConsultas(res.dadosConsultas);
+      pegandoDadosUsuarios(res.dadosConsultas);
+    });
   }
 
   function comparaData(a, b) {
@@ -155,7 +149,7 @@ function ListaUsuarios() {
 
   async function fechandoModalCodigo() {
     setModalAdicionarCodigo(false);
-    pegandoDadosUsuarios();
+    pegandoDadosUsuarios(consultas);
   }
 
   async function verificandoSecretariaOuPaciente(tipo, email) {
@@ -179,44 +173,42 @@ function ListaUsuarios() {
     });
   }
 
-  async function setandoUltimaConsulta(usuario) {
-    if (pegouConsultas === true) {
-      if (usuario.tipo === "SECRETARIA(O)") {
+  async function setandoUltimaConsulta(usuario, consultas) {
+    if (usuario.tipo === "SECRETARIA(O)") {
+      return;
+    }
+    consultas.sort(comparaData);
+    let dataHora = [];
+    consultas.forEach((consulta) => {
+      if (consulta.id_usuario === usuario.id) {
+        dataHora.push(consulta.data_hora);
+      }
+    });
+
+    const primeiraConsulta = dataHora[0];
+    const hoje = new Date();
+
+    for (var i = 0; i < dataHora.length; i++) {
+      if (new Date(primeiraConsulta) > hoje) {
         return;
       }
-      consultas.sort(comparaData);
-      let dataHora = [];
-      consultas.forEach((consulta) => {
-        if (consulta.id_usuario === usuario.id) {
-          dataHora.push(consulta.data_hora);
-        }
-      });
 
-      const primeiraConsulta = dataHora[0];
-      const hoje = new Date();
-
-      for (var i = 0; i < dataHora.length; i++) {
-        if (new Date(primeiraConsulta) > hoje) {
-          return;
-        }
-
-        if (new Date(dataHora[i]) > hoje) {
-          const consultaMaisRecente = dataHora[i - 1];
-          Object.defineProperty(usuario, "ultimaConsulta", {
-            value: consultaMaisRecente,
-          });
-          return;
-        }
+      if (new Date(dataHora[i]) > hoje) {
+        const consultaMaisRecente = dataHora[i - 1];
+        Object.defineProperty(usuario, "ultimaConsulta", {
+          value: consultaMaisRecente,
+        });
+        return;
       }
+    }
 
-      if (
-        dataHora.length != 0 &&
-        usuario.ultimaConsulta === undefined &&
-        new Date(primeiraConsulta) < hoje
-      ) {
-        const consultaMaisRecente = dataHora[dataHora.length - 1];
-        usuario.ultimaConsulta = consultaMaisRecente;
-      }
+    if (
+      dataHora.length != 0 &&
+      usuario.ultimaConsulta === undefined &&
+      new Date(primeiraConsulta) < hoje
+    ) {
+      const consultaMaisRecente = dataHora[dataHora.length - 1];
+      usuario.ultimaConsulta = consultaMaisRecente;
     }
   }
 
