@@ -98,8 +98,6 @@ function Cadastro(props) {
     verificaAutenticacao();
   }, []);
 
-  
-
   useEffect(() => {
     setandoDiaAtual();
   }, []);
@@ -140,8 +138,6 @@ function Cadastro(props) {
     setandoTipoPorProps();
   }, [props]);
 
-  
-
   useEffect(() => {
     setandoDataMinima();
   }, [ontem]);
@@ -149,6 +145,8 @@ function Cadastro(props) {
   async function verificandoEnter(e) {
     if (e.key === "Enter") {
       requisicaoCadastro();
+    }
+  }
   function setandoDiaAtual() {
     let data = new Date();
     let dia = data.getDate() - 1;
@@ -166,7 +164,8 @@ function Cadastro(props) {
   }
 
   function setandoDataMinima() {
-    document.getElementById("data").setAttribute("max", ontem);}
+    document.getElementById("data").setAttribute("max", ontem);
+  }
   function funcaoConvenio() {
     setConvenio(!convenio);
     setUsuario({ ...usuario, convenio: null });
@@ -413,14 +412,17 @@ function Cadastro(props) {
     if (usuario.nome !== "" && usuario.nome !== undefined) {
       setCamposVazios({ ...camposVazios, nome: false });
     }
-
-
   }, [usuario]);
 
   function preenchendoEndereco(e) {
     const { value, name } = e.target;
 
-    if (name !== "complemento" && name !== "pais" && name !== "numero" && name !== "cidade") {
+    if (
+      name !== "complemento" &&
+      name !== "pais" &&
+      name !== "numero" &&
+      name !== "cidade"
+    ) {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
     }
 
@@ -448,7 +450,6 @@ function Cadastro(props) {
         ...enderecoBack,
         [name]: apenasLetras(value),
       });
-      
     }
     if (name === "cidade") {
       setEndereco({
@@ -489,7 +490,6 @@ function Cadastro(props) {
       setCamposVazios({ ...camposVazios, cidade: false });
     }
   }, [enderecoBack.cidade]);
-
 
   return (
     <>
@@ -712,7 +712,9 @@ function Cadastro(props) {
             onChange={preenchendoEndereco}
             camposVazios={camposVazios.estado}
           >
-            <option value="" disabled selected>Estado</option>
+            <option value="" disabled selected>
+              Estado
+            </option>
             <option value="AC">Acre</option>
             <option value="AL">Alagoas</option>
             <option value="AP">Amapá</option>
