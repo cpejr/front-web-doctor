@@ -50,37 +50,6 @@ function Header(props) {
             fontSize="1rem"
             height="50px"
             onClick={() => {
-              history.push("/web/homemedico");
-            }}
-          >
-            Home
-          </Button>
-        </Menu.Item>
-      ) : (
-        <Menu.Item>
-          <Button
-            backgroundColor="transparent"
-            borderColor="transparent"
-            color={Cores.preto}
-            fontSize="1rem"
-            height="50px"
-            onClick={() => {
-              history.push("/web/homesecretaria");
-            }}
-          >
-            Home
-          </Button>
-        </Menu.Item>
-      )}
-      {tipo === "MASTER" ? (
-        <Menu.Item>
-          <Button
-            backgroundColor="transparent"
-            borderColor="transparent"
-            color={Cores.preto}
-            fontSize="1rem"
-            height="50px"
-            onClick={() => {
               history.push("/web/areareceitas");
             }}
           >
@@ -143,7 +112,7 @@ function Header(props) {
           fontSize="1rem"
           height="50px"
           onClick={() => {
-            history.push("/web/criacaoformulario");
+            history.push("/web/listaformularios");
           }}
         >
           Formulários
@@ -253,35 +222,6 @@ function Header(props) {
               fontSize="1.1rem"
               height="50px"
               onClick={() => {
-                history.push("/web/homemedico");
-              }}
-            >
-              Home
-            </Button>
-          ) : (
-            <Button
-              fontSizeMedia1080="1rem"
-              backgroundColor="transparent"
-              borderColor="transparent"
-              color={Cores.branco}
-              fontSize="1.1rem"
-              height="50px"
-              onClick={() => {
-                history.push("/web/homesecretaria");
-              }}
-            >
-              Home
-            </Button>
-          )}
-          {tipo === "MASTER" ? (
-            <Button
-              fontSizeMedia1080="1rem"
-              backgroundColor="transparent"
-              borderColor="transparent"
-              color={Cores.branco}
-              fontSize="1.1rem"
-              height="50px"
-              onClick={() => {
                 history.push("/web/areareceitas");
               }}
             >
@@ -339,7 +279,7 @@ function Header(props) {
             fontSize="1.1rem"
             height="50px"
             onClick={() => {
-              history.push("/web/criacaoformulario");
+              history.push("/web/listaformularios");
             }}
           >
             Formulários
