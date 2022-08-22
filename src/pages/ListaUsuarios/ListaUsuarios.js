@@ -62,7 +62,7 @@ function ListaUsuarios() {
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
-  const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
+  const antIconPagina = <LoadingOutlined style={{ fontSize: 40, color: Cores.azulEscuro }} spin />;
   const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
 
   //Filtros
@@ -302,7 +302,7 @@ function ListaUsuarios() {
     }
 
     if (
-      dataHora.length != 0 &&
+      dataHora.length !== 0 &&
       usuario.ultimaConsulta === undefined &&
       new Date(primeiraConsulta) < hoje
     ) {
@@ -318,7 +318,6 @@ function ListaUsuarios() {
           <FiltrosEsquerda>
             <SelectTipoBusca
               defaultValue=""
-              //style={{ width: 200 }}
               tipoBusca={pesquisa}
               bordered={false}
               onChange={(value) => tipoBarraPesquisa(value)}
@@ -329,7 +328,6 @@ function ListaUsuarios() {
             <BarraPesquisa>
             <SearchStyle
               placeholder="BUSCAR"
-              //style={{ width: 400 }}
               tipoBusca={pesquisa}
               bordered={false}
               value={busca}
@@ -342,7 +340,7 @@ function ListaUsuarios() {
               <FiltroUsuario>
                 <Select
                   defaultValue=""
-                  //style={{ width: 200 }}
+                  style={{ width: 180 }}
                   onChange={(value) => secretariosFiltrados(value)}
                 >
                   <Option value="">Todos os Usuários</Option>
@@ -358,7 +356,7 @@ function ListaUsuarios() {
               <FiltroDatas>
                 <Select
                   defaultValue=""
-                  //style={{ width: 200 }}
+                  style={{ width: 180 }}
                   onChange={(value) => visitaFiltro(value)}
                 >
                   <Option value="">Todas as Datas</Option>

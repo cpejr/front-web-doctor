@@ -35,7 +35,7 @@ export const FiltrosEsquerda = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 55%;
+  width: 50%;
 
   @media (max-width: 920px) {
     width: 100%;
@@ -46,7 +46,6 @@ export const FiltrosEsquerda = styled.div`
   @media (max-width: 450px) {
     flex-direction: column-reverse;
     width: 100%;
-    //justify-content: center;
     align-items: center;
     gap: 10px;
   }
@@ -54,7 +53,7 @@ export const FiltrosEsquerda = styled.div`
 `;
 
 export const SelectTipoBusca = styled(Select)`
-    width: 40%;
+    width: 180px;
     border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
@@ -89,7 +88,7 @@ export const SelectTipoBusca = styled(Select)`
   }
 
   @media (max-width: 570px) {
-    width: 200px;
+    width: 180px;
   }
 `;
 
@@ -133,15 +132,12 @@ export const Filtros = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  //align-items: flex-end;
-  //gap: 2%;
   @media (max-width: 920px) {
-    //margin-top: 2%;
     width: 100%;
     justify-content: center;
+    gap: 10px;
   }
   @media (max-width: 450px) {
-    //margin-top: 2%;
     flex-direction: column;
     width: 100%;
     align-items: center;
@@ -149,7 +145,6 @@ export const Filtros = styled.div`
   }
 `;
 export const FiltroUsuario = styled.div`
-  width: 49%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
@@ -162,7 +157,6 @@ export const FiltroUsuario = styled.div`
 `;
 
 export const FiltroDatas = styled.div`
-  width: 49%;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
