@@ -175,11 +175,11 @@ function FormularioEspecifico(props) {
                     <SelectTipos
                       defaultValue=""
                       bordered={false}
-                      style={{ width: 150 }}
+                      style={{ width: "auto" }}
                       onChange={(value) => usuariosFiltro(value)}
                     >
                       <Option value="">Todos os Usuários</Option>
-                      <Option value="true">Respondido</Option>
+                      <Option value="true">Respondido      </Option>
                       <Option value="false">Resposta Pendente</Option>
                     </SelectTipos>
                   </RotuloBarraDeBuscaOpcoes>

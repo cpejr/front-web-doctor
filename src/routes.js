@@ -152,11 +152,11 @@ function UserHeader() {
           path="/web/respostaformulario"
           component={RespostaFormulario}
         />
-        <RotasPrivadas component={() => <Redirect to="/web/listadeusuarios" />} />
         <RotasPrivadas
           path="/web/formularioespecifico"
           component={FormularioEspecifico}
         />
+        <RotasPrivadas component={() => <Redirect to="/web/listadeusuarios" />} />
       </Switch>
     </Header>
   );

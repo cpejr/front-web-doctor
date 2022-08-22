@@ -353,6 +353,7 @@ export const SelectTipos = styled(Select)`
   font-weight: bold;
   font-size: 0.9em;
 
+
   .ant-select-arrow {
     color: ${Cores.azul};
   }
