@@ -34,8 +34,9 @@ export const TopoPagina = styled.div`
 export const FiltrosEsquerda = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   width: 50%;
+  gap: 10px;
 
   @media (max-width: 920px) {
     width: 100%;
@@ -131,7 +132,8 @@ export const Filtros = styled.div`
   width: 40%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 10px;
   @media (max-width: 920px) {
     width: 100%;
     justify-content: center;
