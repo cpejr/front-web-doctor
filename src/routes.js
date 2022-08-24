@@ -153,6 +153,7 @@ function UserHeader() {
           component={RespostaFormulario}
         />
         <RotasPrivadas
+          exact
           path="/web/formularioespecifico"
           component={FormularioEspecifico}
         />
