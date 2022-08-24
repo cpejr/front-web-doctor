@@ -174,7 +174,7 @@ function CriacaoFormulario() {
       <Instrucao>
         <TextoInstrucao>
           Aperte no + verde abaixo. Em seguida, clique em “Create”. Mantenha o
-          campo “Object Name” preenchido com um nome específico e escreva a
+          campo “Object Name” preenchido com um nome único e escreva a
           pergunta em “Display Name”. Escolha o tipo do input em “Input Type”.
           Quando finalizar, clique em “Criar”.
         </TextoInstrucao>
