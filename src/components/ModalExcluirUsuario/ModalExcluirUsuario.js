@@ -21,10 +21,10 @@ function ModalExcluirUsuario(props) {
     <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin />
   );
 
-  async function deletarUsuario() {
+  async function deletarEnderecoEUsuario() {
     if (usuarioAutenticado() && recebeTipo() === "MASTER") {
       setCarregandoDeletar(true);
-      await managerService.DeletarUsuario(props.usuario.id);
+      await managerService.DeletarEnderecoEUsuario(props.usuario.id_endereco);
       setModalDeletarUsuario(false);
       await sleep(3000);
       redirecionamento("/web/listadeusuarios");
@@ -63,7 +63,7 @@ function ModalExcluirUsuario(props) {
             width="25%"
             fontSize="13px"
             marginLeft="2%"
-            onClick={() => deletarUsuario()}
+            onClick={() => deletarEnderecoEUsuario()}
           >
             {carregandoDeletar ? (
               <Spin indicator={antIconModal} />

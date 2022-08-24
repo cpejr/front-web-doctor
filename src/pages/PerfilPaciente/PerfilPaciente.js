@@ -125,10 +125,10 @@ function PerfilPaciente(props) {
     pegandoListaFormularios();
   }, [usuario]);
 
-  async function deletarUsuario() {
+  async function deletarEnderecoEUsuario() {
     if (usuarioAutenticado() && recebeTipo() === "MASTER") {
       setCarregandoDeletar(true);
-      await managerService.DeletarUsuario(usuario.id);
+      await managerService.DeletarEnderecoEUsuario(usuario.id_endereco);
       setModalDeletarUsuario(false);
       await sleep(3000);
       redirecionamento("/web/listadeusuarios");
@@ -419,7 +419,7 @@ function PerfilPaciente(props) {
         width={"70%"}
         centered={true}
       >
-        <ModalAgendamento abertoPeloUsuario={abertoPeloUsuario} id_usuario={usuario.id} email={usuario.email} />
+        <ModalAgendamento abertoPeloUsuario={abertoPeloUsuario} id_usuario={usuario.id} email={usuario.email}  />
       </Modal>
 
       <Modal

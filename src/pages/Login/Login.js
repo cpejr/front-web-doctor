@@ -188,19 +188,6 @@ function Login() {
           >
             Esqueceu sua senha?
           </Button>
-          <Button
-            backgroundColor="transparent"
-            borderColor="transparent"
-            color="#434B97"
-            fontSize="1em"
-            textDecoration="underline"
-            height="50px"
-            onClick={() => {
-              history.push("/cadastro");
-            }}
-          >
-            Cadastre-se
-          </Button>
         </Botoes>
         <Estetica>
           <BarraEstetica />

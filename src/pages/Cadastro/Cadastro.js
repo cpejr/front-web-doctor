@@ -6,13 +6,7 @@ import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import Select from "../../styles/Select/Select";
 import { Spin, Switch } from "antd";
-import {
-  LoadingOutlined,
-  bleLeftOutlined,
-  RollbackOutlined,
-  LeftOutlined,
-} from "@ant-design/icons";
-import { BiArrowBack } from "react-icons/bi";
+import { LoadingOutlined, LeftOutlined } from "@ant-design/icons";
 import {
   Body,
   DadosCadastro,
@@ -20,38 +14,30 @@ import {
   InputMesmaLinha,
   Rotulo,
   InputMesmaLinha2,
-  CaixaBotaoVoltar,
   Botao,
   RotuloColuna,
   PossuiConvenio,
   PossuiCuidador,
-  TextoVoltar,
 } from "./Styles";
 import "react-toastify/dist/ReactToastify.min.css";
 import AddToast from "../../components/AddToast/AddToast";
 import { toast } from "react-toastify";
-import { brParaPadrao } from "../../utils/date";
 import { recebeTipo, usuarioAutenticado } from "../../services/auth";
-import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import {
   apenasLetras,
   apenasNumeros,
   apenasNumerosCep,
-  apenasNumerosCpfTel,
   cep,
+  apenasNumerosCpfTel,
   cpf,
-  data,
-  dataBack,
   telefone,
 } from "../../utils/masks";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function Cadastro(props) {
   const history = useHistory();
-
-  const email = sessionStorage.getItem("@doctorapp-Email");
-
   const [usuario, setUsuario] = useState({});
   const [endereco, setEndereco] = useState({});
   const [erro, setErro] = useState(false);
@@ -75,33 +61,13 @@ function Cadastro(props) {
     nome_cuidador: false,
     telefone_cuidador: false,
   });
-  const [erroDataBack, setErroDataBack] = useState(false);
   const [enderecoBack, setEnderecoBack] = useState({});
   const [estado, setEstado] = useState({});
   const [carregando, setCarregando] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
-  const [verificacaoLogado, setVerificacaoLogado] = useState("");
-
-  function funcaoConvenio() {
-    setConvenio(!convenio);
-    setUsuario({ ...usuario, convenio: null });
-    setEstado({ ...estado, convenio: null });
-    setCamposVazios({ ...camposVazios, convenio: false });
-  }
-  function funcaoCuidador() {
-    setCuidador(!cuidador);
-    setUsuario({ ...usuario, nome_cuidador: null, telefone_cuidador: null });
-    setEstado({ ...estado, nome_cuidador: null, telefone_cuidador: null });
-    setCamposVazios({
-      ...camposVazios,
-      nome_cuidador: false,
-      telefone_cuidador: false,
-    });
-    setErro({ ...erro, telefone_cuidador: false });
-  }
-
+  const [ontem, setOntem] = useState("");
   const errors = {};
   const testeOriginal = {
     tipo: false,
@@ -120,14 +86,21 @@ function Cadastro(props) {
     senha: false,
     senhaConfirmada: false,
   };
-
   let testeTemp = testeOriginal;
 
-  async function verificandoEnter(e) {
-    if (e.key === "Enter") {
-      requisicaoCadastro();
+  function verificaAutenticacao() {
+    if (usuarioAutenticado() === false) {
+      window.location.href = "/login";
     }
   }
+
+  useEffect(() => {
+    verificaAutenticacao();
+  }, []);
+
+  useEffect(() => {
+    setandoDiaAtual();
+  }, []);
 
   function setandoTipoPorProps() {
     if (history.location.state !== undefined) {
@@ -165,15 +138,51 @@ function Cadastro(props) {
     setandoTipoPorProps();
   }, [props]);
 
-  function verificaAutenticacao() {
-    if (usuarioAutenticado() === false) {
-      window.location.href = "/login";
+  useEffect(() => {
+    setandoDataMinima();
+  }, [ontem]);
+
+  async function verificandoEnter(e) {
+    if (e.key === "Enter") {
+      requisicaoCadastro();
     }
   }
+  function setandoDiaAtual() {
+    let data = new Date();
+    let dia = data.getDate() - 1;
+    let mes = data.getMonth() + 1;
+    let ano = data.getFullYear();
 
-  useEffect(() => {
-    verificaAutenticacao();
-  }, []);
+    if (dia < 10) {
+      dia = "0" + dia;
+    }
+    if (mes < 10) {
+      mes = "0" + mes;
+    }
+
+    setOntem(ano + "-" + mes + "-" + dia);
+  }
+
+  function setandoDataMinima() {
+    document.getElementById("data").setAttribute("max", ontem);
+  }
+  function funcaoConvenio() {
+    setConvenio(!convenio);
+    setUsuario({ ...usuario, convenio: null });
+    setEstado({ ...estado, convenio: null });
+    setCamposVazios({ ...camposVazios, convenio: false });
+  }
+  function funcaoCuidador() {
+    setCuidador(!cuidador);
+    setUsuario({ ...usuario, nome_cuidador: null, telefone_cuidador: null });
+    setEstado({ ...estado, nome_cuidador: null, telefone_cuidador: null });
+    setCamposVazios({
+      ...camposVazios,
+      nome_cuidador: false,
+      telefone_cuidador: false,
+    });
+    setErro({ ...erro, telefone_cuidador: false });
+  }
 
   async function requisicaoCadastro() {
     setCarregando(true);
@@ -256,20 +265,13 @@ function Cadastro(props) {
       delete errors.nome_cuidador;
       delete errors.convenio;
     }
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 259 ~ requisicaoCadastro ~ camposVazios",
-      camposVazios
-    );
-    console.log(
-      "🚀 ~ file: Cadastro.js ~ line 259 ~ requisicaoCadastro ~ testeTemp",
-      testeTemp
-    );
+
     if (_.isEqual(camposVazios, testeTemp)) {
       if (usuario.senha === usuario.senhaConfirmada) {
         await managerService.Cadastrando(usuario, enderecoBack);
         await sleep(1500);
         setCarregando(false);
-        window.location.href = "/login";
+        window.location.href = "/web/listadeusuario";
       } else {
         toast.error("As senhas digitadas são diferentes.");
         setCarregando(false);
@@ -304,18 +306,8 @@ function Cadastro(props) {
       setCamposVazios({ ...camposVazios, [name]: false });
     }
 
-    if (name === "data_nascimento" && value.length < 10) {
-      setErro({ ...erro, [name]: true });
-      setErroDataBack(false);
-    } else if (dataBack(value) === "Data Invalida") {
-      setErro({ ...erro, [name]: true });
-      setErroDataBack(true);
-    } else {
-      setErro({ ...erro, [name]: false });
-    }
-
-    setEstado({ ...estado, [name]: data(value) });
-    setUsuario({ ...usuario, [name]: dataBack(value) });
+    setEstado({ ...estado, [name]: value });
+    setUsuario({ ...usuario, [name]: value });
   }
 
   async function validacaoCamposNaoGerais(e) {
@@ -361,27 +353,6 @@ function Cadastro(props) {
       camposVazios.nome_cuidador = false;
     }
   }, [usuario.nome_cuidador]);
-
-  async function pegandoDadosPerfilPessoal() {
-    const resposta = await managerService.GetDadosUsuario(email);
-    setVerificacaoLogado(resposta.dadosUsuario.tipo);
-  }
-
-  useEffect(() => {
-    pegandoDadosPerfilPessoal();
-  }, []);
-
-  async function voltarLoginOuHome() {
-    if (verificacaoLogado === "SECRETARIA(O)") {
-      history.push("/web/homesecretaria");
-    } else {
-      if (verificacaoLogado === "MASTER") {
-        history.push("/web/homemedico");
-      } else {
-        history.push("/login");
-      }
-    }
-  }
 
   function preenchendoDados(e) {
     const { value, name } = e.target;
@@ -446,7 +417,12 @@ function Cadastro(props) {
   function preenchendoEndereco(e) {
     const { value, name } = e.target;
 
-    if (name !== "complemento" && name !== "pais" && name !== "numero") {
+    if (
+      name !== "complemento" &&
+      name !== "pais" &&
+      name !== "numero" &&
+      name !== "cidade"
+    ) {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
     }
 
@@ -480,6 +456,10 @@ function Cadastro(props) {
         ...endereco,
         [name]: apenasLetras(value),
       });
+      setEnderecoBack({
+        ...enderecoBack,
+        [name]: apenasLetras(value),
+      });
     }
     if (name === "numero") {
       setEndereco({
@@ -498,14 +478,21 @@ function Cadastro(props) {
       setCamposVazios({ ...camposVazios, pais: false });
     }
   }, [enderecoBack.pais]);
+
   useEffect(() => {
     if (enderecoBack.numero !== "" && enderecoBack.numero !== undefined) {
       setCamposVazios({ ...camposVazios, numero: false });
     }
   }, [enderecoBack.numero]);
 
+  useEffect(() => {
+    if (enderecoBack.cidade !== "" && enderecoBack.cidade !== undefined) {
+      setCamposVazios({ ...camposVazios, cidade: false });
+    }
+  }, [enderecoBack.cidade]);
+
   return (
-    <div>
+    <>
       <Body>
         <DadosCadastro>
           <Logo>
@@ -517,9 +504,11 @@ function Cadastro(props) {
               height="100%"
             ></img>
           </Logo>
-          <Botao onClick={() => history.push("/login")}>
-            <LeftOutlined /> Voltar para login
-          </Botao>
+          {recebeTipo() !== "MASTER" && recebeTipo() !== "SECRETARIA(O)" && (
+            <Botao onClick={() => history.push("/login")}>
+              <LeftOutlined /> Voltar para login
+            </Botao>
+          )}
           {history.location.state === undefined && recebeTipo() === "MASTER" ? (
             <Select
               id="tipos"
@@ -576,33 +565,24 @@ function Cadastro(props) {
                 <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
               )}
             </RotuloColuna>
-            <RotuloColuna>
-              <Input
-                placeholder="Data de Nascimento"
-                backgroundColor={Cores.cinza[7]}
-                color={Cores.preto}
-                fontSize="1em"
-                width="100%"
-                marginTop="2%"
-                name="data_nascimento"
-                value={estado.data_nascimento}
-                onChange={validacaoData}
-                erro={erro.data_nascimento}
-                camposVazios={camposVazios.data_nascimento}
-              ></Input>
-
-              {erro.data_nascimento && (
-                <>
-                  {erroDataBack ? (
-                    <Rotulo>Digite uma data válida.</Rotulo>
-                  ) : (
-                    <Rotulo>Digite uma data no formato xx/xx/xxxx</Rotulo>
-                  )}
-                </>
-              )}
-            </RotuloColuna>
+            <Input
+              placeholder="Data de Nascimento"
+              id="data"
+              type="date"
+              onKeyDown={(e) => e.preventDefault()}
+              backgroundColor={Cores.cinza[7]}
+              color={Cores.preto}
+              fontSize="1em"
+              width="50%"
+              marginTop="2%"
+              name="data_nascimento"
+              value={estado.data_nascimento}
+              onChange={validacaoData}
+              erro={erro.data_nascimento}
+              paddingRight="2%"
+              camposVazios={camposVazios.data_nascimento}
+            ></Input>
           </InputMesmaLinha>
-
           <Input
             placeholder="CPF"
             backgroundColor={Cores.cinza[7]}
@@ -631,7 +611,6 @@ function Cadastro(props) {
           {erro.email && (
             <Rotulo>Digite um email no formato email@email.com</Rotulo>
           )}
-
           {usuario.tipo === "PACIENTE" && (
             <>
               <PossuiConvenio>
@@ -653,7 +632,6 @@ function Cadastro(props) {
                   camposVazios={camposVazios.convenio}
                 ></Input>
               )}
-
               <PossuiCuidador>
                 {" "}
                 Possui Cuidador?<Switch onChange={funcaoCuidador}></Switch>
@@ -730,10 +708,13 @@ function Cadastro(props) {
             color={Cores.preto}
             width="100%"
             marginTop="2%"
+            borderWidth="2px"
             onChange={preenchendoEndereco}
             camposVazios={camposVazios.estado}
           >
-            <option value="">Estado</option>
+            <option value="" disabled selected>
+              Estado
+            </option>
             <option value="AC">Acre</option>
             <option value="AL">Alagoas</option>
             <option value="AP">Amapá</option>
@@ -872,9 +853,9 @@ function Cadastro(props) {
             {carregando ? <Spin indicator={antIcon} /> : "CADASTRAR"}
           </Button>
         </DadosCadastro>
+        <AddToast />
       </Body>
-      <AddToast />
-    </div>
+    </>
   );
 }
 

@@ -70,6 +70,8 @@ function EditarPerfil() {
   const [estadoBack, setEstadoBack] = useState({});
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
+  const [ontem, setOntem] = useState("");
+
   const [cpfMasked, setCpfMasked] = useState({});
   const [dataMasked, setDataMasked] = useState({});
   const [telMasked, setTelMasked] = useState({});
@@ -96,6 +98,7 @@ function EditarPerfil() {
     rua: true,
     numero: true,
     bairro: true,
+    complemento: true,
   };
 
   const maskCPF = (value) => {
@@ -122,18 +125,6 @@ function EditarPerfil() {
   };
   const maskApenasNumerosCep = (value) => {
     return value.replace(/\D/g, "").replace(/(\d{8})(\d)/, "$1");
-  };
-
-  const maskData = (value) => {
-    return value
-      .replace(/\D/g, "")
-      .replace(/(\d{2})(\d)/, "$1/$2")
-      .replace(/(\d{2})(\d)/, "$1/$2")
-      .replace(/(\d{4})(\d)/, "$1");
-  };
-
-  const maskDataBack = (value) => {
-    return brParaPadrao(value);
   };
 
   const maskApenasLetras = (value) => {
@@ -201,13 +192,14 @@ function EditarPerfil() {
   }, [telefone]);
   useEffect(() => {
     setDataMasked(
-      dataNascimento.slice(8, -14) +
-        "/" +
-        dataNascimento.slice(5, -17) +
-        "/" +
-        dataNascimento.slice(0, -20)
+      dataNascimento.slice(0, 10) 
     );
   }, [dataNascimento]);
+
+
+
+
+
 
   useEffect(() => {
     if (!estadoBack.nome) errors.nome = true;
@@ -222,9 +214,39 @@ function EditarPerfil() {
     if (!enderecoBack.bairro) errors.bairro = true;
     if (!enderecoBack.rua) errors.rua = true;
     if (!enderecoBack.numero) errors.numero = true;
+    if (!enderecoBack.complemento) errors.complemento = true;
+
 
     setTudoNulo({ ...tudoNulo, ...errors });
-  }, [estadoBack]);
+  }, [estadoBack, enderecoBack]);
+
+  useEffect(() => {
+    setandoDiaAtual();
+  }, []);
+
+  useEffect(() => {
+    setandoDataMinima();
+  }, [ontem]);
+
+  function setandoDiaAtual() {
+    let data = new Date();
+    let dia = data.getDate() - 1;
+    let mes = data.getMonth() + 1;
+    let ano = data.getFullYear();
+
+    if (dia < 10) {
+      dia = "0" + dia;
+    }
+    if (mes < 10) {
+      mes = "0" + mes;
+    }
+
+    setOntem(ano + "-" + mes + "-" + dia);
+  }
+
+  function setandoDataMinima() {
+    document.getElementById("data").setAttribute("max", ontem);
+  }
 
   async function atualizarDados() {
     setCarregando(true);
@@ -238,7 +260,6 @@ function EditarPerfil() {
         );
         await sleep(1500);
         window.location.href = "/web/perfil";
-        
       } else {
         toast.warn("Preencha os campos corretamente");
       }
@@ -274,19 +295,9 @@ function EditarPerfil() {
       setTudoNulo({ ...tudoNulo, [name]: false });
     }
 
-    if (name === "data_nascimento" && value.length < 10 && value.length > -1) {
-      setErro({ ...erro, [name]: true });
-      setErroDataBack(false);
-      if (value.length === 0) setErro({ ...erro, [name]: false });
-    } else if (maskDataBack(value) === "Data Invalida") {
-      setErro({ ...erro, [name]: true });
-      setErroDataBack(true);
-    } else {
-      setErro({ ...erro, [name]: false });
-    }
-
-    setEstado({ ...estado, [name]: maskData(value) });
-    setEstadoBack({ ...estadoBack, [name]: maskDataBack(value) });
+    setEstado({ ...estado, [name]: value });
+    setDataMasked(value);
+    setEstadoBack({ ...estadoBack, [name]: value });
   }
 
   function preenchendoDados(e) {
@@ -295,9 +306,6 @@ function EditarPerfil() {
       setTudoNulo({ ...tudoNulo, [name]: false });
     }
 
-    if (name === "data_nascimento") {
-      e.target.value = maskData(value);
-    }
     if (
       (name === "cpf" && value.length < 14 && value.length > 0) ||
       (name === "telefone" && value.length < 15 && value.length > 0)
@@ -316,6 +324,9 @@ function EditarPerfil() {
         [name]: maskApenasLetras(value),
       });
     }
+
+    
+
     if (name === "cpf") {
       setEstado({ ...estado, [name]: maskCPF(value) });
       setEstadoBack({ ...estadoBack, [name]: maskApenasNumerosCpfTel(value) });
@@ -328,9 +339,24 @@ function EditarPerfil() {
 
   function preenchendoEndereco(e) {
     const { name, value } = e.target;
-    if (value) {
+
+
+    
+    if(name !== "numero" && name!== "pais" && name!=="cidade") {
+
+      if (value) {
+        setTudoNulo({ ...tudoNulo, [name]: false });
+      }
+
+    } else if (name === "numero" && maskApenasNumeros(value) !== ""){
+      setTudoNulo({ ...tudoNulo, [name]: false });
+    } else if ((name === "pais" || name === "cidade") && maskApenasLetras(value) !== ""){
       setTudoNulo({ ...tudoNulo, [name]: false });
     }
+
+    
+
+   
 
     if (name === "cep" && value.length <= 8 && value.length > 0) {
       setErro({ ...erro, [name]: true });
@@ -348,9 +374,13 @@ function EditarPerfil() {
         [name]: maskApenasNumerosCep(value),
       });
     }
-    if (name === "pais" || name === "cidade" || name === "bairro") {
+    if (name === "pais" || name === "cidade") {
       setEnderecoNovo({
         ...enderecoNovo,
+        [name]: maskApenasLetras(value),
+      });
+      setEnderecoBack({
+        ...enderecoBack,
         [name]: maskApenasLetras(value),
       });
     }
@@ -359,6 +389,11 @@ function EditarPerfil() {
         ...enderecoNovo,
         [name]: maskApenasNumeros(value),
       });
+      setEnderecoBack({
+        ...enderecoBack,
+        [name]: maskApenasNumeros(value),
+      });
+
     }
   }
 
@@ -455,30 +490,24 @@ function EditarPerfil() {
             </RotuloColuna>
 
             <Titulo>Data de Nascimento:</Titulo>
-            <RotuloColuna>
-              <Input
-                placeholder={dataMasked}
-                backgroundColor={Cores.cinza[7]}
-                boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-                borderWidth="1px"
-                color={Cores.preto}
-                fontSize="1em"
-                width="90%"
-                name="data_nascimento"
-                value={estado.data_nascimento}
-                onChange={validacaoData}
-                erro={erro.data_nascimento}
-              ></Input>
-              {erro.data_nascimento && (
-                <>
-                  {erroDataBack ? (
-                    <Rotulo>Digite uma data válida.</Rotulo>
-                  ) : (
-                    <Rotulo>Digite uma data no formato xx/xx/xxxx</Rotulo>
-                  )}
-                </>
-              )}
-            </RotuloColuna>
+
+            <Input
+              placeholder="Selecione uma data"
+              value={dataMasked}
+              id="data"
+              type="date"
+              name="data_nascimento"
+              onKeyDown={(e) => e.preventDefault()}
+              onChange={validacaoData}
+              erro={erro.data_nascimento}
+              backgroundColor={Cores.cinza[7]}
+              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+              borderWidth="1px"
+              paddingRight="2%"
+              color={Cores.preto}
+              fontSize="1em"
+              width="90%"
+            ></Input>
           </CaixaInputs>
 
           <CaixaInputs>
@@ -547,6 +576,7 @@ function EditarPerfil() {
               color={Cores.preto}
               width="90%"
               borderWidth="1px"
+              marginTop="0px"
               onChange={preenchendoEndereco}
             >
               <option value="">{endereco.estado}</option>

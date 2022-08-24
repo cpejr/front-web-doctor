@@ -191,7 +191,7 @@ function ModalEditarAgendamentoEspecifico(props) {
 
     const { value, name } = e.target;
 
-    if (value != consulta.descricao) {
+    if (value !== consulta.descricao) {
       if (value) {
         setCamposVazios({ ...camposVazios, [name]: false });
       }
