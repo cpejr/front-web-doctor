@@ -7,9 +7,10 @@ import { Spin } from "antd";
 import {
   TopoPagina,
   ContainerListadeUsuarios,
+  SetarFiltros,
   Filtros,
-  BarraPesquisaComUmInput,
-  BarraPesquisaComDoisInputs,
+  BarraPesquisa,
+  FiltrosDeData,
   BarraEstetica,
   DadosUsuario,
   Titulo,
@@ -27,6 +28,8 @@ import {
   FiltroSelect,
   FiltroInput,
   SelectData,
+  SelectConsultorio,
+  TopoPaginaCima,
 } from "./Styles";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
@@ -51,8 +54,13 @@ function Agendamentos() {
   const [dataInput, setDataInput] = useState("");
   const [tipoSelect, setTipoSelect] = useState("");
   const [carregandoPagina, setCarregandoPagina] = useState(false);
-  const lowerBusca = busca.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const lowerBusca = busca
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
   const [consultaEspecifica, setConsultaEspecifica] = useState([]);
+  const [carregandoConsultorios, setCarregandoConsultorios] = useState();
+  const [consultorios, setConsultorios] = useState([]);
   const [modalConsultaMarcada, setModalConsultaMarcada] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -65,11 +73,18 @@ function Agendamentos() {
     } else {
       if (tipoSelect !== "") {
         return (
-          consultas?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca) &&
-          setandoData(consultas)
+          consultas?.nome
+            ?.toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .includes(lowerBusca) && setandoData(consultas)
         );
       } else {
-        return consultas?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca);
+        return consultas?.nome
+          ?.toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .includes(lowerBusca);
       }
     }
   });
@@ -82,8 +97,19 @@ function Agendamentos() {
     }
   }
 
+  useEffect(() => {
+    pegandoConsultorios();
+  }, []);
+
   function dataFiltrada(value) {
     setTipoSelect(value);
+  }
+
+  async function pegandoConsultorios() {
+    setCarregandoConsultorios(true);
+    const res = await managerService.GetDadosConsultorios();
+    setConsultorios(res.dadosConsultorios);
+    setCarregandoConsultorios(false);
   }
 
   async function pegandoDados() {
@@ -97,7 +123,7 @@ function Agendamentos() {
     setConsultas(resposta.dadosConsultas);
     setExamesMarcados(resposta.dadosExamesMarcados);
     setCarregando(false);
-    setCarregandoPagina(false)
+    setCarregandoPagina(false);
   }
 
   useEffect(() => {
@@ -124,7 +150,6 @@ function Agendamentos() {
   async function fechandoModalConsultaMarcada() {
     setModalConsultaMarcada(false);
     pegandoDados();
-    
   }
 
   async function abreModalConsultaMarcada(consulta) {
@@ -136,35 +161,33 @@ function Agendamentos() {
     <div>
       <ContainerListadeUsuarios>
         <TopoPagina>
-          <TopoPaginaEsquerda>
-          {tipoSelect === "" ? (
-                <BarraPesquisaComUmInput>
-                <Search
-                  placeholder="BUSCAR"
-                  value={busca}
-                  onChange={(e) => setBusca(e.target.value)}
-                />
-              </BarraPesquisaComUmInput>
-              ) : (
-                <BarraPesquisaComDoisInputs>
+          <TopoPaginaCima>
+            <BarraPesquisa>
               <Search
                 placeholder="BUSCAR"
                 value={busca}
                 onChange={(e) => setBusca(e.target.value)}
               />
-            </BarraPesquisaComDoisInputs>
-              )}
-            <Filtros>
-              <FiltroSelect>
-                <SelectData
-                  defaultValue=""
-                  bordered={false}
-                  onChange={(value) => dataFiltrada(value)}
-                >
-                  <Option value="">Todos as datas</Option>
-                  <Option value="filtrado">Data filtrada</Option>
-                </SelectData>
-              </FiltroSelect>
+            </BarraPesquisa>
+            <SetarFiltros
+              defaultValue=""
+              bordered={false}
+              onChange={console.log("oi")}
+            >
+              <Option value="">Todos os agendamentos</Option>
+              <Option value="filtrado">Filtrar agendamentos</Option>
+            </SetarFiltros>
+          </TopoPaginaCima>
+          <Filtros>
+            <FiltrosDeData>
+              <SelectData
+                defaultValue=""
+                bordered={false}
+                onChange={(value) => dataFiltrada(value)}
+              >
+                <Option value="">Todas as datas</Option>
+                <Option value="filtrado">Data filtrada</Option>
+              </SelectData>
               {tipoSelect === "" ? (
                 <></>
               ) : (
@@ -179,8 +202,44 @@ function Agendamentos() {
                   />
                 </FiltroInput>
               )}
-            </Filtros>
-          </TopoPaginaEsquerda>
+            </FiltrosDeData>
+            <FiltroSelect>
+              <SelectConsultorio
+                id="id_consultorio"
+                name="id_consultorio"
+                /*    style={{
+                  width: "100%",
+                  borderColor: "black",
+                  borderWidth: "1px",
+                  color: "black",
+                }} */
+                size="large"
+                bordered={false}
+                defaultValue=""
+                onChange={() => console.log("Oi")}
+              >
+                <option value="">
+                  Todos os consultórios
+                </option>
+                {consultorios.map((consultorio) => (
+                  <>
+                    {carregandoConsultorios ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <option
+                        key={consultorio.id}
+                        value={consultorio.id}
+                        color="red"
+                      >
+                        {consultorio.nome}
+                      </option>
+                    )}
+                  </>
+                ))}
+              </SelectConsultorio>
+            </FiltroSelect>
+          </Filtros>
+
           <Button
             marginTop="0px"
             width="30%"
@@ -268,7 +327,9 @@ function Agendamentos() {
                         " pm"}
                   </Data>
 
-                  <Agendamento  onClick={() => abreModalConsultaMarcada(value)}>Consulta</Agendamento>
+                  <Agendamento onClick={() => abreModalConsultaMarcada(value)}>
+                    Consulta
+                  </Agendamento>
                   <CódigoPaciente>
                     {carregando ? (
                       <Spin indicator={antIcon} />
@@ -278,32 +339,32 @@ function Agendamentos() {
                   </CódigoPaciente>
                 </Usuario>
               ))}
-              {examesMarcados.map((value) => (
-                <Usuario key={value.id_usuario}>
-                  <Imagem>{value.avatar_url}</Imagem>
-                  <Nome>
-                    {carregando ? (
-                      <Spin indicator={antIcon} />
-                    ) : (
-                      <div>{value.nome}</div>
-                    )}
-                  </Nome>
-                  <Telefone>
-                    {carregando ? (
-                      <Spin indicator={antIcon} />
-                    ) : (
-                      <>
-                        ({value.telefone.slice(0, -9)}){" "}
-                        {value.telefone.slice(2, -4)}-{value.telefone.slice(-4)}
-                      </>
-                    )}
-                  </Telefone>
-                  <Data>
-                    {value.data_hora.slice(8, 10)}/{value.data_hora.slice(5, 7)}
-                    /{value.data_hora.slice(0, 4)} -{" "}
-                    {value.data_hora.slice(11, 16)}:
-                    {value.data_hora.slice(17, 19)}
-                  </Data>
+            {examesMarcados.map((value) => (
+              <Usuario key={value.id_usuario}>
+                <Imagem>{value.avatar_url}</Imagem>
+                <Nome>
+                  {carregando ? (
+                    <Spin indicator={antIcon} />
+                  ) : (
+                    <div>{value.nome}</div>
+                  )}
+                </Nome>
+                <Telefone>
+                  {carregando ? (
+                    <Spin indicator={antIcon} />
+                  ) : (
+                    <>
+                      ({value.telefone.slice(0, -9)}){" "}
+                      {value.telefone.slice(2, -4)}-{value.telefone.slice(-4)}
+                    </>
+                  )}
+                </Telefone>
+                <Data>
+                  {value.data_hora.slice(8, 10)}/{value.data_hora.slice(5, 7)}/
+                  {value.data_hora.slice(0, 4)} -{" "}
+                  {value.data_hora.slice(11, 16)}:
+                  {value.data_hora.slice(17, 19)}
+                </Data>
 
                 <Agendamento>{value.titulo}</Agendamento>
                 <CódigoPaciente>
@@ -317,7 +378,6 @@ function Agendamentos() {
             ))}
           </ContainerUsuarios>
         )}
-          
       </ContainerListadeUsuarios>
 
       <Modal
