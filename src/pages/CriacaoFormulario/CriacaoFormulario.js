@@ -32,7 +32,7 @@ function CriacaoFormulario() {
   const [campoPerguntas, setCampoPerguntas] = useState(false);
 
   const antIcon = (
-    <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
+    <LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
   );
 
   const errors = {};
