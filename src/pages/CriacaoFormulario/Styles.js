@@ -72,7 +72,7 @@ export const TitulosInput = styled.h3`
   color: ${Cores.azulEscuro};
   justify-content: start;
   margin-top: 2%;
-  margin-bottom: 0%;
+  margin-bottom: 1%;
 `;
 
 export const TextoInstrucao = styled.text`
