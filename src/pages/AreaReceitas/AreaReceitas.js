@@ -24,6 +24,7 @@ import {
 import Button from "../../styles/Button";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
+import { blue } from "@mui/material/colors";
 
 function AreaReceitas() {
   const { Option } = Select;
@@ -37,7 +38,7 @@ function AreaReceitas() {
 
   const lowerBusca = busca.toLowerCase();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
+  const antIconPagina = <LoadingOutlined style={{ fontSize: 40, color: blue.A700 }} spin />;
 
   const receitasFiltradas = receitas.filter((receita) => {
     if (lowerBusca === "" && pacienteSelect === "")
