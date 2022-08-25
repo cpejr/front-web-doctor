@@ -246,6 +246,7 @@ function Agendamentos() {
               <SelectData
                 defaultValue=""
                 bordered={false}
+                border={tipoSelect}
                 onChange={(value) => dataFiltrada(value)}
               >
                 <Option value="">Todas as datas</Option>
@@ -260,6 +261,7 @@ function Agendamentos() {
                     size="large"
                     name="data"
                     type="date"
+                    border={tipoSelect}
                     onChange={(e) => setDataInput(e.target.value)}
                     value={dataInput}
                   />

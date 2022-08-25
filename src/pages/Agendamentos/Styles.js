@@ -112,6 +112,7 @@ export const SelectConsultorio = styled(Select)`
   border-width: 1px;
   border-style: solid;
   border-color: ${Cores.cinza[8]};
+ 
 
   @media (max-width: 940px) {
     width: 80%;
@@ -160,6 +161,9 @@ export const Usuario = styled.div`
 export const Titulo = styled.div`
   display: flex;
   width: 40px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   justify-content: center;
   @media (max-width: 880px) {
     display: none;
@@ -177,13 +181,9 @@ export const Imagem = styled.div`
 `;
 export const Nome = styled.div`
   width: 18%;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-  :hover {
-    overflow: visible;
-    cursor: pointer;
-  }
 
   @media (max-width: 880px) {
     width: 20%;
@@ -202,18 +202,10 @@ export const Telefone = styled.div`
   width: 18%;
   justify-content: center;
   display: flex;
-  @media (max-width: 880px) {
-    width: 20%;
-  }
-  @media (max-width: 700px) {
-    width: 25%;
-  }
-  @media (max-width: 600px) {
-    width: 33%;
-  }
-  @media (max-width: 500px) {
+  @media (max-width: 800px) {
     display: none;
   }
+  
 `;
 export const Data = styled.div`
   width: 25%;
@@ -258,6 +250,9 @@ export const CódigoPaciente = styled.div`
   width: 18%;
   display: flex;
   justify-content: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   @media (max-width: 880px) {
     width: 20%;
   }
@@ -285,7 +280,16 @@ export const InputData = styled.input`
   border-radius: 3px;
   border-width: 1px;
   border-style: solid;
-  border-color: ${Cores.cinza[8]};
+  border-color: ${(props) => {
+    let cor;
+      if(props.border !== ""){
+        cor = Cores.azul;
+      } else {
+        cor = Cores.cinza[8];
+      }
+     
+    return cor;
+  }};
 
    @media (max-width: 448px) {
     size: 100%;
@@ -307,7 +311,16 @@ export const SelectData = styled(Select)`
   border-radius: 3px;
   border-width: 1px;
   border-style: solid;
-  border-color: ${Cores.cinza[8]};
+  border-color: ${(props) => {
+    let cor;
+      if(props.border !== ""){
+        cor = Cores.azul;
+      } else {
+        cor = Cores.cinza[8];
+      }
+     
+    return cor;
+  }};
 
   @media (max-width: 448px) {
     width: 80%;
