@@ -12,7 +12,7 @@ export const ColunaDireita = styled.div`
 
   padding: 2% 4% 2% 4%;
 
-  @media (max-width: 760px) and (min-width: 500px) {
+  @media (max-width: 850px) and (min-width: 500px) {
     display: flex;
     justify-content: center;
     height: 50%;
@@ -35,10 +35,10 @@ export const ColunaEsquerda = styled.div`
   flex-direction: column;
   width: 55%;
   height: 100vh;
-
+  margin-bottom: 5%;
   padding: 2% 4% 2% 4%;
 
-  @media (max-width: 760px) {
+  @media (max-width: 850px) {
     display: flex;
     justify-content: center;
     height: 10%;
@@ -59,7 +59,7 @@ export const ContainerFormularioEspecifico = styled.div`
   padding: 2% 5% 2% 5%;
   flex-wrap: wrap;
 
-  @media (max-width: 760px) {
+  @media (max-width: 850px) {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -107,7 +107,7 @@ export const BarraPaciente = styled.div`
   display: flex;
   flex-direction: row;
 
-  @media (max-width: 761px) and (min-width: 511px) {
+  @media (max-width: 850px) and (min-width: 511px) {
     height: 120px;
   }
 
@@ -132,7 +132,7 @@ export const BarraDireita = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 38%;
+  width: 43%;
   text-align: center;
 
   @media (max-width: 510px) {
@@ -146,7 +146,11 @@ export const BarraEsquerda = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 30%;
+  width: 25%;
+
+  @media (max-width: 1300px){
+    width: 30%;
+  }
 
   @media (max-width: 510px) {
     width: 100%;
@@ -175,15 +179,15 @@ export const BarraCentro = styled.div`
     text-align: center;
   }
 
-  @media (min-width: 761px) and (max-width: 1200px) {
-    margin-left: 12%;
+  @media (min-width: 850px) and (max-width: 1200px) {
+    margin-left: 5%;
   }
 `;
 
 export const MargemEstetica = styled.div`
   height: 300%;
 
-  @media (max-width: 760px) {
+  @media (max-width: 850px) {
     height: 20%;
   }
 `;
@@ -211,12 +215,12 @@ export const ImagemPaciente = styled.img`
     height: 250px;
   }
 
-  @media (min-width: 761px) {
+  @media (min-width: 850px) {
     width: 120px;
     height: 120px;
   }
 
-  @media (min-width: 730px) and (max-width: 761px) {
+  @media (min-width: 730px) and (max-width: 850px) {
     width: 95px;
     height: 95px;
   }
@@ -352,7 +356,7 @@ export const SelectTipos = styled(Select)`
   color: ${Cores.azul};
   font-weight: bold;
   font-size: 0.9em;
-  background-color: green;
+
 
   .ant-select-arrow {
     color: ${Cores.azul};
@@ -369,7 +373,7 @@ export const ContainerBarraDeBuscaOpcoes = styled.div`
   text-decoration: underline;
   align-items: flex-start;
 
-  @media (max-width: 760px) {
+  @media (max-width: 850px) {
     width: 100%;
     justify-content: center;
     align-items: center;
@@ -390,12 +394,36 @@ export const BarraDePesquisa = styled.div`
   flex-direction: column;
   justify-content: center;
 
-  .ant-input:placeholder-shown {
-    background-color: green;
-  }
-
   @media (max-width: 920px) {
     width: 100%;
     justify-content: center;
+  }
+`;
+
+export const NomePaciente = styled.div`
+  font-size: 1.1em;
+  margin-top: 6%;
+  font-family: ${Fontes.roboto};
+  font-weight: bold;
+  text-decoration: underline;
+  color: ${Cores.preto};
+  display: flex;
+  margin-left: 10%;
+
+  :hover {
+    cursor: pointer;
+  }
+
+  @media (max-width: 850px) {
+    margin-top: 0;
+    margin-left: 0;
+    justify-content: start;
+  }
+
+  @media (max-width: 510px) {
+    margin-left: 0;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
   }
 `;

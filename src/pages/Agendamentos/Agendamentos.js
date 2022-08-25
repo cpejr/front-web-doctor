@@ -8,10 +8,8 @@ import {
   TopoPagina,
   ContainerListadeUsuarios,
   Filtros,
-  FiltroDatas,
-  FiltroUsuario,
-  BarraPesquisa,
-  BotaoNovoAgendamento,
+  BarraPesquisaComUmInput,
+  BarraPesquisaComDoisInputs,
   BarraEstetica,
   DadosUsuario,
   Titulo,
@@ -25,6 +23,10 @@ import {
   CódigoPaciente,
   TopoPaginaEsquerda,
   TextoData,
+  InputData,
+  FiltroSelect,
+  FiltroInput,
+  SelectData,
 } from "./Styles";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
@@ -39,16 +41,50 @@ function Agendamentos() {
   const { Search } = Input;
   const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] =
     useState(false);
+  const { Option } = Select;
   const [email, setEmail] = useState();
   const [carregando, setCarregando] = useState(true);
   const [consultas, setConsultas] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
+  const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
+  const [busca, setBusca] = useState("");
+  const [dataInput, setDataInput] = useState("");
+  const [tipoSelect, setTipoSelect] = useState("");
+  const [carregandoPagina, setCarregandoPagina] = useState(false);
+  const lowerBusca = busca.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   const [consultaEspecifica, setConsultaEspecifica] = useState([]);
   const [modalConsultaMarcada, setModalConsultaMarcada] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
   const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
-  const [carregandoPagina, setCarregandoPagina] = useState(false);
   const abertoPeloUsuario = false;
+
+  const agendamentosFiltrados = consultas.filter((consultas) => {
+    if (lowerBusca === "" && tipoSelect === "") {
+      return consultas;
+    } else {
+      if (tipoSelect !== "") {
+        return (
+          consultas?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca) &&
+          setandoData(consultas)
+        );
+      } else {
+        return consultas?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca);
+      }
+    }
+  });
+
+  function setandoData(value) {
+    let dataString = String(value.data_hora);
+    let dataFormatada = dataString.slice(0, 10);
+    if (dataFormatada === dataInput) {
+      return value;
+    }
+  }
+
+  function dataFiltrada(value) {
+    setTipoSelect(value);
+  }
 
   async function pegandoDados() {
     setCarregandoPagina(true);
@@ -75,7 +111,7 @@ function Agendamentos() {
 
   async function fechandoModalAgendamentoEspecifico() {
     setModalAgendamentoEspecifico(false);
-    document.location.reload();
+    pegandoDados();
   }
 
   async function abrindoPerfilPaciente(email) {
@@ -101,15 +137,49 @@ function Agendamentos() {
       <ContainerListadeUsuarios>
         <TopoPagina>
           <TopoPaginaEsquerda>
-            <BarraPesquisa>
-              <Search placeholder="BUSCAR" />
-            </BarraPesquisa>
-            <FiltroDatas>
-              <Select
-                defaultValue="Todas as datas"
-                style={{ color: "green", width: "100%" }}
-              ></Select>
-            </FiltroDatas>
+          {tipoSelect === "" ? (
+                <BarraPesquisaComUmInput>
+                <Search
+                  placeholder="BUSCAR"
+                  value={busca}
+                  onChange={(e) => setBusca(e.target.value)}
+                />
+              </BarraPesquisaComUmInput>
+              ) : (
+                <BarraPesquisaComDoisInputs>
+              <Search
+                placeholder="BUSCAR"
+                value={busca}
+                onChange={(e) => setBusca(e.target.value)}
+              />
+            </BarraPesquisaComDoisInputs>
+              )}
+            <Filtros>
+              <FiltroSelect>
+                <SelectData
+                  defaultValue=""
+                  bordered={false}
+                  onChange={(value) => dataFiltrada(value)}
+                >
+                  <Option value="">Todos as datas</Option>
+                  <Option value="filtrado">Data filtrada</Option>
+                </SelectData>
+              </FiltroSelect>
+              {tipoSelect === "" ? (
+                <></>
+              ) : (
+                <FiltroInput>
+                  <InputData
+                    placeholder="Digite uma data"
+                    size="large"
+                    name="data"
+                    type="date"
+                    onChange={(e) => setDataInput(e.target.value)}
+                    value={dataInput}
+                  />
+                </FiltroInput>
+              )}
+            </Filtros>
           </TopoPaginaEsquerda>
           <Button
             marginTop="0px"
@@ -234,19 +304,19 @@ function Agendamentos() {
                     {value.data_hora.slice(17, 19)}
                   </Data>
 
-                  <Agendamento>{value.titulo}</Agendamento>
-                  <CódigoPaciente>
-                    {carregando ? (
-                      <Spin indicator={antIcon} />
-                    ) : (
-                      <div>{value.codigo}</div>
-                    )}
-                  </CódigoPaciente>
-                </Usuario>
-              ))}
-            </ContainerUsuarios>
-          </>
+                <Agendamento>{value.titulo}</Agendamento>
+                <CódigoPaciente>
+                  {carregando ? (
+                    <Spin indicator={antIcon} />
+                  ) : (
+                    <div>{value.codigo}</div>
+                  )}
+                </CódigoPaciente>
+              </Usuario>
+            ))}
+          </ContainerUsuarios>
         )}
+          
       </ContainerListadeUsuarios>
 
       <Modal

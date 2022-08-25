@@ -213,9 +213,6 @@ export const GetConsultorioPorId = async (id) => {
 };
 
 export const ConferirSenha = async (email, senhaAtual) => {
-  //comparar a senha do Email com a senha digitada
-  //se as senhas forem iguais retornar true
-  //se as senhas nao forem iguais retornar false
   try {
     await requesterService.requisicaoVerificar(email, senhaAtual);
     await sleep(1500);
@@ -227,7 +224,6 @@ export const ConferirSenha = async (email, senhaAtual) => {
 };
 
 export const AlterarSenha = async (novaSenha, id) => {
-  //passar a "novaSenha" como senha do usuário que possui esse "email"
   await requesterService
     .alterarSenha(id, novaSenha)
     .then(() => {
@@ -270,9 +266,10 @@ export const UpdateCodigo = async (id_usuario, codigo) => {
   return false;
 };
 
-export const DeletarUsuario = async (id) => {
+
+export const DeletarEnderecoEUsuario = async (id_endereco) => {
   await requesterService
-    .deletarUsuario(id)
+    .deletarEnderecoEUsuario(id_endereco)
     .then(() => {
       toast.success("Usuário deletado com sucesso.");
     })
@@ -285,8 +282,7 @@ export const DeletarUsuario = async (id) => {
       return false;
     });
 
-  return false;
-};
+}
 
 export const GetDadosConsultasExamesMarcadosGeral = async () => {
   let dadosConsultas = {};
@@ -464,7 +460,7 @@ export const CriarFormulario = async (estado) => {
   await requesterService
     .criarFormulario(estado)
     .then(() => {
-      alert("Usuário cadastrado com sucesso.");
+      toast.success("Formulário criado com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(error);

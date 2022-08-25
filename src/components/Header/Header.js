@@ -112,7 +112,7 @@ function Header(props) {
           fontSize="1rem"
           height="50px"
           onClick={() => {
-            history.push("/web/criacaoformulario");
+            history.push("/web/listaformularios");
           }}
         >
           Formulários
@@ -279,7 +279,7 @@ function Header(props) {
             fontSize="1.1rem"
             height="50px"
             onClick={() => {
-              history.push("/web/criacaoformulario");
+              history.push("/web/listaformularios");
             }}
           >
             Formulários
