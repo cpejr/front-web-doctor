@@ -9,7 +9,8 @@ import {
   ContainerListadeUsuarios,
   SetarFiltros,
   Filtros,
-  BarraPesquisa,
+  BarraPesquisaComUmSelect,
+  BarraPesquisaComDoisSelects,
   FiltrosDeData,
   BarraEstetica,
   DadosUsuario,
@@ -62,29 +63,62 @@ function Agendamentos() {
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
   const [consultorios, setConsultorios] = useState([]);
   const [modalConsultaMarcada, setModalConsultaMarcada] = useState(false);
+  const [consultorioSelect, setConsultorioSelect] = useState("");
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
   const abertoPeloUsuario = false;
 
   const agendamentosFiltrados = consultas.filter((consultas) => {
-    if (lowerBusca === "" && tipoSelect === "") {
+    if (lowerBusca === "" && tipoSelect === "" && consultorioSelect === "") {
       return consultas;
     } else {
-      if (tipoSelect !== "") {
-        return (
-          consultas?.nome
+      if (lowerBusca !== "") {
+        if (tipoSelect !== "" && consultorioSelect === "") {
+          return (
+            consultas?.nome
+              ?.toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .includes(lowerBusca) && setandoData(consultas)
+          );
+        } else if (tipoSelect === "" && consultorioSelect !== "") {
+          return (
+            consultas?.nome
+              ?.toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .includes(lowerBusca) &&
+            consultas.id_consultorio === consultorioSelect
+          );
+        } else if (tipoSelect !== "" && consultorioSelect !== "") {
+          return (
+            consultas?.nome
+              ?.toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .includes(lowerBusca) &&
+            consultas.id_consultorio === consultorioSelect &&
+            setandoData(consultas)
+          );
+        } else {
+          return consultas?.nome
             ?.toLowerCase()
             .normalize("NFD")
             .replace(/[\u0300-\u036f]/g, "")
-            .includes(lowerBusca) && setandoData(consultas)
-        );
+            .includes(lowerBusca);
+        }
       } else {
-        return consultas?.nome
-          ?.toLowerCase()
-          .normalize("NFD")
-          .replace(/[\u0300-\u036f]/g, "")
-          .includes(lowerBusca);
+        if (tipoSelect !== "" && consultorioSelect === "") {
+          return setandoData(consultas);
+        } else if (tipoSelect === "" && consultorioSelect !== "") {
+          return consultas.id_consultorio === consultorioSelect;
+        } else if (tipoSelect !== "" && consultorioSelect !== "") {
+          return (
+            consultas.id_consultorio === consultorioSelect &&
+            setandoData(consultas)
+          );
+        }
       }
     }
   });
@@ -103,6 +137,10 @@ function Agendamentos() {
 
   function dataFiltrada(value) {
     setTipoSelect(value);
+  }
+
+  function consultorioFiltrado(value) {
+    setConsultorioSelect(value);
   }
 
   async function pegandoConsultorios() {
@@ -162,24 +200,49 @@ function Agendamentos() {
       <ContainerListadeUsuarios>
         <TopoPagina>
           <TopoPaginaCima>
-            <BarraPesquisa>
-              <Search
-                placeholder="BUSCAR"
-                value={busca}
-                onChange={(e) => setBusca(e.target.value)}
-              />
-            </BarraPesquisa>
-            <SetarFiltros
-              defaultValue=""
+            {tipoSelect === "" ? (
+              <BarraPesquisaComUmSelect>
+                <Search
+                  placeholder="BUSCAR"
+                  value={busca}
+                  onChange={(e) => setBusca(e.target.value)}
+                />
+              </BarraPesquisaComUmSelect>
+            ) : (
+              <BarraPesquisaComDoisSelects>
+                <Search
+                  placeholder="BUSCAR"
+                  value={busca}
+                  onChange={(e) => setBusca(e.target.value)}
+                />
+              </BarraPesquisaComDoisSelects>
+            )}
+            <SelectConsultorio
+              id="id_consultorio"
+              name="id_consultorio"
+              size="large"
               bordered={false}
-              onChange={console.log("oi")}
+              defaultValue=""
+              onChange={(value) => consultorioFiltrado(value)}
             >
-              <Option value="">Todos os agendamentos</Option>
-              <Option value="filtrado">Filtrar agendamentos</Option>
-            </SetarFiltros>
-          </TopoPaginaCima>
-          <Filtros>
-            <FiltrosDeData>
+              <option value="">Todos os consultórios</option>
+              {consultorios.map((consultorio) => (
+                <>
+                  {carregandoConsultorios ? (
+                    <Spin indicator={antIcon} />
+                  ) : (
+                    <option
+                      key={consultorio.id}
+                      value={consultorio.id}
+                      color="red"
+                    >
+                      {consultorio.nome}
+                    </option>
+                  )}
+                </>
+              ))}
+            </SelectConsultorio>
+            <Filtros>
               <SelectData
                 defaultValue=""
                 bordered={false}
@@ -202,47 +265,12 @@ function Agendamentos() {
                   />
                 </FiltroInput>
               )}
-            </FiltrosDeData>
-            <FiltroSelect>
-              <SelectConsultorio
-                id="id_consultorio"
-                name="id_consultorio"
-                /*    style={{
-                  width: "100%",
-                  borderColor: "black",
-                  borderWidth: "1px",
-                  color: "black",
-                }} */
-                size="large"
-                bordered={false}
-                defaultValue=""
-                onChange={() => console.log("Oi")}
-              >
-                <option value="">
-                  Todos os consultórios
-                </option>
-                {consultorios.map((consultorio) => (
-                  <>
-                    {carregandoConsultorios ? (
-                      <Spin indicator={antIcon} />
-                    ) : (
-                      <option
-                        key={consultorio.id}
-                        value={consultorio.id}
-                        color="red"
-                      >
-                        {consultorio.nome}
-                      </option>
-                    )}
-                  </>
-                ))}
-              </SelectConsultorio>
-            </FiltroSelect>
-          </Filtros>
+            </Filtros>
+          </TopoPaginaCima>
 
           <Button
-            marginTop="0px"
-            width="30%"
+            marginTop="10px"
+            width="45%"
             height="50px"
             backgroundColor={Cores.lilas[2]}
             borderColor={Cores.azulEscuro}

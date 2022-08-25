@@ -15,7 +15,8 @@ export const ContainerListadeUsuarios = styled.div`
 export const TopoPagina = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
+  align-items: center;
   width: 100%;
   @media (max-width: 920px) {
     width: 100%;
@@ -25,54 +26,48 @@ export const TopoPagina = styled.div`
   }
 `;
 
+
 export const TopoPaginaCima = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 100%;
   gap: 10px;
+  margin-bottom: 20px;
 
+@media (max-width: 940px) {
+  flex-direction: column;
+  align-items: center;
+}
 `;
 
-export const SetarFiltros = styled(Select)`
 
-  width: auto;
-  display: flex;
-  color: ${Cores.preto};
-  font-family: ${Fontes.barlow};
-  font-weight: 500;
-  font-size: 15px;
-  //padding-left: 4%;
-  padding-right: 2%;
-
-  border-radius: 3px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: ${Cores.cinza[8]};
-
-`;
-
-export const BarraPesquisa = styled.div`
-  width: 70%;
+export const BarraPesquisaComUmSelect = styled.div`
+  width: 400px;
   display: flex;
   flex-direction: row;
-  @media (max-width: 920px) {
-    width: 1000px;
-    justify-content: start;
-  }
-  @media (max-width: 840px) {
-    width: 780px;
-  }
-  @media (max-width: 750px) {
-    width: 640px;
+  justify-content: space-around;
+  @media (max-width: 940px) {
+    width: 80%;
+
   }
  
-  @media (max-width: 630px) {
-    width: 590px;
+  
+  .ant-input {
+    height: 36px;
   }
-  @media (max-width: 570px) {
-    width: 100%;
-    margin-bottom: 5px;
+  .ant-btn.ant-btn-default.ant-btn-icon-only.ant-input-search-button {
+    height: 36px;
+  }
+`;
+
+export const BarraPesquisaComDoisSelects = styled.div`
+  width: 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  @media (max-width: 940px) {
+    width: 80%;
   }
   
   .ant-input {
@@ -83,64 +78,34 @@ export const BarraPesquisa = styled.div`
   }
 `;
 
+
 export const Filtros = styled.div`
-  width: 100%;
+  width: 400px;
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
-  gap: 2%;
-  margin-top: 10px;
-  @media (max-width: 920px) {
-    width: 100%;
-    justify-content: flex-end;
+  gap: 10px;
+  @media (max-width: 940px) {
+    width: 80%;
   }
-  @media (max-width: 570px) {
-    margin-top: 2%;
-    width: 100%;
-    justify-content: space-around;
-    align-items: center;
-  }
-
-  @media (max-width: 330px) {
-    margin-top: 2%;
+  @media (max-width: 448px) {
     width: 100%;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-  }
-`;
-
-export const FiltrosDeData = styled.div`
-  width: 35%;
-  display: flex;
-  display: flex;
-  justify-content: space-around;
-
-  @media (max-width: 920px) {
-    width: 240px;
-    justify-content: end;
-  }
-
-  @media (max-width: 690px) {
-    width: 140px;
-  }
-
-  @media (max-width: 490px) {
-    justify-content: start;
-    width: 100%;
+    justify-content: space-around;
   }
 
 `;
+
 
 
 export const SelectConsultorio = styled(Select)`
-  width: 450px;
+  width: 400px;
   height: 36px;
   color: ${Cores.preto};
   font-family: ${Fontes.barlow};
-  font-weight: 500;
-  font-size: 15px;
+  font-weight: 100;
+  font-size: 1em;
   padding-right: 2%;
 
   border-radius: 3px;
@@ -148,27 +113,12 @@ export const SelectConsultorio = styled(Select)`
   border-style: solid;
   border-color: ${Cores.cinza[8]};
 
-
-`;
-
-
-export const FiltroDatas = styled.div`
-
-  width: 140px;
-  display: flex;
-  @media (max-width: 920px) {
-    width: 240px;
-    justify-content: end;
+  @media (max-width: 940px) {
+    width: 80%;
+    //justify-content: start;
   }
+ 
 
-  @media (max-width: 690px) {
-    width: 140px;
-  }
-
-  @media (max-width: 490px) {
-    justify-content: start;
-    width: 100%;
-  }
 `;
 
 export const BarraEstetica = styled.div`
@@ -327,8 +277,8 @@ export const InputData = styled.input`
   height: 36px;
   color: ${Cores.preto};
   font-family: ${Fontes.barlow};
-  font-weight: 500;
-  font-size: 15px;
+  font-weight: 100;
+  font-size: 1em;
   padding-left: 12%;
   padding-right: 2%;
   
@@ -336,6 +286,12 @@ export const InputData = styled.input`
   border-width: 1px;
   border-style: solid;
   border-color: ${Cores.cinza[8]};
+
+   @media (max-width: 448px) {
+    size: 100%;
+
+  } 
+ 
   
 `;
 export const SelectData = styled(Select)`
@@ -343,8 +299,8 @@ export const SelectData = styled(Select)`
   height: 36px;
   color: ${Cores.preto};
   font-family: ${Fontes.barlow};
-  font-weight: 500;
-  font-size: 15px;
+  font-weight: 100;
+  font-size: 1em;
   //padding-left: 4%;
   padding-right: 2%;
 
@@ -352,19 +308,24 @@ export const SelectData = styled(Select)`
   border-width: 1px;
   border-style: solid;
   border-color: ${Cores.cinza[8]};
+
+  @media (max-width: 448px) {
+    width: 80%;
+
+  }
+ 
 `;
 
 export const FiltroSelect = styled.div`
   @media (max-width: 570px) {
-    margin-top: 2%;
-    margin-bottom: 2%;
+    //margin-bottom: 2%;
   }
 `;
 
 export const FiltroInput = styled.div`
   @media (max-width: 570px) {
-    margin-top: 2%;
-    margin-bottom: 2%;
+    //margin-top: 2%;
+    //margin-bottom: 2%;
   }
 `;
 
