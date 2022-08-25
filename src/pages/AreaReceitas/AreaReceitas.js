@@ -45,8 +45,8 @@ function AreaReceitas() {
       return receita;
     else {
       return (
-        receita?.nome?.toLowerCase().includes(pacienteSelect)
-        && receita?.titulo?.toLowerCase().includes(lowerBusca));
+        receita?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(pacienteSelect)
+        && receita?.titulo?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca));
     }
   });
 
