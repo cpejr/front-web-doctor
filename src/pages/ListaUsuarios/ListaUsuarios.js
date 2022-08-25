@@ -19,7 +19,7 @@ import {
   Nome,
   Telefone,
   UltimaVisita,
-  CodigoPaciente,
+  CódigoPaciente,
   BotaoAdicionar,
   CaixaVazia,
   BotoesMedico,

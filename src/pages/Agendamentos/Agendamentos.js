@@ -219,7 +219,6 @@ function Agendamentos() {
             <Spin indicator={antIconPagina} />
           </div>
         ) : (
-          <>
             <ContainerUsuarios>
               {consultas.sort(compararDataAntiga).map((value) => (
                 <Usuario key={value.id_usuario}>
