@@ -220,7 +220,6 @@ function Agendamentos() {
             <SelectConsultorio
               id="id_consultorio"
               name="id_consultorio"
-              size="large"
               bordered={false}
               defaultValue=""
               onChange={(value) => consultorioFiltrado(value)}
@@ -255,9 +254,7 @@ function Agendamentos() {
               {tipoSelect === "" ? (
                 <></>
               ) : (
-                <FiltroInput>
                   <InputData
-                    placeholder="Digite uma data"
                     size="large"
                     name="data"
                     type="date"
@@ -265,7 +262,6 @@ function Agendamentos() {
                     onChange={(e) => setDataInput(e.target.value)}
                     value={dataInput}
                   />
-                </FiltroInput>
               )}
             </Filtros>
           </TopoPaginaCima>

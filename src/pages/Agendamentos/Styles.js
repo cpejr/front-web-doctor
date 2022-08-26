@@ -186,23 +186,23 @@ export const Nome = styled.div`
   text-overflow: ellipsis;
 
   @media (max-width: 880px) {
-    width: 20%;
+    width: 15%;
   }
   @media (max-width: 700px) {
-    width: 25%;
+    width: 20%;
   }
   @media (max-width: 600px) {
     width: 33%;
   }
   @media (max-width: 500px) {
-    width: 50%;
+    width: 28%;
   }
 `;
 export const Telefone = styled.div`
   width: 18%;
   justify-content: center;
   display: flex;
-  @media (max-width: 800px) {
+  @media (max-width: 880px) {
     display: none;
   }
   
@@ -274,7 +274,7 @@ export const InputData = styled.input`
   font-family: ${Fontes.barlow};
   font-weight: 100;
   font-size: 1em;
-  padding-left: 12%;
+  padding-left: 4%;
   padding-right: 2%;
   
   border-radius: 3px;
@@ -292,7 +292,7 @@ export const InputData = styled.input`
   }};
 
    @media (max-width: 448px) {
-    size: 100%;
+    width: 80%;
 
   } 
  
@@ -329,16 +329,7 @@ export const SelectData = styled(Select)`
  
 `;
 
-export const FiltroSelect = styled.div`
-  @media (max-width: 570px) {
-    //margin-bottom: 2%;
-  }
-`;
-
 export const FiltroInput = styled.div`
-  @media (max-width: 570px) {
-    //margin-top: 2%;
-    //margin-bottom: 2%;
-  }
+
 `;
 
