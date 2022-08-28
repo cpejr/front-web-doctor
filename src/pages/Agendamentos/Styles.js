@@ -54,10 +54,10 @@ export const BarraPesquisaComUmSelect = styled.div`
  
   
   .ant-input {
-    height: 36px;
+    height: 32px;
   }
   .ant-btn.ant-btn-default.ant-btn-icon-only.ant-input-search-button {
-    height: 36px;
+    height: 32px;
   }
 `;
 
@@ -71,10 +71,10 @@ export const BarraPesquisaComDoisSelects = styled.div`
   }
   
   .ant-input {
-    height: 36px;
+    height: 32px;
   }
   .ant-btn.ant-btn-default.ant-btn-icon-only.ant-input-search-button {
-    height: 36px;
+    height: 32px;
   }
 `;
 
@@ -101,9 +101,9 @@ export const Filtros = styled.div`
 
 export const SelectConsultorio = styled(Select)`
   width: 400px;
-  height: 36px;
   color: ${Cores.preto};
   padding-right: 2%;
+  height: 32px;
 
   border-radius: 3px;
   border-width: 1px;
@@ -279,7 +279,7 @@ export const BotaoNovoAgendamento = styled.div`
 
 export const InputData = styled.input`
   width: 160px;
-  height: 36px;
+  height: 32px;
   color: ${Cores.preto};
   padding-left: 4%;
   padding-right: 2%;
@@ -307,10 +307,10 @@ export const InputData = styled.input`
 `;
 export const SelectData = styled(Select)`
   width: 160px;
-  height: 36px;
   color: ${Cores.preto};
   //padding-left: 4%;
   padding-right: 2%;
+  height: 32px;
 
   border-radius: 3px;
   border-width: 1px;
