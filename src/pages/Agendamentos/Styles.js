@@ -103,9 +103,6 @@ export const SelectConsultorio = styled(Select)`
   width: 400px;
   height: 36px;
   color: ${Cores.preto};
-  font-family: ${Fontes.barlow};
-  font-weight: 100;
-  font-size: 1em;
   padding-right: 2%;
 
   border-radius: 3px;
@@ -149,7 +146,7 @@ export const Usuario = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: 80px;
+  height: 90px;
   padding: 0% 1% 0% 1%;
   border-color: ${Cores.preto};
   border-style: solid;
@@ -187,15 +184,19 @@ export const Nome = styled.div`
 
   @media (max-width: 880px) {
     width: 15%;
+    padding-left: 10px;
   }
   @media (max-width: 700px) {
     width: 20%;
+  
   }
   @media (max-width: 600px) {
     width: 33%;
+    padding-left: 10px;
   }
   @media (max-width: 500px) {
-    width: 28%;
+    width: 50%;
+    padding-left: 10px;
   }
 `;
 export const Telefone = styled.div`
@@ -208,7 +209,7 @@ export const Telefone = styled.div`
   
 `;
 export const Data = styled.div`
-  width: 25%;
+  width: 20%;
   display: flex;
   justify-content: center;
 
@@ -227,9 +228,10 @@ export const Data = styled.div`
 
 
 export const Agendamento = styled.div`
-  width: 18%;
+  width: 15%;
   display: flex;
   justify-content: center;
+  text-align: center;
   cursor: pointer;
 
   @media (max-width: 880px) {
@@ -247,12 +249,20 @@ export const Agendamento = styled.div`
 `;
 
 export const CódigoPaciente = styled.div`
-  width: 18%;
+  width: 25%;
   display: flex;
   justify-content: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  align-items: center;
+  word-break: break-all;
+  text-align: center;
+  overflow: scroll;
+
+  ::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+
+
   @media (max-width: 880px) {
     width: 20%;
   }
@@ -271,9 +281,6 @@ export const InputData = styled.input`
   width: 160px;
   height: 36px;
   color: ${Cores.preto};
-  font-family: ${Fontes.barlow};
-  font-weight: 100;
-  font-size: 1em;
   padding-left: 4%;
   padding-right: 2%;
   
@@ -302,9 +309,6 @@ export const SelectData = styled(Select)`
   width: 160px;
   height: 36px;
   color: ${Cores.preto};
-  font-family: ${Fontes.barlow};
-  font-weight: 100;
-  font-size: 1em;
   //padding-left: 4%;
   padding-right: 2%;
 
