@@ -178,13 +178,13 @@ export const Imagem = styled.div`
 `;
 export const Nome = styled.div`
   width: 18%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+ // text-align: center;
+  
 
   @media (max-width: 880px) {
-    width: 15%;
-    padding-left: 10px;
+    width: 18%;
+    padding-left: 5px;
   }
   @media (max-width: 700px) {
     width: 20%;
@@ -279,6 +279,9 @@ export const BotaoNovoAgendamento = styled.div`
 
 export const InputData = styled.input`
   width: 160px;
+  
+  
+
   height: 32px;
   color: ${Cores.preto};
   padding-left: 4%;
@@ -287,18 +290,14 @@ export const InputData = styled.input`
   border-radius: 3px;
   border-width: 1px;
   border-style: solid;
-  border-color: ${(props) => {
-    let cor;
-      if(props.border !== ""){
-        cor = Cores.azul;
-      } else {
-        cor = Cores.cinza[8];
-      }
-     
-    return cor;
-  }};
+  border-color: ${Cores.cinza[8]};
 
-   @media (max-width: 448px) {
+  @media (max-width: 940px) {
+    width: 50%;
+
+  } 
+
+  @media (max-width: 448px) {
     width: 80%;
 
   } 
@@ -314,16 +313,20 @@ export const SelectData = styled(Select)`
   border-radius: 3px;
   border-width: 1px;
   border-style: solid;
-  border-color: ${(props) => {
-    let cor;
-      if(props.border !== ""){
-        cor = Cores.azul;
+  border-color: ${Cores.cinza[8]};
+
+  @media (max-width: 940px) {
+    width: ${(props) => {
+    let tamanho;
+      if(props.FiltrarData === ""){
+        tamanho = "100%";
       } else {
-        cor = Cores.cinza[8];
+        tamanho = "50%";
       }
      
-    return cor;
+    return tamanho;
   }};
+  }
 
   @media (max-width: 448px) {
     width: 80%;
