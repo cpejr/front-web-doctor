@@ -308,7 +308,7 @@ function Agendamentos() {
             {agendamentosFiltrados
               ?.sort(compararDataAgendamentos)
               .map((value) => (
-                <Usuario /* key={value.id_usuario} */>
+                <Usuario>
                   <Imagem>{value.avatar_url}</Imagem>
                   <Nome>
                     {carregando ? (

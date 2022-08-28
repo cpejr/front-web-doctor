@@ -113,7 +113,7 @@ export const SelectConsultorio = styled(Select)`
 
   @media (max-width: 940px) {
     width: 80%;
-    //justify-content: start;
+    
   }
  
 
@@ -308,7 +308,6 @@ export const InputData = styled.input`
 export const SelectData = styled(Select)`
   width: 160px;
   color: ${Cores.preto};
-  //padding-left: 4%;
   padding-right: 2%;
   height: 32px;
 
