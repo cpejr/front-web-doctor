@@ -46,6 +46,16 @@ export const HeaderBarraLateralChat = styled.div`
   @media (max-width: 830px) and (min-width: 800px) {
     height: 8%;
   }
+
+  @media (max-width: 640px) {
+    justify-content: center;
+    padding-left: 5%;
+  }
+
+  @media (max-width: 420px) {
+    padding-left: 3%;
+  }
+
   `;
 
 export const ListaPessoasChat = styled.div`
@@ -120,6 +130,14 @@ border-radius: 7px;
 
   @media (max-width: 465px) and (min-width: 414px) {
     margin-left: 34ch;
+  }
+
+  @media (max-width: 346px)  {
+    margin-left: 25ch;
+  }
+
+  @media (max-width: 320px)  {
+    margin-left: 22ch;
   }
 `;
 

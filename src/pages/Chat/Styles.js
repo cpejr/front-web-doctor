@@ -53,15 +53,28 @@ export const MensagemInicialChat = styled.div`
   align-items: center;
   background-color: white;
   margin-left:37%;
-  width: 53%;
+  width: 73%;
   height: 100%;
   padding-top:17%;
   padding-bottom:19%;
+
+  @media (max-width: 928px) {
+    margin-left:43%;
+  }
+
+  @media (max-width: 857px) {
+    margin-left:48%;
+  }
   
   @media (max-width: 821px) {
     margin-left: 37%;
     width: 63%;
   }
+
+  @media (max-width: 729px) {
+    margin-left:44%;
+  }
+
   @media (max-width: 670px) and (min-width: 601px) {
     padding-left:10%;
   }

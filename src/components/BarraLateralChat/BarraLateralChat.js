@@ -38,7 +38,7 @@ const pessoas = [
   {
     id: 4,
     foto:`${patobravo}`,
-    nome: "Pato da silva",
+    nome: "Páto d sílv",
     mensagem: "Quack",
   },
   {
@@ -83,7 +83,7 @@ export default function BarraLateralChat(props) {
           <SearchIcon color="disabled"/>
         </BarraPesquisaChat>
         <Button
-        backgroundColor="transparent"
+        backgroundColor="green"
         borderColor="transparent"
         color={Cores.azul}
         width="18%"
@@ -98,7 +98,7 @@ export default function BarraLateralChat(props) {
         {pessoas.filter((val) => {
           if (searchTerm === "") {
             return val
-         } else if (val.nome.toLowerCase().includes(searchTerm.toLowerCase())) {
+         } else if (val.nome.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(searchTerm.toLowerCase())) {
             return val
         }}).map((pessoa) => (
           <PessoaChat 
