@@ -460,7 +460,7 @@ export const CriarFormulario = async (estado) => {
   await requesterService
     .criarFormulario(estado)
     .then(() => {
-      alert("Usuário cadastrado com sucesso.");
+      toast.success("Formulário criado com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(error);

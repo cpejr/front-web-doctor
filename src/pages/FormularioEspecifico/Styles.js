@@ -35,7 +35,7 @@ export const ColunaEsquerda = styled.div`
   flex-direction: column;
   width: 55%;
   height: 100vh;
-
+  margin-bottom: 5%;
   padding: 2% 4% 2% 4%;
 
   @media (max-width: 850px) {
@@ -356,7 +356,7 @@ export const SelectTipos = styled(Select)`
   color: ${Cores.azul};
   font-weight: bold;
   font-size: 0.9em;
-  background-color: green;
+
 
   .ant-select-arrow {
     color: ${Cores.azul};
@@ -393,10 +393,6 @@ export const BarraDePesquisa = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-
-  .ant-input:placeholder-shown {
-    background-color: green;
-  }
 
   @media (max-width: 920px) {
     width: 100%;
