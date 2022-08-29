@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { BarraPesquisaChat, ImagemPessoa, NomeMensagem, BolaAzul, MensagemPessoa, NomePessoa, HeaderBarraLateralChat, ListaPessoasChat, PessoaChat, BarraLateral } from "./Styles";
 import { Cores } from "../../variaveis";
+import { Tooltip } from 'antd';
 import Button from "../../styles/Button";
 import Input from "../../styles/Input";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -82,6 +83,7 @@ export default function BarraLateralChat(props) {
           />
           <SearchIcon color="disabled"/>
         </BarraPesquisaChat>
+        <Tooltip placement="bottom" title="Iniciar nova conversa">
         <Button
         backgroundColor="green"
         borderColor="transparent"
@@ -93,6 +95,7 @@ export default function BarraLateralChat(props) {
         >
         <AddCircleOutlineIcon fontSize="large"/>
         </Button>
+        </Tooltip>
       </HeaderBarraLateralChat>
       <ListaPessoasChat >
         {pessoas.filter((val) => {
