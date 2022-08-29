@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import { Cores } from "../../variaveis";
+import { Select , Input} from "antd";
+const { Search } = Input;
 
 export const ContainerListadeUsuarios = styled.div`
   display: flex;
@@ -12,14 +14,111 @@ export const ContainerListadeUsuarios = styled.div`
 export const TopoPagina = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   @media (max-width: 920px) {
     flex-direction: column;
     justify-content: center;
+    gap: 10px;
+
+  }
+
+  @media (max-width: 450px) {
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
   }
 `;
-export const BarraPesquisa = styled.div`
+
+export const FiltrosEsquerda = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   width: 50%;
+  gap: 10px;
+
+  @media (max-width: 920px) {
+    width: 100%;
+    justify-content: center;
+    gap: 2%;
+  }
+
+  @media (max-width: 450px) {
+    flex-direction: column-reverse;
+    width: 100%;
+    align-items: center;
+    gap: 10px;
+  }
+
+`;
+
+export const SelectTipoBusca = styled(Select)`
+    width: 180px;
+    border-color: ${(props) => {
+    let cor;
+    if (!props.borderColor) {
+      if(props.tipoBusca === "codigo"){
+        cor = Cores.azul;
+      } else {
+        cor = Cores.cinza[8];
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
+  border-radius: 3px;
+  border-width: 1px;
+  border-style: solid;
+
+  .ant-select-arrow{
+    color: ${(props) => {
+    let cor;
+    if (!props.borderColor) {
+      if(props.tipoBusca === "codigo"){
+        cor = Cores.azul;
+      } else {
+        cor = Cores.cinza[8];
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
+  }
+
+  @media (max-width: 570px) {
+    width: 180px;
+  }
+`;
+
+export const SearchStyle= styled(Search)`
+   width: 100%;
+    border-color: ${(props) => {
+    let cor;
+    if (!props.borderColor) {
+      if(props.tipoBusca === "codigo"){
+        cor = Cores.azul;
+      } else {
+        cor = Cores.cinza[8];
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
+  border-radius: 3px;
+  border-width: 1px;
+  border-style: solid;
+
+  .ant-input-search-button{
+    border: none;
+  }
+
+;`
+export const BarraPesquisa = styled.div`
+  width: 56%;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -30,34 +129,44 @@ export const BarraPesquisa = styled.div`
   }
 `;
 export const Filtros = styled.div`
-  width: 50%;
+  width: 40%;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 2%;
+  gap: 10px;
   @media (max-width: 920px) {
-    margin-top: 2%;
     width: 100%;
     justify-content: center;
+    gap: 10px;
   }
   @media (max-width: 450px) {
-    margin-top: 2%;
     flex-direction: column;
     width: 100%;
-    justify-content: center;
     align-items: center;
+    gap: 10px;
   }
 `;
 export const FiltroUsuario = styled.div`
-  @media (max-width: 480px) {
-    margin-top: 2%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  justify-content: flex-end;
+  @media(max-width: 920px)
+  {
+    justify-content: center;
   }
+ 
 `;
 
 export const FiltroDatas = styled.div`
-  @media (max-width: 480px) {
-    margin-top: 2%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  @media(max-width: 920px)
+  {
+    justify-content: center;
   }
+ 
 `;
 
 export const BarraEstetica = styled.div`

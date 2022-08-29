@@ -28,10 +28,14 @@ import {
   LogoCarregando,
   ContainerSpin,
   CaixaSpin,
+  SelectTipoBusca,
+  SearchStyle,
+  FiltrosEsquerda
 } from "./Styles";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 import ModalAdicionarCodigo from "../../components/ModalAdicionarCodigo/ModalAdicionarCodigo";
+import { compararData, compararNomes } from "../../utils/tratamentoErros";
 import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
@@ -48,34 +52,121 @@ function ListaUsuarios() {
   const [modalAdicionarCodigo, setModalAdicionarCodigo] = useState(false);
   const [email, setEmail] = useState();
   const [tipoSelect, setTipoSelect] = useState("");
+  const [visitaSelect, setVisitaSelect] = useState("");
   const [busca, setBusca] = useState("");
   const abertoPeloUsuario = true;
   const [consultas, setConsultas] = useState([]);
 
-  const lowerBusca = busca.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
+  const [pesquisa, setPesquisa] = useState("");
+
+  const lowerBusca = busca
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+  const antIconPagina = <LoadingOutlined style={{ fontSize: 40, color: Cores.azulEscuro }} spin />;
   const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
 
-  const usuariosFiltrados = usuarios.filter((usuario) => {
-    if (lowerBusca === "" && tipoSelect === "") {
+  const usuariosFiltrados = usuarios.filter((usuario) => 
+  {
+
+    if (lowerBusca === "" && tipoSelect === "" && visitaSelect === "") {
       return usuarios;
     }
-    if (tipoSelect === "ultimaConsulta") {
-      return usuario?.ultimaConsulta !== undefined;
-    } else {
-      return (
-        (usuario?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca) ||
-          usuario?.codigo?.toLowerCase().includes(lowerBusca) ||
-          usuario?.ultimaConsulta !== undefined ||
-          usuario?.telefone?.includes(lowerBusca)) &&
-        usuario?.tipo?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(tipoSelect.toLowerCase())
-      );
+
+    if( lowerBusca === "")
+    {
+      if (tipoSelect !== "" && visitaSelect === "") {
+        return(
+        usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase())); 
+      }
+      else if(tipoSelect === "" && visitaSelect !== "")
+      {
+        return (
+        usuario.ultimaConsulta !== undefined 
+        );
+      }
+      else if(tipoSelect !== "" && visitaSelect !== "")
+      {
+        return (
+        usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase()) &&
+        usuario.ultimaConsulta !== undefined );
+      }
+      else{
+        return(
+        usuario?.nome?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(lowerBusca));
+      }
+    }
+    else
+    {
+      if (pesquisa === "")
+       {
+          if (tipoSelect !== "" && visitaSelect === "")
+          {
+            return(
+            usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase()) &&
+            usuario?.nome?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(lowerBusca));
+          }
+          else if(tipoSelect === "" && visitaSelect !== "")
+          {
+            return(
+            usuario.ultimaConsulta !== undefined && 
+            usuario?.nome?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(lowerBusca));
+          }
+          else if(tipoSelect !== "" && visitaSelect !== "")
+          {
+            return(
+            usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase()) &&
+            usuario.ultimaConsulta !== undefined && 
+            usuario?.nome?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(lowerBusca));
+          }
+          else{
+            return(
+            usuario?.nome?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(lowerBusca));
+          }
+        }
+      else
+      {
+        if (tipoSelect !== "" && visitaSelect === "") {
+          return(
+          usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase()) &&
+          usuario?.codigo?.toLowerCase().normalize("NFD").includes(lowerBusca));
+        }
+        else if(tipoSelect === "" && visitaSelect !== "")
+        {
+          return(
+          usuario.ultimaConsulta !== undefined && 
+          usuario?.codigo?.toLowerCase().normalize("NFD").includes(lowerBusca));
+        }
+        else if(tipoSelect !== "" && visitaSelect !== "")
+        {
+          return(
+          usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase()) &&
+          usuario.ultimaConsulta !== undefined && 
+          usuario?.codigo?.toLowerCase().normalize("NFD").includes(lowerBusca));
+        }
+        else{
+          return(
+          usuario?.codigo?.toLowerCase().normalize("NFD").includes(lowerBusca));
+        }
+      }
     }
   });
 
   function secretariosFiltrados(value) {
+
+    if(value === "SECRETARIA(O)")
+    {
+      setVisitaSelect("");
+    }
     setTipoSelect(value);
+  }
+
+  function visitaFiltro(value) {
+    setVisitaSelect(value);
+  }
+
+  function tipoBarraPesquisa(value) {
+    setPesquisa(value);
   }
 
   async function pegandoDadosUsuarios(consultas) {
@@ -108,27 +199,8 @@ function ListaUsuarios() {
     });
   }
 
-  function comparaData(a, b) {
-    var data1 = new Date(a.data_hora);
-    var data2 = new Date(b.data_hora);
 
-    if (data1 > data2) {
-      return 1;
-    } else {
-      return -1;
-    }
-  }
-
-  function comparaNomes(a, b) {
-    var nome1 = a.nome.toUpperCase();
-    var nome2 = b.nome.toUpperCase();
-
-    if (nome1 > nome2) {
-      return 1;
-    } else {
-      return -1;
-    }
-  }
+  
 
   useEffect(() => {
     pegandoDadosConsultas();
@@ -178,7 +250,7 @@ function ListaUsuarios() {
     if (usuario.tipo === "SECRETARIA(O)") {
       return;
     }
-    consultas.sort(comparaData);
+    consultas.sort(compararData);
     let dataHora = [];
     consultas.forEach((consulta) => {
       if (consulta.id_usuario === usuario.id) {
@@ -204,7 +276,7 @@ function ListaUsuarios() {
     }
 
     if (
-      dataHora.length != 0 &&
+      dataHora.length !== 0 &&
       usuario.ultimaConsulta === undefined &&
       new Date(primeiraConsulta) < hoje
     ) {
@@ -217,20 +289,32 @@ function ListaUsuarios() {
     <div>
       <ContainerListadeUsuarios>
         <TopoPagina>
-          <BarraPesquisa>
-            <Search
+          <FiltrosEsquerda>
+            <SelectTipoBusca
+              defaultValue=""
+              tipoBusca={pesquisa}
+              bordered={false}
+              onChange={(value) => tipoBarraPesquisa(value)}
+            >
+              <Option value="">Pesquisar por nome</Option>
+              <Option value="codigo">Pesquisar por código</Option>
+            </SelectTipoBusca>
+            <BarraPesquisa>
+            <SearchStyle
               placeholder="BUSCAR"
-              style={{ width: 400 }}
+              tipoBusca={pesquisa}
+              bordered={false}
               value={busca}
               onChange={(e) => setBusca(e.target.value)}
             />
           </BarraPesquisa>
+          </FiltrosEsquerda>
           <Filtros>
             {tipoUsuarioLogado === "MASTER" ? (
               <FiltroUsuario>
                 <Select
                   defaultValue=""
-                  style={{ width: 200 }}
+                  style={{ width: 180 }}
                   onChange={(value) => secretariosFiltrados(value)}
                 >
                   <Option value="">Todos os Usuários</Option>
@@ -241,16 +325,21 @@ function ListaUsuarios() {
             ) : (
               <></>
             )}
-            <FiltroDatas>
-              <Select
-                defaultValue="Todas as datas"
-                style={{ width: 200 }}
-                onChange={(value) => secretariosFiltrados(value)}
-              >
-                <Option value="">Todas as Datas</Option>
-                <Option value="ultimaConsulta">Últimas Visitas</Option>
-              </Select>
-            </FiltroDatas>
+            {(tipoUsuarioLogado === "MASTER" &&
+            tipoSelect !== "SECRETARIA(O)") || tipoUsuarioLogado === "SECRETARIA(O)"  ? (
+              <FiltroDatas>
+                <Select
+                  defaultValue=""
+                  style={{ width: 180 }}
+                  onChange={(value) => visitaFiltro(value)}
+                >
+                  <Option value="">Todas as Datas</Option>
+                  <Option value="ultimaConsulta">Últimas Visitas</Option>
+                </Select>
+              </FiltroDatas>
+            ) : (
+              <></>
+            )}
           </Filtros>
         </TopoPagina>
         {tipoUsuarioLogado === "MASTER" ? (
@@ -323,8 +412,8 @@ function ListaUsuarios() {
               <CaixaVazia></CaixaVazia>
             </DadosUsuario>
             <ContainerUsuarios>
-              {usuariosFiltrados?.sort(comparaNomes).map((value) => (
-                <Usuario key={value.id}>
+              {usuariosFiltrados?.sort(compararNomes).map((value) => (
+                <Usuario>
                   <Imagem>{value.avatar_url}</Imagem>
                   <Nome>
                     <div

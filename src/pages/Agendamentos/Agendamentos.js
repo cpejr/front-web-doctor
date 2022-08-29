@@ -36,7 +36,7 @@ import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 import ModalConsultaMarcada from "../../components/ModalConsultaMarcada";
 import { Cores } from "../../variaveis";
-import { compararDataAgendamentos } from "../../utils/tratamentoErros";
+import { compararData } from "../../utils/tratamentoErros";
 import * as managerService from "../../services/ManagerService/managerService";
 import { sleep } from "../../utils/sleep";
 
@@ -306,7 +306,7 @@ function Agendamentos() {
         ) : (
           <ContainerUsuarios>
             {agendamentosFiltrados
-              ?.sort(compararDataAgendamentos)
+              ?.sort(compararData)
               .map((value) => (
                 <Usuario>
                   <Imagem>{value.avatar_url}</Imagem>
