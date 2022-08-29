@@ -32,6 +32,11 @@ export const BarraLateral = styled.div`
     width: 100%;
     padding-top: 5%;
   }
+
+  @media (max-width: 280px) {
+    min-width:280px;
+    width:280px;
+  }
 `;
 
 export const HeaderBarraLateralChat = styled.div`
@@ -75,6 +80,10 @@ padding-bottom: 10%;
 background-color: transparent;
 border-color: transparent;
 width: 100%;
+
+@media (max-width: 280px) {
+  padding-left: 0%;
+  }
 `;
 
 export const NomeMensagem = styled.div`
@@ -164,6 +173,10 @@ white-space: nowrap;
 @media (max-width: 670px) {
 max-width: 15ch;
 }
+
+@media (max-width: 280px) {
+  max-width: 13ch;
+  }
 `;
 
 export const Pessoa = styled.div`
