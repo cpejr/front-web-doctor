@@ -10,11 +10,14 @@ export const ContainerListadeUsuarios = styled.div`
   min-height: 100vh;
   padding: 2% 5% 2% 5%;
 `;
+
+
 export const TopoPagina = styled.div`
   display: flex;
+  flex-direction: column;
+  justify-content: space-around;
   align-items: center;
-  flex-direction: row;
-  justify-content: space-between;
+  width: 100%;
   @media (max-width: 920px) {
     width: 100%;
     height: 70%;
@@ -23,110 +26,97 @@ export const TopoPagina = styled.div`
   }
 `;
 
-export const TopoPaginaEsquerda = styled.div`
+
+export const TopoPaginaCima = styled.div`
   display: flex;
-  align-items: start;
   flex-direction: row;
-  width: 65%;
-  justify-content: space-between;
+  justify-content: space-around;
+  width: 100%;
+  gap: 10px;
+  margin-bottom: 20px;
 
-  @media (max-width: 920px) {
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-between;
-    margin-bottom: 2%;
-  }
-  @media (max-width: 570px) {
-    flex-direction: column;
-    justify-content: center;
-  }
-
+@media (max-width: 940px) {
+  flex-direction: column;
+  align-items: center;
+}
 `;
 
 
-export const BarraPesquisaComUmInput = styled.div`
-  width: 100%;
+export const BarraPesquisaComUmSelect = styled.div`
+  width: 400px;
   display: flex;
   flex-direction: row;
-  @media (max-width: 920px) {
-    width: 1000px;
-    justify-content: start;
-  }
-  @media (max-width: 840px) {
-    width: 780px;
-  }
-  @media (max-width: 750px) {
-    width: 640px;
+  justify-content: space-around;
+  @media (max-width: 940px) {
+    width: 80%;
+
   }
  
-  @media (max-width: 630px) {
-    width: 590px;
-  }
-  @media (max-width: 570px) {
-    width: 100%;
-    margin-bottom: 5px;
-  }
   
   .ant-input {
-    height: 36px;
+    height: 32px;
   }
   .ant-btn.ant-btn-default.ant-btn-icon-only.ant-input-search-button {
-    height: 36px;
+    height: 32px;
   }
 `;
 
-export const BarraPesquisaComDoisInputs = styled.div`
+export const BarraPesquisaComDoisSelects = styled.div`
   width: 40%;
   display: flex;
   flex-direction: row;
-  @media (max-width: 920px) {
-    width: 950px;
-    justify-content: start;
-  }
-  @media (max-width: 840px) {
-    width: 750px;
-  }
-  @media (max-width: 780px) {
-    width: 550px;
-  }
-  @media (max-width: 690px) {
-    width: 380px;
-    flex-direction: row;
-    justify-content: space-between;
-  }
-  @media (max-width: 630px) {
-    width: 280px;
-  }
-  @media (max-width: 570px) {
-    width: 100%;
-    margin-bottom: 5px;
+  justify-content: space-around;
+  @media (max-width: 940px) {
+    width: 80%;
   }
   
   .ant-input {
-    height: 36px;
+    height: 32px;
   }
   .ant-btn.ant-btn-default.ant-btn-icon-only.ant-input-search-button {
-    height: 36px;
+    height: 32px;
   }
 `;
 
-export const FiltroDatas = styled.div`
 
-  width: 140px;
+export const Filtros = styled.div`
+  width: 400px;
   display: flex;
-  @media (max-width: 920px) {
-    width: 240px;
-    justify-content: end;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  @media (max-width: 940px) {
+    width: 80%;
   }
-
-  @media (max-width: 690px) {
-    width: 140px;
-  }
-
-  @media (max-width: 490px) {
-    justify-content: start;
+  @media (max-width: 448px) {
     width: 100%;
+    flex-direction: column;
+    justify-content: space-around;
   }
+
+`;
+
+
+
+export const SelectConsultorio = styled(Select)`
+  width: 400px;
+  color: ${Cores.preto};
+  padding-right: 2%;
+  height: 32px;
+
+  border-radius: 3px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${Cores.cinza[8]};
+ 
+
+  @media (max-width: 940px) {
+    width: 80%;
+    
+  }
+ 
+
 `;
 
 export const BarraEstetica = styled.div`
@@ -156,7 +146,7 @@ export const Usuario = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: 80px;
+  height: 90px;
   padding: 0% 1% 0% 1%;
   border-color: ${Cores.preto};
   border-style: solid;
@@ -168,6 +158,9 @@ export const Usuario = styled.div`
 export const Titulo = styled.div`
   display: flex;
   width: 40px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   justify-content: center;
   @media (max-width: 880px) {
     display: none;
@@ -185,25 +178,25 @@ export const Imagem = styled.div`
 `;
 export const Nome = styled.div`
   width: 18%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  :hover {
-    overflow: visible;
-    cursor: pointer;
-  }
+  white-space: normal;
+ // text-align: center;
+  
 
   @media (max-width: 880px) {
-    width: 20%;
+    width: 18%;
+    padding-left: 5px;
   }
   @media (max-width: 700px) {
-    width: 25%;
+    width: 20%;
+  
   }
   @media (max-width: 600px) {
     width: 33%;
+    padding-left: 10px;
   }
   @media (max-width: 500px) {
     width: 50%;
+    padding-left: 10px;
   }
 `;
 export const Telefone = styled.div`
@@ -211,20 +204,12 @@ export const Telefone = styled.div`
   justify-content: center;
   display: flex;
   @media (max-width: 880px) {
-    width: 20%;
-  }
-  @media (max-width: 700px) {
-    width: 25%;
-  }
-  @media (max-width: 600px) {
-    width: 33%;
-  }
-  @media (max-width: 500px) {
     display: none;
   }
+  
 `;
 export const Data = styled.div`
-  width: 25%;
+  width: 20%;
   display: flex;
   justify-content: center;
 
@@ -243,9 +228,10 @@ export const Data = styled.div`
 
 
 export const Agendamento = styled.div`
-  width: 18%;
+  width: 15%;
   display: flex;
   justify-content: center;
+  text-align: center;
   cursor: pointer;
 
   @media (max-width: 880px) {
@@ -261,10 +247,22 @@ export const Agendamento = styled.div`
     width: 50%;
   }
 `;
+
 export const CódigoPaciente = styled.div`
-  width: 18%;
+  width: 25%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  word-break: break-all;
+  text-align: center;
+  overflow: scroll;
+
+  ::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+  }
+
+
   @media (max-width: 880px) {
     width: 20%;
   }
@@ -272,79 +270,72 @@ export const CódigoPaciente = styled.div`
     display: none;
   }
 `;
+
 export const BotaoNovoAgendamento = styled.div`
   display: flex;
   justify-content: end;
   margin-bottom: 40px;
 `;
+
 export const InputData = styled.input`
   width: 160px;
-  height: 36px;
+  
+  
+
+  height: 32px;
   color: ${Cores.preto};
-  font-family: ${Fontes.barlow};
-  font-weight: 500;
-  font-size: 15px;
-  padding-left: 12%;
+  padding-left: 4%;
   padding-right: 2%;
   
   border-radius: 3px;
   border-width: 1px;
   border-style: solid;
   border-color: ${Cores.cinza[8]};
+
+  @media (max-width: 940px) {
+    width: 50%;
+
+  } 
+
+  @media (max-width: 448px) {
+    width: 80%;
+
+  } 
+ 
   
 `;
 export const SelectData = styled(Select)`
   width: 160px;
-  height: 36px;
   color: ${Cores.preto};
-  font-family: ${Fontes.barlow};
-  font-weight: 500;
-  font-size: 15px;
-  padding-left: 4%;
   padding-right: 2%;
+  height: 32px;
 
   border-radius: 3px;
   border-width: 1px;
   border-style: solid;
   border-color: ${Cores.cinza[8]};
-`;
-export const Filtros = styled.div`
-  width: 50%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 2%;
-  @media (max-width: 920px) {
-    width: 100%;
-    justify-content: flex-end;
-  }
-  @media (max-width: 570px) {
-    margin-top: 2%;
-    width: 100%;
-    justify-content: space-around;
-    align-items: center;
+
+  @media (max-width: 940px) {
+    width: ${(props) => {
+    let tamanho;
+      if(props.FiltrarData === ""){
+        tamanho = "100%";
+      } else {
+        tamanho = "50%";
+      }
+     
+    return tamanho;
+  }};
   }
 
-  @media (max-width: 330px) {
-    margin-top: 2%;
-    width: 100%;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+  @media (max-width: 448px) {
+    width: 80%;
+
   }
-`;
-export const FiltroSelect = styled.div`
-  @media (max-width: 570px) {
-    margin-top: 2%;
-    margin-bottom: 2%;
-  }
+ 
 `;
 
 export const FiltroInput = styled.div`
-  @media (max-width: 570px) {
-    margin-top: 2%;
-    margin-bottom: 2%;
-  }
+
 `;
 

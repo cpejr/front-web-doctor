@@ -296,6 +296,8 @@ export const CódigoPaciente = styled.div`
   width: 24%;
   display: flex;
   justify-content: center;
+  text-align: center;
+  word-break: break-all;
   @media (max-width: 880px) {
     width: 28%;
   }
