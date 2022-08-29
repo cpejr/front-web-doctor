@@ -35,6 +35,7 @@ import {
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 import ModalAdicionarCodigo from "../../components/ModalAdicionarCodigo/ModalAdicionarCodigo";
+import { compararData, compararNomes } from "../../utils/tratamentoErros";
 import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
@@ -64,8 +65,6 @@ function ListaUsuarios() {
     .replace(/[\u0300-\u036f]/g, "");
   const antIconPagina = <LoadingOutlined style={{ fontSize: 40, color: Cores.azulEscuro }} spin />;
   const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
-
-  //Filtros
 
   const usuariosFiltrados = usuarios.filter((usuario) => 
   {
@@ -153,9 +152,6 @@ function ListaUsuarios() {
     }
   });
 
-
-  //Função dos filtros
-
   function secretariosFiltrados(value) {
 
     if(value === "SECRETARIA(O)")
@@ -172,9 +168,6 @@ function ListaUsuarios() {
   function tipoBarraPesquisa(value) {
     setPesquisa(value);
   }
-
-
-  //Resto do código
 
   async function pegandoDadosUsuarios(consultas) {
     setCarregandoPagina(true);
@@ -206,27 +199,8 @@ function ListaUsuarios() {
     });
   }
 
-  function comparaData(a, b) {
-    var data1 = new Date(a.data_hora);
-    var data2 = new Date(b.data_hora);
 
-    if (data1 > data2) {
-      return 1;
-    } else {
-      return -1;
-    }
-  }
-
-  function comparaNomes(a, b) {
-    var nome1 = a.nome.toUpperCase();
-    var nome2 = b.nome.toUpperCase();
-
-    if (nome1 > nome2) {
-      return 1;
-    } else {
-      return -1;
-    }
-  }
+  
 
   useEffect(() => {
     pegandoDadosConsultas();
@@ -276,7 +250,7 @@ function ListaUsuarios() {
     if (usuario.tipo === "SECRETARIA(O)") {
       return;
     }
-    consultas.sort(comparaData);
+    consultas.sort(compararData);
     let dataHora = [];
     consultas.forEach((consulta) => {
       if (consulta.id_usuario === usuario.id) {
@@ -438,7 +412,7 @@ function ListaUsuarios() {
               <CaixaVazia></CaixaVazia>
             </DadosUsuario>
             <ContainerUsuarios>
-              {usuariosFiltrados?.sort(comparaNomes).map((value) => (
+              {usuariosFiltrados?.sort(compararNomes).map((value) => (
                 <Usuario>
                   <Imagem>{value.avatar_url}</Imagem>
                   <Nome>
