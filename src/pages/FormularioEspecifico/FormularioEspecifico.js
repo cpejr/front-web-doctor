@@ -24,6 +24,8 @@ import {
   Selects,
   MargemEstetica,
   NomePaciente,
+  CentralizandoSpin,
+  ContainerInterno
 } from "./Styles";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
@@ -45,7 +47,10 @@ function FormularioEspecifico(props) {
 
 
   const [carregando, setCarregando] = useState(true);
-
+  const [statusSelect, setStatusSelect] = useState("");
+  const { Option } = SelectTipos;
+  const [busca, setBusca] = useState("");
+  const lowerBusca = busca.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
   );
@@ -96,16 +101,50 @@ function abrindoModalFormulario(id, perguntas, titulo) {
     pegandoDadosFormularioEspecifico();
   }, [props.location.state.id]);
 
+  const usuariosFiltrados = formularioPacientes.filter(
+    (formularioPacientes) => {
+      if (lowerBusca === "" && statusSelect === "") {
+        return formularioPacientes;
+      } else {
+        if (statusSelect === "true") {
+          return (
+            formularioPacientes?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca) &&
+            formularioPacientes.status === true
+          );
+        } else if (statusSelect === "false") {
+          return (
+            formularioPacientes?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca) &&
+            formularioPacientes.status === false
+          );
+        } else {
+          return formularioPacientes?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca);
+        }
+      }
+    }
+  );
+
+  function usuariosFiltro(value) {
+    setStatusSelect(value);
+  }
+
   return (
     <div>
       <ContainerFormularioEspecifico>
         {carregando ? (
+          <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "49.5%",
+          }}
+        >
           <Spin indicator={antIcon} />
+        </div>
         ) : (
           <>
             <ContainerFormularioCima>
               <CamposFormularioCima>
-                Formulário: {formularioEspecifico.titulo}
+                {formularioEspecifico.titulo}
               </CamposFormularioCima>
               <CamposFormularioCima>
                 Tipo: {formularioEspecifico.tipo}
@@ -140,22 +179,32 @@ function abrindoModalFormulario(id, perguntas, titulo) {
             <ColunaEsquerda>
               <ContainerBarraDeBuscaOpcoes>
                 <BarraDePesquisa>
-                  <Search placeholder="BUSCAR" style={{ width: "80%" }} />
+                  <Search
+                    placeholder="BUSCAR"
+                    style={{ width: "100%" }}
+                    value={busca}
+                    onChange={(e) => setBusca(e.target.value)}
+                  />
                 </BarraDePesquisa>
                 <Selects>
                   <RotuloBarraDeBuscaOpcoes>
                     <SelectTipos
-                      defaultValue="Status"
+                      defaultValue=""
                       bordered={false}
-                      style={{ width: 90 }}
-                    ></SelectTipos>
+                      style={{ width: "auto" }}
+                      onChange={(value) => usuariosFiltro(value)}
+                    >
+                      <Option value="">Todos os Usuários</Option>
+                      <Option value="true">Respondido      </Option>
+                      <Option value="false">Resposta Pendente</Option>
+                    </SelectTipos>
                   </RotuloBarraDeBuscaOpcoes>
                 </Selects>
               </ContainerBarraDeBuscaOpcoes>
 
               <BarraEstetica></BarraEstetica>
 
-              {formularioPacientes.map((value) => (
+              {usuariosFiltrados?.map((value) => (
                 <BarraPaciente>
                   <BarraEsquerda>
                     <ImagemPaciente
