@@ -183,7 +183,7 @@ function Login() {
             textDecoration="underline"
             height="50px"
             onClick={() => {
-              history.push("/esqueciminhasenha");
+              window.location.href="/alterarsenha_requisicao"
             }}
           >
             Esqueceu sua senha?

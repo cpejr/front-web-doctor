@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import AlterarSenha from "./pages/AlterarSenha";
+import AlterarSenhaComEmail from "./pages/AlterarSenhaComEmail";
 import AreaReceitas from "./pages/AreaReceitas";
 import Cadastro from "./pages/Cadastro";
 import Chat from "./pages/Chat";
@@ -73,7 +74,7 @@ function Routes() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/login" component={Login} />
-        <Route exact path="/esqueciminhasenha" component={EsqueciSenha} />
+        <Route exact path="/alterarsenha_requisicao" component={AlterarSenhaComEmail} />
         <RotasPrivadas  exact path="/cadastro" component={Cadastro}/>
         <RotasPrivadasMedico
           exact
