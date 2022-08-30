@@ -6,6 +6,7 @@ import Cadastro from "./pages/Cadastro";
 import Chat from "./pages/Chat";
 import CriacaoFormulario from "./pages/CriacaoFormulario";
 import EdicaoConteudo from "./pages/EdicaoConteudo";
+import EsqueciSenha from "./pages/EsqueciSenha";
 import Header from "./components/Header/Header";
 import ListaFormularios from "./pages/ListaFormularios";
 import ListaUsuarios from "./pages/ListaUsuarios";
@@ -72,6 +73,7 @@ function Routes() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/login" component={Login} />
+        <Route exact path="/esqueciminhasenha" component={EsqueciSenha} />
         <RotasPrivadas  exact path="/cadastro" component={Cadastro}/>
         <RotasPrivadasMedico
           exact

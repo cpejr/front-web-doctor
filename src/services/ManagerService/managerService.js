@@ -36,13 +36,11 @@ export const requisicaoLogin = async (email, senha) => {
 export const Cadastrando = async (usuario, endereco) => {
   const resposta = await requesterService.requisicaoDadosUsuario(usuario.email);
 
-  if (resposta.status != 204){
+  if (resposta.status != 204) {
     sleep(1500);
     toast.error("E-mail já cadastrado");
     return;
   }
-
-
 
   await requesterService
     .criarUsuario(endereco, usuario)
@@ -51,6 +49,28 @@ export const Cadastrando = async (usuario, endereco) => {
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/cadastro"));
+      return false;
+    });
+  return false;
+};
+
+export const EnviandoEmail = async (email) => {
+  const resposta = await requesterService.requisicaoDadosUsuario(email);
+  if (resposta.status === 204) {
+    sleep(1500);
+    toast.error("E-mail inexistente!");
+    return;
+  }
+
+  await requesterService
+    .recuperarSenha(email)
+    .then(() => {
+      toast.success("Email enviado com sucesso!");
+    })
+    .catch((error) => {
+      console.log(error)
+      sleep(1500);
+      requisicaoErro(error, () => (window.location.href = "/esqueciminhasenha"));
       return false;
     });
   return false;
@@ -219,7 +239,7 @@ export const ConferirSenha = async (email, senhaAtual) => {
     return false;
   } catch (error) {
     toast.error("Senha incorreta!");
-    return true;  
+    return true;
   }
 };
 
@@ -242,7 +262,7 @@ export const UpdateDadosUsuario = async (
     .updateDadosUsuario(id_usuario, id_endereco, endereco, estado)
     .then(() => {
       toast.success("Dados alterados com sucesso.");
-      
+
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));
@@ -353,12 +373,12 @@ export const EnviandoFormularioPaciente = async (
   const sleep = (milliseconds) => {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   };
-   await requesterService
+  await requesterService
     .enviarFormularioPaciente(status, id_formulario, id_usuario)
     .then(() => {
       toast.success("Formulario enviado com sucesso!");
       sleep(1500).then(() => window.location.href = "/web/listaformularios")
-      
+
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -394,7 +414,7 @@ export const GetFormularioEspecifico = async (id) => {
   return dadosFormulario;
 };
 
-export const  DeletarFormulario = async (id) => {
+export const DeletarFormulario = async (id) => {
   await requesterService
     .deletarFormulario(id)
     .then(() => {

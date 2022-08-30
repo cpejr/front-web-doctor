@@ -11,6 +11,8 @@ export const criarUsuario = (endereco, usuario) =>
     api.post("/usuarios", { ...usuario, id_endereco: res.data.id });
   });
 
+export const recuperarSenha = (email) => api.post(`/alterar_senha/${email}`);
+
 export const criarConsulta = (consulta) => api.post("/consultas", consulta);
 
 export const updateConsulta = (id_consulta, consulta) =>
