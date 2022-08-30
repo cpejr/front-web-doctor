@@ -183,18 +183,35 @@ export const BotaoVertical = styled.div`
   }
 `;
 
-export const BotaoFinal = styled.div`
-  width: 98%;
+export const TopoPaginaBotao = styled.div`
+  width: 100%;
   display: flex;
-  min-height: 20vh;
-  justify-content: end;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: 560px) {
+    width: 100%;
+    margin: 1% 2% 0% 0%;
+  }
+`;
+
+export const BotaoFinal = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
   @media (max-width: 920px) {
     width: 100%;
     justify-content: center;
   }
   @media (max-width: 560px) {
-    margin: 0% 10% 0% 10%;
-    width: 80%;
+    
+    display: flex;
+    width: 100%;
+
+  }
+  @media (min-width: 560px) and (max-width: 920px) {
+
+    justify-content: center;
+    align-items: center;
   }
 `;
 

@@ -17,6 +17,7 @@ import * as managerService from "../../services/ManagerService/managerService";
 function ModalEnvioFormulario(props) {
   const [formularioPaciente, setFormularioPaciente] = useState();
   const [carregando, setCarregando] = useState(false);
+  const [fechandoModalEnvioF, setFechandoModalEnvio] = useState(false);
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
@@ -24,12 +25,14 @@ function ModalEnvioFormulario(props) {
 
   async function enviandoFormularioPaciente() {
     setCarregando(true);
+    
     if (formularioPaciente) {
       await managerService.EnviandoFormularioPaciente(
         false,
         props.idFormulario,
-        formularioPaciente
+        formularioPaciente,
       );
+      
     } else {
       toast.error("Escolha um paciente para enviar o formulario");
     }
@@ -38,6 +41,10 @@ function ModalEnvioFormulario(props) {
 
   async function preenchendoDados(e) {
     setFormularioPaciente(e.target.value);
+  }
+
+  async function fechandoModalEnvio(){
+    setFechandoModalEnvio(true);
   }
 
   return (

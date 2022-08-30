@@ -357,7 +357,7 @@ export const EnviandoFormularioPaciente = async (
     .enviarFormularioPaciente(status, id_formulario, id_usuario)
     .then(() => {
       toast.success("Formulario enviado com sucesso!");
-      sleep(1500).then(() => window.location.href = "/web/listaformularios")
+      //sleep(1500).then(() => window.location.href = "/web/listaformularios")
       
     })
     .catch((error) => {
