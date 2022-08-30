@@ -83,6 +83,7 @@ export const ContainerUsuarios = styled.div`
 export const Usuario = styled.div`
   display: flex;
   flex-direction: row;
+  column-gap:10px;
   justify-content: space-around;
   align-items: center;
   width: 100%;

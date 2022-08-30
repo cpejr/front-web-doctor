@@ -5,21 +5,19 @@ import { Spin } from "antd";
 import { compararDataRecente, FormatarDataShort } from "../../utils/tratamentoErros";
 import {
   TopoPagina,
-  ContainerListadeReceitas,
-  FiltroPaciente,
   BarraPesquisa,
+  Botoes,
+  FiltroPaciente,
+  BotaoAdicionar,
+  ContainerListadeReceitas,
   BarraEstetica,
   DadosReceita,
-  Titulo,
   ContainerReceitas,
   Receita,
-  Nome,
+  Titulo,
   DataCriacao,
-  CodigoPaciente,
+  NomePaciente,
   BotaoDeletar,
-  CaixaVazia,
-  BotaoAdicionar,
-  Botoes,
 } from "./Styles";
 import Button from "../../styles/Button";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -36,7 +34,7 @@ function AreaReceitas() {
   const [busca, setBusca] = useState("");
   const [carregandoPagina, setCarregandoPagina] = useState(false);
 
-  const lowerBusca = busca.toLowerCase();
+  const lowerBusca = busca.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const antIconPagina = <LoadingOutlined style={{ fontSize: 40, color: blue.A700 }} spin />;
 
@@ -117,7 +115,7 @@ function AreaReceitas() {
                 height="32px"
                 borderColor={Cores.verde}
                 fontSize="1em"
-                gap="1%"
+                gap="5%"
                 widthMedia600="100%"
               >
                 Receita
@@ -129,9 +127,9 @@ function AreaReceitas() {
         <BarraEstetica></BarraEstetica>
         <DadosReceita>
           <Titulo>Título</Titulo>
-          <CodigoPaciente>Nome do Paciente</CodigoPaciente>
+          <NomePaciente>Nome do Paciente</NomePaciente>
           <DataCriacao>Data de Criação</DataCriacao>
-          <CaixaVazia></CaixaVazia>
+          <BotaoDeletar></BotaoDeletar>
         </DadosReceita>
         {carregandoPagina ? (
           <div
@@ -155,13 +153,13 @@ function AreaReceitas() {
                       <div>{value.titulo}</div>
                     )}
                   </Titulo>
-                  <Nome>
+                  <NomePaciente>
                     {carregando ? (
                       <Spin indicator={antIcon} />
                     ) : (
                       <div>{value.nome}</div>
                     )}
-                  </Nome>
+                  </NomePaciente>
                   <DataCriacao>
                     {carregando ? (
                       <Spin indicator={antIcon} />
