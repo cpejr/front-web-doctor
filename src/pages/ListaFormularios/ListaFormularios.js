@@ -18,9 +18,12 @@ import {
   TituloFormulario,
   Formulario,
   DadosFormulario,
-  BotoesVertical,
+  BotoesVerticalMaster,
+  BotoesVerticalSecretaria,
   BotaoVertical,
   ContainerFormularioEspecifico,
+  TextoUrgencia,
+  CaixaTitulo
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
@@ -40,6 +43,7 @@ function ListaFormularios() {
   const [modalEnvio, setModalEnvio] = useState(false);
   const [usuarios, setUsuarios] = useState([]);
   const [idFormulario, setIdFormulario] = useState();
+  const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
@@ -136,7 +140,15 @@ function ListaFormularios() {
     <div>
       <ContainerListadeFormularios>
         {carregando ? (
-          <Spin indicator={antIcon} />
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "49.5%",
+            }}
+          >
+            <Spin indicator={antIcon} />
+          </div>
         ) : (
           <>
             <TopoPagina>
@@ -169,16 +181,20 @@ function ListaFormularios() {
                 <ContainerFormularioEspecifico>
                   <Formulario>
                     <DadosFormulario>
+                      <CaixaTitulo>
                       <Button
                         backgroundColor="transparent"
                         borderColor="transparent"
                         onClick={() => verificandoFormularioPeloId(value.id)}
+                        width="100%"
+                        marginTop="0px"
                       >
                         <TituloFormulario>{value.titulo}</TituloFormulario>
                       </Button>
+                      </CaixaTitulo>
                       <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
                       <UrgenciaFormulario>
-                        <>Urgência: </>
+                        <TextoUrgencia>Urgência: </TextoUrgencia>
                         {value.urgencia === 1 ? (
                           <>
                             <StarFilled />
@@ -201,48 +217,68 @@ function ListaFormularios() {
                       </UrgenciaFormulario>
                     </DadosFormulario>
                   </Formulario>
+                  {tipoUsuarioLogado === "MASTER" && (
+                    <BotoesVerticalMaster>
+                      <BotaoVertical>
+                        <Button
+                          backgroundColor={Cores.lilas[1]}
+                          color={Cores.branco}
+                          fontWeight="bold"
+                          borderColor={Cores.azulEscuro}
+                          height="37px"
+                          width="90%"
+                          onClick={() => abrindoModal(value.id)}
+                        >
+                          ENVIAR
+                        </Button>
+                      </BotaoVertical>
 
-                  <BotoesVertical>
-                    <BotaoVertical>
-                      <Button
-                        backgroundColor={Cores.lilas[1]}
-                        color={Cores.branco}
-                        fontWeight="bold"
-                        borderColor={Cores.azulEscuro}
-                        height="37px"
-                        width="90%"
-                        onClick={() => abrindoModal(value.id)}
-                      >
-                        ENVIAR
-                      </Button>
-                    </BotaoVertical>
-                    <BotaoVertical>
-                      <Button
-                        backgroundColor={Cores.cinza[7]}
-                        color={Cores.azulEscuro}
-                        fontWeight="bold"
-                        borderColor={Cores.azulEscuro}
-                        height="37px"
-                        width="90%"
-                        onClick={() => editarFormulario(value.id)}
-                      >
-                        EDITAR
-                      </Button>
-                    </BotaoVertical>
-                    <BotaoVertical>
-                      <Button
-                        backgroundColor={Cores.branco}
-                        color={Cores.cinza[2]}
-                        fontWeight="bold"
-                        borderColor="rgba(255, 0, 0, 0.25)"
-                        height="37px"
-                        width="90%"
-                        onClick={() => deletarFormulario(value.id)}
-                      >
-                        DELETAR
-                      </Button>
-                    </BotaoVertical>
-                  </BotoesVertical>
+                      <BotaoVertical>
+                        <Button
+                          backgroundColor={Cores.cinza[7]}
+                          color={Cores.azulEscuro}
+                          fontWeight="bold"
+                          borderColor={Cores.azulEscuro}
+                          height="37px"
+                          width="90%"
+                          onClick={() => editarFormulario(value.id)}
+                        >
+                          EDITAR
+                        </Button>
+                      </BotaoVertical>
+
+                      <BotaoVertical>
+                        <Button
+                          backgroundColor={Cores.branco}
+                          color={Cores.cinza[2]}
+                          fontWeight="bold"
+                          borderColor="rgba(255, 0, 0, 0.25)"
+                          height="37px"
+                          width="90%"
+                          onClick={() => deletarFormulario(value.id)}
+                        >
+                          DELETAR
+                        </Button>
+                      </BotaoVertical>
+                    </BotoesVerticalMaster>
+                  )}
+                  {tipoUsuarioLogado === "SECRETARIA(O)" && (
+                    <BotoesVerticalSecretaria>
+                      <BotaoVertical>
+                        <Button
+                          backgroundColor={Cores.lilas[1]}
+                          color={Cores.branco}
+                          fontWeight="bold"
+                          borderColor={Cores.azulEscuro}
+                          height="37px"
+                          width="90%"
+                          onClick={() => abrindoModal(value.id)}
+                        >
+                          ENVIAR
+                        </Button>
+                      </BotaoVertical>
+                    </BotoesVerticalSecretaria>
+                  )}
                 </ContainerFormularioEspecifico>
               ))}
               <BotaoFinal>

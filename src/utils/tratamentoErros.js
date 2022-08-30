@@ -20,3 +20,14 @@ export function FormatarDataShort(value) {
     return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
   }
 }
+
+export const compararNomes = (a, b) => {
+  var nome1 = a.nome.toUpperCase();
+  var nome2 = b.nome.toUpperCase();
+
+  if (nome1 > nome2) {
+    return 1;
+  } else {
+    return -1;
+  }
+};
