@@ -4,8 +4,7 @@ import { Cores } from "../../variaveis";
 import { Tooltip } from 'antd';
 import Button from "../../styles/Button";
 import Input from "../../styles/Input";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import SearchIcon from '@mui/icons-material/Search';
+import { SearchOutlined, PlusCircleOutlined } from '@ant-design/icons';
 import pato from "./../../assets/pato.jpeg";
 import patao from "./../../assets/patao.jpg";
 import patinho from "./../../assets/patinho.jpg";
@@ -81,7 +80,7 @@ export default function BarraLateralChat(props) {
           height="100%"
           onChange={(event) => { setSearchTerm(event.target.value); }}
           />
-          <SearchIcon color="disabled"/>
+          <SearchOutlined style={{ fontSize: '20px' }}/>
         </BarraPesquisaChat>
         <Tooltip placement="bottom" title="Iniciar nova conversa">
         <Button
@@ -93,7 +92,7 @@ export default function BarraLateralChat(props) {
         height="27%"
         onClick={() => {}}
         >
-        <AddCircleOutlineIcon fontSize="large"/>
+        <PlusCircleOutlined  style={{ fontSize: '30px', color: '{Cores.azul}' }} />
         </Button>
         </Tooltip>
       </HeaderBarraLateralChat>

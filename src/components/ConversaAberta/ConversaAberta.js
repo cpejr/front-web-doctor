@@ -10,9 +10,7 @@ import patobravo from "./../../assets/patobravo.jpg";
 import patomarreco from "./../../assets/patomarreco.jpg";
 import patopato from "./../../assets/patopato.jpg";
 import patotimido from "./../../assets/patotimido.jpg";
-import AttachFileIcon from '@mui/icons-material/AttachFile';
-import SendIcon from '@mui/icons-material/Send';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { ArrowLeftOutlined, PaperClipOutlined, SendOutlined } from '@ant-design/icons';
 
 const pessoas = [
   {
@@ -86,7 +84,7 @@ export default function ConversaAberta(props) {
             marginTop="0%"
             onClick={() => {window.location.reload()}}
             >
-            <ArrowBackIcon fontSize="large"/>
+            <ArrowLeftOutlined style={{ fontSize: '30px', color: '{Cores.lilas[1]}' }}/>
           </Button>
           </BotaoVoltar>
           <img src={pessoas[props.idConversaAberta - 1].foto} alt="61"  height="70px" width="76px"></img>
@@ -109,7 +107,7 @@ export default function ConversaAberta(props) {
             marginTop="0%"
             onClick={() => {}}
             >
-            <AttachFileIcon fontSize="large"/>
+            <PaperClipOutlined style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}/>
           </Button>
           <Input
             placeholder="Mensagem"
@@ -131,7 +129,7 @@ export default function ConversaAberta(props) {
             marginTop="0%"
             onClick={() => {}}
             >
-            <SendIcon fontSize="large"/>
+            <SendOutlined style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}/>
           </Button>
         </FooterConversaAberta>
       </Conversa>
