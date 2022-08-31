@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import AlterarSenha from "./pages/AlterarSenha";
 import AlterarSenhaComEmail from "./pages/AlterarSenhaComEmail";
+import AlterarSenhaEsquecida from "./pages/AlterarSenhaEsquecida";
 import AreaReceitas from "./pages/AreaReceitas";
 import Cadastro from "./pages/Cadastro";
 import Chat from "./pages/Chat";
@@ -73,8 +74,9 @@ function Routes() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/login" component={Login} />
+        <Route exact path="/alterarsenha" component={AlterarSenhaEsquecida}/>
         <Route exact path="/alterarsenha_requisicao" component={AlterarSenhaComEmail} />
-        <RotasPrivadas  exact path="/cadastro" component={Cadastro}/>
+        <RotasPrivadas exact path="/cadastro" component={Cadastro} />
         <RotasPrivadasMedico
           exact
           path="/web"
@@ -98,7 +100,7 @@ function UserHeader() {
           path="/web/editarperfil"
           component={EditarPerfil}
         />
-        <Route
+        <RotasPrivadas
           exact
           path="/web/alterarsenha"
           component={AlterarSenha}
