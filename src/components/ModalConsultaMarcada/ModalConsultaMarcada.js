@@ -5,13 +5,14 @@ import { Caixa, CaixaInformações, CaixaNome, Container, FotoPerfil, Texto, Tex
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalConsultaMarcada (props) {
 
   const [consulta, setConsulta] = useState({});
   const [carregando, setCarregando] = useState();
   const [dataHora, setDataHora] = useState("");
-  const [descricao, setDescricao] = useState("");
+  const [consultorio, setConsultorio] = useState("");
   const [comparaDescricao, setComparaDescricao] = useState(false);
 
   const antIcon = (
@@ -19,11 +20,15 @@ function ModalConsultaMarcada (props) {
   );
 
   async function setandoValoresConsulta() {
+    console.log(props.consulta)
     setCarregando(true);
     await sleep(1500);
     setConsulta(props.consulta);
     setDataHora(String(props.consulta.data_hora));
-    setDescricao(props.consulta.descricao);
+    const resposta = await managerService.GetConsultorioPorId(
+      props.consulta.id_consultorio
+    );
+    setConsultorio(resposta.nome);
     setCarregando(false);
 
     if(props.consulta.descricao !== null)
@@ -76,7 +81,7 @@ function ModalConsultaMarcada (props) {
             marginTop = {margemTopDescricao}
             marginBottom = {margemBottomDescricao}
           >
-            {descricao}
+            {consulta.descricao}
           </TextoDescricao> 
            
         
@@ -95,6 +100,12 @@ function ModalConsultaMarcada (props) {
           </TextoInformacoes>
           <TextoInformacoes>
             Duração: {consulta.duracao_em_minutos} min
+          </TextoInformacoes>
+          <TextoInformacoes>
+            Consultorio: {consultorio}
+          </TextoInformacoes>
+          <TextoInformacoes>
+            Tipo: {consulta.tipo}
           </TextoInformacoes>
         </CaixaInformações>
       </Caixa>
