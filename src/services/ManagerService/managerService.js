@@ -70,7 +70,7 @@ export const EnviandoEmail = async (email) => {
     .catch((error) => {
       console.log(error)
       sleep(1500);
-      requisicaoErro(error, () => (window.location.href = "/esqueciminhasenha"));
+      requisicaoErro(error);
       return false;
     });
   return false;

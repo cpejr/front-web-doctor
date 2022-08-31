@@ -22,8 +22,33 @@ function AlterarSenhaComEmail() {
   const history = useHistory();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
+  const [email, setEmail] = useState();
+
   function enviarEmail(){
     
+  }
+
+  async function validacaoEmail(e) {
+      setEmail(e.target.value);
+      console.log(email);
+  };
+
+  async function alterarSenha() {
+      const resposta = await managerService.GetDadosPessoais();
+      let achei = 0;
+      resposta.forEach((usuario) => {
+          if (usuario.email === email) {
+              achei++;
+          }
+      })
+      if (achei) {
+          toast.success("ATUMALAKA!");
+          await sleep(3000);
+          await managerService.EnviandoEmail(email);
+      } else {
+          toast.error("Email Inválido");
+      }
+
   }
 
   return (
@@ -42,7 +67,7 @@ function AlterarSenhaComEmail() {
                   name="senhaAtual"
                   // camposVazios={camposVazios.senhaAtual}
                   // erro={erro.senhaAtual}
-                  // onChange={ValidacaoSenhaAtual}
+                  onChange={validacaoEmail}
                   // onKeyPress={conferirSenha}
                 ></Input>
                 {/* {erro.senhaAtual && <Rotulo>Insira seu e-mail de login!</Rotulo>} */}
@@ -74,9 +99,9 @@ function AlterarSenhaComEmail() {
                   fontSizeMedia="1.1em"
                   fontSizeMedia950="1.0em"
                   boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-                  onClick={() => enviarEmail()}
+                  onClick={() => alterarSenha()}
                 >
-                  {/* {carregando ? <Spin indicator={antIcon} /> : "CONFIRMAR"} */}
+                  {/* {carregando ? <Spin indicator={antIcon} /> : "CONFIRMAR"} */} oi
                 </Button>
               </BotoesMesmaLinha>
             </Caixa>
