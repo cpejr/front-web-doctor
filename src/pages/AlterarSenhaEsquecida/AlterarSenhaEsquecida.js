@@ -27,7 +27,6 @@ function AlterarSenhaEsquecida() {
   const [confirmarSenha, setConfirmarSenha] = useState("");
   const email = window.location.href.split("/").pop();
   
-
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [camposVaziosTrocarSenha, setCamposVaziosTrocarSenha] = useState(false);
@@ -37,6 +36,13 @@ function AlterarSenhaEsquecida() {
     senhaAtual: false,
     confirmarSenha: false,
   };
+
+  const urlParametro = new URLSearchParams(window.location.search);
+  const nomeParametro = urlParametro.get("token");
+
+  useEffect(() => {
+    console.log(nomeParametro);
+  })
 
 
   async function NovaSenha(e) {

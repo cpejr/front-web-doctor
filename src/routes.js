@@ -74,7 +74,7 @@ function Routes() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/login" component={Login} />
-        <Route exact path="/alterarsenha" component={AlterarSenhaEsquecida}/>
+        <Route exact path="/fc43c2dd-cf6c-4807-825e-3c9e7ba41b19e19637d2-5a44-463c-bae5-6709e7e53448/alterarsenha" component={AlterarSenhaEsquecida}/>
         <Route exact path="/alterarsenha_requisicao" component={AlterarSenhaComEmail} />
         <RotasPrivadas exact path="/cadastro" component={Cadastro} />
         <RotasPrivadasMedico
