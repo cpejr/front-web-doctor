@@ -7,7 +7,7 @@ import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 
-function ModalConsultaMarcada (props) {
+function ModalConsultaMarcada(props) {
 
   const [consulta, setConsulta] = useState({});
   const [carregando, setCarregando] = useState();
@@ -31,7 +31,7 @@ function ModalConsultaMarcada (props) {
     setConsultorio(resposta.nome);
     setCarregando(false);
 
-    if(props.consulta.descricao !== null)
+    if (props.consulta.descricao !== null)
       setComparaDescricao(true);
     else
       setComparaDescricao(false);
@@ -47,68 +47,66 @@ function ModalConsultaMarcada (props) {
   const margemTopInformacoes = comparaDescricao ? "0%" : "8%";
   const margemBottomInformacoes = comparaDescricao ? "0%" : "2%";
 
-  return(
-
+  return (
     <Container>
       {carregando ? (
         <div
-        style={{
-          display: "flex",
-          height:"30px",
-          justifyContent: "center",
-          alignItems: "center",
+          style={{
+            display: "flex",
+            height: "30px",
+            justifyContent: "center",
+            alignItems: "center",
 
-        }}
+          }}
         >
-            <Spin indicator={antIcon} />
-          </div>
-          ) : (
-      <Caixa>
-        <CaixaNome>
-        <FotoPerfil>
-          <img
-            src={logoGuilherme}
-            className="foto"
-            alt="logoGuilherme"
-          ></img>
-        </FotoPerfil>
-          <Texto>
-            {consulta.nome}
-          </Texto>
-        </CaixaNome>
-        
-          <TextoDescricao 
-            marginTop = {margemTopDescricao}
-            marginBottom = {margemBottomDescricao}
+          <Spin indicator={antIcon} />
+        </div>
+      ) : (
+        <Caixa>
+          <CaixaNome>
+            <FotoPerfil>
+              <img
+                src={logoGuilherme}
+                className="foto"
+                alt="logoGuilherme"
+              ></img>
+            </FotoPerfil>
+            <Texto>
+              {consulta.nome}
+            </Texto>
+          </CaixaNome>
+
+          <TextoDescricao
+            marginTop={margemTopDescricao}
+            marginBottom={margemBottomDescricao}
           >
             {consulta.descricao}
-          </TextoDescricao> 
-           
-        
-        <CaixaInformações
-          marginTop = {margemTopInformacoes}
-          marginBottom = {margemBottomInformacoes}
-        >
-          <TextoInformacoes>
-            Data: {dataHora.slice(8,10)}/{dataHora.slice(5,7)}/{dataHora.slice(0,4)} 
-          </TextoInformacoes>
-          <TextoInformacoes>
-            Horário: {parseInt(dataHora.slice(11, 13)) < 12 ? (
-                      parseInt(dataHora.slice(11, 13)) + ":" + dataHora.slice(14, 16) + " am"
-                    ) : (
-                      parseInt(dataHora.slice(11, 13) - 12) + ":" + dataHora.slice(14, 16) + " pm")}
-          </TextoInformacoes>
-          <TextoInformacoes>
-            Duração: {consulta.duracao_em_minutos} min
-          </TextoInformacoes>
-          <TextoInformacoes>
-            Consultorio: {consultorio}
-          </TextoInformacoes>
-          <TextoInformacoes>
-            Tipo: {consulta.tipo}
-          </TextoInformacoes>
-        </CaixaInformações>
-      </Caixa>
+          </TextoDescricao>
+
+          <CaixaInformações
+            marginTop={margemTopInformacoes}
+            marginBottom={margemBottomInformacoes}
+          >
+            <TextoInformacoes>
+              <b>Tipo: </b>{consulta.tipo}
+            </TextoInformacoes>
+            <TextoInformacoes>
+              <b>Consultorio: </b> {consultorio}
+            </TextoInformacoes>
+            <TextoInformacoes>
+              <b>Data: </b> {dataHora.slice(8, 10)}/{dataHora.slice(5, 7)}/{dataHora.slice(0, 4)}
+            </TextoInformacoes>
+            <TextoInformacoes>
+              <b>Horário: </b> {parseInt(dataHora.slice(11, 13)) < 12 ? (
+                parseInt(dataHora.slice(11, 13)) + ":" + dataHora.slice(14, 16) + " am"
+              ) : (
+                parseInt(dataHora.slice(11, 13) - 12) + ":" + dataHora.slice(14, 16) + " pm")}
+            </TextoInformacoes>
+            <TextoInformacoes>
+              <b>Duração: </b> {consulta.duracao_em_minutos} min
+            </TextoInformacoes>
+          </CaixaInformações>
+        </Caixa>
       )}
     </Container>
 
