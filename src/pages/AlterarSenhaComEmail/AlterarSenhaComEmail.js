@@ -15,6 +15,7 @@ import {
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
+import AddToast from "../../components/AddToast/AddToast";
 import { toast } from "react-toastify";
 import { sleep, redirecionamento } from "../../utils/sleep";
 
@@ -23,10 +24,6 @@ function AlterarSenhaComEmail() {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const [email, setEmail] = useState();
-
-  function enviarEmail() {
-
-  }
 
   async function validacaoEmail(e) {
     setEmail(e.target.value);
@@ -105,6 +102,7 @@ function AlterarSenhaComEmail() {
           </BotoesMesmaLinha>
         </Caixa>
       </Conteudo>
+      <AddToast />
     </div>
   );
 }
