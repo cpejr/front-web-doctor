@@ -193,6 +193,21 @@ export const GetDadosUsuario = async (emailUrl) => {
   return { dadosEndereco, dadosUsuario };
 };
 
+export const GetDadosUsuarioPorToken = async (token_usuario) => {
+  let dadosUsuario = {};
+
+  await requesterService
+    .requisicaoDadosUsuarioPorToken(token_usuario)
+    .then((res) => {
+      dadosUsuario = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return { dadosUsuario };
+};
+
 export const GetDadosConsultorios = async () => {
   let dadosConsultorios = {};
   let dadosEndereco = {};

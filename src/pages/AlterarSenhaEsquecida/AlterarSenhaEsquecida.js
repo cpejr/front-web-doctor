@@ -15,6 +15,7 @@ import {
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
+import AddToast from "../../components/AddToast/AddToast";
 import { toast } from "react-toastify";
 import { sleep, redirecionamento } from "../../utils/sleep";
 
@@ -25,24 +26,24 @@ function AlterarSenhaEsquecida() {
   const [carregando, setCarregando] = useState(false);
   const [novaSenha, setNovaSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
-  const email = window.location.href.split("/").pop();
+  const [tokenUsuario, setTokenUsuario] = useState("");
   
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
-  const [camposVaziosTrocarSenha, setCamposVaziosTrocarSenha] = useState(false);
 
   const errorsNovaSenha = {};
   const referenciaCamposNulosNovaSenha = {
-    senhaAtual: false,
+    senha: false,
     confirmarSenha: false,
   };
 
   const urlParametro = new URLSearchParams(window.location.search);
-  const nomeParametro = urlParametro.get("token");
+  const token = urlParametro.get("token");
 
   useEffect(() => {
-    console.log(nomeParametro);
-  })
+    setTokenUsuario(token);
+    console.log(tokenUsuario);
+  }, []);
 
 
   async function NovaSenha(e) {
@@ -50,9 +51,9 @@ function AlterarSenhaEsquecida() {
     setErro({ ...erro, [name]: false });
 
     if (value) {
-      setCamposVaziosTrocarSenha({ ...camposVazios, [name]: false });
+      setCamposVazios({ ...camposVazios, [name]: false });
     } else {
-      setCamposVaziosTrocarSenha({ ...camposVazios, [name]: true });
+      setCamposVazios({ ...camposVazios, [name]: true });
     }
 
     if (value.length < 8) {
@@ -76,14 +77,15 @@ function AlterarSenhaEsquecida() {
 
   async function trocarSenha() {
     if (!novaSenha) errorsNovaSenha.senha = true;
-    setCamposVaziosTrocarSenha({ ...camposVazios, ...errorsNovaSenha });
+    setCamposVazios({ ...camposVazios, ...errorsNovaSenha });
     setErro({ ...erro, ...errorsNovaSenha });
 
-    if (_.isEqual(camposVaziosTrocarSenha, referenciaCamposNulosNovaSenha)) {
+    if (_.isEqual(camposVazios, referenciaCamposNulosNovaSenha)) {
       if (novaSenha === confirmarSenha) {
         if (novaSenha !== "" || confirmarSenha !== "") {
           setCarregando(true);
-          const resposta = await managerService.GetDadosUsuario(email);
+          const resposta = await managerService.GetDadosUsuarioPorToken(tokenUsuario);
+          console.log(resposta.dadosUsuario);
           await managerService.AlterarSenha(
             novaSenha,
             resposta.dadosUsuario.id
@@ -156,7 +158,7 @@ function AlterarSenhaEsquecida() {
                   fontSizeMedia="1.2em"
                   fontSizeMedia950="1.1em"
                   boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-                  onClick={() => history.push("/web/editarperfil")}
+                  onClick={() => history.push("/web/login")}
                 >
                   CANCELAR
                 </Button>
@@ -178,6 +180,7 @@ function AlterarSenhaEsquecida() {
               </BotoesMesmaLinha>
             </Caixa>
           </Conteudo>
+          <AddToast />
         </div>
   );
 }
