@@ -27,6 +27,7 @@ export const Titulo = styled.div`
   font-size: 2em;
   color: #0a0e3c;
   margin-top: 2%;
+  margin-bottom: 5%;
   @media (max-width: 950px) and (min-width: 560px) {
     font-size: 1.5em;
   }
@@ -47,6 +48,11 @@ export const TextoCheckbox = styled.h3`
   @media (max-width: 560px) {
     font-size: 1em;
   }
+`;
+export const CheckboxContainer = styled.div`
+  display: flex;
+  justify-content: start;
+  width: 100%;
 `;
 
 export const SelectContainer = styled.div`

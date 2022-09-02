@@ -9,6 +9,7 @@ import {
   TextoCheckbox,
   Select,
   SelectContainer,
+  CheckboxContainer,
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
@@ -72,17 +73,18 @@ function ModalEnvioFormulario(props) {
               </>
             ))}
           </Select></SelectContainer>
-
+          <CheckboxContainer>
           <Checkbox>
             <TextoCheckbox>Notificar paciente</TextoCheckbox>
           </Checkbox>
-        
+          </CheckboxContainer>
         <Button
           width="100%"
           height="50px"
           backgroundColor="#434B97"
           borderColor="#151B57"
           color="white"
+          marginTop="3.5%"
           fontSize="1.5em"
           fontWeight="bold"
           fontSizeMedia="1.2em"
