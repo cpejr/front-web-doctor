@@ -1,26 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Spin, Checkbox, Select } from "antd";
+import { Spin, Checkbox } from "antd";
 import AddToast from "../AddToast/AddToast";
 import { toast } from "react-toastify";
 import {
   ContainerModalCodigo,
   Titulo,
   TextoCheckbox,
-  SelectUsuarios,
-  StyleSelect,
+  Select,
+  SelectContainer,
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
-//import Select from "../../styles/Select";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalEnvioFormulario(props) {
   const [formularioPaciente, setFormularioPaciente] = useState();
   const [carregando, setCarregando] = useState(false);
   const [fechandoModalEnvioF, setFechandoModalEnvio] = useState(false);
-  const { Option } = Select;
-  
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
@@ -54,29 +51,32 @@ function ModalEnvioFormulario(props) {
     <>
       <ContainerModalCodigo>
         <Titulo>Enviar formulário para:</Titulo>
-        <SelectUsuarios>
+        <SelectContainer
+          borderWidth="2px"
+          width="100%"
+        >
           <Select
-            defaultValue="Escolha um paciente"
             id="id_usuario"
             name="id_usuario"
-            size="large"
-            style={{StyleSelect}}
+            marginTop="0px"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
             onChange={preenchendoDados}
           >
             {props.usuarios?.map((valor) => (
               <>
-                {/*<Option value="" disabled selected>
-                  Paciente:
-            </Option>*/}
-                <Option value={valor.id}>{valor.nome}</Option>
+                <option value="" disabled selected>
+                  Escolha o Paciente:
+            </option>
+                <option value={valor.id}>{valor.nome}</option>
               </>
             ))}
-          </Select>
+          </Select></SelectContainer>
 
           <Checkbox>
             <TextoCheckbox>Notificar paciente</TextoCheckbox>
           </Checkbox>
-        </SelectUsuarios>
+        
         <Button
           width="100%"
           height="50px"
