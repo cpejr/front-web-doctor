@@ -42,7 +42,6 @@ function AlterarSenhaEsquecida() {
 
   useEffect(() => {
     setTokenUsuario(token);
-    console.log(tokenUsuario);
   }, []);
 
 
@@ -85,7 +84,6 @@ function AlterarSenhaEsquecida() {
         if (novaSenha !== "" || confirmarSenha !== "") {
           setCarregando(true);
           const resposta = await managerService.GetDadosUsuarioPorToken(tokenUsuario);
-          console.log(resposta.dadosUsuario);
           await managerService.AlterarSenha(
             novaSenha,
             resposta.dadosUsuario.id

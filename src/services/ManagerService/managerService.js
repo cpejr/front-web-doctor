@@ -68,7 +68,6 @@ export const EnviandoEmail = async (email) => {
       toast.success("Email enviado com sucesso!");
     })
     .catch((error) => {
-      console.log(error)
       sleep(1500);
       requisicaoErro(error);
       return false;

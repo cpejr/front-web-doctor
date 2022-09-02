@@ -27,7 +27,6 @@ function AlterarSenhaComEmail() {
 
   async function validacaoEmail(e) {
     setEmail(e.target.value);
-    console.log(email);
   };
 
   async function alterarSenha() {
