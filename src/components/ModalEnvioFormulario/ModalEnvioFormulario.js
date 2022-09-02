@@ -3,6 +3,7 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin, Checkbox } from "antd";
 import AddToast from "../AddToast/AddToast";
 import { toast } from "react-toastify";
+import { sleep } from "../../utils/sleep";
 import {
   ContainerModalCodigo,
   Titulo,
@@ -18,10 +19,9 @@ import * as managerService from "../../services/ManagerService/managerService";
 function ModalEnvioFormulario(props) {
   const [formularioPaciente, setFormularioPaciente] = useState();
   const [carregando, setCarregando] = useState(false);
-  const [fechandoModalEnvioF, setFechandoModalEnvio] = useState(false);
 
   const antIcon = (
-    <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
+    <LoadingOutlined style={{ fontSize: 22, color: Cores.azul }} spin />
   );
 
   async function enviandoFormularioPaciente() {
@@ -33,7 +33,8 @@ function ModalEnvioFormulario(props) {
         props.idFormulario,
         formularioPaciente,
       );
-      
+      await sleep(1500);
+      props.fechandoModal();
     } else {
       toast.error("Escolha um paciente para enviar o formulario");
     }
@@ -44,9 +45,6 @@ function ModalEnvioFormulario(props) {
     setFormularioPaciente(e.target.value);
   }
 
-  async function fechandoModalEnvio(){
-    setFechandoModalEnvio(true);
-  }
 
   return (
     <>

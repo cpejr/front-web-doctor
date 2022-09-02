@@ -137,6 +137,7 @@ function ListaFormularios() {
     setModalEnvio(true);
   }
 
+
   return (
     <div>
       <ContainerListadeFormularios>
@@ -314,7 +315,7 @@ function ListaFormularios() {
         width={"70%"}
         centered={true}
       >
-        <ModalEnvioFormulario usuarios={usuarios} idFormulario={idFormulario} />
+        <ModalEnvioFormulario usuarios={usuarios} idFormulario={idFormulario} fechandoModal={() => fechandoModal()} />
       </Modal>
     </div>
   );
