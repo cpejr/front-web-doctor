@@ -184,9 +184,6 @@ export const CaixaInformações = styled.div`
 
 `;
 
-
-
-
 export const FotoPerfil = styled.div`
   display: flex;
   width: 37px;
