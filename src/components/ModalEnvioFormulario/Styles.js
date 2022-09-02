@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Fontes, Cores } from "../../variaveis";
+import { Select } from "antd";
 
 export const ContainerModalCodigo = styled.div`
   display: flex;
@@ -55,4 +56,15 @@ export const SelectUsuarios = styled.div`
   width: 100%;
   margin: 2% 0% 2% 0%;
   justify-content: space-between;
+`;
+
+export const StyleSelect = styled(Select)`
+  width:100%;
+  font-size: 1em;
+  color:black;
+  
+  .ant-select-selection {
+  background-color: green;
+}
+
 `;

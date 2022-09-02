@@ -18,7 +18,7 @@ import {
 } from "./Styles";
 import Input from "../../styles/Input";
 import { Cores } from "../../variaveis";
-import Select from "../../styles/Select/Select";
+import {Select, SelectContainer } from "./SelectTeste";
 import Button from "../../styles/Button";
 import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -134,13 +134,17 @@ function CriacaoFormulario() {
           onChange={preenchendoDados}
         ></Input>
         <TitulosInput>Urgência:</TitulosInput>
+        <SelectContainer
+          borderWidth="2px"
+          width="100%"
+        >
         <Select
           id="urgencia"
-          borderWidth="2px"
+          
           marginTop="0px"
           backgroundColor={Cores.cinza[7]}
           color={Cores.preto}
-          width="100%"
+          
           name="urgencia"
           camposVazios={camposVazios.urgencia}
           onChange={preenchendoDados}
@@ -155,7 +159,7 @@ function CriacaoFormulario() {
           <option value="3" borderColor={Cores.azul}>
             3
           </option>
-        </Select>
+        </Select></SelectContainer>
         <Button
           height="50px"
           width="100%"
@@ -180,12 +184,12 @@ function CriacaoFormulario() {
         </TextoInstrucao>
       </Instrucao>
       <Formulario>
-        <FormBuilder
+        {/*<FormBuilder
           schema={schema}
           uischema={uiSchema}
           onChange={mudancasForm}
           mods={TirandoCabecalho}
-        />
+  />*/}
       </Formulario>
     </Container>
   );

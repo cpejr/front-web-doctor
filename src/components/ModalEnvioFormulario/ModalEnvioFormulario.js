@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Spin, Checkbox } from "antd";
+import { Spin, Checkbox, Select } from "antd";
 import AddToast from "../AddToast/AddToast";
 import { toast } from "react-toastify";
 import {
@@ -8,16 +8,19 @@ import {
   Titulo,
   TextoCheckbox,
   SelectUsuarios,
+  StyleSelect,
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
-import Select from "../../styles/Select";
+//import Select from "../../styles/Select";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalEnvioFormulario(props) {
   const [formularioPaciente, setFormularioPaciente] = useState();
   const [carregando, setCarregando] = useState(false);
   const [fechandoModalEnvioF, setFechandoModalEnvio] = useState(false);
+  const { Option } = Select;
+  
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
@@ -53,19 +56,19 @@ function ModalEnvioFormulario(props) {
         <Titulo>Enviar formulário para:</Titulo>
         <SelectUsuarios>
           <Select
+            defaultValue="Escolha um paciente"
             id="id_usuario"
-            backgroundColor={Cores.cinza[7]}
-            color={Cores.preto}
-            width="100%"
             name="id_usuario"
+            size="large"
+            style={{StyleSelect}}
             onChange={preenchendoDados}
           >
             {props.usuarios?.map((valor) => (
               <>
-                <option value="" disabled selected>
-                  Escolha um paciente:
-                </option>
-                <option value={valor.id}>{valor.nome}</option>
+                {/*<Option value="" disabled selected>
+                  Paciente:
+            </Option>*/}
+                <Option value={valor.id}>{valor.nome}</Option>
               </>
             ))}
           </Select>
