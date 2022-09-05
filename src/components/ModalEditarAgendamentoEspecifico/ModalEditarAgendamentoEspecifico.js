@@ -280,15 +280,16 @@ function ModalEditarAgendamentoEspecifico(props) {
                   borderWidth: "1px",
                 }}
                 size="large"
+                value={consulta.tipo}
                 name="tipo"
                 placeholder="Tipo"
                 onChange={(e) => {
                   preenchendoDadosConsulta(e);
                 }}
               >
-                <option value="" disabled selected>
+                {/* <option value="" defaultValue={consulta.tipo} disabled selected>
                   {consulta.tipo}
-                </option>
+                </option> */}
                 {TiposDeConsulta.map((tipo) => (
                   <>
                     {carregando ? (
@@ -312,14 +313,15 @@ function ModalEditarAgendamentoEspecifico(props) {
                   borderWidth: "1px",
                   color: "black",
                 }}
+                value={consulta.id_consultorio}
                 size="large"
                 onChange={(e) => {
                   preenchendoDadosConsulta(e);
                 }}
               >
-                <option value="" disabled selected>
+                {/* <option value="" disabled selected>
                   {consultorioPorId}
-                </option>
+                </option> */}
                 {consultorios.map((consultorio) => (
                   <>
                     {carregandoConsultorios ? (
