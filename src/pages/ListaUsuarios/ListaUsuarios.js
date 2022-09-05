@@ -30,7 +30,8 @@ import {
   CaixaSpin,
   SelectTipoBusca,
   SearchStyle,
-  FiltrosEsquerda
+  FiltrosEsquerda,
+  CaixaBotaoMedico,
 } from "./Styles";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
@@ -63,99 +64,99 @@ function ListaUsuarios() {
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
-  const antIconPagina = <LoadingOutlined style={{ fontSize: 40, color: Cores.azulEscuro }} spin />;
+  const antIconPagina = (
+    <LoadingOutlined style={{ fontSize: 40, color: Cores.azulEscuro }} spin />
+  );
   const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
 
-  const usuariosFiltrados = usuarios.filter((usuario) => 
-  {
-
+  const usuariosFiltrados = usuarios.filter((usuario) => {
     if (lowerBusca === "" && tipoSelect === "" && visitaSelect === "") {
       return usuarios;
     }
 
-    if( lowerBusca === "")
-    {
+    if (lowerBusca === "") {
       if (tipoSelect !== "" && visitaSelect === "") {
-        return(
-        usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase())); 
-      }
-      else if(tipoSelect === "" && visitaSelect !== "")
-      {
+        return usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase());
+      } else if (tipoSelect === "" && visitaSelect !== "") {
+        return usuario.ultimaConsulta !== undefined;
+      } else if (tipoSelect !== "" && visitaSelect !== "") {
         return (
-        usuario.ultimaConsulta !== undefined 
+          usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase()) &&
+          usuario.ultimaConsulta !== undefined
         );
+      } else {
+        return usuario?.nome
+          ?.toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .includes(lowerBusca);
       }
-      else if(tipoSelect !== "" && visitaSelect !== "")
-      {
-        return (
-        usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase()) &&
-        usuario.ultimaConsulta !== undefined );
-      }
-      else{
-        return(
-        usuario?.nome?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(lowerBusca));
-      }
-    }
-    else
-    {
-      if (pesquisa === "")
-       {
-          if (tipoSelect !== "" && visitaSelect === "")
-          {
-            return(
-            usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase()) &&
-            usuario?.nome?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(lowerBusca));
-          }
-          else if(tipoSelect === "" && visitaSelect !== "")
-          {
-            return(
-            usuario.ultimaConsulta !== undefined && 
-            usuario?.nome?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(lowerBusca));
-          }
-          else if(tipoSelect !== "" && visitaSelect !== "")
-          {
-            return(
-            usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase()) &&
-            usuario.ultimaConsulta !== undefined && 
-            usuario?.nome?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(lowerBusca));
-          }
-          else{
-            return(
-            usuario?.nome?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(lowerBusca));
-          }
-        }
-      else
-      {
+    } else {
+      if (pesquisa === "") {
         if (tipoSelect !== "" && visitaSelect === "") {
-          return(
-          usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase()) &&
-          usuario?.codigo?.toLowerCase().normalize("NFD").includes(lowerBusca));
+          return (
+            usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase()) &&
+            usuario?.nome
+              ?.toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .includes(lowerBusca)
+          );
+        } else if (tipoSelect === "" && visitaSelect !== "") {
+          return (
+            usuario.ultimaConsulta !== undefined &&
+            usuario?.nome
+              ?.toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .includes(lowerBusca)
+          );
+        } else if (tipoSelect !== "" && visitaSelect !== "") {
+          return (
+            usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase()) &&
+            usuario.ultimaConsulta !== undefined &&
+            usuario?.nome
+              ?.toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .includes(lowerBusca)
+          );
+        } else {
+          return usuario?.nome
+            ?.toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .includes(lowerBusca);
         }
-        else if(tipoSelect === "" && visitaSelect !== "")
-        {
-          return(
-          usuario.ultimaConsulta !== undefined && 
-          usuario?.codigo?.toLowerCase().normalize("NFD").includes(lowerBusca));
-        }
-        else if(tipoSelect !== "" && visitaSelect !== "")
-        {
-          return(
-          usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase()) &&
-          usuario.ultimaConsulta !== undefined && 
-          usuario?.codigo?.toLowerCase().normalize("NFD").includes(lowerBusca));
-        }
-        else{
-          return(
-          usuario?.codigo?.toLowerCase().normalize("NFD").includes(lowerBusca));
+      } else {
+        if (tipoSelect !== "" && visitaSelect === "") {
+          return (
+            usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase()) &&
+            usuario?.codigo?.toLowerCase().normalize("NFD").includes(lowerBusca)
+          );
+        } else if (tipoSelect === "" && visitaSelect !== "") {
+          return (
+            usuario.ultimaConsulta !== undefined &&
+            usuario?.codigo?.toLowerCase().normalize("NFD").includes(lowerBusca)
+          );
+        } else if (tipoSelect !== "" && visitaSelect !== "") {
+          return (
+            usuario?.tipo?.toLowerCase().includes(tipoSelect.toLowerCase()) &&
+            usuario.ultimaConsulta !== undefined &&
+            usuario?.codigo?.toLowerCase().normalize("NFD").includes(lowerBusca)
+          );
+        } else {
+          return usuario?.codigo
+            ?.toLowerCase()
+            .normalize("NFD")
+            .includes(lowerBusca);
         }
       }
     }
   });
 
   function secretariosFiltrados(value) {
-
-    if(value === "SECRETARIA(O)")
-    {
+    if (value === "SECRETARIA(O)") {
       setVisitaSelect("");
     }
     setTipoSelect(value);
@@ -198,9 +199,6 @@ function ListaUsuarios() {
       pegandoDadosUsuarios(res.dadosConsultas);
     });
   }
-
-
-  
 
   useEffect(() => {
     pegandoDadosConsultas();
@@ -285,6 +283,31 @@ function ListaUsuarios() {
     }
   }
 
+  const ordenarusuarios = (a, b) => {
+    var data1 = new Date(a.ultimaConsulta);
+    var data2 = new Date(b.ultimaConsulta);
+    var nome1 = a.nome.toUpperCase();
+    var nome2 = b.nome.toUpperCase();
+
+    if(visitaSelect === "")
+    {
+      if (nome1 > nome2) {
+        return 1;
+      } else {
+        return -1;
+      }
+    }else{
+      if (data1 < data2) {
+        return 1;
+      } else {
+        return -1;
+      }
+    }
+  
+  };  
+
+ 
+
   return (
     <div>
       <ContainerListadeUsuarios>
@@ -300,42 +323,37 @@ function ListaUsuarios() {
               <Option value="codigo">Pesquisar por código</Option>
             </SelectTipoBusca>
             <BarraPesquisa>
-            <SearchStyle
-              placeholder="BUSCAR"
-              tipoBusca={pesquisa}
-              bordered={false}
-              value={busca}
-              onChange={(e) => setBusca(e.target.value)}
-            />
-          </BarraPesquisa>
+              <SearchStyle
+                placeholder="BUSCAR"
+                tipoBusca={pesquisa}
+                bordered={false}
+                value={busca}
+                onChange={(e) => setBusca(e.target.value)}
+              />
+            </BarraPesquisa>
           </FiltrosEsquerda>
           <Filtros>
             {tipoUsuarioLogado === "MASTER" ? (
-              <FiltroUsuario>
-                <Select
-                  defaultValue=""
-                  style={{ width: 180 }}
-                  onChange={(value) => secretariosFiltrados(value)}
-                >
-                  <Option value="">Todos os Usuários</Option>
-                  <Option value="PACIENTE">Pacientes</Option>
-                  <Option value="SECRETARIA(O)">Secretárias(os)</Option>
-                </Select>
+              <FiltroUsuario
+                defaultValue=""
+                onChange={(value) => secretariosFiltrados(value)}
+              >
+                <Option value="">Todos os Usuários</Option>
+                <Option value="PACIENTE">Pacientes</Option>
+                <Option value="SECRETARIA(O)">Secretárias(os)</Option>
               </FiltroUsuario>
             ) : (
               <></>
             )}
             {(tipoUsuarioLogado === "MASTER" &&
-            tipoSelect !== "SECRETARIA(O)") || tipoUsuarioLogado === "SECRETARIA(O)"  ? (
-              <FiltroDatas>
-                <Select
-                  defaultValue=""
-                  style={{ width: 180 }}
-                  onChange={(value) => visitaFiltro(value)}
-                >
-                  <Option value="">Todas as Datas</Option>
-                  <Option value="ultimaConsulta">Últimas Visitas</Option>
-                </Select>
+              tipoSelect !== "SECRETARIA(O)") ||
+            tipoUsuarioLogado === "SECRETARIA(O)" ? (
+              <FiltroDatas
+                defaultValue=""
+                onChange={(value) => visitaFiltro(value)}
+              >
+                <Option value="">Todas as Datas</Option>
+                <Option value="ultimaConsulta">Últimas Visitas</Option>
               </FiltroDatas>
             ) : (
               <></>
@@ -344,14 +362,15 @@ function ListaUsuarios() {
         </TopoPagina>
         {tipoUsuarioLogado === "MASTER" ? (
           <BotoesMedico>
+            <CaixaBotaoMedico>
             <Button
               backgroundColor={Cores.cinza[7]}
               color={Cores.azul}
-              width="45%"
+              width="100%"
               height="50px"
+              marginTop = "0px"
               borderColor={Cores.azul}
               fontSize="1em"
-              gap="1%"
               boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
               widthMedia600="100%"
               onClick={() => passandoTipoParaCadastro("PACIENTE")}
@@ -359,15 +378,16 @@ function ListaUsuarios() {
               Cadastrar Novo Paciente
               <PlusCircleOutlined style={{ color: Cores.azul }} />
             </Button>
-
+            </CaixaBotaoMedico>
+            <CaixaBotaoMedico>
             <Button
               backgroundColor={Cores.cinza[7]}
+              marginTop = "0px"
               color={Cores.azul}
-              width="45%"
+              width="100%"
               height="50px"
               borderColor={Cores.azul}
               fontSize="1em"
-              gap="1%"
               boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
               widthMedia600="100%"
               onClick={() => passandoTipoParaCadastro("SECRETARIA(O)")}
@@ -375,6 +395,7 @@ function ListaUsuarios() {
               Cadastrar nova(o) Secretária(o)
               <PlusCircleOutlined style={{ color: Cores.azul }} />
             </Button>
+            </CaixaBotaoMedico>
           </BotoesMedico>
         ) : (
           <BotaoSecretario>
@@ -383,9 +404,9 @@ function ListaUsuarios() {
               color={Cores.azul}
               width="100%"
               height="50px"
+              marginTop = "10px"
               borderColor={Cores.azul}
               fontSize="1em"
-              gap="1%"
               boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
               onClick={() => passandoTipoParaCadastro("PACIENTE")}
             >
@@ -396,11 +417,15 @@ function ListaUsuarios() {
         )}
         <BarraEstetica></BarraEstetica>
         {carregandoPagina ? (
-          <ContainerSpin>
-            <CaixaSpin>
-              <Spin indicator={antIconPagina} />
-            </CaixaSpin>
-          </ContainerSpin>
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "47.5%",
+            }}
+          >
+            <Spin indicator={antIconPagina} />
+          </div>
         ) : (
           <>
             <DadosUsuario>
@@ -412,7 +437,7 @@ function ListaUsuarios() {
               <CaixaVazia></CaixaVazia>
             </DadosUsuario>
             <ContainerUsuarios>
-              {usuariosFiltrados?.sort(compararNomes).map((value) => (
+              {usuariosFiltrados?.sort(ordenarusuarios).map((value) => (
                 <Usuario>
                   <Imagem>{value.avatar_url}</Imagem>
                   <Nome>
