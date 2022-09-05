@@ -36,7 +36,7 @@ function AreaReceitas() {
 
   const lowerBusca = busca.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const antIconPagina = <LoadingOutlined style={{ fontSize: 40, color: blue.A700 }} spin />;
+  const antIconPagina = <LoadingOutlined style={{ fontSize: 40, color: Cores.azulEscuro }} spin />;
 
   const receitasFiltradas = receitas.filter((receita) => {
     if (lowerBusca === "" && pacienteSelect === "")
