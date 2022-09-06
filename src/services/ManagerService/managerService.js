@@ -413,9 +413,7 @@ export const  DeletarFormulario = async (id) => {
       window.location.href = "/web/listaformularios";
     })
     .catch((error) => {
-      requisicaoErro(
-      );
-
+      requisicaoErro(error);
       return false;
     });
 
@@ -530,7 +528,7 @@ export const EditarFormularios = async (
 export const CriandoConversa = async (conversa) => {
   let dadosConversaCriada = {}
   await requesterService
-    .criarMensagem(conversa)
+    .criarConversa(conversa)
     .then((res) => {
       dadosConversaCriada = res.data
     })

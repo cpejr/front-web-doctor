@@ -100,10 +100,10 @@ export default function BarraLateralChat() {
                 .includes(searchTerm.toLowerCase()) 
             :
               true
-          }).map((c) => (
+          }).map((c, idx) => (
             <PessoaChat 
-            key={c.id}
-            onClick={cliqueNaConversa(c)}
+              key={idx}
+              onClick={cliqueNaConversa(c)}
             >
               <ImagemPessoa>
                 <img 
@@ -135,11 +135,12 @@ export default function BarraLateralChat() {
       <Modal
         visible={modalAdicionar}
         onCancel={fechandoModal}
+
         footer={null}
         width={"700px"}
         centered={true}
       >
-        <ModalNovaConversa />
+        <ModalNovaConversa setModalAdicionar={setModalAdicionar} />
       </Modal>
     </>
   );

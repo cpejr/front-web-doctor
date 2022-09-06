@@ -34,7 +34,7 @@ export default function ConversaAberta({ socket }) {
       setMensagens(resposta)
     }
 
-    getMensagens()            
+    getMensagens()
   }, [conversaSelecionada])
 
   const atualizarBarraLateral = (novaMensagem) => {
