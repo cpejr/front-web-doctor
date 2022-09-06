@@ -9,7 +9,7 @@ import {
   HeaderBarraLateralChat, 
   ListaPessoasChat, 
   PessoaChat, 
-  BarraLateral 
+  BarraLateral
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import { Tooltip } from 'antd';
