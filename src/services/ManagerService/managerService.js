@@ -65,7 +65,7 @@ export const EnviandoEmail = async (email) => {
   await requesterService
     .recuperarSenha(email)
     .then(() => {
-      toast.success("Email enviado com sucesso!");
+      toast.success("Verifique a sua caixa de entrada para alterar sua senha.");
     })
     .catch((error) => {
       sleep(1500);
