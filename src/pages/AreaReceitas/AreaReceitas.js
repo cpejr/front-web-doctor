@@ -108,18 +108,18 @@ function AreaReceitas() {
             </FiltroPaciente>
             <BotaoAdicionar>
               <Button
-                backgroundColor={Cores.cinza[9]}
-                color={Cores.verde}
+                backgroundColor={Cores.verde}
+                color={Cores.branco}
                 width="50%"
                 display="flex"
                 height="32px"
-                borderColor={Cores.verde}
+                borderColor={Cores.preto}
                 fontSize="1em"
                 gap="5%"
                 widthMedia600="100%"
               >
                 Receita
-                <PlusCircleOutlined style={{ color: Cores.azul }} />
+                <PlusCircleOutlined style={{ color: Cores.branco }} />
               </Button>
             </BotaoAdicionar>
           </Botoes>
@@ -169,9 +169,9 @@ function AreaReceitas() {
                   </DataCriacao>
                   <BotaoDeletar>
                     <Button
-                      backgroundColor="transparent"
-                      borderColor={Cores.verde}
-                      color={Cores.verde}
+                      backgroundColor={Cores.verde}
+                      borderColor={Cores.preto}
+                      color={Cores.branco}
                       fontSize="1em"
                       height="30px"
                       width="50%"

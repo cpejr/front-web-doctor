@@ -14,10 +14,18 @@ export const compararDataRecente = (a, b) => {
 
 export function FormatarDataShort(value) {
   const date = new Date(value);
-  if (date.getMonth() < 10) {
+  
+  if (date.getDay() < 10 && date.getMonth() < 10) {
+    return ('0' + date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear());
+
+  } else if (date.getDay() < 10 && date.getMonth() >= 10) {
+    return ('0' + date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
+
+  } else if (date.getDay() >= 10 && date.getMonth() < 10) {
     return (date.getDate() + '/0' + (date.getMonth() + 1) + '/' + date.getFullYear());
+
   } else {
-    return date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
+    return (date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear());
   }
 }
 
