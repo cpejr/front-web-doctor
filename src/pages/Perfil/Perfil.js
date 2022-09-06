@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
+import { Modal } from "antd";
 import {
   Conteudo,
   CaixaCima,
@@ -31,6 +32,8 @@ import Button from "../../styles/Button";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 import { sleep } from "../../utils/sleep";
+import ModalExcluirConta from "../../components/ModalExcluirConta";
+import { cep, cpf} from "../../utils/masks";
 
 function Perfil(props) {
   const history = useHistory();
@@ -44,6 +47,9 @@ function Perfil(props) {
   const [perfilSelecionado, setPerfilSelecionado] = useState();
   const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState("");
   const [botaoVisivel, setBotaoVisivel] = useState(true);
+
+  const [modalDeletarConta, setModalDeletarConta] = useState(false);
+
 
   const [carregando, setCarregando] = useState(true);
   const antIcon = (
@@ -102,6 +108,10 @@ function Perfil(props) {
     window.location.href = "/login"
   }
 
+  function fechandoModalDeletarConta() {
+    setModalDeletarConta(false);
+  }
+
   return (
     <div>
       <Conteudo>
@@ -125,7 +135,7 @@ function Perfil(props) {
                 <Nome>{usuario.nome}</Nome>
                 <ConjuntoDataCPF>
                   <DataCPF>Nascimento: {dataNascimento}</DataCPF>
-                  <DataCPF>CPF: {usuario.cpf}</DataCPF>
+                  <DataCPF>CPF: {cpf(usuario.cpf)}</DataCPF>
                 </ConjuntoDataCPF>
               </NomeData>
             </FotoNomeData>
@@ -180,7 +190,7 @@ function Perfil(props) {
               <>
                 <EnderecoContato>Endereço</EnderecoContato>
                 <DadosEndereco>País: {endereco.pais}</DadosEndereco>
-                <DadosEndereco>CEP: {endereco.cep}</DadosEndereco>
+                <DadosEndereco>CEP: {cep(endereco.cep)}</DadosEndereco>
                 <DadosEndereco>Estado: {endereco.estado}</DadosEndereco>
                 <DadosEndereco>Cidade: {endereco.cidade}</DadosEndereco>
                 <DadosEndereco>Bairro: {endereco.bairro}</DadosEndereco>
@@ -203,23 +213,40 @@ function Perfil(props) {
                 <>
                   <EnderecoContato>Contato</EnderecoContato>
                   <DadosContato>
+                    Telefone:
                     ({telefone.slice(0, -9)}) {telefone.slice(2, -4)}-
                     {telefone.slice(-4)}
                   </DadosContato>
                   <DadosContato style={{ wordBreak: "break-word" }}>
+                    {"E-mail: "}
                     {usuario.email}
                   </DadosContato>
                 </>
               )}
             </CaixaContato>
             {botaoVisivel && (
-              <ExcluirConta onClick={deletarEnderecoEUsuario}>
+              <ExcluirConta onClick={() => setModalDeletarConta(true)}>
                 EXCLUIR CONTA
               </ExcluirConta>
             )}
           </ContatoExcluirConta>
         </CaixaBaixo>
       </Conteudo>
+
+      <Modal
+        visible={modalDeletarConta}
+        onCancel={() => setModalDeletarConta(false)}
+        style={{ maxWidth: "450px", minWidth: "250px" }}
+        width={"50%"}
+        centered={true}
+        footer={null}
+      >
+        <ModalExcluirConta
+          usuario={usuario}
+          fecharModal={() => fechandoModalDeletarConta()}
+        />
+      </Modal>
+
     </div>
   );
 }
