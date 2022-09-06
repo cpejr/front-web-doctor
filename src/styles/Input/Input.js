@@ -24,7 +24,7 @@ const Input = styled.input`
   margin-top: ${(props) => props.marginTop};
   margin-bottom: ${(props) => props.marginBottom?? "0px"};
   border-style: solid;
-  height: ${(props) => props.height};
+  height: ${(props) => props.height?? "50px"};
   min-height: ${(props) => props.minHeight};
   max-height: ${(props) => props.maxHeight};
   padding-left: 2%;

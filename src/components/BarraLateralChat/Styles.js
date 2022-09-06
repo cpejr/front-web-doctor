@@ -32,6 +32,11 @@ export const BarraLateral = styled.div`
     width: 100%;
     padding-top: 5%;
   }
+
+  @media (max-width: 280px) {
+    min-width:280px;
+    width:280px;
+  }
 `;
 
 export const HeaderBarraLateralChat = styled.div`
@@ -46,6 +51,16 @@ export const HeaderBarraLateralChat = styled.div`
   @media (max-width: 830px) and (min-width: 800px) {
     height: 8%;
   }
+
+  @media (max-width: 640px) {
+    justify-content: center;
+    padding-left: 5%;
+  }
+
+  @media (max-width: 420px) {
+    padding-left: 3%;
+  }
+
   `;
 
 export const ListaPessoasChat = styled.div`
@@ -65,6 +80,10 @@ padding-bottom: 10%;
 background-color: transparent;
 border-color: transparent;
 width: 100%;
+
+@media (max-width: 280px) {
+  padding-left: 0%;
+  }
 `;
 
 export const NomeMensagem = styled.div`
@@ -121,12 +140,20 @@ border-radius: 7px;
   @media (max-width: 465px) and (min-width: 414px) {
     margin-left: 34ch;
   }
+
+  @media (max-width: 346px)  {
+    margin-left: 25ch;
+  }
+
+  @media (max-width: 320px)  {
+    margin-left: 22ch;
+  }
 `;
 
 export const MensagemPessoa = styled.div`
 display: ruby;
 font-size: 25px;
-font-weight: 400;
+font-weight: ${(props) => props.naoVisto > 0 ? 650 : 400};
 line-height: 29px;
 text-align: left;
 margin-top: 6%;
@@ -146,6 +173,10 @@ white-space: nowrap;
 @media (max-width: 670px) {
 max-width: 15ch;
 }
+
+@media (max-width: 280px) {
+  max-width: 13ch;
+  }
 `;
 
 export const Pessoa = styled.div`

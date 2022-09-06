@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
-import { Spin } from "antd";
-import { Input } from "antd";
+import { Spin, Modal, Input } from "antd";
+import ModalFormulario from "../../components/ModalFormulario";
 import {
   ColunaDireita,
   ColunaEsquerda,
@@ -23,6 +23,9 @@ import {
   BarraCentro,
   Selects,
   MargemEstetica,
+  NomePaciente,
+  CentralizandoSpin,
+  ContainerInterno
 } from "./Styles";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
@@ -36,8 +39,18 @@ function FormularioEspecifico(props) {
   const [formularioRespostaPendente, setFormularioRespostaPendente] =
     useState(false);
   const [formularioResposta, setFormularioResposta] = useState(false);
-  const [carregando, setCarregando] = useState(true);
 
+  const [modalFormulario, setModalFormulario] = useState(false);
+  const [perguntas, setPerguntas] = useState();
+  const [titulo, setTitulo] = useState();
+  const [idFormularioPaciente, setIdFormularioPaciente] = useState();
+
+
+  const [carregando, setCarregando] = useState(true);
+  const [statusSelect, setStatusSelect] = useState("");
+  const { Option } = SelectTipos;
+  const [busca, setBusca] = useState("");
+  const lowerBusca = busca.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
   );
@@ -72,24 +85,66 @@ function FormularioEspecifico(props) {
     setFormularioResposta(formularioResposta);
   }
 
+function abrindoModalFormulario(id, perguntas, titulo) {
+    setPerguntas(perguntas);
+    setTitulo(titulo);
+    setIdFormularioPaciente(id);
+    setModalFormulario(true);
+  }
+
   useEffect(() => {
     pegandoFormularioPacientes();
+
   }, [props.location.state.id]);
 
   useEffect(() => {
     pegandoDadosFormularioEspecifico();
   }, [props.location.state.id]);
 
+  const usuariosFiltrados = formularioPacientes.filter(
+    (formularioPacientes) => {
+      if (lowerBusca === "" && statusSelect === "") {
+        return formularioPacientes;
+      } else {
+        if (statusSelect === "true") {
+          return (
+            formularioPacientes?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca) &&
+            formularioPacientes.status === true
+          );
+        } else if (statusSelect === "false") {
+          return (
+            formularioPacientes?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca) &&
+            formularioPacientes.status === false
+          );
+        } else {
+          return formularioPacientes?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca);
+        }
+      }
+    }
+  );
+
+  function usuariosFiltro(value) {
+    setStatusSelect(value);
+  }
+
   return (
-    <>
+    <div>
       <ContainerFormularioEspecifico>
         {carregando ? (
+          <div
+          style={{
+            position: "absolute",
+            top: "50%",
+            left: "49.5%",
+          }}
+        >
           <Spin indicator={antIcon} />
+        </div>
         ) : (
           <>
             <ContainerFormularioCima>
               <CamposFormularioCima>
-                Formulário: {formularioEspecifico.titulo}
+                {formularioEspecifico.titulo}
               </CamposFormularioCima>
               <CamposFormularioCima>
                 Tipo: {formularioEspecifico.tipo}
@@ -124,22 +179,32 @@ function FormularioEspecifico(props) {
             <ColunaEsquerda>
               <ContainerBarraDeBuscaOpcoes>
                 <BarraDePesquisa>
-                  <Search placeholder="BUSCAR" style={{ width: "80%" }} />
+                  <Search
+                    placeholder="BUSCAR"
+                    style={{ width: "100%" }}
+                    value={busca}
+                    onChange={(e) => setBusca(e.target.value)}
+                  />
                 </BarraDePesquisa>
                 <Selects>
                   <RotuloBarraDeBuscaOpcoes>
                     <SelectTipos
-                      defaultValue="Status"
+                      defaultValue=""
                       bordered={false}
-                      style={{ width: 90 }}
-                    ></SelectTipos>
+                      style={{ width: "auto" }}
+                      onChange={(value) => usuariosFiltro(value)}
+                    >
+                      <Option value="">Todos os Usuários</Option>
+                      <Option value="true">Respondido      </Option>
+                      <Option value="false">Resposta Pendente</Option>
+                    </SelectTipos>
                   </RotuloBarraDeBuscaOpcoes>
                 </Selects>
               </ContainerBarraDeBuscaOpcoes>
 
               <BarraEstetica></BarraEstetica>
 
-              {formularioPacientes.map((value) => (
+              {usuariosFiltrados?.map((value) => (
                 <BarraPaciente>
                   <BarraEsquerda>
                     <ImagemPaciente
@@ -151,13 +216,16 @@ function FormularioEspecifico(props) {
                     ></ImagemPaciente>
                   </BarraEsquerda>
                   <BarraCentro>
-                    <TextoBarraPaciente
-                      fontSize="1.1em"
-                      fontWeight="bold"
-                      justifyContent="flex-start"
-                    >
+                    <NomePaciente
+                    onClick={() =>
+                      abrindoModalFormulario(
+                        value.id,
+                        value.perguntas,
+                        value.titulo
+                      )
+                    }>
                       {value.nome}
-                    </TextoBarraPaciente>
+                    </NomePaciente>
                   </BarraCentro>
                   {value.status !== false ? (
                     <></>
@@ -222,7 +290,22 @@ function FormularioEspecifico(props) {
           </>
         )}
       </ContainerFormularioEspecifico>
-    </>
+
+      <Modal
+        visible={modalFormulario}
+        onCancel={() => setModalFormulario(false)}
+        width={"50%"}
+        centered={true}
+        footer={null}
+      >
+        <ModalFormulario
+          idFormularioPaciente={idFormularioPaciente}
+          perguntas={perguntas}
+          titulo={titulo}
+        />
+      </Modal>
+
+    </div>
   );
 }
 

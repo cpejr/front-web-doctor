@@ -8,16 +8,16 @@ import Select from "../../styles/Select/Select";
 import { Spin, Switch } from "antd";
 import { LoadingOutlined, LeftOutlined } from "@ant-design/icons";
 import {
-  Body,
-  DadosCadastro,
-  Logo,
-  InputMesmaLinha,
-  Rotulo,
-  InputMesmaLinha2,
-  Botao,
-  RotuloColuna,
-  PossuiConvenio,
-  PossuiCuidador,
+	Body,
+	DadosCadastro,
+	Logo,
+	InputMesmaLinha,
+	Rotulo,
+	InputMesmaLinha2,
+	Botao,
+	RotuloColuna,
+	PossuiConvenio,
+	PossuiCuidador,
 } from "./Styles";
 import "react-toastify/dist/ReactToastify.min.css";
 import AddToast from "../../components/AddToast/AddToast";
@@ -26,13 +26,13 @@ import { recebeTipo, usuarioAutenticado } from "../../services/auth";
 import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import {
-  apenasLetras,
-  apenasNumeros,
-  apenasNumerosCep,
-  cep,
-  apenasNumerosCpfTel,
-  cpf,
-  telefone,
+	apenasLetras,
+	apenasNumeros,
+	apenasNumerosCep,
+	cep,
+	apenasNumerosCpfTel,
+	cpf,
+	telefone,
 } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
 
@@ -67,7 +67,7 @@ function Cadastro(props) {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
-  const [hoje, setHoje] = useState("");
+  const [ontem, setOntem] = useState("");
   const errors = {};
   const testeOriginal = {
     tipo: false,
@@ -88,31 +88,19 @@ function Cadastro(props) {
   };
   let testeTemp = testeOriginal;
 
-  function verificaAutenticacao() {
-    if (usuarioAutenticado() === false) {
-      window.location.href = "/login";
-    }
-  }
+	function verificaAutenticacao() {
+		if (usuarioAutenticado() === false) {
+			window.location.href = "/login";
+		}
+	}
+
+	useEffect(() => {
+		verificaAutenticacao();
+	}, []);
 
   useEffect(() => {
-    verificaAutenticacao();
+    setandoDiaAtual();
   }, []);
-
-  function setandoDiaAtual() {
-    let data = new Date();
-    let dia = data.getDate();
-    let mes = data.getMonth() + 1;
-    let ano = data.getFullYear();
-
-    if (dia < 10) {
-      dia = "0" + dia;
-    }
-    if (mes < 10) {
-      mes = "0" + mes;
-    }
-
-    setHoje(ano + "-" + mes + "-" + dia);
-  }
 
   useEffect(() => {
     setandoDiaAtual();
@@ -154,20 +142,34 @@ function Cadastro(props) {
     setandoTipoPorProps();
   }, [props]);
 
-  function setandoDataMinima() {
-    document.getElementById("data").setAttribute("max", hoje);
-  }
-
   useEffect(() => {
     setandoDataMinima();
-  }, [hoje]);
+  }, [ontem]);
 
   async function verificandoEnter(e) {
     if (e.key === "Enter") {
       requisicaoCadastro();
     }
   }
+  function setandoDiaAtual() {
+    let data = new Date();
+    let dia = data.getDate() - 1;
+    let mes = data.getMonth() + 1;
+    let ano = data.getFullYear();
 
+    if (dia < 10) {
+      dia = "0" + dia;
+    }
+    if (mes < 10) {
+      mes = "0" + mes;
+    }
+
+    setOntem(ano + "-" + mes + "-" + dia);
+  }
+
+  function setandoDataMinima() {
+    document.getElementById("data").setAttribute("max", ontem);
+  }
   function funcaoConvenio() {
     setConvenio(!convenio);
     setUsuario({ ...usuario, convenio: null });
@@ -186,183 +188,244 @@ function Cadastro(props) {
     setErro({ ...erro, telefone_cuidador: false });
   }
 
-  async function requisicaoCadastro() {
-    setCarregando(true);
+	async function requisicaoCadastro() {
+		setCarregando(true);
 
-    if (!usuario.nome) errors.nome = true;
-    if (!usuario.telefone) errors.telefone = true;
-    if (!usuario.tipo) errors.tipo = true;
-    if (!usuario.data_nascimento) errors.data_nascimento = true;
-    if (!usuario.cpf) errors.cpf = true;
-    if (!usuario.email) errors.email = true;
-    if (!enderecoBack.cep) errors.cep = true;
-    if (!enderecoBack.pais) errors.pais = true;
-    if (!enderecoBack.estado) errors.estado = true;
-    if (!enderecoBack.cidade) errors.cidade = true;
-    if (!enderecoBack.bairro) errors.bairro = true;
-    if (!enderecoBack.rua) errors.rua = true;
-    if (!enderecoBack.numero) errors.numero = true;
-    if (!usuario.senha) errors.senha = true;
-    if (!usuario.senhaConfirmada) errors.senhaConfirmada = true;
-    if (erro.data_nascimento === true) errors.data_nascimento = true;
-    if (erro.email === true) errors.email = true;
+		if (!usuario.nome) errors.nome = true;
+		if (!usuario.telefone) errors.telefone = true;
+		if (!usuario.tipo) errors.tipo = true;
+		if (!usuario.data_nascimento) errors.data_nascimento = true;
+		if (!usuario.cpf) errors.cpf = true;
+		if (!usuario.email) errors.email = true;
+		if (!enderecoBack.cep) errors.cep = true;
+		if (!enderecoBack.pais) errors.pais = true;
+		if (!enderecoBack.estado) errors.estado = true;
+		if (!enderecoBack.cidade) errors.cidade = true;
+		if (!enderecoBack.bairro) errors.bairro = true;
+		if (!enderecoBack.rua) errors.rua = true;
+		if (!enderecoBack.numero) errors.numero = true;
+		if (!usuario.senha) errors.senha = true;
+		if (!usuario.senhaConfirmada) errors.senhaConfirmada = true;
+		if (erro.data_nascimento === true) errors.data_nascimento = true;
+		if (erro.email === true) errors.email = true;
 
-    if (cuidador) {
-      if (!usuario.telefone_cuidador) errors.telefone_cuidador = true;
-      if (!usuario.nome_cuidador) errors.nome_cuidador = true;
-    } else {
-      errors.telefone_cuidador = false;
-      errors.nome_cuidador = false;
-      setErro({ ...erro, telefone_cuidador: false });
-    }
+		if (cuidador) {
+			if (!usuario.telefone_cuidador) errors.telefone_cuidador = true;
+			if (!usuario.nome_cuidador) errors.nome_cuidador = true;
+		} else {
+			errors.telefone_cuidador = false;
+			errors.nome_cuidador = false;
+			setErro({ ...erro, telefone_cuidador: false });
+		}
 
-    if (convenio) {
-      if (!usuario.convenio) {
-        errors.convenio = true;
-      }
-    } else {
-      errors.convenio = false;
-    }
+		if (convenio) {
+			if (!usuario.convenio) {
+				errors.convenio = true;
+			}
+		} else {
+			errors.convenio = false;
+		}
 
-    for (const propriedade_errors in errors) {
-      if (errors[propriedade_errors] === true) {
-        for (const propriedade_campos in camposVazios) {
-          if (propriedade_campos === propriedade_errors) {
-            camposVazios[propriedade_campos] = true;
-          }
-        }
-      }
-    }
-    await sleep(1500);
+		for (const propriedade_errors in errors) {
+			if (errors[propriedade_errors] === true) {
+				for (const propriedade_campos in camposVazios) {
+					if (propriedade_campos === propriedade_errors) {
+						camposVazios[propriedade_campos] = true;
+					}
+				}
+			}
+		}
+		await sleep(1500);
 
-    if (usuario.tipo === "SECRETARIA(O)") {
-      delete camposVazios.nome_cuidador;
-      delete camposVazios.telefone_cuidador;
-      delete camposVazios.convenio;
-      delete errors.telefone_cuidador;
-      delete errors.nome_cuidador;
-      delete errors.convenio;
-    }
+		if (usuario.tipo === "SECRETARIA(O)") {
+			delete camposVazios.nome_cuidador;
+			delete camposVazios.telefone_cuidador;
+			delete camposVazios.convenio;
+			delete errors.telefone_cuidador;
+			delete errors.nome_cuidador;
+			delete errors.convenio;
+		}
 
-    if (convenio && !cuidador) {
-      delete camposVazios.nome_cuidador;
-      delete camposVazios.telefone_cuidador;
-      delete errors.telefone_cuidador;
-      delete errors.nome_cuidador;
-      testeTemp.convenio = false;
-    } else if (!convenio && cuidador) {
-      delete camposVazios.convenio;
-      delete errors.convenio;
-      testeTemp.telefone_cuidador = false;
-      testeTemp.nome_cuidador = false;
-    } else if (convenio && cuidador) {
-      testeTemp.convenio = false;
-      testeTemp.nome_cuidador = false;
-      testeTemp.telefone_cuidador = false;
-    } else {
-      delete camposVazios.nome_cuidador;
-      delete camposVazios.telefone_cuidador;
-      delete camposVazios.convenio;
-      delete errors.telefone_cuidador;
-      delete errors.nome_cuidador;
-      delete errors.convenio;
-    }
+		if (convenio && !cuidador) {
+			delete camposVazios.nome_cuidador;
+			delete camposVazios.telefone_cuidador;
+			delete errors.telefone_cuidador;
+			delete errors.nome_cuidador;
+			testeTemp.convenio = false;
+		} else if (!convenio && cuidador) {
+			delete camposVazios.convenio;
+			delete errors.convenio;
+			testeTemp.telefone_cuidador = false;
+			testeTemp.nome_cuidador = false;
+		} else if (convenio && cuidador) {
+			testeTemp.convenio = false;
+			testeTemp.nome_cuidador = false;
+			testeTemp.telefone_cuidador = false;
+		} else {
+			delete camposVazios.nome_cuidador;
+			delete camposVazios.telefone_cuidador;
+			delete camposVazios.convenio;
+			delete errors.telefone_cuidador;
+			delete errors.nome_cuidador;
+			delete errors.convenio;
+		}
 
-    if (_.isEqual(camposVazios, testeTemp)) {
-      if (usuario.senha === usuario.senhaConfirmada) {
-        await managerService.Cadastrando(usuario, enderecoBack);
-        await sleep(1500);
-        setCarregando(false);
-        window.location.href = "/web/listadeusuario";
-      } else {
-        toast.error("As senhas digitadas são diferentes.");
-        setCarregando(false);
-      }
-    } else {
-      toast.error("Preencha todos os campos obrigatórios");
-    }
+		if (_.isEqual(camposVazios, testeTemp)) {
+			if (usuario.senha === usuario.senhaConfirmada) {
+				await managerService.Cadastrando(usuario, enderecoBack);
+				await sleep(1500);
+				setCarregando(false);
+				window.location.href = "/web/listadeusuario";
+			} else {
+				toast.error("As senhas digitadas são diferentes.");
+				setCarregando(false);
+			}
+		} else {
+			toast.error("Preencha todos os campos obrigatórios");
+		}
 
-    testeTemp = testeOriginal;
-    setCarregando(false);
-  }
+		testeTemp = testeOriginal;
+		setCarregando(false);
+	}
 
-  async function validacaoEmail(e) {
-    const { value, name } = e.target;
-    if (value) {
-      setCamposVazios({ ...camposVazios, [name]: false });
-    }
+	async function validacaoEmail(e) {
+		const { value, name } = e.target;
+		if (value) {
+			setCamposVazios({ ...camposVazios, [name]: false });
+		}
 
-    const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
-    if (!regEx.test(value)) {
-      setErro({ ...erro, [name]: true });
-    } else {
-      setErro({ ...erro, [name]: false });
-    }
+		const regEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+		if (!regEx.test(value)) {
+			setErro({ ...erro, [name]: true });
+		} else {
+			setErro({ ...erro, [name]: false });
+		}
 
-    setUsuario({ ...usuario, [name]: value });
-  }
+		setUsuario({ ...usuario, [name]: value });
+	}
 
-  async function validacaoData(e) {
-    const { value, name } = e.target;
-    if (value) {
-      setCamposVazios({ ...camposVazios, [name]: false });
-    }
+	async function validacaoData(e) {
+		const { value, name } = e.target;
+		if (value) {
+			setCamposVazios({ ...camposVazios, [name]: false });
+		}
 
-    setEstado({ ...estado, [name]: value });
-    setUsuario({ ...usuario, [name]: value });
-  }
+		setEstado({ ...estado, [name]: value });
+		setUsuario({ ...usuario, [name]: value });
+	}
 
-  async function validacaoCamposNaoGerais(e) {
-    const { value, name } = e.target;
+	async function validacaoCamposNaoGerais(e) {
+		const { value, name } = e.target;
 
-    if (cuidador) {
-      if (name === "telefone_cuidador") {
-        setCamposVazios({ ...camposVazios, [name]: false });
-        if (value.length < 15) {
-          setErro({ ...erro, [name]: true });
-        } else {
-          setErro({ ...erro, [name]: false });
-        }
+		if (cuidador) {
+			if (name === "telefone_cuidador") {
+				setCamposVazios({ ...camposVazios, [name]: false });
+				if (value.length < 15) {
+					setErro({ ...erro, [name]: true });
+				} else {
+					setErro({ ...erro, [name]: false });
+				}
 
-        setEstado({ ...estado, [name]: telefone(value) });
-        setUsuario({
-          ...usuario,
-          [name]: apenasNumerosCpfTel(value),
-        });
-      } else if (name === "nome_cuidador") {
-        setEstado({
-          ...estado,
-          [name]: apenasLetras(value),
-        });
-        setUsuario({ ...usuario, [name]: apenasLetras(value) });
-      }
-    }
-    if (convenio) {
-      if (name === "convenio") {
-        setEstado({ ...estado, [name]: apenasLetras(value) });
-        setUsuario({ ...usuario, [name]: apenasLetras(value) });
-      }
-    }
-  }
-  useEffect(() => {
-    if (usuario.convenio) {
-      camposVazios.convenio = false;
-    }
-  }, [usuario.convenio]);
+				setEstado({ ...estado, [name]: telefone(value) });
+				setUsuario({
+					...usuario,
+					[name]: apenasNumerosCpfTel(value),
+				});
+			} else if (name === "nome_cuidador") {
+				setEstado({
+					...estado,
+					[name]: apenasLetras(value),
+				});
+				setUsuario({ ...usuario, [name]: apenasLetras(value) });
+			}
+		}
+		if (convenio) {
+			if (name === "convenio") {
+				setEstado({ ...estado, [name]: apenasLetras(value) });
+				setUsuario({ ...usuario, [name]: apenasLetras(value) });
+			}
+		}
+	}
+	useEffect(() => {
+		if (usuario.convenio) {
+			camposVazios.convenio = false;
+		}
+	}, [usuario.convenio]);
 
-  useEffect(() => {
-    if (usuario.nome_cuidador) {
-      camposVazios.nome_cuidador = false;
-    }
-  }, [usuario.nome_cuidador]);
+	useEffect(() => {
+		if (usuario.nome_cuidador) {
+			camposVazios.nome_cuidador = false;
+		}
+	}, [usuario.nome_cuidador]);
 
-  function preenchendoDados(e) {
-    const { value, name } = e.target;
+	function preenchendoDados(e) {
+		const { value, name } = e.target;
+		if (
+			name !== "convenio" &&
+			name !== "nome_cuidador" &&
+			name !== "telefone_cuidador" &&
+			name !== "nome"
+		) {
+			if (value) setCamposVazios({ ...camposVazios, [name]: false });
+		}
+
+		if (
+			(name === "cpf" && value.length < 14) ||
+			(name === "telefone" && value.length < 15) ||
+			((name === "senha" || name === "senhaConfirmada") && value.length < 8)
+		) {
+			setErro({ ...erro, [name]: true });
+		} else {
+			setErro({ ...erro, [name]: false });
+		}
+
+		setUsuario({ ...usuario, [name]: value });
+		setEstado({ ...estado, [name]: value });
+
+		if (name === "nome") {
+			setEstado({
+				...estado,
+				[name]: apenasLetras(value),
+			});
+			setUsuario({ ...usuario, [name]: apenasLetras(value) });
+		}
+
+		if (name === "telefone") {
+			setEstado({ ...estado, [name]: telefone(value) });
+			setUsuario({ ...usuario, [name]: apenasNumerosCpfTel(value) });
+		}
+
+		if (name === "cpf") {
+			setEstado({ ...estado, [name]: cpf(value) });
+			setUsuario({ ...usuario, [name]: apenasNumerosCpfTel(value) });
+		}
+		if (name === "tipo") {
+			setUsuario({
+				...usuario,
+				[name]: value,
+				nome_cuidador: null,
+				telefone_cuidador: null,
+				convenio: null,
+			});
+			setConvenio(false);
+			setCuidador(false);
+		}
+	}
+
+	useEffect(() => {
+		if (usuario.nome !== "" && usuario.nome !== undefined) {
+			setCamposVazios({ ...camposVazios, nome: false });
+		}
+	}, [usuario]);
+
+	function preenchendoEndereco(e) {
+		const { value, name } = e.target;
+
     if (
-      name !== "convenio" &&
-      name !== "nome_cuidador" &&
-      name !== "telefone_cuidador" &&
-      name !== "nome"
+      name !== "complemento" &&
+      name !== "pais" &&
+      name !== "numero" &&
+      name !== "cidade"
     ) {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
     }
@@ -419,7 +482,12 @@ function Cadastro(props) {
   function preenchendoEndereco(e) {
     const { value, name } = e.target;
 
-    if (name !== "complemento" && name !== "pais" && name !== "numero") {
+    if (
+      name !== "complemento" &&
+      name !== "pais" &&
+      name !== "numero" &&
+      name !== "cidade"
+    ) {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
     }
 
@@ -453,6 +521,10 @@ function Cadastro(props) {
         ...endereco,
         [name]: apenasLetras(value),
       });
+      setEnderecoBack({
+        ...enderecoBack,
+        [name]: apenasLetras(value),
+      });
     }
     if (name === "numero") {
       setEndereco({
@@ -471,11 +543,18 @@ function Cadastro(props) {
       setCamposVazios({ ...camposVazios, pais: false });
     }
   }, [enderecoBack.pais]);
+
   useEffect(() => {
     if (enderecoBack.numero !== "" && enderecoBack.numero !== undefined) {
       setCamposVazios({ ...camposVazios, numero: false });
     }
   }, [enderecoBack.numero]);
+
+  useEffect(() => {
+    if (enderecoBack.cidade !== "" && enderecoBack.cidade !== undefined) {
+      setCamposVazios({ ...camposVazios, cidade: false });
+    }
+  }, [enderecoBack.cidade]);
 
   return (
     <>
@@ -623,43 +702,43 @@ function Cadastro(props) {
                 Possui Cuidador?<Switch onChange={funcaoCuidador}></Switch>
               </PossuiCuidador>
 
-              {cuidador && (
-                <>
-                  <Input
-                    placeholder="Nome Cuidador"
-                    backgroundColor={Cores.cinza[7]}
-                    color={Cores.preto}
-                    fontSize="1em"
-                    width="100%"
-                    marginTop="2%"
-                    name="nome_cuidador"
-                    value={estado.nome_cuidador}
-                    onChange={validacaoCamposNaoGerais}
-                    camposVazios={camposVazios.nome_cuidador}
-                  ></Input>
-                  <Input
-                    placeholder="Telefone Cuidador"
-                    backgroundColor={Cores.cinza[7]}
-                    color={Cores.preto}
-                    fontSize="1em"
-                    width="100%"
-                    marginTop="2%"
-                    name="telefone_cuidador"
-                    value={estado.telefone_cuidador}
-                    onChange={validacaoCamposNaoGerais}
-                    onKeyPress={verificandoEnter}
-                    erro={erro.telefone_cuidador}
-                    camposVazios={camposVazios.telefone_cuidador}
-                  ></Input>
-                  {erro.telefone_cuidador && (
-                    <Rotulo>
-                      Digite um telefone no formato (xx)xxxxx-xxxx
-                    </Rotulo>
-                  )}
-                </>
-              )}
-            </>
-          )}
+							{cuidador && (
+								<>
+									<Input
+										placeholder="Nome Cuidador"
+										backgroundColor={Cores.cinza[7]}
+										color={Cores.preto}
+										fontSize="1em"
+										width="100%"
+										marginTop="2%"
+										name="nome_cuidador"
+										value={estado.nome_cuidador}
+										onChange={validacaoCamposNaoGerais}
+										camposVazios={camposVazios.nome_cuidador}
+									></Input>
+									<Input
+										placeholder="Telefone Cuidador"
+										backgroundColor={Cores.cinza[7]}
+										color={Cores.preto}
+										fontSize="1em"
+										width="100%"
+										marginTop="2%"
+										name="telefone_cuidador"
+										value={estado.telefone_cuidador}
+										onChange={validacaoCamposNaoGerais}
+										onKeyPress={verificandoEnter}
+										erro={erro.telefone_cuidador}
+										camposVazios={camposVazios.telefone_cuidador}
+									></Input>
+									{erro.telefone_cuidador && (
+										<Rotulo>
+											Digite um telefone no formato (xx)xxxxx-xxxx
+										</Rotulo>
+									)}
+								</>
+							)}
+						</>
+					)}
 
           <Input
             placeholder="CEP"
@@ -698,7 +777,9 @@ function Cadastro(props) {
             onChange={preenchendoEndereco}
             camposVazios={camposVazios.estado}
           >
-            <option value="">Estado</option>
+            <option value="" disabled selected>
+              Estado
+            </option>
             <option value="AC">Acre</option>
             <option value="AL">Alagoas</option>
             <option value="AP">Amapá</option>
@@ -787,60 +868,60 @@ function Cadastro(props) {
             ></Input>
           </InputMesmaLinha2>
 
-          <Input
-            placeholder="Defina sua senha"
-            backgroundColor={Cores.cinza[7]}
-            color={Cores.preto}
-            width="100%"
-            marginTop="2%"
-            fontSize="1em"
-            name="senha"
-            id="senha"
-            type="password"
-            onChange={preenchendoDados}
-            erro={erro.senha}
-            camposVazios={camposVazios.senha}
-          ></Input>
-          {erro.senha && <Rotulo>A senha deve ter no minimo 8 digitos</Rotulo>}
-          <Input
-            placeholder="Confirme sua senha"
-            backgroundColor={Cores.cinza[7]}
-            color={Cores.preto}
-            width="100%"
-            marginTop="2%"
-            fontSize="1em"
-            name="senhaConfirmada"
-            id="senhaConfirmada"
-            type="password"
-            onChange={preenchendoDados}
-            onKeyPress={verificandoEnter}
-            erro={erro.senhaConfirmada}
-            camposVazios={camposVazios.senhaConfirmada}
-          ></Input>
-          {erro.senhaConfirmada && (
-            <Rotulo>A senha deve ter no minimo 8 digitos</Rotulo>
-          )}
+					<Input
+						placeholder="Defina sua senha"
+						backgroundColor={Cores.cinza[7]}
+						color={Cores.preto}
+						width="100%"
+						marginTop="2%"
+						fontSize="1em"
+						name="senha"
+						id="senha"
+						type="password"
+						onChange={preenchendoDados}
+						erro={erro.senha}
+						camposVazios={camposVazios.senha}
+					></Input>
+					{erro.senha && <Rotulo>A senha deve ter no minimo 8 digitos</Rotulo>}
+					<Input
+						placeholder="Confirme sua senha"
+						backgroundColor={Cores.cinza[7]}
+						color={Cores.preto}
+						width="100%"
+						marginTop="2%"
+						fontSize="1em"
+						name="senhaConfirmada"
+						id="senhaConfirmada"
+						type="password"
+						onChange={preenchendoDados}
+						onKeyPress={verificandoEnter}
+						erro={erro.senhaConfirmada}
+						camposVazios={camposVazios.senhaConfirmada}
+					></Input>
+					{erro.senhaConfirmada && (
+						<Rotulo>A senha deve ter no minimo 8 digitos</Rotulo>
+					)}
 
-          <Button
-            height="50px"
-            width="60%"
-            backgroundColor={Cores.lilas[1]}
-            borderColor={Cores.azul}
-            color={Cores.branco}
-            fontSize="1.5em"
-            fontSizeMedia="1.2em"
-            onClick={() => {
-              requisicaoCadastro();
-            }}
-            fontWeight="bold"
-          >
-            {carregando ? <Spin indicator={antIcon} /> : "CADASTRAR"}
-          </Button>
-        </DadosCadastro>
-        <AddToast />
-      </Body>
-    </>
-  );
+					<Button
+						height="50px"
+						width="60%"
+						backgroundColor={Cores.lilas[1]}
+						borderColor={Cores.azul}
+						color={Cores.branco}
+						fontSize="1.5em"
+						fontSizeMedia="1.2em"
+						onClick={() => {
+							requisicaoCadastro();
+						}}
+						fontWeight="bold"
+					>
+						{carregando ? <Spin indicator={antIcon} /> : "CADASTRAR"}
+					</Button>
+				</DadosCadastro>
+				<AddToast />
+			</Body>
+		</>
+	);
 }
 
 export default Cadastro;

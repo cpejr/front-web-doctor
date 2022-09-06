@@ -84,8 +84,6 @@ function EditarFormulario(props) {
           formularios.perguntas.properties,
           estado.properties
         );
-
-
         estado.properties = auxiliar;
         await managerService.EditarPerguntasFormulario(formularios.id, estado);
         await sleep(1500);

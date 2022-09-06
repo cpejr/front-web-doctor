@@ -22,58 +22,97 @@ export const Conversa = styled.div`
   }
   //
   //ajuste largura
-  @media (max-width: 1053px) and (min-width: 1003px) {
-    margin-left: 38.5%;
+  @media (max-width: 1060px) and (min-width: 1035px) {
+    margin-left: 38.2%;
   }
 
-  @media (max-width: 1003px) and (min-width: 960px) {
+  @media (max-width: 1034px) and (min-width: 1004px) {
+    margin-left: 39%;
+  }
+
+  @media (max-width: 1003px) and (min-width: 974px) {
     margin-left: 40%;
   }
 
-  @media (max-width: 960px) and (min-width: 920px) {
+  @media (max-width: 973px) and (min-width: 959px) {
+    margin-left: 40.8%;
+  }
+
+  @media (max-width: 960px) and (min-width: 940px) {
     margin-left: 41.4%;
   }
 
-  @media (max-width: 919px) and (min-width: 885px) {
-    margin-left: 43%;
+  @media (max-width: 941px) and (min-width: 920px) {
+    margin-left: 41.9%;
   }
 
-  @media (max-width: 885px) and (min-width: 846px) {
+  @media (max-width: 919px) and (min-width: 901px) {
+    margin-left: 42.7%;
+  }
+
+  @media (max-width: 900px) and (min-width: 883px) {
+    margin-left: 43.3%;
+  }
+
+  @media (max-width: 882px) and (min-width: 866px) {
     margin-left: 44%;
   }
 
-  @media (max-width: 846px) and (min-width: 821px) {
-    margin-left: 45.5%;
+  @media (max-width: 865px) and (min-width: 851px) {
+    margin-left: 44.7%;
+  }
+
+  @media (max-width: 850px) and (min-width: 836px) {
+    margin-left: 45.3%;
+  }
+
+  @media (max-width: 835px) and (min-width: 822px) {
+    margin-left: 46%;
   }
 
   @media (max-width: 821px) {
-    margin-left: 37%;
-    width: 63%;
+    margin-left: 36.6%;
+    width: 63.6%;
   }
 
-  @media (max-width: 790px) and (min-width: 760px) {
+  @media (max-width: 790px) and (min-width: 773px) {
     width:62%;
     margin-left: 38%;
   }
 
-  @media (max-width: 760px) and (min-width: 730px) {
-    width:61%;
-    margin-left: 39.5%;
+  @media (max-width: 772px) and (min-width: 756px) {
+    width:61.2%;
+    margin-left: 38.9%;
   }
 
-  @media (max-width: 730px) and (min-width: 705px) {
-    width:60%;
-    margin-left: 41%;
+  @media (max-width: 755px) and (min-width: 740px) {
+    width:60.3%;
+    margin-left: 39.8%;
   }
 
-  @media (max-width: 705px) and (min-width: 680px) {
-    width:59%;
-    margin-left: 43%;
+  @media (max-width: 739px) and (min-width: 725px) {
+    width:59.5%;
+    margin-left: 40.6%;
   }
 
-  @media (max-width: 680px) and (min-width: 600px) {
-    width:58%;
-    margin-left: 44%;
+  @media (max-width: 725px) and (min-width: 711px) {
+    width:58.7%;
+    margin-left: 41.4%;
+  }
+
+  @media (max-width: 710px) and (min-width: 697px) {
+    width:59.5%;
+    margin-left: 42.3%;
+  }
+
+  @media (max-width: 696px) and (min-width: 685px) {
+    width:59.5%;
+    margin-left: 43.1%;
+  }
+
+  @media (max-width: 684px) and (min-width: 600px) {
+    width:59.5%;
+    margin-left: 43.9%;
   }
   //
 
@@ -130,54 +169,6 @@ export const CorpoConversaAberta = styled.div`
   border-top: 0ch;
   border-bottom: 0ch;
   justify-content:flex-end;
-
-`;
-
-export const MensagemRecebida = styled.div`
-  display: block;
-  align-items: center;
-  padding: 1.5%;
-  max-width: 80%;
-  width: fit-content;
-  height: fit-content;
-  word-wrap: break-word;
-  background-color: white;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 23px;
-  border-radius: 5px;
-  margin-top:0%;
-  margin:2%;
-  align-self:flex-start;
-`;
-
-export const MensagemEnviada = styled.div`
-  display: block;
-  align-items: center;
-  padding: 1.5%;
-  max-width: 80%;
-  word-wrap: break-word;
-  width: fit-content;
-  height: fit-content;
-  font-size: 20px;
-  font-weight: 400;
-  line-height: 23px;
-  border-radius: 5px;
-  background-color: ${Cores.lilas[4]};
-  align-self:flex-end;
-  margin:2%;
-  margin-top:0%;
-`;
-
-export const DataHoraMensagem = styled.div`
-  color: black;
-  align-self: flex-end;
-  justify-self: right;
-  width: 100%;
-  font-size: 10px;
-  font-weight: 400;
-  line-height: 18px;
-  text-align: right;
 `;
 
 export const FooterConversaAberta = styled.div`

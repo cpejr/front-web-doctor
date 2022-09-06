@@ -37,7 +37,7 @@ export const BarraPesquisa = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  
+
   @media (max-width: 920px) {
     width: 100%;
     justify-content: center;
@@ -64,9 +64,7 @@ export const Filtros = styled.div`
   }
 `;
 
-export const FiltroEspecificoUrgencia = styled.div`
-
-`;
+export const FiltroEspecificoUrgencia = styled.div``;
 
 export const BarraEstetica = styled.div`
   margin-top: 2%;
@@ -86,14 +84,21 @@ export const DadosFormulario = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  align-items: flex-end;
-  margin-bottom: 2%;
+  align-items: center;;
+  //margin-bottom: 2%;
+
+  @media (max-width: 960px) {
+    align-items: center;
+    /* margin-top: 1.5%;
+    align-items: flex-start; */
+  }
 
   @media (max-width: 560px) {
     gap: 2%;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    gap: 15px;
   }
 `;
 export const Formulario = styled.div`
@@ -106,11 +111,11 @@ export const Formulario = styled.div`
   border-width: 3px;
   border-radius: 3px;
   justify-content: center;
-  padding: 0% 2% 2% 2%;
+  padding: 2% 2% 2% 2%;
   background-color: ${Cores.azulClaro};
 `;
 
-export const BotoesVertical = styled.div`
+export const BotoesVerticalMaster = styled.div`
   width: 10%;
   display: flex;
   min-height: 20vh;
@@ -136,18 +141,47 @@ export const BotoesVertical = styled.div`
     align-items: center;
   }
 `;
-export const BotaoVertical = styled.div`
 
-@media (min-width: 451px) and (max-width: 920px){
+export const BotoesVerticalSecretaria = styled.div`
+  width: 10%;
+  display: flex;
+  min-height: 20vh;
+  justify-content: center;
+
+  flex-direction: column;
+  @media (max-width: 920px) {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: row;
+    width: 87%;
+    margin-left: 2.5%;
+    margin-top: 2%;
+    min-height: 10vh;
+  }
+
+  @media (max-width: 560px) {
+    display: flex;
+    margin-top: 2%;
+    width: 85%;
+    margin-right: 2.5%;
+    align-items: flex-start;
+  }
+  @media (max-width: 450px) {
+    align-items: flex-start;
+    margin-top: 2%;
+  }
+`;
+export const BotaoVertical = styled.div`
+  @media (min-width: 451px) and (max-width: 920px) {
     width: 30%;
   }
 
-@media (max-width: 450px) {
+  @media (max-width: 450px) {
     width: 100%;
     margin-top: 2%;
   }
 `;
-
 
 export const BotaoFinal = styled.div`
   width: 98%;
@@ -194,15 +228,48 @@ export const TituloFormulario = styled.div`
   }
 `;
 export const TipoFormulario = styled.div`
-  font-size: 1.2em;
+  display: flex;
+  justify-content: center;
+  font-size: 1.3em;
   color: ${Cores.lilas[1]};
+  width: 33%;
+  @media (max-width: 780px) {
+    font-size: 1.2em;
+  }
+  @media (max-width: 560px) {
+    width: 100%;
+  }
+
 `;
 export const UrgenciaFormulario = styled.div`
-  font-size: 1.2em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3em;
+  width: 33%;
   color: ${Cores.lilas[1]};
   @media (max-width: 780px) {
-    font-size: 1.3em;
+    font-size: 1.2em;
   }
+  @media (max-width: 560px) {
+    width: 100%;
+  }
+`;
+
+export const TextoUrgencia = styled.div`
+  margin-right: 5px;
+`;
+
+export const CaixaTitulo = styled.div`
+   width: 33%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+
+   @media (max-width: 560px) {
+    width: 100%;
+  }
+
 `;
 
 export const Resposta = styled.div`

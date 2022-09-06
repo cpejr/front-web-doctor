@@ -12,10 +12,12 @@ const sleep = (milliseconds) => {
 export const requisicaoLogin = async (email, senha) => {
   try {
     const resposta = await requesterService.logarUsuario(email, senha);
+    console.log(resposta.data)
     if (resposta.data.tipo === "PACIENTE") {
       toast.error("Paciente não pode fazer login no sistema!");
     } else {
-      login(resposta.data.token, resposta.data.email, resposta.data.tipo);
+      
+      login(resposta.data.id, resposta.data.token, resposta.data.email, resposta.data.tipo);
 
       if (resposta.data.tipo === "MASTER") {
         toast.success("Login realizado com sucesso!");
@@ -36,7 +38,7 @@ export const requisicaoLogin = async (email, senha) => {
 export const Cadastrando = async (usuario, endereco) => {
   const resposta = await requesterService.requisicaoDadosUsuario(usuario.email);
 
-  if (resposta.status != 204){
+  if (resposta.status !== 204){
     sleep(1500);
     toast.error("E-mail já cadastrado");
     return;
@@ -96,6 +98,15 @@ export const GetConsultaPorId = async (id) => {
     });
   return dadosConsulta;
 };
+
+export const GetReceitasPorUsuarioId = async (id_usuario) => {
+  try {
+    const res = await requesterService.requisicaoReceitasPorUsuarioId(id_usuario);
+    return res.data;
+  } catch (err) {
+    requisicaoErro(err);
+  }
+}
 
 export const GetDadosPessoais = async () => {
   let dadosUsuario = {};
@@ -213,9 +224,6 @@ export const GetConsultorioPorId = async (id) => {
 };
 
 export const ConferirSenha = async (email, senhaAtual) => {
-  //comparar a senha do Email com a senha digitada
-  //se as senhas forem iguais retornar true
-  //se as senhas nao forem iguais retornar false
   try {
     await requesterService.requisicaoVerificar(email, senhaAtual);
     await sleep(1500);
@@ -227,7 +235,6 @@ export const ConferirSenha = async (email, senhaAtual) => {
 };
 
 export const AlterarSenha = async (novaSenha, id) => {
-  //passar a "novaSenha" como senha do usuário que possui esse "email"
   await requesterService
     .alterarSenha(id, novaSenha)
     .then(() => {
@@ -270,9 +277,10 @@ export const UpdateCodigo = async (id_usuario, codigo) => {
   return false;
 };
 
-export const DeletarUsuario = async (id) => {
+
+export const DeletarEnderecoEUsuario = async (id_endereco) => {
   await requesterService
-    .deletarUsuario(id)
+    .deletarEnderecoEUsuario(id_endereco)
     .then(() => {
       toast.success("Usuário deletado com sucesso.");
     })
@@ -285,8 +293,7 @@ export const DeletarUsuario = async (id) => {
       return false;
     });
 
-  return false;
-};
+}
 
 export const GetDadosConsultasExamesMarcadosGeral = async () => {
   let dadosConsultas = {};
@@ -464,7 +471,7 @@ export const CriarFormulario = async (estado) => {
   await requesterService
     .criarFormulario(estado)
     .then(() => {
-      alert("Usuário cadastrado com sucesso.");
+      toast.success("Formulário criado com sucesso.");
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -518,4 +525,97 @@ export const EditarFormularios = async (
     });
 
   return false;
+};
+
+export const CriandoConversa = async (conversa) => {
+  let dadosConversaCriada = {}
+  await requesterService
+    .criarMensagem(conversa)
+    .then((res) => {
+      dadosConversaCriada = res.data
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConversaCriada;
+};
+
+export const GetConversasUsuario = async (id_usuario) => {
+  let dadosConversas = {};
+  await requesterService
+    .requisicaoConversasPorUsuario(id_usuario)
+    .then((res) => {
+      dadosConversas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConversas;
+};
+
+export const UpdateConversaAtiva = async (id) => {
+  let dadosConversa = {};
+  await requesterService
+    .updateConversaAtiva(id)
+    .then((res) => {
+      dadosConversa = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConversa;
+};
+
+export const CriandoMensagem = async (mensagem) => {
+  let dadosMensagemCriada = {}
+  await requesterService
+    .criarMensagem(mensagem)
+    .then((res) => {
+      dadosMensagemCriada = res.data
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosMensagemCriada;
+};
+
+export const GetMensagensPorConversaUsuario = async (id_usuario, id_conversa) => {
+  let dadosMensagens = {};
+  await requesterService
+    .requisicaoMensagensPorConversaUsuario(id_usuario, id_conversa)
+    .then((res) => {
+      dadosMensagens = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosMensagens;
+};
+
+export const UpdateMensagemVisualizada = async (id, atualizacoes) => {
+  let mensagemAtualizada = {}
+  await requesterService
+    .updateMensagemVisualizada(id, atualizacoes)
+    .then((res) => {
+      mensagemAtualizada = res.data
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return mensagemAtualizada;
+};
+
+export const UpdateMensagensVisualizadas = async (id_usuario, id_conversa) => {
+  let mensagensAtualizadas = {}
+  await requesterService
+    .updateMensagensVisualizadas(id_usuario, id_conversa)
+    .then((res) => {
+      mensagensAtualizadas = res.data
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return mensagensAtualizadas;
 };
