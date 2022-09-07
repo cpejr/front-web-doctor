@@ -87,7 +87,6 @@ function AreaReceitas() {
   function abreModalDeletarReceita(receita){
     setModalDeletarReceita(true);
     setReceitaEspecifica(receita)
-    console.log(receitaEspecifica);
 
   }
 
