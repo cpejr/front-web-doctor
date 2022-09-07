@@ -44,7 +44,7 @@ export const FiltrosEsquerda = styled.div`
     gap: 2%;
   }
 
-  @media (max-width: 450px) {
+  @media (max-width: 560px) {
     flex-direction: column-reverse;
     width: 100%;
     align-items: center;
@@ -88,8 +88,8 @@ export const SelectTipoBusca = styled(Select)`
   }};
   }
 
-  @media (max-width: 570px) {
-    width: 180px;
+  @media (max-width: 560px) {
+    width: 100%;
   }
 `;
 
@@ -139,32 +139,37 @@ export const Filtros = styled.div`
     justify-content: center;
     gap: 10px;
   }
+ 
   @media (max-width: 450px) {
-    flex-direction: column;
+    flex-direction: column-reverse;
     width: 100%;
-    align-items: center;
     gap: 10px;
   }
 `;
-export const FiltroUsuario = styled.div`
+export const FiltroUsuario = styled(Select)`
+  width: 180px;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
   justify-content: flex-end;
+  
   @media(max-width: 920px)
   {
     justify-content: center;
+    width: 100%;
   }
  
 `;
 
-export const FiltroDatas = styled.div`
+export const FiltroDatas = styled(Select)`
   display: flex;
   flex-direction: row;
+  width: 180px;
   justify-content: flex-end;
   @media(max-width: 920px)
   {
     justify-content: center;
+    width: 100%;
   }
  
 `;
@@ -335,19 +340,33 @@ export const BotoesMedico = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  gap: 10px;
 
   @media (max-width: 560px) {
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 `;
 
+export const CaixaBotaoMedico = styled.div`
+   width: 50%;
+   margin-top: 10px;
+
+   @media(max-width: 560px){
+   width: 100%;
+   margin-top: 0px;
+   }
+
+`;
 
 export const BotaoSecretario = styled.div`
   
   position: relative;
   left: 25%;
   width: 50%;
-  margin-top: 1%;
 
   @media (max-width: 920px) {
     left: 0%;
