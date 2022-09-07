@@ -1,169 +1,274 @@
-import React, { useEffect, useContext, useState } from "react";
-import { 
-  HeaderConversaAberta, 
-  Conversa,  
-  NomePessoa, 
-  BotaoVoltar, 
-  CorpoConversaAberta, 
-  FooterConversaAberta 
+import React, { useEffect, useContext, useState, useRef } from "react";
+import {
+	HeaderConversaAberta,
+	Conversa,
+	NomePessoa,
+	BotaoVoltar,
+	CorpoConversaAberta,
+	FooterConversaAberta,
 } from "./Styles";
-import Mensagem from "../Mensagem"
+import Mensagem from "../Mensagem";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
 import Input from "../../styles/Input";
 import { ChatContext } from "../../contexts/ChatContext";
-import * as managerService from "../../services/ManagerService/managerService"
-import checarObjVazio from "../../utils/checarObjVazio"
-import moverArray from "../../utils/moverArray"
-import { ArrowLeftOutlined, PaperClipOutlined, SendOutlined } from '@ant-design/icons';
-
+import * as managerService from "../../services/ManagerService/managerService";
+import checarObjVazio from "../../utils/checarObjVazio";
+import moverArray from "../../utils/moverArray";
+import { Spin } from "antd";
+import {
+	ArrowLeftOutlined,
+	PaperClipOutlined,
+	SendOutlined,
+	LoadingOutlined,
+} from "@ant-design/icons";
+import { recebeEmail } from "../../services/auth";
 
 export default function ConversaAberta({ socket }) {
-  const [inputMensagemConteudo, setInputMensagemConteudo] = useState("")
-  const { usuarioId, conversaSelecionada, imagemPerfilPadrão, conversas, setConversas, mensagens, setMensagens } = useContext(ChatContext)
-  
-  const verificarEnter = (e) =>  {
-    if (e.key === "Enter") {
-      enviarMensagem(e);
-    }
-  }
+	const [usuarioAtual, setUsuarioAtual] = useState({});
+	const [inputMensagemConteudo, setInputMensagemConteudo] = useState("");
+	const [carregando, setCarregando] = useState(true);
+	const scrollRef = useRef(null);
+	const {
+		usuarioId,
+		conversaSelecionada,
+		setConversaSelecionada,
+		imagemPerfilPadrão,
+		conversas,
+		setConversas,
+		mensagens,
+		setMensagens,
+		componenteEstaMontadoRef,
+	} = useContext(ChatContext);
 
-  useEffect(() => {
-    async function getMensagens() {
-      const resposta = await managerService.GetMensagensPorConversaUsuario(usuarioId, conversaSelecionada.id)
-      setMensagens(resposta)
-    }
+	const verificarEnter = (e) => {
+		if (e.key === "Enter") {
+			enviarMensagem(e);
+		}
+	};
 
-    getMensagens()
-  }, [conversaSelecionada])
+	useEffect(() => {
+		componenteEstaMontadoRef.current = true;
 
-  const atualizarBarraLateral = (novaMensagem) => {
-    
-    const id_conversa = novaMensagem.id_conversa
-    const index = conversas.findIndex(({ id }) => id === id_conversa)
+		async function getDadosUsuarioAtual() {
+			const { dadosUsuario } = await managerService.GetDadosUsuario(
+				recebeEmail()
+			);
 
-    conversas[index].ultima_mensagem = novaMensagem
-    setConversas((conversasLista) => moverArray(conversasLista, index, 0))
-  }
-  const atualizarConversaInativa = async () => {
-    if (conversaSelecionada.ativada) return
-    
-    const index = conversas.findIndex(({ id }) => id === conversaSelecionada.id)
-    const newConversas = [...conversas]
-    newConversas[index].ativada = true
+			if (componenteEstaMontadoRef.current) {
+				setUsuarioAtual(dadosUsuario);
+				setCarregando(false);
+			}
+		}
 
-    await managerService.UpdateConversaAtiva(conversaSelecionada.id)
+		getDadosUsuarioAtual();
 
-    socket.emit("enviarConversa", newConversas[index])
-    
-    setConversas(newConversas)
-  }
-  const enviarMensagem = async (e) => {
-    e.preventDefault()
-    
-    const dadosParaCriarNovaMensagem = {
-      id_conversa: conversaSelecionada.id,
-      id_usuario: usuarioId,
-      media_url: "nenhuma",
-      foi_visualizado: false,
-      conteudo: inputMensagemConteudo,
-    };
-    const { data_cricao, data_atualizacao, media_url, ...dados } = await managerService.CriandoMensagem(dadosParaCriarNovaMensagem)
+		return () => (componenteEstaMontadoRef.current = false);
+	}, []);
 
-    const novaMensagem = {
-      ...dados,
-      pertenceAoUsuarioAtual: true
-    }
-    setMensagens((mensagensLista) => [...mensagensLista, novaMensagem])
-    socket.emit('enviarMensagem', { novaMensagem, receptorId: conversaSelecionada.conversaCom.id });
+	useEffect(() => {
+		scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+	}, [mensagens]);
 
-    atualizarConversaInativa()
-    atualizarBarraLateral(novaMensagem)
-  
-    setInputMensagemConteudo("")
-  }
+	useEffect(() => {
+		componenteEstaMontadoRef.current = true;
 
-  return (
-    <Conversa>
-      <HeaderConversaAberta>
-        <BotaoVoltar>
-          <Button
-            backgroundColor="transparent"
-            borderColor="transparent"
-            color={Cores.lilas[1]}
-            width="10%"
-            widthres="15%"
-            height="10%"
-            marginTop="0%"
-            onClick={() => {window.location.reload()}}
-            >
-              <ArrowLeftOutlined style={{ fontSize: '30px', color: '{Cores.lilas[1]}' }}/>
-          </Button>
-        </BotaoVoltar>
-        <img 
-          src={
-            conversaSelecionada?.conversaCom?.avatar_url || 
-            imagemPerfilPadrão
-          } 
-          alt="61"  height="70px" width="76px"
-        ></img>
-        <NomePessoa>
-          {conversaSelecionada?.conversaCom?.nome}
-        </NomePessoa> 
-      </HeaderConversaAberta>
-      <CorpoConversaAberta>
-        {mensagens?.map((m) => 
-          <Mensagem
-            key={m.id}
-            pertenceAoUsuarioAtual={m.pertenceAoUsuarioAtual} 
-            conteudo={m.conteudo} 
-            data_criacao={m.data_criacao}
-          />
-        )}
-      </CorpoConversaAberta>
-      <FooterConversaAberta>
-        <Button
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color={Cores.lilas[1]}
-          width="10%"
-          widthres="15%"
-          height="10%"
-          marginTop="0%"
-          onClick={() => {}}
-          >
-            <PaperClipOutlined style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}/>
-        </Button>
-        <Input
-          placeholder="Mensagem"
-          backgroundColor="white"
-          borderColor= {Cores.cinza[3]}
-          width="90%"
-          height="100%"
-          minHeight="45px"
-          maxHeight="40px"
-          paddingRight="2%"
-          onKeyPress={verificarEnter}
-          onChange={(e) => setInputMensagemConteudo(e.target.value)}
-          value={inputMensagemConteudo}
-          disabled={checarObjVazio(conversaSelecionada)}
-        />
-        <Button
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color={Cores.lilas[1]}
-          width="10%"
-          widthres="15%"
-          height="10%"
-          marginTop="0%"
-          onClick={enviarMensagem}
-          disabled={checarObjVazio(conversaSelecionada) || !inputMensagemConteudo}
-        >
-          <SendOutlined style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}/>
-        </Button>
-      </FooterConversaAberta>
-    </Conversa>
-  );
-};
+		async function getMensagens() {
+			if (checarObjVazio(conversaSelecionada)) return;
 
- 
+			const resposta = await managerService.GetMensagensPorConversaUsuario(
+				usuarioId,
+				conversaSelecionada.id
+			);
+			if (componenteEstaMontadoRef.current) setMensagens(resposta);
+		}
+
+		getMensagens();
+
+		return () => (componenteEstaMontadoRef.current = false);
+	}, [conversaSelecionada]);
+
+	const atualizarBarraLateral = (novaMensagem) => {
+		const id_conversa = novaMensagem.id_conversa;
+		const index = conversas.findIndex(({ id }) => id === id_conversa);
+
+		conversas[index].ultima_mensagem = novaMensagem;
+		setConversas((conversasLista) => moverArray(conversasLista, index, 0));
+	};
+	const enviarConversa = async () => {
+		const index = conversas.findIndex(
+			({ id }) => id === conversaSelecionada.id
+		);
+		const newConversas = [...conversas];
+		newConversas[index].ativada = true;
+
+		await managerService.UpdateConversaAtiva(conversaSelecionada.id);
+
+		const {
+			id,
+			ultima_mensagem,
+			conversaCom: { id: receptorId },
+		} = newConversas[index];
+
+		const novaConversa = {
+			id,
+			ativada: true,
+			mensagensNaoVistas: 1,
+			ultima_mensagem: {
+				...ultima_mensagem,
+				pertenceAoUsuarioAtual: false,
+			},
+			conversaCom: {
+				id: usuarioAtual?.id,
+				nome: usuarioAtual?.nome,
+				avatar_url: usuarioAtual?.avatar_url,
+			},
+		};
+		socket.emit("enviarConversa", {
+			novaConversa,
+			receptorId,
+		});
+
+		setConversas(newConversas);
+	};
+	const enviarMensagem = async (e) => {
+		e.preventDefault();
+
+		const dadosParaCriarNovaMensagem = {
+			id_conversa: conversaSelecionada.id,
+			id_usuario: usuarioId,
+			media_url: "nenhuma",
+			foi_visualizado: false,
+			conteudo: inputMensagemConteudo,
+		};
+		const { data_cricao, data_atualizacao, media_url, ...dados } =
+			await managerService.CriandoMensagem(dadosParaCriarNovaMensagem);
+
+		const novaMensagem = {
+			...dados,
+			pertenceAoUsuarioAtual: true,
+		};
+
+		if (conversaSelecionada.ativada) {
+			socket.emit("enviarMensagem", {
+				novaMensagem,
+				receptorId: conversaSelecionada.conversaCom.id,
+			});
+		} else {
+			enviarConversa();
+		}
+
+		atualizarBarraLateral(novaMensagem);
+		setInputMensagemConteudo("");
+
+		setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
+	};
+
+	const antIcon = (
+		<LoadingOutlined style={{ fontSize: 130, color: Cores.azul }} spin />
+	);
+
+	return (
+		<Conversa>
+			<HeaderConversaAberta>
+				<BotaoVoltar>
+					<Button
+						backgroundColor="transparent"
+						borderColor="transparent"
+						color={Cores.lilas[1]}
+						width="10%"
+						widthres="15%"
+						height="10%"
+						marginTop="0%"
+						onClick={() => {
+							setConversaSelecionada({});
+						}}
+					>
+						<ArrowLeftOutlined
+							style={{ fontSize: "30px", color: "{Cores.lilas[1]}" }}
+						/>
+					</Button>
+				</BotaoVoltar>
+				<img
+					src={
+						conversaSelecionada?.conversaCom?.avatar_url || imagemPerfilPadrão
+					}
+					alt="61"
+					height="70px"
+					width="76px"
+				></img>
+				<NomePessoa>{conversaSelecionada?.conversaCom?.nome}</NomePessoa>
+			</HeaderConversaAberta>
+			<CorpoConversaAberta ref={scrollRef}>
+				{carregando ? (
+					<Spin
+						indicator={antIcon}
+						style={{
+							position: "absolute",
+							top: "50%",
+							left: "50%",
+							transform: "translate(-50%, -50%)",
+						}}
+					/>
+				) : (
+					mensagens?.map((m, idx) => (
+						<Mensagem
+							key={idx}
+							scrollRef={idx === mensagens.length - 1 ? scrollRef : null}
+							pertenceAoUsuarioAtual={m.pertenceAoUsuarioAtual}
+							conteudo={m.conteudo}
+							data_criacao={m.data_criacao}
+						/>
+					))
+				)}
+			</CorpoConversaAberta>
+			<FooterConversaAberta>
+				<Button
+					backgroundColor="transparent"
+					borderColor="transparent"
+					color={Cores.lilas[1]}
+					width="10%"
+					widthres="15%"
+					height="10%"
+					marginTop="0%"
+					onClick={() => {}}
+				>
+					<PaperClipOutlined
+						style={{ fontSize: "27px", color: "{Cores.lilas[1]}" }}
+					/>
+				</Button>
+				<Input
+					placeholder="Mensagem"
+					backgroundColor="white"
+					borderColor={Cores.cinza[3]}
+					width="90%"
+					height="100%"
+					minHeight="45px"
+					maxHeight="40px"
+					paddingRight="2%"
+					onKeyPress={verificarEnter}
+					onChange={(e) => setInputMensagemConteudo(e.target.value)}
+					value={inputMensagemConteudo}
+					disabled={checarObjVazio(conversaSelecionada)}
+				/>
+				<Button
+					backgroundColor="transparent"
+					borderColor="transparent"
+					color={Cores.lilas[1]}
+					width="10%"
+					widthres="15%"
+					height="10%"
+					marginTop="0%"
+					onClick={enviarMensagem}
+					disabled={
+						checarObjVazio(conversaSelecionada) || !inputMensagemConteudo
+					}
+				>
+					<SendOutlined
+						style={{ fontSize: "27px", color: "{Cores.lilas[1]}" }}
+					/>
+				</Button>
+			</FooterConversaAberta>
+		</Conversa>
+	);
+}

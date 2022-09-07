@@ -1,116 +1,139 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ContainerModalNovaConversa , Titulo, Subtitulo, XFechar,  TamanhoSelect, LocalBotao } from "./Styles";
+import {
+	ContainerModalNovaConversa,
+	Titulo,
+	Subtitulo,
+	TamanhoSelect,
+	LocalBotao,
+} from "./Styles";
 import { Select, Spin } from "antd";
-import { CloseOutlined, LoadingOutlined } from '@ant-design/icons';
+import { LoadingOutlined } from "@ant-design/icons";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 import Button from "../../styles/Button";
 import { ChatContext } from "../../contexts/ChatContext";
-import checarObjVazio from "../../utils/checarObjVazio";
 
 function ModalNovaConversa({ setModalAdicionar }) {
-  const { usuarioId, conversas, setConversas, setConversaSelecionada } = useContext(ChatContext)
-  const [usuarios, setUsuarios] = useState([]);
-  const [carregando, setCarregando] = useState(false);
-  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const [selecionaUsuarioId, setSelecionaUsuarioId] = useState("")
-  
-  async function pegandoPacientes() {
-    setCarregando(true);
-    const dados = await managerService.GetDadosPessoais();
-    const usuarios = dados.filter((usuario) => usuario.tipo === "PACIENTE")
+	const { usuarioId, conversas, setConversas, setConversaSelecionada } =
+		useContext(ChatContext);
+	const [usuarios, setUsuarios] = useState([]);
+	const [carregando, setCarregando] = useState(false);
+	const [selecionaUsuarioId, setSelecionaUsuarioId] = useState("");
 
-    setUsuarios(usuarios)
-    setCarregando(false)
-  }
+	useEffect(() => {
+		async function pegandoPacientes() {
+			setCarregando(true);
 
-  async function criarNovarConversa() {
-    if (!selecionaUsuarioId) return
+			const dados = await managerService.GetDadosPessoais();
+			const conversasUsuariosIds = conversas.map(
+				({ conversaCom }) => conversaCom.id
+			);
 
-    const existeConversa = conversas.find(({ conversaCom }) => conversaCom.id === selecionaUsuarioId)
+			const usuarios = dados.filter(
+				(usuario) =>
+					!conversasUsuariosIds.includes(usuario.id) && usuario.id !== usuarioId
+			);
+			setUsuarios(usuarios);
 
-    if (!!existeConversa) {
-      setConversaSelecionada(existeConversa)
-      setModalAdicionar(false)
-      return
-    }
+			setCarregando(false);
+		}
 
-    const usuarioSelecionadoDados = usuarios.find((usuario) => usuario.id === selecionaUsuarioId)
-    const dadosParaCriarNovaConversa = {
-      id_criador: usuarioId,
-      id_receptor: usuarioSelecionadoDados.id,
-      ativada: false
-    }
-    const dadosNovaConversa = await managerService.CriandoConversa(dadosParaCriarNovaConversa)
+		pegandoPacientes();
+	}, []);
 
-    const novaConversa = {
-      id: dadosNovaConversa.id,
-      ativada: dadosNovaConversa.ativada,
-      mensagensNaoVistas: 0,
-      conversaCom: {
-        id: usuarioSelecionadoDados.id,
-        nome: usuarioSelecionadoDados.nome,
-        avatar_url: usuarioSelecionadoDados.avatar_url
-      }
-    }
+	async function criarNovarConversa(e) {
+		if (!selecionaUsuarioId) return;
 
-    setConversas((conversasLista) => [novaConversa, ...conversasLista])
-    setConversaSelecionada(novaConversa)
-    setModalAdicionar(false)
-  }
+		e.preventDefault();
 
-  useEffect(() => {
-    pegandoPacientes();
-  }, []);
+		const existeConversa = conversas.find(
+			({ conversaCom }) => conversaCom.id === selecionaUsuarioId
+		);
 
-  return (
-    <>
-      <ContainerModalNovaConversa>
-        <Titulo>Iniciar nova conversa:</Titulo>
-        <Subtitulo>Selecione um usuário:</Subtitulo>
-        <TamanhoSelect>
-          <Select
-            onChange={(value) => setSelecionaUsuarioId(value)}
-            style={{
-              width: "100%",
-              color: "black",
-              borderColor: "black",
-              borderWidth: "0px",
-              marginBottom: "0.5em",
-              paddingLeft: "2.5em",
-            }}
-            size="large"
-            name="id_usuario"
-            placeholder="Nome do usuário"
-          >
-            <Select.Option value="" disabled selected>
-              Nome do usuário
-            </Select.Option>
-            {usuarios.map((usuario) => (
-              <Select.Option key={usuario.id} value={usuario.id} color="red">
-                {usuario.nome}
-              </Select.Option>
-            ))}
-          </Select>
-        </TamanhoSelect>
-        <LocalBotao>
-          <Button
-            height="45px"
-            width="100%"
-            backgroundColor={Cores.lilas[1]}
-            borderColor={Cores.azul}
-            color={Cores.branco}
-            fontSize="1em"
-            fontSizeMedia1080="0.8em"
-            fontSizeMedia950="0.1em"
-            onClick={criarNovarConversa}
-          >CONFIRMAR
-            {/* {carregando ? <Spin indicator={antIcon} /> : "CONFIRMAR"} */}
-          </Button>
-        </LocalBotao>
-      </ContainerModalNovaConversa>
-    </>
-  );
+		if (!!existeConversa) {
+			setConversaSelecionada(existeConversa);
+			setModalAdicionar(false);
+			return;
+		}
+
+		const usuarioSelecionadoDados = usuarios.find(
+			(usuario) => usuario.id === selecionaUsuarioId
+		);
+		const dadosParaCriarNovaConversa = {
+			id_criador: usuarioId,
+			id_receptor: usuarioSelecionadoDados.id,
+			ativada: false,
+		};
+		const dadosNovaConversa = await managerService.CriandoConversa(
+			dadosParaCriarNovaConversa
+		);
+
+		const novaConversa = {
+			id: dadosNovaConversa.id,
+			ativada: dadosNovaConversa.ativada,
+			mensagensNaoVistas: 0,
+			conversaCom: {
+				id: usuarioSelecionadoDados.id,
+				nome: usuarioSelecionadoDados.nome,
+				avatar_url: usuarioSelecionadoDados.avatar_url,
+			},
+		};
+
+		setConversas((conversasLista) => [novaConversa, ...conversasLista]);
+		setConversaSelecionada(novaConversa);
+		setModalAdicionar(false);
+	}
+
+	const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+	return (
+		<>
+			<ContainerModalNovaConversa>
+				<Titulo>Iniciar nova conversa:</Titulo>
+				<Subtitulo>Selecione um usuário:</Subtitulo>
+				<TamanhoSelect>
+					<Select
+						onChange={(value) => setSelecionaUsuarioId(value)}
+						style={{
+							width: "100%",
+							color: "black",
+							borderColor: "black",
+							borderWidth: "0px",
+							marginBottom: "0.5em",
+							paddingLeft: "2.5em",
+						}}
+						size="large"
+						name="id_usuario"
+						placeholder="Nome do usuário"
+					>
+						<Select.Option value="" disabled selected>
+							Nome do usuário
+						</Select.Option>
+						{usuarios.map((usuario, idx) => (
+							<Select.Option key={idx} value={usuario.id} color="red">
+								{usuario.nome}
+							</Select.Option>
+						))}
+					</Select>
+				</TamanhoSelect>
+				<LocalBotao>
+					<Button
+						height="45px"
+						width="100%"
+						backgroundColor={Cores.lilas[1]}
+						borderColor={Cores.azul}
+						color={Cores.branco}
+						fontSize="1em"
+						fontSizeMedia1080="0.8em"
+						fontSizeMedia950="0.1em"
+						onClick={criarNovarConversa}
+					>
+						{carregando ? <Spin indicator={antIcon} /> : "CONFIRMAR"}
+					</Button>
+				</LocalBotao>
+			</ContainerModalNovaConversa>
+		</>
+	);
 }
 
 export default ModalNovaConversa;
