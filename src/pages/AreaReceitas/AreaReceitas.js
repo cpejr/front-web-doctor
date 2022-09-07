@@ -34,6 +34,7 @@ function AreaReceitas() {
   const [pacienteSelect, setPacienteSelect] = useState("");
   const [busca, setBusca] = useState("");
   const [modalDeletarReceita, setModalDeletarReceita] = useState(false);
+  const [receitaEspecifica, setReceitaEspecifica] = useState({});
   const [carregandoPagina, setCarregandoPagina] = useState(false);
 
   const lowerBusca = busca.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
@@ -66,6 +67,7 @@ function AreaReceitas() {
     setCarregandoPagina(false);
   }
 
+
   async function pegandoDadosPacientes() {
     setCarregandoPagina(true);
     setPacientes([]);
@@ -77,8 +79,16 @@ function AreaReceitas() {
       }
     });
   }
+
   function fechandoModalDeletarReceita() {
     setModalDeletarReceita(false);
+  }
+
+  function abreModalDeletarReceita(receita){
+    setModalDeletarReceita(true);
+    setReceitaEspecifica(receita)
+    console.log(receitaEspecifica);
+
   }
 
   useEffect(() => {
@@ -180,7 +190,7 @@ function AreaReceitas() {
                       fontSize="1em"
                       height="30px"
                       width="50%"
-                      onClick={() => setModalDeletarReceita(true)}
+                      onClick={() => abreModalDeletarReceita(value)}
                     >
                       Deletar
                     </Button>
@@ -202,6 +212,7 @@ function AreaReceitas() {
       >
         <ModalExcluirReceita
           fecharModal={() => fechandoModalDeletarReceita()}
+          receita={receitaEspecifica}
         />
       </Modal>
 

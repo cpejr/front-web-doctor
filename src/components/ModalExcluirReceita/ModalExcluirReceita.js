@@ -15,19 +15,22 @@ import {
 } from "./Styles"; 
  
 function ModalExcluirReceita(props) { 
-  const [carregandoDeletar, setCarregandoDeletar] = useState(false); 
+  const [carregandoDeletar, setCarregandoDeletar] = useState(false);
+  const [idReceita, setIdReceita] = useState("");  
   const antIconModal = ( 
     <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin /> 
   ); 
  
   async function excluirReceita() { 
-/*       setCarregandoDeletar(true); 
-      await managerService.DeletarEnderecoEUsuario(props.usuario.id_endereco); 
+      setCarregandoDeletar(true); 
+      await managerService.DeletarReceita(idReceita) 
       await sleep(3000); 
-      redirecionamento("/login"); 
-      setCarregandoDeletar(false);  */
-      console.log("Receita Deletada!")
-  } 
+      setCarregandoDeletar(false); 
+  }
+  
+  useEffect(() => {
+    setIdReceita(props.receita.id);
+  }, [props]);
  
   return ( 
     <div> 
