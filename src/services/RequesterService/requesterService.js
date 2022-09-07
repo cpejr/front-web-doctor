@@ -11,6 +11,8 @@ export const criarUsuario = (endereco, usuario) =>
     api.post("/usuarios", { ...usuario, id_endereco: res.data.id });
   });
 
+export const recuperarSenha = (email) => api.put(`/alterar_senha/${email}`);
+
 export const criarConsulta = (consulta) => api.post("/consultas", consulta);
 
 export const updateConsulta = (id_consulta, consulta) =>
@@ -27,6 +29,9 @@ export const updateCodigo = (id_usuario, codigo) =>
 export const requisicaoDadosUsuario = (emailUrl) =>
   api.get(`/usuarios/${emailUrl}`);
 
+export const requisicaoDadosUsuarioPorToken = (token_usuario) =>
+  api.get(`/usuarios_token/${token_usuario}`);
+
 export const requisicaoDadosPessoais = () => api.get(`/usuarios/`);
 
 export const requisicaoDadosEndereco = (dadosUsuario) =>
@@ -41,9 +46,8 @@ export const requisicaoVerificar = (email, senha) =>
 export const alterarSenha = (id, senha) =>
   api.put(`/usuarios/${id}`, { senha: senha });
 
-
-
-export const deletarEnderecoEUsuario = (id_endereco) => api.delete(`/enderecos/${id_endereco}`);
+export const deletarEnderecoEUsuario = (id_endereco) =>
+  api.delete(`/enderecos/${id_endereco}`);
 
 export const requisicaoExamesMarcados = () => api.get(`/exame_marcados`);
 
