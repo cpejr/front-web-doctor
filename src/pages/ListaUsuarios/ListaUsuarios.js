@@ -22,7 +22,6 @@ import {
   CódigoPaciente,
   BotaoAdicionar,
   CaixaVazia,
-  Botoes,
   BotoesMedico,
   BotaoSecretario,
   LogoCarregando,
@@ -36,7 +35,7 @@ import {
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 import ModalAdicionarCodigo from "../../components/ModalAdicionarCodigo/ModalAdicionarCodigo";
-import { compararData, compararNomes } from "../../utils/tratamentoErros";
+import { compararDataAntiga, compararNomes } from "../../utils/tratamentoErros";
 import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
@@ -248,7 +247,7 @@ function ListaUsuarios() {
     if (usuario.tipo === "SECRETARIA(O)") {
       return;
     }
-    consultas.sort(compararData);
+    consultas.sort(compararDataAntiga);
     let dataHora = [];
     consultas.forEach((consulta) => {
       if (consulta.id_usuario === usuario.id) {
