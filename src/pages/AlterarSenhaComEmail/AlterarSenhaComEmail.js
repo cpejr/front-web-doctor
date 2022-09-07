@@ -49,9 +49,9 @@ function AlterarSenhaComEmail() {
     } else {
       setErro({ ...erro, [name]: false });
     }
-    
+
     setEmail(value);
-  };
+  }
 
   async function alterarSenha() {
     if (!email) errors.email = true;
@@ -59,33 +59,33 @@ function AlterarSenhaComEmail() {
     setCamposVazios({ ...camposVazios, ...errors });
 
     if (_.isEqual(camposVazios, referenciaCamposNulos)) {
-    setCarregando(true);
-    const resposta = await managerService.GetDadosPessoais();
-    let achei = 0;
-    resposta.forEach((usuario) => {
-      if (usuario.email === email) {
-        achei++;
-      }
-    })
+      setCarregando(true);
+      const resposta = await managerService.GetDadosPessoais();
+      let achei = 0;
+      resposta.forEach((usuario) => {
+        if (usuario.email === email) {
+          achei++;
+        }
+      });
 
-    if (achei) {
-      toast.warn("Aguarde um pouco.");
-      await sleep(3000);
-      await managerService.EnviandoEmail(email);
-      setCarregando(false);
+      if (achei) {
+        toast.warn("Aguarde um pouco.");
+        await sleep(3000);
+        await managerService.EnviandoEmail(email);
+        setCarregando(false);
+      } else {
+        toast.error("Esse e-mail não está cadastrado.");
+        setCarregando(false);
+      }
     } else {
-      toast.error("Esse e-mail não está cadastrado.");
-      setCarregando(false);
-    }
-  } else {
-    setCarregando(true);
+      setCarregando(true);
       toast.warn("Preencha com um email.");
       setCarregando(false);
-  }
+    }
   }
 
   return (
-    <div>
+    <>
       <Conteudo>
         <Caixa>
           <Titulo>Recuperação de senha:</Titulo>
@@ -104,8 +104,8 @@ function AlterarSenhaComEmail() {
               onChange={validacaoEmail}
             ></Input>
             {erro.email && (
-            <Rotulo>Digite um email no formato email@email.com</Rotulo>
-          )}
+              <Rotulo>Digite um email no formato email@email.com</Rotulo>
+            )}
           </InputVertical>
           <BotoesMesmaLinha>
             <Button
@@ -136,13 +136,13 @@ function AlterarSenhaComEmail() {
               boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
               onClick={() => alterarSenha()}
             >
-               {carregando ? <Spin indicator={antIcon} /> : "CONFIRMAR"}
+              {carregando ? <Spin indicator={antIcon} /> : "CONFIRMAR"}
             </Button>
           </BotoesMesmaLinha>
         </Caixa>
       </Conteudo>
       <AddToast />
-    </div>
+    </>
   );
 }
 
