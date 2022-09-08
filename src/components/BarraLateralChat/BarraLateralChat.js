@@ -23,14 +23,11 @@ import {
 } from "@ant-design/icons";
 import * as managerService from "../../services/ManagerService/managerService";
 import { ChatContext } from "../../contexts/ChatContext";
+import objCopiaProfunda from "../../utils/objCopiaProfunda";
 
 export default function BarraLateralChat() {
 	const [modalAdicionar, setModalAdicionar] = useState(false);
 	const [carregando, setCarregando] = useState(true);
-
-	async function fechandoModal() {
-		setModalAdicionar(false);
-	}
 	const [searchTerm, setSearchTerm] = useState("");
 	const {
 		usuarioId,
@@ -45,14 +42,18 @@ export default function BarraLateralChat() {
 		componenteEstaMontadoRef.current = true;
 
 		async function getConversas() {
+			setCarregando(true);
+
 			const resposta = await managerService.GetConversasUsuario(usuarioId);
+
 			if (componenteEstaMontadoRef.current) {
 				setConversas(resposta);
-
 				setCarregando(false);
 			}
 		}
+
 		getConversas();
+
 		return () => (componenteEstaMontadoRef.current = false);
 	}, []);
 
@@ -60,7 +61,10 @@ export default function BarraLateralChat() {
 		return async (e) => {
 			e.preventDefault();
 
-			const conversaNaLista = conversas.find(({ id }) => id === conversa.id);
+			const index = conversas.findIndex(({ id }) => id === conversa.id);
+			const copiaConversas = objCopiaProfunda(conversas);
+
+			const conversaNaLista = copiaConversas[index];
 
 			if (conversaNaLista.mensagensNaoVistas) {
 				conversaNaLista.mensagensNaoVistas = 0;
@@ -71,6 +75,7 @@ export default function BarraLateralChat() {
 			}
 
 			setConversaSelecionada(conversaNaLista);
+			setConversas(copiaConversas);
 		};
 	};
 
@@ -165,7 +170,7 @@ export default function BarraLateralChat() {
 			</BarraLateral>
 			<Modal
 				visible={modalAdicionar}
-				onCancel={fechandoModal}
+				onCancel={() => setModalAdicionar(false)}
 				footer={null}
 				width={"700px"}
 				centered={true}

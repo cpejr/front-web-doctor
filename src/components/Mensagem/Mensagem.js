@@ -7,16 +7,12 @@ import pt_BR from "timeago.js/lib/lang/pt_BR";
 register("pt_BR", pt_BR);
 
 export default function Mensagem({
-	scrollRef,
 	pertenceAoUsuarioAtual,
 	conteudo,
 	data_criacao,
 }) {
 	return (
-		<MensagemEnviada
-			pertenceAoUsuarioAtual={pertenceAoUsuarioAtual}
-			ref={scrollRef}
-		>
+		<MensagemEnviada pertenceAoUsuarioAtual={pertenceAoUsuarioAtual}>
 			{conteudo}
 			<DataHoraMensagem>
 				{dayjs(data_criacao).format("DD/MM/YYYY HH:mm")}

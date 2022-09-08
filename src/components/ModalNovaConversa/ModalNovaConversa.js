@@ -14,13 +14,20 @@ import Button from "../../styles/Button";
 import { ChatContext } from "../../contexts/ChatContext";
 
 function ModalNovaConversa({ setModalAdicionar }) {
-	const { usuarioId, conversas, setConversas, setConversaSelecionada } =
-		useContext(ChatContext);
 	const [usuarios, setUsuarios] = useState([]);
 	const [carregando, setCarregando] = useState(false);
 	const [selecionaUsuarioId, setSelecionaUsuarioId] = useState("");
+	const {
+		usuarioId,
+		conversas,
+		setConversas,
+		setConversaSelecionada,
+		componenteEstaMontadoRef,
+	} = useContext(ChatContext);
 
 	useEffect(() => {
+		componenteEstaMontadoRef.current = true;
+
 		async function pegandoPacientes() {
 			setCarregando(true);
 
@@ -33,12 +40,16 @@ function ModalNovaConversa({ setModalAdicionar }) {
 				(usuario) =>
 					!conversasUsuariosIds.includes(usuario.id) && usuario.id !== usuarioId
 			);
-			setUsuarios(usuarios);
 
-			setCarregando(false);
+			if (componenteEstaMontadoRef.current) {
+				setUsuarios(usuarios);
+				setCarregando(false);
+			}
 		}
 
 		pegandoPacientes();
+
+		return () => (componenteEstaMontadoRef.current = false);
 	}, []);
 
 	async function criarNovarConversa(e) {
@@ -46,15 +57,15 @@ function ModalNovaConversa({ setModalAdicionar }) {
 
 		e.preventDefault();
 
-		const existeConversa = conversas.find(
-			({ conversaCom }) => conversaCom.id === selecionaUsuarioId
-		);
+		// const existeConversa = conversas.find(
+		// 	({ conversaCom }) => conversaCom.id === selecionaUsuarioId
+		// );
 
-		if (!!existeConversa) {
-			setConversaSelecionada(existeConversa);
-			setModalAdicionar(false);
-			return;
-		}
+		// if (!!existeConversa) {
+		// 	setConversaSelecionada(existeConversa);
+		// 	setModalAdicionar(false);
+		// 	return;
+		// }
 
 		const usuarioSelecionadoDados = usuarios.find(
 			(usuario) => usuario.id === selecionaUsuarioId
@@ -79,9 +90,10 @@ function ModalNovaConversa({ setModalAdicionar }) {
 			},
 		};
 
-		setConversas((conversasLista) => [novaConversa, ...conversasLista]);
 		setConversaSelecionada(novaConversa);
 		setModalAdicionar(false);
+		setSelecionaUsuarioId(null);
+		setConversas((conversasLista) => [novaConversa, ...conversasLista]);
 	}
 
 	const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -94,6 +106,7 @@ function ModalNovaConversa({ setModalAdicionar }) {
 				<TamanhoSelect>
 					<Select
 						onChange={(value) => setSelecionaUsuarioId(value)}
+						value={selecionaUsuarioId}
 						style={{
 							width: "100%",
 							color: "black",

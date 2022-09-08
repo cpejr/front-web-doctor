@@ -7,7 +7,7 @@ import {
 	CorpoConversaAberta,
 	FooterConversaAberta,
 } from "./Styles";
-import Mensagem from "../Mensagem";
+import Mensagem from "../Mensagem/Mensagem";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
 import Input from "../../styles/Input";
@@ -23,12 +23,12 @@ import {
 	LoadingOutlined,
 } from "@ant-design/icons";
 import { recebeEmail } from "../../services/auth";
+import objCopiaProfunda from "../../utils/objCopiaProfunda";
 
 export default function ConversaAberta({ socket }) {
 	const [usuarioAtual, setUsuarioAtual] = useState({});
 	const [inputMensagemConteudo, setInputMensagemConteudo] = useState("");
 	const [carregando, setCarregando] = useState(true);
-	const scrollRef = useRef(null);
 	const {
 		usuarioId,
 		conversaSelecionada,
@@ -40,12 +40,7 @@ export default function ConversaAberta({ socket }) {
 		setMensagens,
 		componenteEstaMontadoRef,
 	} = useContext(ChatContext);
-
-	const verificarEnter = (e) => {
-		if (e.key === "Enter") {
-			enviarMensagem(e);
-		}
-	};
+	const scrollRef = useRef(null);
 
 	useEffect(() => {
 		componenteEstaMontadoRef.current = true;
@@ -67,10 +62,6 @@ export default function ConversaAberta({ socket }) {
 	}, []);
 
 	useEffect(() => {
-		scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-	}, [mensagens]);
-
-	useEffect(() => {
 		componenteEstaMontadoRef.current = true;
 
 		async function getMensagens() {
@@ -88,19 +79,32 @@ export default function ConversaAberta({ socket }) {
 		return () => (componenteEstaMontadoRef.current = false);
 	}, [conversaSelecionada]);
 
+	useEffect(() => {
+		scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+	}, [mensagens]);
+
 	const atualizarBarraLateral = (novaMensagem) => {
 		const id_conversa = novaMensagem.id_conversa;
-		const index = conversas.findIndex(({ id }) => id === id_conversa);
 
-		conversas[index].ultima_mensagem = novaMensagem;
-		setConversas((conversasLista) => moverArray(conversasLista, index, 0));
+		const index = conversas.findIndex(({ id }) => id === id_conversa);
+		const copiaConversas = objCopiaProfunda(conversas);
+		const conversaNaLista = copiaConversas[index];
+
+		conversaNaLista.ultima_mensagem = novaMensagem;
+
+		setConversas(moverArray(copiaConversas, index, 0));
 	};
 	const enviarConversa = async () => {
 		const index = conversas.findIndex(
 			({ id }) => id === conversaSelecionada.id
 		);
-		const newConversas = [...conversas];
-		newConversas[index].ativada = true;
+		const copiaConversas = objCopiaProfunda(conversas);
+		const conversaNaLista = copiaConversas[index];
+
+		conversaNaLista.ativada = true;
+
+		setConversaSelecionada(conversaNaLista);
+		setConversas(copiaConversas);
 
 		await managerService.UpdateConversaAtiva(conversaSelecionada.id);
 
@@ -108,9 +112,9 @@ export default function ConversaAberta({ socket }) {
 			id,
 			ultima_mensagem,
 			conversaCom: { id: receptorId },
-		} = newConversas[index];
+		} = copiaConversas[index];
 
-		const novaConversa = {
+		const conversaParaEnvio = {
 			id,
 			ativada: true,
 			mensagensNaoVistas: 1,
@@ -124,12 +128,11 @@ export default function ConversaAberta({ socket }) {
 				avatar_url: usuarioAtual?.avatar_url,
 			},
 		};
+
 		socket.emit("enviarConversa", {
-			novaConversa,
+			novaConversa: conversaParaEnvio,
 			receptorId,
 		});
-
-		setConversas(newConversas);
 	};
 	const enviarMensagem = async (e) => {
 		e.preventDefault();
@@ -137,7 +140,7 @@ export default function ConversaAberta({ socket }) {
 		const dadosParaCriarNovaMensagem = {
 			id_conversa: conversaSelecionada.id,
 			id_usuario: usuarioId,
-			media_url: "nenhuma",
+			media_url: "nenhuma", // Futuramente permitir a opção de mandar mídias
 			foi_visualizado: false,
 			conteudo: inputMensagemConteudo,
 		};
@@ -155,6 +158,8 @@ export default function ConversaAberta({ socket }) {
 				receptorId: conversaSelecionada.conversaCom.id,
 			});
 		} else {
+			console.log("oxe");
+			console.log(conversaSelecionada);
 			enviarConversa();
 		}
 
@@ -167,6 +172,12 @@ export default function ConversaAberta({ socket }) {
 	const antIcon = (
 		<LoadingOutlined style={{ fontSize: 130, color: Cores.azul }} spin />
 	);
+
+	const verificarEnter = (e) => {
+		if (e.key === "Enter" && inputMensagemConteudo) {
+			enviarMensagem(e);
+		}
+	};
 
 	return (
 		<Conversa>
@@ -211,15 +222,17 @@ export default function ConversaAberta({ socket }) {
 						}}
 					/>
 				) : (
-					mensagens?.map((m, idx) => (
-						<Mensagem
-							key={idx}
-							scrollRef={idx === mensagens.length - 1 ? scrollRef : null}
-							pertenceAoUsuarioAtual={m.pertenceAoUsuarioAtual}
-							conteudo={m.conteudo}
-							data_criacao={m.data_criacao}
-						/>
-					))
+					<>
+						{mensagens?.map((m, idx) => (
+							<Mensagem
+								key={idx}
+								pertenceAoUsuarioAtual={m.pertenceAoUsuarioAtual}
+								conteudo={m.conteudo}
+								data_criacao={m.data_criacao}
+							/>
+						))}
+						<div ref={scrollRef}></div>
+					</>
 				)}
 			</CorpoConversaAberta>
 			<FooterConversaAberta>

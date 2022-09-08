@@ -6,44 +6,23 @@ import checarObjVazio from "../../utils/checarObjVazio";
 import { Container, MensagemInicialChat, ContainerMobile } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 import io from "socket.io-client";
+import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import moverArray from "../../utils/moverArray";
 
 const BACK_END_URL = "http://localhost:3333";
 
 const Chat = () => {
+	const [mensagemRecebida, setMensagemRecebida] = useState({});
+	const [conversaRecebida, setConversaRecebida] = useState({});
 	const {
 		usuarioId,
 		conversas,
 		setConversas,
 		conversaSelecionada,
 		setMensagens,
+		componenteEstaMontadoRef,
 	} = useContext(ChatContext);
-
-	const [mensagemRecebida, setMensagemRecebida] = useState({});
-	const [conversaRecebida, setConversaRecebida] = useState({});
-
 	const socket = useRef();
-
-	const atualizarBarraLateralNovaMensagem = async (novaMensagem) => {
-		const index = conversas?.findIndex(
-			({ id }) => id === novaMensagem.id_conversa
-		);
-		const newConversas = [...conversas];
-
-		novaMensagem.pertenceAoUsuarioAtual = false;
-
-		if (novaMensagem.id_conversa === conversaSelecionada.id) {
-			setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
-			await managerService.UpdateMensagemVisualizada(novaMensagem.id, {
-				foi_visualizado: true,
-			});
-		} else {
-			newConversas[index].mensagensNaoVistas++;
-		}
-
-		newConversas[index].ultima_mensagem = novaMensagem;
-		setConversas((conversasLista) => moverArray(conversasLista, index, 0));
-	};
 
 	useEffect(() => {
 		socket.current = io(BACK_END_URL);
@@ -60,13 +39,41 @@ const Chat = () => {
 
 		return () => {
 			socket.current.off();
+			socket.current.close();
 		};
 	}, []);
 
 	useEffect(() => {
 		if (checarObjVazio(mensagemRecebida)) return;
 
+		componenteEstaMontadoRef.current = true;
+
+		async function atualizarBarraLateralNovaMensagem(novaMensagem) {
+			const index = conversas?.findIndex(
+				({ id }) => id === novaMensagem.id_conversa
+			);
+			const copiaConversas = objCopiaProfunda(conversas);
+			const conversaNaLista = copiaConversas[index];
+
+			novaMensagem.pertenceAoUsuarioAtual = false;
+			if (novaMensagem.id_conversa === conversaSelecionada.id) {
+				setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
+				await managerService.UpdateMensagemVisualizada(novaMensagem.id, {
+					foi_visualizado: true,
+				});
+			} else {
+				conversaNaLista.mensagensNaoVistas++;
+			}
+
+			conversaNaLista.ultima_mensagem = novaMensagem;
+			if (componenteEstaMontadoRef.current) {
+				setConversas(moverArray(copiaConversas, index, 0));
+			}
+		}
+
 		atualizarBarraLateralNovaMensagem(mensagemRecebida);
+
+		return () => (componenteEstaMontadoRef.current = false);
 	}, [mensagemRecebida]);
 
 	useEffect(() => {
