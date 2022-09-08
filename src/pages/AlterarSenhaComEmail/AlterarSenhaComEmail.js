@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import Input from "../../styles/Input";
 import { useHistory } from "react-router-dom";
 import Button from "../../styles/Button";
@@ -13,11 +13,11 @@ import {
   Titulo,
   Rotulo,
 } from "./Styles";
-import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 import AddToast from "../../components/AddToast/AddToast";
 import { toast } from "react-toastify";
-import { sleep, redirecionamento } from "../../utils/sleep";
+import { sleep } from "../../utils/sleep";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function AlterarSenhaComEmail() {
   const history = useHistory();
