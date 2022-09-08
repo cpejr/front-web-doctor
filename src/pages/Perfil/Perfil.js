@@ -26,6 +26,8 @@ import {
   ContatoExcluirConta,
   CaixaCimaCarregando,
   CaixaEnderecoCarregando,
+  ContainerCPF,
+  ContainerData,
 } from "./Styles";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
@@ -134,8 +136,14 @@ function Perfil(props) {
               <NomeData>
                 <Nome>{usuario.nome}</Nome>
                 <ConjuntoDataCPF>
-                  <DataCPF>Nascimento: {dataNascimento}</DataCPF>
-                  <DataCPF>CPF: {cpf(usuario.cpf)}</DataCPF>
+                  <ContainerData>
+                  <DataCPF>Nascimento:</DataCPF>
+                  <DataCPF>{dataNascimento}</DataCPF>
+                  </ContainerData>
+                  <ContainerCPF>
+                  <DataCPF>CPF:</DataCPF>
+                  <DataCPF>{cpf(usuario.cpf)}</DataCPF>
+                  </ContainerCPF>
                 </ConjuntoDataCPF>
               </NomeData>
             </FotoNomeData>
@@ -146,7 +154,7 @@ function Perfil(props) {
                 width="100%"
                 height="50px"
                 widthMedia480="30%"
-                heightMedia560="30px"
+                heightMedia640="30px"
                 backgroundColor={Cores.lilas[2]}
                 borderColor={Cores.azulEscuro}
                 color={Cores.azulEscuro}
@@ -163,7 +171,7 @@ function Perfil(props) {
                 width="100%"
                 height="50px"
                 widthMedia480="30%"
-                heightMedia560="30px"
+                heightMedia640="30px"
                 backgroundColor={Cores.lilas[2]}
                 borderColor={Cores.azulEscuro}
                 color={Cores.azulEscuro}
