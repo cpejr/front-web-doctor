@@ -44,7 +44,8 @@ function ModalExcluirReceita(props) {
             fontWeight="normal" 
             borderColor={Cores.cinza[3]} 
             height="28px" 
-            width="25%" 
+            width="25%"
+            widthMedia670="50%" 
             fontSize="13px" 
             onClick={props.fecharModal} 
           > 
@@ -56,7 +57,8 @@ function ModalExcluirReceita(props) {
             borderColor={Cores.azulEscuro} 
             fontWeight="normal" 
             height="28px" 
-            width="25%" 
+            width="25%"
+            widthMedia670="50%" 
             fontSize="13px" 
             marginLeft="2%" 
             onClick={() => excluirReceita()} 

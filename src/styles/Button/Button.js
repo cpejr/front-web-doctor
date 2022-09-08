@@ -44,6 +44,10 @@ const Button = styled.button`
     width: ${(props) => props.widthMedia600};
   }
 
+  @media (max-width: 670px){ 
+    width: ${(props) => props.widthMedia670};
+  }
+
   @media (max-width: 800px)
   {
     margin-top: ${(props) => props.marginTopMedia ?? ((props) => props.marginTop?? "2%")};
