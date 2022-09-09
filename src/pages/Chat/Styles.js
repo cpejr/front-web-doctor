@@ -1,14 +1,14 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
   width: 100%;
-  max-width:1800px;
+  max-width: 1800px;
   height: 621px;
-  position:fixed;
+  position: fixed;
 
   @media (max-height: 715px) {
-    position:relative;
+    position: relative;
   }
   @media (max-height: 1300px) and (min-height: 715px) {
     height: 100%;
@@ -26,12 +26,12 @@ export const Container = styled.div`
 export const ContainerMobile = styled.div`
   display: flex;
   width: 100%;
-  max-width:1800px;
+  max-width: 1800px;
   height: 621px;
-  position:fixed;
+  position: fixed;
 
   @media (max-height: 715px) {
-    position:relative;
+    position: relative;
   }
   @media (max-height: 1300px) and (min-height: 715px) {
     height: 100%;
@@ -52,30 +52,30 @@ export const MensagemInicialChat = styled.div`
   justify-content: center;
   align-items: center;
   background-color: white;
-  margin-left:37%;
+  margin-left: 37%;
   width: 73%;
   height: 100%;
-  padding-top:17%;
-  padding-bottom:19%;
+  padding-top: 17%;
+  padding-bottom: 19%;
 
   @media (max-width: 928px) {
-    margin-left:43%;
+    margin-left: 43%;
   }
 
   @media (max-width: 857px) {
-    margin-left:48%;
+    margin-left: 48%;
   }
-  
+
   @media (max-width: 821px) {
     margin-left: 37%;
     width: 63%;
   }
 
   @media (max-width: 729px) {
-    margin-left:44%;
+    margin-left: 44%;
   }
 
   @media (max-width: 670px) and (min-width: 601px) {
-    padding-left:10%;
+    padding-left: 10%;
   }
 `;

@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Cores } from "../../variaveis";
+import styled from 'styled-components';
+import { Cores } from '../../variaveis';
 
 export const BarraLateral = styled.div`
   position: absolute;
@@ -13,14 +13,14 @@ export const BarraLateral = styled.div`
   background-color: white;
   justify-content: center;
   align-items: center;
-  min-width:300px;
+  min-width: 300px;
 
   @media (max-height: 741px) and (min-height: 739px) {
-      height:740px;
+    height: 740px;
   }
 
   @media (max-height: 852px) and (min-height: 843px) {
-    height:850px;
+    height: 850px;
     border-bottom: 0ch;
   }
 
@@ -34,8 +34,8 @@ export const BarraLateral = styled.div`
   }
 
   @media (max-width: 280px) {
-    min-width:280px;
-    width:280px;
+    min-width: 280px;
+    width: 280px;
   }
 `;
 
@@ -60,140 +60,180 @@ export const HeaderBarraLateralChat = styled.div`
   @media (max-width: 420px) {
     padding-left: 3%;
   }
-
-  `;
+`;
 
 export const ListaPessoasChat = styled.div`
-height: 80%;
-display: block;
-align-items: flex-start;
-justify-content: flex-start;
-overflow-y: scroll;
-::-webkit-scrollbar{display:none;}
-
+  height: 80%;
+  display: block;
+  align-items: flex-start;
+  justify-content: flex-start;
+  overflow-y: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const PessoaChat = styled.button`
-display: flex;
-padding-left: 7%;
-padding-bottom: 10%;
-background-color: transparent;
-border-color: transparent;
-width: 100%;
+  display: flex;
+  padding-left: 5%;
+  padding-bottom: 10%;
+  background-color: transparent;
+  border-color: transparent;
+  width: 95%;
 
-@media (max-width: 280px) {
-  padding-left: 0%;
+  @media (max-width: 280px) {
+    padding-left: 0%;
   }
 `;
 
 export const NomeMensagem = styled.div`
-padding-left: 2.5%;
+  padding-left: 2.5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 export const NomePessoa = styled.div`
-display: ruby;
-font-size: 25px;
-font-weight: 500;
-line-height: 29px;
-text-align: left;
-margin-top: -1%;
-max-width: 15.5ch;
-overflow: hidden;
-text-overflow: ellipsis;
-white-space: nowrap;
+  /* display: ruby; */
+  font-size: 23px;
+  font-weight: 500;
+  line-height: 29px;
+  text-align: left;
+  /* margin-top: -1%; */
+  max-width: 18ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  @media (max-width: 1289px) {
+    max-width: 15ch;
+  }
+  // colocar @media 1178
 `;
 
 export const ImagemPessoa = styled.div`
-width:81.3px;
-height:75px;
+  width: 81.3px;
+  height: 75px;
 `;
 
 export const BolaAzul = styled.div`
-display: flex;
-margin-top: -2%;
-margin-left:30ch;
-height: 13px;
-width: 13px;
-background-color: ${Cores.lilas[1]};
-border-radius: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  height: 19px;
+  width: fit-content;
+  text-align: center;
+  padding-right: 5.8px;
+  padding-left: 5px;
+  padding-bottom: 0.5%;
+  margin-top: -2%;
+  margin-left: 2ch;
+  background-color: ${Cores.lilas[1]};
+  border-radius: 50px;
 
-@media (max-width: 1385px){
-    margin-left: 28ch;
+  @media (max-width: 1446px) and (min-width: 1361px) {
+    margin-left: -1ch;
+    margin-top: 5%;
   }
 
-  @media (max-width: 1300px) and (min-width: 1211px){
-    margin-left: 25ch;
+  @media (max-width: 1361px) and (min-width: 1290px) {
+    margin-left: -1.5ch;
+    margin-top: 5%;
   }
 
-  @media (max-width: 1212px) and (min-width: 669px){
-    margin-left: 21ch;
+  @media (max-width: 1289px) and (min-width: 1221px) {
+    margin-left: 0;
+    margin-top: 5%;
+  }
+
+  @media (max-width: 1220px) and (min-width: 1203px) {
+    margin-left: -5px;
+    margin-top: 5%;
+  }
+
+  @media (max-width: 1202px) and (min-width: 1163px) {
+    margin-left: -15px;
+    margin-top: 5%;
+  }
+
+  @media (max-width: 1163px) and (min-width: 671px) {
+    margin-left: -30px;
+    margin-top: 10%;
   }
 
   @media (max-width: 670px) and (min-width: 575px) {
-    margin-left: 55ch;
-  }
-
-  @media (max-width: 574px) and (min-width: 465px) {
-    margin-left: 40ch;
-  }
-
-  @media (max-width: 465px) and (min-width: 414px) {
-    margin-left: 34ch;
-  }
-
-  @media (max-width: 346px)  {
     margin-left: 25ch;
   }
 
-  @media (max-width: 320px)  {
-    margin-left: 22ch;
+  @media (max-width: 574px) and (min-width: 465px) {
+    margin-left: 4ch;
+  }
+
+  @media (max-width: 465px) and (min-width: 380px) {
+    margin-left: 3ch;
+  }
+
+  @media (max-width: 379px) {
+    margin-left: -10px;
+    margin-top: 5%;
+  }
+
+  @media (max-width: 345px) {
+    margin-left: -22px;
+    margin-top: 5%;
+  }
+
+  @media (max-width: 329px) {
+    margin-left: -35px;
+    margin-top: 5%;
   }
 `;
 
 export const MensagemPessoa = styled.div`
-display: ruby;
-font-size: 25px;
-font-weight: ${(props) => props.naoVisto > 0 ? 650 : 400};
-line-height: 29px;
-text-align: left;
-margin-top: 6%;
-max-width: 16ch;
-overflow: hidden;
-text-overflow: ellipsis;
-white-space: nowrap;
+  /* display: ruby; */
+  font-size: 25px;
+  font-weight: ${(props) => (props.naoVisto > 0 ? 650 : 400)};
+  line-height: 29px;
+  text-align: left;
+  margin-top: 6%;
+  max-width: 16ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
-@media (max-width: 670px) and (min-width: 575px){
-  margin-top: 4%;
-}
-
-@media (max-width: 1277px) {
-  max-width: 12ch;
+  @media (max-width: 670px) and (min-width: 575px) {
+    margin-top: 4%;
   }
 
-@media (max-width: 670px) {
-max-width: 15ch;
-}
+  @media (max-width: 1330px) {
+    max-width: 12ch;
+  }
 
-@media (max-width: 280px) {
-  max-width: 13ch;
+  @media (max-width: 670px) {
+    max-width: 15ch;
+  }
+
+  @media (max-width: 280px) {
+    max-width: 13ch;
   }
 `;
 
 export const Pessoa = styled.div`
-display: flex;
+  display: flex;
 `;
 
 export const BarraPesquisaChat = styled.div`
-width: 80%;
-height: 52%;
-min-height :30px;
-max-height :40px;
-border-width: 2px;
-border-style: solid;
-border-color: ${Cores.cinza[3]};
-background-color: ${Cores.cinza[5]};
-align-items: center;
-display: flex;
-border-radius: 3px;
-padding-right: 2%;
+  width: 80%;
+  height: 52%;
+  min-height: 30px;
+  max-height: 40px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: ${Cores.cinza[3]};
+  background-color: ${Cores.cinza[5]};
+  align-items: center;
+  display: flex;
+  border-radius: 3px;
+  padding-right: 2%;
 `;
