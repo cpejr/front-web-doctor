@@ -96,3 +96,15 @@ export const Rotulo = styled.div`
     font-size: 0.9em;
   }
 `;
+
+export const TituloDoInput = styled.div`
+  width: 100%;
+  font-family: "Barlow", sans-serif;
+  font-weight: 400;
+  font-size: 1em;
+  margin-top: 5%;
+  @media (max-width: 580px) {
+    font-size: 12px;
+    text-align: center;
+  }
+`;

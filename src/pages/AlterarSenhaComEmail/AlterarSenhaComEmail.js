@@ -12,6 +12,7 @@ import {
   BotoesMesmaLinha,
   Titulo,
   Rotulo,
+  TituloDoInput
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import AddToast from "../../components/AddToast/AddToast";
@@ -90,8 +91,9 @@ function AlterarSenhaComEmail() {
         <Caixa>
           <Titulo>Recuperação de senha:</Titulo>
           <InputVertical>
+            <TituloDoInput>Digite seu e-mail registrado no DoctorApp:</TituloDoInput>
             <Input
-              placeholder="Digite seu e-mail registrado no DoctorApp"
+              placeholder="E-mail"
               backgroundColor={Cores.cinza[7]}
               color={Cores.preto}
               fontSize="1em"
