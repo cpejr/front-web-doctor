@@ -210,7 +210,7 @@ export default function ConversaAberta({ socket }) {
         ></img>
         <NomePessoa>{conversaSelecionada?.conversaCom?.nome}</NomePessoa>
       </HeaderConversaAberta>
-      <CorpoConversaAberta ref={scrollRef}>
+      <CorpoConversaAberta>
         {carregando ? (
           <Spin
             indicator={antIcon}
