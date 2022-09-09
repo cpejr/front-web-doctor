@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
+import { LoadingOutlined, StarOutlined, StarFilled, UserOutlined } from "@ant-design/icons";
 import { Spin, Modal, Input } from "antd";
 import ModalFormulario from "../../components/ModalFormulario";
 import {
@@ -31,6 +31,7 @@ import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
+import { sleep } from "../../utils/sleep";
 
 function FormularioEspecifico(props) {
   const { Search } = Input;
@@ -44,6 +45,7 @@ function FormularioEspecifico(props) {
   const [perguntas, setPerguntas] = useState();
   const [titulo, setTitulo] = useState();
   const [idFormularioPaciente, setIdFormularioPaciente] = useState();
+  const [contador, setContador] = useState(0);
 
 
   const [carregando, setCarregando] = useState(true);
@@ -70,8 +72,10 @@ function FormularioEspecifico(props) {
       await managerService.GetFormularioPacientesPorFormulario(
         props.location.state.id
       );
-
     setformularioPacientes(respostaFormularios);
+    respostaFormularios.forEach((formulario) => {
+      setandoFotoDePerfil(formulario);
+    });
     setCarregando(false);
 
     const formularioRespostaPendente = respostaFormularios.filter(
@@ -85,7 +89,19 @@ function FormularioEspecifico(props) {
     setFormularioResposta(formularioResposta);
   }
 
-function abrindoModalFormulario(id, perguntas, titulo) {
+  async function setandoFotoDePerfil(formulario) {
+    const chave = formulario.avatar_url;
+    if (chave !== null && chave !== "") {
+      
+      const arquivo = await managerService.GetArquivoPorChave(chave);
+      Object.defineProperty(formulario, "fotoDePerfil", {
+        value: arquivo,
+      });
+    }
+
+  }
+
+  function abrindoModalFormulario(id, perguntas, titulo) {
     setPerguntas(perguntas);
     setTitulo(titulo);
     setIdFormularioPaciente(id);
@@ -94,12 +110,16 @@ function abrindoModalFormulario(id, perguntas, titulo) {
 
   useEffect(() => {
     pegandoFormularioPacientes();
-
   }, [props.location.state.id]);
 
   useEffect(() => {
     pegandoDadosFormularioEspecifico();
   }, [props.location.state.id]);
+
+  useEffect(() => {
+    setandoFotoDePerfil();
+  }, [formularioPacientes]);
+
 
   const usuariosFiltrados = formularioPacientes.filter(
     (formularioPacientes) => {
@@ -132,14 +152,14 @@ function abrindoModalFormulario(id, perguntas, titulo) {
       <ContainerFormularioEspecifico>
         {carregando ? (
           <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "49.5%",
-          }}
-        >
-          <Spin indicator={antIcon} />
-        </div>
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "49.5%",
+            }}
+          >
+            <Spin indicator={antIcon} />
+          </div>
         ) : (
           <>
             <ContainerFormularioCima>
@@ -207,23 +227,32 @@ function abrindoModalFormulario(id, perguntas, titulo) {
               {usuariosFiltrados?.map((value) => (
                 <BarraPaciente>
                   <BarraEsquerda>
-                    <ImagemPaciente
-                      src={fotoPerfil}
-                      className="fotoPerfil"
-                      alt="fotoPerfil"
-                      width="80px"
-                      height="80px"
-                    ></ImagemPaciente>
+                    {value.avatar_url === null || value.avatar_url === "" ? (
+                      <div>
+                        <UserOutlined
+                          style={{ fontSize: "6em" }}
+                        />
+                      </div>
+                    ) : (
+                      <div>
+
+                        <img
+                          src={value.fotoDePerfil}
+                          className="fotoPerfil"
+                          alt="fotoPerfil"
+                        ></img>
+                      </div>
+                    )}
                   </BarraEsquerda>
                   <BarraCentro>
                     <NomePaciente
-                    onClick={() =>
-                      abrindoModalFormulario(
-                        value.id,
-                        value.perguntas,
-                        value.titulo
-                      )
-                    }>
+                      onClick={() =>
+                        abrindoModalFormulario(
+                          value.id,
+                          value.perguntas,
+                          value.titulo
+                        )
+                      }>
                       {value.nome}
                     </NomePaciente>
                   </BarraCentro>
@@ -282,7 +311,7 @@ function abrindoModalFormulario(id, perguntas, titulo) {
                 marginTop="10%"
                 marginLeft="0%"
                 fontSizeMedia950="0.9em"
-                onClick={() => {}}
+                onClick={() => { }}
               >
                 Gerar documento Word
               </Button>
