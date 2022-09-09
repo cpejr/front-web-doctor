@@ -439,7 +439,8 @@ function PerfilPaciente(props) {
       <Modal
         visible={modalFormulario}
         onCancel={() => setModalFormulario(false)}
-        width={"50%"}
+        style={{ minWidth: "250px", maxWidth: "800px" }}
+        width={"70%"}
         centered={true}
         footer={null}
       >
