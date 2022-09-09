@@ -178,6 +178,7 @@ function ListaUsuarios() {
         if (usuario.tipo === "PACIENTE" || usuario.tipo === "SECRETARIA(O)") {
           setUsuarios((usuarios) => [...usuarios, usuario]);
           setandoUltimaConsulta(usuario, consultas);
+          setandoFotoDePerfil2(usuario);
         }
       });
     } else {
@@ -185,6 +186,7 @@ function ListaUsuarios() {
         if (usuario.tipo === "PACIENTE") {
           setUsuarios((usuarios) => [...usuarios, usuario]);
           setandoUltimaConsulta(usuario, consultas);
+          setandoFotoDePerfil2(usuario);
         }
       });
     }
@@ -242,6 +244,20 @@ function ListaUsuarios() {
       state: { tipo },
     });
   }
+
+
+  async function setandoFotoDePerfil2(usuario){
+    const chave = usuario.avatar_url;
+
+    if(chave !== null && chave !== ""){
+      const arquivo = await managerService.GetArquivoPorChave(chave);
+      Object.defineProperty(usuario, "fotoDePerfil", {
+        value: arquivo,
+      });
+    }
+
+  }
+
 
   async function setandoUltimaConsulta(usuario, consultas) {
     if (usuario.tipo === "SECRETARIA(O)") {
@@ -445,7 +461,13 @@ function ListaUsuarios() {
                     />
                   </Imagem>
                   ) : (
-                  <Imagem>{value.avatar_url}</Imagem>
+                  <Imagem>
+                      <img
+                      src={value.fotoDePerfil}
+                      className="foto"
+                      alt="fotoPerfil"
+                    ></img>
+                  </Imagem>
                   )}
                   <Nome>
                     <div
