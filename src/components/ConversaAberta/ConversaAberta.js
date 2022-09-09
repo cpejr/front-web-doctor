@@ -81,7 +81,7 @@ export default function ConversaAberta({ socket }) {
   }, [conversaSelecionada]);
 
   useEffect(() => {
-    inputMensagemRef?.current?.focus();
+    inputMensagemConteudoRef?.current?.focus();
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [mensagens]);
 
@@ -160,8 +160,6 @@ export default function ConversaAberta({ socket }) {
         receptorId: conversaSelecionada.conversaCom.id,
       });
     } else {
-      console.log('oxe');
-      console.log(conversaSelecionada);
       enviarConversa();
     }
 
