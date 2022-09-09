@@ -13,12 +13,17 @@ import { redirecionamento, sleep } from "../../utils/sleep";
 import AddToast from "../AddToast/AddToast";
 import { toast } from "react-toastify";
 
+
 function Header(props) {
   const email = sessionStorage.getItem("@doctorapp-Email");
   const [tipo, setTipo] = useState([]);
+  const [usuario, setUsuario] = useState({});
+  
+
 
   async function pegandoTipo() {
     const resposta = await managerService.GetDadosUsuario(email);
+    setUsuario(resposta.dadosUsuario);
     setTipo(resposta.dadosUsuario.tipo);
   }
 
@@ -297,25 +302,50 @@ function Header(props) {
           >
             Chat
           </Button>
-          <Button
+          {usuario.avatar_url === null || usuario.avatar_url === "" ? (
+            <Button
+              fontSizeMedia1080="1rem"
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color={Cores.branco}
+              height="50px"
+              width="50px"
+            >
+
+              <Dropdown
+                onClick={(e) => e.preventDefault()}
+                overlay={menuPerfil}
+                placement={"bottom"}
+              >
+                <UserOutlined style={{ fontSize: "1.5em" }} />
+              </Dropdown>
+            </Button>
+          ) : (
+            <Button
             fontSizeMedia1080="1rem"
             backgroundColor="transparent"
             borderColor="transparent"
             color={Cores.branco}
             height="50px"
+            width="50px"
           >
+
             <Dropdown
               onClick={(e) => e.preventDefault()}
               overlay={menuPerfil}
               placement={"bottom"}
             >
-              <UserOutlined style={{ fontSize: "1.5em" }} />
+              <div>
+                {usuario.avatar_url}
+              </div>
             </Dropdown>
           </Button>
+          )}
+
         </BotoesHeader>
       </ContainerHeader>
       {props.children}
-      <AddToast/>
+      <AddToast />
     </div>
   );
 }
