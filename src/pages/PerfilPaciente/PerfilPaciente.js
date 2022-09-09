@@ -3,6 +3,7 @@ import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
 import { Spin } from "antd";
 import { Modal } from "antd";
 import { toast } from "react-toastify";
+import { MenuOutlined, UserOutlined } from "@ant-design/icons";
 import {
   ContainerPerfil,
   Perfil,
@@ -195,13 +196,22 @@ function PerfilPaciente(props) {
             <>
               <PerfilEsquerda>
                 <PerfilSuperior>
+                {usuario.avatar_url === null || usuario.avatar === "" ? (
                   <FotoPerfil>
-                    <img
-                      src={logoGuilherme}
-                      className="foto"
-                      alt="logoGuilherme"
-                    ></img>
+                    <UserOutlined
+                    style={{ fontSize: "6.5em" }}
+                    />
                   </FotoPerfil>
+                  ) : (
+                    <FotoPerfil>
+                      <img
+                        src={usuario.avatar_url}
+                        className="foto"
+                        alt="fotoPerfil"
+                      ></img>
+                    </FotoPerfil>
+                    
+                  )}
                   <Dados>
                     <Nome>{usuario.nome}</Nome>
                     <Data> Nascimento: {dataNascimento}</Data>

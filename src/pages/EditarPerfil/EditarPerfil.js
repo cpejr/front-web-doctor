@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined, UserOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { useHistory } from "react-router-dom";
 import {
@@ -169,12 +169,12 @@ function EditarPerfil() {
   useEffect(() => {
     setCpfMasked(
       cpf.slice(+0, -8) +
-        "." +
-        cpf.slice(+3, -5) +
-        "." +
-        cpf.slice(+6, -2) +
-        "-" +
-        cpf.slice(-2)
+      "." +
+      cpf.slice(+3, -5) +
+      "." +
+      cpf.slice(+6, -2) +
+      "-" +
+      cpf.slice(-2)
     );
   }, [cpf]);
   useEffect(() => {
@@ -183,16 +183,16 @@ function EditarPerfil() {
   useEffect(() => {
     setTelMasked(
       "(" +
-        telefone.slice(0, -9) +
-        ") " +
-        telefone.slice(2, -4) +
-        "-" +
-        telefone.slice(-4)
+      telefone.slice(0, -9) +
+      ") " +
+      telefone.slice(2, -4) +
+      "-" +
+      telefone.slice(-4)
     );
   }, [telefone]);
   useEffect(() => {
     setDataMasked(
-      dataNascimento.slice(0, 10) 
+      dataNascimento.slice(0, 10)
     );
   }, [dataNascimento]);
 
@@ -325,7 +325,7 @@ function EditarPerfil() {
       });
     }
 
-    
+
 
     if (name === "cpf") {
       setEstado({ ...estado, [name]: maskCPF(value) });
@@ -341,22 +341,22 @@ function EditarPerfil() {
     const { name, value } = e.target;
 
 
-    
-    if(name !== "numero" && name!== "pais" && name!=="cidade") {
+
+    if (name !== "numero" && name !== "pais" && name !== "cidade") {
 
       if (value) {
         setTudoNulo({ ...tudoNulo, [name]: false });
       }
 
-    } else if (name === "numero" && maskApenasNumeros(value) !== ""){
+    } else if (name === "numero" && maskApenasNumeros(value) !== "") {
       setTudoNulo({ ...tudoNulo, [name]: false });
-    } else if ((name === "pais" || name === "cidade") && maskApenasLetras(value) !== ""){
+    } else if ((name === "pais" || name === "cidade") && maskApenasLetras(value) !== "") {
       setTudoNulo({ ...tudoNulo, [name]: false });
     }
 
-    
 
-   
+
+
 
     if (name === "cep" && value.length <= 8 && value.length > 0) {
       setErro({ ...erro, [name]: true });
@@ -401,15 +401,25 @@ function EditarPerfil() {
     <ContainerEditarPerfil>
       <ColunaEsquerda>
         <BlocoSuperior>
-          <ImagemPerfil>
-            <img
-              src={fotoPerfil}
-              className="fotoPerfil"
-              alt="fotoPerfil"
-              width="100%"
-              height="90%"
-            ></img>
-          </ImagemPerfil>
+          {usuario.avatar_url === null || usuario.avatar_url === "" ? (
+            <ImagemPerfil>
+              <UserOutlined
+                style={{ fontSize: "14em", 
+                          marginBottom: "20px"
+                      }}
+              />
+            </ImagemPerfil>
+          ) : (
+            <ImagemPerfil>
+              <img
+                src={fotoPerfil}
+                className="fotoPerfil"
+                alt="fotoPerfil"
+                width="100%"
+                height="90%"
+              ></img>
+            </ImagemPerfil>
+          )}
           <Button
             backgroundColor="transparent"
             borderColor="transparent"
@@ -417,7 +427,7 @@ function EditarPerfil() {
             fontSize="1em"
             textDecoration="underline"
             height="10px"
-            onClick={() => {}}
+            onClick={() => { }}
           >
             Alterar Foto de Perfil
           </Button>
