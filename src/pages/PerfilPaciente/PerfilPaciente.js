@@ -121,8 +121,8 @@ function PerfilPaciente(props) {
     const chave = usuario.avatar_url
     const arquivo = await managerService.GetArquivoPorChave(chave);
     setFotoDePerfil(arquivo);
-
   }
+  
   useEffect(() => {
     setandoFotoDePerfil();
   }, [usuario]);

@@ -43,6 +43,7 @@ function EditarPerfil() {
   const [complemento, setComplemento] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [carregando, setCarregando] = useState(true);
+  const [fotoDePerfil, setFotoDePerfil] = useState("");
   const [erro, setErro] = useState({
     cpf: false,
     telefone: false,
@@ -156,11 +157,21 @@ function EditarPerfil() {
     }
   }
 
+  async function setandoFotoDePerfil() {
+    const chave = usuario.avatar_url
+    const arquivo = await managerService.GetArquivoPorChave(chave);
+    setFotoDePerfil(arquivo);
+  }
+
   useEffect(() => {
     if (complemento === "") {
       setComplemento("Complemento");
     }
   }, []);
+
+  useEffect(() => {
+    setandoFotoDePerfil();
+  }, [usuario]);
 
   useEffect(() => {
     pegandoDados();
@@ -412,7 +423,7 @@ function EditarPerfil() {
           ) : (
             <ImagemPerfil>
               <img
-                src={fotoPerfil}
+                src={fotoDePerfil}
                 className="fotoPerfil"
                 alt="fotoPerfil"
                 width="100%"

@@ -18,7 +18,8 @@ function Header(props) {
   const email = sessionStorage.getItem("@doctorapp-Email");
   const [tipo, setTipo] = useState([]);
   const [usuario, setUsuario] = useState({});
-  
+  const [fotoDePerfil, setFotoDePerfil] = useState("");
+
 
 
   async function pegandoTipo() {
@@ -41,6 +42,17 @@ function Header(props) {
       alert(error);
     }
   }
+
+  async function setandoFotoDePerfil() {
+    const chave = usuario.avatar_url
+    const arquivo = await managerService.GetArquivoPorChave(chave);
+    setFotoDePerfil(arquivo);
+  }
+
+  useEffect(() => {
+    setandoFotoDePerfil();
+  }, [usuario]);
+
 
   const history = useHistory();
 
@@ -322,24 +334,28 @@ function Header(props) {
             </Button>
           ) : (
             <Button
-            fontSizeMedia1080="1rem"
-            backgroundColor="transparent"
-            borderColor="transparent"
-            color={Cores.branco}
-            height="50px"
-            width="50px"
-          >
-
-            <Dropdown
-              onClick={(e) => e.preventDefault()}
-              overlay={menuPerfil}
-              placement={"bottom"}
+              fontSizeMedia1080="1rem"
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color={Cores.branco}
+              height="50px"
+              width="50px"
             >
-              <div>
-                {usuario.avatar_url}
-              </div>
-            </Dropdown>
-          </Button>
+
+              <Dropdown
+                onClick={(e) => e.preventDefault()}
+                overlay={menuPerfil}
+                placement={"bottom"}
+              >
+                <div>
+                  <img
+                    src={fotoDePerfil}
+                    className="foto"
+                    alt="fotoPerfil"
+                  ></img>
+                </div>
+              </Dropdown>
+            </Button>
           )}
 
         </BotoesHeader>

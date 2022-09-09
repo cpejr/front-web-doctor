@@ -44,6 +44,7 @@ function Perfil(props) {
   const [perfilSelecionado, setPerfilSelecionado] = useState();
   const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState("");
   const [botaoVisivel, setBotaoVisivel] = useState(true);
+  const [fotoDePerfil, setFotoDePerfil] = useState("");
 
   const [carregando, setCarregando] = useState(true);
   const antIcon = (
@@ -102,6 +103,16 @@ function Perfil(props) {
     window.location.href = "/login"
   }
 
+  async function setandoFotoDePerfil() {
+    const chave = usuario.avatar_url
+    const arquivo = await managerService.GetArquivoPorChave(chave);
+    setFotoDePerfil(arquivo);
+  }
+
+  useEffect(() => {
+    setandoFotoDePerfil();
+  }, [usuario]);
+
   return (
     <div>
       <Conteudo>
@@ -121,7 +132,7 @@ function Perfil(props) {
               ) : (
                 <FotoPerfil>
                   <img
-                    src={usuario.avatar_url}
+                    src={fotoDePerfil}
                     className="foto"
                     alt="fotoPerfil"
                   ></img>
