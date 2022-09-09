@@ -1,5 +1,10 @@
 import api from "../../services/api";
 
+
+export const EnviandoImagem = (base64) => api.post("/arquivo", {file: base64});
+
+
+
 export const logarUsuario = (email, senha) =>
   api.post("/login", {
     email,

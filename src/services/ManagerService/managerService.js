@@ -9,6 +9,24 @@ const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
 
+export const EnviandoImagem = async (file) => {
+   requesterService
+    .EnviandoImagem(file)
+    .then(() => {
+      toast.success("Foto adicionada com sucesso");
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      console.log("catch");
+      return false;
+    }); 
+
+  return;
+};
+
+
+
+
 export const requisicaoLogin = async (email, senha) => {
   try {
     const resposta = await requesterService.logarUsuario(email, senha);
