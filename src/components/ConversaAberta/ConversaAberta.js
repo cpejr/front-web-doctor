@@ -81,6 +81,7 @@ export default function ConversaAberta({ socket }) {
   }, [conversaSelecionada]);
 
   useEffect(() => {
+    inputMensagemRef?.current?.focus();
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [mensagens]);
 
@@ -166,7 +167,6 @@ export default function ConversaAberta({ socket }) {
 
     atualizarBarraLateral(novaMensagem);
     setInputMensagemConteudo('');
-    inputMensagemConteudoRef.current.focus();
 
     setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
   };
