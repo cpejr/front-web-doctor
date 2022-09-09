@@ -36,6 +36,7 @@ export default function BarraLateralChat() {
     setConversaSelecionada,
     imagemPerfilPadrão,
     componenteEstaMontadoRef,
+    inputMensagemRef,
   } = useContext(ChatContext);
 
   useEffect(() => {
@@ -60,6 +61,8 @@ export default function BarraLateralChat() {
   const cliqueNaConversa = (conversa) => {
     return async (e) => {
       e.preventDefault();
+
+      inputMensagemRef?.current?.focus();
 
       const index = conversas.findIndex(({ id }) => id === conversa.id);
       const copiaConversas = objCopiaProfunda(conversas);
