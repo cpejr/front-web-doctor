@@ -69,6 +69,8 @@ function PerfilPaciente(props) {
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
   const [tipoUsuario, setTipoUsuario] = useState(false);
   const abertoPeloUsuario = true;
+  const [fotoDePerfil, setFotoDePerfil] = useState("");
+
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
@@ -113,6 +115,17 @@ function PerfilPaciente(props) {
   useEffect(() => {
     pegandoDados();
   }, []);
+
+
+  async function setandoFotoDePerfil() {
+    const chave = usuario.avatar_url
+    const arquivo = await managerService.GetArquivoPorChave(chave);
+    setFotoDePerfil(arquivo);
+
+  }
+  useEffect(() => {
+    setandoFotoDePerfil();
+  }, [usuario]);
 
   async function pegandoListaFormularios() {
     const resposta = await managerService.GetRespostaFormularioIdUsuario(
@@ -204,7 +217,7 @@ function PerfilPaciente(props) {
                   ) : (
                     <FotoPerfil>
                       <img
-                        src={usuario.avatar_url}
+                        src={fotoDePerfil}
                         className="foto"
                         alt="fotoPerfil"
                       ></img>
