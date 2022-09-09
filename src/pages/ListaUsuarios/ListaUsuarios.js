@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Input, Select, Modal } from "antd";
-import { LoadingOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import { LoadingOutlined, PlusCircleOutlined, UserOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import {
   TopoPagina,
@@ -438,7 +438,15 @@ function ListaUsuarios() {
             <ContainerUsuarios>
               {usuariosFiltrados?.sort(ordenarusuarios).map((value) => (
                 <Usuario>
+                  {value.avatar_url === null || value.avatar_url === "" ? (
+                  <Imagem>
+                    <UserOutlined
+                      style={{ fontSize: "2.5em"}}
+                    />
+                  </Imagem>
+                  ) : (
                   <Imagem>{value.avatar_url}</Imagem>
+                  )}
                   <Nome>
                     <div
                       onClick={() =>
