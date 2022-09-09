@@ -91,7 +91,7 @@ function ModalConsultaMarcada(props) {
               <b>Tipo: </b>{consulta.tipo}
             </TextoInformacoes>
             <TextoInformacoes>
-              <b>Consultorio: </b> {consultorio}
+              <b>Consultório: </b> {consultorio}
             </TextoInformacoes>
             <TextoInformacoes>
               <b>Data: </b> {dataHora.slice(8, 10)}/{dataHora.slice(5, 7)}/{dataHora.slice(0, 4)}

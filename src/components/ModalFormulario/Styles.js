@@ -9,7 +9,7 @@ export const ContainerModalFormulario = styled.div`
   align-items: center;
   width: 100%;
   height: 50%;
-  padding: 2% 7% 2% 7%;
+  padding: 2% 7%;
 
   label{
     height: 100%;
