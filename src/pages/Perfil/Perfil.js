@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined, UserOutlined } from "@ant-design/icons";
 import {
   Conteudo,
   CaixaCima,
@@ -98,7 +98,7 @@ function Perfil(props) {
   }
   async function deletarEnderecoEUsuario() {
     await managerService.DeletarEnderecoEUsuario(usuario.id_endereco);
-    await sleep(1500); 
+    await sleep(1500);
     window.location.href = "/login"
   }
 
@@ -112,15 +112,21 @@ function Perfil(props) {
             </CaixaCimaCarregando>
           ) : (
             <FotoNomeData>
-              <FotoPerfil>
-                <img
-                  src={logoGuilherme}
-                  className="logo"
-                  alt="logoGuilherme"
-                  width="100%"
-                  height="100%"
-                ></img>
-              </FotoPerfil>
+              {usuario.avatar_url === null || usuario.avatar_url === "" ? (
+                <FotoPerfil>
+                  <UserOutlined
+                    style={{ fontSize: "6.5em" }}
+                  />
+                </FotoPerfil>
+              ) : (
+                <FotoPerfil>
+                  <img
+                    src={usuario.avatar_url}
+                    className="foto"
+                    alt="fotoPerfil"
+                  ></img>
+                </FotoPerfil>
+              )}
               <NomeData>
                 <Nome>{usuario.nome}</Nome>
                 <ConjuntoDataCPF>
