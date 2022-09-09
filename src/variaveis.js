@@ -21,6 +21,7 @@ export const Cores = {
   azulEscuro: "#0A0E3C",
   preto: "black",
   branco: "white",
+  verde: "green",
   vermelho: "red",
   amarelo: "#fdf1d1",
 };
