@@ -12,7 +12,7 @@ import Header from "./components/Header/Header";
 import ListaFormularios from "./pages/ListaFormularios";
 import ListaUsuarios from "./pages/ListaUsuarios";
 import Login from "./pages/Login";
-import ModeloReceitas from "./pages/ModeloReceitas";
+import CriacaoReceitas from "./pages/CriacaoReceitas";
 import Perfil from "./pages/Perfil";
 import PerfilPaciente from "./pages/PerfilPaciente";
 import RespostaFormulario from "./pages/RespostaFormulario";
@@ -142,8 +142,8 @@ function UserHeader() {
         />
         <RotasPrivadasMedico
           exact
-          path="/web/modeloreceitas"
-          component={ModeloReceitas}
+          path="/web/criacaoreceitas"
+          component={CriacaoReceitas}
         />
         <RotasPrivadas exact path="/web/perfil" component={Perfil} />
         <RotasPrivadas

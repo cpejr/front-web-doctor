@@ -1,30 +1,33 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Input, Select } from "antd";
 import { LoadingOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { compararDataRecente, FormatarDataShort } from "../../utils/tratamentoErros";
-import {
-  TopoPagina,
-  BarraPesquisa,
-  Botoes,
-  FiltroPaciente,
-  BotaoAdicionar,
-  ContainerListadeReceitas,
-  BarraEstetica,
-  DadosReceita,
-  ContainerReceitas,
-  Receita,
-  Titulo,
-  DataCriacao,
-  NomePaciente,
-  BotaoDeletar,
-} from "./Styles";
+  import {
+    TopoPagina,
+    BarraPesquisa,
+    Botoes,
+    FiltroPaciente,
+    BotaoAdicionar,
+    ContainerListadeReceitas,
+    BarraEstetica,
+    DadosReceita,
+    ContainerReceitas,
+    Receita,
+    Titulo,
+    DataCriacao,
+    NomePaciente,
+    BotaoDeletar,
+  } from "./Styles";
 import Button from "../../styles/Button";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 import { blue } from "@mui/material/colors";
 
 function AreaReceitas() {
+  const history = useHistory();
+
   const { Option } = Select;
   const { Search } = Input;
   const [pacientes, setPacientes] = useState([]);
@@ -50,6 +53,12 @@ function AreaReceitas() {
 
   function pacientesFiltrados(value) {
     setPacienteSelect(value);
+  }
+
+  function criandoReceita() {
+    history.push({
+      pathname: "/web/criacaoreceitas",
+    });
   }
 
   async function pegandoDadosReceitas() {
@@ -117,9 +126,9 @@ function AreaReceitas() {
                 fontSize="1em"
                 gap="5%"
                 widthMedia600="100%"
+                onClick={() => criandoReceita()}
               >
-                Receita
-                <PlusCircleOutlined style={{ color: Cores.branco }} />
+                 Adicionar Receita
               </Button>
             </BotaoAdicionar>
           </Botoes>
