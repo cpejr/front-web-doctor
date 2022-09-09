@@ -34,12 +34,13 @@ export const InfoEsquerda = styled.div`
   align-items: center;
   width: 50%;
   height: 100%;
-  min-height: 70vh;
+  height: 70vh;
   padding: 5%;
   margin-top: 5%;
 
   @media (max-width: 800px) {
     width: 100%;
+    height: 35vh;
   }
 `;
 
@@ -58,6 +59,87 @@ export const InfoDireita = styled.div`
   }
 `;
 
+export const ContainerConsultorio = styled.div`
+    display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 40%;
+  height: 40px;
+  @media (max-width: 1717px) {
+    margin-bottom: 5%;
+  }
+  @media (max-width: 560px) {
+    width: 100%;
+    margin-bottom: 5%;
+  }
+  @media (max-width: 1260px) and (min-width: 800px) {
+    width: 90%;
+    margin-bottom: 5%;
+  }
+  @media (max-width: 807px) and (min-width: 800px) {
+    padding-top: 15%;
+  }
+`;
+
+export const ContainerHorario = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 40%;
+  height: 40px;
+  //margin-bottom: 5%;
+  @media (max-width: 1470px) {
+    margin-bottom: 5%;
+  }
+  @media (max-width: 560px) {
+    width: 100%;
+    margin-bottom: 13%;
+  }
+  @media (max-width: 1260px) and (min-width: 800px) {
+    width: 90%;
+    margin-bottom: 5%;
+  }
+`;
+
+export const ContainerDuracaoConsulta = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 40%;
+  height: 40px;
+  @media (max-width: 1622px) {
+    margin-bottom: 5%;
+  }
+  @media  (max-width: 763px) and (min-width: 697px) {
+    margin-bottom: 9%;
+  }
+  @media (max-width: 560px) {
+    width: 100%;
+    margin-bottom: 5%;
+  }
+  @media (max-width: 1260px) and (min-width: 800px) {
+    width: 90%;
+    margin-bottom: 5%;
+  }
+`;
+
+export const TextoDoisSelects = styled.h3`
+  font-family: ${Fontes.barlow};
+  font-weight: 500;
+  font-size: 1.1em;
+  color: ${Cores.azulEscuro};
+  display: flex;
+  justify-content: start;
+  align-items: center;
+
+  @media (max-width: 560px){
+    margin-top: 15%;
+  }
+`;
+
 export const Usuario = styled.div`
   display: flex;
   flex-direction: row;
@@ -72,6 +154,11 @@ export const Usuario = styled.div`
   border-width: 1px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   margin-bottom: 2%;
+  overflow: auto;
+
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
 
   @media (max-width: 500px) {
     flex-direction: column;
@@ -88,17 +175,24 @@ export const Imagem = styled.img`
 `;
 
 export const Nome = styled.div`
-  width: 40%;
+  width: 50%;
   display: flex;
   justify-content: start;
   font-family: ${Fontes.barlow};
   font-weight: 400;
-  font-size: 1.4em;
+  font-size: 1.3em;
   color: ${Cores.azulEscuro};
 
-  @media (max-width: 500px) {
+  @media (max-width: 800px) {
     width: 50%;
-    font-size: 1.1em;
+    font-size: 1.3em;
+    justify-content: center;
+    text-align: center;
+    padding-right: 5%;
+  }
+  @media (max-width: 1319px) {
+    width: 55%;
+    height: 55px;
     justify-content: center;
     text-align: center;
   }
@@ -160,6 +254,9 @@ export const TamanhoInput = styled.div`
   width: 40%;
   height: 40px;
 
+  @media  (max-width: 601px) and (min-width: 560px) {
+    margin-bottom: 5%;
+  }
   @media (max-width: 560px) {
     width: 100%;
     margin-bottom: 5%;
@@ -260,7 +357,7 @@ export const InputDuracao = styled(Input)`
 export const TextoSelecioneUmaData = styled.h3`
   font-family: ${Fontes.barlow};
   font-weight: 500;
-  font-size: 0.9em;
+  font-size: 1.1em;
   color: ${Cores.azulEscuro};
   display: flex;
   justify-content: end;
