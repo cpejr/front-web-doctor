@@ -2,12 +2,12 @@ import styled from "styled-components";
 import { Cores, Fontes } from "../../variaveis";
 
 export const Container = styled.div`
-  width: 22vw;
+  width: 26vw;
   height: 100%;
   background-color: ${Cores.cinza[7]};
 
   @media (max-width: 1101px) {
-    width: 30vw;
+    width: 35vw;
   }
   @media (max-width: 830px) {
     width: 45vw;
