@@ -466,6 +466,8 @@ function ListaUsuarios() {
                       src={value.fotoDePerfil}
                       className="foto"
                       alt="fotoPerfil"
+                      height="100%"
+                      width="100%"
                     ></img>
                   </Imagem>
                   )}

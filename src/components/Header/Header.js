@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { ContainerHeader, BotoesHeader, MenuHeader, Logo } from "./Styles";
+import {
+  ContainerHeader,
+  BotoesHeader,
+  MenuHeader,
+  Logo,
+  CaixaFotoPerfil,
+} from "./Styles";
 import Button from "../../styles/Button";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import logoEscrita from "./../../assets/logoEscrita.png";
@@ -13,14 +19,11 @@ import { redirecionamento, sleep } from "../../utils/sleep";
 import AddToast from "../AddToast/AddToast";
 import { toast } from "react-toastify";
 
-
 function Header(props) {
   const email = sessionStorage.getItem("@doctorapp-Email");
   const [tipo, setTipo] = useState([]);
   const [usuario, setUsuario] = useState({});
   const [fotoDePerfil, setFotoDePerfil] = useState("");
-
-
 
   async function pegandoTipo() {
     const resposta = await managerService.GetDadosUsuario(email);
@@ -35,7 +38,7 @@ function Header(props) {
   async function handleLogout() {
     try {
       logout();
-      toast.success("Usuario deslogado com sucesso")
+      toast.success("Usuario deslogado com sucesso");
       await sleep(1500);
       redirecionamento("/login");
     } catch (error) {
@@ -44,7 +47,7 @@ function Header(props) {
   }
 
   async function setandoFotoDePerfil() {
-    const chave = usuario.avatar_url
+    const chave = usuario.avatar_url;
     const arquivo = await managerService.GetArquivoPorChave(chave);
     setFotoDePerfil(arquivo);
   }
@@ -52,7 +55,6 @@ function Header(props) {
   useEffect(() => {
     setandoFotoDePerfil();
   }, [usuario]);
-
 
   const history = useHistory();
 
@@ -323,7 +325,6 @@ function Header(props) {
               height="50px"
               width="50px"
             >
-
               <Dropdown
                 onClick={(e) => e.preventDefault()}
                 overlay={menuPerfil}
@@ -341,23 +342,23 @@ function Header(props) {
               height="50px"
               width="50px"
             >
-
               <Dropdown
                 onClick={(e) => e.preventDefault()}
                 overlay={menuPerfil}
                 placement={"bottom"}
               >
-                <div>
+                <CaixaFotoPerfil>
                   <img
                     src={fotoDePerfil}
                     className="foto"
                     alt="fotoPerfil"
+                    height="100%"
+                    width="100%"
                   ></img>
-                </div>
+                </CaixaFotoPerfil>
               </Dropdown>
             </Button>
           )}
-
         </BotoesHeader>
       </ContainerHeader>
       {props.children}

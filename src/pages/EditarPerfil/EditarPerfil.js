@@ -158,7 +158,7 @@ function EditarPerfil() {
   }
 
   async function setandoFotoDePerfil() {
-    const chave = usuario.avatar_url
+    const chave = usuario.avatar_url;
     const arquivo = await managerService.GetArquivoPorChave(chave);
     setFotoDePerfil(arquivo);
   }
@@ -180,12 +180,12 @@ function EditarPerfil() {
   useEffect(() => {
     setCpfMasked(
       cpf.slice(+0, -8) +
-      "." +
-      cpf.slice(+3, -5) +
-      "." +
-      cpf.slice(+6, -2) +
-      "-" +
-      cpf.slice(-2)
+        "." +
+        cpf.slice(+3, -5) +
+        "." +
+        cpf.slice(+6, -2) +
+        "-" +
+        cpf.slice(-2)
     );
   }, [cpf]);
   useEffect(() => {
@@ -194,23 +194,16 @@ function EditarPerfil() {
   useEffect(() => {
     setTelMasked(
       "(" +
-      telefone.slice(0, -9) +
-      ") " +
-      telefone.slice(2, -4) +
-      "-" +
-      telefone.slice(-4)
+        telefone.slice(0, -9) +
+        ") " +
+        telefone.slice(2, -4) +
+        "-" +
+        telefone.slice(-4)
     );
   }, [telefone]);
   useEffect(() => {
-    setDataMasked(
-      dataNascimento.slice(0, 10)
-    );
+    setDataMasked(dataNascimento.slice(0, 10));
   }, [dataNascimento]);
-
-
-
-
-
 
   useEffect(() => {
     if (!estadoBack.nome) errors.nome = true;
@@ -226,7 +219,6 @@ function EditarPerfil() {
     if (!enderecoBack.rua) errors.rua = true;
     if (!enderecoBack.numero) errors.numero = true;
     if (!enderecoBack.complemento) errors.complemento = true;
-
 
     setTudoNulo({ ...tudoNulo, ...errors });
   }, [estadoBack, enderecoBack]);
@@ -336,8 +328,6 @@ function EditarPerfil() {
       });
     }
 
-
-
     if (name === "cpf") {
       setEstado({ ...estado, [name]: maskCPF(value) });
       setEstadoBack({ ...estadoBack, [name]: maskApenasNumerosCpfTel(value) });
@@ -351,23 +341,18 @@ function EditarPerfil() {
   function preenchendoEndereco(e) {
     const { name, value } = e.target;
 
-
-
     if (name !== "numero" && name !== "pais" && name !== "cidade") {
-
       if (value) {
         setTudoNulo({ ...tudoNulo, [name]: false });
       }
-
     } else if (name === "numero" && maskApenasNumeros(value) !== "") {
       setTudoNulo({ ...tudoNulo, [name]: false });
-    } else if ((name === "pais" || name === "cidade") && maskApenasLetras(value) !== "") {
+    } else if (
+      (name === "pais" || name === "cidade") &&
+      maskApenasLetras(value) !== ""
+    ) {
       setTudoNulo({ ...tudoNulo, [name]: false });
     }
-
-
-
-
 
     if (name === "cep" && value.length <= 8 && value.length > 0) {
       setErro({ ...erro, [name]: true });
@@ -404,7 +389,6 @@ function EditarPerfil() {
         ...enderecoBack,
         [name]: maskApenasNumeros(value),
       });
-
     }
   }
 
@@ -415,9 +399,7 @@ function EditarPerfil() {
           {usuario.avatar_url === null || usuario.avatar_url === "" ? (
             <ImagemPerfil>
               <UserOutlined
-                style={{ fontSize: "14em", 
-                          marginBottom: "20px"
-                      }}
+                style={{ marginBottom: "20px" }}
               />
             </ImagemPerfil>
           ) : (
@@ -427,7 +409,7 @@ function EditarPerfil() {
                 className="fotoPerfil"
                 alt="fotoPerfil"
                 width="100%"
-                height="90%"
+                height="100%"
               ></img>
             </ImagemPerfil>
           )}
@@ -438,7 +420,7 @@ function EditarPerfil() {
             fontSize="1em"
             textDecoration="underline"
             height="10px"
-            onClick={() => { }}
+            onClick={() => {}}
           >
             Alterar Foto de Perfil
           </Button>

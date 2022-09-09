@@ -100,11 +100,11 @@ function Perfil(props) {
   async function deletarEnderecoEUsuario() {
     await managerService.DeletarEnderecoEUsuario(usuario.id_endereco);
     await sleep(1500);
-    window.location.href = "/login"
+    window.location.href = "/login";
   }
 
   async function setandoFotoDePerfil() {
-    const chave = usuario.avatar_url
+    const chave = usuario.avatar_url;
     const arquivo = await managerService.GetArquivoPorChave(chave);
     setFotoDePerfil(arquivo);
   }
@@ -125,9 +125,7 @@ function Perfil(props) {
             <FotoNomeData>
               {usuario.avatar_url === null || usuario.avatar_url === "" ? (
                 <FotoPerfil>
-                  <UserOutlined
-                    style={{ fontSize: "6.5em" }}
-                  />
+                  <UserOutlined />
                 </FotoPerfil>
               ) : (
                 <FotoPerfil>
@@ -135,6 +133,8 @@ function Perfil(props) {
                     src={fotoDePerfil}
                     className="foto"
                     alt="fotoPerfil"
+                    height="100%"
+                    width="100%"
                   ></img>
                 </FotoPerfil>
               )}

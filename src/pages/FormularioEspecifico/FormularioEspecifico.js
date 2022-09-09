@@ -25,7 +25,8 @@ import {
   MargemEstetica,
   NomePaciente,
   CentralizandoSpin,
-  ContainerInterno
+  ContainerInterno,
+  FotoPerfil
 } from "./Styles";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
@@ -228,20 +229,21 @@ function FormularioEspecifico(props) {
                 <BarraPaciente>
                   <BarraEsquerda>
                     {value.avatar_url === null || value.avatar_url === "" ? (
-                      <div>
+                      <FotoPerfil>
                         <UserOutlined
                           style={{ fontSize: "6em" }}
                         />
-                      </div>
+                      </FotoPerfil>
                     ) : (
-                      <div>
-
+                      <FotoPerfil>
                         <img
                           src={value.fotoDePerfil}
                           className="fotoPerfil"
                           alt="fotoPerfil"
+                          height="100%"
+                          width="100%"
                         ></img>
-                      </div>
+                      </FotoPerfil>
                     )}
                   </BarraEsquerda>
                   <BarraCentro>

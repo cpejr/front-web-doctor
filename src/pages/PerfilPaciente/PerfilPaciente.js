@@ -220,6 +220,8 @@ function PerfilPaciente(props) {
                         src={fotoDePerfil}
                         className="foto"
                         alt="fotoPerfil"
+                        height="100%"
+                        width="100%"
                       ></img>
                     </FotoPerfil>
                   )}
