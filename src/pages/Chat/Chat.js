@@ -14,15 +14,40 @@ const BACK_END_URL = 'http://localhost:3333';
 const Chat = () => {
   const [mensagemRecebida, setMensagemRecebida] = useState({});
   const [conversaRecebida, setConversaRecebida] = useState({});
+  const [carregandoConversas, setCarregandoConversas] = useState(true);
   const {
     usuarioId,
     conversas,
     setConversas,
     conversaSelecionada,
     setMensagens,
-    componenteEstaMontadoRef,
   } = useContext(ChatContext);
-  const socket = useRef();
+  const componenteEstaMontadoRef = useRef(null);
+  const socket = useRef(null);
+
+  useEffect(() => {
+    componenteEstaMontadoRef.current = true;
+
+    async function deletarConversasInativas() {
+      await managerService.deletarConversasInativas(usuarioId);
+    }
+
+    async function getConversas() {
+      setCarregandoConversas(true);
+
+      const resposta = await managerService.GetConversasUsuario(usuarioId);
+
+      if (componenteEstaMontadoRef.current) {
+        setConversas(resposta);
+        setCarregandoConversas(false);
+      }
+    }
+
+    deletarConversasInativas();
+    getConversas();
+
+    return () => (componenteEstaMontadoRef.current = false);
+  }, []);
 
   useEffect(() => {
     socket.current = io(BACK_END_URL);
@@ -79,13 +104,31 @@ const Chat = () => {
   useEffect(() => {
     if (checarObjVazio(conversaRecebida)) return;
 
-    setConversas((conversasLista) => [conversaRecebida, ...conversasLista]);
+    function atualizarBarraLateralNovaConversa(novaConversa) {
+      const index = conversas.findIndex(
+        (conversa) => conversa.id === novaConversa.id
+      );
+
+      if (index === -1) {
+        return setConversas((conversasLista) => [
+          novaConversa,
+          ...conversasLista,
+        ]);
+      }
+
+      const copiaConversas = objCopiaProfunda(conversas);
+      copiaConversas[index] = novaConversa;
+
+      setConversas(copiaConversas);
+    }
+
+    atualizarBarraLateralNovaConversa(conversaRecebida);
   }, [conversaRecebida]);
 
   return (
     <>
       <Container>
-        <BarraLateralChat />
+        <BarraLateralChat carregandoConversas={carregandoConversas} />
         {checarObjVazio(conversaSelecionada) ? (
           <MensagemInicial />
         ) : (
@@ -95,7 +138,7 @@ const Chat = () => {
 
       <ContainerMobile>
         {checarObjVazio(conversaSelecionada) ? (
-          <BarraLateralChat />
+          <BarraLateralChat carregandoConversas={carregandoConversas} />
         ) : (
           <ConversaAberta socket={socket.current} />
         )}

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   BarraPesquisaChat,
   ImagemPessoa,
@@ -25,9 +25,8 @@ import * as managerService from '../../services/ManagerService/managerService';
 import { ChatContext } from '../../contexts/ChatContext';
 import objCopiaProfunda from '../../utils/objCopiaProfunda';
 
-export default function BarraLateralChat() {
+export default function BarraLateralChat({ carregandoConversas }) {
   const [modalAdicionar, setModalAdicionar] = useState(false);
-  const [carregando, setCarregando] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const {
     usuarioId,
@@ -35,27 +34,7 @@ export default function BarraLateralChat() {
     setConversas,
     setConversaSelecionada,
     imagemPerfilPadrão,
-    componenteEstaMontadoRef,
   } = useContext(ChatContext);
-
-  useEffect(() => {
-    componenteEstaMontadoRef.current = true;
-
-    async function getConversas() {
-      setCarregando(true);
-
-      const resposta = await managerService.GetConversasUsuario(usuarioId);
-
-      if (componenteEstaMontadoRef.current) {
-        setConversas(resposta);
-        setCarregando(false);
-      }
-    }
-
-    getConversas();
-
-    return () => (componenteEstaMontadoRef.current = false);
-  }, []);
 
   const cliqueNaConversa = (conversa) => {
     return async (e) => {
@@ -118,7 +97,7 @@ export default function BarraLateralChat() {
           </Tooltip>
         </HeaderBarraLateralChat>
         <ListaPessoasChat>
-          {carregando ? (
+          {carregandoConversas ? (
             <Spin
               indicator={antIcon}
               style={{

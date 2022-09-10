@@ -38,8 +38,8 @@ export default function ConversaAberta({ socket }) {
     setConversas,
     mensagens,
     setMensagens,
-    componenteEstaMontadoRef,
   } = useContext(ChatContext);
+  const componenteEstaMontadoRef = useRef(null);
   const scrollRef = useRef(null);
   const inputMensagemConteudoRef = useRef(null);
 
@@ -96,7 +96,7 @@ export default function ConversaAberta({ socket }) {
 
     setConversas(moverArray(copiaConversas, index, 0));
   };
-  const enviarConversa = async () => {
+  const enviarConversa = async (ultima_mensagem) => {
     const index = conversas.findIndex(
       ({ id }) => id === conversaSelecionada.id
     );
@@ -112,7 +112,6 @@ export default function ConversaAberta({ socket }) {
 
     const {
       id,
-      ultima_mensagem,
       conversaCom: { id: receptorId },
     } = copiaConversas[index];
 
@@ -160,7 +159,7 @@ export default function ConversaAberta({ socket }) {
         receptorId: conversaSelecionada.conversaCom.id,
       });
     } else {
-      enviarConversa();
+      enviarConversa(novaMensagem);
     }
 
     atualizarBarraLateral(novaMensagem);
@@ -222,17 +221,15 @@ export default function ConversaAberta({ socket }) {
             }}
           />
         ) : (
-          <>
-            {mensagens?.map((m, idx) => (
-              <Mensagem
-                key={idx}
-                pertenceAoUsuarioAtual={m.pertenceAoUsuarioAtual}
-                conteudo={m.conteudo}
-                data_criacao={m.data_criacao}
-              />
-            ))}
-            <div ref={scrollRef}></div>
-          </>
+          mensagens?.map((m, idx) => (
+            <Mensagem
+              key={idx}
+              pertenceAoUsuarioAtual={m.pertenceAoUsuarioAtual}
+              conteudo={m.conteudo}
+              scrollRef={scrollRef}
+              data_criacao={m.data_criacao}
+            />
+          ))
         )}
       </CorpoConversaAberta>
       <FooterConversaAberta>

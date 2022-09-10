@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
   ContainerModalNovaConversa,
   Titulo,
@@ -17,13 +17,9 @@ function ModalNovaConversa({ setModalAdicionar }) {
   const [usuarios, setUsuarios] = useState([]);
   const [carregando, setCarregando] = useState(false);
   const [selecionaUsuarioId, setSelecionaUsuarioId] = useState('');
-  const {
-    usuarioId,
-    conversas,
-    setConversas,
-    setConversaSelecionada,
-    componenteEstaMontadoRef,
-  } = useContext(ChatContext);
+  const { usuarioId, conversas, setConversas, setConversaSelecionada } =
+    useContext(ChatContext);
+  const componenteEstaMontadoRef = useRef(null);
 
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
@@ -67,13 +63,13 @@ function ModalNovaConversa({ setModalAdicionar }) {
       id_receptor: usuarioSelecionadoDados.id,
       ativada: false,
     };
-    const dadosNovaConversa = await managerService.CriandoConversa(
+    const { id } = await managerService.CriandoConversa(
       dadosParaCriarNovaConversa
     );
 
     const novaConversa = {
-      id: dadosNovaConversa.id,
-      ativada: dadosNovaConversa.ativada,
+      id,
+      ativada: false,
       mensagensNaoVistas: 0,
       conversaCom: {
         id: usuarioSelecionadoDados.id,
@@ -82,10 +78,10 @@ function ModalNovaConversa({ setModalAdicionar }) {
       },
     };
 
-    setConversaSelecionada(novaConversa);
-    setCarregando(false);
     setModalAdicionar(false);
+    setCarregando(false);
     setSelecionaUsuarioId(null);
+    setConversaSelecionada(novaConversa);
     setConversas((conversasLista) => [novaConversa, ...conversasLista]);
   }
 

@@ -1,4 +1,4 @@
-import React, { createContext, useRef, useState } from 'react';
+import React, { createContext, useRef, useState, useEffect } from 'react';
 import { recebeUsuarioId } from '../../services/auth';
 
 const imagemPerfilPadrão =
@@ -12,7 +12,6 @@ export function ChatProvider({ children }) {
   const [conversaSelecionada, setConversaSelecionada] = useState({});
   const [mensagens, setMensagens] = useState([]);
   // Ref para uso em casos específicos de useEffects --> Prevenir erros
-  const componenteEstaMontadoRef = useRef(null);
   const inputMensagemRef = useRef(null);
 
   return (
@@ -26,7 +25,6 @@ export function ChatProvider({ children }) {
         mensagens,
         setMensagens,
         imagemPerfilPadrão,
-        componenteEstaMontadoRef,
         inputMensagemRef,
       }}
     >
