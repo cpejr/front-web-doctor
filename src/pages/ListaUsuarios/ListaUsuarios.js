@@ -190,7 +190,7 @@ function ListaUsuarios() {
         }
       });
     }
-    await sleep(700);
+    await sleep(1400);
     setCarregandoPagina(false);
   }
 
