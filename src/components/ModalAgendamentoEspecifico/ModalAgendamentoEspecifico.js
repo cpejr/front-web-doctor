@@ -46,7 +46,7 @@ function ModalAgendamentoEspecifico(props) {
   const [usuarios, setUsuarios] = useState([]);
   const [consultorios, setConsultorios] = useState([]);
   const [carregando, setCarregando] = useState();
-  const [nomeConsultorioPorId, setnomeConsultorioPorId] = useState();
+  const [nomeConsultorioPorId, setNomeConsultorioPorId] = useState();
   const [carregandoCadastro, setCarregandoCadastro] = useState();
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -89,13 +89,16 @@ function ModalAgendamentoEspecifico(props) {
     const resposta = await managerService.GetConsultorioPorId(
       consulta.id_consultorio
     );
-    setnomeConsultorioPorId(resposta.nome);
+    setNomeConsultorioPorId(resposta.nome);
   }
 
   useEffect(() => {
-    setandoNomeConsultorioPorId();
     pegandoPacientes();
   }, []);
+
+  useEffect(() => {
+    setandoNomeConsultorioPorId();
+  },);
 
   const errors = {};
   const [referenciaInputNulos, setReferenciaInputNulos] = useState({
@@ -436,9 +439,7 @@ function ModalAgendamentoEspecifico(props) {
             <Tooltip 
                 placement="topLeft" 
                 title =  {nomeConsultorioPorId}
-                color = {Cores.azul}
-                style = {{maxWidth: 20}}
-                >
+                color = {Cores.azul}>
               <Select
                 value={consulta.id_consultorio}
                 id="id_consultorio"
@@ -458,6 +459,7 @@ function ModalAgendamentoEspecifico(props) {
                 camposVazios={camposVazios.id_consultorio}
               >
                 <option value="" disabled selected>
+                  {nomeConsultorioPorId}
                   Consultório
                 </option>
                 {consultorios.map((consultorio) => (
