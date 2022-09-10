@@ -2,6 +2,7 @@ import React from "react";
 import Button from "../../styles/Button";
 import Input from "../../styles/Input";
 import Select from "../../styles/Select";
+import { Cores } from "../../variaveis";
 import { ContainerCriacaoReceitas, CardCriacaoReceitas, CriacaoReceitaNome, CriacaoReceitaCorpo, Titulo, NomeDoPaciente, Descricao, CriacaoReceitaBotoes } from "./Styles";
 
 function CriacaoReceitas() {
@@ -11,11 +12,52 @@ function CriacaoReceitas() {
         <CriacaoReceitaNome>Criação de Receita</CriacaoReceitaNome>
         <CriacaoReceitaCorpo>
           <Titulo>Título:</Titulo>
-          <Input></Input>
+          <Input
+          placeholder="Título"
+          backgroundColor={Cores.cinza[7]}
+          color={Cores.preto}
+          fontSize="1em"
+          width="100%"
+          marginTop="2%"
+          ></Input>
           <NomeDoPaciente>Nome do paciente</NomeDoPaciente>
-          <Select></Select>
+          <Select
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            fontSize="1em"
+            width="100%"
+            marginTop="2%"
+            name="id_usuario"
+            placeholder="Selecione um paciente"
+            onChange={(e) => {
+              validacaoCampos(e);
+            }}
+          >
+            <option value="" disabled selected>
+              Paciente
+            </option>
+
+            {usuarios.map((usuario) => (
+              <>
+                {carregando ? (
+                  <Spin indicator={antIcon} />
+                ) : (
+                  <option key={usuario.id} value={usuario.id} color="red">
+                    {usuario.nome}
+                  </option>
+                )}
+              </>
+            ))}
+          </Select>
           <Descricao>Descrição:</Descricao>
-          <Input></Input>
+          <Input
+          placeholder="Descrição"
+          backgroundColor={Cores.cinza[7]}
+          color={Cores.preto}
+          fontSize="1em"
+          width="100%"
+          marginTop="2%"
+          ></Input>
         </CriacaoReceitaCorpo>
         <CriacaoReceitaBotoes>
           <Button>CANCELAR</Button>

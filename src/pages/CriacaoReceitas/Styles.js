@@ -47,4 +47,5 @@ export const Descricao = styled.div`
 
 export const CriacaoReceitaBotoes = styled.div`
 display: flex;
+
 `;
