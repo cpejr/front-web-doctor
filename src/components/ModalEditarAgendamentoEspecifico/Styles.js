@@ -42,6 +42,15 @@ export const InfoEsquerda = styled.div`
     width: 100%;
     height: 35vh;
   }
+
+  @media (max-width: 800px) {
+    width: 100%;
+    height: 27vh;
+  }
+
+  @media (max-height: 637px) {
+    height: 33vh;
+  }
 `;
 
 export const InfoDireita = styled.div`
@@ -162,7 +171,8 @@ export const Usuario = styled.div`
 
   @media (max-width: 500px) {
     flex-direction: column;
-    height: 120px;
+    height: 70px;
+    padding-top: 20%;
   }
 `;
 
@@ -188,6 +198,7 @@ export const Nome = styled.div`
     font-size: 1.3em;
     justify-content: center;
     text-align: center;
+    align-items: center;
     padding-right: 5%;
   }
   @media (max-width: 1319px) {
@@ -264,6 +275,10 @@ export const TamanhoInput = styled.div`
   @media (max-width: 1260px) and (min-width: 800px) {
     width: 90%;
     margin-bottom: 5%;
+  }
+
+  @media (max-height: 750px) {
+    margin-top: 5%;
   }
 `;
 
