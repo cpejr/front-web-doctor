@@ -3,16 +3,13 @@ import Button from "../../styles/Button";
 import Input from "../../styles/Input";
 import Select from "../../styles/Select";
 import { Cores } from "../../variaveis";
-import { LoadingOutlined } from '@ant-design/icons';
-import { Spin } from "antd";
 import * as managerService from "../../services/ManagerService/managerService";
-import { ContainerCriacaoReceitas, CardCriacaoReceitas, CriacaoReceitaNome, CriacaoReceitaCorpo, Titulo, NomeDoPaciente, Descricao, CriacaoReceitaBotoes } from "./Styles";
+import { ContainerCriacaoReceitas, CardCriacaoReceitas, CriacaoReceitaNome, CriacaoReceitaCorpo, Titulo, NomeDoPaciente, Descricao, CriacaoReceitaBotoes, BotaoEnviar, BotaoCancelar } from "./Styles";
 
 function CriacaoReceitas() {
 
   const [usuarios, setUsuarios] = useState([]);
   const [carregando, setCarregando] = useState(false);
-  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   async function pegandoPacientes() {
     setCarregando(true);
@@ -73,8 +70,32 @@ function CriacaoReceitas() {
           ></Input>
         </CriacaoReceitaCorpo>
         <CriacaoReceitaBotoes>
-          <Button>CANCELAR</Button>
-          <Button>ENVIAR</Button>
+          <BotaoCancelar>
+          <Button
+          height="45px"
+          width="100%"
+          backgroundColor={Cores.branco}
+          borderColor={Cores.cinza[2]}
+          color={Cores.cinza[2]}
+          fontSize="1em"
+          fontSizeMedia1080="0.8em"
+          fontSizeMedia950="0.1em"
+          onClick={() => {}}
+          >CANCELAR</Button>
+          </BotaoCancelar>
+          <BotaoEnviar>
+          <Button
+          height="45px"
+          width="100%"
+          backgroundColor={Cores.lilas[1]}
+          borderColor={Cores.azul}
+          color={Cores.branco}
+          fontSize="1em"
+          fontSizeMedia1080="0.8em"
+          fontSizeMedia950="0.1em"
+          onClick={() => {}}
+          >ENVIAR</Button>
+          </BotaoEnviar>
         </CriacaoReceitaBotoes>  
       </CardCriacaoReceitas>
     </ContainerCriacaoReceitas>
