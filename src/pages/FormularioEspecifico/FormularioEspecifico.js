@@ -50,6 +50,8 @@ function FormularioEspecifico(props) {
 
 
   const [carregando, setCarregando] = useState(true);
+  const [carregandoFormulario, setCarregandoFormulario] = useState(true);
+
   const [statusSelect, setStatusSelect] = useState("");
   const { Option } = SelectTipos;
   const [busca, setBusca] = useState("");
@@ -59,7 +61,6 @@ function FormularioEspecifico(props) {
   );
 
   async function pegandoDadosFormularioEspecifico() {
-    setCarregando(true);
     const resposta = await managerService.GetFormularioEspecifico(
       props.location.state.id
     );
@@ -68,7 +69,6 @@ function FormularioEspecifico(props) {
   }
 
   async function pegandoFormularioPacientes() {
-    setCarregando(true);
     const respostaFormularios =
       await managerService.GetFormularioPacientesPorFormulario(
         props.location.state.id
@@ -77,8 +77,7 @@ function FormularioEspecifico(props) {
     respostaFormularios.forEach((formulario) => {
       setandoFotoDePerfil(formulario);
     });
-    setCarregando(false);
-
+    
     const formularioRespostaPendente = respostaFormularios.filter(
       (item) => item.status === false
     );
@@ -88,12 +87,14 @@ function FormularioEspecifico(props) {
       (item) => item.status !== false
     );
     setFormularioResposta(formularioResposta);
+    await sleep(1000);
+    setCarregandoFormulario(false);
   }
 
   async function setandoFotoDePerfil(formulario) {
     const chave = formulario.avatar_url;
     if (chave !== null && chave !== "") {
-      
+
       const arquivo = await managerService.GetArquivoPorChave(chave);
       Object.defineProperty(formulario, "fotoDePerfil", {
         value: arquivo,
@@ -151,7 +152,7 @@ function FormularioEspecifico(props) {
   return (
     <div>
       <ContainerFormularioEspecifico>
-        {carregando ? (
+        {carregandoFormulario ? (
           <div
             style={{
               position: "absolute",
@@ -228,23 +229,38 @@ function FormularioEspecifico(props) {
               {usuariosFiltrados?.map((value) => (
                 <BarraPaciente>
                   <BarraEsquerda>
-                    {value.avatar_url === null || value.avatar_url === "" ? (
-                      <FotoPerfil>
-                        <UserOutlined
-                          style={{ fontSize: "6em" }}
-                        />
-                      </FotoPerfil>
+                    {carregandoFormulario ? (
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: "50%",
+                          left: "49.5%",
+                        }}
+                      >
+                        <Spin indicator={antIcon} />
+                      </div>
                     ) : (
-                      <FotoPerfil>
-                        <img
-                          src={value.fotoDePerfil}
-                          className="fotoPerfil"
-                          alt="fotoPerfil"
-                          height="100%"
-                          width="100%"
-                        ></img>
-                      </FotoPerfil>
+                      <div>
+                        {value.avatar_url === null || value.avatar_url === "" ? (
+                          <FotoPerfil>
+                            <UserOutlined
+                              style={{ fontSize: "6em" }}
+                            />
+                          </FotoPerfil>
+                        ) : (
+                          <FotoPerfil>
+                            <img
+                              src={value.fotoDePerfil}
+                              className="fotoPerfil"
+                              alt="fotoPerfil"
+                              height="100%"
+                              width="100%"
+                            ></img>
+                          </FotoPerfil>
+                        )}
+                      </div>
                     )}
+
                   </BarraEsquerda>
                   <BarraCentro>
                     <NomePaciente
