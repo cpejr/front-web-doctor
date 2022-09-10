@@ -458,7 +458,6 @@ function ModalAgendamentoEspecifico(props) {
                 camposVazios={camposVazios.id_consultorio}
               >
                 <option value="" disabled selected>
-                  {nomeConsultorioPorId}
                   Consultório
                 </option>
                 {consultorios.map((consultorio) => (
