@@ -101,10 +101,10 @@ export const TituloDoInput = styled.div`
   width: 100%;
   font-family: "Barlow", sans-serif;
   font-weight: 400;
-  font-size: 1em;
+  font-size: 1.1em;
   margin-top: 5%;
-  @media (max-width: 580px) {
-    font-size: 12px;
+  @media (max-width: 590px) {
+    font-size: 13px;
     text-align: center;
   }
 `;
