@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { LoadingOutlined, StarOutlined, StarFilled, UserOutlined } from "@ant-design/icons";
+import {
+  LoadingOutlined,
+  StarOutlined,
+  StarFilled,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Spin, Modal, Input } from "antd";
 import ModalFormulario from "../../components/ModalFormulario";
 import {
@@ -26,7 +31,7 @@ import {
   NomePaciente,
   CentralizandoSpin,
   ContainerInterno,
-  FotoPerfil
+  FotoPerfil,
 } from "./Styles";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
@@ -48,14 +53,17 @@ function FormularioEspecifico(props) {
   const [idFormularioPaciente, setIdFormularioPaciente] = useState();
   const [contador, setContador] = useState(0);
 
-
   const [carregando, setCarregando] = useState(true);
+  const [carregandoFoto, setCarregandoFoto] = useState(true);
   const [carregandoFormulario, setCarregandoFormulario] = useState(true);
 
   const [statusSelect, setStatusSelect] = useState("");
   const { Option } = SelectTipos;
   const [busca, setBusca] = useState("");
-  const lowerBusca = busca.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const lowerBusca = busca
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
   );
@@ -77,7 +85,7 @@ function FormularioEspecifico(props) {
     respostaFormularios.forEach((formulario) => {
       setandoFotoDePerfil(formulario);
     });
-    
+
     const formularioRespostaPendente = respostaFormularios.filter(
       (item) => item.status === false
     );
@@ -94,13 +102,14 @@ function FormularioEspecifico(props) {
   async function setandoFotoDePerfil(formulario) {
     const chave = formulario.avatar_url;
     if (chave !== null && chave !== "") {
-
+      setCarregandoFoto(true);
       const arquivo = await managerService.GetArquivoPorChave(chave);
       Object.defineProperty(formulario, "fotoDePerfil", {
         value: arquivo,
       });
     }
-
+    await sleep(1700);
+    setCarregandoFoto(false);
   }
 
   function abrindoModalFormulario(id, perguntas, titulo) {
@@ -122,7 +131,6 @@ function FormularioEspecifico(props) {
     setandoFotoDePerfil();
   }, [formularioPacientes]);
 
-
   const usuariosFiltrados = formularioPacientes.filter(
     (formularioPacientes) => {
       if (lowerBusca === "" && statusSelect === "") {
@@ -130,16 +138,26 @@ function FormularioEspecifico(props) {
       } else {
         if (statusSelect === "true") {
           return (
-            formularioPacientes?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca) &&
-            formularioPacientes.status === true
+            formularioPacientes?.nome
+              ?.toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .includes(lowerBusca) && formularioPacientes.status === true
           );
         } else if (statusSelect === "false") {
           return (
-            formularioPacientes?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca) &&
-            formularioPacientes.status === false
+            formularioPacientes?.nome
+              ?.toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .includes(lowerBusca) && formularioPacientes.status === false
           );
         } else {
-          return formularioPacientes?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca);
+          return formularioPacientes?.nome
+            ?.toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .includes(lowerBusca);
         }
       }
     }
@@ -217,7 +235,7 @@ function FormularioEspecifico(props) {
                       onChange={(value) => usuariosFiltro(value)}
                     >
                       <Option value="">Todos os Usuários</Option>
-                      <Option value="true">Respondido      </Option>
+                      <Option value="true">Respondido </Option>
                       <Option value="false">Resposta Pendente</Option>
                     </SelectTipos>
                   </RotuloBarraDeBuscaOpcoes>
@@ -241,26 +259,40 @@ function FormularioEspecifico(props) {
                       </div>
                     ) : (
                       <div>
-                        {value.avatar_url === null || value.avatar_url === "" ? (
+                        {value.avatar_url === null ||
+                        value.avatar_url === "" ? (
                           <FotoPerfil>
-                            <UserOutlined
-                              style={{ fontSize: "6em" }}
-                            />
+                            {carregandoFoto ? (
+                              <div>
+                                <Spin size="small" indicator={antIcon} />
+                              </div>
+                            ) : (
+                              <>
+                                <UserOutlined style={{ fontSize: "6em" }} />
+                              </>
+                            )}
                           </FotoPerfil>
                         ) : (
                           <FotoPerfil>
-                            <img
-                              src={value.fotoDePerfil}
-                              className="fotoPerfil"
-                              alt="fotoPerfil"
-                              height="100%"
-                              width="100%"
-                            ></img>
+                            {carregandoFoto ? (
+                              <div>
+                                <Spin size="small" indicator={antIcon} />
+                              </div>
+                            ) : (
+                              <>
+                                <img
+                                  src={value.fotoDePerfil}
+                                  className="fotoPerfil"
+                                  alt="fotoPerfil"
+                                  height="100%"
+                                  width="100%"
+                                ></img>
+                              </>
+                            )}
                           </FotoPerfil>
                         )}
                       </div>
                     )}
-
                   </BarraEsquerda>
                   <BarraCentro>
                     <NomePaciente
@@ -270,7 +302,8 @@ function FormularioEspecifico(props) {
                           value.perguntas,
                           value.titulo
                         )
-                      }>
+                      }
+                    >
                       {value.nome}
                     </NomePaciente>
                   </BarraCentro>
@@ -329,7 +362,7 @@ function FormularioEspecifico(props) {
                 marginTop="10%"
                 marginLeft="0%"
                 fontSizeMedia950="0.9em"
-                onClick={() => { }}
+                onClick={() => {}}
               >
                 Gerar documento Word
               </Button>
@@ -351,7 +384,6 @@ function FormularioEspecifico(props) {
           titulo={titulo}
         />
       </Modal>
-
     </div>
   );
 }

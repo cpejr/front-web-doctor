@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { LoadingOutlined, StarOutlined, StarFilled, UserOutlined  } from "@ant-design/icons";
+import {
+  LoadingOutlined,
+  StarOutlined,
+  StarFilled,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Spin } from "antd";
 import { Modal } from "antd";
 import { toast } from "react-toastify";
@@ -66,11 +71,11 @@ function PerfilPaciente(props) {
   const [cpf, setCpf] = useState();
   const [codigo, setCodigo] = useState();
   const [convenio, setConvenio] = useState();
+  const [carregandoFoto, setCarregandoFoto] = useState(true);
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
   const [tipoUsuario, setTipoUsuario] = useState(false);
   const abertoPeloUsuario = true;
   const [fotoDePerfil, setFotoDePerfil] = useState("");
-
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
@@ -116,13 +121,15 @@ function PerfilPaciente(props) {
     pegandoDados();
   }, []);
 
-
   async function setandoFotoDePerfil() {
-    const chave = usuario.avatar_url
+    const chave = usuario.avatar_url;
+    setCarregandoFoto(true);
     const arquivo = await managerService.GetArquivoPorChave(chave);
     setFotoDePerfil(arquivo);
+    await sleep(1500);
+    setCarregandoFoto(false);
   }
-  
+
   useEffect(() => {
     setandoFotoDePerfil();
   }, [usuario]);
@@ -208,21 +215,31 @@ function PerfilPaciente(props) {
             <>
               <PerfilEsquerda>
                 <PerfilSuperior>
-                {usuario.avatar_url === null || usuario.avatar_url === "" ? (
-                  <FotoPerfil>
-                    <UserOutlined
-                    style={{ fontSize: "6.5em" }}
-                    />
-                  </FotoPerfil>
+                  {usuario.avatar_url === null || usuario.avatar_url === "" ? (
+                    <FotoPerfil>
+                      {carregandoFoto ? (
+                        <Spin size="small" indicator={antIcon} />
+                      ) : (
+                        <>
+                          <UserOutlined style={{ fontSize: "6.5em" }} />
+                        </>
+                      )}
+                    </FotoPerfil>
                   ) : (
                     <FotoPerfil>
-                      <img
-                        src={fotoDePerfil}
-                        className="foto"
-                        alt="fotoPerfil"
-                        height="100%"
-                        width="100%"
-                      ></img>
+                      {carregandoFoto ? (
+                        <Spin size="small" indicator={antIcon} />
+                      ) : (
+                        <>
+                          <img
+                            src={fotoDePerfil}
+                            className="foto"
+                            alt="fotoPerfil"
+                            height="100%"
+                            width="100%"
+                          ></img>
+                        </>
+                      )}
                     </FotoPerfil>
                   )}
                   <Dados>
@@ -442,7 +459,11 @@ function PerfilPaciente(props) {
         width={"70%"}
         centered={true}
       >
-        <ModalAgendamento abertoPeloUsuario={abertoPeloUsuario} id_usuario={usuario.id} email={usuario.email}  />
+        <ModalAgendamento
+          abertoPeloUsuario={abertoPeloUsuario}
+          id_usuario={usuario.id}
+          email={usuario.email}
+        />
       </Modal>
 
       <Modal
@@ -473,7 +494,7 @@ function PerfilPaciente(props) {
         />
       </Modal>
 
-     <AddToast />
+      <AddToast />
     </div>
   );
 }

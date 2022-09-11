@@ -47,6 +47,7 @@ function Perfil(props) {
   const [fotoDePerfil, setFotoDePerfil] = useState("");
 
   const [carregando, setCarregando] = useState(true);
+  const [carregandoFoto, setCarregandoFoto] = useState(true);
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 45, color: Cores.azul }} spin />
   );
@@ -105,8 +106,11 @@ function Perfil(props) {
 
   async function setandoFotoDePerfil() {
     const chave = usuario.avatar_url;
+    setCarregandoFoto(true);
     const arquivo = await managerService.GetArquivoPorChave(chave);
     setFotoDePerfil(arquivo);
+    await sleep(1500);
+    setCarregandoFoto(false);
   }
 
   useEffect(() => {
@@ -125,17 +129,31 @@ function Perfil(props) {
             <FotoNomeData>
               {usuario.avatar_url === null || usuario.avatar_url === "" ? (
                 <FotoPerfil>
-                  <UserOutlined />
+                  {carregandoFoto ? (
+                    <Spin size="small" indicator={antIcon} />
+                  ) : (
+                    <>
+                      <UserOutlined />
+                    </>
+                  )}
                 </FotoPerfil>
               ) : (
                 <FotoPerfil>
-                  <img
-                    src={fotoDePerfil}
-                    className="foto"
-                    alt="fotoPerfil"
-                    height="100%"
-                    width="100%"
-                  ></img>
+                  {carregandoFoto ? (
+                    <div>
+                      <Spin size="small" indicator={antIcon} />
+                    </div>
+                  ) : (
+                    <>
+                      <img
+                        src={fotoDePerfil}
+                        className="foto"
+                        alt="fotoPerfil"
+                        height="100%"
+                        width="100%"
+                      ></img>
+                    </>
+                  )}
                 </FotoPerfil>
               )}
               <NomeData>

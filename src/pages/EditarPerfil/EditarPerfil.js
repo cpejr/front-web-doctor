@@ -43,6 +43,7 @@ function EditarPerfil() {
   const [complemento, setComplemento] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [carregando, setCarregando] = useState(true);
+  const [carregandoFoto, setCarregandoFoto] = useState(true);
   const [fotoDePerfil, setFotoDePerfil] = useState("");
   const [erro, setErro] = useState({
     cpf: false,
@@ -159,8 +160,11 @@ function EditarPerfil() {
 
   async function setandoFotoDePerfil() {
     const chave = usuario.avatar_url;
+    setCarregandoFoto(true);
     const arquivo = await managerService.GetArquivoPorChave(chave);
     setFotoDePerfil(arquivo);
+    await sleep(1500);
+    setCarregandoFoto(false);
   }
 
   useEffect(() => {
@@ -398,19 +402,29 @@ function EditarPerfil() {
         <BlocoSuperior>
           {usuario.avatar_url === null || usuario.avatar_url === "" ? (
             <ImagemPerfil>
-              <UserOutlined
-                style={{ marginBottom: "20px" }}
-              />
+              {carregandoFoto ? (
+                <Spin size="large" indicator={antIcon} />
+              ) : (
+                <>
+                  <UserOutlined style={{ marginBottom: "20px" }} />
+                </>
+              )}
             </ImagemPerfil>
           ) : (
             <ImagemPerfil>
-              <img
-                src={fotoDePerfil}
-                className="fotoPerfil"
-                alt="fotoPerfil"
-                width="100%"
-                height="100%"
-              ></img>
+              {carregandoFoto ? (
+                <Spin size="large" indicator={antIcon} />
+              ) : (
+                <>
+                  <img
+                    src={fotoDePerfil}
+                    className="fotoPerfil"
+                    alt="fotoPerfil"
+                    width="100%"
+                    height="100%"
+                  ></img>
+                </>
+              )}
             </ImagemPerfil>
           )}
           <Button
