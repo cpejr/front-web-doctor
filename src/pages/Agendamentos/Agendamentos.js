@@ -424,7 +424,7 @@ function Agendamentos() {
         visible={modalConsultaMarcada}
         onCancel={fechandoModalConsultaMarcada}
         footer={null}
-        width={"80%"}
+        width={"auto"}
         centered={true}
         style={{
           backgroundColor: "black",
