@@ -83,7 +83,7 @@ export default function ConversaAberta({ socket }) {
   useEffect(() => {
     inputMensagemConteudoRef?.current?.focus();
     scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [mensagens]);
+  });
 
   const atualizarBarraLateral = (novaMensagem) => {
     const id_conversa = novaMensagem.id_conversa;
@@ -226,7 +226,7 @@ export default function ConversaAberta({ socket }) {
               key={idx}
               pertenceAoUsuarioAtual={m.pertenceAoUsuarioAtual}
               conteudo={m.conteudo}
-              scrollRef={scrollRef}
+              scrollRef={mensagens?.length - 1 === idx ? scrollRef : null}
               data_criacao={m.data_criacao}
             />
           ))
@@ -260,7 +260,6 @@ export default function ConversaAberta({ socket }) {
           onChange={(e) => setInputMensagemConteudo(e.target.value)}
           value={inputMensagemConteudo}
           ref={inputMensagemConteudoRef}
-          disabled={checarObjVazio(conversaSelecionada)}
         />
         <Button
           backgroundColor='transparent'
@@ -271,9 +270,7 @@ export default function ConversaAberta({ socket }) {
           height='10%'
           marginTop='0%'
           onClick={enviarMensagem}
-          disabled={
-            checarObjVazio(conversaSelecionada) || !inputMensagemConteudo
-          }
+          disabled={!inputMensagemConteudo}
         >
           <SendOutlined
             style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}

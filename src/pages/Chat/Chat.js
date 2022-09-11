@@ -28,13 +28,10 @@ const Chat = () => {
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
 
-    async function deletarConversasInativas() {
-      await managerService.deletarConversasInativas(usuarioId);
-    }
-
     async function getConversas() {
       setCarregandoConversas(true);
 
+      await managerService.deletarConversasInativas(usuarioId);
       const resposta = await managerService.GetConversasUsuario(usuarioId);
 
       if (componenteEstaMontadoRef.current) {
@@ -43,7 +40,6 @@ const Chat = () => {
       }
     }
 
-    deletarConversasInativas();
     getConversas();
 
     return () => (componenteEstaMontadoRef.current = false);
