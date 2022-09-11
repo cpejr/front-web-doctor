@@ -23,6 +23,7 @@ const Select = styled.select`
   margin-bottom: ${(props) => props.marginBottom?? "0px"};
   border-style: solid;
   border-width: ${(props) => props.borderWidth};
+  box-shadow: ${(props) => props.boxShadow};
   height: 50px;
   padding-left: 2%;
   padding-top: ${(props) => props.paddingTop?? "0px"};

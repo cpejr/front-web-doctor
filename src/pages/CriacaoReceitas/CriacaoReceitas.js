@@ -38,6 +38,7 @@ function CriacaoReceitas() {
           fontSize="1em"
           width="100%"
           marginTop="2%"
+          boxShadow="0px 4px 4px 0px #00000040"
           ></Input>
           <NomeDoPaciente>Nome do paciente:</NomeDoPaciente>
           <Select
@@ -49,6 +50,7 @@ function CriacaoReceitas() {
             size="large"
             name="id_usuario"
             placeholder="Nome do usuário"
+            boxShadow="0px 4px 4px 0px #00000040"
           >
             <option value="" disabled selected>
               Nome do paciente
@@ -62,20 +64,23 @@ function CriacaoReceitas() {
           <Descricao>Descrição:</Descricao>
           <Input
           placeholder="Descrição"
+          paddingBottom="23%"
           backgroundColor={Cores.cinza[7]}
           color={Cores.preto}
           fontSize="1em"
           width="100%"
+          height="150px"
           marginTop="2%"
+          boxShadow="0px 4px 4px 0px #00000040"
           ></Input>
         </CriacaoReceitaCorpo>
         <CriacaoReceitaBotoes>
           <BotaoCancelar>
           <Button
-          height="45px"
+          height="47px"
           width="100%"
           backgroundColor={Cores.branco}
-          borderColor={Cores.cinza[2]}
+          borderColor={Cores.cinza[3]}
           color={Cores.cinza[2]}
           fontSize="1em"
           fontSizeMedia1080="0.8em"
@@ -85,7 +90,7 @@ function CriacaoReceitas() {
           </BotaoCancelar>
           <BotaoEnviar>
           <Button
-          height="45px"
+          height="47px"
           width="100%"
           backgroundColor={Cores.lilas[1]}
           borderColor={Cores.azul}

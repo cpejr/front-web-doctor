@@ -3,7 +3,7 @@ import { Cores } from "../../variaveis";
 
 const Input = styled.input`
   background-color: ${(props) => props.backgroundColor};
-  text-align: left;
+  text-align:  ${(props) => props.textAlign ?? "left"};
   border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
@@ -23,11 +23,13 @@ const Input = styled.input`
   margin-top: ${(props) => props.marginTop};
   margin-bottom: ${(props) => props.marginBottom?? "0px"};
   border-style: solid;
-  height: 50px;
-  padding-left: 2%;
+  line-break: ${(props) => props.lineBreak};
+  height: ${(props) => props.height ?? "50px"};
+  padding-left: ${(props) => props.paddingLeft ?? "2%"};
   box-shadow: ${(props) => props.boxShadow};
   border-width: ${(props) => props.borderWidth};
   padding-right: ${(props) => props.paddingRight ?? "0px"};
+  padding-bottom: ${(props) => props.paddingBottom};
   width: ${(props) => props.width};
   @media (max-width: 820px) {
     width: 100%;
