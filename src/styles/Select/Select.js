@@ -24,13 +24,13 @@ const Select = styled.select`
   border-style: solid;
   border-width: ${(props) => props.borderWidth};
   box-shadow: ${(props) => props.boxShadow};
-  height: 50px;
+  height: ${(props) => props.height ?? "50px"};
   padding-left: 2%;
   padding-top: ${(props) => props.paddingTop?? "0px"};
   padding-bottom: ${(props) => props.paddingTop?? "0px"};
   width: ${(props) => props.width};
   @media (max-width: 820px) {
-    width: 100%;
+    width: ${(props) => props.borderWidth820?? "100%" };
   }
 
   option {

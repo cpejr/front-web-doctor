@@ -4,7 +4,7 @@ import Input from "../../styles/Input";
 import Select from "../../styles/Select";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
-import { ContainerCriacaoReceitas, CardCriacaoReceitas, CriacaoReceitaNome, CriacaoReceitaCorpo, Titulo, NomeDoPaciente, Descricao, CriacaoReceitaBotoes, BotaoEnviar, BotaoCancelar } from "./Styles";
+import { ContainerCriacaoReceitas, CardCriacaoReceitas, SelectContainer, CriacaoReceitaNome, DescricaoTextarea, CriacaoReceitaCorpo, Titulo, NomeDoPaciente, Descricao, CriacaoReceitaBotoes, BotaoEnviar, BotaoCancelar } from "./Styles";
 
 function CriacaoReceitas() {
 
@@ -41,16 +41,19 @@ function CriacaoReceitas() {
           boxShadow="0px 4px 4px 0px #00000040"
           ></Input>
           <NomeDoPaciente>Nome do paciente:</NomeDoPaciente>
+          <SelectContainer>
           <Select
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
+            borderColor= "transparent"
             fontSize="1em"
-            width="100%"
-            marginTop="2%"
+            width="97%"
+            marginTop="0px"
             size="large"
             name="id_usuario"
             placeholder="Nome do usuário"
-            boxShadow="0px 4px 4px 0px #00000040"
+            height="45px"
+            borderWidth820="97%"
           >
             <option value="" disabled selected>
               Nome do paciente
@@ -61,18 +64,11 @@ function CriacaoReceitas() {
               </option>
             ))}
         </Select>
+        </SelectContainer>
           <Descricao>Descrição:</Descricao>
-          <Input
+          <DescricaoTextarea
           placeholder="Descrição"
-          paddingBottom="23%"
-          backgroundColor={Cores.cinza[7]}
-          color={Cores.preto}
-          fontSize="1em"
-          width="100%"
-          height="150px"
-          marginTop="2%"
-          boxShadow="0px 4px 4px 0px #00000040"
-          ></Input>
+          ></DescricaoTextarea>
         </CriacaoReceitaCorpo>
         <CriacaoReceitaBotoes>
           <BotaoCancelar>
@@ -83,8 +79,6 @@ function CriacaoReceitas() {
           borderColor={Cores.cinza[3]}
           color={Cores.cinza[2]}
           fontSize="1em"
-          fontSizeMedia1080="0.8em"
-          fontSizeMedia950="0.1em"
           onClick={() => {}}
           >CANCELAR</Button>
           </BotaoCancelar>
@@ -96,8 +90,6 @@ function CriacaoReceitas() {
           borderColor={Cores.azul}
           color={Cores.branco}
           fontSize="1em"
-          fontSizeMedia1080="0.8em"
-          fontSizeMedia950="0.1em"
           onClick={() => {}}
           >ENVIAR</Button>
           </BotaoEnviar>
