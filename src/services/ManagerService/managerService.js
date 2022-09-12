@@ -549,3 +549,22 @@ export const EditarFormularios = async (
 
   return false;
 };
+
+export const DeletarReceita = async (id) => {
+  await requesterService
+    .deletarReceita(id)
+    .then(() => {
+      toast.success("Receita deletada com sucesso.");
+      window.location.href = "/web/areareceitas";
+    })
+    .catch((error) => {
+      requisicaoErro(
+        error,
+        () => (window.location.href = "/web/areareceitas")
+      );
+
+      return false;
+    });
+
+  return false;
+};
