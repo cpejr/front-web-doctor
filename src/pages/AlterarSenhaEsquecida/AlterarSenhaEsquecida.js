@@ -12,7 +12,12 @@ import {
   BotoesMesmaLinha,
   Titulo,
   Rotulo,
+  CaixaMensagem,
+  Logo,
+  MensagemPacientePrincipal,
+  MensagemPaciente,
 } from "./Styles";
+import logoGuilherme from "./../../assets/logoGuilherme.png";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 import AddToast from "../../components/AddToast/AddToast";
@@ -27,9 +32,11 @@ function AlterarSenhaEsquecida() {
   const [novaSenha, setNovaSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
   const [tokenUsuario, setTokenUsuario] = useState("");
-  
+
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
+
+  const [senhaAlterada, setSenhaAlterada] = useState(false);
 
   const errorsNovaSenha = {};
   const referenciaCamposNulosNovaSenha = {
@@ -43,7 +50,6 @@ function AlterarSenhaEsquecida() {
   useEffect(() => {
     setTokenUsuario(token);
   }, []);
-
 
   async function NovaSenha(e) {
     const { value, name } = e.target;
@@ -83,103 +89,128 @@ function AlterarSenhaEsquecida() {
       if (novaSenha === confirmarSenha) {
         if (novaSenha !== "" || confirmarSenha !== "") {
           setCarregando(true);
-          const resposta = await managerService.GetDadosUsuarioPorToken(tokenUsuario);
+          const resposta = await managerService.GetDadosUsuarioPorToken(
+            tokenUsuario
+          );
           await managerService.AlterarSenha(
             novaSenha,
             resposta.dadosUsuario.id
           );
           await sleep(1500);
-          redirecionamento("/web/perfil");
+          if (resposta.dadosUsuario.tipo !== "PACIENTE") {
+            redirecionamento("/web/perfil");
+            setCarregando(false);
+          } else {
+            setSenhaAlterada(true);
+            setCarregando(false);
+          }
+        } else {
+          toast.error("As senhas digitadas são diferentes!");
+          await sleep(1500);
           setCarregando(false);
         }
       } else {
-        toast.error("As senhas digitadas são diferentes!");
-        await sleep(1500);
+        setCarregando(true);
+        toast.warn("Insira uma nova senha!");
         setCarregando(false);
       }
-    } else {
-      setCarregando(true);
-      toast.warn("Insira uma nova senha!");
-      setCarregando(false);
     }
   }
 
   return (
-        <div>
-          <Conteudo>
-            <Caixa>
-              <Titulo>Alterar Senha:</Titulo>
-              <InputVertical>
-                <Input
-                  placeholder="Defina sua nova senha"
-                  backgroundColor={Cores.cinza[7]}
-                  color={Cores.preto}
-                  fontSize="1em"
-                  width="100%"
-                  marginTop="2%"
-                  type="password"
-                  name="senha"
-                  camposVazios={camposVazios.senha}
-                  erro={erro.senha}
-                  onChange={NovaSenha}
-                ></Input>
-                {erro.senha && (
-                  <Rotulo>Insira uma nova senha com no minimo 8 digitos</Rotulo>
-                )}
-                <Input
-                  placeholder="Confirme sua nova senha"
-                  backgroundColor={Cores.cinza[7]}
-                  color={Cores.preto}
-                  fontSize="1em"
-                  width="100%"
-                  marginTop="5%"
-                  type="password"
-                  name="confirmarSenha"
-                  camposVazios={camposVazios.confirmarSenha}
-                  erro={erro.confirmarSenha}
-                  onChange={NovaSenha}
-                  onKeyPress={verificandoTrocarSenha}
-                ></Input>
-                {erro.confirmarSenha && (
-                  <Rotulo>Confirme sua nova senha</Rotulo>
-                )}
-              </InputVertical>
-              <BotoesMesmaLinha>
-                <Button
-                  width="40%"
-                  height="50px"
-                  backgroundColor={Cores.branco}
-                  borderColor="rgba(255, 0, 0, 0.25)"
-                  color={Cores.cinza[1]}
-                  fontSize="1.5em"
-                  fontWeight="bold"
-                  fontSizeMedia="1.2em"
-                  fontSizeMedia950="1.1em"
-                  boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-                  onClick={() => history.push("/web/login")}
-                >
-                  CANCELAR
-                </Button>
-                <Button
-                  height="50px"
-                  width="40%"
-                  backgroundColor={Cores.lilas[1]}
-                  borderColor={Cores.azul}
-                  color={Cores.branco}
-                  fontSize="1.5em"
-                  fontWeight="bold"
-                  fontSizeMedia="1.2em"
-                  fontSizeMedia950="1.1em"
-                  boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-                  onClick={() => trocarSenha()}
-                >
-                  {carregando ? <Spin indicator={antIcon} /> : "ALTERAR"}
-                </Button>
-              </BotoesMesmaLinha>
-            </Caixa>
-          </Conteudo>
-          <AddToast />
-        </div>
+    <div>
+      {senhaAlterada === false ? (
+        <Conteudo>
+          <Caixa>
+            <Titulo>Alterar Senha:</Titulo>
+            <InputVertical>
+              <Input
+                placeholder="Defina sua nova senha"
+                backgroundColor={Cores.cinza[7]}
+                color={Cores.preto}
+                fontSize="1em"
+                width="100%"
+                marginTop="2%"
+                type="password"
+                name="senha"
+                camposVazios={camposVazios.senha}
+                erro={erro.senha}
+                onChange={NovaSenha}
+              ></Input>
+              {erro.senha && (
+                <Rotulo>Insira uma nova senha com no minimo 8 digitos</Rotulo>
+              )}
+              <Input
+                placeholder="Confirme sua nova senha"
+                backgroundColor={Cores.cinza[7]}
+                color={Cores.preto}
+                fontSize="1em"
+                width="100%"
+                marginTop="5%"
+                type="password"
+                name="confirmarSenha"
+                camposVazios={camposVazios.confirmarSenha}
+                erro={erro.confirmarSenha}
+                onChange={NovaSenha}
+                onKeyPress={verificandoTrocarSenha}
+              ></Input>
+              {erro.confirmarSenha && <Rotulo>Confirme sua nova senha</Rotulo>}
+            </InputVertical>
+            <BotoesMesmaLinha>
+              <Button
+                width="40%"
+                height="50px"
+                backgroundColor={Cores.branco}
+                borderColor="rgba(255, 0, 0, 0.25)"
+                color={Cores.cinza[1]}
+                fontSize="1.5em"
+                fontWeight="bold"
+                fontSizeMedia="1.2em"
+                fontSizeMedia950="1.1em"
+                boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+                onClick={() => history.push("/web/login")}
+              >
+                CANCELAR
+              </Button>
+              <Button
+                height="50px"
+                width="40%"
+                backgroundColor={Cores.lilas[1]}
+                borderColor={Cores.azul}
+                color={Cores.branco}
+                fontSize="1.5em"
+                fontWeight="bold"
+                fontSizeMedia="1.2em"
+                fontSizeMedia950="1.1em"
+                boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+                onClick={() => trocarSenha()}
+              >
+                {carregando ? <Spin indicator={antIcon} /> : "ALTERAR"}
+              </Button>
+            </BotoesMesmaLinha>
+          </Caixa>
+        </Conteudo>
+      ) : (
+        <CaixaMensagem>
+          <Logo>
+            <img
+              src={logoGuilherme}
+              className="logo"
+              alt="logoGuilherme"
+              width="139px"
+              height="160px"
+            ></img>
+          </Logo>
+          <MensagemPacientePrincipal>
+            Senha alterada com sucesso!
+          </MensagemPacientePrincipal>
+          <MensagemPaciente>
+            Você já pode realizar o login no DoctorApp com sua nova senha
+          </MensagemPaciente>
+        </CaixaMensagem>
+      )}
+      <AddToast />
+    </div>
   );
 }
 

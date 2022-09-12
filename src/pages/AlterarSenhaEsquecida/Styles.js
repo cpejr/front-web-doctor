@@ -85,3 +85,56 @@ export const Rotulo = styled.div`
   font-size: 1em;
   color: ${Cores.vermelho};
 `;
+
+export const CaixaMensagem = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: ${Cores.cinza[9]};
+  width: 100%;
+  height: 100vh;
+`;
+
+export const Logo = styled.div`
+  display: flex;
+  align-items: center;;
+  .logo{ border-radius: 15px;}
+`;
+
+export const MensagemPacientePrincipal = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  text-align: center;
+  font-family: "Barlow", sans-serif;
+  font-weight: 800;
+  font-size: 4em;
+  line-height: 1.2;
+  color: ${Cores.lilas[1]};
+  margin-top: 40px;
+  @media (max-width: 560px) {
+    font-size: 3em;
+  }
+
+  @media (max-width: 400px) {
+    font-size: 2em;
+  }
+`;
+
+export const MensagemPaciente = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 90%;
+  font-weight: 800;
+  font-size: 2em;
+  color: ${Cores.lilas[2]};
+  margin-top: 20px; 
+  margin-bottom: 10%;
+  @media (max-width: 560px) {
+    font-size: 1.5em;
+  }
+`;
