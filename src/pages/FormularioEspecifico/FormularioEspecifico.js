@@ -85,7 +85,7 @@ function FormularioEspecifico(props) {
     setFormularioResposta(formularioResposta);
   }
 
-function abrindoModalFormulario(id, perguntas, titulo) {
+  function abrindoModalFormulario(id, perguntas, titulo) {
     setPerguntas(perguntas);
     setTitulo(titulo);
     setIdFormularioPaciente(id);
@@ -132,14 +132,14 @@ function abrindoModalFormulario(id, perguntas, titulo) {
       <ContainerFormularioEspecifico>
         {carregando ? (
           <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "49.5%",
-          }}
-        >
-          <Spin indicator={antIcon} />
-        </div>
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "49.5%",
+            }}
+          >
+            <Spin indicator={antIcon} />
+          </div>
         ) : (
           <>
             <ContainerFormularioCima>
@@ -217,13 +217,13 @@ function abrindoModalFormulario(id, perguntas, titulo) {
                   </BarraEsquerda>
                   <BarraCentro>
                     <NomePaciente
-                    onClick={() =>
-                      abrindoModalFormulario(
-                        value.id,
-                        value.perguntas,
-                        value.titulo
-                      )
-                    }>
+                      onClick={() =>
+                        abrindoModalFormulario(
+                          value.id,
+                          value.perguntas,
+                          value.titulo
+                        )
+                      }>
                       {value.nome}
                     </NomePaciente>
                   </BarraCentro>
@@ -282,7 +282,7 @@ function abrindoModalFormulario(id, perguntas, titulo) {
                 marginTop="10%"
                 marginLeft="0%"
                 fontSizeMedia950="0.9em"
-                onClick={() => {}}
+                onClick={() => { }}
               >
                 Gerar documento Word
               </Button>
@@ -294,7 +294,8 @@ function abrindoModalFormulario(id, perguntas, titulo) {
       <Modal
         visible={modalFormulario}
         onCancel={() => setModalFormulario(false)}
-        width={"50%"}
+        style={{ minWidth: "250px", maxWidth: "800px" }}
+        width={"70%"}
         centered={true}
         footer={null}
       >

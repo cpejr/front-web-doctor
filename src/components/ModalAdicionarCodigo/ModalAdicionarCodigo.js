@@ -68,6 +68,7 @@ function ModalAdicionarCodigo(props) {
             fontSize="1em"
             width="100%"
             marginTop="2%"
+            paddingRight="2%"
             name="codigo"
             onKeyPress={verificandoEnter}
             onChange={preenchendoDados}
@@ -82,6 +83,7 @@ function ModalAdicionarCodigo(props) {
             fontSize="1em"
             width="100%"
             marginTop="2%"
+            paddingRight="2%"
             name="codigo"
             onKeyPress={verificandoEnter}
             onChange={preenchendoDados}
