@@ -12,7 +12,6 @@ const sleep = (milliseconds) => {
 export const requisicaoLogin = async (email, senha) => {
   try {
     const resposta = await requesterService.logarUsuario(email, senha);
-    console.log(resposta.data);
     if (resposta.data.tipo === 'PACIENTE') {
       toast.error('Paciente não pode fazer login no sistema!');
     } else {

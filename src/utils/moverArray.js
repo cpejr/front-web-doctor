@@ -14,5 +14,5 @@ export default function moverArray(arr, index_antigo, novo_index) {
         }
     }
     nova_arr.splice(novo_index, 0, nova_arr.splice(index_antigo, 1)[0]);
-    return nova_arr; // for testing purposes
+    return nova_arr; 
 };

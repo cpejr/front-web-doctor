@@ -11,7 +11,6 @@ export function ChatProvider({ children }) {
   const [conversas, setConversas] = useState([]);
   const [conversaSelecionada, setConversaSelecionada] = useState({});
   const [mensagens, setMensagens] = useState([]);
-  // Ref para uso em casos específicos de useEffects --> Prevenir erros
   const inputMensagemRef = useRef(null);
 
   return (
