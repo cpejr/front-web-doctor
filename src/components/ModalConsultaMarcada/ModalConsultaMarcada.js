@@ -20,7 +20,6 @@ function ModalConsultaMarcada(props) {
   );
 
   async function setandoValoresConsulta() {
-    console.log(props.consulta)
     setCarregando(true);
     await sleep(1500);
     setConsulta(props.consulta);
