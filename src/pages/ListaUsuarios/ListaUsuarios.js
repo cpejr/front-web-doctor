@@ -183,7 +183,7 @@ function ListaUsuarios() {
         if (usuario.tipo === "PACIENTE" || usuario.tipo === "SECRETARIA(O)") {
           setUsuarios((usuarios) => [...usuarios, usuario]);
           setandoUltimaConsulta(usuario, consultas);
-          setandoFotoDePerfil2(usuario);
+          setandoFotoDePerfil(usuario);
         }
       });
     } else {
@@ -191,7 +191,7 @@ function ListaUsuarios() {
         if (usuario.tipo === "PACIENTE") {
           setUsuarios((usuarios) => [...usuarios, usuario]);
           setandoUltimaConsulta(usuario, consultas);
-          setandoFotoDePerfil2(usuario);
+          setandoFotoDePerfil(usuario);
         }
       });
     }
@@ -250,7 +250,7 @@ function ListaUsuarios() {
     });
   }
 
-  async function setandoFotoDePerfil2(usuario) {
+  async function setandoFotoDePerfil(usuario) {
     const chave = usuario.avatar_url;
 
     if (chave !== null && chave !== "") {
