@@ -366,7 +366,7 @@ function FormularioEspecifico(props) {
                 marginTop="10%"
                 marginLeft="0%"
                 fontSizeMedia950="0.9em"
-                onClick={() => {}}
+                onClick={() => { }}
               >
                 Gerar documento Word
               </Button>
@@ -378,7 +378,8 @@ function FormularioEspecifico(props) {
       <Modal
         visible={modalFormulario}
         onCancel={() => setModalFormulario(false)}
-        width={"50%"}
+        style={{ minWidth: "250px", maxWidth: "800px" }}
+        width={"70%"}
         centered={true}
         footer={null}
       >

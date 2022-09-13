@@ -9,7 +9,11 @@ export const ContainerModalFormulario = styled.div`
   align-items: center;
   width: 100%;
   height: 50%;
-  padding: 2% 7% 2% 7%;
+  padding: 2% 7%;
+
+  label{
+    height: 100%;
+  }
 
   @media (max-width: 950px) and (min-width: 560px) {
     padding: 2% 10% 2% 10%;
@@ -27,7 +31,7 @@ export const Titulo = styled.div`
   font-family: "Roboto Condensed", sans-serif;
   font-size: 2em;
   color: ${Cores.preto};
-  margin-top: 2%;
+  margin: 3% 0;
   @media (max-width: 950px) and (min-width: 560px) {
     font-size: 1.5em;
   }

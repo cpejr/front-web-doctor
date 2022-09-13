@@ -52,6 +52,7 @@ import ModalExcluirUsuario from "../../components/ModalExcluirUsuario";
 import ModalFormulario from "../../components/ModalFormulario";
 import { redirecionamento, sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
+import { cep } from "../../utils/masks";
 
 function PerfilPaciente(props) {
   const [modalAgendamento, setModalAgendamento] = useState(false);
@@ -254,7 +255,7 @@ function PerfilPaciente(props) {
                   <DadosGeo>País: {endereco.pais}</DadosGeo>
                   <DadosGeo>Estado: {endereco.estado}</DadosGeo>
                   <DadosGeo>Cidade: {endereco.cidade}</DadosGeo>
-                  <DadosGeo>CEP: {endereco.cep}</DadosGeo>
+                  <DadosGeo>CEP: {cep(endereco.cep)}</DadosGeo>
                   <DadosGeo>Rua: {endereco.rua}</DadosGeo>
                   <DadosGeo>Número: {endereco.numero}</DadosGeo>
                   <DadosGeo>Complemento: {endereco.complemento}</DadosGeo>
@@ -264,13 +265,14 @@ function PerfilPaciente(props) {
                 <DadosContato>
                   <Titulo>Contato</Titulo>
                   <InfoContato>
+                    Telefone:
                     ({telefone.slice(0, -9)}) {telefone.slice(2, -4)}-
                     {telefone.slice(-4)}
                   </InfoContato>
                   <InfoContato
-                    textDecoration="underline"
                     style={{ wordBreak: "break-word" }}
                   >
+                    {"E-mail: "}
                     {usuario.email}
                   </InfoContato>
                   {tipoUsuario ? (
@@ -485,7 +487,8 @@ function PerfilPaciente(props) {
       <Modal
         visible={modalFormulario}
         onCancel={() => setModalFormulario(false)}
-        width={"50%"}
+        style={{ minWidth: "250px", maxWidth: "800px" }}
+        width={"70%"}
         centered={true}
         footer={null}
       >
