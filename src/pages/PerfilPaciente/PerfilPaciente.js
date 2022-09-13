@@ -123,6 +123,8 @@ function PerfilPaciente(props) {
 
   async function setandoFotoDePerfil() {
     const chave = usuario.avatar_url;
+    if (chave === null || chave === "")
+      return;
     setCarregandoFoto(true);
     const arquivo = await managerService.GetArquivoPorChave(chave);
     setFotoDePerfil(arquivo);

@@ -260,6 +260,10 @@ function ListaUsuarios() {
         value: arquivo,
       });
     }
+    else {
+      setCarregandoFoto(false);
+      return;
+    }
     await sleep(1700);
     setCarregandoFoto(false);
   }
