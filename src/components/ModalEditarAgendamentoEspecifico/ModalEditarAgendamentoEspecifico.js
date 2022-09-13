@@ -32,7 +32,6 @@ import { apenasNumeros } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
 import { TiposDeConsulta } from "../listaTiposDeConsultas";
 
-
 function ModalEditarAgendamentoEspecifico(props) {
   const { Option } = Select;
   const [usuario, setUsuario] = useState({});
@@ -41,6 +40,7 @@ function ModalEditarAgendamentoEspecifico(props) {
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
   const [carregandoUpdate, setCarregandoUpdate] = useState();
   const [consulta, setConsulta] = useState({});
+  const [novaConsulta, setNovaConsulta] = useState({});
   const [consultorioPorId, setConsultorioPorId] = useState();
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
@@ -51,7 +51,6 @@ function ModalEditarAgendamentoEspecifico(props) {
     data: false,
   });
   const [editado, setEditado] = useState(false);
-
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -80,15 +79,12 @@ function ModalEditarAgendamentoEspecifico(props) {
     setandoDataMinima();
   }, [hoje]);
 
-
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true);
     const res = await managerService.GetDadosConsultorios();
     setConsultorios(res.dadosConsultorios);
     setCarregandoConsultorios(false);
   }
-
-
 
   async function pegandoDadosUsuario() {
     setCarregando(true);
@@ -103,7 +99,6 @@ function ModalEditarAgendamentoEspecifico(props) {
     setConsulta(props.consulta);
     setCarregando(false);
   }
-
 
   async function setandoNomeConsultorioPorId() {
     const resposta = await managerService.GetConsultorioPorId(
@@ -122,35 +117,32 @@ function ModalEditarAgendamentoEspecifico(props) {
   }
 
   function setandoDiaAtual() {
-
     let data = new Date();
     let dia = data.getDate();
     let mes = data.getMonth() + 1;
     let ano = data.getFullYear();
-    
-    if (dia < 10){
+
+    if (dia < 10) {
       dia = "0" + dia;
     }
-    if (mes < 10){
+    if (mes < 10) {
       mes = "0" + mes;
     }
 
     setHoje(ano + "-" + mes + "-" + dia);
-    
   }
 
-  function setandoDataMinima(){
+  function setandoDataMinima() {
     document.getElementById("data").setAttribute("min", hoje);
   }
 
-  function setandoCamposVazios(){
+  function setandoCamposVazios() {
     setCamposVazios({
       duracao_em_minutos: false,
       data: false,
-      hora: false
-    })
+      hora: false,
+    });
   }
-
 
   function formatacaoDataHora() {
     try {
@@ -170,12 +162,12 @@ function ModalEditarAgendamentoEspecifico(props) {
       setCarregandoUpdate(true);
       toast.warn("Preencha todos os campos corretamente");
       setCarregandoUpdate(false);
-      return
+      return;
     } else if (editado === false) {
       setCarregandoUpdate(true);
       toast.warn("Edite algum campo");
       setCarregandoUpdate(false);
-      return
+      return;
     } else {
       setCarregandoUpdate(true);
       consulta.id_usuario = usuario.id;
@@ -184,19 +176,17 @@ function ModalEditarAgendamentoEspecifico(props) {
       sleep(3000);
       setCarregandoUpdate(false);
       props.fechandoModal();
-      return
+      return;
     }
   }
 
   function preenchendoDadosConsulta(e) {
-
     const { value, name } = e.target;
 
     if (value !== consulta.descricao) {
       if (value) {
         setCamposVazios({ ...camposVazios, [name]: false });
-      }
-      else {
+      } else {
         setCamposVazios({ ...camposVazios, [name]: true });
       }
     }
@@ -216,8 +206,8 @@ function ModalEditarAgendamentoEspecifico(props) {
       });
       setEditado(true);
       return consulta;
-    } else {
-      setConsulta({ ...consulta, [e.target.name]: e.target.value });
+    }  else {
+      setConsulta({ ...consulta, [name]: value });
       setEditado(true);
       return consulta;
     }
@@ -254,7 +244,7 @@ function ModalEditarAgendamentoEspecifico(props) {
             <InputData
               placeholder="Selecione uma data"
               value={data}
-              id = "data"
+              id="data"
               type="date"
               onKeyDown={(e) => e.preventDefault()}
               size="large"
@@ -264,12 +254,8 @@ function ModalEditarAgendamentoEspecifico(props) {
                 preenchendoDadosConsulta(e);
               }}
             ></InputData>
-              {camposVazios.data ? (
-                <Rotulo>Escolha uma data</Rotulo>
-              ) : (
-                <></>
-              )}
-            </SelecioneUmaData>
+            {camposVazios.data ? <Rotulo>Escolha uma data</Rotulo> : <></>}
+          </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
               <Select
@@ -355,11 +341,7 @@ function ModalEditarAgendamentoEspecifico(props) {
                 style={{ color: "black" }}
                 camposVazios={camposVazios.hora}
               />
-              {camposVazios.hora ? (
-                <Rotulo>Digite um horário</Rotulo>
-              ) : (
-                <></>
-              )}
+              {camposVazios.hora ? <Rotulo>Digite um horário</Rotulo> : <></>}
             </TamanhoInput>
 
             <TamanhoInput>

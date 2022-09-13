@@ -70,6 +70,7 @@ export const CriandoConsulta = async (consulta) => {
 };
 
 export const UpdateConsulta = async (id_consulta, consulta) => {
+  
   await requesterService
     .updateConsulta(id_consulta, consulta)
     .then(() => {
