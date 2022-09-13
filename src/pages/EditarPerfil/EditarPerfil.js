@@ -406,7 +406,9 @@ function EditarPerfil() {
           {usuario.avatar_url === null || usuario.avatar_url === "" ? (
             <ImagemPerfil>
               {carregandoFoto ? (
-                <Spin size="large" indicator={antIconFoto} />
+                <div>
+                  <Spin size="large" indicator={antIconFoto} />
+                </div>
               ) : (
                 <>
                   <UserOutlined style={{ marginBottom: "20px" }} />
@@ -416,7 +418,9 @@ function EditarPerfil() {
           ) : (
             <ImagemPerfil>
               {carregandoFoto ? (
-                <Spin size="large" indicator={antIconFoto} />
+                <div>
+                  <Spin size="large" indicator={antIconFoto} />
+                </div>
               ) : (
                 <>
                   <img
