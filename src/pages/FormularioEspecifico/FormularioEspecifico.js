@@ -101,7 +101,6 @@ function FormularioEspecifico(props) {
 
   async function setandoFotoDePerfil(formulario) {
     const chave = formulario.avatar_url;
-    console.log(chave);
     if (chave !== null && chave !== "") {
       setCarregandoFoto(true);
       const arquivo = await managerService.GetArquivoPorChave(chave);
