@@ -10,8 +10,8 @@ import Button from "../../styles/Button";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import logoEscrita from "./../../assets/logoEscrita.png";
 import { useHistory } from "react-router-dom";
-import { Dropdown, Menu } from "antd";
-import { MenuOutlined, UserOutlined } from "@ant-design/icons";
+import { Dropdown, Menu, Spin } from "antd";
+import { MenuOutlined, UserOutlined, LoadingOutlined } from "@ant-design/icons";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 import { logout } from "../../services/auth";
@@ -24,6 +24,11 @@ function Header(props) {
   const [tipo, setTipo] = useState([]);
   const [usuario, setUsuario] = useState({});
   const [fotoDePerfil, setFotoDePerfil] = useState("");
+  const [carregandoFoto, setCarregandoFoto] = useState(true);
+
+  const antIcon = (
+    <LoadingOutlined style={{ fontSize: 20, color: Cores.azulClaro }} spin />
+  );
 
   async function pegandoTipo() {
     const resposta = await managerService.GetDadosUsuario(email);
@@ -48,10 +53,14 @@ function Header(props) {
 
   async function setandoFotoDePerfil() {
     const chave = usuario.avatar_url;
-    if (chave === null || chave === "")
+    if (chave === null || chave === "") {
+      setCarregandoFoto(false);
       return;
+    }
     const arquivo = await managerService.GetArquivoPorChave(chave);
     setFotoDePerfil(arquivo);
+    await sleep(700);
+    setCarregandoFoto(false);
   }
 
   useEffect(() => {
@@ -327,13 +336,19 @@ function Header(props) {
               height="50px"
               width="50px"
             >
-              <Dropdown
-                onClick={(e) => e.preventDefault()}
-                overlay={menuPerfil}
-                placement={"bottom"}
-              >
-                <UserOutlined style={{ fontSize: "1.5em" }} />
-              </Dropdown>
+              {carregandoFoto ? (
+                <Spin size="small" indicator={antIcon} />
+              ) : (
+                <>
+                  <Dropdown
+                    onClick={(e) => e.preventDefault()}
+                    overlay={menuPerfil}
+                    placement={"bottom"}
+                  >
+                    <UserOutlined style={{ fontSize: "1.5em" }} />
+                  </Dropdown>
+                </>
+              )}
             </Button>
           ) : (
             <Button
@@ -344,21 +359,27 @@ function Header(props) {
               height="50px"
               width="50px"
             >
-              <Dropdown
-                onClick={(e) => e.preventDefault()}
-                overlay={menuPerfil}
-                placement={"bottom"}
-              >
-                <CaixaFotoPerfil>
-                  <img
-                    src={fotoDePerfil}
-                    className="foto"
-                    alt="fotoPerfil"
-                    height="100%"
-                    width="100%"
-                  ></img>
-                </CaixaFotoPerfil>
-              </Dropdown>
+              {carregandoFoto ? (
+                <Spin size="small" indicator={antIcon} />
+              ) : (
+                <>
+                  <Dropdown
+                    onClick={(e) => e.preventDefault()}
+                    overlay={menuPerfil}
+                    placement={"bottom"}
+                  >
+                    <CaixaFotoPerfil>
+                      <img
+                        src={fotoDePerfil}
+                        className="foto"
+                        alt="fotoPerfil"
+                        height="100%"
+                        width="100%"
+                      ></img>
+                    </CaixaFotoPerfil>
+                  </Dropdown>
+                </>
+              )}
             </Button>
           )}
         </BotoesHeader>

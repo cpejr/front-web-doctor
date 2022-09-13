@@ -71,6 +71,7 @@ function EditarPerfil() {
   const [estado, setEstado] = useState({});
   const [estadoBack, setEstadoBack] = useState({});
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const antIconFoto = <LoadingOutlined style={{ fontSize: 56, marginBottom: "2%" }} spin />;
 
   const [ontem, setOntem] = useState("");
 
@@ -405,7 +406,7 @@ function EditarPerfil() {
           {usuario.avatar_url === null || usuario.avatar_url === "" ? (
             <ImagemPerfil>
               {carregandoFoto ? (
-                <Spin size="large" indicator={antIcon} />
+                <Spin size="large" indicator={antIconFoto} />
               ) : (
                 <>
                   <UserOutlined style={{ marginBottom: "20px" }} />
@@ -415,7 +416,7 @@ function EditarPerfil() {
           ) : (
             <ImagemPerfil>
               {carregandoFoto ? (
-                <Spin size="large" indicator={antIcon} />
+                <Spin size="large" indicator={antIconFoto} />
               ) : (
                 <>
                   <img
@@ -444,6 +445,8 @@ function EditarPerfil() {
         <BlocoInferior>
           <Button
             width="100%"
+            paddingRight="1.5%"
+            paddingLeft="1.5%"
             backgroundColor={Cores.lilas[2]}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             height="50px"

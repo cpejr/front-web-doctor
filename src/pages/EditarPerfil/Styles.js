@@ -130,6 +130,7 @@ export const ImagemPerfil = styled.div`
   display: flex;
   justify-content: center;
   font-size: 12em;
+  margin-bottom: 1%;
   .fotoPerfil {
     font-size: 12em;
     align-items: center;
