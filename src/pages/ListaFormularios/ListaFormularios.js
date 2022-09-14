@@ -184,7 +184,7 @@ function ListaFormularios() {
                       backgroundColor={Cores.cinza[7]}
                       color={Cores.azul}
                       width="45%"
-                      height="50px"
+                      height="39px"
                       borderColor={Cores.azul}
                       fontSize="1em"
                       gap="2%"

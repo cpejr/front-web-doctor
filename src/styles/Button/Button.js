@@ -11,6 +11,7 @@ const Button = styled.button`
   border-radius: 3px;
   margin-top: ${(props) => props.marginTop?? "2%"};
   margin-left: ${(props) => props.marginLeft};
+  min-width: ${(props) => props.minWidth};
   padding-top: ${(props) => props.paddingTop};
   height: ${(props) => props.height};
   gap: ${(props) => props.gap};
