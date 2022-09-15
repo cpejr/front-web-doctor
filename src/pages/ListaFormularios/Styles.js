@@ -188,34 +188,36 @@ export const TopoPaginaBotao = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 1% 0 0 1%;
   @media (max-width: 920px) {
     padding: 1% 2% 0% 2%;
+  }
+  @media (max-width: 920px) {
+    padding: 1% 0.5% 0% 0.5%;
   }
 `;
 
 export const BotaoFinal = styled.div`
-  width: 60%;
+  width: 420px;
   display: flex;
   justify-content: center;
-  @media (max-width: 921px) {
-    min-width: 45vw;
-   justify-content: start;
-  }
+
   @media (max-width: 920px) {
+    width: 400px;
    justify-content: center;
   }
 
-  @media (max-width: 750px) {
-    //width: 65%;
+  @media (max-width: 560px) {
+    //width: 390px;
     justify-content: center;
   }
 
   @media (max-width: 560px) {
     
-    display: flex;
-    width: 92%;
-
+    justify-content: center;
   }
+
+
   @media (min-width: 560px) and (max-width: 920px) {
 
     justify-content: center;

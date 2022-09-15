@@ -183,8 +183,8 @@ function ListaFormularios() {
                     <Button
                       backgroundColor={Cores.cinza[7]}
                       color={Cores.azul}
-                      width="45%"
-                      height="39px"
+                      width="100%"
+                      height="38px"
                       borderColor={Cores.azul}
                       fontSize="1em"
                       gap="2%"
