@@ -30,6 +30,7 @@ import Button from "../../styles/Button";
 import ModalEnvioFormulario from "../../components/ModalEnvioFormulario";
 import ModalExcluirFormulario from "../../components/ModalExcluirFormulario/ModalExcluirFormulario";
 import * as managerService from "../../services/ManagerService/managerService";
+import { compararDataRecente } from "../../utils/tratamentoErros";
 
 function ListaFormularios() {
   const history = useHistory();
@@ -187,7 +188,9 @@ function ListaFormularios() {
             </TopoPagina>
             <BarraEstetica />
             <ContainerFormulario>
-              {formulariosFiltrados?.map((value) => (
+              {formulariosFiltrados
+              .sort(compararDataRecente)
+              .map((value) => (
                 <ContainerFormularioEspecifico>
                   <Formulario>
                     <DadosFormulario>
