@@ -28,6 +28,7 @@ import {
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
 import ModalEnvioFormulario from "../../components/ModalEnvioFormulario";
+import ModalExcluirFormulario from "../../components/ModalExcluirFormulario/ModalExcluirFormulario";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ListaFormularios() {
@@ -41,8 +42,10 @@ function ListaFormularios() {
   const lowerBusca = busca.toLowerCase();
   const [tipoSelect, setTipoSelect] = useState("");
   const [modalEnvio, setModalEnvio] = useState(false);
+  const [ModalDeletarFormulario, setModalDeletarFormulario] = useState(false);
   const [usuarios, setUsuarios] = useState([]);
   const [idFormulario, setIdFormulario] = useState();
+  const [formularioEspecifico, setFormularioEspecifico] = useState({});
   const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
 
   const antIcon = (
@@ -86,6 +89,7 @@ function ListaFormularios() {
 
   useEffect(() => {
     pegandoDadosFormularios();
+
   }, []);
 
   async function pegandoDadosFormularios() {
@@ -109,8 +113,14 @@ function ListaFormularios() {
     });
   }
 
-  async function deletarFormulario(id) {
-    await managerService.DeletarFormulario(id);
+  function fechandoModalDeletarFormulario() {
+    setModalDeletarFormulario(false);
+  }
+
+  function abreModalDeletarFormulario(formulario){
+    setModalDeletarFormulario(true);
+    setFormularioEspecifico(formulario)
+
   }
 
   async function pegandoDadosUsuarios() {
@@ -255,7 +265,7 @@ function ListaFormularios() {
                           borderColor="rgba(255, 0, 0, 0.25)"
                           height="37px"
                           width="90%"
-                          onClick={() => deletarFormulario(value.id)}
+                          onClick={() => abreModalDeletarFormulario(value)}
                         >
                           DELETAR
                         </Button>
@@ -310,6 +320,21 @@ function ListaFormularios() {
       >
         <ModalEnvioFormulario usuarios={usuarios} idFormulario={idFormulario} />
       </Modal>
+
+      <Modal
+        visible={ModalDeletarFormulario}
+        onCancel={() => setModalDeletarFormulario(false)}
+        style={{ maxWidth: "450px", minWidth: "250px" }}
+        footer={null}
+        width={"50%"}
+        centered={true}
+      >
+        <ModalExcluirFormulario
+         formulario={formularioEspecifico}
+         fecharModal={() => fechandoModalDeletarFormulario()}
+         />
+      </Modal>
+
     </div>
   );
 }
