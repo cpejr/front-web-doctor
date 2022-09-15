@@ -1,38 +1,38 @@
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { message, Upload } from "antd";
-import React, { useState , useEffect} from "react";
+import { Upload } from "antd";
+import React, { useState, useEffect } from "react";
 import * as managerService from "../../services/ManagerService/managerService";
-
-
-
-const getBase64 = (img, callback) => {
-  const reader = new FileReader();
-  reader.addEventListener("load", () => callback(reader.result));
-  reader.readAsDataURL(img);
-};
-
-const beforeUpload = (file) => {
-  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-
-  if (!isJpgOrPng) {
-    console.log("You can only upload JPG/PNG file!");
-  }
-
-  const isLt2M = file.size / 1024 / 1024 < 2;
-
-  if (!isLt2M) {
-    console.log("Image must smaller than 2MB!");
-  }
-
-  return isJpgOrPng && isLt2M;
-};
+import AddToast from "../../components/AddToast/AddToast";
+import { toast } from "react-toastify";
 
 function TesteUpload() {
+  const getBase64 = (img, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(img);
+  };
+
+  const beforeUpload = (file) => {
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+
+    if (!isJpgOrPng) {
+      toast.error("You can only upload JPG/PNG file!");
+      setLoading(true);
+    }
+
+    const isLt2M = file.size / 1024 / 1024 < 2;
+
+    if (!isLt2M) {
+      toast.error("Image must smaller than 2MB!");
+      setLoading(true);
+    }
+
+    return isJpgOrPng && isLt2M;
+  };
+
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
- 
-
-
+  const [carregando, setCarregando] = useState(false);
 
   async function handleChange(info) {
     // Get this url from response in real world.
@@ -41,14 +41,17 @@ function TesteUpload() {
       setLoading(false);
       setImageUrl(url);
     });
-
-
   }
 
-  
-
-  async function upload(){
-    await managerService.EnviandoImagem( imageUrl );
+  async function upload() {
+    if (imageUrl) {
+      setCarregando(true);
+      await managerService.EnviandoImagem(imageUrl);
+      setCarregando(false);
+      toast.success("Foto adicionada com sucesso");
+    } else {
+      toast.error("Selecione uma foto para enviar!");
+    }
   }
 
   const uploadButton = (
@@ -86,8 +89,10 @@ function TesteUpload() {
           uploadButton
         )}
       </Upload>
-      <button onClick={upload}>botao</button>
-  
+      <button onClick={upload}>
+        {carregando ? <LoadingOutlined /> : <>Botão </>}
+      </button>
+      <AddToast />
     </>
   );
 }
