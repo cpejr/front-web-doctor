@@ -57,6 +57,10 @@ function EditarFormulario(props) {
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
   );
 
+  const antIconAtualizarCampos = (
+    <LoadingOutlined style={{ fontSize: 24, color: Cores.azul }} spin />
+  );
+
   async function pegandoDados() {
     setCarregando(true);
     const resposta = await managerService.GetFormularioEspecifico(
@@ -224,7 +228,7 @@ function EditarFormulario(props) {
               marginTop="4%"
             >
               {carregandoBotaoAtualizar ? (
-                <Spin indicator={antIcon} />
+                <Spin indicator={antIconAtualizarCampos} />
               ) : (
                 <>Atualizar campos</>
               )}
