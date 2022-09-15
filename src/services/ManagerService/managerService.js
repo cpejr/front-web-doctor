@@ -381,6 +381,7 @@ export const DeletarExameMarcado = async (id) => {
 
 export const EnviandoFormularioPaciente = async (
   status,
+  notificacao_ativa,
   id_formulario,
   id_usuario
 ) => {
@@ -388,7 +389,7 @@ export const EnviandoFormularioPaciente = async (
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   };
   await requesterService
-    .enviarFormularioPaciente(status, id_formulario, id_usuario)
+    .enviarFormularioPaciente(status, notificacao_ativa, id_formulario, id_usuario)
     .then(() => {
       toast.success("Formulario enviado com sucesso!");
       sleep(1500).then(() => window.location.href = "/web/listaformularios")

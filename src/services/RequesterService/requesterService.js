@@ -98,5 +98,5 @@ export const editarPerguntasFormulario = (id, perguntas) =>
 export const editarCamposFormulario = (id, campos) =>
   api.put(`/formularios/${id}`, campos);
 
-export const enviarFormularioPaciente = (status, id_formulario, id_usuario) =>
-  api.post("/formularios_pacientes", { status, id_formulario, id_usuario });
+export const enviarFormularioPaciente = (status, notificacao_ativa, id_formulario, id_usuario) =>
+  api.post("/formularios_pacientes", { status, notificacao_ativa, id_formulario, id_usuario });

@@ -9,6 +9,7 @@ import Chat from "./pages/Chat";
 import CriacaoFormulario from "./pages/CriacaoFormulario";
 import EdicaoConteudo from "./pages/EdicaoConteudo";
 import Header from "./components/Header/Header";
+import HomeSecretaria from "./pages/HomeSecretaria/HomeSecretaria";
 import ListaFormularios from "./pages/ListaFormularios";
 import ListaUsuarios from "./pages/ListaUsuarios";
 import Login from "./pages/Login";
@@ -62,7 +63,7 @@ const RotasPrivadasSecretaria = ({ component: Component, ...rest }) => (
         <Component {...props} />
       ) : (
         <Redirect
-          to={{ pathname: "/web/listadeusuarios", state: { from: props.location } }}
+          to={{ pathname: "/web/homesecretaria", state: { from: props.location } }}
         />
       )
     }
@@ -160,6 +161,11 @@ function UserHeader() {
           exact
           path="/web/formularioespecifico"
           component={FormularioEspecifico}
+        />
+        <RotasPrivadas
+          exact
+          path="/web/homesecretaria"
+          component={HomeSecretaria}
         />
         <RotasPrivadas component={() => <Redirect to="/web/listadeusuarios" />} />
       </Switch>

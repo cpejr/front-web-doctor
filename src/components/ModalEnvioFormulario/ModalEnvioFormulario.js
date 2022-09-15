@@ -16,6 +16,7 @@ import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalEnvioFormulario(props) {
   const [formularioPaciente, setFormularioPaciente] = useState();
+  const [notificacaoAtiva, setNotificacaoAtiva] = useState(false);
   const [carregando, setCarregando] = useState(false);
 
   const antIcon = (
@@ -27,9 +28,11 @@ function ModalEnvioFormulario(props) {
     if (formularioPaciente) {
       await managerService.EnviandoFormularioPaciente(
         false,
+        false,
         props.idFormulario,
         formularioPaciente
       );
+      setNotificacaoAtiva(false);
     } else {
       toast.error("Escolha um paciente para enviar o formulario");
     }

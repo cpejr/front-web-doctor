@@ -13,10 +13,7 @@ import {
   IconeAdicionar,
 } from "./Styles";
 
-
-
-
-function HomeSecretaria() {
+function HomeSecretaria(props) {
   const history = useHistory();
 
   function passandoTipoParaCadastro(tipo){
