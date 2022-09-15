@@ -140,6 +140,12 @@ function EditarFormulario(props) {
     setBotaoForms(true);
   }
 
+
+  async function fechandoModalAlterarPerguntas() {
+    setModalAlterar(false);
+    pegandoDados();
+  }
+
   return (
     <Container>
       <CaixaInputs>
@@ -299,6 +305,7 @@ function EditarFormulario(props) {
           formulario={formularios}
           perguntas={perguntas}
           perguntasAlterar={perguntasAlterar}
+          fechandoModal={() => fechandoModalAlterarPerguntas()}
         />
       </Modal>
     </Container>

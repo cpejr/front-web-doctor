@@ -37,7 +37,7 @@ function ModalEditarFormulario(props) {
       props.perguntasAlterar
     );
     await sleep(1500);
-    window.location.href = "/web/listaformularios";
+    props.fechandoModal();
   }
 
   return (
