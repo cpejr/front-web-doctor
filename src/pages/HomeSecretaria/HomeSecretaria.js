@@ -17,7 +17,7 @@ import {
   IconeAdicionar,
 } from "./Styles";
 
-function HomeSecretaria(props) {
+function HomeSecretaria() {
   const history = useHistory();
 
   function passandoTipoParaCadastro(tipo){
@@ -28,20 +28,93 @@ function HomeSecretaria(props) {
 }
 
 const [carregando, setCarregando] = useState(true);
-const [formularioPacientes, setformularioPacientes] = useState([]);
+const [dadosFormularios, setDadosFormularios] = useState([]);
+const [formularioPaciente, setFormularioPaciente] = useState([]);
+const [notificacaoFormularioAtivo, setNotificacaoFormularioAtivo] = useState([]);
 
 async function PegaFormularios() {
   setCarregando(true);
-  const respostaFormularios = await managerService.GetFormularioPacientesPorFormulario(
-    props.location.state.id
+  const resposta = await managerService.GetFormularios();
+  setDadosFormularios(resposta);
+  setCarregando(false);
+}
+
+useEffect(() => {
+  PegaFormulariosPaciente();
+}, [dadosFormularios.id]);
+
+useEffect(() => {
+  PegaFormularios();
+}, [dadosFormularios.id]);
+
+async function PegaFormulariosPaciente() {
+
+  setCarregando(true);
+
+  const notificacao = await managerService.GetFormularioPacientesPorFormulario(
+    dadosFormularios.id
   );
-  
+
+  setFormularioPaciente(notificacao);
+  setCarregando(false);
+
+  const verificaNotificacaoAtiva = notificacao.filter(
+    (item) => item.resposta !== false || item.resposta !== null
+  );
+
+  setNotificacaoFormularioAtivo(verificaNotificacaoAtiva);
+
 }
 
   return (
     <div>
       <Body>
         <Board>
+        {notificacaoFormularioAtivo?.map((value) =>
+          <Notificacao>
+          
+            <CaixaTexto>
+              <h3>
+                <TextoNotificacao>
+                  Formulário {value.titulo} respondido por {value.nome}
+                </TextoNotificacao>
+              </h3>
+            </CaixaTexto>
+            <BotoesColuna>
+              <Button
+                width="100%"
+                height="50px"
+                backgroundColor={Cores.lilas[1]}
+                borderColor={Cores.azul}
+                color={Cores.branco}
+                fontSize="1.5em"
+                fontWeight="medium"
+                fontSizeMedia="0.8em"
+                fontSizeMedia950="1em"
+                heightMedia="2em"
+                onClick={() => history.push("/web/respostaformulario")}
+              >
+                VISUALIZAR
+              </Button>
+              <Button
+                width="100%"
+                height="50px"
+                backgroundColor={Cores.cinza[7]}
+                borderColor={Cores.azul}
+                color={Cores.preto}
+                fontSize="1.5em"
+                fontWeight="medium"
+                fontSizeMedia="0.8em"
+                fontSizeMedia950="1em"
+                heightMedia="2em"
+                onClick={() => history.push("/web/chat")}
+              >
+                INICIAR CHAT
+              </Button>
+            </BotoesColuna>
+          
+          </Notificacao>
+          )}
           <Notificacao>
             <CaixaTexto>
               <h3>
@@ -49,7 +122,7 @@ async function PegaFormularios() {
                   Formulário Pré-consulta respondido por Nome do Usuário
                 </TextoNotificacao>
               </h3>
-            </CaixaTexto>
+            </CaixaTexto> 
             <BotoesColuna>
               <Button
                 width="100%"
@@ -408,49 +481,8 @@ async function PegaFormularios() {
                 onClick={() => history.push("/web/chat")}
               >
                 INICIAR CHAT
-              </Button>
-            </BotoesColuna>
-          </Notificacao>
-          <Notificacao>
-            <CaixaTexto>
-              <h3>
-                <TextoNotificacao>
-                  Formulário Pré-consulta respondido por Nome do Usuário
-                </TextoNotificacao>
-              </h3>
-            </CaixaTexto>
-            <BotoesColuna>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.lilas[1]}
-                borderColor={Cores.azul}
-                color={Cores.branco}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/respostaformulario")}
-              >
-                VISUALIZAR
-              </Button>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.cinza[7]}
-                borderColor={Cores.azul}
-                color={Cores.preto}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/chat")}
-              >
-                INICIAR CHAT
-              </Button>
-            </BotoesColuna>
+        </Button>
+        </BotoesColuna>
           </Notificacao>
         </Board>
         <BotaoCanto>
