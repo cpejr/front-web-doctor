@@ -257,7 +257,7 @@ export const ConferirSenha = async (email, senhaAtual) => {
 };
 
 export const AlterarSenha = async (novaSenha, id) => {
-  let linkErrado;
+  let linkErrado = true;
   await requesterService
     .alterarSenha(id, novaSenha)
     .then(() => {
@@ -268,7 +268,9 @@ export const AlterarSenha = async (novaSenha, id) => {
       toast.error(
         "Erro ao alterar senha. Reenvie o e-mail de recuperação para alterá-la com sucesso."
       );
-      linkErrado = true;
+      setTimeout((error) => {
+        requisicaoErro(error, () => (window.location.href = "/alterarsenha_requisicao"));
+      }, 5000);
     });
   return linkErrado;
 };
