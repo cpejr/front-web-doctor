@@ -191,25 +191,21 @@ export const TopoPaginaBotao = styled.div`
   padding: 1% 0 0 1%;
   @media (max-width: 920px) {
     padding: 1% 2% 0% 2%;
+    
   }
-  @media (max-width: 920px) {
-    padding: 1% 0.5% 0% 0.5%;
+  @media (max-width: 560px) {
+    padding: 3% 0.5% 0% 0.5%;
   }
 `;
 
 export const BotaoFinal = styled.div`
-  width: 420px;
+  width: 500px;
   display: flex;
   justify-content: center;
-
+  height:  60px;
   @media (max-width: 920px) {
-    width: 400px;
+   width: 400px;
    justify-content: center;
-  }
-
-  @media (max-width: 560px) {
-    //width: 390px;
-    justify-content: center;
   }
 
   @media (max-width: 560px) {
