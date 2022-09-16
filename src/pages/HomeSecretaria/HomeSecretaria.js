@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Cores} from "../../variaveis";
 import { useHistory } from "react-router-dom";
 import Button from "../../styles/Button";
+import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
+import { Spin, Modal, Input } from "antd";
+import ModalFormulario from "../../components/ModalFormulario";
+import * as managerService from "../../services/ManagerService/managerService";
 import {
   Body,
   Board,
@@ -21,6 +25,17 @@ function HomeSecretaria(props) {
     pathname: "/cadastro",
     state: { tipo },
   });
+}
+
+const [carregando, setCarregando] = useState(true);
+const [formularioPacientes, setformularioPacientes] = useState([]);
+
+async function PegaFormularios() {
+  setCarregando(true);
+  const respostaFormularios = await managerService.GetFormularioPacientesPorFormulario(
+    props.location.state.id
+  );
+  
 }
 
   return (
