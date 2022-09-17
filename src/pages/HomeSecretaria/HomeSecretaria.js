@@ -37,21 +37,15 @@ useEffect(() => {
 }, []);
 
 async function PegaFormulariosPaciente() {
-
   setCarregando(true);
-
   const notificacao = await managerService.GetTodosFormulariosPacientes(
   );
-  
   setFormularioPaciente(notificacao);
   setCarregando(false);
-
   const verificaNotificacaoAtiva = notificacao.filter(
     (item) => item.notificacao_ativa === true
   );
-
   setNotificacaoFormularioAtivo(verificaNotificacaoAtiva);
-
 }
 
 async function apagaNotificacaoFormulario(idFormularioPaciente){
@@ -64,22 +58,23 @@ async function apagaNotificacaoFormulario(idFormularioPaciente){
   setCarregando(false);
 }
 
-/*async function pegaIdUsuario(idUsuario){
-  await managerService.UpdateNotificacaoAtivaFormulario(idUsuario);
-  history
-}*/
+async function pegaPerfilUsuario(email){
+  history.push({
+        pathname: "/web/perfildopaciente",
+        state: { email },
+  });
+}
 
 const ordenaFormularios = (a, b) => {
   var data1 = new Date(a.data_criacao);
   var data2 = new Date(b.data_criacao);
-
+  
     if (data1 < data2) {
       return 1;
     } else {
       return -1;
     }
-  };
-
+};
 
   return (
     <div>
@@ -106,7 +101,7 @@ const ordenaFormularios = (a, b) => {
                 fontSizeMedia="0.8em"
                 fontSizeMedia950="1em"
                 heightMedia="2em"
-                onClick={() => history.push("/web/perfil")}
+                onClick={() => pegaPerfilUsuario(value.email)}
               >
                 VISUALIZAR
               </Button>
