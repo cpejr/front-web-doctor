@@ -16,6 +16,7 @@ import {
   BotaoCanto,
   IconeAdicionar,
 } from "./Styles";
+import { map } from "lodash";
 
 function HomeSecretaria() {
   const history = useHistory();
@@ -28,55 +29,68 @@ function HomeSecretaria() {
 }
 
 const [carregando, setCarregando] = useState(true);
-const [dadosFormularios, setDadosFormularios] = useState([]);
 const [formularioPaciente, setFormularioPaciente] = useState([]);
 const [notificacaoFormularioAtivo, setNotificacaoFormularioAtivo] = useState([]);
 
-async function PegaFormularios() {
-  setCarregando(true);
-  const resposta = await managerService.GetFormularios();
-  setDadosFormularios(resposta);
-  setCarregando(false);
-}
-
 useEffect(() => {
   PegaFormulariosPaciente();
-}, [dadosFormularios.id]);
-
-useEffect(() => {
-  PegaFormularios();
-}, [dadosFormularios.id]);
+}, []);
 
 async function PegaFormulariosPaciente() {
 
   setCarregando(true);
 
-  const notificacao = await managerService.GetFormularioPacientesPorFormulario(
-    dadosFormularios.id
+  const notificacao = await managerService.GetTodosFormulariosPacientes(
   );
-
+  
   setFormularioPaciente(notificacao);
   setCarregando(false);
 
   const verificaNotificacaoAtiva = notificacao.filter(
-    (item) => item.resposta !== false || item.resposta !== null
+    (item) => item.notificacao_ativa === true
   );
 
   setNotificacaoFormularioAtivo(verificaNotificacaoAtiva);
 
 }
 
+async function apagaNotificacaoFormulario(idFormularioPaciente){
+  setCarregando(true);
+  await managerService.UpdateNotificacaoAtivaFormulario(
+    idFormularioPaciente,
+    false,
+  );
+  PegaFormulariosPaciente();
+  setCarregando(false);
+}
+
+/*async function pegaIdUsuario(idUsuario){
+  await managerService.UpdateNotificacaoAtivaFormulario(idUsuario);
+  history
+}*/
+
+const ordenaFormularios = (a, b) => {
+  var data1 = new Date(a.data_criacao);
+  var data2 = new Date(b.data_criacao);
+
+    if (data1 < data2) {
+      return 1;
+    } else {
+      return -1;
+    }
+  };
+
+
   return (
     <div>
       <Body>
         <Board>
-        {notificacaoFormularioAtivo?.map((value) =>
+        {notificacaoFormularioAtivo?.sort(ordenaFormularios).map((value) =>
           <Notificacao>
-          
             <CaixaTexto>
               <h3>
                 <TextoNotificacao>
-                  Formulário {value.titulo} respondido por {value.nome}
+                  Formulário: {value.titulo} respondido por: {value.nome}
                 </TextoNotificacao>
               </h3>
             </CaixaTexto>
@@ -92,7 +106,7 @@ async function PegaFormulariosPaciente() {
                 fontSizeMedia="0.8em"
                 fontSizeMedia950="1em"
                 heightMedia="2em"
-                onClick={() => history.push("/web/respostaformulario")}
+                onClick={() => history.push("/web/perfil")}
               >
                 VISUALIZAR
               </Button>
@@ -107,383 +121,13 @@ async function PegaFormulariosPaciente() {
                 fontSizeMedia="0.8em"
                 fontSizeMedia950="1em"
                 heightMedia="2em"
-                onClick={() => history.push("/web/chat")}
+                onClick={() => apagaNotificacaoFormulario(value.id)}
               >
-                INICIAR CHAT
+                OK
               </Button>
             </BotoesColuna>
-          
           </Notificacao>
           )}
-          <Notificacao>
-            <CaixaTexto>
-              <h3>
-                <TextoNotificacao>
-                  Formulário Pré-consulta respondido por Nome do Usuário
-                </TextoNotificacao>
-              </h3>
-            </CaixaTexto> 
-            <BotoesColuna>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.lilas[1]}
-                borderColor={Cores.azul}
-                color={Cores.branco}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/respostaformulario")}
-              >
-                VISUALIZAR
-              </Button>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.cinza[7]}
-                borderColor={Cores.azul}
-                color={Cores.preto}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/chat")}
-              >
-                INICIAR CHAT
-              </Button>
-            </BotoesColuna>
-          </Notificacao>
-          <Notificacao>
-            <CaixaTexto>
-              <h3>
-                <TextoNotificacao>
-                  Formulário Pré-consulta respondido por Nome do Usuário
-                </TextoNotificacao>
-              </h3>
-            </CaixaTexto>
-            <BotoesColuna>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.lilas[1]}
-                borderColor={Cores.azul}
-                color={Cores.branco}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/respostaformulario")}
-              >
-                VISUALIZAR
-              </Button>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.cinza[7]}
-                borderColor={Cores.azul}
-                color={Cores.preto}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/chat")}
-              >
-                INICIAR CHAT
-              </Button>
-            </BotoesColuna>
-          </Notificacao>
-          <Notificacao>
-            <CaixaTexto>
-              <h3>
-                <TextoNotificacao>
-                  Formulário Pré-consulta respondido por Nome do Usuário
-                </TextoNotificacao>
-              </h3>
-            </CaixaTexto>
-            <BotoesColuna>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.lilas[1]}
-                borderColor={Cores.azul}
-                color={Cores.branco}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/respostaformulario")}
-              >
-                VISUALIZAR
-              </Button>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.cinza[7]}
-                borderColor={Cores.azul}
-                color={Cores.preto}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/chat")}
-              >
-                INICIAR CHAT
-              </Button>
-            </BotoesColuna>
-          </Notificacao>
-          <Notificacao>
-            <CaixaTexto>
-              <h3>
-                <TextoNotificacao>
-                  Formulário Pré-consulta respondido por Nome do Usuário
-                </TextoNotificacao>
-              </h3>
-            </CaixaTexto>
-            <BotoesColuna>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.lilas[1]}
-                borderColor={Cores.azul}
-                color={Cores.branco}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/respostaformulario")}
-              >
-                VISUALIZAR
-              </Button>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.cinza[7]}
-                borderColor={Cores.azul}
-                color={Cores.preto}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/chat")}
-              >
-                INICIAR CHAT
-              </Button>
-            </BotoesColuna>
-          </Notificacao>
-          <Notificacao>
-            <CaixaTexto>
-              <h3>
-                <TextoNotificacao>
-                  Formulário Pré-consulta respondido por Nome do Usuário
-                </TextoNotificacao>
-              </h3>
-            </CaixaTexto>
-            <BotoesColuna>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.lilas[1]}
-                borderColor={Cores.azul}
-                color={Cores.branco}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/respostaformulario")}
-              >
-                VISUALIZAR
-              </Button>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.cinza[7]}
-                borderColor={Cores.azul}
-                color={Cores.preto}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/chat")}
-              >
-                INICIAR CHAT
-              </Button>
-            </BotoesColuna>
-          </Notificacao>
-          <Notificacao>
-            <CaixaTexto>
-              <h3>
-                <TextoNotificacao>
-                  Formulário Pré-consulta respondido por Nome do Usuário
-                </TextoNotificacao>
-              </h3>
-            </CaixaTexto>
-            <BotoesColuna>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.lilas[1]}
-                borderColor={Cores.azul}
-                color={Cores.branco}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/respostaformulario")}
-              >
-                VISUALIZAR
-              </Button>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.cinza[7]}
-                borderColor={Cores.azul}
-                color={Cores.preto}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/chat")}
-              >
-                INICIAR CHAT
-              </Button>
-            </BotoesColuna>
-          </Notificacao>
-          <Notificacao>
-            <CaixaTexto>
-              <h3>
-                <TextoNotificacao>
-                  Formulário Pré-consulta respondido por Nome do Usuário
-                </TextoNotificacao>
-              </h3>
-            </CaixaTexto>
-            <BotoesColuna>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.lilas[1]}
-                borderColor={Cores.azul}
-                color={Cores.branco}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/respostaformulario")}
-              >
-                VISUALIZAR
-              </Button>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.cinza[7]}
-                borderColor={Cores.azul}
-                color={Cores.preto}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/chat")}
-              >
-                INICIAR CHAT
-              </Button>
-            </BotoesColuna>
-          </Notificacao>
-          <Notificacao>
-            <CaixaTexto>
-              <h3>
-                <TextoNotificacao>
-                  Formulário Pré-consulta respondido por Nome do Usuário
-                </TextoNotificacao>
-              </h3>
-            </CaixaTexto>
-            <BotoesColuna>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.lilas[1]}
-                borderColor={Cores.azul}
-                color={Cores.branco}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/respostaformulario")}
-              >
-                VISUALIZAR
-              </Button>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.cinza[7]}
-                borderColor={Cores.azul}
-                color={Cores.preto}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/chat")}
-              >
-                INICIAR CHAT
-              </Button>
-            </BotoesColuna>
-          </Notificacao>
-          <Notificacao>
-            <CaixaTexto>
-              <h3>
-                <TextoNotificacao>
-                  Formulário Pré-consulta respondido por Nome do Usuário
-                </TextoNotificacao>
-              </h3>
-            </CaixaTexto>
-            <BotoesColuna>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.lilas[1]}
-                borderColor={Cores.azul}
-                color={Cores.branco}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/respostaformulario")}
-              >
-                VISUALIZAR
-              </Button>
-              <Button
-                width="100%"
-                height="50px"
-                backgroundColor={Cores.cinza[7]}
-                borderColor={Cores.azul}
-                color={Cores.preto}
-                fontSize="1.5em"
-                fontWeight="medium"
-                fontSizeMedia="0.8em"
-                fontSizeMedia950="1em"
-                heightMedia="2em"
-                onClick={() => history.push("/web/chat")}
-              >
-                INICIAR CHAT
-        </Button>
-        </BotoesColuna>
-          </Notificacao>
         </Board>
         <BotaoCanto>
           <Button

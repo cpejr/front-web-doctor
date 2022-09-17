@@ -32,7 +32,6 @@ function ModalEnvioFormulario(props) {
         props.idFormulario,
         formularioPaciente
       );
-      setNotificacaoAtiva(false);
     } else {
       toast.error("Escolha um paciente para enviar o formulario");
     }

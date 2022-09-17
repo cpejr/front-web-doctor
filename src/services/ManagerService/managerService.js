@@ -101,6 +101,16 @@ export const UpdateConsulta = async (id_consulta, consulta) => {
   return;
 };
 
+export const UpdateNotificacaoAtivaFormulario = async (id, notificacao_ativa) => {
+  await requesterService
+    .updateNotificacaoAtivaFormularioPaciente(id, notificacao_ativa)
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return;
+};
+
 export const GetConsultaPorId = async (id) => {
   let dadosConsulta = {};
 
@@ -490,6 +500,22 @@ export const GetFormularioPacientesPorFormulario = async (id_formulario) => {
     });
   return dadosResposta;
 };
+
+export const GetTodosFormulariosPacientes = async () => {
+  let dadosResposta = {};
+
+  await requesterService
+    .requisicaoTodosFormulariosPaciente()
+
+    .then((res) => {
+      dadosResposta = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosResposta;
+};
+
 
 export const CriarFormulario = async (estado) => {
   await requesterService
