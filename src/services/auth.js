@@ -1,8 +1,7 @@
-export const CHAVE_USUARIO_ID = "@doctorapp-UsuarioId";
-export const CHAVE_EMAIL = "@doctorapp-Email";
-export const CHAVE_TOKEN = "@doctorapp-Token";
-export const CHAVE_TIPO = "@doctorapp-Tipo";
-
+export const CHAVE_USUARIO_ID = '@doctorapp-UsuarioId';
+export const CHAVE_EMAIL = '@doctorapp-Email';
+export const CHAVE_TOKEN = '@doctorapp-Token';
+export const CHAVE_TIPO = '@doctorapp-Tipo';
 
 export const usuarioAutenticado = () =>
   sessionStorage.getItem(CHAVE_TOKEN) !== null;

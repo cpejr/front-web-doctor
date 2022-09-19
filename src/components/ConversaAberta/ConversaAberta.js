@@ -15,7 +15,7 @@ import { ChatContext } from '../../contexts/ChatContext';
 import * as managerService from '../../services/ManagerService/managerService';
 import checarObjVazio from '../../utils/checarObjVazio';
 import moverArray from '../../utils/moverArray';
-import { Spin } from 'antd';
+import { Spin, Tooltip } from 'antd';
 import {
   ArrowLeftOutlined,
   PaperClipOutlined,
@@ -261,21 +261,23 @@ export default function ConversaAberta({ socket }) {
           value={inputMensagemConteudo}
           ref={inputMensagemConteudoRef}
         />
-        <Button
-          backgroundColor='transparent'
-          borderColor='transparent'
-          color={Cores.lilas[1]}
-          width='10%'
-          widthres='15%'
-          height='10%'
-          marginTop='0%'
-          onClick={enviarMensagem}
-          disabled={!inputMensagemConteudo}
-        >
-          <SendOutlined
-            style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
-          />
-        </Button>
+        <Tooltip placement='bottom' title='Enviar mensagem'>
+          <Button
+            backgroundColor='transparent'
+            borderColor='transparent'
+            color={Cores.lilas[1]}
+            width='10%'
+            widthres='15%'
+            height='10%'
+            marginTop='0%'
+            onClick={enviarMensagem}
+            disabled={!inputMensagemConteudo}
+          >
+            <SendOutlined
+              style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
+            />
+          </Button>
+        </Tooltip>
       </FooterConversaAberta>
     </Conversa>
   );
