@@ -28,7 +28,8 @@ import objCopiaProfunda from '../../utils/objCopiaProfunda';
 export default function ConversaAberta({ socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState('');
-  const [carregando, setCarregando] = useState(true);
+  const [carregandoConversa, setCarregandoConversa] = useState(true);
+  const [carregandoEnvioMensagem, setCarregandoEnvioMensagem] = useState(false);
   const {
     usuarioId,
     conversaSelecionada,
@@ -53,7 +54,7 @@ export default function ConversaAberta({ socket }) {
 
       if (componenteEstaMontadoRef.current) {
         setUsuarioAtual(dadosUsuario);
-        setCarregando(false);
+        setCarregandoConversa(false);
       }
     }
 
@@ -138,6 +139,7 @@ export default function ConversaAberta({ socket }) {
   const enviarMensagem = async (e) => {
     e.preventDefault();
 
+    setCarregandoEnvioMensagem(true);
     const dadosParaCriarNovaMensagem = {
       id_conversa: conversaSelecionada.id,
       id_usuario: usuarioId,
@@ -145,6 +147,9 @@ export default function ConversaAberta({ socket }) {
       foi_visualizado: false,
       conteudo: inputMensagemConteudo,
     };
+
+    setInputMensagemConteudo('');
+
     const { data_cricao, data_atualizacao, media_url, ...dados } =
       await managerService.CriandoMensagem(dadosParaCriarNovaMensagem);
 
@@ -163,13 +168,17 @@ export default function ConversaAberta({ socket }) {
     }
 
     atualizarBarraLateral(novaMensagem);
-    setInputMensagemConteudo('');
 
     setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
+    setCarregandoEnvioMensagem(false);
   };
 
-  const antIcon = (
+  const antIconConversa = (
     <LoadingOutlined style={{ fontSize: 130, color: Cores.azul }} spin />
+  );
+
+  const antIconEnvioMensagem = (
+    <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
   );
 
   const verificarEnter = (e) => {
@@ -210,9 +219,9 @@ export default function ConversaAberta({ socket }) {
         <NomePessoa>{conversaSelecionada?.conversaCom?.nome}</NomePessoa>
       </HeaderConversaAberta>
       <CorpoConversaAberta>
-        {carregando ? (
+        {carregandoConversa ? (
           <Spin
-            indicator={antIcon}
+            indicator={antIconConversa}
             style={{
               position: 'absolute',
               top: '50%',
@@ -261,23 +270,32 @@ export default function ConversaAberta({ socket }) {
           value={inputMensagemConteudo}
           ref={inputMensagemConteudoRef}
         />
-        <Tooltip placement='bottom' title='Enviar mensagem'>
-          <Button
-            backgroundColor='transparent'
-            borderColor='transparent'
-            color={Cores.lilas[1]}
-            width='10%'
-            widthres='15%'
-            height='10%'
-            marginTop='0%'
-            onClick={enviarMensagem}
-            disabled={!inputMensagemConteudo}
-          >
-            <SendOutlined
-              style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
-            />
-          </Button>
-        </Tooltip>
+        {carregandoEnvioMensagem ? (
+          <Spin
+            indicator={antIconEnvioMensagem}
+            style={{
+              margin: '0px 1rem',
+            }}
+          />
+        ) : (
+          <Tooltip placement='bottom' title='Enviar mensagem'>
+            <Button
+              backgroundColor='transparent'
+              borderColor='transparent'
+              color={Cores.lilas[1]}
+              width='10%'
+              widthres='15%'
+              height='10%'
+              marginTop='0%'
+              onClick={enviarMensagem}
+              disabled={!inputMensagemConteudo}
+            >
+              <SendOutlined
+                style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
+              />
+            </Button>
+          </Tooltip>
+        )}
       </FooterConversaAberta>
     </Conversa>
   );
