@@ -90,7 +90,11 @@ export const requisicaoFormularioPacientes = (id_formulario) =>
 
 export const requisicaoReceitas = () => api.get(`/receitas/`);
 
+<<<<<<< HEAD
 export const criarReceita = (receita) => api.post(`/receitas`, receita);
+=======
+export const deletarReceita = (id) => api.delete(`/receitas/${id}`);
+>>>>>>> DEV
 
 export const editarPerguntasFormulario = (id, perguntas) =>
 	api.put(`/formularios/${id}`, { perguntas: perguntas });
