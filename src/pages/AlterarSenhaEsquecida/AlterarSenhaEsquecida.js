@@ -90,14 +90,6 @@ function AlterarSenhaEsquecida() {
             novaSenha,
             resposta.dadosUsuario.id
           );
-          console.log(resposta.linkErrado);
-          // if (resposta.linkErrado === true) {
-          //   await sleep(3000);
-          //   redirecionamento("/alterarsenha_requisicao");
-          //   setCarregando(false);
-          // }
-          await sleep(1500);
-          redirecionamento("/web/perfil");
           setCarregando(false);
         }
       } else {

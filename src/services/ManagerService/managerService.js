@@ -257,22 +257,23 @@ export const ConferirSenha = async (email, senhaAtual) => {
 };
 
 export const AlterarSenha = async (novaSenha, id) => {
-  let linkErrado = true;
   await requesterService
     .alterarSenha(id, novaSenha)
     .then(() => {
       toast.success("Senha alterada com sucesso!");
-      linkErrado = false;
+      setTimeout(() => {
+        window.location.href = "/wb/perfil";
+      }, 2000);
     })
-    .catch((error) => {
+    .catch(() => {
       toast.error(
-        "Erro ao alterar senha. Reenvie o e-mail de recuperação para alterá-la com sucesso."
+        "Erro ao alterar senha. Reenvie o e-mail de recuperação e entre no link mais atual para alterá-la com sucesso"
       );
-      setTimeout((error) => {
-        requisicaoErro(error, () => (window.location.href = "/alterarsenha_requisicao"));
-      }, 5000);
+      setTimeout(() => {
+        window.location.href = "/alterarsenha_requisicao";
+      }, 5200);
     });
-  return linkErrado;
+  return;
 };
 
 export const UpdateDadosUsuario = async (
