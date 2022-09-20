@@ -36,13 +36,11 @@ export const requisicaoLogin = async (email, senha) => {
 export const Cadastrando = async (usuario, endereco) => {
   const resposta = await requesterService.requisicaoDadosUsuario(usuario.email);
 
-  if (resposta.status != 204){
+  if (resposta.status != 204) {
     sleep(1500);
     toast.error("E-mail já cadastrado");
     return;
   }
-
-
 
   await requesterService
     .criarUsuario(endereco, usuario)
@@ -51,6 +49,27 @@ export const Cadastrando = async (usuario, endereco) => {
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/cadastro"));
+      return false;
+    });
+  return false;
+};
+
+export const EnviandoEmail = async (email) => {
+  const resposta = await requesterService.requisicaoDadosUsuario(email);
+  if (resposta.status === 204) {
+    sleep(1500);
+    toast.error("E-mail inexistente!");
+    return;
+  }
+
+  await requesterService
+    .recuperarSenha(email)
+    .then(() => {
+      toast.success("Email enviado com sucesso!");
+    })
+    .catch((error) => {
+      sleep(1500);
+      requisicaoErro(error);
       return false;
     });
   return false;
@@ -75,6 +94,16 @@ export const UpdateConsulta = async (id_consulta, consulta) => {
     .then(() => {
       toast.success("Consulta atualizada com sucesso!");
     })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return;
+};
+
+export const UpdateNotificacaoAtivaFormulario = async (id, notificacao_ativa) => {
+  await requesterService
+    .updateNotificacaoAtivaFormularioPaciente(id, notificacao_ativa)
     .catch((error) => {
       requisicaoErro(error);
       return false;
@@ -173,6 +202,21 @@ export const GetDadosUsuario = async (emailUrl) => {
   return { dadosEndereco, dadosUsuario };
 };
 
+export const GetDadosUsuarioPorToken = async (token_usuario) => {
+  let dadosUsuario = {};
+
+  await requesterService
+    .requisicaoDadosUsuarioPorToken(token_usuario)
+    .then((res) => {
+      dadosUsuario = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return { dadosUsuario };
+};
+
 export const GetDadosConsultorios = async () => {
   let dadosConsultorios = {};
   let dadosEndereco = {};
@@ -219,7 +263,7 @@ export const ConferirSenha = async (email, senhaAtual) => {
     return false;
   } catch (error) {
     toast.error("Senha incorreta!");
-    return true;  
+    return true;
   }
 };
 
@@ -242,7 +286,7 @@ export const UpdateDadosUsuario = async (
     .updateDadosUsuario(id_usuario, id_endereco, endereco, estado)
     .then(() => {
       toast.success("Dados alterados com sucesso.");
-      
+
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));
@@ -347,18 +391,19 @@ export const DeletarExameMarcado = async (id) => {
 
 export const EnviandoFormularioPaciente = async (
   status,
+  notificacao_ativa,
   id_formulario,
   id_usuario
 ) => {
   const sleep = (milliseconds) => {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   };
-   await requesterService
-    .enviarFormularioPaciente(status, id_formulario, id_usuario)
+  await requesterService
+    .enviarFormularioPaciente(status, notificacao_ativa, id_formulario, id_usuario)
     .then(() => {
       toast.success("Formulario enviado com sucesso!");
-      //sleep(1500).then(() => window.location.href = "/web/listaformularios")
-      
+      sleep(1500).then(() => window.location.href = "/web/listaformularios")
+
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -394,7 +439,7 @@ export const GetFormularioEspecifico = async (id) => {
   return dadosFormulario;
 };
 
-export const  DeletarFormulario = async (id) => {
+export const DeletarFormulario = async (id) => {
   await requesterService
     .deletarFormulario(id)
     .then(() => {
@@ -456,6 +501,22 @@ export const GetFormularioPacientesPorFormulario = async (id_formulario) => {
   return dadosResposta;
 };
 
+export const GetTodosFormulariosPacientes = async () => {
+  let dadosResposta = {};
+
+  await requesterService
+    .requisicaoTodosFormulariosPaciente()
+
+    .then((res) => {
+      dadosResposta = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosResposta;
+};
+
+
 export const CriarFormulario = async (estado) => {
   await requesterService
     .criarFormulario(estado)
@@ -510,6 +571,25 @@ export const EditarFormularios = async (
       toast.success("Formulario atualizado com sucesso.");
     })
     .catch((error) => {
+      return false;
+    });
+
+  return false;
+};
+
+export const DeletarReceita = async (id) => {
+  await requesterService
+    .deletarReceita(id)
+    .then(() => {
+      toast.success("Receita deletada com sucesso.");
+      window.location.href = "/web/areareceitas";
+    })
+    .catch((error) => {
+      requisicaoErro(
+        error,
+        () => (window.location.href = "/web/areareceitas")
+      );
+
       return false;
     });
 
