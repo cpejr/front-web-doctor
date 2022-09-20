@@ -27,8 +27,7 @@ export const requisicaoLogin = async (email, senha) => {
         window.location.href = "/web/listadeusuarios";
       }
     }
-  } catch (error) {
-  }
+  } catch (error) {}
 
   return;
 };
@@ -101,7 +100,10 @@ export const UpdateConsulta = async (id_consulta, consulta) => {
   return;
 };
 
-export const UpdateNotificacaoAtivaFormulario = async (id, notificacao_ativa) => {
+export const UpdateNotificacaoAtivaFormulario = async (
+  id,
+  notificacao_ativa
+) => {
   await requesterService
     .updateNotificacaoAtivaFormularioPaciente(id, notificacao_ativa)
     .catch((error) => {
@@ -268,11 +270,9 @@ export const ConferirSenha = async (email, senhaAtual) => {
 };
 
 export const AlterarSenha = async (novaSenha, id) => {
-  await requesterService
-    .alterarSenha(id, novaSenha)
-    .then(() => {
-      toast.success("Senha alterada com sucesso!");
-    })
+  await requesterService.alterarSenha(id, novaSenha).then(() => {
+    toast.success("Senha alterada com sucesso!");
+  });
   return false;
 };
 
@@ -286,7 +286,6 @@ export const UpdateDadosUsuario = async (
     .updateDadosUsuario(id_usuario, id_endereco, endereco, estado)
     .then(() => {
       toast.success("Dados alterados com sucesso.");
-
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));
@@ -310,7 +309,6 @@ export const UpdateCodigo = async (id_usuario, codigo) => {
   return false;
 };
 
-
 export const DeletarEnderecoEUsuario = async (id_endereco) => {
   await requesterService
     .deletarEnderecoEUsuario(id_endereco)
@@ -325,8 +323,7 @@ export const DeletarEnderecoEUsuario = async (id_endereco) => {
 
       return false;
     });
-
-}
+};
 
 export const GetDadosConsultasExamesMarcadosGeral = async () => {
   let dadosConsultas = {};
@@ -395,15 +392,15 @@ export const EnviandoFormularioPaciente = async (
   id_formulario,
   id_usuario
 ) => {
-  const sleep = (milliseconds) => {
-    return new Promise((resolve) => setTimeout(resolve, milliseconds));
-  };
   await requesterService
-    .enviarFormularioPaciente(status, notificacao_ativa, id_formulario, id_usuario)
+    .enviarFormularioPaciente(
+      status,
+      notificacao_ativa,
+      id_formulario,
+      id_usuario
+    )
     .then(() => {
       toast.success("Formulario enviado com sucesso!");
-      sleep(1500).then(() => window.location.href = "/web/listaformularios")
-
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -447,8 +444,7 @@ export const DeletarFormulario = async (id) => {
       window.location.href = "/web/listaformularios";
     })
     .catch((error) => {
-      requisicaoErro(
-      );
+      requisicaoErro();
 
       return false;
     });
@@ -516,7 +512,6 @@ export const GetTodosFormulariosPacientes = async () => {
   return dadosResposta;
 };
 
-
 export const CriarFormulario = async (estado) => {
   await requesterService
     .criarFormulario(estado)
@@ -543,10 +538,7 @@ export const GetReceitas = async () => {
   return dadosReceitas;
 };
 
-export const EditarPerguntasFormulario = async (
-  id,
-  perguntas
-) => {
+export const EditarPerguntasFormulario = async (id, perguntas) => {
   await requesterService
     .editarPerguntasFormulario(id, perguntas)
     .then(() => {
@@ -561,10 +553,7 @@ export const EditarPerguntasFormulario = async (
   return false;
 };
 
-export const EditarFormularios = async (
-  id,
-  campos
-) => {
+export const EditarFormularios = async (id, campos) => {
   await requesterService
     .editarCamposFormulario(id, campos)
     .then(() => {
@@ -585,10 +574,7 @@ export const DeletarReceita = async (id) => {
       window.location.href = "/web/areareceitas";
     })
     .catch((error) => {
-      requisicaoErro(
-        error,
-        () => (window.location.href = "/web/areareceitas")
-      );
+      requisicaoErro(error, () => (window.location.href = "/web/areareceitas"));
 
       return false;
     });
