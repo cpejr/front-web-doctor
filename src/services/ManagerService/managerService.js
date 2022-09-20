@@ -64,7 +64,7 @@ export const EnviandoEmail = async (email) => {
   await requesterService
     .recuperarSenha(email)
     .then(() => {
-      toast.success("Email enviado com sucesso!");
+      toast.success("Verifique a sua caixa de entrada para alterar sua senha.");
     })
     .catch((error) => {
       sleep(1500);
@@ -270,10 +270,23 @@ export const ConferirSenha = async (email, senhaAtual) => {
 };
 
 export const AlterarSenha = async (novaSenha, id) => {
-  await requesterService.alterarSenha(id, novaSenha).then(() => {
-    toast.success("Senha alterada com sucesso!");
-  });
-  return false;
+  await requesterService
+    .alterarSenha(id, novaSenha)
+    .then(() => {
+      toast.success("Senha alterada com sucesso!");
+      setTimeout(() => {
+        window.location.href = "/wb/perfil";
+      }, 2000);
+    })
+    .catch(() => {
+      toast.error(
+        "Erro ao alterar senha. Reenvie o e-mail de recuperação e entre no link mais atual para alterá-la com sucesso"
+      );
+      setTimeout(() => {
+        window.location.href = "/alterarsenha_requisicao";
+      }, 5200);
+    });
+  return;
 };
 
 export const UpdateDadosUsuario = async (
