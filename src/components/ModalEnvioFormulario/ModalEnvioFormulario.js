@@ -18,7 +18,6 @@ import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalEnvioFormulario(props) {
   const [formularioPaciente, setFormularioPaciente] = useState();
-  const [notificacaoAtiva, setNotificacaoAtiva] = useState(false);
   const [carregando, setCarregando] = useState(false);
 
   const antIcon = (
@@ -27,15 +26,14 @@ function ModalEnvioFormulario(props) {
 
   async function enviandoFormularioPaciente() {
     setCarregando(true);
-    
+
     if (formularioPaciente) {
       await managerService.EnviandoFormularioPaciente(
         false,
         false,
         props.idFormulario,
-        formularioPaciente,
+        formularioPaciente
       );
-      await sleep(1500);
       props.fechandoModal();
     } else {
       toast.error("Escolha um paciente para enviar o formulario");
@@ -47,15 +45,11 @@ function ModalEnvioFormulario(props) {
     setFormularioPaciente(e.target.value);
   }
 
-
   return (
     <>
       <ContainerModalCodigo>
         <Titulo>Enviar formulário para:</Titulo>
-        <SelectContainer
-          borderWidth="2px"
-          width="100%"
-        >
+        <SelectContainer borderWidth="2px" width="100%">
           <Select
             id="id_usuario"
             name="id_usuario"
@@ -68,16 +62,17 @@ function ModalEnvioFormulario(props) {
               <>
                 <option value="" disabled selected>
                   Escolha o Paciente:
-            </option>
+                </option>
                 <option value={valor.id}>{valor.nome}</option>
               </>
             ))}
-          </Select></SelectContainer>
-          <CheckboxContainer>
+          </Select>
+        </SelectContainer>
+        <CheckboxContainer>
           <Checkbox>
             <TextoCheckbox>Notificar paciente</TextoCheckbox>
           </Checkbox>
-          </CheckboxContainer>
+        </CheckboxContainer>
         <Button
           width="100%"
           height="50px"
@@ -93,7 +88,6 @@ function ModalEnvioFormulario(props) {
           {carregando ? <Spin indicator={antIcon} /> : "ENVIAR"}
         </Button>
       </ContainerModalCodigo>
-      <AddToast />
     </>
   );
 }
