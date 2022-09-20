@@ -2,22 +2,21 @@ import styled from "styled-components";
 import { Cores, Fontes } from "../../variaveis";
 
 export const Container = styled.div`
-  width: 22vw;
+  width: 26vw;
   height: 100%;
   background-color: ${Cores.cinza[7]};
 
   @media (max-width: 1101px) {
-    width: 26vw;
+    width: 35vw;
   }
   @media (max-width: 830px) {
-    width: 30vw;
+    width: 45vw;
   }
   @media (max-width: 670px) {
-    width: 45vw;
+    width: 50vw;
   }
 
   @media (max-width: 400px) {
-    width: 50vw;
     height: auto;
   }
 `;
@@ -30,7 +29,7 @@ export const Caixa = styled.div`
   padding: 5% 0% 5% 0%;
   align-items: center;
   width: 100%;
-  height: 90%;
+  height: 100%;
   background-color: ${Cores.branco};
   border: 15px solid ${Cores.cinza[7]};
   border-radius: 3px;
@@ -39,10 +38,9 @@ export const Caixa = styled.div`
     padding: 0% 0% 0% 0%;
   }
   @media (max-width: 670px) {
-    width: 45vw;
+    width: 50vw;
   }
   @media (max-width: 400px) {
-    width: 50vw;
     border: 5px solid ${Cores.cinza[7]};
     padding: 0% 0% 0% 0%;
     justify-content: center;
@@ -127,8 +125,6 @@ export const TextoDescricao = styled.div`
   @media (max-width: 1200px) {
     font-size: 1.1em;
     width: 80%;
-    
-    
   }
 
   @media (max-width: 710px) {
@@ -149,13 +145,24 @@ export const TextoDescricao = styled.div`
 export const TextoInformacoes = styled.div`
   font-family: ${Fontes.roboto};
   color: ${Cores.azulEscuro};
-  display: flex;
   justify-content: start;
+
+  @media (max-width: 1200px) {
+    font-size: 1em;
+  }
+
+  @media (max-width: 710px) {
+    font-size: 0.85em;
+  } 
+
+  @media (max-width: 400px) {
+    font-size: 0.75em;
+  }
 `;
 
 export const CaixaInformações = styled.div`
   width: 80%;
-  height: 90px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -167,7 +174,6 @@ export const CaixaInformações = styled.div`
     margin-bottom: 5%;
   }
   @media (max-width: 710px) {
-    height: 80px;
     width: 90%;
     justify-content: space-between;
   }
@@ -177,9 +183,6 @@ export const CaixaInformações = styled.div`
   }
 
 `;
-
-
-
 
 export const FotoPerfil = styled.div`
   display: flex;

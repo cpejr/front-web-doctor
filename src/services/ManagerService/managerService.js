@@ -100,6 +100,19 @@ export const UpdateConsulta = async (id_consulta, consulta) => {
   return;
 };
 
+export const UpdateNotificacaoAtivaFormulario = async (
+  id,
+  notificacao_ativa
+) => {
+  await requesterService
+    .updateNotificacaoAtivaFormularioPaciente(id, notificacao_ativa)
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return;
+};
+
 export const GetConsultaPorId = async (id) => {
   let dadosConsulta = {};
 
@@ -388,17 +401,19 @@ export const DeletarExameMarcado = async (id) => {
 
 export const EnviandoFormularioPaciente = async (
   status,
+  notificacao_ativa,
   id_formulario,
   id_usuario
 ) => {
-  const sleep = (milliseconds) => {
-    return new Promise((resolve) => setTimeout(resolve, milliseconds));
-  };
   await requesterService
-    .enviarFormularioPaciente(status, id_formulario, id_usuario)
+    .enviarFormularioPaciente(
+      status,
+      notificacao_ativa,
+      id_formulario,
+      id_usuario
+    )
     .then(() => {
       toast.success("Formulario enviado com sucesso!");
-      sleep(1500).then(() => (window.location.href = "/web/listaformularios"));
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -495,6 +510,21 @@ export const GetFormularioPacientesPorFormulario = async (id_formulario) => {
   return dadosResposta;
 };
 
+export const GetTodosFormulariosPacientes = async () => {
+  let dadosResposta = {};
+
+  await requesterService
+    .requisicaoTodosFormulariosPaciente()
+
+    .then((res) => {
+      dadosResposta = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosResposta;
+};
+
 export const CriarFormulario = async (estado) => {
   await requesterService
     .criarFormulario(estado)
@@ -543,6 +573,22 @@ export const EditarFormularios = async (id, campos) => {
       toast.success("Formulario atualizado com sucesso.");
     })
     .catch((error) => {
+      return false;
+    });
+
+  return false;
+};
+
+export const DeletarReceita = async (id) => {
+  await requesterService
+    .deletarReceita(id)
+    .then(() => {
+      toast.success("Receita deletada com sucesso.");
+      window.location.href = "/web/areareceitas";
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = "/web/areareceitas"));
+
       return false;
     });
 
