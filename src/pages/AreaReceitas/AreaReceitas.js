@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Input, Select } from "antd";
 import { LoadingOutlined, PlusCircleOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
+import { Spin, Modal } from "antd";
 import {
 	compararDataRecente,
 	FormatarDataShort,
@@ -27,6 +27,7 @@ import Button from "../../styles/Button";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 import { blue } from "@mui/material/colors";
+import ModalExcluirReceita from "../../components/ModalExcluirReceita";
 
 function AreaReceitas() {
 	const history = useHistory();
@@ -38,6 +39,8 @@ function AreaReceitas() {
 	const [carregando, setCarregando] = useState(true);
 	const [pacienteSelect, setPacienteSelect] = useState("");
 	const [busca, setBusca] = useState("");
+	const [modalDeletarReceita, setModalDeletarReceita] = useState(false);
+	const [receitaEspecifica, setReceitaEspecifica] = useState({});
 	const [carregandoPagina, setCarregandoPagina] = useState(false);
 
 	const lowerBusca = busca
@@ -101,6 +104,15 @@ function AreaReceitas() {
 		});
 	}
 
+	function fechandoModalDeletarReceita() {
+		setModalDeletarReceita(false);
+	}
+
+	function abreModalDeletarReceita(receita) {
+		setModalDeletarReceita(true);
+		setReceitaEspecifica(receita);
+	}
+
 	useEffect(() => {
 		pegandoDadosReceitas();
 		pegandoDadosPacientes();
@@ -127,7 +139,7 @@ function AreaReceitas() {
 							>
 								<Option value="">Todos os Pacientes</Option>
 								{pacientes.map((value) => (
-									<Option key={value.id} value={value.nome.toLowerCase()}>
+									<Option value={value.nome.toLowerCase()}>
 										{" "}
 										{value.nome}{" "}
 									</Option>
@@ -197,12 +209,13 @@ function AreaReceitas() {
 									</DataCriacao>
 									<BotaoDeletar>
 										<Button
-											backgroundColor={Cores.verde}
-											borderColor={Cores.preto}
-											color={Cores.branco}
+											backgroundColor={Cores.cinza[7]}
+											borderColor={Cores.azul}
+											color={Cores.azul}
 											fontSize="1em"
 											height="30px"
 											width="50%"
+											onClick={() => abreModalDeletarReceita(value)}
 										>
 											Deletar
 										</Button>
@@ -213,6 +226,20 @@ function AreaReceitas() {
 					</>
 				)}
 			</ContainerListadeReceitas>
+
+			<Modal
+				visible={modalDeletarReceita}
+				onCancel={() => setModalDeletarReceita(false)}
+				style={{ maxWidth: "450px", minWidth: "250px" }}
+				width={"50%"}
+				centered={true}
+				footer={null}
+			>
+				<ModalExcluirReceita
+					fecharModal={() => fechandoModalDeletarReceita()}
+					receita={receitaEspecifica}
+				/>
+			</Modal>
 		</div>
 	);
 }

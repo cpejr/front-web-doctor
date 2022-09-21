@@ -535,28 +535,47 @@ export const CriandoReceita = async (
 
 export const EditarPerguntasFormulario = async (id, perguntas) => {
 	await requesterService
-		.editarPerguntasFormulario(id, perguntas)
-		.then(() => {
-			sleep(1500);
-			toast.success("Ação realizada com sucesso.");
-		})
-		.catch((error) => {
-			requisicaoErro(error, () => (window.location.href = "/"));
-			return false;
-		});
+	.editarPerguntasFormulario(id, perguntas)
+	.then(() => {
+		sleep(1500);
+		toast.success("Ação realizada com sucesso.");
+	})
+	.catch((error) => {
+		requisicaoErro(error, () => (window.location.href = "/"));
+		return false;
+	});
 
 	return false;
 };
 
 export const EditarFormularios = async (id, campos) => {
 	await requesterService
-		.editarCamposFormulario(id, campos)
-		.then(() => {
-			toast.success("Formulario atualizado com sucesso.");
-		})
-		.catch((error) => {
-			return false;
-		});
+	.editarCamposFormulario(id, campos)
+	.then(() => {
+		toast.success("Formulario atualizado com sucesso.");
+	})
+	.catch((error) => {
+		return false;
+	});
+
+	return false;
+};
+
+export const DeletarReceita = async (id) => {
+	await requesterService
+	.deletarReceita(id)
+	.then(() => {
+		toast.success("Receita deletada com sucesso.");
+		window.location.href = "/web/areareceitas";
+	})
+	.catch((error) => {
+		requisicaoErro(
+		error,
+		() => (window.location.href = "/web/areareceitas")
+		);
+
+		return false;
+	});
 
 	return false;
 };
