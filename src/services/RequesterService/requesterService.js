@@ -107,3 +107,5 @@ export const editarCamposFormulario = (id, campos) =>
 export const enviarFormularioPaciente = (status, notificacao_ativa, id_formulario, id_usuario) =>
   api.post("/formularios_pacientes", { status, notificacao_ativa, id_formulario, id_usuario });
 
+
+export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
