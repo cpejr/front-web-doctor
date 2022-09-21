@@ -178,7 +178,7 @@ export default function ConversaAberta({ socket }) {
   );
 
   const antIconEnvioMensagem = (
-    <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
+    <LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
   );
 
   const verificarEnter = (e) => {
