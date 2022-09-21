@@ -139,6 +139,8 @@ export default function ConversaAberta({ socket }) {
   const enviarMensagem = async (e) => {
     e.preventDefault();
 
+    if (!inputMensagemConteudo) return;
+
     setCarregandoEnvioMensagem(true);
     const dadosParaCriarNovaMensagem = {
       id_conversa: conversaSelecionada.id,
@@ -288,7 +290,6 @@ export default function ConversaAberta({ socket }) {
               height='10%'
               marginTop='0%'
               onClick={enviarMensagem}
-              disabled={!inputMensagemConteudo}
             >
               <SendOutlined
                 style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
