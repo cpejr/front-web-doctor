@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, Input } from "antd";
+import { Checkbox, Input, Tooltip } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
@@ -22,6 +22,9 @@ import {
   TextAreaDescricao,
   Rotulo,
   InputData,
+  ContainerConsultorio,
+  TextoDoisSelects,
+  ContainerNome,
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
@@ -30,6 +33,7 @@ import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import { apenasNumeros } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
+import { ContainerDuracaoConsulta, ContainerHorario } from "../ModalAgendamentoEspecifico/Styles";
 import { TiposDeConsulta } from "../listaTiposDeConsultas";
 
 function ModalEditarAgendamentoEspecifico(props) {
@@ -237,6 +241,7 @@ function ModalEditarAgendamentoEspecifico(props) {
               color: "black",
             }}
           />
+
         </InfoEsquerda>
         <InfoDireita>
           <SelecioneUmaData>
@@ -258,6 +263,11 @@ function ModalEditarAgendamentoEspecifico(props) {
           </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
+            <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
+              <Tooltip 
+                placement="topLeft" 
+                title={consulta.tipo} 
+                color = {Cores.azul}>
               <Select
                 style={{
                   width: "100%",
@@ -265,6 +275,8 @@ function ModalEditarAgendamentoEspecifico(props) {
                   borderColor: "black",
                   borderWidth: "1px",
                 }}
+                paddingTop="8px"
+                paddingBottom="8px"
                 size="large"
                 value={consulta.tipo}
                 name="tipo"
@@ -273,9 +285,7 @@ function ModalEditarAgendamentoEspecifico(props) {
                   preenchendoDadosConsulta(e);
                 }}
               >
-                {/* <option value="" defaultValue={consulta.tipo} disabled selected>
-                  {consulta.tipo}
-                </option> */}
+                
                 {TiposDeConsulta.map((tipo) => (
                   <>
                     {carregando ? (
@@ -289,7 +299,13 @@ function ModalEditarAgendamentoEspecifico(props) {
                 ))}
               </Select>
             </TamanhoInput>
-            <TamanhoInput>
+            <ContainerConsultorio>
+            <TextoDoisSelects>Selecione um consultório:</TextoDoisSelects>
+            <Tooltip 
+                placement="topLeft" 
+                title =  {consultorioPorId}
+                color = {Cores.azul}
+                >
               <Select
                 id="id_consultorio"
                 name="id_consultorio"
@@ -299,16 +315,16 @@ function ModalEditarAgendamentoEspecifico(props) {
                   borderWidth: "1px",
                   color: "black",
                 }}
+                paddingTop="8px"
+                paddingBottom="8px"
                 value={consulta.id_consultorio}
                 size="large"
                 onChange={(e) => {
                   preenchendoDadosConsulta(e);
                 }}
               >
-                {/* <option value="" disabled selected>
-                  {consultorioPorId}
-                </option> */}
                 {consultorios.map((consultorio) => (
+                  
                   <>
                     {carregandoConsultorios ? (
                       <Spin indicator={antIcon} />
@@ -324,11 +340,13 @@ function ModalEditarAgendamentoEspecifico(props) {
                   </>
                 ))}
               </Select>
-            </TamanhoInput>
+              </Tooltip>
+            </ContainerConsultorio>
           </DoisSelect>
 
           <DoisSelect>
-            <TamanhoInput>
+            <ContainerHorario>
+            <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
               <InputHora
                 value={hora}
                 type="text"
@@ -341,10 +359,15 @@ function ModalEditarAgendamentoEspecifico(props) {
                 style={{ color: "black" }}
                 camposVazios={camposVazios.hora}
               />
-              {camposVazios.hora ? <Rotulo>Digite um horário</Rotulo> : <></>}
-            </TamanhoInput>
+              {camposVazios.hora ? (
+                <Rotulo>Digite um horário</Rotulo>
+              ) : (
+                <></>
+              )}
+            </ContainerHorario>
 
-            <TamanhoInput>
+            <ContainerDuracaoConsulta>
+            <TextoDoisSelects>Selecione uma duração:</TextoDoisSelects>
               <InputDuracao
                 value={consulta.duracao_em_minutos}
                 placeholder="Duração"
@@ -358,7 +381,7 @@ function ModalEditarAgendamentoEspecifico(props) {
               ) : (
                 <></>
               )}
-            </TamanhoInput>
+            </ContainerDuracaoConsulta>
           </DoisSelect>
           <Checkbox>
             <TextoCheckbox>Notificar paciente</TextoCheckbox>

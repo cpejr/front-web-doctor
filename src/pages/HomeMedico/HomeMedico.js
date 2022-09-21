@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../../styles/Button";
 import { useHistory } from "react-router-dom";
 import {
@@ -17,15 +17,43 @@ import {
 } from "./Styles";
 import { PlusCircleOutlined } from "@ant-design/icons";
 import { Cores } from "../../variaveis";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function HomeMedico() {
   const history = useHistory();
+  const [carregando, setCarregando] = useState(true);
+  const [formularioPaciente, setFormularioPaciente] = useState([]);
+  const [notificacaoFormularioAtivo, setNotificacaoFormularioAtivo] = useState([]);
 
   function passandoTipoParaCadastro(tipo){
     history.push({
       pathname: "/cadastro",
       state: { tipo },
     });
+  }
+
+  useEffect(() => {
+    PegaFormulariosPaciente();
+  }, []);
+  
+  
+  
+  async function PegaFormulariosPaciente() {
+  
+    setCarregando(true);
+  
+    const notificacao = await managerService.GetTodosFormulariosPacientes(
+    );
+    
+    setFormularioPaciente(notificacao);
+    setCarregando(false);
+  
+    const verificaNotificacaoAtiva = notificacao.filter(
+      (item) => item.status === true
+    );
+  
+    setNotificacaoFormularioAtivo(verificaNotificacaoAtiva);
+  
   }
 
 
@@ -113,13 +141,9 @@ function HomeMedico() {
           </Secretarios>
         </ContainerSecretario>
         <ContainerFormulario>
-          <Formulario>Formulário 1</Formulario>
-          <Formulario>Formulário 2</Formulario>
-          <Formulario>Formulário 3</Formulario>
-          <Formulario>Formulário 4</Formulario>
-          <Formulario>Formulário 5</Formulario>
-          <Formulario>Formulário 6</Formulario>
-        </ContainerFormulario>
+        {notificacaoFormularioAtivo?.map((value) =>
+            <Formulario>Formulário: {value.titulo} respondido por: {value.nome}</Formulario>
+        )}</ContainerFormulario>
       </ContainerSuperior>
       <ContainerBotoes>
         <Botoes>

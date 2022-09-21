@@ -21,7 +21,7 @@ import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../ModalAgendamentoEspecifico";
 import ModalEditarAgendamentoEspecifico from "../ModalEditarAgendamentoEspecifico";
 import ModalConsultaMarcada from "../ModalConsultaMarcada";
-import { compararDataAgendamentos } from "../../utils/tratamentoErros";
+import { compararDataAntiga } from "../../utils/tratamentoErros";
 import * as managerService from "../../services/ManagerService/managerService";
 import { sleep } from "../../utils/sleep";
 
@@ -112,7 +112,9 @@ function ModalAgendamento(props) {
         ) : (
           <CorpoCaixa>
             <InfoEsquerda>
-              {consultas.sort(compararDataAgendamentos).map((value) => (
+              {consultas
+              .sort(compararDataAntiga)
+              .map((value) => (
                 <Agendamento>
                   <CaixaAgendamento key={value.id}>
                     <DiaHorarioAgendamento
