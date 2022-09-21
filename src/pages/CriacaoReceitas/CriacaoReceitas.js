@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import Button from "../../styles/Button";
 import Input from "../../styles/Input";
 import Select from "../../styles/Select";
@@ -41,6 +42,8 @@ function CriacaoReceitas() {
 	const [camposVazios, setCamposVazios] = useState({});
 	const [carregandoCriacao, setCarregandoCriacao] = useState(false);
 
+	const history = useHistory();
+
 	function preenchendoDados(e) {
 		e.preventDefault();
 		const { value, name } = e.target;
@@ -67,7 +70,7 @@ function CriacaoReceitas() {
 	}, []);
 
 	function cancelarCriacaoReceita() {
-		window.location.href = "/web/areareceitas";
+		history.push("/web/areareceitas");
 	}
 
 	async function criarReceita(e) {
@@ -87,14 +90,14 @@ function CriacaoReceitas() {
 		}
 
 		setCarregandoCriacao(true);
-		const mensagemSucesso = "Receita criada com sucesso.";
-		const tempoToast = 1500; // Em milisegundos
-		const res = await managerService.CriandoReceita({
-			receita: estado,
-			mensagemSucesso,
-			tempoToast,
-			redirecionamento: "/web/areareceitas",
+		const res = await managerService.CriandoReceita(estado, {
+			mensagemSucesso: "Receita criada com sucesso",
+			tempo: 1500,
+			onClose: () => {
+				history.push("/web/areareceitas");
+			},
 		});
+
 		if (!res) setCarregandoCriacao(false);
 	}
 

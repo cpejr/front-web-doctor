@@ -508,19 +508,23 @@ export const GetReceitas = async () => {
 	return dadosReceitas;
 };
 
-export const CriandoReceita = async ({
+export const CriandoReceita = async (
 	receita,
-	mensagemSucesso,
-	tempoToast,
-	redirecionamento,
-}) => {
+	usarToast = {
+		mensagemSucesso: "Operação bem sucedida",
+		tempo: 1500,
+		onClose: () => {},
+	}
+) => {
 	return requesterService
 		.criarReceita(receita)
 		.then(() => {
-			toast.success(mensagemSucesso, {
-				autoClose: tempoToast,
-				onClose: () => (window.location.href = redirecionamento),
-			});
+			if (usarToast) {
+				toast.success(usarToast.mensagemSucesso, {
+					autoClose: usarToast.tempo,
+					onClose: usarToast.onClose,
+				});
+			}
 			return true;
 		})
 		.catch((error) => {
