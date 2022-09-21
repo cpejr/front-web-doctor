@@ -57,6 +57,8 @@ function FormularioEspecifico(props) {
   const [carregandoFoto, setCarregandoFoto] = useState(true);
   const [carregandoFormulario, setCarregandoFormulario] = useState(true);
 
+  const [carregando, setCarregando] = useState(true);
+  const [notificacaoAtiva, setNotificacaoAtiva] = useState(false);
   const [statusSelect, setStatusSelect] = useState("");
   const { Option } = SelectTipos;
   const [busca, setBusca] = useState("");
@@ -97,6 +99,7 @@ function FormularioEspecifico(props) {
     setFormularioResposta(formularioResposta);
     await sleep(1000);
     setCarregandoFormulario(false);
+    setNotificacaoAtiva(true);
   }
 
   async function setandoFotoDePerfil(formulario) {

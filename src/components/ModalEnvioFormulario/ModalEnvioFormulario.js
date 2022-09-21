@@ -3,15 +3,17 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin, Checkbox } from "antd";
 import AddToast from "../AddToast/AddToast";
 import { toast } from "react-toastify";
+import { sleep } from "../../utils/sleep";
 import {
   ContainerModalCodigo,
   Titulo,
   TextoCheckbox,
-  SelectUsuarios,
+  Select,
+  SelectContainer,
+  CheckboxContainer,
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
-import Select from "../../styles/Select";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalEnvioFormulario(props) {
@@ -19,17 +21,20 @@ function ModalEnvioFormulario(props) {
   const [carregando, setCarregando] = useState(false);
 
   const antIcon = (
-    <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
+    <LoadingOutlined style={{ fontSize: 22, color: Cores.azul }} spin />
   );
 
   async function enviandoFormularioPaciente() {
     setCarregando(true);
+
     if (formularioPaciente) {
       await managerService.EnviandoFormularioPaciente(
+        false,
         false,
         props.idFormulario,
         formularioPaciente
       );
+      props.fechandoModal();
     } else {
       toast.error("Escolha um paciente para enviar o formulario");
     }
@@ -44,35 +49,37 @@ function ModalEnvioFormulario(props) {
     <>
       <ContainerModalCodigo>
         <Titulo>Enviar formulário para:</Titulo>
-        <SelectUsuarios>
+        <SelectContainer borderWidth="2px" width="100%">
           <Select
             id="id_usuario"
+            name="id_usuario"
+            marginTop="0px"
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
-            width="100%"
-            name="id_usuario"
             onChange={preenchendoDados}
           >
             {props.usuarios?.map((valor) => (
               <>
                 <option value="" disabled selected>
-                  Escolha um paciente:
+                  Escolha o Paciente:
                 </option>
                 <option value={valor.id}>{valor.nome}</option>
               </>
             ))}
           </Select>
-
+        </SelectContainer>
+        <CheckboxContainer>
           <Checkbox>
             <TextoCheckbox>Notificar paciente</TextoCheckbox>
           </Checkbox>
-        </SelectUsuarios>
+        </CheckboxContainer>
         <Button
           width="100%"
           height="50px"
           backgroundColor="#434B97"
           borderColor="#151B57"
           color="white"
+          marginTop="3.5%"
           fontSize="1.5em"
           fontWeight="bold"
           fontSizeMedia="1.2em"
@@ -81,7 +88,6 @@ function ModalEnvioFormulario(props) {
           {carregando ? <Spin indicator={antIcon} /> : "ENVIAR"}
         </Button>
       </ContainerModalCodigo>
-      <AddToast />
     </>
   );
 }
