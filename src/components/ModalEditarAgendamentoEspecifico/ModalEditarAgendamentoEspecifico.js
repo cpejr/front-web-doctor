@@ -33,7 +33,10 @@ import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import { apenasNumeros } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
-import { ContainerDuracaoConsulta, ContainerHorario } from "../ModalAgendamentoEspecifico/Styles";
+import {
+  ContainerDuracaoConsulta,
+  ContainerHorario,
+} from "../ModalAgendamentoEspecifico/Styles";
 import { TiposDeConsulta } from "../listaTiposDeConsultas";
 
 function ModalEditarAgendamentoEspecifico(props) {
@@ -210,7 +213,7 @@ function ModalEditarAgendamentoEspecifico(props) {
       });
       setEditado(true);
       return consulta;
-    }  else {
+    } else {
       setConsulta({ ...consulta, [name]: value });
       setEditado(true);
       return consulta;
@@ -241,7 +244,6 @@ function ModalEditarAgendamentoEspecifico(props) {
               color: "black",
             }}
           />
-
         </InfoEsquerda>
         <InfoDireita>
           <SelecioneUmaData>
@@ -263,90 +265,90 @@ function ModalEditarAgendamentoEspecifico(props) {
           </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
-            <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
-              <Tooltip 
-                placement="topLeft" 
-                title={consulta.tipo} 
-                color = {Cores.azul}>
-              <Select
-                style={{
-                  width: "100%",
-                  color: "black",
-                  borderColor: "black",
-                  borderWidth: "1px",
-                }}
-                paddingTop="8px"
-                paddingBottom="8px"
-                size="large"
-                value={consulta.tipo}
-                name="tipo"
-                placeholder="Tipo"
-                onChange={(e) => {
-                  preenchendoDadosConsulta(e);
-                }}
+              <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
+              <Tooltip
+                placement="topLeft"
+                title={consulta.tipo}
+                color={Cores.azul}
               >
-                
-                {TiposDeConsulta.map((tipo) => (
-                  <>
-                    {carregando ? (
-                      <Spin indicator={antIcon} />
-                    ) : (
-                      <option key={tipo} value={tipo} color="red">
-                        {tipo}
-                      </option>
-                    )}
-                  </>
-                ))}
-              </Select>
+                <Select
+                  style={{
+                    width: "100%",
+                    color: "black",
+                    borderColor: "black",
+                    borderWidth: "1px",
+                  }}
+                  paddingTop="8px"
+                  paddingBottom="8px"
+                  size="large"
+                  value={consulta.tipo}
+                  name="tipo"
+                  placeholder="Tipo"
+                  onChange={(e) => {
+                    preenchendoDadosConsulta(e);
+                  }}
+                >
+                  {TiposDeConsulta.map((tipo) => (
+                    <>
+                      {carregando ? (
+                        <Spin indicator={antIcon} />
+                      ) : (
+                        <option key={tipo} value={tipo} color="red">
+                          {tipo}
+                        </option>
+                      )}
+                    </>
+                  ))}
+                </Select>
+              </Tooltip>
             </TamanhoInput>
             <ContainerConsultorio>
-            <TextoDoisSelects>Selecione um consultório:</TextoDoisSelects>
-            <Tooltip 
-                placement="topLeft" 
-                title =  {consultorioPorId}
-                color = {Cores.azul}
-                >
-              <Select
-                id="id_consultorio"
-                name="id_consultorio"
-                style={{
-                  width: "100%",
-                  borderColor: "black",
-                  borderWidth: "1px",
-                  color: "black",
-                }}
-                paddingTop="8px"
-                paddingBottom="8px"
-                value={consulta.id_consultorio}
-                size="large"
-                onChange={(e) => {
-                  preenchendoDadosConsulta(e);
-                }}
+              <TextoDoisSelects>Selecione um consultório:</TextoDoisSelects>
+              <Tooltip
+                placement="topLeft"
+                title={consultorioPorId}
+                color={Cores.azul}
               >
-                {consultorios.map((consultorio) => (
-                  
-                  <>
-                    {carregandoConsultorios ? (
-                      <Spin indicator={antIcon} />
-                    ) : (
-                      <option
-                        key={consultorio.id}
-                        value={consultorio.id}
-                        color="red"
-                      >
-                        {consultorio.nome}
-                      </option>
-                    )}
-                  </>
-                ))}
-              </Select>
+                <Select
+                  id="id_consultorio"
+                  name="id_consultorio"
+                  style={{
+                    width: "100%",
+                    borderColor: "black",
+                    borderWidth: "1px",
+                    color: "black",
+                  }}
+                  paddingTop="8px"
+                  paddingBottom="8px"
+                  value={consulta.id_consultorio}
+                  size="large"
+                  onChange={(e) => {
+                    preenchendoDadosConsulta(e);
+                  }}
+                >
+                  {consultorios.map((consultorio) => (
+                    <>
+                      {carregandoConsultorios ? (
+                        <Spin indicator={antIcon} />
+                      ) : (
+                        <option
+                          key={consultorio.id}
+                          value={consultorio.id}
+                          color="red"
+                        >
+                          {consultorio.nome}
+                        </option>
+                      )}
+                    </>
+                  ))}
+                </Select>
               </Tooltip>
             </ContainerConsultorio>
           </DoisSelect>
 
           <DoisSelect>
             <ContainerHorario>
-            <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
+              <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
               <InputHora
                 value={hora}
                 type="text"
@@ -359,15 +361,11 @@ function ModalEditarAgendamentoEspecifico(props) {
                 style={{ color: "black" }}
                 camposVazios={camposVazios.hora}
               />
-              {camposVazios.hora ? (
-                <Rotulo>Digite um horário</Rotulo>
-              ) : (
-                <></>
-              )}
+              {camposVazios.hora ? <Rotulo>Digite um horário</Rotulo> : <></>}
             </ContainerHorario>
 
             <ContainerDuracaoConsulta>
-            <TextoDoisSelects>Selecione uma duração:</TextoDoisSelects>
+              <TextoDoisSelects>Selecione uma duração:</TextoDoisSelects>
               <InputDuracao
                 value={consulta.duracao_em_minutos}
                 placeholder="Duração"
