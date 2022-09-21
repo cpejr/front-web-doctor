@@ -138,3 +138,15 @@ export const MensagemPaciente = styled.div`
     font-size: 1.5em;
   }
 `;
+
+export const TituloDoInput = styled.div`
+  width: 100%;
+  font-family: "Barlow", sans-serif;
+  font-weight: 400;
+  font-size: 1.3em;
+  margin-top: 2%;
+  @media (max-width: 580px) {
+    font-size: 15px;
+    text-align: center;
+  }
+`;

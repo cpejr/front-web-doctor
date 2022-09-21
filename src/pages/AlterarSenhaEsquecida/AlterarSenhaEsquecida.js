@@ -16,6 +16,7 @@ import {
   Logo,
   MensagemPacientePrincipal,
   MensagemPaciente,
+  TituloDoInput,
 } from "./Styles";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import * as managerService from "../../services/ManagerService/managerService";

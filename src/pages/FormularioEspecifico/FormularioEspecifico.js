@@ -47,6 +47,7 @@ function FormularioEspecifico(props) {
 
 
   const [carregando, setCarregando] = useState(true);
+  const [notificacaoAtiva, setNotificacaoAtiva] = useState(false);
   const [statusSelect, setStatusSelect] = useState("");
   const { Option } = SelectTipos;
   const [busca, setBusca] = useState("");
@@ -83,6 +84,7 @@ function FormularioEspecifico(props) {
       (item) => item.status !== false
     );
     setFormularioResposta(formularioResposta);
+    setNotificacaoAtiva(true);
   }
 
   function abrindoModalFormulario(id, perguntas, titulo) {
