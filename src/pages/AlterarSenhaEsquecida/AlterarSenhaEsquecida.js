@@ -120,160 +120,78 @@ function AlterarSenhaEsquecida() {
   }
 
   return (
-        <div>
-          {senhaAlterada === false?
-          <Conteudo>
-            <Caixa>
-              <Titulo>Alterar Senha:</Titulo>
-              <InputVertical>
-                <Input
-                  placeholder="Defina sua nova senha"
-                  backgroundColor={Cores.cinza[7]}
-                  color={Cores.preto}
-                  fontSize="1em"
-                  width="100%"
-                  marginTop="2%"
-                  type="password"
-                  name="senha"
-                  camposVazios={camposVazios.senha}
-                  erro={erro.senha}
-                  onChange={NovaSenha}
-                ></Input>
-                {erro.senha && (
-                  <Rotulo>Insira uma nova senha com no minimo 8 digitos</Rotulo>
-                )}
-                <Input
-                  placeholder="Confirme sua nova senha"
-                  backgroundColor={Cores.cinza[7]}
-                  color={Cores.preto}
-                  fontSize="1em"
-                  width="100%"
-                  marginTop="5%"
-                  type="password"
-                  name="confirmarSenha"
-                  camposVazios={camposVazios.confirmarSenha}
-                  erro={erro.confirmarSenha}
-                  onChange={NovaSenha}
-                  onKeyPress={verificandoTrocarSenha}
-                ></Input>
-                {erro.confirmarSenha && (
-                  <Rotulo>Confirme sua nova senha</Rotulo>
-                )}
-              </InputVertical>
-              <BotoesMesmaLinha>
-                <Button
-                  width="40%"
-                  height="50px"
-                  backgroundColor={Cores.branco}
-                  borderColor="rgba(255, 0, 0, 0.25)"
-                  color={Cores.cinza[1]}
-                  fontSize="1.5em"
-                  fontWeight="bold"
-                  fontSizeMedia="1.2em"
-                  fontSizeMedia950="1.1em"
-                  boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-                  onClick={() => history.push("/web/login")}
-                >
-                  CANCELAR
-                </Button>
-                <Button
-                  height="50px"
-                  width="40%"
-                  backgroundColor={Cores.lilas[1]}
-                  borderColor={Cores.azul}
-                  color={Cores.branco}
-                  fontSize="1.5em"
-                  fontWeight="bold"
-                  fontSizeMedia="1.2em"
-                  fontSizeMedia950="1.1em"
-                  boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-                  onClick={() => trocarSenha()}
-                >
-                  {carregando ? <Spin indicator={antIcon} /> : "ALTERAR"}
-                </Button>
-              </BotoesMesmaLinha>
-            </Caixa>
-          </Conteudo>
-          <AddToast />
-        </div>
+    <div>
       {senhaAlterada === false ? (
-        <div>
-          <Conteudo>
-            <Caixa>
-              <Titulo>Alterar Senha:</Titulo>
-              <InputVertical>
-              <TituloInput>Insira uma nova senha:</TituloInput>
-                <Input
-                  placeholder="Nova senha"
-                  backgroundColor={Cores.cinza[7]}
-                  color={Cores.preto}
-                  fontSize="1em"
-                  width="100%"
-                  marginTop="2%"
-                  type="password"
-                  name="senha"
-                  camposVazios={camposVazios.senha}
-                  erro={erro.senha}
-                  onChange={NovaSenha}
-                ></Input>
-                {erro.senha && (
-                  <Rotulo>Insira uma nova senha com no minimo 8 digitos</Rotulo>
-                )}
-                <TituloInput>Confirme sua nova senha:</TituloInput>
-                <Input
-                  placeholder="Confirme sua nova senha"
-                  backgroundColor={Cores.cinza[7]}
-                  color={Cores.preto}
-                  fontSize="1em"
-                  width="100%"
-                  marginTop="5%"
-                  type="password"
-                  name="confirmarSenha"
-                  camposVazios={camposVazios.confirmarSenha}
-                  erro={erro.confirmarSenha}
-                  onChange={NovaSenha}
-                  onKeyPress={verificandoTrocarSenha}
-                ></Input>
-                {erro.confirmarSenha && (
-                  <Rotulo>Confirme sua nova senha</Rotulo>
-                )}
-              </InputVertical>
-              <BotoesMesmaLinha>
-                <Button
-                  width="40%"
-                  height="50px"
-                  backgroundColor={Cores.branco}
-                  borderColor="rgba(255, 0, 0, 0.25)"
-                  color={Cores.cinza[1]}
-                  fontSize="1.5em"
-                  fontWeight="bold"
-                  fontSizeMedia="1.2em"
-                  fontSizeMedia950="1.1em"
-                  boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-                  onClick={() => history.push("/web/login")}
-                >
-                  CANCELAR
-                </Button>
-                <Button
-                  height="50px"
-                  width="40%"
-                  backgroundColor={Cores.lilas[1]}
-                  borderColor={Cores.azul}
-                  color={Cores.branco}
-                  fontSize="1.5em"
-                  fontWeight="bold"
-                  fontSizeMedia="1.2em"
-                  fontSizeMedia950="1.1em"
-                  boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
-                  onClick={() => trocarSenha()}
-                >
-                  {carregando ? <Spin indicator={antIcon} /> : "ALTERAR"}
-                </Button>
-              </BotoesMesmaLinha>
-            </Caixa>
-          </Conteudo>
-          <AddToast />
-        </div>
+        <Conteudo>
+          <Caixa>
+            <Titulo>Alterar Senha:</Titulo>
+            <InputVertical>
+              <Input
+                placeholder="Defina sua nova senha"
+                backgroundColor={Cores.cinza[7]}
+                color={Cores.preto}
+                fontSize="1em"
+                width="100%"
+                marginTop="2%"
+                type="password"
+                name="senha"
+                camposVazios={camposVazios.senha}
+                erro={erro.senha}
+                onChange={NovaSenha}
+              ></Input>
+              {erro.senha && (
+                <Rotulo>Insira uma nova senha com no minimo 8 digitos</Rotulo>
+              )}
+              <Input
+                placeholder="Confirme sua nova senha"
+                backgroundColor={Cores.cinza[7]}
+                color={Cores.preto}
+                fontSize="1em"
+                width="100%"
+                marginTop="5%"
+                type="password"
+                name="confirmarSenha"
+                camposVazios={camposVazios.confirmarSenha}
+                erro={erro.confirmarSenha}
+                onChange={NovaSenha}
+                onKeyPress={verificandoTrocarSenha}
+              ></Input>
+              {erro.confirmarSenha && <Rotulo>Confirme sua nova senha</Rotulo>}
+            </InputVertical>
+            <BotoesMesmaLinha>
+              <Button
+                width="40%"
+                height="50px"
+                backgroundColor={Cores.branco}
+                borderColor="rgba(255, 0, 0, 0.25)"
+                color={Cores.cinza[1]}
+                fontSize="1.5em"
+                fontWeight="bold"
+                fontSizeMedia="1.2em"
+                fontSizeMedia950="1.1em"
+                boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+                onClick={() => history.push("/web/login")}
+              >
+                CANCELAR
+              </Button>
+              <Button
+                height="50px"
+                width="40%"
+                backgroundColor={Cores.lilas[1]}
+                borderColor={Cores.azul}
+                color={Cores.branco}
+                fontSize="1.5em"
+                fontWeight="bold"
+                fontSizeMedia="1.2em"
+                fontSizeMedia950="1.1em"
+                boxShadow="0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"
+                onClick={() => trocarSenha()}
+              >
+                {carregando ? <Spin indicator={antIcon} /> : "ALTERAR"}
+              </Button>
+            </BotoesMesmaLinha>
+          </Caixa>
+        </Conteudo>
       ) : (
         <CaixaMensagem>
           <MensagemPacientePrincipal>
@@ -284,6 +202,7 @@ function AlterarSenhaEsquecida() {
           </MensagemPaciente>
         </CaixaMensagem>
       )}
+    </div>
   );
 }
 

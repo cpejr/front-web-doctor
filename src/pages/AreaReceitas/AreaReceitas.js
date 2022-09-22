@@ -4,10 +4,6 @@ import { LoadingOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { Spin, Modal } from "antd";
 import { compararDataRecente, FormatarDataShort } from "../../utils/tratamentoErros";
 import {
-  compararDataRecente,
-  FormatarDataShort,
-} from "../../utils/tratamentoErros";
-import {
   TopoPagina,
   BarraPesquisa,
   Botoes,

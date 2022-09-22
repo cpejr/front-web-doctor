@@ -137,7 +137,6 @@ function ListaFormularios() {
     setModalEnvio(true);
   }
 
-
   return (
     <div>
       <ContainerListadeFormularios>
@@ -174,28 +173,32 @@ function ListaFormularios() {
               </Filtros>
             </TopoPagina>
             <TopoPaginaBotao>
-            {tipoUsuarioLogado === "MASTER" && (
-                <BotaoFinal>
-                    <Button
-                      backgroundColor={Cores.cinza[7]}
-                      color={Cores.azul}
-                      width="100%"
-                      heightMedia920="63%"
-                      borderColor={Cores.azul}
-                      fontSize="1em"
-                      gap="2%"
-                      widthMedia="100%"
-                      boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-                      onClick={() => history.push("/web/criacaoformulario")}
-                    >
-                      <PlusCircleOutlined style={{ color: Cores.azul }} />
-                      Adicionar Formularios
-                    </Button>
-                  </BotaoFinal>
-              )}</TopoPaginaBotao>
+              {tipoUsuarioLogado === "MASTER" && (
+                
+                  <Button
+                    backgroundColor={Cores.cinza[7]}
+                    borderColor={Cores.azul}
+                    gap="2%"
+                    widthMedia="100%"
+                    boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+                    onClick={() => history.push("/web/criacaoformulario")}
+                    marginTop="0px"
+                    width="45%"
+                    height="50px"
+                    color={Cores.azul}
+                    fontSize="1.8em"
+                    fontWeight="bold"
+                    fontSizeMedia950="1em"
+                    fontSizeMedia480="1.2em"
+                    fontSizeMedia1080="1.5em"
+                  >
+                    Adicionar Formularios
+                  </Button>
+                
+              )}
+            </TopoPaginaBotao>
             <BarraEstetica />
             <ContainerFormulario>
-              
               {formulariosFiltrados?.map((value) => (
                 <ContainerFormularioEspecifico>
                   <Formulario>
@@ -300,21 +303,6 @@ function ListaFormularios() {
                   )}
                 </ContainerFormularioEspecifico>
               ))}
-              <BotaoFinal>
-                <Button
-                  backgroundColor={Cores.cinza[7]}
-                  color={Cores.azul}
-                  width="35%"
-                  height="50px"
-                  borderColor={Cores.azul}
-                  fontSize="1em"
-                  gap="2%"
-                  boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-                  onClick={() => history.push("/web/criacaoformulario")}
-                >
-                  Adicionar formulários
-                </Button>
-              </BotaoFinal>
             </ContainerFormulario>
           </>
         )}
@@ -326,7 +314,11 @@ function ListaFormularios() {
         width={"70%"}
         centered={true}
       >
-        <ModalEnvioFormulario usuarios={usuarios} idFormulario={idFormulario} fechandoModal={() => fechandoModal()} />
+        <ModalEnvioFormulario
+          usuarios={usuarios}
+          idFormulario={idFormulario}
+          fechandoModal={() => fechandoModal()}
+        />
       </Modal>
     </div>
   );
