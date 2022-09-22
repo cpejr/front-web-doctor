@@ -427,3 +427,22 @@ export const NomePaciente = styled.div`
     width: 100%;
   }
 `;
+
+export const FotoPerfil = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .fotoPerfil {
+  width: 120px;
+  height: 120px;
+  object-fit: fill;
+  border-radius: 3px;
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
+  justify-content: center;
+
+@media (max-width: 850px) {
+  width: 100px;
+  height: 100px;
+}
+}
+`;

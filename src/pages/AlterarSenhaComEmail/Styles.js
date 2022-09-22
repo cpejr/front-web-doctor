@@ -43,6 +43,12 @@ export const Titulo = styled.div`
   @media (max-width: 950px) {
     font-size: 1.5em;
   }
+  @media (max-width: 450px) {
+    font-size: 1.3em;
+  }
+  @media (max-width: 300px) {
+    font-size: 1.2em;
+  }
 `;
 export const InputVertical = styled.div`
   display: flex;
@@ -73,9 +79,11 @@ export const BotoesMesmaLinha = styled.div`
   }
   @media (min-width: 561px) and (max-width: 690px) {
     font-size: 0.75em;
+    width: 75%;
   }
   @media (min-width: 690px) and (max-width: 780px) {
     font-size: 0.9em;
+    width: 85%;
   }
 `;
 
@@ -85,4 +93,19 @@ export const Rotulo = styled.div`
   font-weight: 400;
   font-size: 1em;
   color: ${Cores.vermelho};
+  @media (max-width: 530px) {
+    font-size: 0.9em;
+  }
+`;
+
+export const TituloDoInput = styled.div`
+  width: 100%;
+  font-family: "Barlow", sans-serif;
+  font-weight: 400;
+  font-size: 1.1em;
+  margin-top: 5%;
+  @media (max-width: 590px) {
+    font-size: 13px;
+    text-align: center;
+  }
 `;

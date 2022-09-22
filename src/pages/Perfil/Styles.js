@@ -24,7 +24,7 @@ export const CaixaCima = styled.div`
   border-style: solid;
   border-radius: 4px;
   border-color: ${Cores.cinza[3]};
-  @media (max-width: 560px) {
+  @media (max-width: 640px) {
     flex-direction: column;
     width: 80%;
   }
@@ -47,11 +47,16 @@ export const FotoPerfil = styled.div`
   justify-content: center;
   width: 26%;
   height: 10%;
+  font-size: 9em;
   .logo {
     border-radius: 3px;
   }
+  @media (max-width: 760px) {
+    font-size: 6em;
+  }
   @media (max-width: 560px) {
     width: 28%;
+    font-size: 4em;
   }
 `;
 export const NomeData = styled.div`
@@ -63,7 +68,7 @@ export const NomeData = styled.div`
   @media (max-width: 560px) {
     height: auto;
   }
-  @media (max-width: 770px) and (min-width: 560px) {
+  @media (max-width: 770px) and (min-width: 640px) {
     width: 64%;
     height: auto;
   }
@@ -72,22 +77,26 @@ export const NomeData = styled.div`
 export const Nome = styled.div`
   display: flex;
   flex-direction: row;
-  margin-left: 10%;
-  width: 90%;
+  justify-content: center;
+  width: 85%;
   color: ${Cores.azul};
   font-family: ${Fontes.barlow};
   font-weight: 600;
   font-size: 1.4em;
+  margin-left: 10%;
   @media (max-width: 1100px) and (min-width: 770px) {
     font-size: 1.2em;
   }
   @media (max-width: 770px) and (min-width: 480px) {
     font-size: 1.1em;
+    justify-content: center;
+    margin-left: 8%;
   }
   @media (max-width: 480px) {
-    font-size: 0.9em;
+    font-size: 0.95em;
+    margin-left: 0%;
   }
-  @media (max-width: 770px) and (min-width: 560px) {
+  @media (max-width: 770px) and (min-width: 640px) {
     margin-left: 5%;
     width: 100%;
   }
@@ -97,15 +106,15 @@ export const ConjuntoDataCPF = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin-left: 10%;
-  width: 80%;
+  width: 85%;
   gap: 4%;
   @media (max-width: 480px) {
     font-size: 0.8em;
     flex-direction: column;
     justify-content: center;
-    width: 100%;
+    width: 70%;
   }
-  @media (max-width: 770px) and (min-width: 560px) {
+  @media (max-width: 770px) and (min-width: 640px) {
     width: 100%;
     margin-left: 5%;
   }
@@ -122,9 +131,32 @@ export const DataCPF = styled.div`
     font-size: 0.9em;
   }
   @media (max-width: 480px) {
-    font-size: 0.8em;
+    font-size: 0.85em;
   }
 `;
+
+export const ContainerCPF = styled.div`
+  display:flex;
+  flex-direction: column;
+  @media (max-width: 480px) {
+    flex-direction: row;
+    position: relative;
+    left: -12%;
+  }
+
+`;
+
+export const ContainerData = styled.div`
+  display:flex;
+  flex-direction: column;
+  @media (max-width: 480px) {
+    flex-direction: row;
+    margin-bottom: 2%;
+    position: relative;
+    left: -12%;
+  }
+`; 
+
 export const BotoesColuna = styled.div`
   margin-top: 20px;
   display: flex;
@@ -158,7 +190,7 @@ export const CaixaBaixo = styled.div`
   height: auto;
   width: 70%;
   margin-top: 4%;
-  @media (max-width: 560px) {
+  @media (max-width: 640px) {
     display: flex;
     flex-direction: column;
     width: 80%;
@@ -177,7 +209,7 @@ export const CaixaEndereco = styled.div`
   border-style: solid;
   border-radius: 4px;
   border-color: ${Cores.cinza[3]};
-  @media (max-width: 560px) {
+  @media (max-width: 640px) {
     width: 100%;
   }
 `;
@@ -196,10 +228,10 @@ export const EnderecoContato = styled.div`
   @media (max-width: 1100px) and (min-width: 770px) {
     height: 15%;
   }
-  @media (max-width: 770px) and (min-width: 560px) {
+  @media (max-width: 770px) and (min-width: 640px) {
     font-size: 1.3em;
   }
-  @media (max-width: 560px) {
+  @media (max-width: 640px) {
     font-size: 1.5em;
     height: 15%;
     margin-bottom: 2%;
@@ -219,10 +251,10 @@ export const DadosEndereco = styled.div`
   @media (max-width: 1100px) and (min-width: 770px) {
     font-size: 1em;
   }
-  @media (max-width: 770px) and (min-width: 560px) {
+  @media (max-width: 770px) and (min-width: 640px) {
     font-size: 0.85em;
   }
-  @media (max-width: 560px) {
+  @media (max-width: 640px) {
     font-size: 1em;
   }
 `;
@@ -249,12 +281,12 @@ export const Rua = styled.div`
     width: 100%;
     margin-bottom: 3%;
   }
-  @media (max-width: 770px) and (min-width: 560px) {
+  @media (max-width: 770px) and (min-width: 640px) {
     font-size: 1em;
     width: 100%;
     margin-bottom: 4%;
   }
-  @media (max-width: 560px) {
+  @media (max-width: 640px) {
     font-size: 0.9em;
     width: 100%;
     margin-bottom: 3%;
@@ -276,13 +308,13 @@ export const Complemento = styled.div`
     align-items: start;
     width: 100%;
   }
-  @media (max-width: 770px) and (min-width: 560px) {
+  @media (max-width: 770px) and (min-width: 640px) {
     font-size: 1em;
     justify-content: start;
     align-items: start;
     width: 100%;
   }
-  @media (max-width: 560px) {
+  @media (max-width: 640px) {
     font-size: 0.9em;
     width: 100%;
     justify-content: start;
@@ -297,7 +329,7 @@ export const ContatoExcluirConta = styled.div`
   align-items: center;
   height: 100%;
   width: 48%;
-  @media (max-width: 560px) {
+  @media (max-width: 640px) {
     width: 100%;
     margin-top: 4%;
   }
@@ -314,10 +346,10 @@ export const CaixaContato = styled.div`
   border-style: solid;
   border-radius: 4px;
   border-color: ${Cores.cinza[3]};
-  @media (max-width: 1100px) and (min-width: 560px) {
+  @media (max-width: 1100px) and (min-width: 640px) {
     padding: 5%;
   }
-  @media (max-width: 560px) {
+  @media (max-width: 640px) {
     padding: 5%;
   }
 `;
@@ -336,11 +368,11 @@ export const DadosContato = styled.div`
     font-size: 1.1em;
     margin-bottom: 0.5%;
   }
-  @media (max-width: 770px) and (min-width: 560px) {
+  @media (max-width: 770px) and (min-width: 640px) {
     font-size: 0.85em;
     margin-bottom: 0.5%;
   }
-  @media (max-width: 560px) {
+  @media (max-width: 640px) {
     font-size: 1em;
   }
 `;
@@ -360,11 +392,11 @@ export const ExcluirConta = styled.div`
   @media (max-width: 1100px) and (min-width: 770px) {
     font-size: 1em;
   }
-  @media (max-width: 770px) and (min-width: 560px) {
+  @media (max-width: 770px) and (min-width: 640px) {
     font-size: 0.9em;
     height: 10%;
   }
-  @media (max-width: 560px) {
+  @media (max-width: 640px) {
     margin-top: 4%;
     font-size: 0.8em;
   }

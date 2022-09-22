@@ -27,6 +27,9 @@ export const updateDadosUsuario = (id_usuario, id_endereco, endereco, estado) =>
     api.put(`/usuarios/${id_usuario}`, { ...estado, id_endereco: res.data.id });
   });
 
+export const updateNotificacaoAtivaFormularioPaciente = (id, notificacao_ativa) =>
+  api.put(`/formularios_pacientes/${id}`, {notificacao_ativa: notificacao_ativa});
+
 export const updateCodigo = (id_usuario, codigo) =>
   api.put(`/usuarios/${id_usuario}`, { codigo: codigo });
 
@@ -93,11 +96,20 @@ export const requisicaoFormularioPacientes = (id_formulario) =>
   api.get(`/formularios_pacientes_formularios/${id_formulario}`);
 
 export const requisicaoReceitas = () => api.get(`/receitas/`);
+
+export const deletarReceita = (id) => api.delete(`/receitas/${id}`);
+
 export const editarPerguntasFormulario = (id, perguntas) =>
   api.put(`/formularios/${id}`, { perguntas: perguntas });
 
 export const editarCamposFormulario = (id, campos) =>
   api.put(`/formularios/${id}`, campos);
 
-export const enviarFormularioPaciente = (status, id_formulario, id_usuario) =>
-  api.post("/formularios_pacientes", { status, id_formulario, id_usuario });
+  export const requisicaoTodosFormulariosPaciente = () =>
+  api.get("/formularios_pacientes");
+
+export const enviarFormularioPaciente = (status, notificacao_ativa, id_formulario, id_usuario) =>
+  api.post("/formularios_pacientes", { status, notificacao_ativa, id_formulario, id_usuario });
+
+
+export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);

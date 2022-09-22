@@ -191,7 +191,7 @@ function Login() {
               window.location.href="/alterarsenha_requisicao"
             }}
           >
-            Esqueceu sua senha?
+            Esqueceu sua senha? Clique aqui para recuperá-la.
           </Button>
         </Botoes>
         <Estetica>

@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Input, Select, Modal } from "antd";
-import { LoadingOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import {
+  LoadingOutlined,
+  PlusCircleOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Spin } from "antd";
 import {
   TopoPagina,
@@ -47,6 +51,7 @@ function ListaUsuarios() {
   const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
   const [carregandoPagina, setCarregandoPagina] = useState(true);
+  const [carregandoFoto, setCarregandoFoto] = useState(true);
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [emailPaciente, setEmailPaciente] = useState(false);
   const [modalAdicionarCodigo, setModalAdicionarCodigo] = useState(false);
@@ -178,6 +183,7 @@ function ListaUsuarios() {
         if (usuario.tipo === "PACIENTE" || usuario.tipo === "SECRETARIA(O)") {
           setUsuarios((usuarios) => [...usuarios, usuario]);
           setandoUltimaConsulta(usuario, consultas);
+          setandoFotoDePerfil(usuario);
         }
       });
     } else {
@@ -185,10 +191,11 @@ function ListaUsuarios() {
         if (usuario.tipo === "PACIENTE") {
           setUsuarios((usuarios) => [...usuarios, usuario]);
           setandoUltimaConsulta(usuario, consultas);
+          setandoFotoDePerfil(usuario);
         }
       });
     }
-    await sleep(700);
+    await sleep(1400);
     setCarregandoPagina(false);
   }
 
@@ -241,6 +248,24 @@ function ListaUsuarios() {
       pathname: "/web/cadastroNovoUsuario",
       state: { tipo },
     });
+  }
+
+  async function setandoFotoDePerfil(usuario) {
+    const chave = usuario.avatar_url;
+
+    if (chave !== null && chave !== "") {
+      setCarregandoFoto(true);
+      const arquivo = await managerService.GetArquivoPorChave(chave);
+      Object.defineProperty(usuario, "fotoDePerfil", {
+        value: arquivo,
+      });
+    }
+    else {
+      setCarregandoFoto(false);
+      return;
+    }
+    await sleep(1700);
+    setCarregandoFoto(false);
   }
 
   async function setandoUltimaConsulta(usuario, consultas) {
@@ -443,7 +468,37 @@ function ListaUsuarios() {
             <ContainerUsuarios>
               {usuariosFiltrados?.sort(ordenarusuarios).map((value) => (
                 <Usuario>
-                  <Imagem>{value.avatar_url}</Imagem>
+                  {value.avatar_url === null || value.avatar_url === "" ? (
+                    <Imagem>
+                      {carregandoFoto ? (
+                        <div>
+                          <Spin size="small" indicator={antIconPagina} />
+                        </div>
+                      ) : (
+                        <>
+                          <UserOutlined style={{ fontSize: "2.5em" }} />
+                        </>
+                      )}
+                    </Imagem>
+                  ) : (
+                    <Imagem>
+                      {carregandoFoto ? (
+                        <div>
+                          <Spin size="small" indicator={antIconPagina} />
+                        </div>
+                      ) : (
+                        <>
+                          <img
+                            src={value.fotoDePerfil}
+                            className="foto"
+                            alt="fotoPerfil"
+                            height="100%"
+                            width="100%"
+                          ></img>
+                        </>
+                      )}
+                    </Imagem>
+                  )}
                   <Nome>
                     <div
                       onClick={() =>
@@ -468,7 +523,6 @@ function ListaUsuarios() {
                         value.ultimaConsulta.slice(0, 4)}
                     </UltimaVisita>
                   )}
-
                   <CódigoPaciente>{value.codigo}</CódigoPaciente>
                   {tipoUsuarioLogado === "MASTER" ? (
                     <BotaoAdicionar>

@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
+import {
+  LoadingOutlined,
+  StarOutlined,
+  StarFilled,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Spin, Modal, Input } from "antd";
 import ModalFormulario from "../../components/ModalFormulario";
 import {
@@ -25,12 +30,14 @@ import {
   MargemEstetica,
   NomePaciente,
   CentralizandoSpin,
-  ContainerInterno
+  ContainerInterno,
+  FotoPerfil,
 } from "./Styles";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
+import { sleep } from "../../utils/sleep";
 
 function FormularioEspecifico(props) {
   const { Search } = Input;
@@ -44,19 +51,26 @@ function FormularioEspecifico(props) {
   const [perguntas, setPerguntas] = useState();
   const [titulo, setTitulo] = useState();
   const [idFormularioPaciente, setIdFormularioPaciente] = useState();
-
+  const [contador, setContador] = useState(0);
 
   const [carregando, setCarregando] = useState(true);
+  const [carregandoFoto, setCarregandoFoto] = useState(true);
+  const [carregandoFormulario, setCarregandoFormulario] = useState(true);
+
+  const [carregando, setCarregando] = useState(true);
+  const [notificacaoAtiva, setNotificacaoAtiva] = useState(false);
   const [statusSelect, setStatusSelect] = useState("");
   const { Option } = SelectTipos;
   const [busca, setBusca] = useState("");
-  const lowerBusca = busca.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const lowerBusca = busca
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
   );
 
   async function pegandoDadosFormularioEspecifico() {
-    setCarregando(true);
     const resposta = await managerService.GetFormularioEspecifico(
       props.location.state.id
     );
@@ -65,14 +79,14 @@ function FormularioEspecifico(props) {
   }
 
   async function pegandoFormularioPacientes() {
-    setCarregando(true);
     const respostaFormularios =
       await managerService.GetFormularioPacientesPorFormulario(
         props.location.state.id
       );
-
     setformularioPacientes(respostaFormularios);
-    setCarregando(false);
+    respostaFormularios.forEach((formulario) => {
+      setandoFotoDePerfil(formulario);
+    });
 
     const formularioRespostaPendente = respostaFormularios.filter(
       (item) => item.status === false
@@ -83,9 +97,29 @@ function FormularioEspecifico(props) {
       (item) => item.status !== false
     );
     setFormularioResposta(formularioResposta);
+    await sleep(1000);
+    setCarregandoFormulario(false);
+    setNotificacaoAtiva(true);
   }
 
-function abrindoModalFormulario(id, perguntas, titulo) {
+  async function setandoFotoDePerfil(formulario) {
+    const chave = formulario.avatar_url;
+    if (chave !== null && chave !== "") {
+      setCarregandoFoto(true);
+      const arquivo = await managerService.GetArquivoPorChave(chave);
+      Object.defineProperty(formulario, "fotoDePerfil", {
+        value: arquivo,
+      });
+    }
+    else {
+      setCarregandoFoto(false);
+      return;
+    }
+    await sleep(1700);
+    setCarregandoFoto(false);
+  }
+
+  function abrindoModalFormulario(id, perguntas, titulo) {
     setPerguntas(perguntas);
     setTitulo(titulo);
     setIdFormularioPaciente(id);
@@ -94,12 +128,15 @@ function abrindoModalFormulario(id, perguntas, titulo) {
 
   useEffect(() => {
     pegandoFormularioPacientes();
-
   }, [props.location.state.id]);
 
   useEffect(() => {
     pegandoDadosFormularioEspecifico();
   }, [props.location.state.id]);
+
+  useEffect(() => {
+    setandoFotoDePerfil();
+  }, [formularioPacientes]);
 
   const usuariosFiltrados = formularioPacientes.filter(
     (formularioPacientes) => {
@@ -108,16 +145,26 @@ function abrindoModalFormulario(id, perguntas, titulo) {
       } else {
         if (statusSelect === "true") {
           return (
-            formularioPacientes?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca) &&
-            formularioPacientes.status === true
+            formularioPacientes?.nome
+              ?.toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .includes(lowerBusca) && formularioPacientes.status === true
           );
         } else if (statusSelect === "false") {
           return (
-            formularioPacientes?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca) &&
-            formularioPacientes.status === false
+            formularioPacientes?.nome
+              ?.toLowerCase()
+              .normalize("NFD")
+              .replace(/[\u0300-\u036f]/g, "")
+              .includes(lowerBusca) && formularioPacientes.status === false
           );
         } else {
-          return formularioPacientes?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca);
+          return formularioPacientes?.nome
+            ?.toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .includes(lowerBusca);
         }
       }
     }
@@ -130,16 +177,16 @@ function abrindoModalFormulario(id, perguntas, titulo) {
   return (
     <div>
       <ContainerFormularioEspecifico>
-        {carregando ? (
+        {carregandoFormulario ? (
           <div
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "49.5%",
-          }}
-        >
-          <Spin indicator={antIcon} />
-        </div>
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "49.5%",
+            }}
+          >
+            <Spin indicator={antIcon} />
+          </div>
         ) : (
           <>
             <ContainerFormularioCima>
@@ -195,7 +242,7 @@ function abrindoModalFormulario(id, perguntas, titulo) {
                       onChange={(value) => usuariosFiltro(value)}
                     >
                       <Option value="">Todos os Usuários</Option>
-                      <Option value="true">Respondido      </Option>
+                      <Option value="true">Respondido </Option>
                       <Option value="false">Resposta Pendente</Option>
                     </SelectTipos>
                   </RotuloBarraDeBuscaOpcoes>
@@ -207,23 +254,63 @@ function abrindoModalFormulario(id, perguntas, titulo) {
               {usuariosFiltrados?.map((value) => (
                 <BarraPaciente>
                   <BarraEsquerda>
-                    <ImagemPaciente
-                      src={fotoPerfil}
-                      className="fotoPerfil"
-                      alt="fotoPerfil"
-                      width="80px"
-                      height="80px"
-                    ></ImagemPaciente>
+                    {carregandoFormulario ? (
+                      <div
+                        style={{
+                          position: "absolute",
+                          top: "50%",
+                          left: "49.5%",
+                        }}
+                      >
+                        <Spin indicator={antIcon} />
+                      </div>
+                    ) : (
+                      <div>
+                        {value.avatar_url === null ||
+                        value.avatar_url === "" ? (
+                          <FotoPerfil>
+                            {carregandoFoto ? (
+                              <div>
+                                <Spin size="small" indicator={antIcon} />
+                              </div>
+                            ) : (
+                              <>
+                                <UserOutlined style={{ fontSize: "6em" }} />
+                              </>
+                            )}
+                          </FotoPerfil>
+                        ) : (
+                          <FotoPerfil>
+                            {carregandoFoto ? (
+                              <div>
+                                <Spin size="small" indicator={antIcon} />
+                              </div>
+                            ) : (
+                              <>
+                                <img
+                                  src={value.fotoDePerfil}
+                                  className="fotoPerfil"
+                                  alt="fotoPerfil"
+                                  height="100%"
+                                  width="100%"
+                                ></img>
+                              </>
+                            )}
+                          </FotoPerfil>
+                        )}
+                      </div>
+                    )}
                   </BarraEsquerda>
                   <BarraCentro>
                     <NomePaciente
-                    onClick={() =>
-                      abrindoModalFormulario(
-                        value.id,
-                        value.perguntas,
-                        value.titulo
-                      )
-                    }>
+                      onClick={() =>
+                        abrindoModalFormulario(
+                          value.id,
+                          value.perguntas,
+                          value.titulo
+                        )
+                      }
+                    >
                       {value.nome}
                     </NomePaciente>
                   </BarraCentro>
@@ -282,7 +369,7 @@ function abrindoModalFormulario(id, perguntas, titulo) {
                 marginTop="10%"
                 marginLeft="0%"
                 fontSizeMedia950="0.9em"
-                onClick={() => {}}
+                onClick={() => { }}
               >
                 Gerar documento Word
               </Button>
@@ -294,7 +381,8 @@ function abrindoModalFormulario(id, perguntas, titulo) {
       <Modal
         visible={modalFormulario}
         onCancel={() => setModalFormulario(false)}
-        width={"50%"}
+        style={{ minWidth: "250px", maxWidth: "800px" }}
+        width={"70%"}
         centered={true}
         footer={null}
       >
@@ -304,7 +392,6 @@ function abrindoModalFormulario(id, perguntas, titulo) {
           titulo={titulo}
         />
       </Modal>
-
     </div>
   );
 }

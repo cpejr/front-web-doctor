@@ -228,10 +228,15 @@ export const Titulo = styled.div`
 `;
 export const Imagem = styled.div`
   justify-content: center;
+  align-items: center;
   object-fit: fill;
-  width: 10%;
-  width: 40px;
+  width: 60px;
+  height: 60px;
   display: flex;
+  margin-right:1%;
+  border-radius: 3px;
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
+  
   @media (max-width: 880px) {
     display: none;
   }

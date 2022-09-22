@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined, UserOutlined } from "@ant-design/icons";
+import { Modal } from "antd";
 import {
   Conteudo,
   CaixaCima,
@@ -25,12 +26,16 @@ import {
   ContatoExcluirConta,
   CaixaCimaCarregando,
   CaixaEnderecoCarregando,
+  ContainerCPF,
+  ContainerData,
 } from "./Styles";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 import { sleep } from "../../utils/sleep";
+import ModalExcluirConta from "../../components/ModalExcluirConta";
+import { cep, cpf} from "../../utils/masks";
 
 function Perfil(props) {
   const history = useHistory();
@@ -44,8 +49,13 @@ function Perfil(props) {
   const [perfilSelecionado, setPerfilSelecionado] = useState();
   const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState("");
   const [botaoVisivel, setBotaoVisivel] = useState(true);
+  const [fotoDePerfil, setFotoDePerfil] = useState("");
+
+  const [modalDeletarConta, setModalDeletarConta] = useState(false);
+
 
   const [carregando, setCarregando] = useState(true);
+  const [carregandoFoto, setCarregandoFoto] = useState(true);
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 45, color: Cores.azul }} spin />
   );
@@ -98,8 +108,27 @@ function Perfil(props) {
   }
   async function deletarEnderecoEUsuario() {
     await managerService.DeletarEnderecoEUsuario(usuario.id_endereco);
-    await sleep(1500); 
-    window.location.href = "/login"
+    await sleep(1500);
+    window.location.href = "/login";
+  }
+
+  async function setandoFotoDePerfil() {
+    const chave = usuario.avatar_url;
+    if (chave === null || chave === "")
+      return;
+    setCarregandoFoto(true);
+    const arquivo = await managerService.GetArquivoPorChave(chave);
+    setFotoDePerfil(arquivo);
+    await sleep(1500);
+    setCarregandoFoto(false);
+  }
+
+  useEffect(() => {
+    setandoFotoDePerfil();
+  }, [usuario]);
+
+  function fechandoModalDeletarConta() {
+    setModalDeletarConta(false);
   }
 
   return (
@@ -112,20 +141,46 @@ function Perfil(props) {
             </CaixaCimaCarregando>
           ) : (
             <FotoNomeData>
-              <FotoPerfil>
-                <img
-                  src={logoGuilherme}
-                  className="logo"
-                  alt="logoGuilherme"
-                  width="100%"
-                  height="100%"
-                ></img>
-              </FotoPerfil>
+              {usuario.avatar_url === null || usuario.avatar_url === "" ? (
+                <FotoPerfil>
+                  {carregandoFoto ? (
+                    <Spin size="small" indicator={antIcon} />
+                  ) : (
+                    <>
+                      <UserOutlined />
+                    </>
+                  )}
+                </FotoPerfil>
+              ) : (
+                <FotoPerfil>
+                  {carregandoFoto ? (
+                    <div>
+                      <Spin size="small" indicator={antIcon} />
+                    </div>
+                  ) : (
+                    <>
+                      <img
+                        src={fotoDePerfil}
+                        className="foto"
+                        alt="fotoPerfil"
+                        height="100%"
+                        width="100%"
+                      ></img>
+                    </>
+                  )}
+                </FotoPerfil>
+              )}
               <NomeData>
                 <Nome>{usuario.nome}</Nome>
                 <ConjuntoDataCPF>
-                  <DataCPF>Nascimento: {dataNascimento}</DataCPF>
-                  <DataCPF>CPF: {usuario.cpf}</DataCPF>
+                  <ContainerData>
+                  <DataCPF>Nascimento:</DataCPF>
+                  <DataCPF>{dataNascimento}</DataCPF>
+                  </ContainerData>
+                  <ContainerCPF>
+                  <DataCPF>CPF:</DataCPF>
+                  <DataCPF>{cpf(usuario.cpf)}</DataCPF>
+                  </ContainerCPF>
                 </ConjuntoDataCPF>
               </NomeData>
             </FotoNomeData>
@@ -137,7 +192,7 @@ function Perfil(props) {
                 width="100%"
                 height="50px"
                 widthMedia480="30%"
-                heightMedia560="30px"
+                heightMedia640="30px"
                 backgroundColor={Cores.lilas[2]}
                 borderColor={Cores.azulEscuro}
                 color={Cores.azulEscuro}
@@ -155,7 +210,7 @@ function Perfil(props) {
                 width="100%"
                 height="50px"
                 widthMedia480="30%"
-                heightMedia560="30px"
+                heightMedia640="30px"
                 backgroundColor={Cores.lilas[2]}
                 borderColor={Cores.azulEscuro}
                 color={Cores.azulEscuro}
@@ -182,7 +237,7 @@ function Perfil(props) {
               <>
                 <EnderecoContato>Endereço</EnderecoContato>
                 <DadosEndereco>País: {endereco.pais}</DadosEndereco>
-                <DadosEndereco>CEP: {endereco.cep}</DadosEndereco>
+                <DadosEndereco>CEP: {cep(endereco.cep)}</DadosEndereco>
                 <DadosEndereco>Estado: {endereco.estado}</DadosEndereco>
                 <DadosEndereco>Cidade: {endereco.cidade}</DadosEndereco>
                 <DadosEndereco>Bairro: {endereco.bairro}</DadosEndereco>
@@ -205,23 +260,40 @@ function Perfil(props) {
                 <>
                   <EnderecoContato>Contato</EnderecoContato>
                   <DadosContato>
+                    Telefone:
                     ({telefone.slice(0, -9)}) {telefone.slice(2, -4)}-
                     {telefone.slice(-4)}
                   </DadosContato>
                   <DadosContato style={{ wordBreak: "break-word" }}>
+                    {"E-mail: "}
                     {usuario.email}
                   </DadosContato>
                 </>
               )}
             </CaixaContato>
             {botaoVisivel && (
-              <ExcluirConta onClick={deletarEnderecoEUsuario}>
+              <ExcluirConta onClick={() => setModalDeletarConta(true)}>
                 EXCLUIR CONTA
               </ExcluirConta>
             )}
           </ContatoExcluirConta>
         </CaixaBaixo>
       </Conteudo>
+
+      <Modal
+        visible={modalDeletarConta}
+        onCancel={() => setModalDeletarConta(false)}
+        style={{ maxWidth: "450px", minWidth: "250px" }}
+        width={"50%"}
+        centered={true}
+        footer={null}
+      >
+        <ModalExcluirConta
+          usuario={usuario}
+          fecharModal={() => fechandoModalDeletarConta()}
+        />
+      </Modal>
+
     </div>
   );
 }

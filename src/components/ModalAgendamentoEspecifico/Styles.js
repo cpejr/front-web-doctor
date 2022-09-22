@@ -42,6 +42,22 @@ export const InfoEsquerdaEDireita = styled.div`
   }
 `;
 
+export const InfoEsquerda = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+  height: 80vh;
+  padding: 5%;
+
+  @media (max-width: 800px) {
+    width: 100%;
+    height: 50vh;
+  }
+`;
+
 export const Usuario = styled.div`
   display: flex;
   flex-direction: row;
@@ -59,7 +75,7 @@ export const Usuario = styled.div`
 
   @media (max-width: 500px) {
     flex-direction: column;
-    height: 120px;
+    height: 60px;
   }
 `;
 
@@ -92,7 +108,7 @@ export const NomePaciente = styled.div`
   width: 100%;
   font-family: ${Fontes.barlow};
   font-weight: 400;
-  font-size: 1.4em;
+  font-size: 1.1em;
   color: ${Cores.azulEscuro};
 
   @media (max-width: 500px) {
@@ -108,8 +124,16 @@ export const TipoAgendamento = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 80%;
+  width: 100%;
   background-color: green;
+  @media (max-width: 620px){
+    height: 25%;
+    width: 100%;
+  }
+  @media (max-width: 560px){
+    height: 30%;
+    flex-wrap: nowrap;
+  }
 `;
 
 export const TextoTipoAgendamento = styled.h3`
@@ -183,10 +207,81 @@ export const TamanhoInput = styled.div`
   justify-content: center;
   width: 40%;
   height: 40px;
-
+  @media  (max-width: 601px) and (min-width: 560px) {
+    margin-bottom: 5%;
+  }
   @media (max-width: 560px) {
     width: 100%;
     margin-bottom: 5%;
+  }
+  @media (max-width: 1260px) and (min-width: 800px) {
+    width: 90%;
+    margin-bottom: 5%;
+  }
+`;
+
+export const InputConsultorio = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 40%;
+  height: 40px;
+  //margin-bottom: 5%;
+  @media (max-width: 1717px) {
+    margin-bottom: 5%;
+  }
+  @media (max-width: 560px) {
+    width: 100%;
+    margin-bottom: 5%;
+  }
+  @media (max-width: 1260px) and (min-width: 800px) {
+    width: 90%;
+    margin-bottom: 5%;
+  }
+  @media (max-width: 807px) and (min-width: 800px) {
+    padding-top: 15%;
+  }
+`;
+
+export const ContainerDuracaoConsulta = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 40%;
+  height: 40px;
+  //margin-bottom: 5%;
+  @media (max-width: 1622px) {
+    margin-bottom: 5%;
+  }
+  @media  (max-width: 763px) and (min-width: 697px) {
+    margin-bottom: 9%;
+  }
+  @media (max-width: 560px) {
+    width: 100%;
+    margin-bottom: 5%;
+  }
+  @media (max-width: 1260px) and (min-width: 800px) {
+    width: 90%;
+    margin-bottom: 5%;
+  }
+`;
+
+export const ContainerHorario = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 40%;
+  height: 40px;
+  //margin-bottom: 5%;
+  @media (max-width: 1470px) {
+    margin-bottom: 5%;
+  }
+  @media (max-width: 560px) {
+    width: 100%;
+    margin-bottom: 13%;
   }
   @media (max-width: 1260px) and (min-width: 800px) {
     width: 90%;
@@ -294,6 +389,20 @@ export const TextoSelecioneUmaData = styled.h3`
   display: flex;
   justify-content: end;
   align-items: center;
+`;
+
+export const TextoDoisSelects = styled.h3`
+  font-family: ${Fontes.barlow};
+  font-weight: 500;
+  font-size: 1.1em;
+  color: ${Cores.azulEscuro};
+  display: flex;
+  justify-content: start;
+  align-items: center;
+
+  @media (max-width: 560px){
+    margin-top: 15%;
+  }
 `;
 
 export const SelecioneUmaData = styled.div`
