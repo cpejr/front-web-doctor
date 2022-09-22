@@ -148,8 +148,8 @@ function AreaReceitas() {
 						</FiltroPaciente>
 						<BotaoAdicionar>
 							<Button
-								backgroundColor={Cores.verde}
-								color={Cores.branco}
+								backgroundColor={Cores.cinza[7]}
+								color={Cores.azul}
 								width="50%"
 								display="flex"
 								height="32px"
