@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import { redirecionamento } from "../../utils/sleep";
 import { recebeTipo } from "../../services/auth";
 
+const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
+
 const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
@@ -46,13 +48,19 @@ export const requisicaoLogin = async (email, senha) => {
   return;
 };
 
-export const Cadastrando = async (usuario, endereco) => {
+export const Cadastrando = async (usuario, endereco, callbackError = () => {}) => {
+
   const resposta = await requesterService.requisicaoDadosUsuario(usuario.email);
 
   if (resposta.status !== 204) {
     sleep(1500);
     toast.error("E-mail já cadastrado");
-    return;
+
+    callbackError(tipoUsuarioLogado)
+
+   
+    
+    return false;
   }
 
   await requesterService
@@ -64,7 +72,7 @@ export const Cadastrando = async (usuario, endereco) => {
       requisicaoErro(error, () => (window.location.href = "/cadastro"));
       return false;
     });
-  return false;
+  return true;
 };
 
 export const EnviandoEmail = async (email) => {

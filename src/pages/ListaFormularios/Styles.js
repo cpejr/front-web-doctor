@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Cores } from "../../variaveis";
+import { Select } from "antd";
 
 export const ContainerListadeFormularios = styled.div`
   display: flex;
@@ -7,7 +8,7 @@ export const ContainerListadeFormularios = styled.div`
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  padding: 2% 5% 2% 5%;
+  padding: 25px 5% 2% 5%;
 `;
 
 export const TopoPagina = styled.div`
@@ -15,6 +16,7 @@ export const TopoPagina = styled.div`
   flex-direction: row;
   justify-content: space-around;
   width: 100%;
+  gap: 10px;
   @media (min-width: 1200px) and (max-width: 1400px) {
     justify-content: center;
     margin-left: 1%;
@@ -23,13 +25,13 @@ export const TopoPagina = styled.div`
     justify-content: center;
     margin-left: 3%;
   }
-  @media (min-width: 921px) and (max-width: 1089px) {
+  @media (min-width: 591px) and (max-width: 1089px) {
     justify-content: center;
-    margin-left: 4%;
   }
-  @media (max-width: 920px) {
+  @media (max-width: 590px) {
     flex-direction: column;
     justify-content: center;
+    margin-left: 0%;
   }
 `;
 export const BarraPesquisa = styled.div`
@@ -42,40 +44,57 @@ export const BarraPesquisa = styled.div`
     width: 100%;
     justify-content: center;
   }
+
+  @media (max-width: 590px) {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
 `;
 export const Filtros = styled.div`
-  width: 50%;
+  width: 40%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: end;
   gap: 2%;
 
   @media (max-width: 920px) {
-    margin-top: 2%;
-    width: 100%;
-    justify-content: center;
+    width: 50%;
+    justify-content: end;
   }
-  @media (max-width: 480px) {
-    margin-top: 2%;
-    flex-direction: column;
+  @media (max-width: 590px) {
     width: 100%;
     justify-content: center;
     align-items: center;
   }
 `;
 
-export const FiltroEspecificoUrgencia = styled.div``;
+export const FiltroEspecificoUrgencia = styled(Select)`
+  width: 200px;
+
+  @media (max-width: 590px) {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+`;
 
 export const BarraEstetica = styled.div`
-  margin-top: 2%;
-  margin-bottom: 1%;
+  margin-top: 25px;
+  margin-bottom: 25px;
   height: 2px;
   width: 100%;
   background-color: ${Cores.azul};
+
+  @media (max-width: 940px) {
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
 `;
 
 export const ContainerFormulario = styled.div`
-  padding: 2% 0% 2% 0%;
+  padding: 0px 0% 2% 0%;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -84,7 +103,7 @@ export const DadosFormulario = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  align-items: center;;
+  align-items: center;
   //margin-bottom: 2%;
 
   @media (max-width: 960px) {
@@ -205,7 +224,7 @@ export const ContainerFormularioEspecifico = styled.div`
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  margin: 2% 0% 2% 0%;
+  margin: 0% 0% 2% 0%;
   @media (max-width: 920px) {
     flex-direction: column;
     justify-content: center;
@@ -239,7 +258,6 @@ export const TipoFormulario = styled.div`
   @media (max-width: 560px) {
     width: 100%;
   }
-
 `;
 export const UrgenciaFormulario = styled.div`
   display: flex;
@@ -261,15 +279,14 @@ export const TextoUrgencia = styled.div`
 `;
 
 export const CaixaTitulo = styled.div`
-   width: 33%;
-   display: flex;
-   justify-content: center;
-   align-items: center;
+  width: 33%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-   @media (max-width: 560px) {
+  @media (max-width: 560px) {
     width: 100%;
   }
-
 `;
 
 export const Resposta = styled.div`

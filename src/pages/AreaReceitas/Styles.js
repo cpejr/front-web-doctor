@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { Cores } from "../../variaveis";
+import { Select } from "antd";
 
 export const TopoPagina = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-around;
-  margin-bottom: 1%;
+  gap: 10px;
   @media (max-width: 920px) {
     flex-direction: column;
     justify-content: center;
@@ -15,12 +16,15 @@ export const TopoPagina = styled.div`
 
 export const BarraPesquisa = styled.div`
   width: 50%;
-  margin-top: 1.5%;
   display: flex;
   flex-direction: row;
   justify-content: center;
 
   @media (max-width: 920px) {
+    width: 70%;
+  }
+
+  @media (max-width: 590px) {
     width: 100%;
     justify-content: center;
   }
@@ -29,32 +33,27 @@ export const BarraPesquisa = styled.div`
 export const Botoes = styled.div`
   position: relative;
   display: flex;
-  width: 50%;
-  margin: 1%;
-  justify-content: space-between;
-  @media (max-width: 920px){
-    width: 500px;
+  width: 100%;
+  justify-content: space-around;
+  gap: 10px;
+
+  @media (max-width: 550px) {
+    flex-direction: column;
   }
-  @media (max-width: 550px){
-    margin-top: 2%;
-    flex-direction:column;
-    width: 100%;
+
+  @media (max-width: 920px) {
+    justify-content: space-between;
   }
 `;
 
-export const FiltroPaciente = styled.div`
-  width: 50%;
-  margin: 1%;
+export const FiltroPaciente = styled(Select)`
+  width: 200px;
   display: flex;
   flex-direction: row;
-  justify-content: start;
+  justify-content: end;
   gap: 2%;
-  @media (max-width: 920px) {
-    margin: 1% 0;
-    width: 100%;
-  }
+
   @media (max-width: 550px) {
-    flex-direction: column;
     width: 100%;
     justify-content: center;
     align-items: center;
@@ -63,12 +62,12 @@ export const FiltroPaciente = styled.div`
 
 export const BotaoAdicionar = styled.div`
   position: relative;
-  width: 50%;
+  width: 100%;
   display: flex;
   justify-content: center;
-  @media (max-width: 920px){
+  @media (max-width: 920px) {
     justify-content: flex-end;
-    width: 100%
+    width: 100%;
   }
 `;
 
@@ -78,21 +77,27 @@ export const ContainerListadeReceitas = styled.div`
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  padding: 2% 5% 2% 5%;
+  padding: 25px 5% 2% 5%;
 `;
 
 export const BarraEstetica = styled.div`
-  margin-top: 2%;
-  margin-bottom: 1%;
+  margin-top: 25px;
+  margin-bottom: 15px;
   height: 2px;
   width: 100%;
   background-color: ${Cores.azul};
+
+  @media (max-width: 940px) {
+    margin-top: 10px;
+    margin-bottom: 15px;
+  }
 `;
 
 export const DadosReceita = styled.div`
   color: ${Cores.azul};
   justify-content: space-around;
   display: flex;
+  margin-bottom: 15px;
   flex-direction: row;
   @media (max-width: 500px) {
     justify-content: space-between;
@@ -100,7 +105,7 @@ export const DadosReceita = styled.div`
 `;
 
 export const ContainerReceitas = styled.div`
-  padding: 2% 0% 2% 0%;
+  padding: 0% 0% 2% 0%;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -113,7 +118,7 @@ export const Receita = styled.div`
   align-items: center;
   column-gap: 10px;
   width: 100%;
-  height: 80px;
+  height: 90px;
   padding: 0% 1% 0% 1%;
   border-color: ${Cores.preto};
   border-style: solid;
@@ -153,7 +158,7 @@ export const Titulo = styled.div`
 
 export const NomePaciente = styled.div`
   width: 18%;
-  display:flex;
+  display: flex;
   justify-content: center;
   white-space: pre-wrap;
   overflow: hidden;

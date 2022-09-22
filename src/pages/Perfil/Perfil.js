@@ -133,6 +133,7 @@ function Perfil(props) {
           {perfilPessoal && (
             <BotoesColuna>
               <Button
+                marginTop="0px"
                 width="100%"
                 height="50px"
                 widthMedia480="30%"
@@ -150,6 +151,7 @@ function Perfil(props) {
                 ALTERAR DADOS
               </Button>
               <Button
+                marginTop="0px"
                 width="100%"
                 height="50px"
                 widthMedia480="30%"

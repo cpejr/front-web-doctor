@@ -23,7 +23,7 @@ import {
   BotaoVertical,
   ContainerFormularioEspecifico,
   TextoUrgencia,
-  CaixaTitulo
+  CaixaTitulo,
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
@@ -155,23 +155,19 @@ function ListaFormularios() {
               <BarraPesquisa>
                 <Search
                   placeholder="BUSCAR"
-                  style={{ width: 400 }}
                   value={busca}
                   onChange={(e) => setBusca(e.target.value)}
                 />
               </BarraPesquisa>
               <Filtros>
-                <FiltroEspecificoUrgencia>
-                  <Select
-                    defaultValue="Urgências"
-                    style={{ width: 200 }}
-                    onChange={(value) => urgenciasFiltradas(value)}
-                  >
-                    <Option value="">Todas as Urgências</Option>
-                    <Option value="1">Urgência: 1</Option>
-                    <Option value="2">Urgência: 2</Option>
-                    <Option value="3">Urgência: 3</Option>
-                  </Select>
+                <FiltroEspecificoUrgencia
+                  defaultValue="Urgências"
+                  onChange={(value) => urgenciasFiltradas(value)}
+                >
+                  <Option value="">Todas as Urgências</Option>
+                  <Option value="1">Urgência: 1</Option>
+                  <Option value="2">Urgência: 2</Option>
+                  <Option value="3">Urgência: 3</Option>
                 </FiltroEspecificoUrgencia>
               </Filtros>
             </TopoPagina>
@@ -182,15 +178,15 @@ function ListaFormularios() {
                   <Formulario>
                     <DadosFormulario>
                       <CaixaTitulo>
-                      <Button
-                        backgroundColor="transparent"
-                        borderColor="transparent"
-                        onClick={() => verificandoFormularioPeloId(value.id)}
-                        width="100%"
-                        marginTop="0px"
-                      >
-                        <TituloFormulario>{value.titulo}</TituloFormulario>
-                      </Button>
+                        <Button
+                          backgroundColor="transparent"
+                          borderColor="transparent"
+                          onClick={() => verificandoFormularioPeloId(value.id)}
+                          width="100%"
+                          marginTop="0px"
+                        >
+                          <TituloFormulario>{value.titulo}</TituloFormulario>
+                        </Button>
                       </CaixaTitulo>
                       <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
                       <UrgenciaFormulario>
@@ -293,8 +289,7 @@ function ListaFormularios() {
                   boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
                   onClick={() => history.push("/web/criacaoformulario")}
                 >
-                  <PlusCircleOutlined style={{ color: Cores.azul }} />
-                  Adicionar Formularios
+                  Adicionar formulários
                 </Button>
               </BotaoFinal>
             </ContainerFormulario>

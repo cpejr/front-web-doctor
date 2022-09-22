@@ -11,7 +11,8 @@ import {
   InputVertical,
   BotoesMesmaLinha,
   Titulo,
-  Rotulo,
+  Rotulo, 
+  TituloInput
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";

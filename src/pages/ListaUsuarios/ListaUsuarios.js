@@ -238,7 +238,7 @@ function ListaUsuarios() {
 
   function passandoTipoParaCadastro(tipo) {
     history.push({
-      pathname: "/cadastro",
+      pathname: "/web/cadastroNovoUsuario",
       state: { tipo },
     });
   }
@@ -288,24 +288,20 @@ function ListaUsuarios() {
     var nome1 = a.nome.toUpperCase();
     var nome2 = b.nome.toUpperCase();
 
-    if(visitaSelect === "")
-    {
+    if (visitaSelect === "") {
       if (nome1 > nome2) {
         return 1;
       } else {
         return -1;
       }
-    }else{
+    } else {
       if (data1 < data2) {
         return 1;
       } else {
         return -1;
       }
     }
-  
-  };  
-
- 
+  };
 
   return (
     <div>
@@ -362,38 +358,44 @@ function ListaUsuarios() {
         {tipoUsuarioLogado === "MASTER" ? (
           <BotoesMedico>
             <CaixaBotaoMedico>
-            <Button
-              backgroundColor={Cores.cinza[7]}
-              color={Cores.azul}
-              width="100%"
-              height="50px"
-              marginTop = "0px"
-              borderColor={Cores.azul}
-              fontSize="1em"
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              widthMedia600="100%"
-              onClick={() => passandoTipoParaCadastro("PACIENTE")}
-            >
-              Cadastrar Novo Paciente
-              <PlusCircleOutlined style={{ color: Cores.azul }} />
-            </Button>
+              <Button
+                backgroundColor={Cores.cinza[7]}
+                color={Cores.azul}
+                width="100%"
+                height="50px"
+                marginTop="0px"
+                borderColor={Cores.azul}
+                fontSize="1.8em"
+                fontSizeMedia480="1.1em"
+                fontWeight="bold"
+                fontSizeMedia950="1.2em"
+                fontSizeMedia1080="1.5em"
+                boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+                widthMedia600="100%"
+                onClick={() => passandoTipoParaCadastro("PACIENTE")}
+              >
+                Cadastrar Novo Paciente
+              </Button>
             </CaixaBotaoMedico>
             <CaixaBotaoMedico>
-            <Button
-              backgroundColor={Cores.cinza[7]}
-              marginTop = "0px"
-              color={Cores.azul}
-              width="100%"
-              height="50px"
-              borderColor={Cores.azul}
-              fontSize="1em"
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              widthMedia600="100%"
-              onClick={() => passandoTipoParaCadastro("SECRETARIA(O)")}
-            >
-              Cadastrar nova(o) Secretária(o)
-              <PlusCircleOutlined style={{ color: Cores.azul }} />
-            </Button>
+              <Button
+                backgroundColor={Cores.cinza[7]}
+                marginTop="0px"
+                color={Cores.azul}
+                width="100%"
+                height="50px"
+                borderColor={Cores.azul}
+                fontSize="1.8em"
+                fontWeight="bold"
+                fontSizeMedia950="1.15em"
+                fontSizeMedia480="1.1em"
+                fontSizeMedia1080="1.5em"
+                boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+                widthMedia600="100%"
+                onClick={() => passandoTipoParaCadastro("SECRETARIA(O)")}
+              >
+                Cadastrar nova(o) Secretária(o)
+              </Button>
             </CaixaBotaoMedico>
           </BotoesMedico>
         ) : (
@@ -403,14 +405,17 @@ function ListaUsuarios() {
               color={Cores.azul}
               width="100%"
               height="50px"
-              marginTop = "10px"
+              marginTop="0px"
               borderColor={Cores.azul}
-              fontSize="1em"
+              fontSize="1.8em"
+              fontWeight="bold"
+              fontSizeMedia480="1.1em"
+              fontSizeMedia950="1.2em"
+              fontSizeMedia1080="1.5em"
               boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
               onClick={() => passandoTipoParaCadastro("PACIENTE")}
             >
               Cadastrar Novo Paciente
-              <PlusCircleOutlined style={{ color: Cores.azul }} />
             </Button>
           </BotaoSecretario>
         )}

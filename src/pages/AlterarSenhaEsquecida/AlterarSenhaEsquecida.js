@@ -12,6 +12,7 @@ import {
   BotoesMesmaLinha,
   Titulo,
   Rotulo,
+  TituloInput,
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
@@ -110,8 +111,9 @@ function AlterarSenhaEsquecida() {
             <Caixa>
               <Titulo>Alterar Senha:</Titulo>
               <InputVertical>
+              <TituloInput>Insira uma nova senha:</TituloInput>
                 <Input
-                  placeholder="Defina sua nova senha"
+                  placeholder="Nova senha"
                   backgroundColor={Cores.cinza[7]}
                   color={Cores.preto}
                   fontSize="1em"
@@ -126,6 +128,7 @@ function AlterarSenhaEsquecida() {
                 {erro.senha && (
                   <Rotulo>Insira uma nova senha com no minimo 8 digitos</Rotulo>
                 )}
+                <TituloInput>Confirme sua nova senha:</TituloInput>
                 <Input
                   placeholder="Confirme sua nova senha"
                   backgroundColor={Cores.cinza[7]}

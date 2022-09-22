@@ -56,7 +56,7 @@ function ModalAdicionarCodigo(props) {
   return (
     <>
       <ContainerModalCodigo>
-        <Titulo>Insira um codigo</Titulo>
+        <Titulo>Insira um código:</Titulo>
 
         {codigo === null ? (
           <Input

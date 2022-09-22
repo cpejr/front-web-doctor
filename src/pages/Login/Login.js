@@ -18,6 +18,7 @@ import {
   BarraEstetica,
   Logo,
   Rotulo,
+  TituloInput
 } from "./Styles";
 import _ from "lodash";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -126,29 +127,32 @@ function Login() {
               height="100%"
             ></img>
           </Logo>
+          <TituloInput>Email:
           <Input
             placeholder="Email"
             backgroundColor="#E4E6F4"
             color="black"
             fontSize="1em"
             width="100%"
-            marginTop="2%"
+            marginTop="0%"
             name="email"
             value={email}
             onChange={validacaoEmail}
             camposVazios={camposVazios.email}
             erro={erro.email}
           ></Input>
+          </TituloInput>
           {erro.email && (
             <Rotulo>Digite um email no formato email@email.com</Rotulo>
           )}
+          <TituloInput>Senha:
           <Input
             placeholder="Senha"
             backgroundColor="#E4E6F4"
             color="black"
             fontSize="1em"
             width="100%"
-            marginTop="2%"
+            marginTop="0%"
             type="password"
             name="senha"
             value={senha}
@@ -157,6 +161,7 @@ function Login() {
             camposVazios={camposVazios.senha}
             erro={erro.senha}
           ></Input>
+          </TituloInput>
           {erro.senha && (
             <Rotulo>Digite uma senha com no minimo 8 digitos</Rotulo>
           )}

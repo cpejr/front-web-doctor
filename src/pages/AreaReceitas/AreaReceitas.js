@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import { Input, Select } from "antd";
 import { LoadingOutlined, PlusCircleOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
-import { compararDataRecente, FormatarDataShort } from "../../utils/tratamentoErros";
+import {
+  compararDataRecente,
+  FormatarDataShort,
+} from "../../utils/tratamentoErros";
 import {
   TopoPagina,
   BarraPesquisa,
@@ -34,17 +37,30 @@ function AreaReceitas() {
   const [busca, setBusca] = useState("");
   const [carregandoPagina, setCarregandoPagina] = useState(false);
 
-  const lowerBusca = busca.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const lowerBusca = busca
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const antIconPagina = <LoadingOutlined style={{ fontSize: 40, color: Cores.azulEscuro }} spin />;
+  const antIconPagina = (
+    <LoadingOutlined style={{ fontSize: 40, color: Cores.azulEscuro }} spin />
+  );
 
   const receitasFiltradas = receitas.filter((receita) => {
-    if (lowerBusca === "" && pacienteSelect === "")
-      return receita;
+    if (lowerBusca === "" && pacienteSelect === "") return receita;
     else {
       return (
-        receita?.nome?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(pacienteSelect)
-        && receita?.titulo?.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').includes(lowerBusca));
+        receita?.nome
+          ?.toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .includes(pacienteSelect) &&
+        receita?.titulo
+          ?.toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .includes(lowerBusca)
+      );
     }
   });
 
@@ -85,44 +101,45 @@ function AreaReceitas() {
     <div>
       <ContainerListadeReceitas>
         <TopoPagina>
-          <BarraPesquisa>
-            <Search
-              placeholder="BUSCAR"
-              style={{ width: 500 }}
-              value={busca}
-              onChange={(e) => setBusca(e.target.value)}
-            />
-          </BarraPesquisa>
           <Botoes>
-            <FiltroPaciente>
-              <Select
-                defaultValue=""
-                style={{ width: 200 }}
-                onChange={(value) => pacientesFiltrados(value)}
-              >
-                <Option value="">Todos os Pacientes</Option>
-                {pacientes.map((value) => (
-                  <Option value={value.nome.toLowerCase()} > {value.nome} </Option>
-                ))}
-              </Select>
+            <BarraPesquisa>
+              <Search
+                placeholder="BUSCAR"
+                value={busca}
+                onChange={(e) => setBusca(e.target.value)}
+              />
+            </BarraPesquisa>
+
+            <FiltroPaciente
+              defaultValue=""
+              onChange={(value) => pacientesFiltrados(value)}
+            >
+              <Option value="">Todos os Pacientes</Option>
+              {pacientes.map((value) => (
+                <Option value={value.nome.toLowerCase()}> {value.nome} </Option>
+              ))}
             </FiltroPaciente>
-            <BotaoAdicionar>
-              <Button
-                backgroundColor={Cores.verde}
-                color={Cores.branco}
-                width="50%"
-                display="flex"
-                height="32px"
-                borderColor={Cores.preto}
-                fontSize="1em"
-                gap="5%"
-                widthMedia600="100%"
-              >
-                Receita
-                <PlusCircleOutlined style={{ color: Cores.branco }} />
-              </Button>
-            </BotaoAdicionar>
           </Botoes>
+          <BotaoAdicionar>
+            <Button
+              backgroundColor={Cores.verde}
+              color={Cores.branco}
+              borderColor={Cores.preto}
+              widthMedia600="100%"
+              marginTop="0px"
+              width="45%"
+              height="50px"
+              fontSize="1.8em"
+              fontWeight="bold"
+              fontSizeMedia950="1em"
+              fontSizeMedia480="1.2em"
+              fontSizeMedia1080="1.5em"
+              gap="1%"
+              widthMedia="100%"
+            >
+              Adicionar receita
+            </Button>
+          </BotaoAdicionar>
         </TopoPagina>
         <BarraEstetica></BarraEstetica>
         <DadosReceita>

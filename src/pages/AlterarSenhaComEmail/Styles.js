@@ -12,6 +12,7 @@ export const Conteudo = styled.div`
   background-color: ${Cores.branco};
 `;
 
+
 export const Caixa = styled.div`
   display: flex;
   flex-direction: column;

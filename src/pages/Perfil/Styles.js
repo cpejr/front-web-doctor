@@ -33,8 +33,10 @@ export const CaixaCima = styled.div`
 export const FotoNomeData = styled.div`
   display: flex;
   align-items: center;
+  height: auto;
   flex-direction: row;
   width: 68%;
+
   @media (max-width: 770px) {
     width: 100%;
   }
@@ -56,15 +58,16 @@ export const NomeData = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 5em;
+  height: auto;
   width: 74%;
   @media (max-width: 560px) {
-    height: 4em;
+    height: auto;
   }
   @media (max-width: 770px) and (min-width: 560px) {
     width: 64%;
-    height: 4em;
+    height: auto;
   }
+ 
 `;
 export const Nome = styled.div`
   display: flex;
@@ -123,6 +126,7 @@ export const DataCPF = styled.div`
   }
 `;
 export const BotoesColuna = styled.div`
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -130,18 +134,20 @@ export const BotoesColuna = styled.div`
   height: 7.5em;
   width: 25%;
   font-size: 1em;
+  gap: 10px;
   @media (max-width: 1100px) and (min-width: 770px) {
     height: 6em;
   }
   @media (max-width: 770px) and (min-width: 560px) {
-    height: 5em;
-    width: 35%;
+    width: 38%;
+    height: 6em;
+
   }
   @media (max-width: 560px) {
-    flex-direction: row;
+    
     width: 100%;
-    height: 2em;
-    margin-top: 5%;
+    height: auto;
+   
   }
 `;
 export const CaixaBaixo = styled.div`
