@@ -57,7 +57,6 @@ function FormularioEspecifico(props) {
   const [carregandoFoto, setCarregandoFoto] = useState(true);
   const [carregandoFormulario, setCarregandoFormulario] = useState(true);
 
-  const [carregando, setCarregando] = useState(true);
   const [notificacaoAtiva, setNotificacaoAtiva] = useState(false);
   const [statusSelect, setStatusSelect] = useState("");
   const { Option } = SelectTipos;
