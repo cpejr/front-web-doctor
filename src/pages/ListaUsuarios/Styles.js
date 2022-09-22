@@ -219,7 +219,7 @@ export const Usuario = styled.div`
 `;
 
 export const Titulo = styled.div`
-  width: 30px;
+  width: 90px;
   display: flex;
   justify-content: center;
   @media (max-width: 880px) {
@@ -242,6 +242,33 @@ export const Imagem = styled.div`
   }
 `;
 export const Nome = styled.div`
+  width: 18%;
+  justify-content: center;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  :hover {
+    overflow: visible;
+    cursor: pointer;
+  }
+
+  @media (max-width: 880px) {
+    width: 20%;
+  }
+  @media (max-width: 740px) {
+    width: 25%;
+  }
+  @media (max-width: 660px) {
+    width: 33%;
+  }
+  @media (max-width: 560px) {
+    width: 50%;
+  }
+`;
+
+export const NomeCima = styled.div`
   width: 18%;
   justify-content: center;
 

@@ -35,6 +35,7 @@ import {
   SearchStyle,
   FiltrosEsquerda,
   CaixaBotaoMedico,
+  NomeCima
 } from "./Styles";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
@@ -459,7 +460,7 @@ function ListaUsuarios() {
           <>
             <DadosUsuario>
               <Titulo></Titulo>
-              <Nome>Nome do Usuário</Nome>
+              <NomeCima>Nome do Usuário</NomeCima>
               <Telefone>Telefone</Telefone>
               <UltimaVisita>Última Visita</UltimaVisita>
               <CódigoPaciente>Código do Paciente</CódigoPaciente>
