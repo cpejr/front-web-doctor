@@ -57,8 +57,21 @@ export const CaixaTexto = styled.div`
   border-color: ${Cores.lilas[3]};
   border-width: 0.2em;
   border-radius: 6px;
+
+  @media (max-width: 1660px) {
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   @media (max-width: 950px) and (min-width: 560px) {
-    height: 60%;
+    height: 70%;
+    padding-top: 2.5%;
+  }
+  @media (max-width: 601px) {
+    height: 80%;
+    padding-top: 4%;
   }
   @media (max-width: 560px) {
     width: 90%;
@@ -73,8 +86,11 @@ export const TextoNotificacao = styled.div`
   width: 100%;
   font-family: ${Fontes.roboto};
   font-size: 1em;
+  @media (max-width: 1870px) {
+    font-size: 0.9em;
+  }
   @media (max-width: 950px) {
-    font-size: 0.8em;
+    font-size: 0.7em;
   }
   @media (max-width: 560px) {
     font-size: 0.7em;
