@@ -400,7 +400,7 @@ export const BarraDePesquisa = styled.div`
   }
 `;
 
-export const NomePaciente = styled.div`
+export const NomePacienteMaster = styled.div`
   font-size: 1.1em;
   margin-top: 6%;
   font-family: ${Fontes.roboto};
@@ -413,6 +413,30 @@ export const NomePaciente = styled.div`
   :hover {
     cursor: pointer;
   }
+
+  @media (max-width: 850px) {
+    margin-top: 0;
+    margin-left: 0;
+    justify-content: start;
+  }
+
+  @media (max-width: 510px) {
+    margin-left: 0;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+`;
+
+export const NomePacienteSecretaria = styled.div`
+  font-size: 1.1em;
+  margin-top: 6%;
+  font-family: ${Fontes.roboto};
+  font-weight: bold;
+  color: ${Cores.preto};
+  display: flex;
+  margin-left: 10%;
+
 
   @media (max-width: 850px) {
     margin-top: 0;

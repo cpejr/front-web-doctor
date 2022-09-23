@@ -32,6 +32,8 @@ import {
   CentralizandoSpin,
   ContainerInterno,
   FotoPerfil,
+  NomePacienteSecretaria,
+  NomePacienteMaster,
 } from "./Styles";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
@@ -61,6 +63,8 @@ function FormularioEspecifico(props) {
   const [statusSelect, setStatusSelect] = useState("");
   const { Option } = SelectTipos;
   const [busca, setBusca] = useState("");
+  const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
+
   const lowerBusca = busca
     .toLowerCase()
     .normalize("NFD")
@@ -266,7 +270,7 @@ function FormularioEspecifico(props) {
                     ) : (
                       <div>
                         {value.avatar_url === null ||
-                        value.avatar_url === "" ? (
+                          value.avatar_url === "" ? (
                           <FotoPerfil>
                             {carregandoFoto ? (
                               <div>
@@ -301,17 +305,23 @@ function FormularioEspecifico(props) {
                     )}
                   </BarraEsquerda>
                   <BarraCentro>
-                    <NomePaciente
-                      onClick={() =>
-                        abrindoModalFormulario(
-                          value.id,
-                          value.perguntas,
-                          value.titulo
-                        )
-                      }
-                    >
-                      {value.nome}
-                    </NomePaciente>
+                    {tipoUsuarioLogado === "MASTER" ?(
+                      <NomePacienteMaster
+                        onClick={() =>
+                          abrindoModalFormulario(
+                            value.id,
+                            value.perguntas,
+                            value.titulo
+                          )
+                        }
+                      >
+                        {value.nome}
+                      </NomePacienteMaster>
+                    ) : (
+                      <NomePacienteSecretaria>
+                        {value.nome}
+                      </NomePacienteSecretaria>
+                    )}
                   </BarraCentro>
                   {value.status !== false ? (
                     <></>
