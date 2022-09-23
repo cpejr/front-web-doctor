@@ -40,7 +40,7 @@ function ListaFormularios() {
   const [formularios, setFormularios] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [busca, setBusca] = useState("");
-  const lowerBusca = busca.toLowerCase();
+  const lowerBusca = busca.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, '');
   const [tipoSelect, setTipoSelect] = useState("");
   const [modalEnvio, setModalEnvio] = useState(false);
   const [ModalDeletarFormulario, setModalDeletarFormulario] = useState(false);
@@ -77,8 +77,8 @@ function ListaFormularios() {
         );
       } else {
         return (
-          formulario?.titulo?.toLowerCase().includes(lowerBusca) ||
-          formulario?.tipo?.toLowerCase().includes(lowerBusca)
+          formulario?.titulo?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(lowerBusca) ||
+          formulario?.tipo?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(lowerBusca)
         );
       }
     }
@@ -90,7 +90,6 @@ function ListaFormularios() {
 
   useEffect(() => {
     pegandoDadosFormularios();
-
   }, []);
 
   async function pegandoDadosFormularios() {
