@@ -4,13 +4,14 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd"; 
 import AddToast from "../AddToast/AddToast"; 
 import * as managerService from "../../services/ManagerService/managerService"; 
-import { redirecionamento, sleep } from "../../utils/sleep"; 
+import { sleep } from "../../utils/sleep"; 
 import { Cores } from "../../variaveis"; 
 import { 
   ContainerModalExcluir, 
   ConteudoModalExcluir, 
   ContainerFooterModalExcluir, 
 } from "./Styles"; 
+
  
 function ModalExcluirFormulario(props) { 
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
@@ -21,9 +22,12 @@ function ModalExcluirFormulario(props) {
  
   async function excluirFormulario() { 
       setCarregandoDeletar(true); 
-      await managerService.DeletarFormulario(idFormulario); 
-      await sleep(3000); 
-      setCarregandoDeletar(false); 
+      await managerService.DeletarFormulario(idFormulario);
+      setTimeout(() => {
+        document.location.reload(true);
+        setCarregandoDeletar(false); 
+      }, 1500); 
+     
   }
   
   useEffect(() => {
