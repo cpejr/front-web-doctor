@@ -23,7 +23,7 @@ import {
   BotaoVertical,
   ContainerFormularioEspecifico,
   TextoUrgencia,
-  CaixaTitulo
+  CaixaTitulo,
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
@@ -182,15 +182,15 @@ function ListaFormularios() {
                   <Formulario>
                     <DadosFormulario>
                       <CaixaTitulo>
-                      <Button
-                        backgroundColor="transparent"
-                        borderColor="transparent"
-                        onClick={() => verificandoFormularioPeloId(value.id)}
-                        width="100%"
-                        marginTop="0px"
-                      >
-                        <TituloFormulario>{value.titulo}</TituloFormulario>
-                      </Button>
+                        <Button
+                          backgroundColor="transparent"
+                          borderColor="transparent"
+                          onClick={() => verificandoFormularioPeloId(value.id)}
+                          width="100%"
+                          marginTop="0px"
+                        >
+                          <TituloFormulario>{value.titulo}</TituloFormulario>
+                        </Button>
                       </CaixaTitulo>
                       <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
                       <UrgenciaFormulario>
@@ -308,7 +308,11 @@ function ListaFormularios() {
         width={"70%"}
         centered={true}
       >
-        <ModalEnvioFormulario usuarios={usuarios} idFormulario={idFormulario} />
+        <ModalEnvioFormulario
+          fecharModal={() => fechandoModal()}
+          usuarios={usuarios}
+          idFormulario={idFormulario}
+        />
       </Modal>
     </div>
   );

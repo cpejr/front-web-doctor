@@ -32,6 +32,7 @@ function ModalEnvioFormulario(props) {
         props.idFormulario,
         formularioPaciente
       );
+      props.fecharModal()
     } else {
       toast.error("Escolha um paciente para enviar o formulario");
     }
@@ -83,7 +84,6 @@ function ModalEnvioFormulario(props) {
           {carregando ? <Spin indicator={antIcon} /> : "ENVIAR"}
         </Button>
       </ContainerModalCodigo>
-      <AddToast />
     </>
   );
 }
