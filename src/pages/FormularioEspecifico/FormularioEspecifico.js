@@ -403,12 +403,12 @@ function FormularioEspecifico(props) {
                 Gerar documento Word
               </Button>
               <Button
-                backgroundColor="green"
+                backgroundColor={Cores.cinza[7]}
                 borderRadius="3px"
                 borderWidth="1px"
-                borderColor={Cores.preto}
+                borderColor={Cores.azul}
                 boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-                color={Cores.preto}
+                color={Cores.azul}
                 fontSize="15px"
                 height="50px"
                 width="60%"
