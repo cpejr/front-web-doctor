@@ -108,8 +108,8 @@ function EditarFormulario(props) {
       setCarregandoBotaoAtualizar(false);
     } else {
       await managerService.EditarFormularios(formularios.id, campos);
-      await sleep(1500);
-      window.location.href = "/web/listaformularios";
+      await sleep(1000);
+      document.location.reload(true);
       setCarregandoBotaoAtualizar(false);
     }
   }
