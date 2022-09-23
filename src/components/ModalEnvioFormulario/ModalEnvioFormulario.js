@@ -28,7 +28,7 @@ function ModalEnvioFormulario(props) {
     if (formularioPaciente) {
       await managerService.EnviandoFormularioPaciente(
         false,
-        false,
+        true,
         props.idFormulario,
         formularioPaciente
       );
