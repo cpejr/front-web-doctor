@@ -25,6 +25,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 function EditarFormulario(props) {
   const [formularios, setFormularios] = useState();
   const [carregando, setCarregando] = useState(true);
+  const [carregandoConcluido, setCarregandoConcluido] = useState();
   const [modalAlterar, setModalAlterar] = useState();
   const [perguntas, setPerguntas] = useState();
   const [perguntasAlterar, setPerguntasAlterar] = useState();
@@ -77,6 +78,7 @@ function EditarFormulario(props) {
   }, [props]);
 
   async function atualizarDados() {
+    setCarregandoConcluido(true);
     if (botaoForms) {
       let aux = JSON.parse(schema);
 
@@ -93,11 +95,12 @@ function EditarFormulario(props) {
         estado.properties = auxiliar;
         await managerService.EditarPerguntasFormulario(formularios.id, estado);
         await sleep(1500);
-        window.location.href = "/web/listaformularios";
+        document.location.reload(true);
       }
     } else {
       toast.error("Adicione uma pergunta para concluir esta ação.");
     }
+    setCarregandoConcluido(false);
   }
 
   async function atualizarCamposQueNaoSaoPerguntas() {
@@ -275,7 +278,6 @@ function EditarFormulario(props) {
                 onChange={mudancasForm}
                 mods={TirandoCabecalho}
               />
-
               <Button
                 height="50px"
                 width="50%"
@@ -287,7 +289,11 @@ function EditarFormulario(props) {
                 fontWeight="bold"
                 onClick={() => atualizarDados()}
               >
-                Concluído
+                {carregandoConcluido ? (
+                  <Spin indicator={antIconAtualizarCampos} />
+                ) : (
+                  <>Concluído</>
+                )}
               </Button>
             </ContainerAdicionarPergunta>
           </>
