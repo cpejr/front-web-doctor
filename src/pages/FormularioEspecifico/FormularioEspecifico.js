@@ -305,7 +305,7 @@ function FormularioEspecifico(props) {
                     )}
                   </BarraEsquerda>
                   <BarraCentro>
-                    {tipoUsuarioLogado === "MASTER" ?(
+                    {tipoUsuarioLogado === "MASTER" ? (
                       <NomePacienteMaster
                         onClick={() =>
                           abrindoModalFormulario(
@@ -362,7 +362,17 @@ function FormularioEspecifico(props) {
               </BarraRespostas>
               <BarraRespostas>
                 {" "}
-                {formularioResposta.length} formulários já foram respondidos.
+                {formularioResposta.length < 2 ? (
+                  <>
+                    {formularioResposta.length === 1 ? (
+                      "1 formulário ja foi respondido"
+                    ) : (
+                      "Nenhum formulário foi respondido"
+                    )}
+                  </>
+                ) : (
+                  `${formularioResposta.length} já foram respondidos`
+                )}
               </BarraRespostas>
               <MargemEstetica />
               <Button
