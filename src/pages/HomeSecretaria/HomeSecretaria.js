@@ -32,6 +32,10 @@ const [carregando, setCarregando] = useState(true);
 const [formularioPaciente, setFormularioPaciente] = useState([]);
 const [notificacaoFormularioAtivo, setNotificacaoFormularioAtivo] = useState([]);
 
+const antIcon = (
+  <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
+);
+
 useEffect(() => {
   PegaFormulariosPaciente();
 }, []);
@@ -80,6 +84,18 @@ const ordenaFormularios = (a, b) => {
     <div>
       <Body>
         <Board>
+        {carregando ? (
+          <div
+            style={{
+              position: "absolute",
+              top: "45%",
+              left: "49%",
+            }}
+          >
+            <Spin indicator={antIcon} />
+          </div>
+        ) : (
+          <>
         {notificacaoFormularioAtivo?.sort(ordenaFormularios).map((value) =>
           <Notificacao>
             <CaixaTexto>
@@ -123,6 +139,8 @@ const ordenaFormularios = (a, b) => {
             </BotoesColuna>
           </Notificacao>
           )}
+          </>
+        )}
         </Board>
         <BotaoCanto>
           <Button
