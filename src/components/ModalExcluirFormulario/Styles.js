@@ -39,3 +39,7 @@ export const ContainerFooterModalExcluir = styled.h3`
   justify-content: flex-end;
   width:95%;
 `
+
+export const CaixaLoader = styled.div`
+  padding-bottom: 6%;
+`;
