@@ -5,8 +5,9 @@ import {
   StarFilled,
   UserOutlined,
 } from "@ant-design/icons";
-import { Spin, Modal, Input } from "antd";
+import { Spin, Modal, Input, Form } from "antd";
 import ModalFormulario from "../../components/ModalFormulario";
+import ModalPerguntaFormulario from "../../components/ModalPerguntaFormulario";
 import {
   ColunaDireita,
   ColunaEsquerda,
@@ -50,6 +51,7 @@ function FormularioEspecifico(props) {
   const [formularioResposta, setFormularioResposta] = useState(false);
 
   const [modalFormulario, setModalFormulario] = useState(false);
+  const [modalPerguntaFormulario, setModalPerguntaFormulario] = useState(false);
   const [perguntas, setPerguntas] = useState();
   const [titulo, setTitulo] = useState();
   const [idFormularioPaciente, setIdFormularioPaciente] = useState();
@@ -80,6 +82,7 @@ function FormularioEspecifico(props) {
     setFormularioEspecifico(resposta);
     setCarregando(false);
   }
+
 
   async function pegandoFormularioPacientes() {
     const respostaFormularios =
@@ -127,6 +130,13 @@ function FormularioEspecifico(props) {
     setTitulo(titulo);
     setIdFormularioPaciente(id);
     setModalFormulario(true);
+  }
+
+  function abrindoModalPerguntaFormulario() {
+    console.log(formularioEspecifico);
+    setPerguntas(formularioEspecifico.perguntas);
+    setTitulo(formularioEspecifico.titulo);
+    setModalPerguntaFormulario(true);
   }
 
   useEffect(() => {
@@ -392,6 +402,25 @@ function FormularioEspecifico(props) {
               >
                 Gerar documento Word
               </Button>
+              <Button
+                backgroundColor="green"
+                borderRadius="3px"
+                borderWidth="1px"
+                borderColor={Cores.preto}
+                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                color={Cores.preto}
+                fontSize="15px"
+                height="50px"
+                width="60%"
+                marginTop="10%"
+                marginLeft="0%"
+                fontSizeMedia950="0.9em"
+                onClick={() =>
+                  abrindoModalPerguntaFormulario()
+                }
+              >
+                Visualizar Perguntas
+              </Button>
             </ColunaDireita>
           </>
         )}
@@ -411,6 +440,21 @@ function FormularioEspecifico(props) {
           titulo={titulo}
         />
       </Modal>
+
+      <Modal
+        visible={modalPerguntaFormulario}
+        onCancel={() => setModalPerguntaFormulario(false)}
+        style={{ minWidth: "250px", maxWidth: "800px" }}
+        width={"70%"}
+        centered={true}
+        footer={null}
+      >
+        <ModalFormulario
+          perguntas={perguntas}
+          titulo={titulo}
+        />
+      </Modal>
+
     </div>
   );
 }
