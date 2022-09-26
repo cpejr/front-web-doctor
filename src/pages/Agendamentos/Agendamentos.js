@@ -273,11 +273,11 @@ function Agendamentos() {
             backgroundColor={Cores.lilas[2]}
             borderColor={Cores.azulEscuro}
             color={Cores.azul}
-            fontSize="1.8em"
+            fontSize="1.45em"
             fontWeight="bold"
-            fontSizeMedia950="1em"
-            fontSizeMedia480="1.2em"
-            fontSizeMedia1080="1.5em"
+            fontSizeMedia950="1.1em"
+            fontSizeMedia480="1em"
+            fontSizeMedia1080="1.3em"
             gap="1%"
             widthMedia="100%"
             onClick={() => marcandoAgendamento()}

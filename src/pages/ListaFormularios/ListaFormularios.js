@@ -182,17 +182,17 @@ function ListaFormularios() {
                     widthMedia="100%"
                     boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
                     onClick={() => history.push("/web/criacaoformulario")}
-                    marginTop="0px"
+                    marginTop="15px"
                     width="45%"
                     height="50px"
                     color={Cores.azul}
-                    fontSize="1.8em"
+                    fontSize="1.45em"
                     fontWeight="bold"
-                    fontSizeMedia950="1em"
-                    fontSizeMedia480="1.2em"
-                    fontSizeMedia1080="1.5em"
+                    fontSizeMedia950="1.1em"
+                    fontSizeMedia480="1em"
+                    fontSizeMedia1080="1.3em"
                   >
-                    Adicionar Formularios
+                    Adicionar Formulários
                   </Button>
                 
               )}
