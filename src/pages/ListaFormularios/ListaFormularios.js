@@ -24,12 +24,14 @@ import {
   BotaoVertical,
   ContainerFormularioEspecifico,
   TextoUrgencia,
-  CaixaTitulo,
-} from './Styles';
-import { Cores } from '../../variaveis';
-import Button from '../../styles/Button';
-import ModalEnvioFormulario from '../../components/ModalEnvioFormulario';
-import * as managerService from '../../services/ManagerService/managerService';
+  CaixaTitulo
+} from "./Styles";
+import { Cores } from "../../variaveis";
+import Button from "../../styles/Button";
+import ModalEnvioFormulario from "../../components/ModalEnvioFormulario";
+import ModalExcluirFormulario from "../../components/ModalExcluirFormulario/ModalExcluirFormulario";
+import * as managerService from "../../services/ManagerService/managerService";
+import { compararDataRecente } from "../../utils/tratamentoErros";
 
 function ListaFormularios() {
   const history = useHistory();
@@ -38,13 +40,15 @@ function ListaFormularios() {
   const { Option } = Select;
   const [formularios, setFormularios] = useState([]);
   const [carregando, setCarregando] = useState(true);
-  const [busca, setBusca] = useState('');
-  const lowerBusca = busca.toLowerCase();
-  const [tipoSelect, setTipoSelect] = useState('');
+  const [busca, setBusca] = useState("");
+  const lowerBusca = busca.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, '');
+  const [tipoSelect, setTipoSelect] = useState("");
   const [modalEnvio, setModalEnvio] = useState(false);
+  const [ModalDeletarFormulario, setModalDeletarFormulario] = useState(false);
   const [usuarios, setUsuarios] = useState([]);
   const [idFormulario, setIdFormulario] = useState();
-  const tipoUsuarioLogado = sessionStorage.getItem('@doctorapp-Tipo');
+  const [formularioEspecifico, setFormularioEspecifico] = useState({});
+  const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
@@ -74,8 +78,8 @@ function ListaFormularios() {
         );
       } else {
         return (
-          formulario?.titulo?.toLowerCase().includes(lowerBusca) ||
-          formulario?.tipo?.toLowerCase().includes(lowerBusca)
+          formulario?.titulo?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(lowerBusca) ||
+          formulario?.tipo?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(lowerBusca)
         );
       }
     }
@@ -110,8 +114,14 @@ function ListaFormularios() {
     });
   }
 
-  async function deletarFormulario(id) {
-    await managerService.DeletarFormulario(id);
+  function fechandoModalDeletarFormulario() {
+    setModalDeletarFormulario(false);
+  }
+
+  function abreModalDeletarFormulario(formulario){
+    setModalDeletarFormulario(true);
+    setFormularioEspecifico(formulario)
+
   }
 
   async function pegandoDadosUsuarios() {
@@ -199,8 +209,9 @@ function ListaFormularios() {
               )}</TopoPaginaBotao>
             <BarraEstetica />
             <ContainerFormulario>
-              
-              {formulariosFiltrados?.map((value) => (
+              {formulariosFiltrados
+              .sort(compararDataRecente)
+              .map((value) => (
                 <ContainerFormularioEspecifico>
                   <Formulario>
                     <DadosFormulario>
@@ -274,11 +285,11 @@ function ListaFormularios() {
                         <Button
                           backgroundColor={Cores.branco}
                           color={Cores.cinza[2]}
-                          fontWeight='bold'
-                          borderColor='rgba(255, 0, 0, 0.25)'
-                          height='37px'
-                          width='90%'
-                          onClick={() => deletarFormulario(value.id)}
+                          fontWeight="bold"
+                          borderColor="rgba(255, 0, 0, 0.25)"
+                          height="37px"
+                          width="90%"
+                          onClick={() => abreModalDeletarFormulario(value)}
                         >
                           DELETAR
                         </Button>
@@ -317,6 +328,21 @@ function ListaFormularios() {
       >
         <ModalEnvioFormulario usuarios={usuarios} idFormulario={idFormulario} fechandoModal={() => fechandoModal()} />
       </Modal>
+
+      <Modal
+        visible={ModalDeletarFormulario}
+        onCancel={() => setModalDeletarFormulario(false)}
+        style={{ maxWidth: "450px", minWidth: "250px" }}
+        footer={null}
+        width={"50%"}
+        centered={true}
+      >
+        <ModalExcluirFormulario
+         formulario={formularioEspecifico}
+         fecharModal={() => fechandoModalDeletarFormulario()}
+         />
+      </Modal>
+
     </div>
   );
 }

@@ -470,8 +470,7 @@ export const DeletarFormulario = async (id) => {
   await requesterService
     .deletarFormulario(id)
     .then(() => {
-      toast.success('Formulario deletado com sucesso.');
-      window.location.href = '/web/listaformularios';
+      toast.success("Formulario deletado com sucesso.");
     })
     .catch((error) => {
       requisicaoErro();
