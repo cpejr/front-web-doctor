@@ -20,7 +20,7 @@ export const TopoPagina = styled.div`
     flex-direction: column;
     justify-content: center;
     gap: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
 
   }
 
@@ -183,10 +183,7 @@ export const BarraEstetica = styled.div`
   width: 100%;
   background-color: ${Cores.azul};
 
-  @media (max-width: 940px) {
-    margin-top: 10px;
-    margin-bottom: 15px;
-  }
+ 
 `;
 export const DadosUsuario = styled.div`
   color: ${Cores.azul};
@@ -386,8 +383,7 @@ export const BotoesMedico = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    
   }
 `;
 

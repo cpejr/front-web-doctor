@@ -18,7 +18,7 @@ export const TopoPagina = styled.div`
   align-items: center;
   width: 100%;
   
-  @media (max-width: 920px) {
+  @media (max-width: 940px) {
     width: 100%;
     height: 70%;
     flex-direction: column;
@@ -38,7 +38,8 @@ export const TopoPaginaCima = styled.div`
   @media (max-width: 940px) {
     flex-direction: column;
     align-items: center;
-    margin-bottom: 0px;
+    margin-bottom: 15px;
+   
   }
 `;
 
@@ -118,10 +119,7 @@ export const BarraEstetica = styled.div`
   width: 100%;
   background-color: ${Cores.azul};
 
-  @media (max-width: 940px) {
-    margin-top: 10px;
-    margin-bottom: 15px;
-  }
+  
 `;
 export const DadosUsuario = styled.div`
   color: ${Cores.azul};

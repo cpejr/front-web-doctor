@@ -88,7 +88,7 @@ export const BarraEstetica = styled.div`
   background-color: ${Cores.azul};
 
   @media (max-width: 940px) {
-    margin-top: 10px;
+    
     margin-bottom: 15px;
   }
 `;
