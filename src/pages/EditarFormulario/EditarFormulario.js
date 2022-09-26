@@ -13,7 +13,6 @@ import {
 } from "./Styles";
 import Select from "../../styles/Select/Select";
 import Button from "../../styles/Button";
-import * as managerService from "../../services/ManagerService/managerService";
 import ModalEditarFormulario from "../../components/ModalEditarFormulario";
 import { Modal, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -21,6 +20,7 @@ import _ from "lodash";
 import { toast } from "react-toastify";
 import { sleep } from "../../utils/sleep";
 import "bootstrap/dist/css/bootstrap.min.css";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function EditarFormulario(props) {
   const [formularios, setFormularios] = useState();
@@ -34,9 +34,7 @@ function EditarFormulario(props) {
   const [schema, setSchema] = useState("");
   const [estado, setEstado] = useState({});
   const [campos, setCampos] = useState({});
-
   const [botaoForms, setBotaoForms] = useState(false);
-
   const [carregandoBotaoAtualizar, setCarregandoBotaoAtualizar] =
     useState(false);
 
@@ -90,8 +88,6 @@ function EditarFormulario(props) {
           formularios.perguntas.properties,
           estado.properties
         );
-
-
         estado.properties = auxiliar;
         await managerService.EditarPerguntasFormulario(formularios.id, estado);
         await sleep(1500);

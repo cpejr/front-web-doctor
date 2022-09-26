@@ -94,3 +94,11 @@ export const MenuHeader = styled.div`
     justify-content:center ;
   }
 `;
+
+export const CaixaFotoPerfil = styled.div`
+  display: flex;
+  height: 95%;
+  width: 95%;
+  border-radius: 50%;
+  overflow: hidden
+`;

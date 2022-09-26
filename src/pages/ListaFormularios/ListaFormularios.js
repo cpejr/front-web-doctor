@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { Input, Select, Modal } from "antd";
-import { PlusCircleOutlined } from "@ant-design/icons";
-import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
-import { Spin } from "antd";
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import { Input, Select, Modal } from 'antd';
+import { PlusCircleOutlined } from '@ant-design/icons';
+import { LoadingOutlined, StarOutlined, StarFilled } from '@ant-design/icons';
+import { Spin } from 'antd';
 import {
   TopoPagina,
+  TopoPaginaBotao,
   ContainerListadeFormularios,
   Filtros,
   FiltroEspecificoUrgencia,
@@ -54,22 +55,22 @@ function ListaFormularios() {
   );
 
   const formulariosFiltrados = formularios.filter((formulario) => {
-    if (lowerBusca === "" && tipoSelect === "") {
+    if (lowerBusca === '' && tipoSelect === '') {
       return formularios;
     } else {
-      if (tipoSelect === "1") {
+      if (tipoSelect === '1') {
         return (
           (formulario?.titulo?.toLowerCase().includes(lowerBusca) ||
             formulario?.tipo?.toLowerCase().includes(lowerBusca)) &&
           formulario.urgencia === 1
         );
-      } else if (tipoSelect === "2") {
+      } else if (tipoSelect === '2') {
         return (
           (formulario?.titulo?.toLowerCase().includes(lowerBusca) ||
             formulario?.tipo?.toLowerCase().includes(lowerBusca)) &&
           formulario.urgencia === 2
         );
-      } else if (tipoSelect === "3") {
+      } else if (tipoSelect === '3') {
         return (
           (formulario?.titulo?.toLowerCase().includes(lowerBusca) ||
             formulario?.tipo?.toLowerCase().includes(lowerBusca)) &&
@@ -101,14 +102,14 @@ function ListaFormularios() {
 
   async function verificandoFormularioPeloId(id) {
     history.push({
-      pathname: "/web/formularioespecifico",
+      pathname: '/web/formularioespecifico',
       state: { id },
     });
   }
 
   async function editarFormulario(id) {
     history.push({
-      pathname: "/web/editarformulario",
+      pathname: '/web/editarformulario',
       state: { id },
     });
   }
@@ -126,7 +127,7 @@ function ListaFormularios() {
   async function pegandoDadosUsuarios() {
     const resposta = await managerService.GetDadosPessoais();
     resposta.forEach((usuario) => {
-      if (usuario.tipo === "PACIENTE") {
+      if (usuario.tipo === 'PACIENTE') {
         usuarios.push(usuario);
       }
     });
@@ -146,15 +147,16 @@ function ListaFormularios() {
     setModalEnvio(true);
   }
 
+
   return (
     <div>
       <ContainerListadeFormularios>
         {carregando ? (
           <div
             style={{
-              position: "absolute",
-              top: "50%",
-              left: "49.5%",
+              position: 'absolute',
+              top: '50%',
+              left: '49.5%',
             }}
           >
             <Spin indicator={antIcon} />
@@ -164,7 +166,7 @@ function ListaFormularios() {
             <TopoPagina>
               <BarraPesquisa>
                 <Search
-                  placeholder="BUSCAR"
+                  placeholder='BUSCAR'
                   style={{ width: 400 }}
                   value={busca}
                   onChange={(e) => setBusca(e.target.value)}
@@ -173,18 +175,38 @@ function ListaFormularios() {
               <Filtros>
                 <FiltroEspecificoUrgencia>
                   <Select
-                    defaultValue="Urgências"
+                    defaultValue='Urgências'
                     style={{ width: 200 }}
                     onChange={(value) => urgenciasFiltradas(value)}
                   >
-                    <Option value="">Todas as Urgências</Option>
-                    <Option value="1">Urgência: 1</Option>
-                    <Option value="2">Urgência: 2</Option>
-                    <Option value="3">Urgência: 3</Option>
+                    <Option value=''>Todas as Urgências</Option>
+                    <Option value='1'>Urgência: 1</Option>
+                    <Option value='2'>Urgência: 2</Option>
+                    <Option value='3'>Urgência: 3</Option>
                   </Select>
                 </FiltroEspecificoUrgencia>
               </Filtros>
             </TopoPagina>
+            <TopoPaginaBotao>
+            {tipoUsuarioLogado === "MASTER" && (
+                <BotaoFinal>
+                    <Button
+                      backgroundColor={Cores.cinza[7]}
+                      color={Cores.azul}
+                      width="100%"
+                      heightMedia920="63%"
+                      borderColor={Cores.azul}
+                      fontSize="1em"
+                      gap="2%"
+                      widthMedia="100%"
+                      boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+                      onClick={() => history.push("/web/criacaoformulario")}
+                    >
+                      <PlusCircleOutlined style={{ color: Cores.azul }} />
+                      Adicionar Formularios
+                    </Button>
+                  </BotaoFinal>
+              )}</TopoPaginaBotao>
             <BarraEstetica />
             <ContainerFormulario>
               {formulariosFiltrados
@@ -194,15 +216,15 @@ function ListaFormularios() {
                   <Formulario>
                     <DadosFormulario>
                       <CaixaTitulo>
-                      <Button
-                        backgroundColor="transparent"
-                        borderColor="transparent"
-                        onClick={() => verificandoFormularioPeloId(value.id)}
-                        width="100%"
-                        marginTop="0px"
-                      >
-                        <TituloFormulario>{value.titulo}</TituloFormulario>
-                      </Button>
+                        <Button
+                          backgroundColor='transparent'
+                          borderColor='transparent'
+                          onClick={() => verificandoFormularioPeloId(value.id)}
+                          width='100%'
+                          marginTop='0px'
+                        >
+                          <TituloFormulario>{value.titulo}</TituloFormulario>
+                        </Button>
                       </CaixaTitulo>
                       <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
                       <UrgenciaFormulario>
@@ -229,16 +251,16 @@ function ListaFormularios() {
                       </UrgenciaFormulario>
                     </DadosFormulario>
                   </Formulario>
-                  {tipoUsuarioLogado === "MASTER" && (
+                  {tipoUsuarioLogado === 'MASTER' && (
                     <BotoesVerticalMaster>
                       <BotaoVertical>
                         <Button
                           backgroundColor={Cores.lilas[1]}
                           color={Cores.branco}
-                          fontWeight="bold"
+                          fontWeight='bold'
                           borderColor={Cores.azulEscuro}
-                          height="37px"
-                          width="90%"
+                          height='37px'
+                          width='90%'
                           onClick={() => abrindoModal(value.id)}
                         >
                           ENVIAR
@@ -249,10 +271,10 @@ function ListaFormularios() {
                         <Button
                           backgroundColor={Cores.cinza[7]}
                           color={Cores.azulEscuro}
-                          fontWeight="bold"
+                          fontWeight='bold'
                           borderColor={Cores.azulEscuro}
-                          height="37px"
-                          width="90%"
+                          height='37px'
+                          width='90%'
                           onClick={() => editarFormulario(value.id)}
                         >
                           EDITAR
@@ -274,16 +296,16 @@ function ListaFormularios() {
                       </BotaoVertical>
                     </BotoesVerticalMaster>
                   )}
-                  {tipoUsuarioLogado === "SECRETARIA(O)" && (
+                  {tipoUsuarioLogado === 'SECRETARIA(O)' && (
                     <BotoesVerticalSecretaria>
                       <BotaoVertical>
                         <Button
                           backgroundColor={Cores.lilas[1]}
                           color={Cores.branco}
-                          fontWeight="bold"
+                          fontWeight='bold'
                           borderColor={Cores.azulEscuro}
-                          height="37px"
-                          width="90%"
+                          height='37px'
+                          width='90%'
                           onClick={() => abrindoModal(value.id)}
                         >
                           ENVIAR
@@ -293,22 +315,6 @@ function ListaFormularios() {
                   )}
                 </ContainerFormularioEspecifico>
               ))}
-              <BotaoFinal>
-                <Button
-                  backgroundColor={Cores.cinza[7]}
-                  color={Cores.azul}
-                  width="35%"
-                  height="50px"
-                  borderColor={Cores.azul}
-                  fontSize="1em"
-                  gap="2%"
-                  boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-                  onClick={() => history.push("/web/criacaoformulario")}
-                >
-                  <PlusCircleOutlined style={{ color: Cores.azul }} />
-                  Adicionar Formularios
-                </Button>
-              </BotaoFinal>
             </ContainerFormulario>
           </>
         )}
@@ -317,10 +323,10 @@ function ListaFormularios() {
         visible={modalEnvio}
         onCancel={fechandoModal}
         footer={null}
-        width={"70%"}
+        width={'70%'}
         centered={true}
       >
-        <ModalEnvioFormulario usuarios={usuarios} idFormulario={idFormulario} />
+        <ModalEnvioFormulario usuarios={usuarios} idFormulario={idFormulario} fechandoModal={() => fechandoModal()} />
       </Modal>
 
       <Modal
