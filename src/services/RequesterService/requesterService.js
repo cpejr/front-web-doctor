@@ -101,3 +101,8 @@ export const editarCamposFormulario = (id, campos) =>
 
 export const enviarFormularioPaciente = (status, id_formulario, id_usuario) =>
   api.post("/formularios_pacientes", { status, id_formulario, id_usuario });
+
+export const updateFotoDePerfil = (id, base64) =>
+  api.post(`/usuariosimagem/${id}`,{
+    file: base64
+  });

@@ -33,6 +33,7 @@ function TesteUpload() {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
   const [carregando, setCarregando] = useState(false);
+  const [idUsuario, setIdUsuario] = useState(null)
 
   async function handleChange(info) {
     // Get this url from response in real world.
@@ -43,12 +44,23 @@ function TesteUpload() {
     });
   }
 
+  async function pegandoIdUsuario() {
+    setCarregando(true);
+    const email = "aspas@gmail.com"
+    const resposta = await managerService.GetDadosUsuario(email);
+    setIdUsuario(resposta.dadosUsuario.id)
+    setCarregando(false);
+  }
+
+  useEffect(() => {
+    pegandoIdUsuario();
+  }, []);
+
   async function upload() {
     if (imageUrl) {
       setCarregando(true);
-      await managerService.EnviandoImagem(imageUrl);
+      await managerService.UpdateFotoDePerfil(idUsuario, imageUrl);
       setCarregando(false);
-      toast.success("Foto adicionada com sucesso");
     } else {
       toast.error("Selecione uma foto para enviar!");
     }

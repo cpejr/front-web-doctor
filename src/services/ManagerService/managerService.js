@@ -549,3 +549,17 @@ export const EditarFormularios = async (id, campos) => {
 
   return false;
 };
+
+export const UpdateFotoDePerfil = async (id, file) => {
+  console.log(id, file);
+  await requesterService
+    .updateFotoDePerfil(id, file)
+    .then(() => {
+      toast.success('Foto atualizada com sucesso');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return;
+};
