@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, Row, Col } from "antd";
+import { Checkbox, Row, Col, Tooltip } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
@@ -19,18 +19,23 @@ import {
   TamanhoInput,
   InputHora,
   InputDuracao,
+  ContainerDuracaoConsulta,
   SelecioneUmaData,
   TextoSelecioneUmaData,
   TextAreaDescricao,
+  TextoDoisSelects,
   Rotulo,
+  InputConsultorio,
   InputData,
   NomePaciente,
+  ContainerHorario,
+  InfoEsquerda,
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import { Cores } from "../../variaveis";
-import { TiposDeConsulta } from "./TiposDeConsulta";
+import { TiposDeConsulta } from "../listaTiposDeConsultas";
 import { apenasNumeros, data, dataAgendamentoBack } from "../../utils/masks";
 import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -41,6 +46,7 @@ function ModalAgendamentoEspecifico(props) {
   const [usuarios, setUsuarios] = useState([]);
   const [consultorios, setConsultorios] = useState([]);
   const [carregando, setCarregando] = useState();
+  const [nomeConsultorioPorId, setNomeConsultorioPorId] = useState();
   const [carregandoCadastro, setCarregandoCadastro] = useState();
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -79,9 +85,20 @@ function ModalAgendamentoEspecifico(props) {
     });
   }
 
+  async function setandoNomeConsultorioPorId() {
+    const resposta = await managerService.GetConsultorioPorId(
+      consulta.id_consultorio
+    );
+    setNomeConsultorioPorId(resposta.nome);
+  }
+
   useEffect(() => {
     pegandoPacientes();
   }, []);
+
+  useEffect(() => {
+    setandoNomeConsultorioPorId();
+  },);
 
   const errors = {};
   const [referenciaInputNulos, setReferenciaInputNulos] = useState({
@@ -278,7 +295,7 @@ function ModalAgendamentoEspecifico(props) {
   return (
     <Container>
       <Caixa>
-        <InfoEsquerdaEDireita>
+        <InfoEsquerda>
           {props.abertoPeloUsuario === true ? (
             <Usuario>
               <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
@@ -309,6 +326,7 @@ function ModalAgendamentoEspecifico(props) {
                 >
                   <option value="" disabled selected>
                     Paciente
+                    
                   </option>
 
                   {usuarios.map((usuario) => (
@@ -356,7 +374,7 @@ function ModalAgendamentoEspecifico(props) {
               color: "black",
             }}
           />
-        </InfoEsquerdaEDireita>
+        </InfoEsquerda>
         <InfoEsquerdaEDireita>
           <SelecioneUmaData>
             <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
@@ -375,6 +393,11 @@ function ModalAgendamentoEspecifico(props) {
           </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
+            <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
+            <Tooltip 
+                placement="topLeft" 
+                title={consulta.tipo} 
+                color = {Cores.azul}>
               <Select
                 style={{
                   width: "100%",
@@ -406,12 +429,17 @@ function ModalAgendamentoEspecifico(props) {
                     )}
                   </>
                 ))}
-              </Select>
+              </Select></Tooltip>
               {camposVazios.tipo && (
                 <Rotulo>Selecione um tipo de consulta</Rotulo>
               )}
             </TamanhoInput>
-            <TamanhoInput>
+            <InputConsultorio>
+            <TextoDoisSelects>Selecione um consultório:</TextoDoisSelects>
+            <Tooltip 
+                placement="topLeft" 
+                title =  {nomeConsultorioPorId}
+                color = {Cores.azul}>
               <Select
                 value={consulta.id_consultorio}
                 id="id_consultorio"
@@ -419,6 +447,7 @@ function ModalAgendamentoEspecifico(props) {
                 style={{
                   width: "100%",
                   borderWidth: "1px",
+                  borderColor: "black",
                   color: "black",
                 }}
                 paddingTop="8px"
@@ -430,6 +459,7 @@ function ModalAgendamentoEspecifico(props) {
                 camposVazios={camposVazios.id_consultorio}
               >
                 <option value="" disabled selected>
+                  {nomeConsultorioPorId}
                   Consultório
                 </option>
                 {consultorios.map((consultorio) => (
@@ -447,15 +477,17 @@ function ModalAgendamentoEspecifico(props) {
                     )}
                   </>
                 ))}
-              </Select>
+              </Select></Tooltip>
               {camposVazios.id_consultorio && (
                 <Rotulo>Selecione um consultório</Rotulo>
               )}
-            </TamanhoInput>
+              
+            </InputConsultorio>
           </DoisSelect>
 
           <DoisSelect>
-            <TamanhoInput>
+            <ContainerHorario>
+            <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
               <InputHora
                 value={hora}
                 type="time"
@@ -469,9 +501,10 @@ function ModalAgendamentoEspecifico(props) {
               />
               {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
               {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
-            </TamanhoInput>
+            </ContainerHorario>
 
-            <TamanhoInput>
+            <ContainerDuracaoConsulta>
+            <TextoDoisSelects>Selecione uma duração:</TextoDoisSelects>
               <InputDuracao
                 value={consulta.duracao_em_minutos}
                 placeholder="Duração"
@@ -492,7 +525,7 @@ function ModalAgendamentoEspecifico(props) {
                   )}
                 </>
               )}
-            </TamanhoInput>
+            </ContainerDuracaoConsulta>
           </DoisSelect>
           <Checkbox>
             <TextoCheckbox>Notificar paciente</TextoCheckbox>

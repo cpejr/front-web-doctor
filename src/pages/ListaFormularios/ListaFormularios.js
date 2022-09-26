@@ -6,6 +6,7 @@ import { LoadingOutlined, StarOutlined, StarFilled } from '@ant-design/icons';
 import { Spin } from 'antd';
 import {
   TopoPagina,
+  TopoPaginaBotao,
   ContainerListadeFormularios,
   Filtros,
   FiltroEspecificoUrgencia,
@@ -136,6 +137,7 @@ function ListaFormularios() {
     setModalEnvio(true);
   }
 
+
   return (
     <div>
       <ContainerListadeFormularios>
@@ -175,8 +177,29 @@ function ListaFormularios() {
                 </FiltroEspecificoUrgencia>
               </Filtros>
             </TopoPagina>
+            <TopoPaginaBotao>
+            {tipoUsuarioLogado === "MASTER" && (
+                <BotaoFinal>
+                    <Button
+                      backgroundColor={Cores.cinza[7]}
+                      color={Cores.azul}
+                      width="100%"
+                      heightMedia920="63%"
+                      borderColor={Cores.azul}
+                      fontSize="1em"
+                      gap="2%"
+                      widthMedia="100%"
+                      boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+                      onClick={() => history.push("/web/criacaoformulario")}
+                    >
+                      <PlusCircleOutlined style={{ color: Cores.azul }} />
+                      Adicionar Formularios
+                    </Button>
+                  </BotaoFinal>
+              )}</TopoPaginaBotao>
             <BarraEstetica />
             <ContainerFormulario>
+              
               {formulariosFiltrados?.map((value) => (
                 <ContainerFormularioEspecifico>
                   <Formulario>
@@ -281,22 +304,6 @@ function ListaFormularios() {
                   )}
                 </ContainerFormularioEspecifico>
               ))}
-              <BotaoFinal>
-                <Button
-                  backgroundColor={Cores.cinza[7]}
-                  color={Cores.azul}
-                  width='35%'
-                  height='50px'
-                  borderColor={Cores.azul}
-                  fontSize='1em'
-                  gap='2%'
-                  boxShadow='3px 3px 5px 0px rgba(0, 0, 0, 0.2)'
-                  onClick={() => history.push('/web/criacaoformulario')}
-                >
-                  <PlusCircleOutlined style={{ color: Cores.azul }} />
-                  Adicionar Formularios
-                </Button>
-              </BotaoFinal>
             </ContainerFormulario>
           </>
         )}
@@ -308,7 +315,7 @@ function ListaFormularios() {
         width={'70%'}
         centered={true}
       >
-        <ModalEnvioFormulario usuarios={usuarios} idFormulario={idFormulario} />
+        <ModalEnvioFormulario usuarios={usuarios} idFormulario={idFormulario} fechandoModal={() => fechandoModal()} />
       </Modal>
     </div>
   );

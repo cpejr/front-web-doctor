@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined, UserOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { useHistory } from "react-router-dom";
 import {
@@ -43,6 +43,8 @@ function EditarPerfil() {
   const [complemento, setComplemento] = useState("");
   const [dataNascimento, setDataNascimento] = useState("");
   const [carregando, setCarregando] = useState(true);
+  const [carregandoFoto, setCarregandoFoto] = useState(true);
+  const [fotoDePerfil, setFotoDePerfil] = useState("");
   const [erro, setErro] = useState({
     cpf: false,
     telefone: false,
@@ -69,6 +71,7 @@ function EditarPerfil() {
   const [estado, setEstado] = useState({});
   const [estadoBack, setEstadoBack] = useState({});
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const antIconFoto = <LoadingOutlined style={{ fontSize: 56, marginBottom: "2%" }} spin />;
 
   const [ontem, setOntem] = useState("");
 
@@ -156,11 +159,26 @@ function EditarPerfil() {
     }
   }
 
+  async function setandoFotoDePerfil() {
+    const chave = usuario.avatar_url;
+    if (chave === null || chave === "")
+      return;
+    setCarregandoFoto(true);
+    const arquivo = await managerService.GetArquivoPorChave(chave);
+    setFotoDePerfil(arquivo);
+    await sleep(1500);
+    setCarregandoFoto(false);
+  }
+
   useEffect(() => {
     if (complemento === "") {
       setComplemento("Complemento");
     }
   }, []);
+
+  useEffect(() => {
+    setandoFotoDePerfil();
+  }, [usuario]);
 
   useEffect(() => {
     pegandoDados();
@@ -191,15 +209,8 @@ function EditarPerfil() {
     );
   }, [telefone]);
   useEffect(() => {
-    setDataMasked(
-      dataNascimento.slice(0, 10) 
-    );
+    setDataMasked(dataNascimento.slice(0, 10));
   }, [dataNascimento]);
-
-
-
-
-
 
   useEffect(() => {
     if (!estadoBack.nome) errors.nome = true;
@@ -215,7 +226,6 @@ function EditarPerfil() {
     if (!enderecoBack.rua) errors.rua = true;
     if (!enderecoBack.numero) errors.numero = true;
     if (!enderecoBack.complemento) errors.complemento = true;
-
 
     setTudoNulo({ ...tudoNulo, ...errors });
   }, [estadoBack, enderecoBack]);
@@ -325,8 +335,6 @@ function EditarPerfil() {
       });
     }
 
-    
-
     if (name === "cpf") {
       setEstado({ ...estado, [name]: maskCPF(value) });
       setEstadoBack({ ...estadoBack, [name]: maskApenasNumerosCpfTel(value) });
@@ -340,23 +348,18 @@ function EditarPerfil() {
   function preenchendoEndereco(e) {
     const { name, value } = e.target;
 
-
-    
-    if(name !== "numero" && name!== "pais" && name!=="cidade") {
-
+    if (name !== "numero" && name !== "pais" && name !== "cidade") {
       if (value) {
         setTudoNulo({ ...tudoNulo, [name]: false });
       }
-
-    } else if (name === "numero" && maskApenasNumeros(value) !== ""){
+    } else if (name === "numero" && maskApenasNumeros(value) !== "") {
       setTudoNulo({ ...tudoNulo, [name]: false });
-    } else if ((name === "pais" || name === "cidade") && maskApenasLetras(value) !== ""){
+    } else if (
+      (name === "pais" || name === "cidade") &&
+      maskApenasLetras(value) !== ""
+    ) {
       setTudoNulo({ ...tudoNulo, [name]: false });
     }
-
-    
-
-   
 
     if (name === "cep" && value.length <= 8 && value.length > 0) {
       setErro({ ...erro, [name]: true });
@@ -393,7 +396,6 @@ function EditarPerfil() {
         ...enderecoBack,
         [name]: maskApenasNumeros(value),
       });
-
     }
   }
 
@@ -401,15 +403,37 @@ function EditarPerfil() {
     <ContainerEditarPerfil>
       <ColunaEsquerda>
         <BlocoSuperior>
-          <ImagemPerfil>
-            <img
-              src={fotoPerfil}
-              className="fotoPerfil"
-              alt="fotoPerfil"
-              width="100%"
-              height="90%"
-            ></img>
-          </ImagemPerfil>
+          {usuario.avatar_url === null || usuario.avatar_url === "" ? (
+            <ImagemPerfil>
+              {carregandoFoto ? (
+                <div>
+                  <Spin size="large" indicator={antIconFoto} />
+                </div>
+              ) : (
+                <>
+                  <UserOutlined style={{ marginBottom: "20px" }} />
+                </>
+              )}
+            </ImagemPerfil>
+          ) : (
+            <ImagemPerfil>
+              {carregandoFoto ? (
+                <div>
+                  <Spin size="large" indicator={antIconFoto} />
+                </div>
+              ) : (
+                <>
+                  <img
+                    src={fotoDePerfil}
+                    className="fotoPerfil"
+                    alt="fotoPerfil"
+                    width="100%"
+                    height="100%"
+                  ></img>
+                </>
+              )}
+            </ImagemPerfil>
+          )}
           <Button
             backgroundColor="transparent"
             borderColor="transparent"
@@ -425,6 +449,8 @@ function EditarPerfil() {
         <BlocoInferior>
           <Button
             width="100%"
+            paddingRight="1.5%"
+            paddingLeft="1.5%"
             backgroundColor={Cores.lilas[2]}
             boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
             height="50px"

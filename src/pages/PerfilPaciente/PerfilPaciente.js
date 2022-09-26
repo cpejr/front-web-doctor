@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { LoadingOutlined, StarOutlined, StarFilled } from "@ant-design/icons";
+import {
+  LoadingOutlined,
+  StarOutlined,
+  StarFilled,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Spin } from "antd";
 import { Modal } from "antd";
 import { toast } from "react-toastify";
@@ -47,6 +52,7 @@ import ModalExcluirUsuario from "../../components/ModalExcluirUsuario";
 import ModalFormulario from "../../components/ModalFormulario";
 import { redirecionamento, sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
+import { cep } from "../../utils/masks";
 
 function PerfilPaciente(props) {
   const [modalAgendamento, setModalAgendamento] = useState(false);
@@ -66,9 +72,11 @@ function PerfilPaciente(props) {
   const [cpf, setCpf] = useState();
   const [codigo, setCodigo] = useState();
   const [convenio, setConvenio] = useState();
+  const [carregandoFoto, setCarregandoFoto] = useState(true);
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
   const [tipoUsuario, setTipoUsuario] = useState(false);
   const abertoPeloUsuario = true;
+  const [fotoDePerfil, setFotoDePerfil] = useState("");
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
@@ -113,6 +121,21 @@ function PerfilPaciente(props) {
   useEffect(() => {
     pegandoDados();
   }, []);
+
+  async function setandoFotoDePerfil() {
+    const chave = usuario.avatar_url;
+    if (chave === null || chave === "")
+      return;
+    setCarregandoFoto(true);
+    const arquivo = await managerService.GetArquivoPorChave(chave);
+    setFotoDePerfil(arquivo);
+    await sleep(1500);
+    setCarregandoFoto(false);
+  }
+
+  useEffect(() => {
+    setandoFotoDePerfil();
+  }, [usuario]);
 
   async function pegandoListaFormularios() {
     const resposta = await managerService.GetRespostaFormularioIdUsuario(
@@ -195,13 +218,33 @@ function PerfilPaciente(props) {
             <>
               <PerfilEsquerda>
                 <PerfilSuperior>
-                  <FotoPerfil>
-                    <img
-                      src={logoGuilherme}
-                      className="foto"
-                      alt="logoGuilherme"
-                    ></img>
-                  </FotoPerfil>
+                  {usuario.avatar_url === null || usuario.avatar_url === "" ? (
+                    <FotoPerfil>
+                      {carregandoFoto ? (
+                        <Spin size="small" indicator={antIcon} />
+                      ) : (
+                        <>
+                          <UserOutlined style={{ fontSize: "6.5em" }} />
+                        </>
+                      )}
+                    </FotoPerfil>
+                  ) : (
+                    <FotoPerfil>
+                      {carregandoFoto ? (
+                        <Spin size="small" indicator={antIcon} />
+                      ) : (
+                        <>
+                          <img
+                            src={fotoDePerfil}
+                            className="foto"
+                            alt="fotoPerfil"
+                            height="100%"
+                            width="100%"
+                          ></img>
+                        </>
+                      )}
+                    </FotoPerfil>
+                  )}
                   <Dados>
                     <Nome>{usuario.nome}</Nome>
                     <Data> Nascimento: {dataNascimento}</Data>
@@ -212,7 +255,7 @@ function PerfilPaciente(props) {
                   <DadosGeo>País: {endereco.pais}</DadosGeo>
                   <DadosGeo>Estado: {endereco.estado}</DadosGeo>
                   <DadosGeo>Cidade: {endereco.cidade}</DadosGeo>
-                  <DadosGeo>CEP: {endereco.cep}</DadosGeo>
+                  <DadosGeo>CEP: {cep(endereco.cep)}</DadosGeo>
                   <DadosGeo>Rua: {endereco.rua}</DadosGeo>
                   <DadosGeo>Número: {endereco.numero}</DadosGeo>
                   <DadosGeo>Complemento: {endereco.complemento}</DadosGeo>
@@ -222,13 +265,14 @@ function PerfilPaciente(props) {
                 <DadosContato>
                   <Titulo>Contato</Titulo>
                   <InfoContato>
+                    Telefone:
                     ({telefone.slice(0, -9)}) {telefone.slice(2, -4)}-
                     {telefone.slice(-4)}
                   </InfoContato>
                   <InfoContato
-                    textDecoration="underline"
                     style={{ wordBreak: "break-word" }}
                   >
+                    {"E-mail: "}
                     {usuario.email}
                   </InfoContato>
                   {tipoUsuario ? (
@@ -419,7 +463,11 @@ function PerfilPaciente(props) {
         width={"70%"}
         centered={true}
       >
-        <ModalAgendamento abertoPeloUsuario={abertoPeloUsuario} id_usuario={usuario.id} email={usuario.email}  />
+        <ModalAgendamento
+          abertoPeloUsuario={abertoPeloUsuario}
+          id_usuario={usuario.id}
+          email={usuario.email}
+        />
       </Modal>
 
       <Modal
@@ -439,7 +487,8 @@ function PerfilPaciente(props) {
       <Modal
         visible={modalFormulario}
         onCancel={() => setModalFormulario(false)}
-        width={"50%"}
+        style={{ minWidth: "250px", maxWidth: "800px" }}
+        width={"70%"}
         centered={true}
         footer={null}
       >
@@ -450,7 +499,7 @@ function PerfilPaciente(props) {
         />
       </Modal>
 
-     <AddToast />
+      <AddToast />
     </div>
   );
 }
