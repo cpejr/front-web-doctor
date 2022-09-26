@@ -31,7 +31,8 @@ function ModalAgendamento(props) {
   const [examesMarcados, setExamesMarcados] = useState([]);
   const [modalEditarAgendamento, setModalEditarAgendamento] = useState(false);
   const [modalConsultaMarcada, setModalConsultaMarcada] = useState(false);
-  const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] = useState(false);
+  const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] =
+    useState(false);
   const [quantidadeAgendamentos, setQuantidadeAgendamentos] = useState();
   const abertoPeloUsuario = true;
   const [carregando, setCarregando] = useState(true);
@@ -41,9 +42,9 @@ function ModalAgendamento(props) {
 
   async function pegandoDados() {
     setCarregando(true);
-    setConsultas([])
+    setConsultas([]);
     await sleep(400);
-    setExamesMarcados([])
+    setExamesMarcados([]);
     const respostaConsultas =
       await managerService.GetDadosConsultasExamesMarcados(props.id_usuario);
     setConsultas(respostaConsultas.dadosConsultas);
@@ -57,7 +58,6 @@ function ModalAgendamento(props) {
 
     setCarregando(false);
   }
-
 
   useEffect(() => {
     pegandoDados();
@@ -77,7 +77,7 @@ function ModalAgendamento(props) {
     setConsultaEspecifica(consulta);
   }
 
-  async function abreModalConsultaMarcada(consulta){
+  async function abreModalConsultaMarcada(consulta) {
     setModalConsultaMarcada(true);
     setConsultaEspecifica(consulta);
   }
@@ -102,7 +102,6 @@ function ModalAgendamento(props) {
     pegandoDados();
   }
 
-
   return (
     <Container>
       <Caixa>
@@ -121,20 +120,19 @@ function ModalAgendamento(props) {
                     <DiaHorarioAgendamento
                       onClick={() => abreModalConsultaMarcada(value)}
                     >
-
-                        {value.data_hora.slice(8, -14)}/
-                        {value.data_hora.slice(5, -17)}/
-                        {value.data_hora.slice(0, -20)}
+                      {value.data_hora.slice(8, -14)}/
+                      {value.data_hora.slice(5, -17)}/
+                      {value.data_hora.slice(0, -20)}
                     </DiaHorarioAgendamento>
                     <BarraEstetica></BarraEstetica>
                     <TextoAgendamentoEspecifico
-                    onClick={() => abreModalConsultaMarcada(value)}
+                      onClick={() => abreModalConsultaMarcada(value)}
                     >
                       Consulta
                     </TextoAgendamentoEspecifico>
                     <BarraEstetica></BarraEstetica>
                     <DiaHorarioAgendamento
-                    onClick={() => abreModalConsultaMarcada(value)}
+                      onClick={() => abreModalConsultaMarcada(value)}
                     >
                       {value.data_hora.slice(11, -11)}
                       {value.data_hora.slice(13, -8)}
@@ -233,7 +231,15 @@ function ModalAgendamento(props) {
 
             <InfoDireita>
               <NumeroAgendamentos>
-                O paciente ja realizou {quantidadeAgendamentos} agendamentos
+                {quantidadeAgendamentos === 1 ? (
+                  <>
+                    O paciente já realizou {quantidadeAgendamentos} agendamento
+                  </>
+                ) : (
+                  <>
+                    O paciente já realizou {quantidadeAgendamentos} agendamentos
+                  </>
+                )}
               </NumeroAgendamentos>
               <Button
                 width="100%"
@@ -290,7 +296,7 @@ function ModalAgendamento(props) {
         width={"auto"}
         centered={true}
         style={{
-          backgroundColor: "black"
+          backgroundColor: "black",
         }}
       >
         <ModalConsultaMarcada

@@ -151,15 +151,21 @@ export const Receitas = styled.div`
 
 export const FotoPerfil = styled.div`
   display: flex;
-  width: 100px;
-  height: 100px;
-  object-fit: fill;
-  border-radius: 5px;
+  align-items: center;
   justify-content: center;
-
-  @media (max-width: 640px) {
-    width: auto;
-  }
+  .foto {
+  width: 150px;
+  height: 150px;
+  object-fit: fill;
+  border-radius: 3px;
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
+  justify-content: center;
+}
+@media (max-width: 640px) {
+  width: auto;
+  height: auto;
+  margin-bottom:2%;
+}
 `;
 export const Dados = styled.div`
   display: flex;
@@ -176,6 +182,9 @@ export const Nome = styled.div`
   text-overflow: ellipsis;
   white-space: pre-line;
 
+  @media (max-width: 640px) {
+    text-align: center;
+  }
   @media (max-width: 300px) {
     font-size: 1.5em;
   }
@@ -192,6 +201,9 @@ export const Data = styled.div`
   justify-content: flex-start;
   color: ${Cores.azul};
 
+  @media (max-width: 640px) {
+    text-align: center;
+  }
   @media (max-width: 460px) {
     font-size: 1em;
   }
