@@ -24,7 +24,7 @@ import {
   BotaoVertical,
   ContainerFormularioEspecifico,
   TextoUrgencia,
-  CaixaTitulo
+  CaixaTitulo,
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
@@ -137,6 +137,24 @@ function ListaFormularios() {
     setModalEnvio(true);
   }
 
+  const ordenarFormularios = (a, b) => {
+    var formulario1 = a.id;
+    var formulario2 = b.id;
+
+    if (
+      formulario1 === "aa321e77-0d3c-48b5-ba8c-0bfd7dfe1c33" &&
+      formulario2 !== "aa321e77-0d3c-48b5-ba8c-0bfd7dfe1c33"
+    ) {
+      return -1;
+    }
+    if (
+      formulario1 !== "aa321e77-0d3c-48b5-ba8c-0bfd7dfe1c33" &&
+      formulario2 === "aa321e77-0d3c-48b5-ba8c-0bfd7dfe1c33"
+    ) {
+      return 1;
+    }
+    return a.titulo.localeCompare(b.titulo);
+  };
 
   return (
     <div>
@@ -178,42 +196,42 @@ function ListaFormularios() {
               </Filtros>
             </TopoPagina>
             <TopoPaginaBotao>
-            {tipoUsuarioLogado === "MASTER" && (
+              {tipoUsuarioLogado === "MASTER" && (
                 <BotaoFinal>
-                    <Button
-                      backgroundColor={Cores.cinza[7]}
-                      color={Cores.azul}
-                      width="100%"
-                      heightMedia920="63%"
-                      borderColor={Cores.azul}
-                      fontSize="1em"
-                      gap="2%"
-                      widthMedia="100%"
-                      boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-                      onClick={() => history.push("/web/criacaoformulario")}
-                    >
-                      <PlusCircleOutlined style={{ color: Cores.azul }} />
-                      Adicionar Formularios
-                    </Button>
-                  </BotaoFinal>
-              )}</TopoPaginaBotao>
+                  <Button
+                    backgroundColor={Cores.cinza[7]}
+                    color={Cores.azul}
+                    width="100%"
+                    heightMedia920="63%"
+                    borderColor={Cores.azul}
+                    fontSize="1em"
+                    gap="2%"
+                    widthMedia="100%"
+                    boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+                    onClick={() => history.push("/web/criacaoformulario")}
+                  >
+                    <PlusCircleOutlined style={{ color: Cores.azul }} />
+                    Adicionar Formularios
+                  </Button>
+                </BotaoFinal>
+              )}
+            </TopoPaginaBotao>
             <BarraEstetica />
             <ContainerFormulario>
-              
-              {formulariosFiltrados?.map((value) => (
+              {formulariosFiltrados?.sort(ordenarFormularios).map((value) => (
                 <ContainerFormularioEspecifico>
                   <Formulario>
                     <DadosFormulario>
                       <CaixaTitulo>
-                      <Button
-                        backgroundColor="transparent"
-                        borderColor="transparent"
-                        onClick={() => verificandoFormularioPeloId(value.id)}
-                        width="100%"
-                        marginTop="0px"
-                      >
-                        <TituloFormulario>{value.titulo}</TituloFormulario>
-                      </Button>
+                        <Button
+                          backgroundColor="transparent"
+                          borderColor="transparent"
+                          onClick={() => verificandoFormularioPeloId(value.id)}
+                          width="100%"
+                          marginTop="0px"
+                        >
+                          <TituloFormulario>{value.titulo}</TituloFormulario>
+                        </Button>
                       </CaixaTitulo>
                       <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
                       <UrgenciaFormulario>
@@ -315,7 +333,11 @@ function ListaFormularios() {
         width={"70%"}
         centered={true}
       >
-        <ModalEnvioFormulario usuarios={usuarios} idFormulario={idFormulario} fechandoModal={() => fechandoModal()} />
+        <ModalEnvioFormulario
+          usuarios={usuarios}
+          idFormulario={idFormulario}
+          fechandoModal={() => fechandoModal()}
+        />
       </Modal>
     </div>
   );
