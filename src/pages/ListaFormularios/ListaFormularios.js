@@ -24,7 +24,7 @@ import {
   BotaoVertical,
   ContainerFormularioEspecifico,
   TextoUrgencia,
-  CaixaTitulo
+  CaixaTitulo,
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
@@ -326,7 +326,11 @@ function ListaFormularios() {
         width={'70%'}
         centered={true}
       >
-        <ModalEnvioFormulario usuarios={usuarios} idFormulario={idFormulario} fechandoModal={() => fechandoModal()} />
+        <ModalEnvioFormulario
+          fecharModal={() => fechandoModal()}
+          usuarios={usuarios}
+          idFormulario={idFormulario}
+        />
       </Modal>
 
       <Modal

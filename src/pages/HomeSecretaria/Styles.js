@@ -22,7 +22,7 @@ export const Board = styled.div`
   overflow: auto;
   padding: 8px;
   margin-top: 3%;
-  background-color: green; //${Cores.branco};
+  background-color:${Cores.cinza[9]};
   border-style: solid;
   border-color: ${Cores.preto};
   box-shadow: 0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -35,7 +35,7 @@ export const Notificacao = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  height: 6em;
+  height: 6.5em;
   padding-left: 2%;
   padding-right: 2%;
   @media (max-width: 560px) {
@@ -50,15 +50,18 @@ export const CaixaTexto = styled.div`
   flex-direction: row;
   justify-content: center;
   width: 78%;
-  height: 80%;
+  height: 85%;
   padding: 1%;
   background-color: ${Cores.lilas[4]};
   border-style: solid;
   border-color: ${Cores.lilas[3]};
   border-width: 0.2em;
   border-radius: 6px;
-  @media (max-width: 950px) and (min-width: 560px) {
-    height: 60%;
+  @media (max-width: 950px) and (min-width: 680px) {
+    height: 70%;
+  }
+  @media (max-width: 680px) {
+    height: 80%;
   }
   @media (max-width: 560px) {
     width: 90%;
@@ -69,15 +72,18 @@ export const TextoNotificacao = styled.div`
   align-items: center;
   flex-direction: row;
   justify-content: center;
+  padding-top: 1.5%;
   text-align: center;
   width: 100%;
   font-family: ${Fontes.roboto};
-  font-size: 1em;
+  font-size: 0.9em;
   @media (max-width: 950px) {
-    font-size: 0.8em;
+    font-size: 0.75em;
+    padding-top: 2.5%;
   }
-  @media (max-width: 560px) {
-    font-size: 0.7em;
+  @media (max-width: 680px) {
+    font-size: 0.68em;
+    padding-top: 3.5%;
   }
 `;
 
