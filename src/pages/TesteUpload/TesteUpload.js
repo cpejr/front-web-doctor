@@ -101,7 +101,7 @@ function TesteUpload() {
           uploadButton
         )}
       </Upload>
-      <button onClick={upload}>
+      <button onClick={upload()}>
         {carregando ? <LoadingOutlined /> : <>Botão </>}
       </button>
       <AddToast />

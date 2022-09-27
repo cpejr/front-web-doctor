@@ -19,8 +19,6 @@ import { toast } from "react-toastify";
 function ModalAlterarFoto(props) {
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
   const [carregando, setCarregando] = useState(false);
-  const [emailUsuario, setEmailUsuario] = useState("");
-  const [idUsuario, setIdUsuario] = useState(null)
   const [imageUrl, setImageUrl] = useState();
   const antIconModal = (
     <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin />
@@ -69,8 +67,8 @@ function ModalAlterarFoto(props) {
     // Get this url from response in real world.
     setCarregando(true);
     getBase64(info.file.originFileObj, (url) => {
-      setCarregando(false);
-      setImageUrl(url);
+    setCarregando(false);
+    setImageUrl(url);
     });
   }
 
@@ -87,20 +85,19 @@ function ModalAlterarFoto(props) {
   return (
     <div>
       <ContainerModalExcluir>
-      <CaixaBotaoUpload>
-      <Upload
-        name="avatar"
-        listType="picture-card"
-        className="avatar-uploader"
-        showUploadList={false}
-        customRequest={() => {}}
-        beforeUpload={beforeUpload}
-        onChange={handleChange}
-      >
-        {uploadButton}
-      </Upload>
-      </CaixaBotaoUpload>
-        
+        <CaixaBotaoUpload>
+          <Upload
+            name="avatar"
+            listType="picture-card"
+            className="avatar-uploader"
+            showUploadList={false}
+            beforeUpload={beforeUpload}
+            onChange={handleChange}
+          >
+            {uploadButton}
+          </Upload>
+        </CaixaBotaoUpload>
+
         <ContainerFooterModalExcluir>
           <Button
             color={Cores.azulEscuro}
@@ -115,7 +112,7 @@ function ModalAlterarFoto(props) {
           >
             Cancelar
           </Button>
-          
+
           <Button
             backgroundColor={Cores.lilas[2]}
             color={Cores.azulEscuro}
@@ -125,11 +122,13 @@ function ModalAlterarFoto(props) {
             width="35%"
             widthMedia670="50%"
             fontSize="13px"
-            onClick={updateFoto()}
+            onClick={() => {
+              updateFoto();
+            }}
           >
             {carregandoDeletar ? (
               <CaixaLoader>
-                <Spin indicator={antIconModal}/>
+                <Spin indicator={antIconModal} />
               </CaixaLoader>
             ) : (
               "Confirmar"
