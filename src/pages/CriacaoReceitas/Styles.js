@@ -32,6 +32,10 @@ export const CardCriacaoReceitas = styled.div`
 	@media (max-width: 360px) {
 		width: 98%;
 	}
+
+	@media (max-width: 280px) {
+		width: 90%;
+	}
 `;
 
 export const CriacaoReceitaNome = styled.div`
@@ -49,10 +53,18 @@ export const CriacaoReceitaNome = styled.div`
 	@media (max-width: 360px) {
 		font-size: 30px;
 	}
+
+	@media (max-width: 280px) {
+		font-size: 25px;
+	}
 `;
 
 export const CriacaoReceitaCorpo = styled.div`
 	width: 85%;
+
+	@media (max-width: 280px) {
+		width: 90%;
+	}
 `;
 
 export const Titulo = styled.div`
@@ -61,6 +73,10 @@ export const Titulo = styled.div`
 	font-weight: 500;
 	line-height: 24px;
 	letter-spacing: 0em;
+
+	@media (max-width: 280px) {
+		font-size: 16px;
+	}
 `;
 
 export const NomeDoPaciente = styled.div`
@@ -70,6 +86,10 @@ export const NomeDoPaciente = styled.div`
 	line-height: 24px;
 	letter-spacing: 0em;
 	margin-top: 4%;
+
+	@media (max-width: 280px) {
+		font-size: 16px;
+	}
 `;
 
 export const SelectContainer = styled.div`
@@ -91,6 +111,10 @@ export const Descricao = styled.div`
 	font-weight: 500;
 	line-height: 24px;
 	margin-top: 4%;
+
+	@media (max-width: 280px) {
+		font-size: 16px;
+	}
 `;
 
 export const DescricaoTextarea = styled.textarea`
@@ -133,16 +157,29 @@ export const CriacaoReceitaBotoes = styled.div`
 	margin-top: 6%;
 	align-self: center;
 	justify-content: center;
+
+	@media (max-width: 280px) {
+		margin-bottom: 7px;
+		width: 85%;
+	}
 `;
 
 export const BotaoCancelar = styled.div`
 	display: flex;
 	width: 40%;
 	margin-right: 5%;
+
+	@media (max-width: 280px) {
+		width: 55%;
+	}
 `;
 
 export const BotaoEnviar = styled.div`
 	display: flex;
 	width: 40%;
 	margin-left: 5%;
+
+	@media (max-width: 280px) {
+		width: 55%;
+	}
 `;
