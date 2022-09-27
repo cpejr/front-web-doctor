@@ -449,6 +449,16 @@ function EditarPerfil() {
     }
   }
 
+  async function deletarFoto(){
+    if(usuario.avatar_url === null){
+      toast.error("O usuário não possui foto de perfil");
+      return false;
+    }
+    setCarregando(true);
+    await managerService.deletarFotoDePerfil(usuario.id, usuario.avatar_url);
+    setCarregando(false);
+  }
+
   return (
     <ContainerEditarPerfil>
       <ColunaEsquerda>
@@ -465,7 +475,7 @@ function EditarPerfil() {
           <Button
             backgroundColor="transparent"
             borderColor="transparent"
-            color="green"
+            color= {Cores.azul}
             fontSize="1em"
             textDecoration="underline"
             height="10px"
@@ -482,6 +492,9 @@ function EditarPerfil() {
             fontSize="1em"
             textDecoration="underline"
             height="10px"
+            onClick={() => {
+              deletarFoto();
+            }}
           >
            Excluir Foto de Perfil
           </Button>

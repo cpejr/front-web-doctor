@@ -76,6 +76,7 @@ function ModalAlterarFoto(props) {
     if (imageUrl) {
       setCarregando(true);
       await managerService.UpdateFotoDePerfil(props.idUsuario, imageUrl);
+      setImageUrl(null);
       setCarregando(false);
     } else {
       toast.error("Selecione uma foto para enviar!");
@@ -94,7 +95,18 @@ function ModalAlterarFoto(props) {
             beforeUpload={beforeUpload}
             onChange={handleChange}
           >
-            {uploadButton}
+            {imageUrl ? (
+          <img
+            src={imageUrl}
+            alt="avatar"
+            style={{
+              width: "100%",
+              height: "100%"
+            }}
+          />
+        ) : (
+          uploadButton
+        )}
           </Upload>
         </CaixaBotaoUpload>
 
