@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState, useHistory } from 'react';
 import {
   ContainerModalNovaConversa,
   Titulo,
   Subtitulo,
   TamanhoSelect,
   LocalBotao,
+  SelectUsuario,
 } from './Styles';
 import { Select, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
@@ -16,10 +17,23 @@ import { ChatContext } from '../../contexts/ChatContext';
 function ModalNovaConversa({ setModalAdicionar }) {
   const [usuarios, setUsuarios] = useState([]);
   const [carregando, setCarregando] = useState(false);
+  const [camposVazios, setCamposVazios] = useState(false);
+  const [estado, setEstado] = useState('');
   const [selecionaUsuarioId, setSelecionaUsuarioId] = useState('');
   const { usuarioId, conversas, setConversas, setConversaSelecionada } =
     useContext(ChatContext);
   const componenteEstaMontadoRef = useRef(null);
+
+  const history = useHistory();
+
+  // function preenchendoDados() {
+
+	// 	if (camposVazios)
+	// 		setCamposVazios((valorAnterior) => ({ ...valorAnterior }));
+
+	// 	setEstado({ ...estado });
+	// }
+
 
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
@@ -83,6 +97,20 @@ function ModalNovaConversa({ setModalAdicionar }) {
     setSelecionaUsuarioId(null);
     setConversaSelecionada(novaConversa);
     setConversas((conversasLista) => [novaConversa, ...conversasLista]);
+
+
+
+    setCarregando(true);
+		const res = await managerService.CriandoConversa(estado, {
+			mensagemSucesso: "Receita criada com sucesso",
+			tempo: 1500,
+			onClose: () => {
+				history.push("/web/areareceitas");
+			},
+		});
+
+		if (!res) setCarregando(false);
+
   }
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -93,17 +121,10 @@ function ModalNovaConversa({ setModalAdicionar }) {
         <Titulo>Iniciar nova conversa:</Titulo>
         <Subtitulo>Selecione um usuário:</Subtitulo>
         <TamanhoSelect>
-          <Select
+          <SelectUsuario
+            camposVazios={camposVazios}
             onChange={(value) => setSelecionaUsuarioId(value)}
             value={selecionaUsuarioId}
-            style={{
-              width: '100%',
-              color: 'black',
-              borderColor: 'black',
-              borderWidth: '0px',
-              marginBottom: '0.5em',
-              paddingLeft: '2.5em',
-            }}
             size='large'
             name='id_usuario'
             placeholder='Nome do usuário'
@@ -116,7 +137,7 @@ function ModalNovaConversa({ setModalAdicionar }) {
                 {usuario.nome}
               </Select.Option>
             ))}
-          </Select>
+          </SelectUsuario>
         </TamanhoSelect>
         <LocalBotao>
           <Button
