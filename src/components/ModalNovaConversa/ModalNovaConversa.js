@@ -9,16 +9,26 @@ import {
 } from './Styles';
 import { Select, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import _ from "lodash";
+import { toast } from "react-toastify";
 import { Cores } from '../../variaveis';
 import * as managerService from '../../services/ManagerService/managerService';
 import Button from '../../styles/Button';
 import { ChatContext } from '../../contexts/ChatContext';
 
+const camposVaziosReferencia = {
+	id_usuario: false,
+};
+
+const estadoIncial = {
+	id_usuario: "",
+};
+
 function ModalNovaConversa({ setModalAdicionar }) {
   const [usuarios, setUsuarios] = useState([]);
   const [carregando, setCarregando] = useState(false);
-  const [camposVazios, setCamposVazios] = useState(false);
-  const [estado, setEstado] = useState('');
+  const [camposVazios, setCamposVazios] = useState({});
+  const [estado, setEstado] = useState(estadoIncial);
   const [selecionaUsuarioId, setSelecionaUsuarioId] = useState('');
   const { usuarioId, conversas, setConversas, setConversaSelecionada } =
     useContext(ChatContext);
@@ -26,14 +36,15 @@ function ModalNovaConversa({ setModalAdicionar }) {
 
   const history = useHistory();
 
-  // function preenchendoDados() {
+  function preenchendoDados(e) {
+		e.preventDefault();
+		const { value, name } = e.target;
 
-	// 	if (camposVazios)
-	// 		setCamposVazios((valorAnterior) => ({ ...valorAnterior }));
+		if (camposVazios[name])
+			setCamposVazios((valorAnterior) => ({ ...valorAnterior, [name]: false }));
 
-	// 	setEstado({ ...estado });
-	// }
-
+		setEstado({ ...estado, [name]: value });
+	}
 
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
@@ -67,6 +78,28 @@ function ModalNovaConversa({ setModalAdicionar }) {
 
     e.preventDefault();
 
+    const camposVaziosAtual = {
+			id_usuario: !estado.id_usuario,
+		};
+
+		setCamposVazios(camposVaziosAtual);
+
+		if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
+			toast.warn("Preencha todos os campos");
+			return;
+		}
+
+		setCarregando(true);
+		const res = await managerService.CriandoConversa(estado, {
+			mensagemSucesso: "Receita criada com sucesso",
+			tempo: 1500,
+			onClose: () => {
+				history.push("/web/areareceitas");
+			},
+		});
+
+		if (!res) setCarregando(false);
+
     setCarregando(true);
 
     const usuarioSelecionadoDados = usuarios.find(
@@ -98,19 +131,6 @@ function ModalNovaConversa({ setModalAdicionar }) {
     setConversaSelecionada(novaConversa);
     setConversas((conversasLista) => [novaConversa, ...conversasLista]);
 
-
-
-    setCarregando(true);
-		const res = await managerService.CriandoConversa(estado, {
-			mensagemSucesso: "Receita criada com sucesso",
-			tempo: 1500,
-			onClose: () => {
-				history.push("/web/areareceitas");
-			},
-		});
-
-		if (!res) setCarregando(false);
-
   }
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
@@ -122,8 +142,8 @@ function ModalNovaConversa({ setModalAdicionar }) {
         <Subtitulo>Selecione um usuário:</Subtitulo>
         <TamanhoSelect>
           <SelectUsuario
-            camposVazios={camposVazios}
-            onChange={(value) => setSelecionaUsuarioId(value)}
+            camposVazios={camposVazios.id_usuario}
+            onChange={[(value) => setSelecionaUsuarioId(value), preenchendoDados]}
             value={selecionaUsuarioId}
             size='large'
             name='id_usuario'
