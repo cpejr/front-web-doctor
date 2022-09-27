@@ -74,7 +74,6 @@ function ModalNovaConversa({ setModalAdicionar }) {
   }, [conversas]);
 
   async function criarNovarConversa(e) {
-    if (!selecionaUsuarioId) return;
 
     e.preventDefault();
 
@@ -83,7 +82,7 @@ function ModalNovaConversa({ setModalAdicionar }) {
 		};
 
 		setCamposVazios(camposVaziosAtual);
-
+  
 		if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
 			toast.warn("Preencha todos os campos");
 			return;
@@ -118,6 +117,9 @@ function ModalNovaConversa({ setModalAdicionar }) {
       },
     };
 
+
+    setEstado(camposVaziosReferencia);
+    setCamposVazios({});
     setModalAdicionar(false);
     setCarregando(false);
     setSelecionaUsuarioId(null);
