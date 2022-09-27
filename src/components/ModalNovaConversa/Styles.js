@@ -63,19 +63,8 @@ export const SelectUsuario = styled(Select)`
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
-  border-color: ${(props) => {
-    let cor;
-    if (!props.borderColor) {
-      if(props.erro || props.camposVazios){
-        cor = Cores.vermelho;
-      } else {
-        cor = Cores.azul;
-      }
-    } else {
-      cor = props.borderColor;
-    }
-    return cor;
-  }};
+  border-color: ${(props) =>
+		props.camposVazios ? Cores.vermelho : Cores.azulEscuro};
 
   ::placeholder {
     color:${Cores.preto}
