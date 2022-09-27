@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState, useHistory } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import {
   ContainerModalNovaConversa,
   Titulo,
@@ -7,6 +7,7 @@ import {
   LocalBotao,
   SelectUsuario,
 } from './Styles';
+import { useHistory } from 'react-router-dom'
 import { Select, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import _ from "lodash";
@@ -36,14 +37,13 @@ function ModalNovaConversa({ setModalAdicionar }) {
 
   const history = useHistory();
 
-  function preenchendoDados(e) {
-		e.preventDefault();
-		const { value, name } = e.target;
+  function preenchendoDados(value) {
+    setSelecionaUsuarioId(value)
 
-		if (camposVazios[name])
-			setCamposVazios((valorAnterior) => ({ ...valorAnterior, [name]: false }));
+		if (camposVazios.id_usuario)
+			setCamposVazios({ id_usuario: false });
 
-		setEstado({ ...estado, [name]: value });
+		setEstado({ id_usuario: value });
 	}
 
   useEffect(() => {
@@ -90,17 +90,6 @@ function ModalNovaConversa({ setModalAdicionar }) {
 		}
 
 		setCarregando(true);
-		const res = await managerService.CriandoConversa(estado, {
-			mensagemSucesso: "Receita criada com sucesso",
-			tempo: 1500,
-			onClose: () => {
-				history.push("/web/areareceitas");
-			},
-		});
-
-		if (!res) setCarregando(false);
-
-    setCarregando(true);
 
     const usuarioSelecionadoDados = usuarios.find(
       (usuario) => usuario.id === selecionaUsuarioId
@@ -111,7 +100,11 @@ function ModalNovaConversa({ setModalAdicionar }) {
       ativada: false,
     };
     const { id } = await managerService.CriandoConversa(
-      dadosParaCriarNovaConversa
+      dadosParaCriarNovaConversa,
+      {
+        mensagemSucesso: "Receita criada com sucesso",
+        tempo: 1500,
+      }
     );
 
     const novaConversa = {
@@ -143,7 +136,7 @@ function ModalNovaConversa({ setModalAdicionar }) {
         <TamanhoSelect>
           <SelectUsuario
             camposVazios={camposVazios.id_usuario}
-            onChange={[(value) => setSelecionaUsuarioId(value), preenchendoDados]}
+            onChange={preenchendoDados}
             value={selecionaUsuarioId}
             size='large'
             name='id_usuario'
