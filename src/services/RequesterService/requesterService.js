@@ -106,3 +106,9 @@ export const updateFotoDePerfil = (id, base64) =>
   api.post(`/usuariosimagem/${id}`,{
     file: base64
   });
+
+
+  export const deleteFotoDePerfil = (id, base64) =>
+  api.put(`/usuariosimagem/${id}`,{
+    file: base64
+  });

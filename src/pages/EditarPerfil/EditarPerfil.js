@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
+import { Spin, Menu, Dropdown, Modal } from "antd";
 import { useHistory } from "react-router-dom";
 import {
   ContainerEditarPerfil,
@@ -25,9 +25,10 @@ import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 import { brParaPadrao } from "../../utils/date";
 import { toast } from "react-toastify";
-import _ from "lodash";
+import _, { get } from "lodash";
 import { sleep, redirecionamento } from "../../utils/sleep";
 import Select from "../../styles/Select/Select";
+import ModalAlterarFoto from "../../components/ModalAlterarFoto";
 
 function EditarPerfil() {
   const history = useHistory();
@@ -101,6 +102,8 @@ function EditarPerfil() {
     complemento: true,
   };
 
+  const [modalAlterarFotoPerfil, setModalAlterarFotoPerfil] = useState(false);
+
   const maskCPF = (value) => {
     return value
       .replace(/\D/g, "")
@@ -169,12 +172,12 @@ function EditarPerfil() {
   useEffect(() => {
     setCpfMasked(
       cpf.slice(+0, -8) +
-        "." +
-        cpf.slice(+3, -5) +
-        "." +
-        cpf.slice(+6, -2) +
-        "-" +
-        cpf.slice(-2)
+      "." +
+      cpf.slice(+3, -5) +
+      "." +
+      cpf.slice(+6, -2) +
+      "-" +
+      cpf.slice(-2)
     );
   }, [cpf]);
   useEffect(() => {
@@ -183,23 +186,56 @@ function EditarPerfil() {
   useEffect(() => {
     setTelMasked(
       "(" +
-        telefone.slice(0, -9) +
-        ") " +
-        telefone.slice(2, -4) +
-        "-" +
-        telefone.slice(-4)
+      telefone.slice(0, -9) +
+      ") " +
+      telefone.slice(2, -4) +
+      "-" +
+      telefone.slice(-4)
     );
   }, [telefone]);
   useEffect(() => {
     setDataMasked(
-      dataNascimento.slice(0, 10) 
+      dataNascimento.slice(0, 10)
     );
   }, [dataNascimento]);
 
-
-
-
-
+  const menuFoto = (
+    <Menu>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+        >
+          Fazer Upload de Imagem
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+        >
+          Remover Foto
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+        >
+          Cancelar
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
 
   useEffect(() => {
     if (!estadoBack.nome) errors.nome = true;
@@ -242,6 +278,11 @@ function EditarPerfil() {
     }
 
     setOntem(ano + "-" + mes + "-" + dia);
+  }
+
+  async function fechandoModalAlterarFotoPerfil() {
+    setModalAlterarFotoPerfil(false);
+    pegandoDados();
   }
 
   function setandoDataMinima() {
@@ -289,6 +330,17 @@ function EditarPerfil() {
     setEstadoBack({ ...estadoBack, [name]: value });
   }
 
+/*   async function deletarFotoDePerfil(id) {
+    if (usuario.avatar_url === null) {
+      toast.error("O usuário não possui uma foto de perfil");
+      return false;
+    }
+
+    //const imagem = getImagem
+    await managerService.deletarFotoDePerfil(usuario.id, imagem);
+
+  } */
+
   async function validacaoData(e) {
     const { value, name } = e.target;
     if (value) {
@@ -325,7 +377,7 @@ function EditarPerfil() {
       });
     }
 
-    
+
 
     if (name === "cpf") {
       setEstado({ ...estado, [name]: maskCPF(value) });
@@ -341,22 +393,22 @@ function EditarPerfil() {
     const { name, value } = e.target;
 
 
-    
-    if(name !== "numero" && name!== "pais" && name!=="cidade") {
+
+    if (name !== "numero" && name !== "pais" && name !== "cidade") {
 
       if (value) {
         setTudoNulo({ ...tudoNulo, [name]: false });
       }
 
-    } else if (name === "numero" && maskApenasNumeros(value) !== ""){
+    } else if (name === "numero" && maskApenasNumeros(value) !== "") {
       setTudoNulo({ ...tudoNulo, [name]: false });
-    } else if ((name === "pais" || name === "cidade") && maskApenasLetras(value) !== ""){
+    } else if ((name === "pais" || name === "cidade") && maskApenasLetras(value) !== "") {
       setTudoNulo({ ...tudoNulo, [name]: false });
     }
 
-    
 
-   
+
+
 
     if (name === "cep" && value.length <= 8 && value.length > 0) {
       setErro({ ...erro, [name]: true });
@@ -417,9 +469,21 @@ function EditarPerfil() {
             fontSize="1em"
             textDecoration="underline"
             height="10px"
-            onClick={() => {}}
+            onClick={() => {
+              setModalAlterarFotoPerfil(true);
+            }}
           >
-            Alterar Foto de Perfil
+           Alterar Foto De Perfil
+          </Button>
+          <Button
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color="green"
+            fontSize="1em"
+            textDecoration="underline"
+            height="10px"
+          >
+           Excluir Foto de Perfil
           </Button>
         </BlocoSuperior>
         <BlocoInferior>
@@ -702,7 +766,26 @@ function EditarPerfil() {
           </Button>
         </CaixaBotao>
       </ColunaDireita>
+
+      <Modal
+        visible={modalAlterarFotoPerfil}
+        onCancel={fechandoModalAlterarFotoPerfil}
+        footer={null}
+        width={"20%"}
+        centered={true}
+        style={{
+          backgroundColor: "black"
+        }}
+      >
+        <ModalAlterarFoto
+          emailUsuario = {usuario.email}
+          fecharModal={() => fechandoModalAlterarFotoPerfil()}
+          idUsuario = {usuario.id}
+        />
+      </Modal>
+      
     </ContainerEditarPerfil>
+    
   );
 }
 export default EditarPerfil;

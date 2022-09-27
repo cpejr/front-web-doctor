@@ -563,3 +563,18 @@ export const UpdateFotoDePerfil = async (id, file) => {
     });
   return;
 };
+
+
+export const deletarFotoDePerfil = async (id, file) => {
+  console.log(id, file);
+  await requesterService
+    .updateFotoDePerfil(id, file)
+    .then(() => {
+      toast.success('Foto deletada com sucesso');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return;
+};
