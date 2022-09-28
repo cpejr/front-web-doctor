@@ -144,6 +144,20 @@ export const ImagemPerfil = styled.div`
   }
 `;
 
+export const CaixaBotoesFoto = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 40px;
+  @media (max-width: 930px) {
+    margin-top: 10px;
+  }
+  @media (max-width: 480px) {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+`;
+
 export const BlocoSuperior = styled.div`
   display: flex;
   flex-direction: column;
@@ -170,11 +184,11 @@ export const BlocoInferior = styled.div`
   }
   @media (max-width: 480px) {
     display: flex;
-    height: 10vh;
+    height: 7vh;
     flex-direction: row;
     width: 100%;
     gap: 2%;
-    margin-top: 5%;
+    margin-top: 8%;
   }
 `;
 

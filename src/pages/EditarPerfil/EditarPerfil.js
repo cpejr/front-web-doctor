@@ -17,6 +17,7 @@ import {
   EspaçoInput,
   Rotulo,
   RotuloColuna,
+  CaixaBotoesFoto,
 } from "./Styles";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
@@ -199,43 +200,6 @@ function EditarPerfil() {
     );
   }, [dataNascimento]);
 
-  const menuFoto = (
-    <Menu>
-      <Menu.Item>
-        <Button
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color={Cores.preto}
-          fontSize="1rem"
-          height="50px"
-        >
-          Fazer Upload de Imagem
-        </Button>
-      </Menu.Item>
-      <Menu.Item>
-        <Button
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color={Cores.preto}
-          fontSize="1rem"
-          height="50px"
-        >
-          Remover Foto
-        </Button>
-      </Menu.Item>
-      <Menu.Item>
-        <Button
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color={Cores.preto}
-          fontSize="1rem"
-          height="50px"
-        >
-          Cancelar
-        </Button>
-      </Menu.Item>
-    </Menu>
-  );
 
   useEffect(() => {
     if (!estadoBack.nome) errors.nome = true;
@@ -330,16 +294,16 @@ function EditarPerfil() {
     setEstadoBack({ ...estadoBack, [name]: value });
   }
 
-/*   async function deletarFotoDePerfil(id) {
-    if (usuario.avatar_url === null) {
-      toast.error("O usuário não possui uma foto de perfil");
-      return false;
-    }
-
-    //const imagem = getImagem
-    await managerService.deletarFotoDePerfil(usuario.id, imagem);
-
-  } */
+  /*   async function deletarFotoDePerfil(id) {
+      if (usuario.avatar_url === null) {
+        toast.error("O usuário não possui uma foto de perfil");
+        return false;
+      }
+  
+      //const imagem = getImagem
+      await managerService.deletarFotoDePerfil(usuario.id, imagem);
+  
+    } */
 
   async function validacaoData(e) {
     const { value, name } = e.target;
@@ -449,8 +413,8 @@ function EditarPerfil() {
     }
   }
 
-  async function deletarFoto(){
-    if(usuario.avatar_url === null){
+  async function deletarFoto() {
+    if (usuario.avatar_url === null) {
       toast.error("O usuário não possui foto de perfil");
       return false;
     }
@@ -472,32 +436,34 @@ function EditarPerfil() {
               height="90%"
             ></img>
           </ImagemPerfil>
-          <Button
-            backgroundColor="transparent"
-            borderColor="transparent"
-            color= {Cores.azul}
-            fontSize="1em"
-            textDecoration="underline"
-            height="10px"
-            onClick={() => {
-              setModalAlterarFotoPerfil(true);
-            }}
-          >
-           Alterar Foto De Perfil
-          </Button>
-          <Button
-            backgroundColor="transparent"
-            borderColor="transparent"
-            color="green"
-            fontSize="1em"
-            textDecoration="underline"
-            height="10px"
-            onClick={() => {
-              deletarFoto();
-            }}
-          >
-           Excluir Foto de Perfil
-          </Button>
+          <CaixaBotoesFoto>
+            <Button
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color={Cores.azul}
+              fontSize="1em"
+              textDecoration="underline"
+              height="10px"
+              onClick={() => {
+                setModalAlterarFotoPerfil(true);
+              }}
+            >
+              Alterar Foto De Perfil
+            </Button>
+            <Button
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color="green"
+              fontSize="1em"
+              textDecoration="underline"
+              height="10px"
+              onClick={() => {
+                deletarFoto();
+              }}
+            >
+              Excluir Foto de Perfil
+            </Button>
+          </CaixaBotoesFoto>
         </BlocoSuperior>
         <BlocoInferior>
           <Button
@@ -791,14 +757,14 @@ function EditarPerfil() {
         }}
       >
         <ModalAlterarFoto
-          emailUsuario = {usuario.email}
+          emailUsuario={usuario.email}
           fecharModal={() => fechandoModalAlterarFotoPerfil()}
-          idUsuario = {usuario.id}
+          idUsuario={usuario.id}
         />
       </Modal>
-      
+
     </ContainerEditarPerfil>
-    
+
   );
 }
 export default EditarPerfil;
