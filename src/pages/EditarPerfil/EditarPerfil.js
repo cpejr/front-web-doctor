@@ -757,11 +757,9 @@ function EditarPerfil() {
         visible={modalAlterarFotoPerfil}
         onCancel={fechandoModalAlterarFotoPerfil}
         footer={null}
-        width={"20%"}
+        width={"50%"}
         centered={true}
-        style={{
-          backgroundColor: "black"
-        }}
+        style={{ maxWidth: "450px", minWidth: "250px" }}
       >
         <ModalAlterarFoto
           emailUsuario={usuario.email}

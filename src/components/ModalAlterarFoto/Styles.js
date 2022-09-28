@@ -18,12 +18,11 @@ export const ContainerModalExcluir = styled.div`
 `;
 
 export const CaixaBotaoUpload = styled.div`
-  position: relative;
-  left: 30%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: auto;
-  padding: 5% 2% 2% 1%;
-
 `;
 
 
