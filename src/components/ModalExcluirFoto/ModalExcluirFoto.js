@@ -69,7 +69,6 @@ function ModalExcluirFoto(props) {
           </Button> 
         </ContainerFooterModalExcluir> 
       </ContainerModalExcluir> 
-      <AddToast /> 
     </div> 
   ); 
 } 

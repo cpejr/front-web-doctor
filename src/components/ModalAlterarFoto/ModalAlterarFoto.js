@@ -148,7 +148,6 @@ function ModalAlterarFoto(props) {
           </Button>
         </ContainerFooterModalExcluir>
       </ContainerModalExcluir>
-      <AddToast />
     </div>
   );
 }
