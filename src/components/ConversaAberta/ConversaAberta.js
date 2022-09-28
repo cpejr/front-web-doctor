@@ -147,7 +147,7 @@ export default function ConversaAberta({ socket }) {
     if (!inputMensagemConteudo) return;
 
     const horaAtual = moment().hours();
-    const horarioComercial = (horaAtual >= 7 && horaAtual < 9) ? true : false;
+    const horarioComercial = (horaAtual >= 7 && horaAtual < 19) ? true : false;
 
     const remetente = conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)].conversaCom;
 
@@ -170,7 +170,7 @@ export default function ConversaAberta({ socket }) {
       conteudo: texto,
     };
 
-    if (horarioComercial) setInputMensagemConteudo('');
+    if (horarioComercial) { setInputMensagemConteudo('') };
 
     const { data_cricao, data_atualizacao, media_url, ...dados } =
       await managerService.CriandoMensagem(dadosParaCriarNovaMensagem);
