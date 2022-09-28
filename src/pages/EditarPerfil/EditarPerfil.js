@@ -30,6 +30,7 @@ import _, { get } from "lodash";
 import { sleep, redirecionamento } from "../../utils/sleep";
 import Select from "../../styles/Select/Select";
 import ModalAlterarFoto from "../../components/ModalAlterarFoto";
+import ModalExcluirFoto from "../../components/ModalExcluirFoto";
 
 function EditarPerfil() {
   const history = useHistory();
@@ -104,6 +105,7 @@ function EditarPerfil() {
   };
 
   const [modalAlterarFotoPerfil, setModalAlterarFotoPerfil] = useState(false);
+  const [modalExcluirFotoPerfil, setModalExcluirFotoPerfil] = useState(false);
 
   const maskCPF = (value) => {
     return value
@@ -246,6 +248,11 @@ function EditarPerfil() {
 
   async function fechandoModalAlterarFotoPerfil() {
     setModalAlterarFotoPerfil(false);
+    pegandoDados();
+  }
+
+  async function fechandoModalExcluirFotoPerfil() {
+    setModalExcluirFotoPerfil(false);
     pegandoDados();
   }
 
@@ -453,12 +460,12 @@ function EditarPerfil() {
             <Button
               backgroundColor="transparent"
               borderColor="transparent"
-              color="green"
+              color={Cores.azul}
               fontSize="1em"
               textDecoration="underline"
               height="10px"
               onClick={() => {
-                deletarFoto();
+                setModalExcluirFotoPerfil(true);
               }}
             >
               Excluir Foto de Perfil
@@ -759,6 +766,21 @@ function EditarPerfil() {
         <ModalAlterarFoto
           emailUsuario={usuario.email}
           fecharModal={() => fechandoModalAlterarFotoPerfil()}
+          idUsuario={usuario.id}
+        />
+      </Modal>
+
+      <Modal
+        visible={modalExcluirFotoPerfil}
+        onCancel={fechandoModalExcluirFotoPerfil}
+        style={{ maxWidth: "450px", minWidth: "250px" }}
+        width={"50%"}
+        centered={true}
+        footer={null}
+      >
+        <ModalExcluirFoto
+          avatarUrl={usuario.avatar_url}
+          fecharModal={() => fechandoModalExcluirFotoPerfil()}
           idUsuario={usuario.id}
         />
       </Modal>
