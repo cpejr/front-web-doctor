@@ -27,6 +27,7 @@ function ModalExcluirFoto(props) {
     }
     setCarregandoDeletar(true);
     await managerService.deletarFotoDePerfil(props.idUsuario, props.avatarUrl);
+    props.fecharModal();
     setCarregandoDeletar(false);
   }
   
