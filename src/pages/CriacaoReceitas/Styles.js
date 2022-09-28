@@ -30,7 +30,7 @@ export const CardCriacaoReceitas = styled.div`
 	}
 
 	@media (max-width: 360px) {
-		width: 98%;
+		width: 94%;
 	}
 
 	@media (max-width: 280px) {
