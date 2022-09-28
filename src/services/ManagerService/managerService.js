@@ -567,7 +567,7 @@ export const UpdateFotoDePerfil = async (id, file) => {
 
 export const deletarFotoDePerfil = async (id, file) => {
   await requesterService
-    .updateFotoDePerfil(id, file)
+    .deleteFotoDePerfil(id, file)
     .then(() => {
       toast.success('Foto deletada com sucesso');
     })
