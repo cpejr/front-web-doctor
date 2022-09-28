@@ -551,7 +551,6 @@ export const EditarFormularios = async (id, campos) => {
 };
 
 export const UpdateFotoDePerfil = async (id, file) => {
-  console.log(id, file);
   await requesterService
     .updateFotoDePerfil(id, file)
     .then(() => {
