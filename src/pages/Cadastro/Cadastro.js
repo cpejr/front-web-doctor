@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
-import _ from "lodash";
-import { useHistory } from "react-router-dom";
-import logoGuilherme from "./../../assets/logoGuilherme.png";
-import Input from "../../styles/Input";
-import Button from "../../styles/Button";
-import Select from "../../styles/Select/Select";
-import { Spin, Switch } from "antd";
-import { LoadingOutlined, LeftOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from 'react';
+import _ from 'lodash';
+import { useHistory } from 'react-router-dom';
+import logoGuilherme from './../../assets/logoGuilherme.png';
+import Input from '../../styles/Input';
+import Button from '../../styles/Button';
+import Select from '../../styles/Select/Select';
+import { Spin, Switch } from 'antd';
+import { LoadingOutlined, LeftOutlined } from '@ant-design/icons';
 import {
   Body,
   DadosCadastro,
@@ -18,13 +18,13 @@ import {
   RotuloColuna,
   PossuiConvenio,
   PossuiCuidador,
-} from "./Styles";
-import "react-toastify/dist/ReactToastify.min.css";
-import AddToast from "../../components/AddToast/AddToast";
-import { toast } from "react-toastify";
-import { recebeTipo, usuarioAutenticado } from "../../services/auth";
-import { Cores } from "../../variaveis";
-import { sleep } from "../../utils/sleep";
+} from './Styles';
+import 'react-toastify/dist/ReactToastify.min.css';
+import AddToast from '../../components/AddToast/AddToast';
+import { toast } from 'react-toastify';
+import { recebeTipo, usuarioAutenticado } from '../../services/auth';
+import { Cores } from '../../variaveis';
+import { sleep } from '../../utils/sleep';
 import {
   apenasLetras,
   apenasNumeros,
@@ -33,8 +33,8 @@ import {
   apenasNumerosCpfTel,
   cpf,
   telefone,
-} from "../../utils/masks";
-import * as managerService from "../../services/ManagerService/managerService";
+} from '../../utils/masks';
+import * as managerService from '../../services/ManagerService/managerService';
 
 function Cadastro(props) {
   const history = useHistory();
@@ -67,7 +67,7 @@ function Cadastro(props) {
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const [convenio, setConvenio] = useState(false);
   const [cuidador, setCuidador] = useState(false);
-  const [ontem, setOntem] = useState("");
+  const [ontem, setOntem] = useState('');
   const errors = {};
   const testeOriginal = {
     tipo: false,
@@ -90,12 +90,16 @@ function Cadastro(props) {
 
   function verificaAutenticacao() {
     if (usuarioAutenticado() === false) {
-      window.location.href = "/login";
+      window.location.href = '/login';
     }
   }
 
   useEffect(() => {
     verificaAutenticacao();
+  }, []);
+
+  useEffect(() => {
+    setandoDiaAtual();
   }, []);
 
   useEffect(() => {
@@ -115,11 +119,11 @@ function Cadastro(props) {
       setCuidador(false);
     } else if (
       history.location.state === undefined &&
-      recebeTipo() === "SECRETARIA(O)"
+      recebeTipo() === 'SECRETARIA(O)'
     ) {
       setUsuario({
         ...usuario,
-        tipo: "PACIENTE",
+        tipo: 'PACIENTE',
         nome_cuidador: null,
         telefone_cuidador: null,
         convenio: null,
@@ -128,7 +132,7 @@ function Cadastro(props) {
       setCuidador(false);
     } else if (
       history.location.state === undefined &&
-      recebeTipo() === "MASTER"
+      recebeTipo() === 'MASTER'
     ) {
       testeTemp.tipo = false;
     }
@@ -143,7 +147,7 @@ function Cadastro(props) {
   }, [ontem]);
 
   async function verificandoEnter(e) {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       requisicaoCadastro();
     }
   }
@@ -154,17 +158,17 @@ function Cadastro(props) {
     let ano = data.getFullYear();
 
     if (dia < 10) {
-      dia = "0" + dia;
+      dia = '0' + dia;
     }
     if (mes < 10) {
-      mes = "0" + mes;
+      mes = '0' + mes;
     }
 
-    setOntem(ano + "-" + mes + "-" + dia);
+    setOntem(ano + '-' + mes + '-' + dia);
   }
 
   function setandoDataMinima() {
-    document.getElementById("data").setAttribute("max", ontem);
+    document.getElementById('data').setAttribute('max', ontem);
   }
   function funcaoConvenio() {
     setConvenio(!convenio);
@@ -233,7 +237,7 @@ function Cadastro(props) {
     }
     await sleep(1500);
 
-    if (usuario.tipo === "SECRETARIA(O)") {
+    if (usuario.tipo === 'SECRETARIA(O)') {
       delete camposVazios.nome_cuidador;
       delete camposVazios.telefone_cuidador;
       delete camposVazios.convenio;
@@ -271,13 +275,13 @@ function Cadastro(props) {
         await managerService.Cadastrando(usuario, enderecoBack);
         await sleep(1500);
         setCarregando(false);
-        window.location.href = "/web/listadeusuario";
+        window.location.href = '/web/listadeusuario';
       } else {
-        toast.error("As senhas digitadas são diferentes.");
+        toast.error('As senhas digitadas são diferentes.');
         setCarregando(false);
       }
     } else {
-      toast.error("Preencha todos os campos obrigatórios");
+      toast.error('Preencha todos os campos obrigatórios');
     }
 
     testeTemp = testeOriginal;
@@ -314,7 +318,7 @@ function Cadastro(props) {
     const { value, name } = e.target;
 
     if (cuidador) {
-      if (name === "telefone_cuidador") {
+      if (name === 'telefone_cuidador') {
         setCamposVazios({ ...camposVazios, [name]: false });
         if (value.length < 15) {
           setErro({ ...erro, [name]: true });
@@ -327,7 +331,7 @@ function Cadastro(props) {
           ...usuario,
           [name]: apenasNumerosCpfTel(value),
         });
-      } else if (name === "nome_cuidador") {
+      } else if (name === 'nome_cuidador') {
         setEstado({
           ...estado,
           [name]: apenasLetras(value),
@@ -336,7 +340,7 @@ function Cadastro(props) {
       }
     }
     if (convenio) {
-      if (name === "convenio") {
+      if (name === 'convenio') {
         setEstado({ ...estado, [name]: apenasLetras(value) });
         setUsuario({ ...usuario, [name]: apenasLetras(value) });
       }
@@ -357,18 +361,18 @@ function Cadastro(props) {
   function preenchendoDados(e) {
     const { value, name } = e.target;
     if (
-      name !== "convenio" &&
-      name !== "nome_cuidador" &&
-      name !== "telefone_cuidador" &&
-      name !== "nome"
+      name !== 'convenio' &&
+      name !== 'nome_cuidador' &&
+      name !== 'telefone_cuidador' &&
+      name !== 'nome'
     ) {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
     }
 
     if (
-      (name === "cpf" && value.length < 14) ||
-      (name === "telefone" && value.length < 15) ||
-      ((name === "senha" || name === "senhaConfirmada") && value.length < 8)
+      (name === 'cpf' && value.length < 14) ||
+      (name === 'telefone' && value.length < 15) ||
+      ((name === 'senha' || name === 'senhaConfirmada') && value.length < 8)
     ) {
       setErro({ ...erro, [name]: true });
     } else {
@@ -378,7 +382,7 @@ function Cadastro(props) {
     setUsuario({ ...usuario, [name]: value });
     setEstado({ ...estado, [name]: value });
 
-    if (name === "nome") {
+    if (name === 'nome') {
       setEstado({
         ...estado,
         [name]: apenasLetras(value),
@@ -386,16 +390,16 @@ function Cadastro(props) {
       setUsuario({ ...usuario, [name]: apenasLetras(value) });
     }
 
-    if (name === "telefone") {
+    if (name === 'telefone') {
       setEstado({ ...estado, [name]: telefone(value) });
       setUsuario({ ...usuario, [name]: apenasNumerosCpfTel(value) });
     }
 
-    if (name === "cpf") {
+    if (name === 'cpf') {
       setEstado({ ...estado, [name]: cpf(value) });
       setUsuario({ ...usuario, [name]: apenasNumerosCpfTel(value) });
     }
-    if (name === "tipo") {
+    if (name === 'tipo') {
       setUsuario({
         ...usuario,
         [name]: value,
@@ -409,7 +413,7 @@ function Cadastro(props) {
   }
 
   useEffect(() => {
-    if (usuario.nome !== "" && usuario.nome !== undefined) {
+    if (usuario.nome !== '' && usuario.nome !== undefined) {
       setCamposVazios({ ...camposVazios, nome: false });
     }
   }, [usuario]);
@@ -418,15 +422,76 @@ function Cadastro(props) {
     const { value, name } = e.target;
 
     if (
-      name !== "complemento" &&
-      name !== "pais" &&
-      name !== "numero" &&
-      name !== "cidade"
+      name !== 'complemento' &&
+      name !== 'pais' &&
+      name !== 'numero' &&
+      name !== 'cidade'
     ) {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
     }
 
-    if (name === "cep" && value.length <= 8) {
+    if (
+      (name === 'cpf' && value.length < 14) ||
+      (name === 'telefone' && value.length < 15) ||
+      ((name === 'senha' || name === 'senhaConfirmada') && value.length < 8)
+    ) {
+      setErro({ ...erro, [name]: true });
+    } else {
+      setErro({ ...erro, [name]: false });
+    }
+
+    setUsuario({ ...usuario, [name]: value });
+    setEstado({ ...estado, [name]: value });
+
+    if (name === 'nome') {
+      setEstado({
+        ...estado,
+        [name]: apenasLetras(value),
+      });
+      setUsuario({ ...usuario, [name]: apenasLetras(value) });
+    }
+
+    if (name === 'telefone') {
+      setEstado({ ...estado, [name]: telefone(value) });
+      setUsuario({ ...usuario, [name]: apenasNumerosCpfTel(value) });
+    }
+
+    if (name === 'cpf') {
+      setEstado({ ...estado, [name]: cpf(value) });
+      setUsuario({ ...usuario, [name]: apenasNumerosCpfTel(value) });
+    }
+    if (name === 'tipo') {
+      setUsuario({
+        ...usuario,
+        [name]: value,
+        nome_cuidador: null,
+        telefone_cuidador: null,
+        convenio: null,
+      });
+      setConvenio(false);
+      setCuidador(false);
+    }
+  }
+
+  useEffect(() => {
+    if (usuario.nome !== '' && usuario.nome !== undefined) {
+      setCamposVazios({ ...camposVazios, nome: false });
+    }
+  }, [usuario]);
+
+  function preenchendoEndereco(e) {
+    const { value, name } = e.target;
+
+    if (
+      name !== 'complemento' &&
+      name !== 'pais' &&
+      name !== 'numero' &&
+      name !== 'cidade'
+    ) {
+      if (value) setCamposVazios({ ...camposVazios, [name]: false });
+    }
+
+    if (name === 'cep' && value.length <= 8) {
       setErro({ ...erro, [name]: true });
     } else {
       setErro({ ...erro, [name]: false });
@@ -434,14 +499,14 @@ function Cadastro(props) {
     setEndereco({ ...endereco, [name]: value });
     setEnderecoBack({ ...enderecoBack, [name]: value });
 
-    if (name === "cep") {
+    if (name === 'cep') {
       setEndereco({ ...endereco, [name]: cep(value) });
       setEnderecoBack({
         ...enderecoBack,
         [name]: apenasNumerosCep(value),
       });
     }
-    if (name === "pais") {
+    if (name === 'pais') {
       setEndereco({
         ...endereco,
         [name]: apenasLetras(value),
@@ -451,7 +516,7 @@ function Cadastro(props) {
         [name]: apenasLetras(value),
       });
     }
-    if (name === "cidade") {
+    if (name === 'cidade') {
       setEndereco({
         ...endereco,
         [name]: apenasLetras(value),
@@ -461,7 +526,7 @@ function Cadastro(props) {
         [name]: apenasLetras(value),
       });
     }
-    if (name === "numero") {
+    if (name === 'numero') {
       setEndereco({
         ...endereco,
         [name]: apenasNumeros(value),
@@ -474,19 +539,19 @@ function Cadastro(props) {
   }
 
   useEffect(() => {
-    if (enderecoBack.pais !== "" && enderecoBack.pais !== undefined) {
+    if (enderecoBack.pais !== '' && enderecoBack.pais !== undefined) {
       setCamposVazios({ ...camposVazios, pais: false });
     }
   }, [enderecoBack.pais]);
 
   useEffect(() => {
-    if (enderecoBack.numero !== "" && enderecoBack.numero !== undefined) {
+    if (enderecoBack.numero !== '' && enderecoBack.numero !== undefined) {
       setCamposVazios({ ...camposVazios, numero: false });
     }
   }, [enderecoBack.numero]);
 
   useEffect(() => {
-    if (enderecoBack.cidade !== "" && enderecoBack.cidade !== undefined) {
+    if (enderecoBack.cidade !== '' && enderecoBack.cidade !== undefined) {
       setCamposVazios({ ...camposVazios, cidade: false });
     }
   }, [enderecoBack.cidade]);
@@ -498,33 +563,33 @@ function Cadastro(props) {
           <Logo>
             <img
               src={logoGuilherme}
-              className="logo"
-              alt="logoGuilherme"
-              width="100%"
-              height="100%"
+              className='logo'
+              alt='logoGuilherme'
+              width='100%'
+              height='100%'
             ></img>
           </Logo>
-          {recebeTipo() !== "MASTER" && recebeTipo() !== "SECRETARIA(O)" && (
-            <Botao onClick={() => history.push("/login")}>
+          {recebeTipo() !== 'MASTER' && recebeTipo() !== 'SECRETARIA(O)' && (
+            <Botao onClick={() => history.push('/login')}>
               <LeftOutlined /> Voltar para login
             </Botao>
           )}
-          {history.location.state === undefined && recebeTipo() === "MASTER" ? (
+          {history.location.state === undefined && recebeTipo() === 'MASTER' ? (
             <Select
-              id="tipos"
+              id='tipos'
               backgroundColor={Cores.cinza[7]}
               color={Cores.preto}
-              borderWidth="2px"
-              width="100%"
-              name="tipo"
+              borderWidth='2px'
+              width='100%'
+              name='tipo'
               onChange={preenchendoDados}
               camposVazios={camposVazios.tipo}
             >
-              <option value="">Tipo de Usuário</option>
-              <option value="SECRETARIA(O)" borderColor={Cores.azul}>
+              <option value=''>Tipo de Usuário</option>
+              <option value='SECRETARIA(O)' borderColor={Cores.azul}>
                 Secretária(o)
               </option>
-              <option value="PACIENTE" borderColor={Cores.azul}>
+              <option value='PACIENTE' borderColor={Cores.azul}>
                 Paciente
               </option>
             </Select>
@@ -532,14 +597,14 @@ function Cadastro(props) {
             <></>
           )}
           <Input
-            placeholder="Nome Completo"
-            status="error"
+            placeholder='Nome Completo'
+            status='error'
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
-            fontSize="1em"
-            width="100%"
-            marginTop="2%"
-            name="nome"
+            fontSize='1em'
+            width='100%'
+            marginTop='2%'
+            name='nome'
             value={estado.nome}
             onChange={preenchendoDados}
             erro={erro.nome}
@@ -548,13 +613,13 @@ function Cadastro(props) {
           <InputMesmaLinha>
             <RotuloColuna>
               <Input
-                placeholder="Telefone"
+                placeholder='Telefone'
                 backgroundColor={Cores.cinza[7]}
                 color={Cores.preto}
-                fontSize="1em"
-                marginTop="2%"
-                width="100%"
-                name="telefone"
+                fontSize='1em'
+                marginTop='2%'
+                width='100%'
+                name='telefone'
                 value={estado.telefone}
                 onChange={preenchendoDados}
                 onKeyPress={verificandoEnter}
@@ -566,30 +631,30 @@ function Cadastro(props) {
               )}
             </RotuloColuna>
             <Input
-              placeholder="Data de Nascimento"
-              id="data"
-              type="date"
+              placeholder='Data de Nascimento'
+              id='data'
+              type='date'
               onKeyDown={(e) => e.preventDefault()}
               backgroundColor={Cores.cinza[7]}
               color={Cores.preto}
-              fontSize="1em"
-              width="50%"
-              marginTop="2%"
-              name="data_nascimento"
+              fontSize='1em'
+              width='50%'
+              marginTop='2%'
+              name='data_nascimento'
               value={estado.data_nascimento}
               onChange={validacaoData}
               erro={erro.data_nascimento}
-              paddingRight="2%"
+              paddingRight='2%'
               camposVazios={camposVazios.data_nascimento}
             ></Input>
           </InputMesmaLinha>
           <Input
-            placeholder="CPF"
+            placeholder='CPF'
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
-            fontSize="1em"
-            width="100%"
-            name="cpf"
+            fontSize='1em'
+            width='100%'
+            name='cpf'
             value={estado.cpf}
             onChange={preenchendoDados}
             erro={erro.cpf}
@@ -597,13 +662,13 @@ function Cadastro(props) {
           ></Input>
           {erro.cpf && <Rotulo>Digite um CPF no formato xxx.xxx.xxx-xx</Rotulo>}
           <Input
-            placeholder="Endereço de e-mail"
+            placeholder='Endereço de e-mail'
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
-            fontSize="1em"
-            width="100%"
-            marginTop="2%"
-            name="email"
+            fontSize='1em'
+            width='100%'
+            marginTop='2%'
+            name='email'
             onChange={validacaoEmail}
             erro={erro.email}
             camposVazios={camposVazios.email}
@@ -611,54 +676,54 @@ function Cadastro(props) {
           {erro.email && (
             <Rotulo>Digite um email no formato email@email.com</Rotulo>
           )}
-          {usuario.tipo === "PACIENTE" && (
+          {usuario.tipo === 'PACIENTE' && (
             <>
               <PossuiConvenio>
-                {" "}
+                {' '}
                 Possui Convênio?
                 <Switch onChange={funcaoConvenio}></Switch>
               </PossuiConvenio>
               {convenio && (
                 <Input
-                  placeholder="Nome do Convênio"
+                  placeholder='Nome do Convênio'
                   backgroundColor={Cores.cinza[7]}
                   color={Cores.preto}
-                  fontSize="1em"
-                  width="100%"
-                  marginTop="2%"
-                  name="convenio"
+                  fontSize='1em'
+                  width='100%'
+                  marginTop='2%'
+                  name='convenio'
                   value={estado.convenio}
                   onChange={validacaoCamposNaoGerais}
                   camposVazios={camposVazios.convenio}
                 ></Input>
               )}
               <PossuiCuidador>
-                {" "}
+                {' '}
                 Possui Cuidador?<Switch onChange={funcaoCuidador}></Switch>
               </PossuiCuidador>
 
               {cuidador && (
                 <>
                   <Input
-                    placeholder="Nome Cuidador"
+                    placeholder='Nome Cuidador'
                     backgroundColor={Cores.cinza[7]}
                     color={Cores.preto}
-                    fontSize="1em"
-                    width="100%"
-                    marginTop="2%"
-                    name="nome_cuidador"
+                    fontSize='1em'
+                    width='100%'
+                    marginTop='2%'
+                    name='nome_cuidador'
                     value={estado.nome_cuidador}
                     onChange={validacaoCamposNaoGerais}
                     camposVazios={camposVazios.nome_cuidador}
                   ></Input>
                   <Input
-                    placeholder="Telefone Cuidador"
+                    placeholder='Telefone Cuidador'
                     backgroundColor={Cores.cinza[7]}
                     color={Cores.preto}
-                    fontSize="1em"
-                    width="100%"
-                    marginTop="2%"
-                    name="telefone_cuidador"
+                    fontSize='1em'
+                    width='100%'
+                    marginTop='2%'
+                    name='telefone_cuidador'
                     value={estado.telefone_cuidador}
                     onChange={validacaoCamposNaoGerais}
                     onKeyPress={verificandoEnter}
@@ -676,13 +741,13 @@ function Cadastro(props) {
           )}
 
           <Input
-            placeholder="CEP"
+            placeholder='CEP'
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
-            fontSize="1em"
-            width="100%"
-            marginTop="2%"
-            name="cep"
+            fontSize='1em'
+            width='100%'
+            marginTop='2%'
+            name='cep'
             value={endereco.cep}
             onChange={preenchendoEndereco}
             erro={erro.cep}
@@ -690,144 +755,144 @@ function Cadastro(props) {
           ></Input>
           {erro.cep && <Rotulo>Digite um CEP no formato xx.xxx-xxx</Rotulo>}
           <Input
-            placeholder="País"
+            placeholder='País'
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
-            fontSize="1em"
-            width="100%"
-            marginTop="2%"
-            name="pais"
+            fontSize='1em'
+            width='100%'
+            marginTop='2%'
+            name='pais'
             value={endereco.pais}
             onChange={preenchendoEndereco}
             camposVazios={camposVazios.pais}
           ></Input>
           <Select
-            id="estado"
-            name="estado"
+            id='estado'
+            name='estado'
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
-            width="100%"
-            marginTop="2%"
-            borderWidth="2px"
+            width='100%'
+            marginTop='2%'
+            borderWidth='2px'
             onChange={preenchendoEndereco}
             camposVazios={camposVazios.estado}
           >
-            <option value="" disabled selected>
+            <option value='' disabled selected>
               Estado
             </option>
-            <option value="AC">Acre</option>
-            <option value="AL">Alagoas</option>
-            <option value="AP">Amapá</option>
-            <option value="AM">Amazonas</option>
-            <option value="BA">Bahia</option>
-            <option value="CE">Ceará</option>
-            <option value="DF">Distrito Federal</option>
-            <option value="ES">Espírito Santo</option>
-            <option value="GO">Goiás</option>
-            <option value="MA">Maranhão</option>
-            <option value="MT">Mato Grosso</option>
-            <option value="MS">Mato Grosso do Sul</option>
-            <option value="MG">Minas Gerais</option>
-            <option value="PA">Pará</option>
-            <option value="PB">Paraíba</option>
-            <option value="PR">Paraná</option>
-            <option value="PE">Pernambuco</option>
-            <option value="PI">Piauí</option>
-            <option value="RJ">Rio de Janeiro</option>
-            <option value="RN">Rio Grande do Norte</option>
-            <option value="RS">Rio Grande do Sul</option>
-            <option value="RO">Rondônia</option>
-            <option value="RR">Roraima</option>
-            <option value="SC">Santa Catarina</option>
-            <option value="SP">São Paulo</option>
-            <option value="SE">Sergipe</option>
-            <option value="TO">Tocantins</option>
-            <option value="EX">Estrangeiro</option>
+            <option value='AC'>Acre</option>
+            <option value='AL'>Alagoas</option>
+            <option value='AP'>Amapá</option>
+            <option value='AM'>Amazonas</option>
+            <option value='BA'>Bahia</option>
+            <option value='CE'>Ceará</option>
+            <option value='DF'>Distrito Federal</option>
+            <option value='ES'>Espírito Santo</option>
+            <option value='GO'>Goiás</option>
+            <option value='MA'>Maranhão</option>
+            <option value='MT'>Mato Grosso</option>
+            <option value='MS'>Mato Grosso do Sul</option>
+            <option value='MG'>Minas Gerais</option>
+            <option value='PA'>Pará</option>
+            <option value='PB'>Paraíba</option>
+            <option value='PR'>Paraná</option>
+            <option value='PE'>Pernambuco</option>
+            <option value='PI'>Piauí</option>
+            <option value='RJ'>Rio de Janeiro</option>
+            <option value='RN'>Rio Grande do Norte</option>
+            <option value='RS'>Rio Grande do Sul</option>
+            <option value='RO'>Rondônia</option>
+            <option value='RR'>Roraima</option>
+            <option value='SC'>Santa Catarina</option>
+            <option value='SP'>São Paulo</option>
+            <option value='SE'>Sergipe</option>
+            <option value='TO'>Tocantins</option>
+            <option value='EX'>Estrangeiro</option>
           </Select>
           <Input
-            placeholder="Cidade"
+            placeholder='Cidade'
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
-            fontSize="1em"
-            width="100%"
-            marginTop="2%"
-            name="cidade"
+            fontSize='1em'
+            width='100%'
+            marginTop='2%'
+            name='cidade'
             value={endereco.cidade}
             onChange={preenchendoEndereco}
             camposVazios={camposVazios.cidade}
           ></Input>
           <Input
-            placeholder="Bairro"
+            placeholder='Bairro'
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
-            fontSize="1em"
-            width="100%"
-            marginTop="2%"
-            name="bairro"
+            fontSize='1em'
+            width='100%'
+            marginTop='2%'
+            name='bairro'
             onChange={preenchendoEndereco}
             camposVazios={camposVazios.bairro}
           ></Input>
           <Input
-            placeholder="Rua"
+            placeholder='Rua'
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
-            fontSize="1em"
-            width="100%"
-            marginTop="2%"
-            name="rua"
+            fontSize='1em'
+            width='100%'
+            marginTop='2%'
+            name='rua'
             onChange={preenchendoEndereco}
             camposVazios={camposVazios.rua}
           ></Input>
           <InputMesmaLinha2>
             <Input
-              placeholder="Número"
+              placeholder='Número'
               backgroundColor={Cores.cinza[7]}
               color={Cores.preto}
-              fontSize="1em"
-              width="48%"
-              name="numero"
+              fontSize='1em'
+              width='48%'
+              name='numero'
               value={endereco.numero}
               onChange={preenchendoEndereco}
               camposVazios={camposVazios.numero}
             ></Input>
             <Input
-              placeholder="Complemento"
+              placeholder='Complemento'
               backgroundColor={Cores.cinza[7]}
               borderColor={Cores.azul}
               color={Cores.preto}
-              fontSize="1em"
-              width="48%"
-              marginTop="2%"
-              name="complemento"
+              fontSize='1em'
+              width='48%'
+              marginTop='2%'
+              name='complemento'
               onChange={preenchendoEndereco}
             ></Input>
           </InputMesmaLinha2>
 
           <Input
-            placeholder="Defina sua senha"
+            placeholder='Defina sua senha'
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
-            width="100%"
-            marginTop="2%"
-            fontSize="1em"
-            name="senha"
-            id="senha"
-            type="password"
+            width='100%'
+            marginTop='2%'
+            fontSize='1em'
+            name='senha'
+            id='senha'
+            type='password'
             onChange={preenchendoDados}
             erro={erro.senha}
             camposVazios={camposVazios.senha}
           ></Input>
           {erro.senha && <Rotulo>A senha deve ter no minimo 8 digitos</Rotulo>}
           <Input
-            placeholder="Confirme sua senha"
+            placeholder='Confirme sua senha'
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
-            width="100%"
-            marginTop="2%"
-            fontSize="1em"
-            name="senhaConfirmada"
-            id="senhaConfirmada"
-            type="password"
+            width='100%'
+            marginTop='2%'
+            fontSize='1em'
+            name='senhaConfirmada'
+            id='senhaConfirmada'
+            type='password'
             onChange={preenchendoDados}
             onKeyPress={verificandoEnter}
             erro={erro.senhaConfirmada}
@@ -838,19 +903,19 @@ function Cadastro(props) {
           )}
 
           <Button
-            height="50px"
-            width="60%"
+            height='50px'
+            width='60%'
             backgroundColor={Cores.lilas[1]}
             borderColor={Cores.azul}
             color={Cores.branco}
-            fontSize="1.5em"
-            fontSizeMedia="1.2em"
+            fontSize='1.5em'
+            fontSizeMedia='1.2em'
             onClick={() => {
               requisicaoCadastro();
             }}
-            fontWeight="bold"
+            fontWeight='bold'
           >
-            {carregando ? <Spin indicator={antIcon} /> : "CADASTRAR"}
+            {carregando ? <Spin indicator={antIcon} /> : 'CADASTRAR'}
           </Button>
         </DadosCadastro>
         <AddToast />

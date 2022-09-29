@@ -11,7 +11,10 @@ const Button = styled.button`
   border-radius: 3px;
   margin-top: ${(props) => props.marginTop?? "2%"};
   margin-left: ${(props) => props.marginLeft};
+  min-width: ${(props) => props.minWidth};
   padding-top: ${(props) => props.paddingTop};
+  padding-left: ${(props) => props.paddingLeft};
+  padding-right: ${(props) => props.paddingRight};
   height: ${(props) => props.height};
   gap: ${(props) => props.gap};
   width: ${(props) => props.width};
@@ -43,6 +46,9 @@ const Button = styled.button`
   @media (max-width: 600px){ 
     width: ${(props) => props.widthMedia600};
   }
+  @media (max-width: 920px){ 
+    height: ${(props) => props.heightMedia920};
+  }
 
   @media (max-width: 670px){ 
     width: ${(props) => props.widthMedia670};
@@ -63,6 +69,12 @@ const Button = styled.button`
   }
   @media (max-width: 1080px) {
     font-size: ${(props) => props.fontSizeMedia1080};
+  }
+  @media (max-width: 376px) {
+    width: ${(props) => props.widthres};
+  }
+  @media (max-width: 571px) {
+    width: ${(props) => props.widthres};
   }
 `;
 export default Button;
