@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Input, Select } from "antd";
-import moment from 'moment';
+import moment from "moment";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin, Modal } from "antd";
-import {
-	compararDataRecente,
-} from "../../utils/tratamentoErros";
+import { compararDataRecente } from "../../utils/tratamentoErros";
 import {
 	TopoPagina,
 	BarraPesquisa,
@@ -82,28 +80,22 @@ function AreaReceitas() {
 		const resposta = await managerService.GetReceitas();
 		const receitasFormatadas = resposta
 			.sort(compararDataRecente)
-			.map(({ data_criacao, ...resto }) => ({ 
-				data_criacao: moment(data_criacao).format('DD/MM/YYYY'), 
-				...resto
-			}))
-		// resposta.sort(compararDataRecente).forEach((receita) => {
-		// 	receita.data_criacao = FormatarDataShort(receita.data_criacao);
-		// 	setReceitas((receitas) => [...receitas, receita]);
-		// });
-
+			.map(({ data_criacao, ...resto }) => ({
+				data_criacao: moment(data_criacao).format("DD/MM/YYYY"),
+				...resto,
+			}));
 		setReceitas(receitasFormatadas);
 		setCarregandoPagina(false);
 	}
 
 	async function pegandoDadosPacientes() {
 		setCarregandoPagina(true);
-		setPacientes([]);
 		const resposta = await managerService.GetDadosPessoais();
-		resposta.forEach((usuario) => {
-			if (usuario.tipo === "PACIENTE") {
-				setPacientes((usuarios) => [...usuarios, usuario]);
-			}
-		});
+		const filtroDadosPessoais = resposta.filter(
+			({ tipo }) => tipo === "PACIENTE"
+		);
+		setPacientes(filtroDadosPessoais);
+		setCarregandoPagina(false);
 	}
 
 	function fechandoModalDeletarReceita() {
