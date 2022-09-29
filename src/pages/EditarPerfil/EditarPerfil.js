@@ -455,7 +455,7 @@ function EditarPerfil() {
                 setModalAlterarFotoPerfil(true);
               }}
             >
-              Alterar Foto De Perfil
+              Adicionar ou Alterar Foto De Perfil
             </Button>
             <Button
               backgroundColor="transparent"
