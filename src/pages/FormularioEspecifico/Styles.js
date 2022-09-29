@@ -9,7 +9,7 @@ export const ColunaDireita = styled.div`
   align-items: center;
   width: 40%;
   height: 100%;
-
+  gap: 20px;
   padding: 2% 4% 2% 4%;
 
   @media (max-width: 850px) and (min-width: 500px) {
@@ -17,7 +17,8 @@ export const ColunaDireita = styled.div`
     justify-content: center;
     height: 50%;
     width: 98%;
-    margin-top: 5%;
+    margin-top: 0;
+    padding-top: 0px;
   }
 
   @media (max-width: 520px) {
@@ -26,7 +27,8 @@ export const ColunaDireita = styled.div`
     justify-content: center;
     height: 50%;
     width: 98%;
-    margin-top: 5%;
+    margin-top: 0;
+    padding-top: 0px;
   }
 `;
 
@@ -35,7 +37,7 @@ export const ColunaEsquerda = styled.div`
   flex-direction: column;
   width: 55%;
   height: 100vh;
-  margin-bottom: 5%;
+  margin-bottom: 40px;
   padding: 2% 4% 2% 4%;
 
   @media (max-width: 850px) {
@@ -185,10 +187,10 @@ export const BarraCentro = styled.div`
 `;
 
 export const MargemEstetica = styled.div`
-  height: 300%;
+  height: 40px;
 
   @media (max-width: 850px) {
-    height: 20%;
+    height:0px;
   }
 `;
 
@@ -253,7 +255,7 @@ export const Selects = styled.div`
 `;
 
 export const BarraRespostas = styled.div`
-  margin: 0% 0% 5% 0%;
+  margin: 0% 0% 0% 0%;
   display: flex;
   justify-content: center;
   align-items: center;

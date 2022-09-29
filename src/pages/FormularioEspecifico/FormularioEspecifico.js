@@ -52,7 +52,6 @@ function FormularioEspecifico(props) {
 
   const [modalFormulario, setModalFormulario] = useState(false);
   const [modalPerguntaFormulario, setModalPerguntaFormulario] = useState(false);
-  const [perguntas, setPerguntas] = useState();
   const [titulo, setTitulo] = useState();
   const [idFormularioPaciente, setIdFormularioPaciente] = useState();
   const [contador, setContador] = useState(0);
@@ -66,6 +65,9 @@ function FormularioEspecifico(props) {
   const { Option } = SelectTipos;
   const [busca, setBusca] = useState("");
   const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
+  const [formularios, setFormularios] = useState();
+  const [perguntas, setPerguntas] = useState();
+  const [perguntasAlterar, setPerguntasAlterar] = useState();
 
   const lowerBusca = busca
     .toLowerCase()
@@ -75,6 +77,8 @@ function FormularioEspecifico(props) {
     <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
   );
 
+  
+
   async function pegandoDadosFormularioEspecifico() {
     const resposta = await managerService.GetFormularioEspecifico(
       props.location.state.id
@@ -83,6 +87,9 @@ function FormularioEspecifico(props) {
     setCarregando(false);
   }
 
+  useEffect(() => {
+    pegandoDadosFormularioEspecifico();
+  }, [props]);
 
   async function pegandoFormularioPacientes() {
     const respostaFormularios =
@@ -116,8 +123,7 @@ function FormularioEspecifico(props) {
       Object.defineProperty(formulario, "fotoDePerfil", {
         value: arquivo,
       });
-    }
-    else {
+    } else {
       setCarregandoFoto(false);
       return;
     }
@@ -133,8 +139,7 @@ function FormularioEspecifico(props) {
   }
 
   function abrindoModalPerguntaFormulario() {
-    console.log(formularioEspecifico);
-    setPerguntas(formularioEspecifico.perguntas);
+    setPerguntas(Object.entries(formularioEspecifico.perguntas.properties));
     setTitulo(formularioEspecifico.titulo);
     setModalPerguntaFormulario(true);
   }
@@ -143,9 +148,7 @@ function FormularioEspecifico(props) {
     pegandoFormularioPacientes();
   }, [props.location.state.id]);
 
-  useEffect(() => {
-    pegandoDadosFormularioEspecifico();
-  }, [props.location.state.id]);
+ 
 
   useEffect(() => {
     setandoFotoDePerfil();
@@ -280,7 +283,7 @@ function FormularioEspecifico(props) {
                     ) : (
                       <div>
                         {value.avatar_url === null ||
-                          value.avatar_url === "" ? (
+                        value.avatar_url === "" ? (
                           <FotoPerfil>
                             {carregandoFoto ? (
                               <div>
@@ -374,34 +377,16 @@ function FormularioEspecifico(props) {
                 {" "}
                 {formularioResposta.length < 2 ? (
                   <>
-                    {formularioResposta.length === 1 ? (
-                      "1 formulário ja foi respondido"
-                    ) : (
-                      "Nenhum formulário foi respondido"
-                    )}
+                    {formularioResposta.length === 1
+                      ? "1 formulário ja foi respondido"
+                      : "Nenhum formulário foi respondido"}
                   </>
                 ) : (
                   `${formularioResposta.length} já foram respondidos`
                 )}
               </BarraRespostas>
               <MargemEstetica />
-              <Button
-                backgroundColor="green"
-                borderRadius="3px"
-                borderWidth="1px"
-                borderColor={Cores.preto}
-                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-                color={Cores.preto}
-                fontSize="15px"
-                height="50px"
-                width="60%"
-                marginTop="10%"
-                marginLeft="0%"
-                fontSizeMedia950="0.9em"
-                onClick={() => { }}
-              >
-                Gerar documento Word
-              </Button>
+
               <Button
                 backgroundColor={Cores.cinza[7]}
                 borderRadius="3px"
@@ -412,14 +397,29 @@ function FormularioEspecifico(props) {
                 fontSize="15px"
                 height="50px"
                 width="60%"
-                marginTop="10%"
+                marginTop="0%"
                 marginLeft="0%"
                 fontSizeMedia950="0.9em"
-                onClick={() =>
-                  abrindoModalPerguntaFormulario()
-                }
+                onClick={() => abrindoModalPerguntaFormulario()}
               >
                 Visualizar Perguntas
+              </Button>
+              <Button
+                backgroundColor="green"
+                borderRadius="3px"
+                borderWidth="1px"
+                borderColor={Cores.preto}
+                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                color={Cores.preto}
+                fontSize="15px"
+                height="50px"
+                width="60%"
+                marginTop="0%"
+                marginLeft="0%"
+                fontSizeMedia950="0.9em"
+                onClick={() => {}}
+              >
+                Gerar documento Word
               </Button>
             </ColunaDireita>
           </>
@@ -449,12 +449,12 @@ function FormularioEspecifico(props) {
         centered={true}
         footer={null}
       >
-        <ModalFormulario
+        <ModalPerguntaFormulario
+          formulario={formularios}
           perguntas={perguntas}
-          titulo={titulo}
+          perguntasAlterar={perguntasAlterar}
         />
       </Modal>
-
     </div>
   );
 }

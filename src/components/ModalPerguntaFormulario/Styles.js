@@ -1,42 +1,51 @@
 import styled from "styled-components";
-import { Cores } from "../../variaveis";
+import { Cores, Fontes } from "../../variaveis";
 
-export const ContainerModalPerguntaFormulario = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: column;
-
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: 50%;
-  padding: 2% 7%;
+  height: 100%;
+  padding: 5%;
+  background-color: ${Cores.cinza[8]};
 
-  label{
-    height: 100%;
-  }
+`;
 
-  @media (max-width: 950px) and (min-width: 560px) {
-    padding: 2% 10% 2% 10%;
-  }
-  @media (max-width: 560px) {
-    padding: 2% 0% 2% 0%;
+export const PerguntaBotao = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-self: center;
+  width: 100%;
+  margin-bottom: 3%;
+
+  @media (max-width: 830px) {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom:20px;
   }
 `;
 
-export const Titulo = styled.div`
+export const Pergunta = styled.div`
+  font-size: 1.3em;
+  font-family: ${Fontes.roboto};
+  width: 70%;
+  align-self: center;
+
+
+  
+  @media (max-width: 830px) {
+    width: 100%;
+    font-size: 1em;
+    text-align: center;
+  }
+
+`;
+
+export const TextoSemPerguntas = styled.div`
   display: flex;
-  align-items: center;
   justify-content: center;
-  text-align: center;
-  font-family: "Roboto Condensed", sans-serif;
-  font-size: 2em;
-  color: ${Cores.preto};
-  margin: 3% 0;
-  @media (max-width: 950px) and (min-width: 560px) {
-    font-size: 1.5em;
-  }
-  @media (max-width: 560px) {
-    font-size: 1.2em;
-    margin-bottom: 8%;
-  }
+  color: ${Cores.azulEscuro};
 `;
