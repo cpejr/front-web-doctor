@@ -449,7 +449,7 @@ function FormularioEspecifico(props) {
         centered={true}
         footer={null}
       >
-        <ModalFormulario
+        <ModalPerguntaFormulario
           perguntas={perguntas}
           titulo={titulo}
         />
