@@ -18,7 +18,7 @@ import {
 } from "./Styles";
 import Input from "../../styles/Input";
 import { Cores } from "../../variaveis";
-import Select from "../../styles/Select/Select";
+import { Select, SelectContainer } from "./SelectTeste";
 import Button from "../../styles/Button";
 import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -134,28 +134,28 @@ function CriacaoFormulario() {
           onChange={preenchendoDados}
         ></Input>
         <TitulosInput>Urgência:</TitulosInput>
-        <Select
-          id="urgencia"
-          borderWidth="2px"
-          marginTop="0px"
-          backgroundColor={Cores.cinza[7]}
-          color={Cores.preto}
-          width="100%"
-          name="urgencia"
-          camposVazios={camposVazios.urgencia}
-          onChange={preenchendoDados}
-        >
-          <option value="">Urgência</option>
-          <option value="1" borderColor={Cores.azul}>
-            1
-          </option>
-          <option value="2" borderColor={Cores.azul}>
-            2
-          </option>
-          <option value="3" borderColor={Cores.azul}>
-            3
-          </option>
-        </Select>
+        <SelectContainer borderWidth="2px" width="100%">
+          <Select
+            id="urgencia"
+            marginTop="0px"
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.preto}
+            name="urgencia"
+            camposVazios={camposVazios.urgencia}
+            onChange={preenchendoDados}
+          >
+            <option value="">Urgência</option>
+            <option value="1" borderColor={Cores.azul}>
+              1
+            </option>
+            <option value="2" borderColor={Cores.azul}>
+              2
+            </option>
+            <option value="3" borderColor={Cores.azul}>
+              3
+            </option>
+          </Select>
+        </SelectContainer>
         <Button
           height="50px"
           width="100%"
@@ -174,9 +174,9 @@ function CriacaoFormulario() {
       <Instrucao>
         <TextoInstrucao>
           Aperte no + verde abaixo. Em seguida, clique em “Create”. Mantenha o
-          campo “Object Name” preenchido com um nome único e escreva a
-          pergunta em “Display Name”. Escolha o tipo do input em “Input Type”.
-          Quando finalizar, clique em “Criar”.
+          campo “Object Name” preenchido com um nome único e escreva a pergunta
+          em “Display Name”. Escolha o tipo do input em “Input Type”. Quando
+          finalizar, clique em “Criar”.
         </TextoInstrucao>
       </Instrucao>
       <Formulario>

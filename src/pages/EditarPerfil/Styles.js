@@ -131,19 +131,30 @@ export const CaixaBotao = styled.div`
 export const ImagemPerfil = styled.div`
   display: flex;
   justify-content: center;
+  font-size: 12em;
+  margin-bottom: 1%;
   .fotoPerfil {
-    border-radius: 3px;
+    font-size: 12em;
+    align-items: center;
+    justify-content: center;
+    width: 200px;
+    height: 200px;
+    margin-bottom: 4%;
     border-radius: 3px;
     box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
     @media (max-width: 930px) {
-      width: 100%;
-      height: 100%;
+      font-size: 8em;
+      width: 150px;
+      height: 150px;
     }
     @media (max-width: 670px) {
       width: 50%;
       height: 80%;
     }
   }
+  @media (max-width: 930px) {
+      font-size: 8em;
+    }
 `;
 
 export const CaixaBotoesFoto = styled.div`
