@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Input, Select } from "antd";
-import { LoadingOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import moment from 'moment';
+import { LoadingOutlined } from "@ant-design/icons";
 import { Spin, Modal } from "antd";
 import {
 	compararDataRecente,
-	FormatarDataShort,
 } from "../../utils/tratamentoErros";
 import {
 	TopoPagina,
@@ -26,7 +26,6 @@ import {
 import Button from "../../styles/Button";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
-import { blue } from "@mui/material/colors";
 import ModalExcluirReceita from "../../components/ModalExcluirReceita";
 
 function AreaReceitas() {
@@ -36,7 +35,6 @@ function AreaReceitas() {
 	const { Search } = Input;
 	const [pacientes, setPacientes] = useState([]);
 	const [receitas, setReceitas] = useState([]);
-	const [carregando, setCarregando] = useState(true);
 	const [pacienteSelect, setPacienteSelect] = useState("");
 	const [busca, setBusca] = useState("");
 	const [modalDeletarReceita, setModalDeletarReceita] = useState(false);
@@ -47,7 +45,6 @@ function AreaReceitas() {
 		.toLowerCase()
 		.normalize("NFD")
 		.replace(/[\u0300-\u036f]/g, "");
-	const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 	const antIconPagina = (
 		<LoadingOutlined style={{ fontSize: 40, color: Cores.azulEscuro }} spin />
 	);
@@ -82,13 +79,19 @@ function AreaReceitas() {
 
 	async function pegandoDadosReceitas() {
 		setCarregandoPagina(true);
-		setReceitas([]);
 		const resposta = await managerService.GetReceitas();
-		resposta.sort(compararDataRecente).forEach((receita) => {
-			receita.data_criacao = FormatarDataShort(receita.data_criacao);
-			setReceitas((receitas) => [...receitas, receita]);
-			setCarregando(false);
-		});
+		const receitasFormatadas = resposta
+			.sort(compararDataRecente)
+			.map(({ data_criacao, ...resto }) => ({ 
+				data_criacao: moment(data_criacao).format('DD/MM/YYYY'), 
+				...resto
+			}))
+		// resposta.sort(compararDataRecente).forEach((receita) => {
+		// 	receita.data_criacao = FormatarDataShort(receita.data_criacao);
+		// 	setReceitas((receitas) => [...receitas, receita]);
+		// });
+
+		setReceitas(receitasFormatadas);
 		setCarregandoPagina(false);
 	}
 
@@ -99,7 +102,6 @@ function AreaReceitas() {
 		resposta.forEach((usuario) => {
 			if (usuario.tipo === "PACIENTE") {
 				setPacientes((usuarios) => [...usuarios, usuario]);
-				setCarregando(false);
 			}
 		});
 	}
@@ -185,28 +187,10 @@ function AreaReceitas() {
 					<>
 						<ContainerReceitas>
 							{receitasFiltradas.map((value) => (
-								<Receita key={value.id}>
-									<Titulo>
-										{carregando ? (
-											<Spin indicator={antIcon} />
-										) : (
-											<div>{value.titulo}</div>
-										)}
-									</Titulo>
-									<NomePaciente>
-										{carregando ? (
-											<Spin indicator={antIcon} />
-										) : (
-											<div>{value.nome}</div>
-										)}
-									</NomePaciente>
-									<DataCriacao>
-										{carregando ? (
-											<Spin indicator={antIcon} />
-										) : (
-											<div> {value.data_criacao} </div>
-										)}
-									</DataCriacao>
+								<Receita key={value?.id}>
+									<Titulo>{value?.titulo}</Titulo>
+									<NomePaciente>{value?.nome}</NomePaciente>
+									<DataCriacao>{value?.data_criacao}</DataCriacao>
 									<BotaoDeletar>
 										<Button
 											backgroundColor={Cores.cinza[7]}
