@@ -18,6 +18,24 @@ export const ContainerModalExcluir = styled.div`
   }
 `;
 
+
+export const Titulo = styled.h3`
+  font-family: ${Fontes.barlow};
+  font-weight: 500;
+  font-size: 1.2em;
+  color: ${Cores.azulEscuro};
+  text-align: center;
+  margin-bottom: 20px;
+
+  @media (max-width: 850px) and (min-width: 560px) {
+    font-size: 1.1em;
+  }
+
+  @media (max-width: 560px) {
+    font-size: 1em;
+  }
+`;
+
 export const CaixaBotaoUpload = styled.div`
   display: flex;
   justify-content: center;

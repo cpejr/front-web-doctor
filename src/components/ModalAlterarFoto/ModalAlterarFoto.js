@@ -1,20 +1,19 @@
-import React, { useState, useEffect } from "react";
-import Button from "../../styles/Button";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { Spin, Upload } from "antd";
-import AddToast from "../AddToast/AddToast";
-import * as managerService from "../../services/ManagerService/managerService";
-import { sleep } from "../../utils/sleep";
-import { Cores } from "../../variaveis";
+import React, { useState, useEffect } from 'react';
+import Button from '../../styles/Button';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Spin, Upload } from 'antd';
+import AddToast from '../AddToast/AddToast';
+import * as managerService from '../../services/ManagerService/managerService';
+import { sleep } from '../../utils/sleep';
+import { Cores } from '../../variaveis';
 import {
   ContainerModalExcluir,
-  ConteudoModalExcluir,
   ContainerFooterModalExcluir,
   CaixaLoader,
   CaixaBotaoUpload,
-} from "./Styles";
-import { toast } from "react-toastify";
-
+  Titulo
+} from './Styles';
+import { toast } from 'react-toastify';
 
 function ModalAlterarFoto(props) {
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
@@ -24,11 +23,9 @@ function ModalAlterarFoto(props) {
     <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin />
   );
 
-
-
   const getBase64 = (img, callback) => {
     const reader = new FileReader();
-    reader.addEventListener("load", () => callback(reader.result));
+    reader.addEventListener('load', () => callback(reader.result));
     reader.readAsDataURL(img);
   };
 
@@ -46,17 +43,17 @@ function ModalAlterarFoto(props) {
   );
 
   const beforeUpload = (file) => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
 
     if (!isJpgOrPng) {
-      toast.error("You can only upload JPG/PNG file!");
+      toast.error('You can only upload JPG/PNG file!');
       setCarregando(true);
     }
 
     const isLt2M = file.size / 1024 / 1024 < 2;
 
     if (!isLt2M) {
-      toast.error("Image must smaller than 2MB!");
+      toast.error('Image must smaller than 2MB!');
       setCarregando(true);
     }
 
@@ -67,62 +64,63 @@ function ModalAlterarFoto(props) {
     // Get this url from response in real world.
     setCarregando(true);
     getBase64(info.file.originFileObj, (url) => {
-    setCarregando(false);
-    setImageUrl(url);
+      setCarregando(false);
+      setImageUrl(url);
     });
   }
 
   async function updateFoto() {
     if (imageUrl) {
-      console.log("chegou");
       setCarregandoDeletar(true);
       await managerService.UpdateFotoDePerfil(props.idUsuario, imageUrl);
       setImageUrl(null);
       props.fecharModal();
       setCarregandoDeletar(false);
     } else {
-      toast.error("Selecione uma foto para enviar!");
+      toast.error('Selecione uma foto para enviar!');
     }
   }
 
   return (
     <div>
       <ContainerModalExcluir>
+        <Titulo>
+          Selecione uma imagem para personalizar seu perfil:
+        </Titulo>
         <CaixaBotaoUpload>
           <Upload
-            name="avatar"
-            listType="picture-card"
-            className="avatar-uploader"
+            name='avatar'
+            listType='picture-card'
+            className='avatar-uploader'
             showUploadList={false}
             beforeUpload={beforeUpload}
             onChange={handleChange}
           >
             {imageUrl ? (
-          <img
-            src={imageUrl}
-            alt="avatar"
-            style={{
-              width: "100%",
-              height: "100%"
-            }}
-          />
-        ) : (
-          uploadButton
-        )}
+              <img
+                src={imageUrl}
+                alt='avatar'
+                style={{
+                  width: '100%',
+                  height: '100%',
+                }}
+              />
+            ) : (
+              uploadButton
+            )}
           </Upload>
         </CaixaBotaoUpload>
 
         <ContainerFooterModalExcluir>
           <Button
             color={Cores.azulEscuro}
-            fontWeight="normal"
+            fontWeight='normal'
             borderColor={Cores.cinza[3]}
-            height="28px"
-            width="35%"
-            widthMedia670="50%"
-            fontSize="13px"
+            height='28px'
+            width='35%'
+            widthMedia670='50%'
+            fontSize='13px'
             onClick={props.fecharModal}
-
           >
             Cancelar
           </Button>
@@ -131,11 +129,11 @@ function ModalAlterarFoto(props) {
             backgroundColor={Cores.lilas[2]}
             color={Cores.azulEscuro}
             borderColor={Cores.azulEscuro}
-            fontWeight="normal"
-            height="28px"
-            width="35%"
-            widthMedia670="50%"
-            fontSize="13px"
+            fontWeight='normal'
+            height='28px'
+            width='35%'
+            widthMedia670='50%'
+            fontSize='13px'
             onClick={() => {
               updateFoto();
             }}
@@ -145,7 +143,7 @@ function ModalAlterarFoto(props) {
                 <Spin indicator={antIconModal} />
               </CaixaLoader>
             ) : (
-              "Confirmar"
+              'Confirmar'
             )}
           </Button>
         </ContainerFooterModalExcluir>

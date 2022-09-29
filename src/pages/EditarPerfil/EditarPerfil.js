@@ -444,7 +444,7 @@ function EditarPerfil() {
             <ImagemPerfil>
               {carregandoFoto ? (
                 <div>
-                  <Spin size="large" indicator={antIconFoto} />
+                  <Spin size="large" indicator={antIconFoto} style={{ color: Cores.azul }}/>
                 </div>
               ) : (
                 <>
