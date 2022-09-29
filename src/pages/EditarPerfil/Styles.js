@@ -30,7 +30,7 @@ export const ColunaEsquerda = styled.div`
   padding: 2% 4% 2% 4%;
   @media (max-width: 930px) {
     justify-content: space-around;
-    height: 30vh;
+    height: 35vh;
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -149,6 +149,7 @@ export const CaixaBotoesFoto = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 40px;
+  gap: 10px;
   @media (max-width: 930px) {
     margin-top: 10px;
   }
@@ -184,7 +185,7 @@ export const BlocoInferior = styled.div`
   }
   @media (max-width: 480px) {
     display: flex;
-    height: 7vh;
+    height: 8.5vh;
     flex-direction: row;
     width: 100%;
     gap: 2%;

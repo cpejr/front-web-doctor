@@ -3,6 +3,7 @@ import { Cores, Fontes } from "../../variaveis";
 
 export const ContainerModalExcluir = styled.div`
   display: flex;
+  align-items: center;
   flex-direction: column;
   width: 100%;
   height: 100%;
@@ -21,7 +22,7 @@ export const CaixaBotaoUpload = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: auto;
   height: auto;
 `;
 
@@ -53,5 +54,7 @@ export const ContainerFooterModalExcluir = styled.h3`
 `
 
 export const CaixaLoader = styled.div`
-  padding-bottom: 6%;
+  padding-bottom: 4%;
+  display: flex;
+  align-items: center;
 `;

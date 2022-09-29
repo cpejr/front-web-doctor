@@ -468,7 +468,7 @@ function EditarPerfil() {
                 setModalExcluirFotoPerfil(true);
               }}
             >
-              Excluir Foto de Perfil
+              Excluir Foto De Perfil
             </Button>
           </CaixaBotoesFoto>
         </BlocoSuperior>
