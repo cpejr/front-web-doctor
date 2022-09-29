@@ -450,7 +450,6 @@ function FormularioEspecifico(props) {
         footer={null}
       >
         <ModalPerguntaFormulario
-          formulario={formularios}
           perguntas={perguntas}
           perguntasAlterar={perguntasAlterar}
         />
