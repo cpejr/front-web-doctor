@@ -6,6 +6,12 @@ export const logarUsuario = (email, senha) =>
     senha,
   });
 
+export const criarUsuario = async (endereco, usuario) => {
+ const res = await api.post("/enderecos", endereco);
+  const response = await api.post("/usuarios", { ...usuario, id_endereco: res.data.id });
+  const userId = response.data.id;
+  return userId;
+};
 export const criarUsuario = (endereco, usuario) =>
   api.post('/enderecos', endereco).then((res) => {
     api.post('/usuarios', { ...usuario, id_endereco: res.data.id });
@@ -23,8 +29,13 @@ export const updateDadosUsuario = (id_usuario, id_endereco, endereco, estado) =>
     api.put(`/usuarios/${id_usuario}`, { ...estado, id_endereco: res.data.id });
   });
 
-export const updateNotificacaoAtivaFormularioPaciente = (id, notificacao_ativa) =>
-  api.put(`/formularios_pacientes/${id}`, {notificacao_ativa: notificacao_ativa});
+export const updateNotificacaoAtivaFormularioPaciente = (
+  id,
+  notificacao_ativa
+) =>
+  api.put(`/formularios_pacientes/${id}`, {
+    notificacao_ativa: notificacao_ativa,
+  });
 
 export const updateCodigo = (id_usuario, codigo) =>
   api.put(`/usuarios/${id_usuario}`, { codigo: codigo });
@@ -103,12 +114,23 @@ export const editarPerguntasFormulario = (id, perguntas) =>
 export const editarCamposFormulario = (id, campos) =>
   api.put(`/formularios/${id}`, campos);
 
-  export const requisicaoTodosFormulariosPaciente = () =>
+export const requisicaoTodosFormulariosPaciente = () =>
   api.get("/formularios_pacientes");
 
-export const enviarFormularioPaciente = (status, notificacao_ativa, id_formulario, id_usuario) =>
-  api.post("/formularios_pacientes", { status, notificacao_ativa, id_formulario, id_usuario });
+export const enviarFormularioPaciente = (
+  status,
+  notificacao_ativa,
+  id_formulario,
+  id_usuario
+) =>
+  api.post("/formularios_pacientes", {
+    status,
+    notificacao_ativa,
+    id_formulario,
+    id_usuario,
+  });
 
+export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
 
 export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
 

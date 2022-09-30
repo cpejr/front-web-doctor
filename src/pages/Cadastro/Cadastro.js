@@ -61,6 +61,7 @@ function Cadastro(props) {
     nome_cuidador: false,
     telefone_cuidador: false,
   });
+  const [idUserFormularioPaciente, setIdUserFormularioPaciente] = useState();
   const [enderecoBack, setEnderecoBack] = useState({});
   const [estado, setEstado] = useState({});
   const [carregando, setCarregando] = useState(false);
@@ -69,6 +70,7 @@ function Cadastro(props) {
   const [cuidador, setCuidador] = useState(false);
   const [ontem, setOntem] = useState('');
   const errors = {};
+  const idFormulario = "cc1f729c-0968-4935-a80f-f53561000bb5";
   const testeOriginal = {
     tipo: false,
     nome: false,
@@ -188,6 +190,20 @@ function Cadastro(props) {
     setErro({ ...erro, telefone_cuidador: false });
   }
 
+  async function enviandoFormularioPaciente(id) {
+    setCarregando(true);
+
+    await managerService.EnviandoFormularioPaciente(
+      false,
+      false,
+      idFormulario,
+      id,
+      false
+    );
+
+    setCarregando(false);
+  }
+
   async function requisicaoCadastro() {
     setCarregando(true);
 
@@ -272,8 +288,13 @@ function Cadastro(props) {
 
     if (_.isEqual(camposVazios, testeTemp)) {
       if (usuario.senha === usuario.senhaConfirmada) {
-        await managerService.Cadastrando(usuario, enderecoBack);
+        const idUsuario = await managerService.Cadastrando(
+          usuario,
+          enderecoBack
+        );
+        enviandoFormularioPaciente(idUsuario);
         await sleep(1500);
+        
         setCarregando(false);
         window.location.href = '/web/listadeusuario';
       } else {
