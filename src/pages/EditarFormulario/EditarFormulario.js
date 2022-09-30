@@ -13,7 +13,6 @@ import {
 } from "./Styles";
 import Select from "../../styles/Select/Select";
 import Button from "../../styles/Button";
-import * as managerService from "../../services/ManagerService/managerService";
 import ModalEditarFormulario from "../../components/ModalEditarFormulario";
 import { Modal, Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -21,10 +20,12 @@ import _ from "lodash";
 import { toast } from "react-toastify";
 import { sleep } from "../../utils/sleep";
 import "bootstrap/dist/css/bootstrap.min.css";
+import * as managerService from "../../services/ManagerService/managerService";
 
 function EditarFormulario(props) {
   const [formularios, setFormularios] = useState();
   const [carregando, setCarregando] = useState(true);
+  const [carregandoConcluido, setCarregandoConcluido] = useState();
   const [modalAlterar, setModalAlterar] = useState();
   const [perguntas, setPerguntas] = useState();
   const [perguntasAlterar, setPerguntasAlterar] = useState();
@@ -33,9 +34,7 @@ function EditarFormulario(props) {
   const [schema, setSchema] = useState("");
   const [estado, setEstado] = useState({});
   const [campos, setCampos] = useState({});
-
   const [botaoForms, setBotaoForms] = useState(false);
-
   const [carregandoBotaoAtualizar, setCarregandoBotaoAtualizar] =
     useState(false);
 
@@ -57,6 +56,10 @@ function EditarFormulario(props) {
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
   );
 
+  const antIconAtualizarCampos = (
+    <LoadingOutlined style={{ fontSize: 24, color: Cores.azul }} spin />
+  );
+
   async function pegandoDados() {
     setCarregando(true);
     const resposta = await managerService.GetFormularioEspecifico(
@@ -73,6 +76,7 @@ function EditarFormulario(props) {
   }, [props]);
 
   async function atualizarDados() {
+    setCarregandoConcluido(true);
     if (botaoForms) {
       let aux = JSON.parse(schema);
 
@@ -84,16 +88,15 @@ function EditarFormulario(props) {
           formularios.perguntas.properties,
           estado.properties
         );
-
-
         estado.properties = auxiliar;
         await managerService.EditarPerguntasFormulario(formularios.id, estado);
         await sleep(1500);
-        window.location.href = "/web/listaformularios";
+        document.location.reload(true);
       }
     } else {
       toast.error("Adicione uma pergunta para concluir esta ação.");
     }
+    setCarregandoConcluido(false);
   }
 
   async function atualizarCamposQueNaoSaoPerguntas() {
@@ -104,8 +107,8 @@ function EditarFormulario(props) {
       setCarregandoBotaoAtualizar(false);
     } else {
       await managerService.EditarFormularios(formularios.id, campos);
-      await sleep(1500);
-      window.location.href = "/web/listaformularios";
+      await sleep(1000);
+      document.location.reload(true);
       setCarregandoBotaoAtualizar(false);
     }
   }
@@ -134,6 +137,12 @@ function EditarFormulario(props) {
     setUiSchema(newUiSchema);
 
     setBotaoForms(true);
+  }
+
+
+  async function fechandoModalAlterarPerguntas() {
+    setModalAlterar(false);
+    pegandoDados();
   }
 
   return (
@@ -224,7 +233,7 @@ function EditarFormulario(props) {
               marginTop="4%"
             >
               {carregandoBotaoAtualizar ? (
-                <Spin indicator={antIcon} />
+                <Spin indicator={antIconAtualizarCampos} />
               ) : (
                 <>Atualizar campos</>
               )}
@@ -265,7 +274,6 @@ function EditarFormulario(props) {
                 onChange={mudancasForm}
                 mods={TirandoCabecalho}
               />
-
               <Button
                 height="50px"
                 width="50%"
@@ -277,7 +285,11 @@ function EditarFormulario(props) {
                 fontWeight="bold"
                 onClick={() => atualizarDados()}
               >
-                Concluído
+                {carregandoConcluido ? (
+                  <Spin indicator={antIconAtualizarCampos} />
+                ) : (
+                  <>Concluído</>
+                )}
               </Button>
             </ContainerAdicionarPergunta>
           </>
@@ -295,6 +307,7 @@ function EditarFormulario(props) {
           formulario={formularios}
           perguntas={perguntas}
           perguntasAlterar={perguntasAlterar}
+          fechandoModal={() => fechandoModalAlterarPerguntas()}
         />
       </Modal>
     </Container>

@@ -45,11 +45,16 @@ export const FotoPerfil = styled.div`
   justify-content: center;
   width: 26%;
   height: 10%;
+  font-size: 9em;
   .logo {
     border-radius: 3px;
   }
-  @media (max-width: 640px) {
+  @media (max-width: 760px) {
+    font-size: 6em;
+  }
+  @media (max-width: 560px) {
     width: 28%;
+    font-size: 4em;
   }
 `;
 export const NomeData = styled.div`

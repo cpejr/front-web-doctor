@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Input, Select, Modal } from "antd";
-import { LoadingOutlined, PlusCircleOutlined } from "@ant-design/icons";
+import {
+  LoadingOutlined,
+  PlusCircleOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 import { Spin } from "antd";
 import {
   TopoPagina,
@@ -47,6 +51,7 @@ function ListaUsuarios() {
   const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
   const [carregandoPagina, setCarregandoPagina] = useState(true);
+  const [carregandoFoto, setCarregandoFoto] = useState(true);
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [emailPaciente, setEmailPaciente] = useState(false);
   const [modalAdicionarCodigo, setModalAdicionarCodigo] = useState(false);
@@ -178,6 +183,7 @@ function ListaUsuarios() {
         if (usuario.tipo === "PACIENTE" || usuario.tipo === "SECRETARIA(O)") {
           setUsuarios((usuarios) => [...usuarios, usuario]);
           setandoUltimaConsulta(usuario, consultas);
+          setandoFotoDePerfil(usuario);
         }
       });
     } else {
@@ -185,10 +191,11 @@ function ListaUsuarios() {
         if (usuario.tipo === "PACIENTE") {
           setUsuarios((usuarios) => [...usuarios, usuario]);
           setandoUltimaConsulta(usuario, consultas);
+          setandoFotoDePerfil(usuario);
         }
       });
     }
-    await sleep(700);
+    await sleep(1400);
     setCarregandoPagina(false);
   }
 
@@ -243,6 +250,24 @@ function ListaUsuarios() {
     });
   }
 
+  async function setandoFotoDePerfil(usuario) {
+    const chave = usuario.avatar_url;
+
+    if (chave !== null && chave !== "") {
+      setCarregandoFoto(true);
+      const arquivo = await managerService.GetArquivoPorChave(chave);
+      Object.defineProperty(usuario, "fotoDePerfil", {
+        value: arquivo,
+      });
+    }
+    else {
+      setCarregandoFoto(false);
+      return;
+    }
+    await sleep(1700);
+    setCarregandoFoto(false);
+  }
+
   async function setandoUltimaConsulta(usuario, consultas) {
     if (usuario.tipo === "SECRETARIA(O)") {
       return;
@@ -288,24 +313,20 @@ function ListaUsuarios() {
     var nome1 = a.nome.toUpperCase();
     var nome2 = b.nome.toUpperCase();
 
-    if(visitaSelect === "")
-    {
+    if (visitaSelect === "") {
       if (nome1 > nome2) {
         return 1;
       } else {
         return -1;
       }
-    }else{
+    } else {
       if (data1 < data2) {
         return 1;
       } else {
         return -1;
       }
     }
-  
-  };  
-
- 
+  };
 
   return (
     <div>
@@ -362,38 +383,38 @@ function ListaUsuarios() {
         {tipoUsuarioLogado === "MASTER" ? (
           <BotoesMedico>
             <CaixaBotaoMedico>
-            <Button
-              backgroundColor={Cores.cinza[7]}
-              color={Cores.azul}
-              width="100%"
-              height="50px"
-              marginTop = "0px"
-              borderColor={Cores.azul}
-              fontSize="1em"
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              widthMedia600="100%"
-              onClick={() => passandoTipoParaCadastro("PACIENTE")}
-            >
-              Cadastrar Novo Paciente
-              <PlusCircleOutlined style={{ color: Cores.azul }} />
-            </Button>
+              <Button
+                backgroundColor={Cores.cinza[7]}
+                color={Cores.azul}
+                width="100%"
+                height="50px"
+                marginTop="0px"
+                borderColor={Cores.azul}
+                fontSize="1em"
+                boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+                widthMedia600="100%"
+                onClick={() => passandoTipoParaCadastro("PACIENTE")}
+              >
+                Cadastrar Novo Paciente
+                <PlusCircleOutlined style={{ color: Cores.azul }} />
+              </Button>
             </CaixaBotaoMedico>
             <CaixaBotaoMedico>
-            <Button
-              backgroundColor={Cores.cinza[7]}
-              marginTop = "0px"
-              color={Cores.azul}
-              width="100%"
-              height="50px"
-              borderColor={Cores.azul}
-              fontSize="1em"
-              boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-              widthMedia600="100%"
-              onClick={() => passandoTipoParaCadastro("SECRETARIA(O)")}
-            >
-              Cadastrar nova(o) Secretária(o)
-              <PlusCircleOutlined style={{ color: Cores.azul }} />
-            </Button>
+              <Button
+                backgroundColor={Cores.cinza[7]}
+                marginTop="0px"
+                color={Cores.azul}
+                width="100%"
+                height="50px"
+                borderColor={Cores.azul}
+                fontSize="1em"
+                boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+                widthMedia600="100%"
+                onClick={() => passandoTipoParaCadastro("SECRETARIA(O)")}
+              >
+                Cadastrar nova(o) Secretária(o)
+                <PlusCircleOutlined style={{ color: Cores.azul }} />
+              </Button>
             </CaixaBotaoMedico>
           </BotoesMedico>
         ) : (
@@ -403,7 +424,7 @@ function ListaUsuarios() {
               color={Cores.azul}
               width="100%"
               height="50px"
-              marginTop = "10px"
+              marginTop="10px"
               borderColor={Cores.azul}
               fontSize="1em"
               boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
@@ -438,7 +459,37 @@ function ListaUsuarios() {
             <ContainerUsuarios>
               {usuariosFiltrados?.sort(ordenarusuarios).map((value) => (
                 <Usuario>
-                  <Imagem>{value.avatar_url}</Imagem>
+                  {value.avatar_url === null || value.avatar_url === "" ? (
+                    <Imagem>
+                      {carregandoFoto ? (
+                        <div>
+                          <Spin size="small" indicator={antIconPagina} />
+                        </div>
+                      ) : (
+                        <>
+                          <UserOutlined style={{ fontSize: "2.5em" }} />
+                        </>
+                      )}
+                    </Imagem>
+                  ) : (
+                    <Imagem>
+                      {carregandoFoto ? (
+                        <div>
+                          <Spin size="small" indicator={antIconPagina} />
+                        </div>
+                      ) : (
+                        <>
+                          <img
+                            src={value.fotoDePerfil}
+                            className="foto"
+                            alt="fotoPerfil"
+                            height="100%"
+                            width="100%"
+                          ></img>
+                        </>
+                      )}
+                    </Imagem>
+                  )}
                   <Nome>
                     <div
                       onClick={() =>
@@ -463,7 +514,6 @@ function ListaUsuarios() {
                         value.ultimaConsulta.slice(0, 4)}
                     </UltimaVisita>
                   )}
-
                   <CódigoPaciente>{value.codigo}</CódigoPaciente>
                   {tipoUsuarioLogado === "MASTER" ? (
                     <BotaoAdicionar>
