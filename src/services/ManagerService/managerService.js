@@ -2,8 +2,6 @@ import { login } from '../../services/auth';
 import requisicaoErro from '../../utils/HttpErros';
 import * as requesterService from '../RequesterService/requesterService';
 import { toast } from 'react-toastify';
-import { redirecionamento } from '../../utils/sleep';
-import { recebeTipo } from '../../services/auth';
 
 const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
