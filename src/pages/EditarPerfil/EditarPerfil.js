@@ -789,6 +789,7 @@ function EditarPerfil() {
         footer={null}
         width={"50%"}
         centered={true}
+        destroyOnClose={true}
         style={{ maxWidth: "450px", minWidth: "250px" }}
       >
         <ModalAlterarFoto
