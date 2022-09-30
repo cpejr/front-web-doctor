@@ -7,15 +7,14 @@ export const logarUsuario = (email, senha) =>
   });
 
 export const criarUsuario = async (endereco, usuario) => {
- const res = await api.post("/enderecos", endereco);
-  const response = await api.post("/usuarios", { ...usuario, id_endereco: res.data.id });
+  const res = await api.post('/enderecos', endereco);
+  const response = await api.post('/usuarios', {
+    ...usuario,
+    id_endereco: res.data.id,
+  });
   const userId = response.data.id;
   return userId;
 };
-export const criarUsuario = (endereco, usuario) =>
-  api.post('/enderecos', endereco).then((res) => {
-    api.post('/usuarios', { ...usuario, id_endereco: res.data.id });
-  });
 
 export const recuperarSenha = (email) => api.put(`/alterar_senha/${email}`);
 
@@ -115,7 +114,7 @@ export const editarCamposFormulario = (id, campos) =>
   api.put(`/formularios/${id}`, campos);
 
 export const requisicaoTodosFormulariosPaciente = () =>
-  api.get("/formularios_pacientes");
+  api.get('/formularios_pacientes');
 
 export const enviarFormularioPaciente = (
   status,
@@ -123,14 +122,12 @@ export const enviarFormularioPaciente = (
   id_formulario,
   id_usuario
 ) =>
-  api.post("/formularios_pacientes", {
+  api.post('/formularios_pacientes', {
     status,
     notificacao_ativa,
     id_formulario,
     id_usuario,
   });
-
-export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
 
 export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
 
