@@ -101,7 +101,7 @@ function ModalNovaConversa({ setModalAdicionar }) {
     const { id } = await managerService.CriandoConversa(
       dadosParaCriarNovaConversa,
       {
-        mensagemSucesso: "Receita criada com sucesso",
+        mensagemSucesso: "Conversa criada com sucesso",
         tempo: 1500,
       }
     );
