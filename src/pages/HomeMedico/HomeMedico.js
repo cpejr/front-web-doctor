@@ -35,9 +35,7 @@ function HomeMedico() {
   useEffect(() => {
     PegaFormulariosPaciente();
   }, []);
-  
-  
-  
+
   async function PegaFormulariosPaciente() {
   
     setCarregando(true);

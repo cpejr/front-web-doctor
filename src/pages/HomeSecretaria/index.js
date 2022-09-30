@@ -1,2 +1,2 @@
-import HomeSecretaria from "./HomeSecretaria";
+import HomeSecretaria from './HomeSecretaria';
 export default HomeSecretaria;
