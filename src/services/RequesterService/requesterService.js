@@ -44,6 +44,7 @@ export const requisicaoDadosUsuario = (emailUrl) =>
 
 export const requisicaoReceitasPorUsuarioId = (id_usuario) =>
   api.get(`/usuarios_receitas/${id_usuario}`);
+  
 export const requisicaoDadosUsuarioPorToken = (token_usuario) =>
   api.get(`/usuarios_token/${token_usuario}`);
 
