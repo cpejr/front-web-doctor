@@ -77,8 +77,6 @@ function FormularioEspecifico(props) {
     <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
   );
 
-  
-
   async function pegandoDadosFormularioEspecifico() {
     const resposta = await managerService.GetFormularioEspecifico(
       props.location.state.id
@@ -147,8 +145,6 @@ function FormularioEspecifico(props) {
   useEffect(() => {
     pegandoFormularioPacientes();
   }, [props.location.state.id]);
-
- 
 
   useEffect(() => {
     setandoFotoDePerfil();
@@ -370,15 +366,17 @@ function FormularioEspecifico(props) {
             </ColunaEsquerda>
             <ColunaDireita>
               <BarraRespostas>
-                Aguardando respostas de {formularioRespostaPendente.length}{" "}
-                formulários.
+                {" "}
+                {formularioRespostaPendente.length === 1
+                  ? "Aguardando respostas de 1 formulário"
+                  : `Aguardando respostas de ${formularioRespostaPendente.length} formulários`}
               </BarraRespostas>
               <BarraRespostas>
                 {" "}
                 {formularioResposta.length < 2 ? (
                   <>
                     {formularioResposta.length === 1
-                      ? "1 formulário ja foi respondido"
+                      ? "1 formulário já foi respondido"
                       : "Nenhum formulário foi respondido"}
                   </>
                 ) : (
