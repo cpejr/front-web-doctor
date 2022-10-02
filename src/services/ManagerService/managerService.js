@@ -736,3 +736,20 @@ export const UpdateMensagensVisualizadas = async (id_usuario, id_conversa) => {
 
   return mensagensAtualizadas;
 };
+
+export const dispostivoById = async (id) => {
+  let dispositivo = {};
+
+ 
+
+  await requesterService
+    .dispostivoById(id)
+
+    .then((res) => {
+      dispositivo = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dispositivo;
+}

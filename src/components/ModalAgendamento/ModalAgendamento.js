@@ -21,6 +21,7 @@ import Button from '../../styles/Button';
 import ModalAgendamentoEspecifico from '../ModalAgendamentoEspecifico';
 import ModalEditarAgendamentoEspecifico from '../ModalEditarAgendamentoEspecifico';
 import ModalConsultaMarcada from '../ModalConsultaMarcada';
+import ModalExameMarcado from '../ModalExameMarcado';
 import { compararDataAntiga } from '../../utils/tratamentoErros';
 import * as managerService from '../../services/ManagerService/managerService';
 import { sleep } from '../../utils/sleep';
@@ -29,8 +30,10 @@ function ModalAgendamento(props) {
   const [consultas, setConsultas] = useState([]);
   const [consultaEspecifica, setConsultaEspecifica] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
+  const [exameEspecifico, setExameEspecifico] = useState([]);
   const [modalEditarAgendamento, setModalEditarAgendamento] = useState(false);
   const [modalConsultaMarcada, setModalConsultaMarcada] = useState(false);
+  const [modalExameMarcado, setModalExameMarcado] = useState(false);
   const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] =
     useState(false);
   const [quantidadeAgendamentos, setQuantidadeAgendamentos] = useState();
@@ -83,6 +86,11 @@ function ModalAgendamento(props) {
     setConsultaEspecifica(consulta);
   }
 
+  async function abreModalExameMarcado(exame) {
+    setModalExameMarcado(true);
+    setExameEspecifico(exame);
+  }
+
   async function fechandoModalEditarAgendamento() {
     setModalEditarAgendamento(false);
     pegandoDados();
@@ -90,6 +98,11 @@ function ModalAgendamento(props) {
 
   async function fechandoModalConsultaMarcada() {
     setModalConsultaMarcada(false);
+    pegandoDados();
+  }
+
+  async function fechandoModalExameMarcado() {
+    setModalExameMarcado(false);
     pegandoDados();
   }
 
@@ -181,20 +194,20 @@ function ModalAgendamento(props) {
               )}
               {tipoAgendamento === 'Exame' && (
                 <>
-                  {examesMarcados.map((value) => (
+                  {examesMarcados.sort(compararDataAntiga).map((value) => (
                     <Agendamento>
                       <CaixaAgendamento key={value.id}>
-                        <DiaHorarioAgendamento>
+                        <DiaHorarioAgendamento onClick={() => abreModalExameMarcado(value)}>
                           {value.data_hora.slice(8, -14)}/
                           {value.data_hora.slice(5, -17)}/
                           {value.data_hora.slice(0, -20)}
-                        </DiaHorarioAgendamento>
+                        </DiaHorarioAgendamento >
                         <BarraEstetica></BarraEstetica>
-                        <TextoAgendamentoEspecifico>
+                        <TextoAgendamentoEspecifico onClick={() => abreModalExameMarcado(value)}>
                           {value.titulo}
                         </TextoAgendamentoEspecifico>
                         <BarraEstetica></BarraEstetica>
-                        <DiaHorarioAgendamento>
+                        <DiaHorarioAgendamento onClick={() => abreModalExameMarcado(value)}>
                           {value.data_hora.slice(11, -11)}
                           {value.data_hora.slice(13, -8)}
                         </DiaHorarioAgendamento>
@@ -321,6 +334,23 @@ function ModalAgendamento(props) {
           fechandoModal={() => fechandoModalConsultaMarcada()}
         />
       </Modal>
+
+
+   {/*  <Modal
+        visible={ModalExameMarcado}
+        onCancel={fechandoModalExameMarcado}
+        footer={null}
+        width={'auto'}
+        centered={true}
+        style={{
+          backgroundColor: 'black',
+        }}
+      >
+        <ModalExameMarcado
+          exameEspecifico={exameEspecifico}
+          fechandoModal={() => fechandoModalExameMarcado()}
+        />
+      </Modal> */}
     </Container>
   );
 }
