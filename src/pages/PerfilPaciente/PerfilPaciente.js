@@ -77,6 +77,7 @@ function PerfilPaciente(props) {
   const [tipoUsuario, setTipoUsuario] = useState(false);
   const abertoPeloUsuario = true;
   const [fotoDePerfil, setFotoDePerfil] = useState("");
+  const [tipoAgendamento, setTipoAgendamento] = useState("");
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
@@ -163,7 +164,16 @@ function PerfilPaciente(props) {
     }
   }
 
-  async function marcandoAgendamento() {
+ 
+
+  async function setandoTipoExame() {
+    setTipoAgendamento("Exame");
+    setModalAgendamento(true);
+    
+  }
+
+  async function setandoTipoConsulta() {
+    setTipoAgendamento("Consulta");
     setModalAgendamento(true);
   }
 
@@ -320,11 +330,13 @@ function PerfilPaciente(props) {
                       height="40px"
                       width="100%"
                       fontSize="1.3em"
+                      onClick={()=> console.log(tipoAgendamento)}
                     >
                       Iniciar Conversa
                     </Button>
                   </Botao>
                   {tipoUsuario ? (
+                    <>
                     <Botao>
                       <Button
                         backgroundColor={Cores.lilas[2]}
@@ -334,11 +346,26 @@ function PerfilPaciente(props) {
                         height="40px"
                         width="100%"
                         fontSize="1.3em"
-                        onClick={() => marcandoAgendamento()}
+                        onClick={() => setandoTipoConsulta()}
                       >
-                        Agendamentos
+                        Consultas Agendadas
                       </Button>
                     </Botao>
+                     <Botao>
+                     <Button
+                       backgroundColor={Cores.lilas[2]}
+                       color={Cores.azulEscuro}
+                       fontWeight="bold"
+                       borderColor={Cores.azulEscuro}
+                       height="40px"
+                       width="100%"
+                       fontSize="1.3em"
+                       onClick={() =>setandoTipoExame()}
+                     >
+                       Exames Agendados
+                     </Button>
+                   </Botao>
+                   </>
                   ) : (
                     <></>
                   )}
@@ -462,11 +489,14 @@ function PerfilPaciente(props) {
         footer={null}
         width={"70%"}
         centered={true}
+        destroyOnClose
       >
         <ModalAgendamento
           abertoPeloUsuario={abertoPeloUsuario}
           id_usuario={usuario.id}
           email={usuario.email}
+          tipoAgendamento={tipoAgendamento}
+          
         />
       </Modal>
 
