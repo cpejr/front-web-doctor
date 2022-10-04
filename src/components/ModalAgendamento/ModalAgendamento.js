@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { LoadingOutlined } from '@ant-design/icons';
-import { Modal, Spin } from 'antd';
+import { Spin } from 'antd';
 import {
   Container,
   Caixa,
@@ -15,6 +15,7 @@ import {
   NumeroAgendamentos,
   BarraEstetica,
   BotoesEditarExcluir,
+  Modal,
 } from './Styles';
 import { Cores } from '../../variaveis';
 import Button from '../../styles/Button';
@@ -33,7 +34,7 @@ function ModalAgendamento(props) {
   const [exameEspecifico, setExameEspecifico] = useState([]);
   const [modalEditarAgendamento, setModalEditarAgendamento] = useState(false);
   const [modalConsultaMarcada, setModalConsultaMarcada] = useState(false);
-  const [modalExameMarcado, setModalExameMarcado] = useState(false);
+  const [modalExameVisivel, setModalExameVisivel] = useState(false);
   const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] =
     useState(false);
   const [quantidadeAgendamentos, setQuantidadeAgendamentos] = useState();
@@ -87,7 +88,7 @@ function ModalAgendamento(props) {
   }
 
   async function abreModalExameMarcado(exame) {
-    setModalExameMarcado(true);
+    setModalExameVisivel(true);
     setExameEspecifico(exame);
   }
 
@@ -102,7 +103,7 @@ function ModalAgendamento(props) {
   }
 
   async function fechandoModalExameMarcado() {
-    setModalExameMarcado(false);
+    setModalExameVisivel(false);
     pegandoDados();
   }
 
@@ -119,8 +120,11 @@ function ModalAgendamento(props) {
   return (
     <Container>
       <Caixa>
-        {tipoAgendamento === "Consulta" ? <Titulo>Consultas Marcadas:</Titulo> : <Titulo>Exames Marcados:</Titulo>}
-        
+        {tipoAgendamento === 'Consulta' ? (
+          <Titulo>Consultas Marcadas:</Titulo>
+        ) : (
+          <Titulo>Exames Marcados:</Titulo>
+        )}
 
         {carregando ? (
           <Spin indicator={antIcon} />
@@ -197,17 +201,23 @@ function ModalAgendamento(props) {
                   {examesMarcados.sort(compararDataAntiga).map((value) => (
                     <Agendamento>
                       <CaixaAgendamento key={value.id}>
-                        <DiaHorarioAgendamento onClick={() => abreModalExameMarcado(value)}>
+                        <DiaHorarioAgendamento
+                          onClick={() => abreModalExameMarcado(value)}
+                        >
                           {value.data_hora.slice(8, -14)}/
                           {value.data_hora.slice(5, -17)}/
                           {value.data_hora.slice(0, -20)}
-                        </DiaHorarioAgendamento >
+                        </DiaHorarioAgendamento>
                         <BarraEstetica></BarraEstetica>
-                        <TextoAgendamentoEspecifico onClick={() => abreModalExameMarcado(value)}>
+                        <TextoAgendamentoEspecifico
+                          onClick={() => abreModalExameMarcado(value)}
+                        >
                           {value.titulo}
                         </TextoAgendamentoEspecifico>
                         <BarraEstetica></BarraEstetica>
-                        <DiaHorarioAgendamento onClick={() => abreModalExameMarcado(value)}>
+                        <DiaHorarioAgendamento
+                          onClick={() => abreModalExameMarcado(value)}
+                        >
                           {value.data_hora.slice(11, -11)}
                           {value.data_hora.slice(13, -8)}
                         </DiaHorarioAgendamento>
@@ -252,24 +262,23 @@ function ModalAgendamento(props) {
 
             <InfoDireita>
               <NumeroAgendamentos>
-                {tipoAgendamento === "Consulta" ?  <>{consultas.length === 1 ? (
+                {tipoAgendamento === 'Consulta' ? (
                   <>
-                    O paciente  agendou {consultas.length} consulta
+                    {consultas.length === 1 ? (
+                      <>O paciente agendou {consultas.length} consulta</>
+                    ) : (
+                      <>O paciente agendou {examesMarcados.length} consultas</>
+                    )}
                   </>
                 ) : (
                   <>
-                    O paciente agendou {examesMarcados.length} consultas
+                    {examesMarcados.length === 1 ? (
+                      <>O paciente agendou {examesMarcados.length} exame</>
+                    ) : (
+                      <>O paciente agendou {examesMarcados.length} exames</>
+                    )}
                   </>
-                )}</> : <>{examesMarcados.length === 1 ? (
-                  <>
-                    O paciente  agendou {examesMarcados.length} exame
-                  </>
-                ) : (
-                  <>
-                    O paciente agendou {examesMarcados.length} exames
-                  </>
-                )}</> }
-               
+                )}
               </NumeroAgendamentos>
               <Button
                 width='100%'
@@ -294,7 +303,6 @@ function ModalAgendamento(props) {
       <Modal
         visible={modalAgendamentoEspecifico}
         onCancel={() => setModalAgendamentoEspecifico(false)}
-        footer={null}
         width={'70%'}
         centered={true}
       >
@@ -308,7 +316,6 @@ function ModalAgendamento(props) {
       <Modal
         visible={modalEditarAgendamento}
         onCancel={fechandoModalEditarAgendamento}
-        footer={null}
         width={'70%'}
         centered={true}
       >
@@ -322,12 +329,8 @@ function ModalAgendamento(props) {
       <Modal
         visible={modalConsultaMarcada}
         onCancel={fechandoModalConsultaMarcada}
-        footer={null}
         width={'auto'}
         centered={true}
-        style={{
-          backgroundColor: 'black',
-        }}
       >
         <ModalConsultaMarcada
           consulta={consultaEspecifica}
@@ -335,22 +338,17 @@ function ModalAgendamento(props) {
         />
       </Modal>
 
-
-   {/*  <Modal
-        visible={ModalExameMarcado}
+      <Modal
+        visible={modalExameVisivel}
         onCancel={fechandoModalExameMarcado}
-        footer={null}
         width={'auto'}
         centered={true}
-        style={{
-          backgroundColor: 'black',
-        }}
       >
         <ModalExameMarcado
-          exameEspecifico={exameEspecifico}
+          exame={exameEspecifico}
           fechandoModal={() => fechandoModalExameMarcado()}
         />
-      </Modal> */}
+      </Modal>
     </Container>
   );
 }

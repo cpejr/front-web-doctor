@@ -28,7 +28,7 @@ function ModalExameMarcado(props) {
   async function setandoValoresExame() {
     setCarregando(true);
     await sleep(1500);
-    setExame(props.exameEspecifico);
+    setExame(props.exame);
     setDataHora(String(props.exame.data_hora));
     setDataEnvio(String(props.exame.data_envio));
     setDataDevolucao(String(props.exame.data_devolucao));
