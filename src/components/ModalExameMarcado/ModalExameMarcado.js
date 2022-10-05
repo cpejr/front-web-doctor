@@ -28,8 +28,6 @@ function ModalExameMarcado(props) {
   const [estaDisponivel, setEstaDisponivel] = useState();
   const [estaAtrasado, setEstaAtrasado] = useState();
   const [dispositivo, setDispositivo] = useState('');
-  const idUsuario = props.exame.id_usuario;
-  const [usuario, setUsuario] = useState({});
   const [fotoDePerfil, setFotoDePerfil] = useState('');
   const [carregandoFoto, setCarregandoFoto] = useState(true);
 
@@ -37,9 +35,7 @@ function ModalExameMarcado(props) {
     <LoadingOutlined style={{ fontSize: 20, color: Cores.azul }} spin />
   );
 
-  useEffect(() => {
-    console.log(props.email);
-  }, [props]);
+
 
   async function setandoValoresExame() {
     setCarregando(true);
@@ -71,14 +67,9 @@ function ModalExameMarcado(props) {
     else setComparaDescricao(false);
   }
 
-  async function pegandoDados() {
-    const resposta = await managerService.GetDadosUsuario(props.email);
-    const data = new Date(resposta.dadosUsuario.data_nascimento);
-    setUsuario(resposta.dadosUsuario);
-  }
-
   async function setandoFotoDePerfil() {
-    const chave = usuario.avatar_url;
+    const resposta = await managerService.GetDadosUsuario(props.email);
+    const chave = resposta.dadosUsuario.avatar_url;
     if (chave === null || chave === '') return;
     setCarregandoFoto(true);
     const arquivo = await managerService.GetArquivoPorChave(chave);
@@ -88,7 +79,6 @@ function ModalExameMarcado(props) {
   }
 
   useEffect(() => {
-    pegandoDados();
     setandoValoresExame();
     setandoFotoDePerfil();
   }, [props]);
@@ -116,11 +106,26 @@ function ModalExameMarcado(props) {
         <Caixa>
           <CaixaNome>
             <FotoPerfil>
-              <img
-                src={fotoDePerfil}
-                className='foto'
-                alt='logoGuilherme'
-              ></img>
+              {carregandoFoto ? (
+                <div
+                  style={{
+                    display: 'flex',
+                    height: '30px',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Spin indicator={antIcon} />
+                </div>
+              ) : (
+                <img
+                  src={fotoDePerfil}
+                  className='foto'
+                  alt='fotoDePerfil'
+                  height='100%'
+                  width='100%'
+                ></img>
+              )}
             </FotoPerfil>
             <Texto>{exame.nome}</Texto>
           </CaixaNome>

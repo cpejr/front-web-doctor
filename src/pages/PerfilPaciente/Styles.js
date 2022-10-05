@@ -44,11 +44,13 @@ export const PerfilEsquerda = styled.div`
   flex-direction: column;
   height: 100%;
   width: 50%;
+  gap: 75px;
 
   @media (max-width: 1080px) {
     justify-content: center;
     width: 100%;
     align-items: center;
+    gap: 0px;
   }
 `;
 export const PerfilDireita = styled.div`

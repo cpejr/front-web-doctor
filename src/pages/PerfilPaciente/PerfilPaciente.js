@@ -114,7 +114,7 @@ function PerfilPaciente(props) {
     setConvenio(resposta.dadosUsuario.convenio);
     setCarregando(false);
 
-    console.log(resposta.dadosUsuario.avatar_url);
+    
 
     if (resposta.dadosUsuario.tipo === "PACIENTE") {
       setTipoUsuario(true);
@@ -128,7 +128,7 @@ function PerfilPaciente(props) {
   async function setandoFotoDePerfil() {
     const chave = usuario.avatar_url;
 
-    console.log(chave);
+
     if (chave === null || chave === "")
       return;
     setCarregandoFoto(true);
@@ -334,7 +334,6 @@ function PerfilPaciente(props) {
                       height="40px"
                       width="100%"
                       fontSize="1.3em"
-                      onClick={()=> console.log(tipoAgendamento)}
                     >
                       Iniciar Conversa
                     </Button>

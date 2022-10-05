@@ -14,6 +14,8 @@ function ModalConsultaMarcada(props) {
   const [dataHora, setDataHora] = useState("");
   const [consultorio, setConsultorio] = useState("");
   const [comparaDescricao, setComparaDescricao] = useState(false);
+  const [fotoDePerfil, setFotoDePerfil] = useState('');
+  const [carregandoFoto, setCarregandoFoto] = useState(true);
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 20, color: Cores.azul }} spin />
@@ -36,8 +38,20 @@ function ModalConsultaMarcada(props) {
       setComparaDescricao(false);
   }
 
+  async function setandoFotoDePerfil() {
+    const resposta = await managerService.GetDadosUsuario(props.email);
+    const chave = resposta.dadosUsuario.avatar_url;
+    if (chave === null || chave === '') return;
+    setCarregandoFoto(true);
+    const arquivo = await managerService.GetArquivoPorChave(chave);
+    setFotoDePerfil(arquivo);
+    await sleep(1500);
+    setCarregandoFoto(false);
+  }
+
   useEffect(() => {
     setandoValoresConsulta();
+    setandoFotoDePerfil();
   }, [props]);
 
   const margemBottomDescricao = comparaDescricao ? "8%" : "0%";
@@ -64,11 +78,26 @@ function ModalConsultaMarcada(props) {
         <Caixa>
           <CaixaNome>
             <FotoPerfil>
-              <img
-                src={logoGuilherme}
-                className="foto"
-                alt="logoGuilherme"
-              ></img>
+            {carregandoFoto ? (
+                <div
+                  style={{
+                    display: 'flex',
+                    height: '30px',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Spin indicator={antIcon} />
+                </div>
+              ) : (
+                <img
+                  src={fotoDePerfil}
+                  className='foto'
+                  alt='fotoDePerfil'
+                  height='100%'
+                  width='100%'
+                ></img>
+              )}
             </FotoPerfil>
             <Texto>
               {consulta.nome}
