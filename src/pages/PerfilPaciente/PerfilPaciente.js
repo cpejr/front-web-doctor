@@ -114,6 +114,8 @@ function PerfilPaciente(props) {
     setConvenio(resposta.dadosUsuario.convenio);
     setCarregando(false);
 
+    console.log(resposta.dadosUsuario.avatar_url);
+
     if (resposta.dadosUsuario.tipo === "PACIENTE") {
       setTipoUsuario(true);
     }
@@ -125,6 +127,8 @@ function PerfilPaciente(props) {
 
   async function setandoFotoDePerfil() {
     const chave = usuario.avatar_url;
+
+    console.log(chave);
     if (chave === null || chave === "")
       return;
     setCarregandoFoto(true);

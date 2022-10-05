@@ -301,6 +301,7 @@ function ModalAgendamento(props) {
         )}
       </Caixa>
       <Modal
+        destroyOnClose
         visible={modalAgendamentoEspecifico}
         onCancel={() => setModalAgendamentoEspecifico(false)}
         width={'70%'}
@@ -314,6 +315,7 @@ function ModalAgendamento(props) {
       </Modal>
 
       <Modal
+        destroyOnClose
         visible={modalEditarAgendamento}
         onCancel={fechandoModalEditarAgendamento}
         width={'70%'}
@@ -334,6 +336,7 @@ function ModalAgendamento(props) {
       >
         <ModalConsultaMarcada
           consulta={consultaEspecifica}
+          email={props.email}
           fechandoModal={() => fechandoModalConsultaMarcada()}
         />
       </Modal>
@@ -346,6 +349,7 @@ function ModalAgendamento(props) {
       >
         <ModalExameMarcado
           exame={exameEspecifico}
+          email={props.email}
           fechandoModal={() => fechandoModalExameMarcado()}
         />
       </Modal>

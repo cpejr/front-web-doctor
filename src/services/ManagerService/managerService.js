@@ -12,8 +12,8 @@ const sleep = (milliseconds) => {
 export const requisicaoLogin = async (email, senha) => {
   try {
     const resposta = await requesterService.logarUsuario(email, senha);
-    if (resposta.data.tipo === "PACIENTE") {
-      toast.error("Paciente deve fazer login exclusivamente pelo App");
+    if (resposta.data.tipo === 'PACIENTE') {
+      toast.error('Paciente deve fazer login exclusivamente pelo App');
     } else {
       login(
         resposta.data.id,
@@ -69,7 +69,7 @@ export const EnviandoEmail = async (email) => {
   await requesterService
     .recuperarSenha(email)
     .then(() => {
-      toast.success("Verifique a sua caixa de entrada para alterar sua senha.");
+      toast.success('Verifique a sua caixa de entrada para alterar sua senha.');
     })
     .catch((error) => {
       sleep(1500);
@@ -93,7 +93,6 @@ export const CriandoConsulta = async (consulta) => {
 };
 
 export const UpdateConsulta = async (id_consulta, consulta) => {
-  
   await requesterService
     .updateConsulta(id_consulta, consulta)
     .then(() => {
@@ -290,17 +289,17 @@ export const AlterarSenha = async (novaSenha, id) => {
   await requesterService
     .alterarSenha(id, novaSenha)
     .then(() => {
-      toast.success("Senha alterada com sucesso!");
+      toast.success('Senha alterada com sucesso!');
       setTimeout(() => {
-        window.location.href = "/wb/perfil";
+        window.location.href = '/wb/perfil';
       }, 2000);
     })
     .catch(() => {
       toast.error(
-        "Erro ao alterar senha. Reenvie o e-mail de recuperação e entre no link mais atual para alterá-la com sucesso"
+        'Erro ao alterar senha. Reenvie o e-mail de recuperação e entre no link mais atual para alterá-la com sucesso'
       );
       setTimeout(() => {
-        window.location.href = "/alterarsenha_requisicao";
+        window.location.href = '/alterarsenha_requisicao';
       }, 5200);
     });
   return;
@@ -315,7 +314,7 @@ export const UpdateDadosUsuario = async (
   await requesterService
     .updateDadosUsuario(id_usuario, id_endereco, endereco, estado)
     .then(() => {
-      toast.success("Dados alterados com sucesso.");
+      toast.success('Dados alterados com sucesso.');
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = '/web/editarperfil'));
@@ -430,7 +429,7 @@ export const EnviandoFormularioPaciente = async (
       id_usuario
     )
     .then(() => {
-      toast.success("Formulario enviado com sucesso!");
+      toast.success('Formulario enviado com sucesso!');
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -470,7 +469,7 @@ export const DeletarFormulario = async (id) => {
   await requesterService
     .deletarFormulario(id)
     .then(() => {
-      toast.success("Formulario deletado com sucesso.");
+      toast.success('Formulario deletado com sucesso.');
     })
     .catch((error) => {
       requisicaoErro();
@@ -599,11 +598,11 @@ export const DeletarReceita = async (id) => {
   await requesterService
     .deletarReceita(id)
     .then(() => {
-      toast.success("Receita deletada com sucesso.");
-      window.location.href = "/web/areareceitas";
+      toast.success('Receita deletada com sucesso.');
+      window.location.href = '/web/areareceitas';
     })
     .catch((error) => {
-      requisicaoErro(error, () => (window.location.href = "/web/areareceitas"));
+      requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
 
       return false;
     });
@@ -611,10 +610,8 @@ export const DeletarReceita = async (id) => {
   return false;
 };
 
-
-export const GetArquivoPorChave= async (chave) => {
-  let arquivo = "";
-
+export const GetArquivoPorChave = async (chave) => {
+  let arquivo = '';
 
   await requesterService
     .requisicaoArquivo(chave)
@@ -740,11 +737,8 @@ export const UpdateMensagensVisualizadas = async (id_usuario, id_conversa) => {
 export const dispostivoById = async (id) => {
   let dispositivo = {};
 
- 
-
   await requesterService
     .dispostivoById(id)
-
     .then((res) => {
       dispositivo = res.data;
     })
@@ -752,4 +746,4 @@ export const dispostivoById = async (id) => {
       requisicaoErro(error);
     });
   return dispositivo;
-}
+};
