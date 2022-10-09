@@ -147,19 +147,21 @@ function ListaFormularios() {
     setModalEnvio(true);
   }
 
+  const idFormularioUrgencia = "046975f7-d7d0-4635-a9d9-25efbe65d7b7";
+
   const ordenarFormularios = (a, b) => {
     var formulario1 = a.id;
     var formulario2 = b.id;
 
     if (
-      formulario1 === "aa321e77-0d3c-48b5-ba8c-0bfd7dfe1c33" &&
-      formulario2 !== "aa321e77-0d3c-48b5-ba8c-0bfd7dfe1c33"
+      formulario1 === idFormularioUrgencia &&
+      formulario2 !== idFormularioUrgencia
     ) {
       return -1;
     }
     if (
-      formulario1 !== "aa321e77-0d3c-48b5-ba8c-0bfd7dfe1c33" &&
-      formulario2 === "aa321e77-0d3c-48b5-ba8c-0bfd7dfe1c33"
+      formulario1 !== idFormularioUrgencia &&
+      formulario2 === idFormularioUrgencia
     ) {
       return 1;
     }
