@@ -334,6 +334,7 @@ function PerfilPaciente(props) {
                       height="40px"
                       width="100%"
                       fontSize="1.3em"
+                      fontSizeMedia="1em"
                     >
                       Iniciar Conversa
                     </Button>
@@ -349,6 +350,7 @@ function PerfilPaciente(props) {
                         height="40px"
                         width="100%"
                         fontSize="1.3em"
+                        fontSizeMedia="1em"
                         onClick={() => setandoTipoConsulta()}
                       >
                         Consultas Agendadas
@@ -363,6 +365,7 @@ function PerfilPaciente(props) {
                        height="40px"
                        width="100%"
                        fontSize="1.3em"
+                       fontSizeMedia="1em"
                        onClick={() =>setandoTipoExame()}
                      >
                        Exames Agendados
@@ -382,7 +385,7 @@ function PerfilPaciente(props) {
                         height="40px"
                         width="100%"
                         fontSize="1.3em"
-                        fontSizeMedia=""
+                        fontSizeMedia="1em"
                         onClick={() => setModalDeletarUsuario(true)}
                       >
                         Excluir Usuário
@@ -502,7 +505,6 @@ function PerfilPaciente(props) {
           
         />
       </Modal>
-
       <Modal
         visible={modalDeletarUsuario}
         onCancel={() => setModalDeletarUsuario(false)}

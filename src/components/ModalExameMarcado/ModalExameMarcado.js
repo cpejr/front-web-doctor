@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { LoadingOutlined } from '@ant-design/icons';
+import { LoadingOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Spin } from 'antd';
 import {
   Caixa,
@@ -106,26 +106,36 @@ function ModalExameMarcado(props) {
         <Caixa>
           <CaixaNome>
             <FotoPerfil>
-              {carregandoFoto ? (
-                <div
-                  style={{
-                    display: 'flex',
-                    height: '30px',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Spin indicator={antIcon} />
-                </div>
-              ) : (
-                <img
-                  src={fotoDePerfil}
-                  className='foto'
-                  alt='fotoDePerfil'
-                  height='100%'
-                  width='100%'
-                ></img>
-              )}
+            {fotoDePerfil !== "" ?
+             <>  {carregandoFoto ? (
+              <div
+                style={{
+                  display: 'flex',
+                  height: '30px',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Spin indicator={antIcon} />
+              </div>
+            ) : (
+              <img
+                src={fotoDePerfil}
+                className='foto'
+                alt='fotoDePerfil'
+                height='100%'
+                width='100%'
+              ></img>
+            )}</> : <><div
+            style={{
+              display: 'flex',
+              height: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <UserOutlined style={{ fontSize: "1.2em" }} />
+          </div></>}  
             </FotoPerfil>
             <Texto>{exame.nome}</Texto>
           </CaixaNome>

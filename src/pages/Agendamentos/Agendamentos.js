@@ -433,6 +433,8 @@ function Agendamentos() {
         <ModalConsultaMarcada
           consulta={consultaEspecifica}
           fechandoModal={() => fechandoModalConsultaMarcada()}
+          id_usuario={usuario.id}
+          email={usuario.email}
         />
       </Modal>
     </div>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined, UserOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { Caixa, CaixaInformações, CaixaNome, Container, FotoPerfil, Texto, TextoDescricao, TextoInformacoes } from "./Styles";
 import logoGuilherme from "../../assets/logoGuilherme.png";
@@ -41,7 +41,9 @@ function ModalConsultaMarcada(props) {
   async function setandoFotoDePerfil() {
     const resposta = await managerService.GetDadosUsuario(props.email);
     const chave = resposta.dadosUsuario.avatar_url;
-    if (chave === null || chave === '') return;
+    if (chave === null || chave === '')
+    { setCarregandoFoto(false);
+    return;} 
     setCarregandoFoto(true);
     const arquivo = await managerService.GetArquivoPorChave(chave);
     setFotoDePerfil(arquivo);
@@ -78,26 +80,37 @@ function ModalConsultaMarcada(props) {
         <Caixa>
           <CaixaNome>
             <FotoPerfil>
-            {carregandoFoto ? (
-                <div
-                  style={{
-                    display: 'flex',
-                    height: '30px',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Spin indicator={antIcon} />
-                </div>
-              ) : (
-                <img
-                  src={fotoDePerfil}
-                  className='foto'
-                  alt='fotoDePerfil'
-                  height='100%'
-                  width='100%'
-                ></img>
-              )}
+            {fotoDePerfil !== "" ?
+             <>  {carregandoFoto ? (
+              <div
+                style={{
+                  display: 'flex',
+                  height: '30px',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Spin indicator={antIcon} />
+              </div>
+            ) : (
+              <img
+                src={fotoDePerfil}
+                className='foto'
+                alt='fotoDePerfil'
+                height='100%'
+                width='100%'
+              ></img>
+            )}</> : <><div
+            style={{
+              display: 'flex',
+              height: '100%',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <UserOutlined style={{ fontSize: "1.2em" }} />
+          </div></>}  
+      
             </FotoPerfil>
             <Texto>
               {consulta.nome}
