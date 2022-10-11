@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, Row, Col, Tooltip } from "antd";
+import { Checkbox, Row, Col, Tooltip, RadioChangeEvent, Radio} from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
@@ -73,6 +73,12 @@ function ModalAgendamentoEspecifico(props) {
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [hoje, setHoje] = useState("");
+  const [valueradio, setValueradio] = useState(1);
+  
+  const onChange = (e: RadioChangeEvent) => {
+    console.log('radio checked', e.target.value);
+    setValueradio(e.target.value);
+  };
 
   moment.locale("pt-br");
 
@@ -350,16 +356,10 @@ function ModalAgendamentoEspecifico(props) {
               Selecione o Tipo de Agendamento:
             </TextoTipoAgendamento>
             <Row gutter={60} justify={"space-around"}>
-              <Col>
-                <Checkbox>
-                  <TextoCheckbox>Exame</TextoCheckbox>
-                </Checkbox>
-              </Col>
-              <Col>
-                <Checkbox>
-                  <TextoCheckbox>Consulta</TextoCheckbox>
-                </Checkbox>
-              </Col>
+            <Radio.Group onChange={onChange} value={valueradio}>
+              <Radio value={1}>Exame</Radio>
+              <Radio value={2}>Consulta</Radio>
+            </Radio.Group>
             </Row>
           </TipoAgendamento>
           <TextAreaDescricao
