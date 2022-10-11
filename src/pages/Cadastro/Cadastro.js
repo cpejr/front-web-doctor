@@ -89,7 +89,7 @@ function Cadastro(props) {
   let testeTemp = testeOriginal;
 
   function verificaAutenticacao() {
-    if (usuarioAutenticado() === false) {
+    if (usuarioAutenticado() === false && true) {
       window.location.href = '/login';
     }
   }
