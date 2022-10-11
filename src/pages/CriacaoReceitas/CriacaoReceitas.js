@@ -72,10 +72,6 @@ function CriacaoReceitas() {
 
 	}
 
-	async function geraPdf() {
-		await managerService.geraPDF(NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita);
-	}
-
 	async function armazenaInformacoesUsuario(id) {
 		const resposta = await managerService.GetUsuarioPorId(id);
 
@@ -125,6 +121,7 @@ function CriacaoReceitas() {
 		}
 
 		setCarregandoCriacao(true);
+		await managerService.geraPDF(NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita);
 		const res = await managerService.CriandoReceita(estado, {
 			mensagemSucesso: "Receita criada com sucesso",
 			tempo: 1500,
@@ -224,18 +221,6 @@ function CriacaoReceitas() {
 							)}
 						</Button>
 					</BotaoEnviar>
-					<Button
-						height="47px"
-						width="100%"
-						backgroundColor={Cores.lilas[1]}
-						borderColor={Cores.azul}
-						color={Cores.branco}
-						fontSize="1em"
-						onClick={geraPdf}
-					>
-						<div>SEEWY</div>
-
-					</Button>
 				</CriacaoReceitaBotoes>
 			</CardCriacaoReceitas>
 		</ContainerCriacaoReceitas>
