@@ -41,6 +41,10 @@ function CriacaoReceitas() {
 	const [estado, setEstado] = useState(estadoIncial);
 	const [camposVazios, setCamposVazios] = useState({});
 	const [carregandoCriacao, setCarregandoCriacao] = useState(false);
+	const [NomePaciente, setNomePaciente] = useState();
+	const [tituloReceita, setTituloReceita] = useState();
+	const [dataNascimentoPaciente, setDataNascimentoPaciente] = useState();
+	const [descricaoReceita, setDescricaoReceita] = useState();
 
 	const history = useHistory();
 
@@ -48,10 +52,41 @@ function CriacaoReceitas() {
 		e.preventDefault();
 		const { value, name } = e.target;
 
+
 		if (camposVazios[name])
 			setCamposVazios((valorAnterior) => ({ ...valorAnterior, [name]: false }));
 
 		setEstado({ ...estado, [name]: value });
+
+		if (name === "titulo") {
+			setTituloReceita(value);
+		}
+
+		if (name === "id_usuario") {
+			armazenaInformacoesUsuario(value);
+		}
+
+		if (name === "descricao") {
+			setDescricaoReceita(value);
+		}
+
+	}
+
+	async function geraPdf() {
+		await managerService.geraPDF(NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita);
+	}
+
+	async function armazenaInformacoesUsuario(id) {
+		const resposta = await managerService.GetUsuarioPorId(id);
+
+		const dataDesformatada = resposta.data_nascimento;
+		const dia = dataDesformatada.slice(8, 10);
+		const mes = dataDesformatada.slice(5, 7);
+		const ano = dataDesformatada.slice(0, 4);
+		const dataFormatada = dia + '/' + mes + '/' + ano;
+
+		setDataNascimentoPaciente(dataFormatada);
+		setNomePaciente(resposta.nome);
 	}
 
 	useEffect(() => {
@@ -189,6 +224,18 @@ function CriacaoReceitas() {
 							)}
 						</Button>
 					</BotaoEnviar>
+					<Button
+						height="47px"
+						width="100%"
+						backgroundColor={Cores.lilas[1]}
+						borderColor={Cores.azul}
+						color={Cores.branco}
+						fontSize="1em"
+						onClick={geraPdf}
+					>
+						<div>SEEWY</div>
+
+					</Button>
 				</CriacaoReceitaBotoes>
 			</CardCriacaoReceitas>
 		</ContainerCriacaoReceitas>

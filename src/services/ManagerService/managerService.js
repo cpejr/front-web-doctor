@@ -756,3 +756,29 @@ export const UpdateMensagensVisualizadas = async (id_usuario, id_conversa) => {
 
   return mensagensAtualizadas;
 };
+
+export const geraPDF = async (nomePaciente, dataNascimento, tituloReceita, descricao ) => {
+  console.log(nomePaciente, dataNascimento, tituloReceita, descricao);
+  await requesterService
+    .criaPDF(nomePaciente, dataNascimento, tituloReceita, descricao )
+    .then(() => {
+      toast.success('PDF gerado com sucesso');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return;
+};
+
+
+export const GetUsuarioPorId = async (id_usuario) => {
+  try {
+    const res = await requesterService.requisicaoUsuarioPorId(
+      id_usuario
+    );
+    return res.data;
+  } catch (err) {
+    requisicaoErro(err);
+  }
+};
