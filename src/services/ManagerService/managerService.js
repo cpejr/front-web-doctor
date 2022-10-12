@@ -565,15 +565,19 @@ export const GetReceitas = async () => {
 };
 
 export const CriandoReceita = async (
-  receita,
+  id_usuario, nomePaciente, dataNascimento, tituloReceita, descricao,
   usarToast = {
     mensagemSucesso: 'Operação bem sucedida',
     tempo: 1500,
     onClose: () => {},
   }
 ) => {
+
+  console.log(id_usuario);
+
   return requesterService
-    .criarReceita(receita)
+  
+    .criarReceita(id_usuario, nomePaciente, dataNascimento, tituloReceita, descricao)
     .then(() => {
       if (usarToast) {
         toast.success(usarToast.mensagemSucesso, {

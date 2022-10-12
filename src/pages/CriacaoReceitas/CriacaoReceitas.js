@@ -121,8 +121,8 @@ function CriacaoReceitas() {
 		}
 
 		setCarregandoCriacao(true);
-		await managerService.geraPDF(NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita);
-		const res = await managerService.CriandoReceita(estado, {
+		const id = estado.id_usuario
+		const res = await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
 			mensagemSucesso: "Receita criada com sucesso",
 			tempo: 1500,
 			onClose: () => {
