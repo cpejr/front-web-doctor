@@ -11,10 +11,12 @@ import {
   Notificacao,
   TextoNotificacao,
   CaixaTexto,
+  Texto,
   BotoesColuna,
   BotaoCanto,
   IconeAdicionar,
 } from './Styles';
+import { sleep } from '../../utils/sleep';
 
 function HomeSecretaria() {
   const history = useHistory();
@@ -38,17 +40,21 @@ function HomeSecretaria() {
 
   useEffect(() => {
     PegaFormulariosPaciente();
-  }, []);
+    VerificandoNotificacoesAtivas();
+  }, [formularioPaciente]);
 
   async function PegaFormulariosPaciente() {
     setCarregando(true);
     const notificacao = await managerService.GetTodosFormulariosPacientes();
     setFormularioPaciente(notificacao);
-    setCarregando(false);
-    const verificaNotificacaoAtiva = notificacao.filter(
+  }
+
+  async function VerificandoNotificacoesAtivas() {
+    const verificaNotificacaoAtiva = formularioPaciente.filter(
       (item) => item.notificacao_ativa === true
     );
     setNotificacaoFormularioAtivo(verificaNotificacaoAtiva);
+    setCarregando(false);
   }
 
   async function apagaNotificacaoFormulario(idFormularioPaciente) {
@@ -57,8 +63,6 @@ function HomeSecretaria() {
       idFormularioPaciente,
       false
     );
-    PegaFormulariosPaciente();
-    setCarregando(false);
   }
 
   async function pegaPerfilUsuario(email) {
@@ -94,7 +98,8 @@ function HomeSecretaria() {
               <Spin indicator={antIcon} />
             </div>
           ) : (
-            <>
+            <>{notificacaoFormularioAtivo.length !== 0 ? (
+              <>
               {notificacaoFormularioAtivo
                 ?.sort(ordenaFormularios)
                 .map((value) => (
@@ -141,6 +146,10 @@ function HomeSecretaria() {
                     </BotoesColuna>
                   </Notificacao>
                 ))}
+                </>
+              ) : (
+                <Texto> Ainda não há notificações!</Texto>
+              )}
             </>
           )}
         </Board>
