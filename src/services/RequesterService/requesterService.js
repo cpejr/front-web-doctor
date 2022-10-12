@@ -160,11 +160,3 @@ export const updateMensagemVisualizada = (id, atualizacoes) =>
 
 export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   api.put(`/mensagems/${id_conversa}/visualizadas/${id_usuario}`);
-
-export const criaPDF = (nomePaciente, dataNascimento, tituloReceita, descricao) =>
-  api.post(`/arquivopdf`, {
-    nome: nomePaciente,
-    data: dataNascimento,
-    titulo: tituloReceita,
-    descricao: descricao
-  });

@@ -573,7 +573,6 @@ export const CriandoReceita = async (
   }
 ) => {
 
-  console.log(id_usuario);
 
   return requesterService
   
@@ -761,19 +760,6 @@ export const UpdateMensagensVisualizadas = async (id_usuario, id_conversa) => {
   return mensagensAtualizadas;
 };
 
-export const geraPDF = async (nomePaciente, dataNascimento, tituloReceita, descricao ) => {
-  console.log(nomePaciente, dataNascimento, tituloReceita, descricao);
-  await requesterService
-    .criaPDF(nomePaciente, dataNascimento, tituloReceita, descricao )
-    .then(() => {
-      toast.success('PDF gerado com sucesso');
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-      return;
-    });
-  return;
-};
 
 
 export const GetUsuarioPorId = async (id_usuario) => {
