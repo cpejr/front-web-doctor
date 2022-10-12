@@ -87,6 +87,22 @@ export const TextoNotificacao = styled.div`
   }
 `;
 
+export const Texto = styled.div`
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: ${Cores.cinza[1]};
+  font-family: ${Fontes.roboto};
+  font-size: 250%;
+  @media  (max-width: 490px) and (min-width: 300px) {
+    padding-left: 5px;
+    padding-right: 5px
+  }
+`;
+
 export const BotoesColuna = styled.div`
   display: flex;
   flex-direction: column;
