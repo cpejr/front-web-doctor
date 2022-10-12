@@ -12,7 +12,7 @@ import Header from './components/Header/Header';
 import ListaFormularios from './pages/ListaFormularios';
 import ListaUsuarios from './pages/ListaUsuarios';
 import Login from './pages/Login';
-import ModeloReceitas from './pages/ModeloReceitas';
+// import ModeloReceitas from './pages/ModeloReceitas';
 import Perfil from './pages/Perfil';
 import PerfilPaciente from './pages/PerfilPaciente';
 import RespostaFormulario from './pages/RespostaFormulario';
@@ -153,10 +153,15 @@ function UserHeader() {
           path='/web/listadeusuarios'
           component={ListaUsuarios}
         />
-        <RotasPrivadasMedico
+        {/* <RotasPrivadasMedico
           exact
           path='/web/modeloreceitas'
           component={ModeloReceitas}
+        /> */}
+        <RotasPrivadasMedico
+          exact
+          path='/web/criacaoreceitas'
+          component={CriacaoReceitas}
         />
         <RotasPrivadas exact path='/web/perfil' component={Perfil} />
         <RotasPrivadas
