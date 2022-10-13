@@ -49,7 +49,7 @@ export const InfoEsquerda = styled.div`
   align-items: center;
   width: 50%;
   height: 100%;
-  height: 80vh;
+  height: 70vh;
   padding: 5%;
 
   @media (max-width: 800px) {
@@ -125,7 +125,6 @@ export const TipoAgendamento = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  background-color: green;
   @media (max-width: 620px){
     height: 25%;
     width: 100%;

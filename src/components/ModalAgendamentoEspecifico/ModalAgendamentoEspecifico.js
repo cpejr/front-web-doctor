@@ -49,6 +49,7 @@ function ModalAgendamentoEspecifico(props) {
   const [nomeConsultorioPorId, setNomeConsultorioPorId] = useState();
   const [carregandoCadastro, setCarregandoCadastro] = useState();
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
+  const [tipoRadio, setTipoRadio] = useState("");
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const [consulta, setConsulta] = useState({
     data_hora: "",
@@ -73,12 +74,8 @@ function ModalAgendamentoEspecifico(props) {
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [hoje, setHoje] = useState("");
-  const [valueradio, setValueradio] = useState(1);
   
-  const onChange = (e: RadioChangeEvent) => {
-    console.log('radio checked', e.target.value);
-    setValueradio(e.target.value);
-  };
+  
 
   moment.locale("pt-br");
 
@@ -106,6 +103,8 @@ function ModalAgendamentoEspecifico(props) {
     setandoNomeConsultorioPorId();
   },);
 
+  
+
   const errors = {};
   const [referenciaInputNulos, setReferenciaInputNulos] = useState({
     data: false,
@@ -121,6 +120,10 @@ function ModalAgendamentoEspecifico(props) {
     } else {
       setConsulta({ ...consulta, id_usuario: usuario.id });
     }
+  }
+
+  function inputsFiltrados(value) {
+    setTipoRadio(value);
   }
 
   useEffect(() => {
@@ -356,24 +359,34 @@ function ModalAgendamentoEspecifico(props) {
               Selecione o Tipo de Agendamento:
             </TextoTipoAgendamento>
             <Row gutter={60} justify={"space-around"}>
-            <Radio.Group onChange={onChange} value={valueradio}>
-              <Radio value={1}>Exame</Radio>
-              <Radio value={2}>Consulta</Radio>
+            <Radio.Group 
+            defaultValue=""
+            bordered={false}
+            FiltrarInputs={tipoRadio}
+            onChange={(e) => inputsFiltrados(e.target.value)}
+            >
+              <Radio value="">Exame</Radio>
+              <Radio value="filtrado">Consulta</Radio>
             </Radio.Group>
             </Row>
           </TipoAgendamento>
-          <TextAreaDescricao
-            placeholder="Adicione uma descrição"
-            rows={4}
-            name="descricao"
-            value={consulta.descricao}
-            onChange={(e) => validacaoCampos(e)}
-            style={{
-              borderWidth: "1px",
-              borderColor: Cores.azul,
-              color: "black",
-            }}
-          />
+          {tipoRadio === "" ? (
+                <></>
+              ) : (
+                <TextAreaDescricao
+                border={tipoRadio}
+                placeholder="Adicione uma descrição"
+                rows={4}
+                name="descricao"
+                value={consulta.descricao}
+                onChange={(e) => validacaoCampos(e)}
+                style={{
+                  borderWidth: "1px",
+                  borderColor: Cores.azul,
+                  color: "black",
+                }}
+              />
+              )}
         </InfoEsquerda>
         <InfoEsquerdaEDireita>
           <SelecioneUmaData>
@@ -502,8 +515,10 @@ function ModalAgendamentoEspecifico(props) {
               {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
               {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
             </ContainerHorario>
-
-            <ContainerDuracaoConsulta>
+            {tipoRadio === "" ? (
+                <></>
+              ) : (
+                <ContainerDuracaoConsulta>
             <TextoDoisSelects>Selecione uma duração:</TextoDoisSelects>
               <InputDuracao
                 value={consulta.duracao_em_minutos}
@@ -526,10 +541,17 @@ function ModalAgendamentoEspecifico(props) {
                 </>
               )}
             </ContainerDuracaoConsulta>
+              )}
+            
           </DoisSelect>
-          <Checkbox>
-            <TextoCheckbox>Notificar paciente</TextoCheckbox>
-          </Checkbox>
+          {tipoRadio === "" ? (
+                <></>
+              ) : (
+                <Checkbox>
+                  <TextoCheckbox>Notificar paciente</TextoCheckbox>
+                </Checkbox>
+              )}
+          
 
           <Button
             width="80%"

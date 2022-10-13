@@ -64,6 +64,7 @@ function Agendamentos() {
   const [consultorios, setConsultorios] = useState([]);
   const [modalConsultaMarcada, setModalConsultaMarcada] = useState(false);
   const [consultorioSelect, setConsultorioSelect] = useState("");
+  
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
