@@ -59,7 +59,7 @@ function FormularioEspecifico(props) {
   const [carregando, setCarregando] = useState(true);
   const [carregandoFoto, setCarregandoFoto] = useState(true);
   const [carregandoFormulario, setCarregandoFormulario] = useState(true);
-
+  const idFormularioUrgencia = "046975f7-d7d0-4635-a9d9-25efbe65d7b7";
   const [notificacaoAtiva, setNotificacaoAtiva] = useState(false);
   const [statusSelect, setStatusSelect] = useState("");
   const { Option } = SelectTipos;
@@ -77,9 +77,11 @@ function FormularioEspecifico(props) {
     <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
   );
 
+  const idFormularioEspecifico = props.location.state.id;
+
   async function pegandoDadosFormularioEspecifico() {
     const resposta = await managerService.GetFormularioEspecifico(
-      props.location.state.id
+      idFormularioEspecifico
     );
     setFormularioEspecifico(resposta);
     setCarregando(false);
@@ -92,7 +94,7 @@ function FormularioEspecifico(props) {
   async function pegandoFormularioPacientes() {
     const respostaFormularios =
       await managerService.GetFormularioPacientesPorFormulario(
-        props.location.state.id
+        idFormularioEspecifico
       );
     setformularioPacientes(respostaFormularios);
     respostaFormularios.forEach((formulario) => {
@@ -144,7 +146,11 @@ function FormularioEspecifico(props) {
 
   useEffect(() => {
     pegandoFormularioPacientes();
-  }, [props.location.state.id]);
+  }, [idFormularioEspecifico]);
+
+  useEffect(() => {
+    pegandoDadosFormularioEspecifico();
+  }, [idFormularioEspecifico]);
 
   useEffect(() => {
     setandoFotoDePerfil();
@@ -153,7 +159,11 @@ function FormularioEspecifico(props) {
   const usuariosFiltrados = formularioPacientes.filter(
     (formularioPacientes) => {
       if (lowerBusca === "" && statusSelect === "") {
-        return formularioPacientes;
+        if (idFormularioEspecifico === idFormularioUrgencia) {
+          return formularioPacientes.status === true;
+        } else {
+          return formularioPacientes;
+        }
       } else {
         if (statusSelect === "true") {
           return (
@@ -164,19 +174,31 @@ function FormularioEspecifico(props) {
               .includes(lowerBusca) && formularioPacientes.status === true
           );
         } else if (statusSelect === "false") {
-          return (
-            formularioPacientes?.nome
+          if (idFormularioEspecifico !== idFormularioUrgencia) {
+            return (
+              formularioPacientes?.nome
+                ?.toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .includes(lowerBusca) && formularioPacientes.status === false
+            );
+          } else return false;
+        } else {
+          if (idFormularioEspecifico !== idFormularioUrgencia) {
+            return formularioPacientes?.nome
               ?.toLowerCase()
               .normalize("NFD")
               .replace(/[\u0300-\u036f]/g, "")
-              .includes(lowerBusca) && formularioPacientes.status === false
-          );
-        } else {
-          return formularioPacientes?.nome
-            ?.toLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .includes(lowerBusca);
+              .includes(lowerBusca);
+          } else {
+            return (
+              formularioPacientes?.nome
+                ?.toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .includes(lowerBusca) && formularioPacientes.status === true
+            );
+          }
         }
       }
     }
@@ -246,18 +268,22 @@ function FormularioEspecifico(props) {
                   />
                 </BarraDePesquisa>
                 <Selects>
-                  <RotuloBarraDeBuscaOpcoes>
-                    <SelectTipos
-                      defaultValue=""
-                      bordered={false}
-                      style={{ width: "auto" }}
-                      onChange={(value) => usuariosFiltro(value)}
-                    >
-                      <Option value="">Todos os Usuários</Option>
-                      <Option value="true">Respondido </Option>
-                      <Option value="false">Resposta Pendente</Option>
-                    </SelectTipos>
-                  </RotuloBarraDeBuscaOpcoes>
+                  {idFormularioEspecifico !== idFormularioUrgencia ? (
+                    <RotuloBarraDeBuscaOpcoes>
+                      <SelectTipos
+                        defaultValue=""
+                        bordered={false}
+                        style={{ width: "auto" }}
+                        onChange={(value) => usuariosFiltro(value)}
+                      >
+                        <Option value="">Todos os Usuários</Option>
+                        <Option value="true">Respondido </Option>
+                        <Option value="false">Resposta Pendente</Option>
+                      </SelectTipos>
+                    </RotuloBarraDeBuscaOpcoes>
+                  ) : (
+                    <></>
+                  )}
                 </Selects>
               </ContainerBarraDeBuscaOpcoes>
 
@@ -365,12 +391,18 @@ function FormularioEspecifico(props) {
               ))}
             </ColunaEsquerda>
             <ColunaDireita>
-              <BarraRespostas>
+              {idFormularioEspecifico !== idFormularioUrgencia ? (
+                <BarraRespostas>
                 {" "}
                 {formularioRespostaPendente.length === 1
                   ? "Aguardando respostas de 1 formulário"
                   : `Aguardando respostas de ${formularioRespostaPendente.length} formulários`}
               </BarraRespostas>
+              ) : (
+                <></>
+              )}
+
+              
               <BarraRespostas>
                 {" "}
                 {formularioResposta.length < 2 ? (

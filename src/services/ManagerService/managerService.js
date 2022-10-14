@@ -1,9 +1,7 @@
-import { login } from "../../services/auth";
-import requisicaoErro from "../../utils/HttpErros";
-import * as requesterService from "../RequesterService/requesterService";
-import { toast } from "react-toastify";
-import { redirecionamento } from "../../utils/sleep";
-import { recebeTipo } from "../../services/auth";
+import { login } from '../../services/auth';
+import requisicaoErro from '../../utils/HttpErros';
+import * as requesterService from '../RequesterService/requesterService';
+import { toast } from 'react-toastify';
 
 const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -12,19 +10,19 @@ const sleep = (milliseconds) => {
 export const requisicaoLogin = async (email, senha) => {
   try {
     const resposta = await requesterService.logarUsuario(email, senha);
-    if (resposta.data.tipo === "PACIENTE") {
-      toast.error("Paciente deve fazer login exclusivamente pelo App");
+    if (resposta.data.tipo === 'PACIENTE') {
+      toast.error('Paciente deve fazer login exclusivamente pelo App');
     } else {
       login(resposta.data.token, resposta.data.email, resposta.data.tipo);
 
-      if (resposta.data.tipo === "MASTER") {
-        toast.success("Login realizado com sucesso!");
+      if (resposta.data.tipo === 'MASTER') {
+        toast.success('Login realizado com sucesso!');
         await sleep(1500);
-        window.location.href = "/web/listadeusuarios";
+        window.location.href = '/web/listadeusuarios';
       } else {
-        toast.success("Login realizado com sucesso!");
+        toast.success('Login realizado com sucesso!');
         await sleep(1500);
-        window.location.href = "/web/listadeusuarios";
+        window.location.href = '/web/listadeusuarios';
       }
     }
   } catch (error) {}
@@ -35,36 +33,33 @@ export const requisicaoLogin = async (email, senha) => {
 export const Cadastrando = async (usuario, endereco) => {
   const resposta = await requesterService.requisicaoDadosUsuario(usuario.email);
 
-  if (resposta.status != 204) {
+  if (resposta.status !== 204) {
     sleep(1500);
-    toast.error("E-mail já cadastrado");
+    toast.error('E-mail já cadastrado');
     return;
   }
-
-  await requesterService
-    .criarUsuario(endereco, usuario)
-    .then(() => {
-      toast.success("Usuário cadastrado com sucesso.");
-    })
-    .catch((error) => {
-      requisicaoErro(error, () => (window.location.href = "/cadastro"));
-      return false;
-    });
-  return false;
+  try {
+    const idUsuario = await requesterService.criarUsuario(endereco, usuario);
+    toast.success("Usuário cadastrado com sucesso.");
+    return idUsuario;
+  } catch (error) {
+    requisicaoErro(error, () => (window.location.href = "/cadastro"));
+    return false;
+  }
 };
 
 export const EnviandoEmail = async (email) => {
   const resposta = await requesterService.requisicaoDadosUsuario(email);
   if (resposta.status === 204) {
     sleep(1500);
-    toast.error("E-mail inexistente!");
+    toast.error('E-mail inexistente!');
     return;
   }
 
   await requesterService
     .recuperarSenha(email)
     .then(() => {
-      toast.success("Verifique a sua caixa de entrada para alterar sua senha.");
+      toast.success('Verifique a sua caixa de entrada para alterar sua senha.');
     })
     .catch((error) => {
       sleep(1500);
@@ -78,7 +73,7 @@ export const CriandoConsulta = async (consulta) => {
   await requesterService
     .criarConsulta(consulta)
     .then(() => {
-      toast.success("Consulta criada com sucesso.");
+      toast.success('Consulta criada com sucesso.');
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -88,11 +83,10 @@ export const CriandoConsulta = async (consulta) => {
 };
 
 export const UpdateConsulta = async (id_consulta, consulta) => {
-  
   await requesterService
     .updateConsulta(id_consulta, consulta)
     .then(() => {
-      toast.success("Consulta atualizada com sucesso!");
+      toast.success('Consulta atualizada com sucesso!');
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -127,6 +121,17 @@ export const GetConsultaPorId = async (id) => {
       requisicaoErro(error);
     });
   return dadosConsulta;
+};
+
+export const GetReceitasPorUsuarioId = async (id_usuario) => {
+  try {
+    const res = await requesterService.requisicaoReceitasPorUsuarioId(
+      id_usuario
+    );
+    return res.data;
+  } catch (err) {
+    requisicaoErro(err);
+  }
 };
 
 export const GetDadosPessoais = async () => {
@@ -265,7 +270,7 @@ export const ConferirSenha = async (email, senhaAtual) => {
     await sleep(1500);
     return false;
   } catch (error) {
-    toast.error("Senha incorreta!");
+    toast.error('Senha incorreta!');
     return true;
   }
 };
@@ -274,17 +279,17 @@ export const AlterarSenha = async (novaSenha, id) => {
   await requesterService
     .alterarSenha(id, novaSenha)
     .then(() => {
-      toast.success("Senha alterada com sucesso!");
+      toast.success('Senha alterada com sucesso!');
       setTimeout(() => {
-        window.location.href = "/wb/perfil";
+        window.location.href = '/wb/perfil';
       }, 2000);
     })
     .catch(() => {
       toast.error(
-        "Erro ao alterar senha. Reenvie o e-mail de recuperação e entre no link mais atual para alterá-la com sucesso"
+        'Erro ao alterar senha. Reenvie o e-mail de recuperação e entre no link mais atual para alterá-la com sucesso'
       );
       setTimeout(() => {
-        window.location.href = "/alterarsenha_requisicao";
+        window.location.href = '/alterarsenha_requisicao';
       }, 5200);
     });
   return;
@@ -299,10 +304,10 @@ export const UpdateDadosUsuario = async (
   await requesterService
     .updateDadosUsuario(id_usuario, id_endereco, endereco, estado)
     .then(() => {
-      toast.success("Dados alterados com sucesso.");
+      toast.success('Dados alterados com sucesso.');
     })
     .catch((error) => {
-      requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));
+      requisicaoErro(error, () => (window.location.href = '/web/editarperfil'));
       return false;
     });
 
@@ -313,10 +318,10 @@ export const UpdateCodigo = async (id_usuario, codigo) => {
   await requesterService
     .updateCodigo(id_usuario, codigo)
     .then(() => {
-      toast.success("Código atualizado com sucesso.");
+      toast.success('Código atualizado com sucesso.');
     })
     .catch((error) => {
-      requisicaoErro(error, () => (window.location.href = "/web/editarperfil"));
+      requisicaoErro(error, () => (window.location.href = '/web/editarperfil'));
       return false;
     });
 
@@ -327,12 +332,12 @@ export const DeletarEnderecoEUsuario = async (id_endereco) => {
   await requesterService
     .deletarEnderecoEUsuario(id_endereco)
     .then(() => {
-      toast.success("Usuário deletado com sucesso.");
+      toast.success('Usuário deletado com sucesso.');
     })
     .catch((error) => {
       requisicaoErro(
         error,
-        () => (window.location.href = "/web/perfildopaciente")
+        () => (window.location.href = '/web/perfildopaciente')
       );
 
       return false;
@@ -368,12 +373,12 @@ export const DeletarConsulta = async (id) => {
   await requesterService
     .deletarConsulta(id)
     .then(() => {
-      toast.success("Consulta deletada com sucesso.");
+      toast.success('Consulta deletada com sucesso.');
     })
     .catch((error) => {
       requisicaoErro(
         error,
-        () => (window.location.href = "/web/perfildopaciente")
+        () => (window.location.href = '/web/perfildopaciente')
       );
 
       return false;
@@ -386,12 +391,12 @@ export const DeletarExameMarcado = async (id) => {
   await requesterService
     .deletarExameMarcado(id)
     .then(() => {
-      toast.success("Exame deletado com sucesso.");
+      toast.success('Exame deletado com sucesso.');
     })
     .catch((error) => {
       requisicaoErro(
         error,
-        () => (window.location.href = "/web/perfildopaciente")
+        () => (window.location.href = '/web/perfildopaciente')
       );
 
       return false;
@@ -404,7 +409,8 @@ export const EnviandoFormularioPaciente = async (
   status,
   notificacao_ativa,
   id_formulario,
-  id_usuario
+  id_usuario,
+  mostrarToast = true
 ) => {
   await requesterService
     .enviarFormularioPaciente(
@@ -414,7 +420,9 @@ export const EnviandoFormularioPaciente = async (
       id_usuario
     )
     .then(() => {
-      toast.success("Formulario enviado com sucesso!");
+      if (mostrarToast) {
+        toast.success("Formulario enviado com sucesso!");
+      }
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -454,8 +462,7 @@ export const DeletarFormulario = async (id) => {
   await requesterService
     .deletarFormulario(id)
     .then(() => {
-      toast.success("Formulario deletado com sucesso.");
-      window.location.href = "/web/listaformularios";
+      toast.success('Formulario deletado com sucesso.');
     })
     .catch((error) => {
       requisicaoErro();
@@ -530,7 +537,7 @@ export const CriarFormulario = async (estado) => {
   await requesterService
     .criarFormulario(estado)
     .then(() => {
-      toast.success("Formulário criado com sucesso.");
+      toast.success('Formulário criado com sucesso.');
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -552,15 +559,40 @@ export const GetReceitas = async () => {
   return dadosReceitas;
 };
 
+export const CriandoReceita = async (
+  receita,
+  usarToast = {
+    mensagemSucesso: 'Operação bem sucedida',
+    tempo: 1500,
+    onClose: () => {},
+  }
+) => {
+  return requesterService
+    .criarReceita(receita)
+    .then(() => {
+      if (usarToast) {
+        toast.success(usarToast.mensagemSucesso, {
+          autoClose: usarToast.tempo,
+          onClose: usarToast.onClose,
+        });
+      }
+      return true;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+};
+
 export const EditarPerguntasFormulario = async (id, perguntas) => {
   await requesterService
     .editarPerguntasFormulario(id, perguntas)
     .then(() => {
       sleep(1500);
-      toast.success("Ação realizada com sucesso.");
+      toast.success('Ação realizada com sucesso.');
     })
     .catch((error) => {
-      requisicaoErro(error, () => (window.location.href = "/"));
+      requisicaoErro(error, () => (window.location.href = '/'));
       return false;
     });
 
@@ -571,7 +603,7 @@ export const EditarFormularios = async (id, campos) => {
   await requesterService
     .editarCamposFormulario(id, campos)
     .then(() => {
-      toast.success("Formulario atualizado com sucesso.");
+      toast.success('Formulario atualizado com sucesso.');
     })
     .catch((error) => {
       return false;
@@ -584,11 +616,11 @@ export const DeletarReceita = async (id) => {
   await requesterService
     .deletarReceita(id)
     .then(() => {
-      toast.success("Receita deletada com sucesso.");
-      window.location.href = "/web/areareceitas";
+      toast.success('Receita deletada com sucesso.');
+      window.location.href = '/web/areareceitas';
     })
     .catch((error) => {
-      requisicaoErro(error, () => (window.location.href = "/web/areareceitas"));
+      requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
 
       return false;
     });
@@ -596,10 +628,8 @@ export const DeletarReceita = async (id) => {
   return false;
 };
 
-
-export const GetArquivoPorChave= async (chave) => {
+export const GetArquivoPorChave = async (chave) => {
   let arquivo = "";
-
 
   await requesterService
     .requisicaoArquivo(chave)
@@ -611,4 +641,113 @@ export const GetArquivoPorChave= async (chave) => {
       requisicaoErro(error);
     });
   return arquivo;
+};
+
+export const CriandoConversa = async (conversa) => {
+  let dadosConversaCriada = {};
+  await requesterService
+    .criarConversa(conversa)
+    .then((res) => {
+      dadosConversaCriada = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConversaCriada;
+};
+
+export const GetConversasUsuario = async (id_usuario) => {
+  let dadosConversas = {};
+  await requesterService
+    .requisicaoConversasPorUsuario(id_usuario)
+    .then((res) => {
+      dadosConversas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConversas;
+};
+
+export const UpdateConversaAtiva = async (id) => {
+  let dadosConversa = {};
+  await requesterService
+    .updateConversaAtiva(id)
+    .then((res) => {
+      dadosConversa = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConversa;
+};
+
+export const deletarConversasInativas = async (id_usaurio) => {
+  let conversasApagadas = {};
+  await requesterService
+    .deletarConversasInativas(id_usaurio)
+    .then((res) => {
+      conversasApagadas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return conversasApagadas;
+};
+
+export const CriandoMensagem = async (mensagem) => {
+  let dadosMensagemCriada = {};
+  await requesterService
+    .criarMensagem(mensagem)
+    .then((res) => {
+      dadosMensagemCriada = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosMensagemCriada;
+};
+
+export const GetMensagensPorConversaUsuario = async (
+  id_usuario,
+  id_conversa
+) => {
+  let dadosMensagens = {};
+  await requesterService
+    .requisicaoMensagensPorConversaUsuario(id_usuario, id_conversa)
+    .then((res) => {
+      dadosMensagens = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosMensagens;
+};
+
+export const UpdateMensagemVisualizada = async (id, atualizacoes) => {
+  let mensagemAtualizada = {};
+  await requesterService
+    .updateMensagemVisualizada(id, atualizacoes)
+    .then((res) => {
+      mensagemAtualizada = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return mensagemAtualizada;
+};
+
+export const UpdateMensagensVisualizadas = async (id_usuario, id_conversa) => {
+  let mensagensAtualizadas = {};
+  await requesterService
+    .updateMensagensVisualizadas(id_usuario, id_conversa)
+    .then((res) => {
+      mensagensAtualizadas = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return mensagensAtualizadas;
 };

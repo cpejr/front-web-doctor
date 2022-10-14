@@ -1,19 +1,24 @@
-import api from "../../services/api";
+import api from '../../services/api';
 
 export const logarUsuario = (email, senha) =>
-  api.post("/login", {
+  api.post('/login', {
     email,
     senha,
   });
 
-export const criarUsuario = (endereco, usuario) =>
-  api.post("/enderecos", endereco).then((res) => {
-    api.post("/usuarios", { ...usuario, id_endereco: res.data.id });
+export const criarUsuario = async (endereco, usuario) => {
+  const res = await api.post('/enderecos', endereco);
+  const response = await api.post('/usuarios', {
+    ...usuario,
+    id_endereco: res.data.id,
   });
+  const userId = response.data.id;
+  return userId;
+};
 
 export const recuperarSenha = (email) => api.put(`/alterar_senha/${email}`);
 
-export const criarConsulta = (consulta) => api.post("/consultas", consulta);
+export const criarConsulta = (consulta) => api.post('/consultas', consulta);
 
 export const updateConsulta = (id_consulta, consulta) =>
   api.put(`/consultas/${id_consulta}`, consulta);
@@ -23,8 +28,13 @@ export const updateDadosUsuario = (id_usuario, id_endereco, endereco, estado) =>
     api.put(`/usuarios/${id_usuario}`, { ...estado, id_endereco: res.data.id });
   });
 
-export const updateNotificacaoAtivaFormularioPaciente = (id, notificacao_ativa) =>
-  api.put(`/formularios_pacientes/${id}`, {notificacao_ativa: notificacao_ativa});
+export const updateNotificacaoAtivaFormularioPaciente = (
+  id,
+  notificacao_ativa
+) =>
+  api.put(`/formularios_pacientes/${id}`, {
+    notificacao_ativa: notificacao_ativa,
+  });
 
 export const updateCodigo = (id_usuario, codigo) =>
   api.put(`/usuarios/${id_usuario}`, { codigo: codigo });
@@ -32,6 +42,9 @@ export const updateCodigo = (id_usuario, codigo) =>
 export const requisicaoDadosUsuario = (emailUrl) =>
   api.get(`/usuarios/${emailUrl}`);
 
+export const requisicaoReceitasPorUsuarioId = (id_usuario) =>
+  api.get(`/usuarios_receitas/${id_usuario}`);
+  
 export const requisicaoDadosUsuarioPorToken = (token_usuario) =>
   api.get(`/usuarios_token/${token_usuario}`);
 
@@ -41,7 +54,7 @@ export const requisicaoDadosEndereco = (dadosUsuario) =>
   api.get(`/enderecos/${dadosUsuario.id_endereco}`);
 
 export const requisicaoVerificar = (email, senha) =>
-  api.post("/verificar", {
+  api.post('/verificar', {
     email,
     senha,
   });
@@ -83,7 +96,7 @@ export const deletarFormulario = (id) => api.delete(`/formularios/${id}`);
 export const requisicaoRespostaFormularioIdUsuario = (id_usuario) =>
   api.get(`/formularios_pacientes_usuario/${id_usuario}`);
 
-export const criarFormulario = (estado) => api.post("/formularios", estado);
+export const criarFormulario = (estado) => api.post('/formularios', estado);
 
 export const requisicaoRespostaFormulario = (id) =>
   api.get(`/formularios_pacientes/${id}`);
@@ -93,6 +106,7 @@ export const requisicaoFormularioPacientes = (id_formulario) =>
 
 export const requisicaoReceitas = () => api.get(`/receitas/`);
 
+export const criarReceita = (receita) => api.post(`/receitas`, receita);
 export const deletarReceita = (id) => api.delete(`/receitas/${id}`);
 
 export const editarPerguntasFormulario = (id, perguntas) =>
@@ -101,11 +115,42 @@ export const editarPerguntasFormulario = (id, perguntas) =>
 export const editarCamposFormulario = (id, campos) =>
   api.put(`/formularios/${id}`, campos);
 
-  export const requisicaoTodosFormulariosPaciente = () =>
-  api.get("/formularios_pacientes");
+export const requisicaoTodosFormulariosPaciente = () =>
+  api.get('/formularios_pacientes');
 
-export const enviarFormularioPaciente = (status, notificacao_ativa, id_formulario, id_usuario) =>
-  api.post("/formularios_pacientes", { status, notificacao_ativa, id_formulario, id_usuario });
-
+export const enviarFormularioPaciente = (
+  status,
+  notificacao_ativa,
+  id_formulario,
+  id_usuario
+) =>
+  api.post('/formularios_pacientes', {
+    status,
+    notificacao_ativa,
+    id_formulario,
+    id_usuario,
+  });
 
 export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
+
+export const criarConversa = (conversa) => api.post(`/conversas`, conversa);
+
+export const requisicaoConversasPorUsuario = (id_usuario) =>
+  api.get(`/conversas/${id_usuario}/usuario`);
+
+export const updateConversaAtiva = (id) => api.put(`/conversas/ativacao/${id}`);
+export const deletarConversasInativas = (id_usuario) =>
+  api.delete(`/conversas/${id_usuario}/usuario`);
+
+export const criarMensagem = (mensagem) => api.post(`/mensagems`, mensagem);
+
+export const requisicaoMensagensPorConversaUsuario = (
+  id_usuario,
+  id_conversa
+) => api.get(`/mensagems/${id_conversa}/conversa/${id_usuario}`);
+
+export const updateMensagemVisualizada = (id, atualizacoes) =>
+  api.put(`/mensagems/${id}`, atualizacoes);
+
+export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
+  api.put(`/mensagems/${id_conversa}/visualizadas/${id_usuario}`);

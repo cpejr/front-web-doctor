@@ -14,10 +14,16 @@ import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalEditarFormulario(props) {
   const [carregando, setCarregando] = useState(true);
+  const [carregandoApagar, setCarregandoApagar] = useState(null); 
   const [pergunta, setPergunta] = useState();
+  const [perguntaDeletada, setPerguntaDeletada] = useState();
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
+  );
+
+  const antIconBotaoApagar = (
+    <LoadingOutlined style={{ fontSize: 24 }} spin />
   );
 
   async function pegandoDados() {
@@ -31,13 +37,16 @@ function ModalEditarFormulario(props) {
   }, [props]);
 
   async function deletarCampo(valor) {
+    setPerguntaDeletada(valor);
+    setCarregandoApagar(true);
     delete props.perguntasAlterar.properties[valor[0]];
     await managerService.EditarPerguntasFormulario(
       props.formulario.id,
       props.perguntasAlterar
     );
     await sleep(1500);
-    window.location.href = "/web/listaformularios";
+    setCarregandoApagar(false);
+    props.fechandoModal();
   }
 
   return (
@@ -65,7 +74,11 @@ function ModalEditarFormulario(props) {
                 fontWeight="bold"
                 onClick={() => deletarCampo(valor)}
               >
-                Apagar
+                {carregandoApagar === true  && perguntaDeletada === valor?(
+                  <Spin indicator={antIconBotaoApagar} />
+                ) : (
+                  <div>Apagar</div>
+                )}
               </Button>
             </PerguntaBotao>
           ))}
