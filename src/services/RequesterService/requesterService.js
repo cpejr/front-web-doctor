@@ -106,6 +106,7 @@ export const requisicaoFormularioPacientes = (id_formulario) =>
 
 export const requisicaoReceitas = () => api.get(`/receitas/`);
 
+export const criarReceita = (receita) => api.post(`/receitas`, receita);
 export const deletarReceita = (id) => api.delete(`/receitas/${id}`);
 
 export const editarPerguntasFormulario = (id, perguntas) =>

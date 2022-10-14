@@ -263,6 +263,7 @@ function PerfilPaciente(props) {
                   <Titulo>Endereço</Titulo>
                   <DadosGeo>País: {endereco.pais}</DadosGeo>
                   <DadosGeo>Estado: {endereco.estado}</DadosGeo>
+                  <DadosGeo>Bairro: {endereco.bairro}</DadosGeo>
                   <DadosGeo>Cidade: {endereco.cidade}</DadosGeo>
                   <DadosGeo>CEP: {cep(endereco.cep)}</DadosGeo>
                   <DadosGeo>Rua: {endereco.rua}</DadosGeo>
