@@ -9,12 +9,9 @@ import Chat from './pages/Chat';
 import CriacaoFormulario from './pages/CriacaoFormulario';
 import EdicaoConteudo from './pages/EdicaoConteudo';
 import Header from './components/Header/Header';
-import HomeMedico from './pages/HomeMedico/HomeMedico';
-import HomeSecretaria from './pages/HomeSecretaria/HomeSecretaria';
 import ListaFormularios from './pages/ListaFormularios';
 import ListaUsuarios from './pages/ListaUsuarios';
 import Login from './pages/Login';
-import CriacaoReceitas from './pages/CriacaoReceitas';
 import Perfil from './pages/Perfil';
 import PerfilPaciente from './pages/PerfilPaciente';
 import RespostaFormulario from './pages/RespostaFormulario';
@@ -23,6 +20,9 @@ import Agendamentos from './pages/Agendamentos';
 import { usuarioAutenticado, recebeTipo } from './services/auth';
 import EditarFormulario from './pages/EditarFormulario/EditarFormulario';
 import FormularioEspecifico from './pages/FormularioEspecifico';
+import Home from './pages/Home/Home';
+import CriacaoReceitas from './pages/CriacaoReceitas';
+
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
   <Route
@@ -47,7 +47,7 @@ const RotasPrivadasMedico = ({ component: Component, ...rest }) => (
       ) : (
         <Redirect
           to={{
-            pathname: '/web/homemedico',
+            pathname: '/web/home',
             state: { from: props.location },
           }}
         />
@@ -65,7 +65,7 @@ const RotasPrivadasSecretaria = ({ component: Component, ...rest }) => (
       ) : (
         <Redirect
           to={{
-            pathname: '/web/homesecretaria',
+            pathname: '/web/home',
             state: { from: props.location },
           }}
         />
@@ -110,7 +110,12 @@ function UserHeader() {
       <Switch>
         <RotasPrivadas
           exact
-          path='/web/editarperfil'
+          path="/web/cadastroNovoUsuario"
+          component={Cadastro}
+        />
+        <RotasPrivadas
+          exact
+          path="/web/editarperfil"
           component={EditarPerfil}
         />
         <RotasPrivadas
@@ -174,15 +179,9 @@ function UserHeader() {
           path='/web/formularioespecifico'
           component={FormularioEspecifico}
         />
-        <RotasPrivadasSecretaria
-          exact
-          path='/web/homesecretaria'
-          component={HomeSecretaria}
-        />
-        <RotasPrivadasMedico
-          exact
-          path='/web/homemedico'
-          component={HomeMedico}
+        <RotasPrivadas exact path='/web/home' component={Home} />
+        <RotasPrivadas
+          component={() => <Redirect to='/web/listadeusuarios' />}
         />
         <RotasPrivadas
           component={() => <Redirect to='/web/listadeusuarios' />}

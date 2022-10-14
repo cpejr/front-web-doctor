@@ -12,6 +12,17 @@ export const Body = styled.div`
   padding: 4% 2% 4% 2%;
   background-color: ${Cores.cinza[8]};
 `;
+
+export const TituloInput = styled.div`
+   font-size: 1em;
+   color: ${Cores.azul};
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   margin-top: 10px;
+
+`;
+
 export const DadosCadastro = styled.div`
   display: flex;
   flex-direction: column;
@@ -26,26 +37,27 @@ export const InputMesmaLinha = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 2%;
-  margin-top: 1% ;
-  align-items: end;
+  align-items: start;
   width: 100%;
   font-size: 1em;
+  gap: 10px;
   @media (max-width: 820px) {
     flex-direction: column;
+    gap: 0px;
   }
 `;
 export const InputMesmaLinha2 = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: end;
+  align-items: start;
 
   width: 100%;
   font-size: 1em;
+  gap: 10px;
   @media (max-width: 820px) {
     flex-direction: column;
-    margin-top: 2%;
+    gap: 0px;
   }
 `;
 export const Logo = styled.div`
@@ -88,7 +100,7 @@ export const RotuloColuna = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: flex-start;
-  width: 48%;
+  width: 50%;
   @media (max-width: 820px) {
     width: 100%;
   }

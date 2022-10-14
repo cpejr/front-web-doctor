@@ -24,6 +24,7 @@ export const CaixaCima = styled.div`
   border-style: solid;
   border-radius: 4px;
   border-color: ${Cores.cinza[3]};
+  gap: 10px;
   @media (max-width: 640px) {
     flex-direction: column;
     width: 80%;
@@ -33,10 +34,14 @@ export const CaixaCima = styled.div`
 export const FotoNomeData = styled.div`
   display: flex;
   align-items: center;
+  height: auto;
   flex-direction: row;
   width: 68%;
+  gap: 10px;
+
   @media (max-width: 770px) {
     width: 100%;
+    gap: 15px;
   }
 `;
 export const FotoPerfil = styled.div`
@@ -61,64 +66,61 @@ export const NomeData = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 7em;
-  width: 74%;
-  @media (max-width: 640px) {
-    height: 5.5em;
+  height: auto;
+  width: 80%;
+  margin-left: 10%;
+  @media (max-width: 560px) {
+    height: auto;
+    justify-content: center;
   }
   @media (max-width: 770px) and (min-width: 640px) {
     width: 64%;
-    height: 5.5em;
-  }
-
-  @media (max-width: 480px){
-    margin-left: 5%;
-    height: 4em;
+    height: auto;
   }
 `;
 export const Nome = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  width: 85%;
+  width: 100%;
   color: ${Cores.azul};
   font-family: ${Fontes.barlow};
   font-weight: 600;
   font-size: 1.4em;
-  margin-left: 10%;
+
+  margin-bottom: 10px;
   @media (max-width: 1100px) and (min-width: 770px) {
     font-size: 1.2em;
   }
   @media (max-width: 770px) and (min-width: 480px) {
     font-size: 1.1em;
-    justify-content: center;
-    margin-left: 8%;
+    
+    
   }
   @media (max-width: 480px) {
     font-size: 0.95em;
-    margin-left: 0%;
   }
   @media (max-width: 770px) and (min-width: 640px) {
-    margin-left: 5%;
+    
     width: 100%;
   }
 `;
 export const ConjuntoDataCPF = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
-  margin-left: 10%;
-  width: 85%;
+
+
+  width: 100%;
   gap: 4%;
   @media (max-width: 480px) {
     font-size: 0.8em;
     flex-direction: column;
     justify-content: center;
+    //align-items: center;
     width: 70%;
   }
   @media (max-width: 770px) and (min-width: 640px) {
     width: 100%;
-    margin-left: 5%;
   }
 `;
 export const DataCPF = styled.div`
@@ -126,6 +128,7 @@ export const DataCPF = styled.div`
   font-family: ${Fontes.barlow};
   font-weight: 400;
   font-size: 1.2em;
+  white-space: nowrap;
   @media (max-width: 1100px) and (min-width: 770px) {
     font-size: 1em;
   }
@@ -138,48 +141,47 @@ export const DataCPF = styled.div`
 `;
 
 export const ContainerCPF = styled.div`
-  display:flex;
-  flex-direction: column;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
   @media (max-width: 480px) {
     flex-direction: row;
-    position: relative;
-    left: -12%;
+    //position: relative;
+    //left: -12%;
   }
-
 `;
 
 export const ContainerData = styled.div`
-  display:flex;
-  flex-direction: column;
+  display: flex;
+  gap: 4px;
+  flex-direction: row;
   @media (max-width: 480px) {
     flex-direction: row;
     margin-bottom: 2%;
-    position: relative;
-    left: -12%;
+   
   }
-`; 
+`;
 
 export const BotoesColuna = styled.div`
+ 
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: end;
   height: 7.5em;
   width: 25%;
   font-size: 1em;
-  margin-left: 5%;
+  gap: 10px;
   @media (max-width: 1100px) and (min-width: 770px) {
     height: 6em;
   }
-  @media (max-width: 770px) and (min-width: 640px) {
-    height: 5em;
-    width: 35%;
+  @media (max-width: 770px) and (min-width: 560px) {
+    width: 38%;
+    height: 6em;
   }
   @media (max-width: 640px) {
-    flex-direction: row;
     width: 100%;
-    height: 2em;
-    margin-top: 5%;
+    height: auto;
   }
 `;
 export const CaixaBaixo = styled.div`

@@ -41,6 +41,10 @@ function CriacaoReceitas() {
 	const [estado, setEstado] = useState(estadoIncial);
 	const [camposVazios, setCamposVazios] = useState({});
 	const [carregandoCriacao, setCarregandoCriacao] = useState(false);
+	const [NomePaciente, setNomePaciente] = useState();
+	const [tituloReceita, setTituloReceita] = useState();
+	const [dataNascimentoPaciente, setDataNascimentoPaciente] = useState();
+	const [descricaoReceita, setDescricaoReceita] = useState();
 
 	const history = useHistory();
 
@@ -48,10 +52,37 @@ function CriacaoReceitas() {
 		e.preventDefault();
 		const { value, name } = e.target;
 
+
 		if (camposVazios[name])
 			setCamposVazios((valorAnterior) => ({ ...valorAnterior, [name]: false }));
 
 		setEstado({ ...estado, [name]: value });
+
+		if (name === "titulo") {
+			setTituloReceita(value);
+		}
+
+		if (name === "id_usuario") {
+			armazenaInformacoesUsuario(value);
+		}
+
+		if (name === "descricao") {
+			setDescricaoReceita(value);
+		}
+
+	}
+
+	async function armazenaInformacoesUsuario(id) {
+		const resposta = await managerService.GetUsuarioPorId(id);
+
+		const dataDesformatada = resposta.data_nascimento;
+		const dia = dataDesformatada.slice(8, 10);
+		const mes = dataDesformatada.slice(5, 7);
+		const ano = dataDesformatada.slice(0, 4);
+		const dataFormatada = dia + '/' + mes + '/' + ano;
+
+		setDataNascimentoPaciente(dataFormatada);
+		setNomePaciente(resposta.nome);
 	}
 
 	useEffect(() => {
@@ -90,7 +121,8 @@ function CriacaoReceitas() {
 		}
 
 		setCarregandoCriacao(true);
-		const res = await managerService.CriandoReceita(estado, {
+		const id = estado.id_usuario
+		const res = await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
 			mensagemSucesso: "Receita criada com sucesso",
 			tempo: 1500,
 			onClose: () => {

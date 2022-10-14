@@ -413,21 +413,22 @@ function Agendamentos() {
           </TopoPaginaCima>
 
           <Button
-            marginTop='10px'
-            width='45%'
-            height='50px'
+            marginTop="0px"
+            width="45%"
+            height="50px"
             backgroundColor={Cores.lilas[2]}
             borderColor={Cores.azulEscuro}
             color={Cores.azul}
-            fontSize='1.8em'
-            fontWeight='bold'
-            fontSizeMedia950='1em'
-            fontSizeMedia1080='1.5em'
-            gap='1%'
-            widthMedia='100%'
+            fontSize="1.45em"
+            fontWeight="bold"
+            fontSizeMedia950="1.1em"
+            fontSizeMedia480="1em"
+            fontSizeMedia1080="1.3em"
+            gap="1%"
+            widthMedia="100%"
             onClick={() => marcandoAgendamento()}
           >
-            Novo Agendamento <PlusCircleOutlined />
+            Novo Agendamento
           </Button>
         </TopoPagina>
         <BarraEstetica></BarraEstetica>

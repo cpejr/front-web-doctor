@@ -8,7 +8,7 @@ export const ContainerListadeUsuarios = styled.div`
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  padding: 2% 5% 2% 5%;
+  padding: 25px 5% 2% 5%;
 `;
 
 export const TopoPagina = styled.div`
@@ -17,11 +17,13 @@ export const TopoPagina = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  @media (max-width: 920px) {
+  
+  @media (max-width: 940px) {
     width: 100%;
     height: 70%;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 10px;
   }
 `;
 
@@ -31,11 +33,13 @@ export const TopoPaginaCima = styled.div`
   justify-content: space-around;
   width: 100%;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 
   @media (max-width: 940px) {
     flex-direction: column;
     align-items: center;
+    margin-bottom: 15px;
+   
   }
 `;
 
@@ -62,7 +66,7 @@ export const BarraPesquisaComDoisSelects = styled.div`
   flex-direction: row;
   justify-content: space-around;
   @media (max-width: 940px) {
-    width: 80%;
+    width: 100%;
   }
 
   .ant-input {
@@ -81,7 +85,9 @@ export const Filtros = styled.div`
   align-items: center;
   gap: 10px;
   @media (max-width: 940px) {
-    width: 80%;
+    width: 100%;
+    gap: 10px;
+
   }
   @media (max-width: 448px) {
     width: 100%;
@@ -107,22 +113,26 @@ export const SelectConsultorio = styled(Select)`
 `;
 
 export const BarraEstetica = styled.div`
-  margin-top: 2%;
-  margin-bottom: 1%;
+  margin-top: 25px;
+  margin-bottom: 15px;
   height: 2px;
   width: 100%;
   background-color: ${Cores.azul};
+
+  
 `;
 export const DadosUsuario = styled.div`
   color: ${Cores.azul};
   justify-content: space-around;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  margin-bottom: 15px;
   padding: 0% 2% 0% 2%;
 `;
 
 export const ContainerUsuarios = styled.div`
-  padding: 2% 0% 2% 0%;
+  padding: 0% 0% 2% 0%;
   display: flex;
   flex-direction: column;
   width: 100%;
