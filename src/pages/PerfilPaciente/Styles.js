@@ -381,14 +381,14 @@ export const BotaoReceita = styled.div`
 `;
 export const TituloFormulario = styled.div`
   font-size: 1.3em;
-  text-decoration: underline;
+  text-decoration: ${(props) => props.textDecoration};
   color: ${Cores.preto};
   display: flex;
   justify-content: center;
   width: 33%;
 
   :hover {
-    cursor: pointer;
+    cursor: ${(props) => props.cursor};
   }
 
   @media (max-width: 780px) {
