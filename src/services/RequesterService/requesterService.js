@@ -122,18 +122,7 @@ export const editarCamposFormulario = (id, campos) =>
 export const requisicaoTodosFormulariosPaciente = () =>
   api.get('/formularios_pacientes');
 
-export const enviarFormularioPaciente = (
-  status,
-  notificacao_ativa,
-  id_formulario,
-  id_usuario
-) =>
-  api.post('/formularios_pacientes', {
-    status,
-    notificacao_ativa,
-    id_formulario,
-    id_usuario,
-  });
+
 export const updateFotoDePerfil = (id, base64) =>
   api.post(`/usuariosimagem/${id}`,{
     file: base64
