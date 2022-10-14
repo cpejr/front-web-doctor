@@ -31,6 +31,7 @@ import {
   SelectData,
   SelectConsultorio,
   TopoPaginaCima,
+  SelectTipoAgendamento,
 } from './Styles';
 import Button from '../../styles/Button';
 import ModalAgendamentoEspecifico from '../../components/ModalAgendamentoEspecifico';
@@ -64,7 +65,7 @@ function Agendamentos() {
   const [consultorios, setConsultorios] = useState([]);
   const [modalConsultaMarcada, setModalConsultaMarcada] = useState(false);
   const [consultorioSelect, setConsultorioSelect] = useState('');
-  const [tipoAgendamento, setTipoAgendamento] = useState("");
+  const [tipoAgendamento, setTipoAgendamento] = useState('');
   const [carregandoFoto, setCarregandoFoto] = useState(true);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -72,11 +73,20 @@ function Agendamentos() {
   const abertoPeloUsuario = false;
 
   const agendamentosFiltrados = consultas.filter((consultas) => {
-    if (lowerBusca === '' && tipoSelect === '' && consultorioSelect === '' && tipoAgendamento === '') {
+    if (
+      lowerBusca === '' &&
+      tipoSelect === '' &&
+      consultorioSelect === '' &&
+      tipoAgendamento === ''
+    ) {
       return consultas;
     } else {
       if (lowerBusca !== '' && tipoAgendamento === '') {
-        if (tipoSelect !== '' && consultorioSelect === '' && tipoAgendamento === '') {
+        if (
+          tipoSelect !== '' &&
+          consultorioSelect === '' &&
+          tipoAgendamento === ''
+        ) {
           return (
             consultas?.nome
               ?.toLowerCase()
@@ -84,7 +94,11 @@ function Agendamentos() {
               .replace(/[\u0300-\u036f]/g, '')
               .includes(lowerBusca) && setandoData(consultas)
           );
-        } else if (tipoSelect === '' && consultorioSelect !== '' && tipoAgendamento === '') {
+        } else if (
+          tipoSelect === '' &&
+          consultorioSelect !== '' &&
+          tipoAgendamento === ''
+        ) {
           return (
             consultas?.nome
               ?.toLowerCase()
@@ -93,7 +107,11 @@ function Agendamentos() {
               .includes(lowerBusca) &&
             consultas.id_consultorio === consultorioSelect
           );
-        } else if (tipoSelect !== '' && consultorioSelect !== '' && tipoAgendamento === '') {
+        } else if (
+          tipoSelect !== '' &&
+          consultorioSelect !== '' &&
+          tipoAgendamento === ''
+        ) {
           return (
             consultas?.nome
               ?.toLowerCase()
@@ -111,11 +129,23 @@ function Agendamentos() {
             .includes(lowerBusca);
         }
       } else {
-        if (tipoSelect !== '' && consultorioSelect === '' && tipoAgendamento === '') {
+        if (
+          tipoSelect !== '' &&
+          consultorioSelect === '' &&
+          tipoAgendamento === ''
+        ) {
           return setandoData(consultas);
-        } else if (tipoSelect === '' && consultorioSelect !== '' && tipoAgendamento === '') {
+        } else if (
+          tipoSelect === '' &&
+          consultorioSelect !== '' &&
+          tipoAgendamento === ''
+        ) {
           return consultas.id_consultorio === consultorioSelect;
-        } else if (tipoSelect !== '' && consultorioSelect !== '' && tipoAgendamento === '') {
+        } else if (
+          tipoSelect !== '' &&
+          consultorioSelect !== '' &&
+          tipoAgendamento === ''
+        ) {
           return (
             consultas.id_consultorio === consultorioSelect &&
             setandoData(consultas)
@@ -126,11 +156,20 @@ function Agendamentos() {
   });
 
   const examesFiltrados = examesMarcados.filter((examesMarcados) => {
-    if (lowerBusca === '' && tipoSelect === '' && consultorioSelect === '' && tipoAgendamento === 'exames') {
+    if (
+      lowerBusca === '' &&
+      tipoSelect === '' &&
+      consultorioSelect === '' &&
+      tipoAgendamento === 'exames'
+    ) {
       return examesMarcados;
     } else {
       if (lowerBusca !== '' && tipoAgendamento === 'exames') {
-        if (tipoSelect !== '' && consultorioSelect === '' && tipoAgendamento === 'exames') {
+        if (
+          tipoSelect !== '' &&
+          consultorioSelect === '' &&
+          tipoAgendamento === 'exames'
+        ) {
           return (
             examesMarcados?.nome
               ?.toLowerCase()
@@ -138,7 +177,11 @@ function Agendamentos() {
               .replace(/[\u0300-\u036f]/g, '')
               .includes(lowerBusca) && setandoData(examesMarcados)
           );
-        } else if (tipoSelect === '' && consultorioSelect !== '' && tipoAgendamento === 'exames') {
+        } else if (
+          tipoSelect === '' &&
+          consultorioSelect !== '' &&
+          tipoAgendamento === 'exames'
+        ) {
           return (
             examesMarcados?.nome
               ?.toLowerCase()
@@ -147,7 +190,11 @@ function Agendamentos() {
               .includes(lowerBusca) &&
             examesMarcados.id_consultorio === consultorioSelect
           );
-        } else if (tipoSelect !== '' && consultorioSelect !== '' && tipoAgendamento === 'exames') {
+        } else if (
+          tipoSelect !== '' &&
+          consultorioSelect !== '' &&
+          tipoAgendamento === 'exames'
+        ) {
           return (
             examesMarcados?.nome
               ?.toLowerCase()
@@ -165,11 +212,23 @@ function Agendamentos() {
             .includes(lowerBusca);
         }
       } else {
-        if (tipoSelect !== '' && consultorioSelect === '' && tipoAgendamento === 'exames') {
+        if (
+          tipoSelect !== '' &&
+          consultorioSelect === '' &&
+          tipoAgendamento === 'exames'
+        ) {
           return setandoData(examesMarcados);
-        } else if (tipoSelect === '' && consultorioSelect !== '' && tipoAgendamento === 'exames') {
+        } else if (
+          tipoSelect === '' &&
+          consultorioSelect !== '' &&
+          tipoAgendamento === 'exames'
+        ) {
           return examesMarcados.id_consultorio === consultorioSelect;
-        } else if (tipoSelect !== '' && consultorioSelect !== '' && tipoAgendamento === 'exames') {
+        } else if (
+          tipoSelect !== '' &&
+          consultorioSelect !== '' &&
+          tipoAgendamento === 'exames'
+        ) {
           return (
             examesMarcados.id_consultorio === consultorioSelect &&
             setandoData(examesMarcados)
@@ -342,7 +401,7 @@ function Agendamentos() {
                 />
               )}
             </Filtros>
-            <SelectData
+            <SelectTipoAgendamento
               defaultValue=''
               FiltrarTipo={tipoAgendamento}
               bordered={false}
@@ -350,7 +409,7 @@ function Agendamentos() {
             >
               <Option value=''>Consultas</Option>
               <Option value='exames'>Exames</Option>
-            </SelectData>
+            </SelectTipoAgendamento>
           </TopoPaginaCima>
 
           <Button
