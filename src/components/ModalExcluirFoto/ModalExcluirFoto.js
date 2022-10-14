@@ -14,31 +14,30 @@ import {
   ContainerFooterModalExcluir, 
 } from "./Styles"; 
  
-function ModalExcluirReceita(props) { 
-  const [carregandoDeletar, setCarregandoDeletar] = useState(false);
-  const [idReceita, setIdReceita] = useState("");
-  const [pdfUrl, setPdfUrl] = useState("");
+function ModalExcluirFoto(props) { 
+  const [carregandoDeletar, setCarregandoDeletar] = useState(false);  
   const antIconModal = ( 
     <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin /> 
   ); 
  
-  async function excluirReceita() { 
-      setCarregandoDeletar(true); 
-      await managerService.DeletarReceita(idReceita, pdfUrl) 
-      await sleep(3000); 
-      setCarregandoDeletar(false); 
+  async function deletarFoto() {
+    if (props.avatarUrl === null) {
+      toast.error("O usuário não possui foto de perfil");
+      return false;
+    }
+    setCarregandoDeletar(true);
+    await managerService.deletarFotoDePerfil(props.idUsuario, props.avatarUrl);
+    props.fecharModal();
+    document.location.reload(true);
+    setCarregandoDeletar(false);
+  
   }
   
-  useEffect(() => {
-    setIdReceita(props.receita.id);
-    setPdfUrl(props.receita.pdf_url);
-  }, [props]);
- 
   return ( 
     <div> 
       <ContainerModalExcluir> 
         <ConteudoModalExcluir> 
-          Tem certeza que quer excluir essa receita? 
+          Tem certeza que quer excluir sua foto de perfil? 
         </ConteudoModalExcluir> 
         <ContainerFooterModalExcluir> 
           <Button 
@@ -63,7 +62,7 @@ function ModalExcluirReceita(props) {
             widthMedia670="50%" 
             fontSize="13px" 
             marginLeft="2%" 
-            onClick={() => excluirReceita()} 
+            onClick={() => deletarFoto()} 
           > 
             {carregandoDeletar ? ( 
               <Spin indicator={antIconModal} /> 
@@ -73,9 +72,8 @@ function ModalExcluirReceita(props) {
           </Button> 
         </ContainerFooterModalExcluir> 
       </ContainerModalExcluir> 
-      <AddToast /> 
     </div> 
   ); 
 } 
  
-export default ModalExcluirReceita;
+export default ModalExcluirFoto;
