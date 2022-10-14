@@ -125,6 +125,7 @@ function AlterarSenhaEsquecida() {
           <Caixa>
             <Titulo>Alterar Senha:</Titulo>
             <InputVertical>
+            <TituloDoInput>Defina sua nova senha:</TituloDoInput>
               <Input
                 placeholder="Defina sua nova senha"
                 backgroundColor={Cores.cinza[7]}
@@ -141,6 +142,7 @@ function AlterarSenhaEsquecida() {
               {erro.senha && (
                 <Rotulo>Insira uma nova senha com no minimo 8 digitos</Rotulo>
               )}
+              <TituloDoInput>Confirme sua nova senha:</TituloDoInput>
               <Input
                 placeholder="Confirme sua nova senha"
                 backgroundColor={Cores.cinza[7]}
