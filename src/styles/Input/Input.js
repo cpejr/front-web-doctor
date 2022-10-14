@@ -26,7 +26,7 @@ const Input = styled.input`
   border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
-      if (props.erro || props.camposVazios) {
+      if(props.erro || props.camposVazios || props.emailJaExiste){
         cor = Cores.vermelho;
       } else {
         cor = Cores.azul;

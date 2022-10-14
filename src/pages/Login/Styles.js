@@ -13,6 +13,16 @@ export const Body = styled.div`
   background-color: ${Cores.cinza[8]} ;
 `;
 
+export const TituloInput = styled.div`
+   font-size: 1em;
+   color: ${Cores.azul};
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   margin-top: 10px;
+
+`;
+
 export const DadosLogin = styled.div`
   display: flex;
   flex-direction: column;

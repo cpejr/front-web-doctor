@@ -26,6 +26,8 @@ const Chat = () => {
   const socket = useRef(null);
 
   useEffect(() => {
+    if (!usuarioId) return;
+
     componenteEstaMontadoRef.current = true;
 
     async function getConversas() {
@@ -43,9 +45,11 @@ const Chat = () => {
     getConversas();
 
     return () => (componenteEstaMontadoRef.current = false);
-  }, []);
+  }, [usuarioId]);
 
   useEffect(() => {
+    if (!usuarioId) return;
+
     socket.current = io(BACK_END_URL);
 
     socket.current.emit('adicionarUsuario', usuarioId);
@@ -62,10 +66,10 @@ const Chat = () => {
       socket.current.off();
       socket.current.close();
     };
-  }, []);
+  }, [usuarioId]);
 
   useEffect(() => {
-    if (checarObjVazio(mensagemRecebida)) return;
+    if (checarObjVazio(mensagemRecebida) || !usuarioId) return;
 
     componenteEstaMontadoRef.current = true;
 
@@ -93,15 +97,16 @@ const Chat = () => {
     }
 
     atualizarBarraLateralNovaMensagem(mensagemRecebida);
+    setMensagemRecebida({});
 
     return () => (componenteEstaMontadoRef.current = false);
-  }, [mensagemRecebida]);
+  }, [mensagemRecebida, usuarioId]);
 
   useEffect(() => {
     if (checarObjVazio(conversaRecebida)) return;
 
     function atualizarBarraLateralNovaConversa(novaConversa) {
-      const index = conversas.findIndex(
+      const index = conversas?.findIndex(
         (conversa) => conversa.id === novaConversa.id
       );
 
@@ -119,7 +124,8 @@ const Chat = () => {
     }
 
     atualizarBarraLateralNovaConversa(conversaRecebida);
-  }, [conversaRecebida]);
+    setConversaRecebida({});
+  }, [conversaRecebida, usuarioId]);
 
   return (
     <>

@@ -67,7 +67,7 @@ export default function ConversaAberta({ socket }) {
     componenteEstaMontadoRef.current = true;
 
     async function getMensagens() {
-      if (checarObjVazio(conversaSelecionada)) return;
+      if (checarObjVazio(conversaSelecionada) || !usuarioId) return;
 
       const resposta = await managerService.GetMensagensPorConversaUsuario(
         usuarioId,
@@ -79,7 +79,7 @@ export default function ConversaAberta({ socket }) {
     getMensagens();
 
     return () => (componenteEstaMontadoRef.current = false);
-  }, [conversaSelecionada]);
+  }, [conversaSelecionada, usuarioId]);
 
   useEffect(() => {
     inputMensagemConteudoRef?.current?.focus();

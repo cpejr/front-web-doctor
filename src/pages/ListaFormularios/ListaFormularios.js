@@ -147,6 +147,26 @@ function ListaFormularios() {
     setModalEnvio(true);
   }
 
+  const idFormularioUrgencia = "046975f7-d7d0-4635-a9d9-25efbe65d7b7";
+
+  const ordenarFormularios = (a, b) => {
+    var formulario1 = a.id;
+    var formulario2 = b.id;
+
+    if (
+      formulario1 === idFormularioUrgencia &&
+      formulario2 !== idFormularioUrgencia
+    ) {
+      return -1;
+    }
+    if (
+      formulario1 !== idFormularioUrgencia &&
+      formulario2 === idFormularioUrgencia
+    ) {
+      return 1;
+    }
+    return a.titulo.localeCompare(b.titulo);
+  };
 
   return (
     <div>
@@ -188,40 +208,43 @@ function ListaFormularios() {
               </Filtros>
             </TopoPagina>
             <TopoPaginaBotao>
-            {tipoUsuarioLogado === "MASTER" && (
-                <BotaoFinal>
-                    <Button
-                      backgroundColor={Cores.cinza[7]}
-                      color={Cores.azul}
-                      width="100%"
-                      heightMedia920="63%"
-                      borderColor={Cores.azul}
-                      fontSize="1em"
-                      gap="2%"
-                      widthMedia="100%"
-                      boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-                      onClick={() => history.push("/web/criacaoformulario")}
-                    >
-                      <PlusCircleOutlined style={{ color: Cores.azul }} />
-                      Adicionar Formularios
-                    </Button>
-                  </BotaoFinal>
-              )}</TopoPaginaBotao>
+              {tipoUsuarioLogado === "MASTER" && (
+                
+                  <Button
+                    backgroundColor={Cores.cinza[7]}
+                    borderColor={Cores.azul}
+                    gap="2%"
+                    widthMedia="100%"
+                    boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+                    onClick={() => history.push("/web/criacaoformulario")}
+                    marginTop="15px"
+                    width="45%"
+                    height="50px"
+                    color={Cores.azul}
+                    fontSize="1.45em"
+                    fontWeight="bold"
+                    fontSizeMedia950="1.1em"
+                    fontSizeMedia480="1em"
+                    fontSizeMedia1080="1.3em"
+                  >
+                    Adicionar Formulários
+                  </Button>
+                
+              )}
+            </TopoPaginaBotao>
             <BarraEstetica />
             <ContainerFormulario>
-              {formulariosFiltrados
-              .sort(compararDataRecente)
-              .map((value) => (
+              {formulariosFiltrados?.sort(ordenarFormularios).map((value) => (
                 <ContainerFormularioEspecifico>
                   <Formulario>
                     <DadosFormulario>
                       <CaixaTitulo>
                         <Button
-                          backgroundColor='transparent'
-                          borderColor='transparent'
+                          backgroundColor="transparent"
+                          borderColor="transparent"
                           onClick={() => verificandoFormularioPeloId(value.id)}
-                          width='100%'
-                          marginTop='0px'
+                          width="100%"
+                          marginTop="0px"
                         >
                           <TituloFormulario>{value.titulo}</TituloFormulario>
                         </Button>
@@ -327,9 +350,9 @@ function ListaFormularios() {
         centered={true}
       >
         <ModalEnvioFormulario
-          fecharModal={() => fechandoModal()}
           usuarios={usuarios}
           idFormulario={idFormulario}
+          fechandoModal={() => fechandoModal()}
         />
       </Modal>
 
