@@ -315,17 +315,6 @@ function EditarPerfil() {
     setEstadoBack({ ...estadoBack, [name]: value });
   }
 
-  /*   async function deletarFotoDePerfil(id) {
-      if (usuario.avatar_url === null) {
-        toast.error("O usuário não possui uma foto de perfil");
-        return false;
-      }
-  
-      //const imagem = getImagem
-      await managerService.deletarFotoDePerfil(usuario.id, imagem);
-  
-    } */
-
   async function validacaoData(e) {
     const { value, name } = e.target;
     if (value) {
