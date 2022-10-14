@@ -12,7 +12,6 @@ import Header from './components/Header/Header';
 import ListaFormularios from './pages/ListaFormularios';
 import ListaUsuarios from './pages/ListaUsuarios';
 import Login from './pages/Login';
-// import ModeloReceitas from './pages/ModeloReceitas';
 import Perfil from './pages/Perfil';
 import PerfilPaciente from './pages/PerfilPaciente';
 import RespostaFormulario from './pages/RespostaFormulario';
@@ -23,6 +22,7 @@ import EditarFormulario from './pages/EditarFormulario/EditarFormulario';
 import FormularioEspecifico from './pages/FormularioEspecifico';
 import Home from './pages/Home/Home';
 import CriacaoReceitas from './pages/CriacaoReceitas';
+
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
   <Route
@@ -110,7 +110,12 @@ function UserHeader() {
       <Switch>
         <RotasPrivadas
           exact
-          path='/web/editarperfil'
+          path="/web/cadastroNovoUsuario"
+          component={Cadastro}
+        />
+        <RotasPrivadas
+          exact
+          path="/web/editarperfil"
           component={EditarPerfil}
         />
         <RotasPrivadas
@@ -153,13 +158,8 @@ function UserHeader() {
           path='/web/listadeusuarios'
           component={ListaUsuarios}
         />
-        {/* <RotasPrivadasMedico
-          exact
-          path='/web/modeloreceitas'
-          component={ModeloReceitas}
-        /> */}
         <RotasPrivadasMedico
-          exact
+          exact 
           path='/web/criacaoreceitas'
           component={CriacaoReceitas}
         />

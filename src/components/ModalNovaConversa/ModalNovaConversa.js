@@ -22,6 +22,8 @@ function ModalNovaConversa({ setModalAdicionar }) {
   const componenteEstaMontadoRef = useRef(null);
 
   useEffect(() => {
+    if (!usuarioId) return;
+
     componenteEstaMontadoRef.current = true;
 
     async function pegandoPacientes() {
@@ -46,7 +48,7 @@ function ModalNovaConversa({ setModalAdicionar }) {
     pegandoPacientes();
 
     return () => (componenteEstaMontadoRef.current = false);
-  }, [conversas]);
+  }, [conversas, usuarioId]);
 
   async function criarNovarConversa(e) {
     if (!selecionaUsuarioId) return;

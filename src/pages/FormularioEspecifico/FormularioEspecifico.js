@@ -5,8 +5,9 @@ import {
   StarFilled,
   UserOutlined,
 } from "@ant-design/icons";
-import { Spin, Modal, Input } from "antd";
+import { Spin, Modal, Input, Form } from "antd";
 import ModalFormulario from "../../components/ModalFormulario";
+import ModalPerguntaFormulario from "../../components/ModalPerguntaFormulario";
 import {
   ColunaDireita,
   ColunaEsquerda,
@@ -32,6 +33,8 @@ import {
   CentralizandoSpin,
   ContainerInterno,
   FotoPerfil,
+  NomePacienteSecretaria,
+  NomePacienteMaster,
 } from "./Styles";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
@@ -48,7 +51,7 @@ function FormularioEspecifico(props) {
   const [formularioResposta, setFormularioResposta] = useState(false);
 
   const [modalFormulario, setModalFormulario] = useState(false);
-  const [perguntas, setPerguntas] = useState();
+  const [modalPerguntaFormulario, setModalPerguntaFormulario] = useState(false);
   const [titulo, setTitulo] = useState();
   const [idFormularioPaciente, setIdFormularioPaciente] = useState();
   const [contador, setContador] = useState(0);
@@ -56,11 +59,16 @@ function FormularioEspecifico(props) {
   const [carregando, setCarregando] = useState(true);
   const [carregandoFoto, setCarregandoFoto] = useState(true);
   const [carregandoFormulario, setCarregandoFormulario] = useState(true);
-
+  const idFormularioUrgencia = "046975f7-d7d0-4635-a9d9-25efbe65d7b7";
   const [notificacaoAtiva, setNotificacaoAtiva] = useState(false);
   const [statusSelect, setStatusSelect] = useState("");
   const { Option } = SelectTipos;
   const [busca, setBusca] = useState("");
+  const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
+  const [formularios, setFormularios] = useState();
+  const [perguntas, setPerguntas] = useState();
+  const [perguntasAlterar, setPerguntasAlterar] = useState();
+
   const lowerBusca = busca
     .toLowerCase()
     .normalize("NFD")
@@ -69,18 +77,24 @@ function FormularioEspecifico(props) {
     <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
   );
 
+  const idFormularioEspecifico = props.location.state.id;
+
   async function pegandoDadosFormularioEspecifico() {
     const resposta = await managerService.GetFormularioEspecifico(
-      props.location.state.id
+      idFormularioEspecifico
     );
     setFormularioEspecifico(resposta);
     setCarregando(false);
   }
 
+  useEffect(() => {
+    pegandoDadosFormularioEspecifico();
+  }, [props]);
+
   async function pegandoFormularioPacientes() {
     const respostaFormularios =
       await managerService.GetFormularioPacientesPorFormulario(
-        props.location.state.id
+        idFormularioEspecifico
       );
     setformularioPacientes(respostaFormularios);
     respostaFormularios.forEach((formulario) => {
@@ -109,8 +123,7 @@ function FormularioEspecifico(props) {
       Object.defineProperty(formulario, "fotoDePerfil", {
         value: arquivo,
       });
-    }
-    else {
+    } else {
       setCarregandoFoto(false);
       return;
     }
@@ -125,13 +138,19 @@ function FormularioEspecifico(props) {
     setModalFormulario(true);
   }
 
+  function abrindoModalPerguntaFormulario() {
+    setPerguntas(Object.entries(formularioEspecifico.perguntas.properties));
+    setTitulo(formularioEspecifico.titulo);
+    setModalPerguntaFormulario(true);
+  }
+
   useEffect(() => {
     pegandoFormularioPacientes();
-  }, [props.location.state.id]);
+  }, [idFormularioEspecifico]);
 
   useEffect(() => {
     pegandoDadosFormularioEspecifico();
-  }, [props.location.state.id]);
+  }, [idFormularioEspecifico]);
 
   useEffect(() => {
     setandoFotoDePerfil();
@@ -140,7 +159,11 @@ function FormularioEspecifico(props) {
   const usuariosFiltrados = formularioPacientes.filter(
     (formularioPacientes) => {
       if (lowerBusca === "" && statusSelect === "") {
-        return formularioPacientes;
+        if (idFormularioEspecifico === idFormularioUrgencia) {
+          return formularioPacientes.status === true;
+        } else {
+          return formularioPacientes;
+        }
       } else {
         if (statusSelect === "true") {
           return (
@@ -151,19 +174,31 @@ function FormularioEspecifico(props) {
               .includes(lowerBusca) && formularioPacientes.status === true
           );
         } else if (statusSelect === "false") {
-          return (
-            formularioPacientes?.nome
+          if (idFormularioEspecifico !== idFormularioUrgencia) {
+            return (
+              formularioPacientes?.nome
+                ?.toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .includes(lowerBusca) && formularioPacientes.status === false
+            );
+          } else return false;
+        } else {
+          if (idFormularioEspecifico !== idFormularioUrgencia) {
+            return formularioPacientes?.nome
               ?.toLowerCase()
               .normalize("NFD")
               .replace(/[\u0300-\u036f]/g, "")
-              .includes(lowerBusca) && formularioPacientes.status === false
-          );
-        } else {
-          return formularioPacientes?.nome
-            ?.toLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .includes(lowerBusca);
+              .includes(lowerBusca);
+          } else {
+            return (
+              formularioPacientes?.nome
+                ?.toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "")
+                .includes(lowerBusca) && formularioPacientes.status === true
+            );
+          }
         }
       }
     }
@@ -233,18 +268,22 @@ function FormularioEspecifico(props) {
                   />
                 </BarraDePesquisa>
                 <Selects>
-                  <RotuloBarraDeBuscaOpcoes>
-                    <SelectTipos
-                      defaultValue=""
-                      bordered={false}
-                      style={{ width: "auto" }}
-                      onChange={(value) => usuariosFiltro(value)}
-                    >
-                      <Option value="">Todos os Usuários</Option>
-                      <Option value="true">Respondido </Option>
-                      <Option value="false">Resposta Pendente</Option>
-                    </SelectTipos>
-                  </RotuloBarraDeBuscaOpcoes>
+                  {idFormularioEspecifico !== idFormularioUrgencia ? (
+                    <RotuloBarraDeBuscaOpcoes>
+                      <SelectTipos
+                        defaultValue=""
+                        bordered={false}
+                        style={{ width: "auto" }}
+                        onChange={(value) => usuariosFiltro(value)}
+                      >
+                        <Option value="">Todos os Usuários</Option>
+                        <Option value="true">Respondido </Option>
+                        <Option value="false">Resposta Pendente</Option>
+                      </SelectTipos>
+                    </RotuloBarraDeBuscaOpcoes>
+                  ) : (
+                    <></>
+                  )}
                 </Selects>
               </ContainerBarraDeBuscaOpcoes>
 
@@ -301,17 +340,23 @@ function FormularioEspecifico(props) {
                     )}
                   </BarraEsquerda>
                   <BarraCentro>
-                    <NomePaciente
-                      onClick={() =>
-                        abrindoModalFormulario(
-                          value.id,
-                          value.perguntas,
-                          value.titulo
-                        )
-                      }
-                    >
-                      {value.nome}
-                    </NomePaciente>
+                    {tipoUsuarioLogado === "MASTER" ? (
+                      <NomePacienteMaster
+                        onClick={() =>
+                          abrindoModalFormulario(
+                            value.id,
+                            value.perguntas,
+                            value.titulo
+                          )
+                        }
+                      >
+                        {value.nome}
+                      </NomePacienteMaster>
+                    ) : (
+                      <NomePacienteSecretaria>
+                        {value.nome}
+                      </NomePacienteSecretaria>
+                    )}
                   </BarraCentro>
                   {value.status !== false ? (
                     <></>
@@ -346,15 +391,49 @@ function FormularioEspecifico(props) {
               ))}
             </ColunaEsquerda>
             <ColunaDireita>
-              <BarraRespostas>
-                Aguardando respostas de {formularioRespostaPendente.length}{" "}
-                formulários.
+              {idFormularioEspecifico !== idFormularioUrgencia ? (
+                <BarraRespostas>
+                {" "}
+                {formularioRespostaPendente.length === 1
+                  ? "Aguardando respostas de 1 formulário"
+                  : `Aguardando respostas de ${formularioRespostaPendente.length} formulários`}
               </BarraRespostas>
+              ) : (
+                <></>
+              )}
+
+              
               <BarraRespostas>
                 {" "}
-                {formularioResposta.length} formulários já foram respondidos.
+                {formularioResposta.length < 2 ? (
+                  <>
+                    {formularioResposta.length === 1
+                      ? "1 formulário já foi respondido"
+                      : "Nenhum formulário foi respondido"}
+                  </>
+                ) : (
+                  `${formularioResposta.length} já foram respondidos`
+                )}
               </BarraRespostas>
               <MargemEstetica />
+
+              <Button
+                backgroundColor={Cores.cinza[7]}
+                borderRadius="3px"
+                borderWidth="1px"
+                borderColor={Cores.azul}
+                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                color={Cores.azul}
+                fontSize="15px"
+                height="50px"
+                width="60%"
+                marginTop="0%"
+                marginLeft="0%"
+                fontSizeMedia950="0.9em"
+                onClick={() => abrindoModalPerguntaFormulario()}
+              >
+                Visualizar Perguntas
+              </Button>
               <Button
                 backgroundColor="green"
                 borderRadius="3px"
@@ -365,10 +444,10 @@ function FormularioEspecifico(props) {
                 fontSize="15px"
                 height="50px"
                 width="60%"
-                marginTop="10%"
+                marginTop="0%"
                 marginLeft="0%"
                 fontSizeMedia950="0.9em"
-                onClick={() => { }}
+                onClick={() => {}}
               >
                 Gerar documento Word
               </Button>
@@ -389,6 +468,20 @@ function FormularioEspecifico(props) {
           idFormularioPaciente={idFormularioPaciente}
           perguntas={perguntas}
           titulo={titulo}
+        />
+      </Modal>
+
+      <Modal
+        visible={modalPerguntaFormulario}
+        onCancel={() => setModalPerguntaFormulario(false)}
+        style={{ minWidth: "250px", maxWidth: "800px" }}
+        width={"70%"}
+        centered={true}
+        footer={null}
+      >
+        <ModalPerguntaFormulario
+          perguntas={perguntas}
+          perguntasAlterar={perguntasAlterar}
         />
       </Modal>
     </div>

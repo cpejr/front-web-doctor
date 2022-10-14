@@ -12,6 +12,7 @@ import {
   BotoesMesmaLinha,
   Titulo,
   Rotulo,
+  TituloInput,
   CaixaMensagem,
   Logo,
   MensagemPacientePrincipal,
@@ -195,15 +196,6 @@ function AlterarSenhaEsquecida() {
         </Conteudo>
       ) : (
         <CaixaMensagem>
-          <Logo>
-            <img
-              src={logoGuilherme}
-              className="logo"
-              alt="logoGuilherme"
-              width="139px"
-              height="160px"
-            ></img>
-          </Logo>
           <MensagemPacientePrincipal>
             Senha alterada com sucesso!
           </MensagemPacientePrincipal>
@@ -212,7 +204,6 @@ function AlterarSenhaEsquecida() {
           </MensagemPaciente>
         </CaixaMensagem>
       )}
-      <AddToast />
     </div>
   );
 }
