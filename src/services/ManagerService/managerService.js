@@ -821,3 +821,17 @@ export const GetUsuarioPorId = async (id_usuario) => {
     requisicaoErro(err);
   }
 };
+
+export const dispostivoById = async (id) => {
+  let dispositivo = {};
+
+  await requesterService
+    .dispostivoById(id)
+    .then((res) => {
+      dispositivo = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dispositivo;
+};
