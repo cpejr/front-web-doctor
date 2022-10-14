@@ -98,8 +98,11 @@ export const Texto = styled.div`
   font-family: ${Fontes.roboto};
   font-size: 250%;
   @media  (max-width: 490px) and (min-width: 300px) {
-    padding-left: 5px;
-    padding-right: 5px
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+  @media  (max-width: 560px){
+    font-size: 190%;
   }
 `;
 
