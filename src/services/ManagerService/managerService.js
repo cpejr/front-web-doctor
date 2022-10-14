@@ -38,17 +38,14 @@ export const Cadastrando = async (usuario, endereco) => {
     toast.error('E-mail já cadastrado');
     return;
   }
-
-  await requesterService
-    .criarUsuario(endereco, usuario)
-    .then(() => {
-      toast.success('Usuário cadastrado com sucesso.');
-    })
-    .catch((error) => {
-      requisicaoErro(error, () => (window.location.href = '/cadastro'));
-      return false;
-    });
-  return false;
+  try {
+    const idUsuario = await requesterService.criarUsuario(endereco, usuario);
+    toast.success("Usuário cadastrado com sucesso.");
+    return idUsuario;
+  } catch (error) {
+    requisicaoErro(error, () => (window.location.href = "/cadastro"));
+    return false;
+  }
 };
 
 export const EnviandoEmail = async (email) => {
@@ -412,7 +409,8 @@ export const EnviandoFormularioPaciente = async (
   status,
   notificacao_ativa,
   id_formulario,
-  id_usuario
+  id_usuario,
+  mostrarToast = true
 ) => {
   await requesterService
     .enviarFormularioPaciente(
@@ -422,7 +420,9 @@ export const EnviandoFormularioPaciente = async (
       id_usuario
     )
     .then(() => {
-      toast.success('Formulario enviado com sucesso!');
+      if (mostrarToast) {
+        toast.success("Formulario enviado com sucesso!");
+      }
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -629,7 +629,7 @@ export const DeletarReceita = async (id) => {
 };
 
 export const GetArquivoPorChave = async (chave) => {
-  let arquivo = '';
+  let arquivo = "";
 
   await requesterService
     .requisicaoArquivo(chave)
