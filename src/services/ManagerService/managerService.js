@@ -585,15 +585,18 @@ export const GetReceitas = async () => {
 };
 
 export const CriandoReceita = async (
-  receita,
+  id_usuario, nomePaciente, dataNascimento, tituloReceita, descricao,
   usarToast = {
     mensagemSucesso: 'Operação bem sucedida',
     tempo: 1500,
     onClose: () => {},
   }
 ) => {
+
+
   return requesterService
-    .criarReceita(receita)
+  
+    .criarReceita(id_usuario, nomePaciente, dataNascimento, tituloReceita, descricao)
     .then(() => {
       if (usarToast) {
         toast.success(usarToast.mensagemSucesso, {
@@ -804,4 +807,17 @@ export const deletarFotoDePerfil = async (id, file) => {
       return;
     });
   return;
+};
+
+
+
+export const GetUsuarioPorId = async (id_usuario) => {
+  try {
+    const res = await requesterService.requisicaoUsuarioPorId(
+      id_usuario
+    );
+    return res.data;
+  } catch (err) {
+    requisicaoErro(err);
+  }
 };
