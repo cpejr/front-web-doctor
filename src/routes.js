@@ -110,7 +110,12 @@ function UserHeader() {
       <Switch>
         <RotasPrivadas
           exact
-          path='/web/editarperfil'
+          path="/web/cadastroNovoUsuario"
+          component={Cadastro}
+        />
+        <RotasPrivadas
+          exact
+          path="/web/editarperfil"
           component={EditarPerfil}
         />
         <RotasPrivadas

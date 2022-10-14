@@ -254,34 +254,35 @@ function Agendamentos() {
               {tipoSelect === "" ? (
                 <></>
               ) : (
-                  <InputData
-                    size="large"
-                    name="data"
-                    type="date"
-                    border={tipoSelect}
-                    onChange={(e) => setDataInput(e.target.value)}
-                    value={dataInput}
-                  />
+                <InputData
+                  size="large"
+                  name="data"
+                  type="date"
+                  border={tipoSelect}
+                  onChange={(e) => setDataInput(e.target.value)}
+                  value={dataInput}
+                />
               )}
             </Filtros>
           </TopoPaginaCima>
 
           <Button
-            marginTop="10px"
+            marginTop="0px"
             width="45%"
             height="50px"
             backgroundColor={Cores.lilas[2]}
             borderColor={Cores.azulEscuro}
             color={Cores.azul}
-            fontSize="1.8em"
+            fontSize="1.45em"
             fontWeight="bold"
-            fontSizeMedia950="1em"
-            fontSizeMedia1080="1.5em"
+            fontSizeMedia950="1.1em"
+            fontSizeMedia480="1em"
+            fontSizeMedia1080="1.3em"
             gap="1%"
             widthMedia="100%"
             onClick={() => marcandoAgendamento()}
           >
-            Novo Agendamento <PlusCircleOutlined />
+            Novo Agendamento
           </Button>
         </TopoPagina>
         <BarraEstetica></BarraEstetica>
@@ -305,66 +306,64 @@ function Agendamentos() {
           </div>
         ) : (
           <ContainerUsuarios>
-            {agendamentosFiltrados
-              .map((value) => (
-                <Usuario>
-              ?.sort(compararDataAntiga)
-                  <Imagem>{value.avatar_url}</Imagem>
-                  <Nome>
-                    {carregando ? (
-                      <Spin indicator={antIcon} />
-                    ) : (
-                      <div onClick={() => abrindoPerfilPaciente(value.email)}>
-                        {value.nome}
-                      </div>
-                    )}
-                  </Nome>
-                  <Telefone>
-                    {carregando ? (
-                      <Spin indicator={antIcon} />
-                    ) : (
-                      <>
-                        ({value.telefone.slice(0, -9)}){" "}
-                        {value.telefone.slice(2, -4)}-{value.telefone.slice(-4)}
-                      </>
-                    )}
-                  </Telefone>
-                  <Data>
-                    {parseInt(value.data_hora.slice(11, 13)) < 12
-                      ? value.data_hora.slice(8, 10) +
-                        "/" +
-                        value.data_hora.slice(5, 7) +
-                        "/" +
-                        value.data_hora.slice(0, 4) +
-                        " - " +
-                        parseInt(value.data_hora.slice(11, 13)) +
-                        ":" +
-                        value.data_hora.slice(14, 16) +
-                        " am"
-                      : value.data_hora.slice(8, 10) +
-                        "/" +
-                        value.data_hora.slice(5, 7) +
-                        "/" +
-                        value.data_hora.slice(0, 4) +
-                        " - " +
-                        parseInt(value.data_hora.slice(11, 13) - 12) +
-                        ":" +
-                        value.data_hora.slice(14, 16) +
-                        " pm"}
-                  </Data>
+            {agendamentosFiltrados?.sort(compararDataAntiga).map((value) => (
+              <Usuario>
+                <Imagem>{value.avatar_url}</Imagem>
+                <Nome>
+                  {carregando ? (
+                    <Spin indicator={antIcon} />
+                  ) : (
+                    <div onClick={() => abrindoPerfilPaciente(value.email)}>
+                      {value.nome}
+                    </div>
+                  )}
+                </Nome>
+                <Telefone>
+                  {carregando ? (
+                    <Spin indicator={antIcon} />
+                  ) : (
+                    <>
+                      ({value.telefone.slice(0, -9)}){" "}
+                      {value.telefone.slice(2, -4)}-{value.telefone.slice(-4)}
+                    </>
+                  )}
+                </Telefone>
+                <Data>
+                  {parseInt(value.data_hora.slice(11, 13)) < 12
+                    ? value.data_hora.slice(8, 10) +
+                      "/" +
+                      value.data_hora.slice(5, 7) +
+                      "/" +
+                      value.data_hora.slice(0, 4) +
+                      " - " +
+                      parseInt(value.data_hora.slice(11, 13)) +
+                      ":" +
+                      value.data_hora.slice(14, 16) +
+                      " am"
+                    : value.data_hora.slice(8, 10) +
+                      "/" +
+                      value.data_hora.slice(5, 7) +
+                      "/" +
+                      value.data_hora.slice(0, 4) +
+                      " - " +
+                      parseInt(value.data_hora.slice(11, 13) - 12) +
+                      ":" +
+                      value.data_hora.slice(14, 16) +
+                      " pm"}
+                </Data>
 
-                  <Agendamento onClick={() => abreModalConsultaMarcada(value)}>
-                    Consulta
-                  </Agendamento>
-                  <CódigoPaciente>
-                    {carregando ? (
-                      <Spin indicator={antIcon} />
-                    ) : (
-                      <div>{value.codigo}</div>
-                    )}
-                  </CódigoPaciente>
-                </Usuario>
-              ))}
+                <Agendamento onClick={() => abreModalConsultaMarcada(value)}>
+                  Consulta
+                </Agendamento>
+                <CódigoPaciente>
+                  {carregando ? (
+                    <Spin indicator={antIcon} />
+                  ) : (
+                    <div>{value.codigo}</div>
+                  )}
+                </CódigoPaciente>
+              </Usuario>
+            ))}
             {examesMarcados.map((value) => (
               <Usuario key={value.id_usuario}>
                 <Imagem>{value.avatar_url}</Imagem>

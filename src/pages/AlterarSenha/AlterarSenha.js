@@ -12,6 +12,7 @@ import {
   BotoesMesmaLinha,
   Titulo,
   Rotulo,
+  TituloInput,
 } from "./Styles";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
@@ -159,20 +160,23 @@ function AlterarSenha() {
             <Caixa>
               <Titulo>Alterar Senha:</Titulo>
               <InputVertical>
-                <Input
-                  placeholder="Confirme sua senha atual"
-                  backgroundColor={Cores.cinza[7]}
-                  color={Cores.preto}
-                  fontSize="1em"
-                  width="100%"
-                  marginTop="2%"
-                  type="password"
-                  name="senhaAtual"
-                  camposVazios={camposVazios.senhaAtual}
-                  erro={erro.senhaAtual}
-                  onChange={ValidacaoSenhaAtual}
-                  onKeyPress={verificandoConferirSenha}
-                ></Input>
+                <div>
+                  <TituloInput>Insira sua senha atual:</TituloInput>
+                  <Input
+                    placeholder="Senha atual"
+                    backgroundColor={Cores.cinza[7]}
+                    color={Cores.preto}
+                    fontSize="1em"
+                    width="100%"
+                    marginTop="5px"
+                    type="password"
+                    name="senhaAtual"
+                    camposVazios={camposVazios.senhaAtual}
+                    erro={erro.senhaAtual}
+                    onChange={ValidacaoSenhaAtual}
+                    onKeyPress={verificandoConferirSenha}
+                  ></Input>
+                </div>
                 {erro.senhaAtual && <Rotulo>Insira sua senha atual!</Rotulo>}
               </InputVertical>
               <BotoesMesmaLinha>
@@ -217,40 +221,53 @@ function AlterarSenha() {
             <Caixa>
               <Titulo>Alterar Senha:</Titulo>
               <InputVertical>
-                <Input
-                  placeholder="Defina sua nova senha"
-                  backgroundColor={Cores.cinza[7]}
-                  color={Cores.preto}
-                  fontSize="1em"
-                  width="100%"
-                  marginTop="2%"
-                  type="password"
-                  name="senha"
-                  camposVazios={camposVazios.senha}
-                  erro={erro.senha}
-                  onChange={NovaSenha}
-                ></Input>
-                {erro.senha && (
-                  <Rotulo>Insira uma nova senha com no minimo 8 digitos</Rotulo>
-                )}
-                <Input
-                  placeholder="Confirme sua nova senha"
-                  backgroundColor={Cores.cinza[7]}
-                  color={Cores.preto}
-                  fontSize="1em"
-                  width="100%"
-                  marginTop="5%"
-                  type="password"
-                  name="confirmarSenha"
-                  camposVazios={camposVazios.confirmarSenha}
-                  erro={erro.confirmarSenha}
-                  onChange={NovaSenha}
-                  onKeyPress={verificandoTrocarSenha}
-                ></Input>
-                {erro.confirmarSenha && (
-                  <Rotulo>Confirme sua nova senha</Rotulo>
-                )}
+                <>
+                  <TituloInput>
+                    Insira uma nova senha:
+                    <Input
+                      placeholder="Nova senha"
+                      backgroundColor={Cores.cinza[7]}
+                      color={Cores.preto}
+                      fontSize="1em"
+                      width="100%"
+                      marginTop="5px"
+                      type="password"
+                      name="senha"
+                      camposVazios={camposVazios.senha}
+                      erro={erro.senha}
+                      onChange={NovaSenha}
+                    ></Input>
+                    {erro.senha && (
+                      <Rotulo>
+                        Insira uma nova senha com no minimo 8 digitos
+                      </Rotulo>
+                    )}
+                  </TituloInput>
+                </>
+                <>
+                  <TituloInput>
+                    Confirme sua nova senha:
+                    <Input
+                      placeholder="Confirme sua nova senha"
+                      backgroundColor={Cores.cinza[7]}
+                      color={Cores.preto}
+                      fontSize="1em"
+                      width="100%"
+                      marginTop="5px"
+                      type="password"
+                      name="confirmarSenha"
+                      camposVazios={camposVazios.confirmarSenha}
+                      erro={erro.confirmarSenha}
+                      onChange={NovaSenha}
+                      onKeyPress={verificandoTrocarSenha}
+                    ></Input>
+                    {erro.confirmarSenha && (
+                      <Rotulo>Confirme sua nova senha</Rotulo>
+                    )}
+                  </TituloInput>
+                </>
               </InputVertical>
+
               <BotoesMesmaLinha>
                 <Button
                   width="40%"

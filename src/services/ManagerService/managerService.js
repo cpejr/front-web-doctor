@@ -3,6 +3,8 @@ import requisicaoErro from '../../utils/HttpErros';
 import * as requesterService from '../RequesterService/requesterService';
 import { toast } from 'react-toastify';
 
+const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
+
 const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
@@ -44,22 +46,31 @@ export const requisicaoLogin = async (email, senha) => {
   return;
 };
 
-export const Cadastrando = async (usuario, endereco) => {
+export const Cadastrando = async (usuario, endereco, callbackError = () => {}) => {
+
   const resposta = await requesterService.requisicaoDadosUsuario(usuario.email);
 
   if (resposta.status !== 204) {
     sleep(1500);
-    toast.error('E-mail já cadastrado');
-    return;
-  }
-  try {
-    const idUsuario = await requesterService.criarUsuario(endereco, usuario);
-    toast.success("Usuário cadastrado com sucesso.");
-    return idUsuario;
-  } catch (error) {
-    requisicaoErro(error, () => (window.location.href = "/cadastro"));
+    toast.error("E-mail já cadastrado");
+
+    callbackError(tipoUsuarioLogado)
+
+   
+    
     return false;
   }
+
+  await requesterService
+    .criarUsuario(endereco, usuario)
+    .then(() => {
+      toast.success("Usuário cadastrado com sucesso.");
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = "/cadastro"));
+      return false;
+    });
+  return true;
 };
 
 export const EnviandoEmail = async (email) => {
@@ -625,6 +636,7 @@ export const EditarFormularios = async (id, campos) => {
 
   return false;
 };
+
 
 export const DeletarReceita = async (id) => {
   await requesterService

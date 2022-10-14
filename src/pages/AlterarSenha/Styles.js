@@ -12,6 +12,13 @@ export const Conteudo = styled.div`
   background-color: ${Cores.branco};
 `;
 
+export const TituloInput = styled.div`
+   font-family: ${Fontes.barlow};
+   color: ${Cores.azul};
+   font-size: 15px;
+  
+`;
+
 export const Caixa = styled.div`
   display: flex;
   flex-direction: column;
@@ -47,11 +54,12 @@ export const InputVertical = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
+  //align-items: center;
   margin: 4% 0%;
   width: 65%;
   height: 100%;
   font-size: 1em;
+  gap: 25px;
   @media (max-width: 850px) {
     flex-direction: column;
     width: 80%;
