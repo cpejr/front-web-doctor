@@ -66,7 +66,7 @@ export const BarraPesquisaComDoisSelects = styled.div`
   flex-direction: row;
   justify-content: space-around;
   @media (max-width: 940px) {
-    width: 100%;
+    width: 80%;
   }
 
   .ant-input {
@@ -85,7 +85,7 @@ export const Filtros = styled.div`
   align-items: center;
   gap: 10px;
   @media (max-width: 940px) {
-    width: 100%;
+    width: 80%;
     gap: 10px;
 
   }

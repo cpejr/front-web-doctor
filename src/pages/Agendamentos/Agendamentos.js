@@ -36,16 +36,19 @@ import {
 import Button from '../../styles/Button';
 import ModalAgendamentoEspecifico from '../../components/ModalAgendamentoEspecifico';
 import ModalConsultaMarcada from '../../components/ModalConsultaMarcada';
+import ModalExameMarcado from '../../components/ModalExameMarcado/ModalExameMarcado';
 import { Cores } from '../../variaveis';
 import { compararDataAntiga } from '../../utils/tratamentoErros';
 import * as managerService from '../../services/ManagerService/managerService';
 import { sleep } from '../../utils/sleep';
 
-function Agendamentos() {
+function Agendamentos(props) {
   const history = useHistory();
   const { Search } = Input;
   const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] =
     useState(false);
+  const [modalExameMarcado, setModalExameMarcado] = useState(false);
+  const [exameEspecifico, setExameEspecifico] = useState([]);
   const { Option } = Select;
   const [email, setEmail] = useState();
   const [carregando, setCarregando] = useState(true);
@@ -315,6 +318,16 @@ function Agendamentos() {
     setConsultaEspecifica(consulta);
   }
 
+  async function abreModalExameMarcado(exame) {
+    setModalExameMarcado(true);
+    setExameEspecifico(exame);
+  }
+
+  async function fechandoModalModalExameMarcado() {
+    setModalExameMarcado(false);
+    pegandoDados();
+  }
+
   async function setandoFotoDePerfil(usuario) {
     const chave = usuario.avatar_url;
 
@@ -413,19 +426,19 @@ function Agendamentos() {
           </TopoPaginaCima>
 
           <Button
-            marginTop="0px"
-            width="45%"
-            height="50px"
+            marginTop='0px'
+            width='45%'
+            height='50px'
             backgroundColor={Cores.lilas[2]}
             borderColor={Cores.azulEscuro}
             color={Cores.azul}
-            fontSize="1.45em"
-            fontWeight="bold"
-            fontSizeMedia950="1.1em"
-            fontSizeMedia480="1em"
-            fontSizeMedia1080="1.3em"
-            gap="1%"
-            widthMedia="100%"
+            fontSize='1.45em'
+            fontWeight='bold'
+            fontSizeMedia950='1.1em'
+            fontSizeMedia480='1em'
+            fontSizeMedia1080='1.3em'
+            gap='1%'
+            widthMedia='100%'
             onClick={() => marcandoAgendamento()}
           >
             Novo Agendamento
@@ -599,7 +612,9 @@ function Agendamentos() {
                   {value.data_hora.slice(17, 19)}
                 </Data>
 
-                <Agendamento>{value.titulo}</Agendamento>
+                <Agendamento onClick={() => abreModalExameMarcado(value)}>
+                  {/* {value.titulo} */} Exame
+                </Agendamento>
                 <CódigoPaciente>
                   {carregando ? (
                     <Spin indicator={antIcon} />
@@ -639,7 +654,25 @@ function Agendamentos() {
       >
         <ModalConsultaMarcada
           consulta={consultaEspecifica}
+          email={consultaEspecifica.email}
           fechandoModal={() => fechandoModalConsultaMarcada()}
+        />
+      </Modal>
+
+      <Modal
+        visible={modalExameMarcado}
+        onCancel={fechandoModalModalExameMarcado}
+        footer={null}
+        width={'auto'}
+        centered={true}
+        style={{
+          backgroundColor: 'black',
+        }}
+      >
+        <ModalExameMarcado
+          exame={exameEspecifico}
+          email={exameEspecifico.email}
+          fechandoModal={() => fechandoModalModalExameMarcado()}
         />
       </Modal>
     </div>
