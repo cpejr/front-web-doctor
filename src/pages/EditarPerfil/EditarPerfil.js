@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { LoadingOutlined, UserOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
+import { Spin, Menu, Dropdown, Modal } from "antd";
 import { useHistory } from "react-router-dom";
 import {
   ContainerEditarPerfil,
@@ -17,6 +17,7 @@ import {
   EspaçoInput,
   Rotulo,
   RotuloColuna,
+  CaixaBotoesFoto,
 } from "./Styles";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
@@ -25,9 +26,11 @@ import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 import { brParaPadrao } from "../../utils/date";
 import { toast } from "react-toastify";
-import _ from "lodash";
+import _, { get } from "lodash";
 import { sleep, redirecionamento } from "../../utils/sleep";
 import Select from "../../styles/Select/Select";
+import ModalAlterarFoto from "../../components/ModalAlterarFoto";
+import ModalExcluirFoto from "../../components/ModalExcluirFoto";
 
 function EditarPerfil() {
   const history = useHistory();
@@ -103,6 +106,9 @@ function EditarPerfil() {
     bairro: true,
     complemento: true,
   };
+
+  const [modalAlterarFotoPerfil, setModalAlterarFotoPerfil] = useState(false);
+  const [modalExcluirFotoPerfil, setModalExcluirFotoPerfil] = useState(false);
 
   const maskCPF = (value) => {
     return value
@@ -187,12 +193,12 @@ function EditarPerfil() {
   useEffect(() => {
     setCpfMasked(
       cpf.slice(+0, -8) +
-        "." +
-        cpf.slice(+3, -5) +
-        "." +
-        cpf.slice(+6, -2) +
-        "-" +
-        cpf.slice(-2)
+      "." +
+      cpf.slice(+3, -5) +
+      "." +
+      cpf.slice(+6, -2) +
+      "-" +
+      cpf.slice(-2)
     );
   }, [cpf]);
   useEffect(() => {
@@ -201,11 +207,11 @@ function EditarPerfil() {
   useEffect(() => {
     setTelMasked(
       "(" +
-        telefone.slice(0, -9) +
-        ") " +
-        telefone.slice(2, -4) +
-        "-" +
-        telefone.slice(-4)
+      telefone.slice(0, -9) +
+      ") " +
+      telefone.slice(2, -4) +
+      "-" +
+      telefone.slice(-4)
     );
   }, [telefone]);
   useEffect(() => {
@@ -252,6 +258,16 @@ function EditarPerfil() {
     }
 
     setOntem(ano + "-" + mes + "-" + dia);
+  }
+
+  async function fechandoModalAlterarFotoPerfil() {
+    setModalAlterarFotoPerfil(false);
+    pegandoDados();
+  }
+
+  async function fechandoModalExcluirFotoPerfil() {
+    setModalExcluirFotoPerfil(false);
+    pegandoDados();
   }
 
   function setandoDataMinima() {
@@ -399,6 +415,16 @@ function EditarPerfil() {
     }
   }
 
+  async function deletarFoto() {
+    if (usuario.avatar_url === null) {
+      toast.error("O usuário não possui foto de perfil");
+      return false;
+    }
+    setCarregando(true);
+    await managerService.deletarFotoDePerfil(usuario.id, usuario.avatar_url);
+    setCarregando(false);
+  }
+
   return (
     <ContainerEditarPerfil>
       <ColunaEsquerda>
@@ -407,7 +433,7 @@ function EditarPerfil() {
             <ImagemPerfil>
               {carregandoFoto ? (
                 <div>
-                  <Spin size="large" indicator={antIconFoto} />
+                  <Spin size="large" indicator={antIconFoto} style={{ color: Cores.azul }}/>
                 </div>
               ) : (
                 <>
@@ -434,17 +460,34 @@ function EditarPerfil() {
               )}
             </ImagemPerfil>
           )}
-          <Button
-            backgroundColor="transparent"
-            borderColor="transparent"
-            color="green"
-            fontSize="1em"
-            textDecoration="underline"
-            height="10px"
-            onClick={() => {}}
-          >
-            Alterar Foto de Perfil
-          </Button>
+          <CaixaBotoesFoto>
+            <Button
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color={Cores.azul}
+              fontSize="1em"
+              textDecoration="underline"
+              height="10px"
+              onClick={() => {
+                setModalAlterarFotoPerfil(true);
+              }}
+            >
+              Adicionar ou Alterar Foto De Perfil
+            </Button>
+            <Button
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color={Cores.azul}
+              fontSize="1em"
+              textDecoration="underline"
+              height="10px"
+              onClick={() => {
+                setModalExcluirFotoPerfil(true);
+              }}
+            >
+              Excluir Foto De Perfil
+            </Button>
+          </CaixaBotoesFoto>
         </BlocoSuperior>
         <BlocoInferior>
           <Button
@@ -728,7 +771,40 @@ function EditarPerfil() {
           </Button>
         </CaixaBotao>
       </ColunaDireita>
+
+      <Modal
+        visible={modalAlterarFotoPerfil}
+        onCancel={fechandoModalAlterarFotoPerfil}
+        footer={null}
+        width={"50%"}
+        centered={true}
+        destroyOnClose={true}
+        style={{ maxWidth: "450px", minWidth: "250px" }}
+      >
+        <ModalAlterarFoto
+          emailUsuario={usuario.email}
+          fecharModal={() => fechandoModalAlterarFotoPerfil()}
+          idUsuario={usuario.id}
+        />
+      </Modal>
+
+      <Modal
+        visible={modalExcluirFotoPerfil}
+        onCancel={fechandoModalExcluirFotoPerfil}
+        style={{ maxWidth: "450px", minWidth: "250px" }}
+        width={"50%"}
+        centered={true}
+        footer={null}
+      >
+        <ModalExcluirFoto
+          avatarUrl={usuario.avatar_url}
+          fecharModal={() => fechandoModalExcluirFotoPerfil()}
+          idUsuario={usuario.id}
+        />
+      </Modal>
+
     </ContainerEditarPerfil>
+
   );
 }
 export default EditarPerfil;

@@ -23,6 +23,7 @@ import FormularioEspecifico from './pages/FormularioEspecifico';
 import Home from './pages/Home/Home';
 import CriacaoReceitas from './pages/CriacaoReceitas';
 
+
 const RotasPrivadas = ({ component: Component, ...rest }) => (
   <Route
     {...rest}

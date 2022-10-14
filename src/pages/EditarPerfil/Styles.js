@@ -15,6 +15,7 @@ export const ContainerEditarPerfil = styled.div`
     justify-content: normal;
     display: flex;
     flex-direction: column;
+    
   }
 `;
 export const ColunaEsquerda = styled.div`
@@ -30,12 +31,13 @@ export const ColunaEsquerda = styled.div`
   padding: 2% 4% 2% 4%;
   @media (max-width: 930px) {
     justify-content: space-around;
-    height: 30vh;
+    height: 50vh;
     width: 100%;
     display: flex;
     flex-direction: row;
+    gap: 10px;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 670px) {
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -145,15 +147,29 @@ export const ImagemPerfil = styled.div`
       width: 150px;
       height: 150px;
     }
-    @media (max-width: 480px) {
-      font-size: 5em;
-      width: 150px;
-      height: 150px;
+    @media (max-width: 670px) {
+      width: 50%;
+      height: 80%;
     }
   }
   @media (max-width: 930px) {
       font-size: 8em;
     }
+`;
+
+export const CaixaBotoesFoto = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80px;
+  gap: 20px;
+  @media (max-width: 930px) {
+    margin-top: 10px;
+  }
+  @media (max-width: 670px) {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 `;
 
 export const BlocoSuperior = styled.div`
@@ -180,13 +196,13 @@ export const BlocoInferior = styled.div`
     width: 50%;
     gap: 2%;
   }
-  @media (max-width: 480px) {
+  @media (max-width: 670px) {
     display: flex;
-    height: 10vh;
+    height: 8.5vh;
     flex-direction: row;
     width: 100%;
     gap: 2%;
-    margin-top: 5%;
+    margin-top: 8%;
   }
 `;
 

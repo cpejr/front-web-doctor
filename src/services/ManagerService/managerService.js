@@ -7,6 +7,20 @@ const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
 };
 
+export const EnviandoImagem = async (file) => {
+  await requesterService
+    .EnviandoImagem(file)
+    .then(() => {
+      return;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+
+  return;
+};
+
 export const requisicaoLogin = async (email, senha) => {
   try {
     const resposta = await requesterService.logarUsuario(email, senha);
@@ -750,4 +764,32 @@ export const UpdateMensagensVisualizadas = async (id_usuario, id_conversa) => {
     });
 
   return mensagensAtualizadas;
+};
+
+
+export const UpdateFotoDePerfil = async (id, file) => {
+  await requesterService
+    .updateFotoDePerfil(id, file)
+    .then(() => {
+      toast.success('Foto atualizada com sucesso');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return;
+};
+
+
+export const deletarFotoDePerfil = async (id, file) => {
+  await requesterService
+    .deleteFotoDePerfil(id, file)
+    .then(() => {
+      toast.success('Foto deletada com sucesso');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return;
 };

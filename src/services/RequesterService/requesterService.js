@@ -1,5 +1,9 @@
 import api from '../../services/api';
 
+
+export const EnviandoImagem = (base64) => api.post("/arquivo", {file: base64});
+
+
 export const logarUsuario = (email, senha) =>
   api.post('/login', {
     email,
@@ -118,18 +122,20 @@ export const editarCamposFormulario = (id, campos) =>
 export const requisicaoTodosFormulariosPaciente = () =>
   api.get('/formularios_pacientes');
 
-export const enviarFormularioPaciente = (
-  status,
-  notificacao_ativa,
-  id_formulario,
-  id_usuario
-) =>
-  api.post('/formularios_pacientes', {
-    status,
-    notificacao_ativa,
-    id_formulario,
-    id_usuario,
+
+export const updateFotoDePerfil = (id, base64) =>
+  api.post(`/usuariosimagem/${id}`,{
+    file: base64
   });
+
+
+  export const deleteFotoDePerfil = (id, base64) =>
+  api.put(`/usuariosdeletarimagem/${id}`,{
+    file: base64
+  });
+
+export const enviarFormularioPaciente = (status, notificacao_ativa, id_formulario, id_usuario) =>
+  api.post("/formularios_pacientes", { status, notificacao_ativa, id_formulario, id_usuario });
 
 export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
 
