@@ -274,7 +274,7 @@ export const ContainerHorario = styled.div`
   align-items: start;
   justify-content: center;
   width: 40%;
-  height: 40px;
+  
   //margin-bottom: 5%;
   @media (max-width: 1470px) {
     margin-bottom: 5%;
