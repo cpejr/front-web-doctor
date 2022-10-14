@@ -5,8 +5,9 @@ import {
   StarFilled,
   UserOutlined,
 } from "@ant-design/icons";
-import { Spin, Modal, Input } from "antd";
+import { Spin, Modal, Input, Form } from "antd";
 import ModalFormulario from "../../components/ModalFormulario";
+import ModalPerguntaFormulario from "../../components/ModalPerguntaFormulario";
 import {
   ColunaDireita,
   ColunaEsquerda,
@@ -32,6 +33,8 @@ import {
   CentralizandoSpin,
   ContainerInterno,
   FotoPerfil,
+  NomePacienteSecretaria,
+  NomePacienteMaster,
 } from "./Styles";
 import Button from "../../styles/Button";
 import fotoPerfil from "./../../assets/fotoPerfil.png";
@@ -48,7 +51,7 @@ function FormularioEspecifico(props) {
   const [formularioResposta, setFormularioResposta] = useState(false);
 
   const [modalFormulario, setModalFormulario] = useState(false);
-  const [perguntas, setPerguntas] = useState();
+  const [modalPerguntaFormulario, setModalPerguntaFormulario] = useState(false);
   const [titulo, setTitulo] = useState();
   const [idFormularioPaciente, setIdFormularioPaciente] = useState();
   const [contador, setContador] = useState(0);
@@ -61,6 +64,11 @@ function FormularioEspecifico(props) {
   const [statusSelect, setStatusSelect] = useState("");
   const { Option } = SelectTipos;
   const [busca, setBusca] = useState("");
+  const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
+  const [formularios, setFormularios] = useState();
+  const [perguntas, setPerguntas] = useState();
+  const [perguntasAlterar, setPerguntasAlterar] = useState();
+
   const lowerBusca = busca
     .toLowerCase()
     .normalize("NFD")
@@ -78,6 +86,10 @@ function FormularioEspecifico(props) {
     setFormularioEspecifico(resposta);
     setCarregando(false);
   }
+
+  useEffect(() => {
+    pegandoDadosFormularioEspecifico();
+  }, [props]);
 
   async function pegandoFormularioPacientes() {
     const respostaFormularios =
@@ -124,6 +136,12 @@ function FormularioEspecifico(props) {
     setTitulo(titulo);
     setIdFormularioPaciente(id);
     setModalFormulario(true);
+  }
+
+  function abrindoModalPerguntaFormulario() {
+    setPerguntas(Object.entries(formularioEspecifico.perguntas.properties));
+    setTitulo(formularioEspecifico.titulo);
+    setModalPerguntaFormulario(true);
   }
 
   useEffect(() => {
@@ -322,17 +340,23 @@ function FormularioEspecifico(props) {
                     )}
                   </BarraEsquerda>
                   <BarraCentro>
-                    <NomePaciente
-                      onClick={() =>
-                        abrindoModalFormulario(
-                          value.id,
-                          value.perguntas,
-                          value.titulo
-                        )
-                      }
-                    >
-                      {value.nome}
-                    </NomePaciente>
+                    {tipoUsuarioLogado === "MASTER" ? (
+                      <NomePacienteMaster
+                        onClick={() =>
+                          abrindoModalFormulario(
+                            value.id,
+                            value.perguntas,
+                            value.titulo
+                          )
+                        }
+                      >
+                        {value.nome}
+                      </NomePacienteMaster>
+                    ) : (
+                      <NomePacienteSecretaria>
+                        {value.nome}
+                      </NomePacienteSecretaria>
+                    )}
                   </BarraCentro>
                   {value.status !== false ? (
                     <></>
@@ -369,18 +393,47 @@ function FormularioEspecifico(props) {
             <ColunaDireita>
               {idFormularioEspecifico !== idFormularioUrgencia ? (
                 <BarraRespostas>
-                  Aguardando respostas de {formularioRespostaPendente.length}{" "}
-                  formulários.
-                </BarraRespostas>
+                {" "}
+                {formularioRespostaPendente.length === 1
+                  ? "Aguardando respostas de 1 formulário"
+                  : `Aguardando respostas de ${formularioRespostaPendente.length} formulários`}
+              </BarraRespostas>
               ) : (
                 <></>
               )}
 
+              
               <BarraRespostas>
                 {" "}
-                {formularioResposta.length} formulários já foram respondidos.
+                {formularioResposta.length < 2 ? (
+                  <>
+                    {formularioResposta.length === 1
+                      ? "1 formulário já foi respondido"
+                      : "Nenhum formulário foi respondido"}
+                  </>
+                ) : (
+                  `${formularioResposta.length} já foram respondidos`
+                )}
               </BarraRespostas>
               <MargemEstetica />
+
+              <Button
+                backgroundColor={Cores.cinza[7]}
+                borderRadius="3px"
+                borderWidth="1px"
+                borderColor={Cores.azul}
+                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                color={Cores.azul}
+                fontSize="15px"
+                height="50px"
+                width="60%"
+                marginTop="0%"
+                marginLeft="0%"
+                fontSizeMedia950="0.9em"
+                onClick={() => abrindoModalPerguntaFormulario()}
+              >
+                Visualizar Perguntas
+              </Button>
               <Button
                 backgroundColor="green"
                 borderRadius="3px"
@@ -391,7 +444,7 @@ function FormularioEspecifico(props) {
                 fontSize="15px"
                 height="50px"
                 width="60%"
-                marginTop="10%"
+                marginTop="0%"
                 marginLeft="0%"
                 fontSizeMedia950="0.9em"
                 onClick={() => {}}
@@ -415,6 +468,20 @@ function FormularioEspecifico(props) {
           idFormularioPaciente={idFormularioPaciente}
           perguntas={perguntas}
           titulo={titulo}
+        />
+      </Modal>
+
+      <Modal
+        visible={modalPerguntaFormulario}
+        onCancel={() => setModalPerguntaFormulario(false)}
+        style={{ minWidth: "250px", maxWidth: "800px" }}
+        width={"70%"}
+        centered={true}
+        footer={null}
+      >
+        <ModalPerguntaFormulario
+          perguntas={perguntas}
+          perguntasAlterar={perguntasAlterar}
         />
       </Modal>
     </div>
