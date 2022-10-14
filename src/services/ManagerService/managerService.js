@@ -13,12 +13,7 @@ export const requisicaoLogin = async (email, senha) => {
     if (resposta.data.tipo === 'PACIENTE') {
       toast.error('Paciente deve fazer login exclusivamente pelo App');
     } else {
-      login(
-        resposta.data.id,
-        resposta.data.token,
-        resposta.data.email,
-        resposta.data.tipo
-      );
+      login(resposta.data.token, resposta.data.email, resposta.data.tipo);
 
       if (resposta.data.tipo === 'MASTER') {
         toast.success('Login realizado com sucesso!');
