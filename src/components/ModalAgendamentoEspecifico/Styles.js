@@ -45,11 +45,11 @@ export const InfoEsquerdaEDireita = styled.div`
 export const InfoEsquerda = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
   width: 50%;
   height: 100%;
-  height: 70vh;
+  height: 73vh;
   padding: 5%;
 
   @media (max-width: 800px) {
@@ -125,6 +125,8 @@ export const TipoAgendamento = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
+  margin-top:18%;
+  margin-bottom:20%;
   @media (max-width: 620px){
     height: 25%;
     width: 100%;
