@@ -30,12 +30,13 @@ export const Caixa = styled.div`
 export const InfoEsquerda = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   width: 50%;
   height: 100%;
-  height: 70vh;
+  height: 63vh;
   padding: 5%;
+  padding-top:3%;
   margin-top: 5%;
 
   @media (max-width: 800px) {
@@ -48,9 +49,6 @@ export const InfoEsquerda = styled.div`
     height: 27vh;
   }
 
-  @media (max-height: 637px) {
-    height: 33vh;
-  }
 `;
 
 export const InfoDireita = styled.div`
@@ -68,28 +66,7 @@ export const InfoDireita = styled.div`
   }
 `;
 
-export const ContainerConsultorio = styled.div`
-    display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: center;
-  width: 40%;
-  height: 40px;
-  @media (max-width: 1717px) {
-    margin-bottom: 5%;
-  }
-  @media (max-width: 560px) {
-    width: 100%;
-    margin-bottom: 5%;
-  }
-  @media (max-width: 1260px) and (min-width: 800px) {
-    width: 90%;
-    margin-bottom: 5%;
-  }
-  @media (max-width: 807px) and (min-width: 800px) {
-    padding-top: 15%;
-  }
-`;
+
 
 export const ContainerHorario = styled.div`
   display: flex;
@@ -112,42 +89,7 @@ export const ContainerHorario = styled.div`
   }
 `;
 
-export const ContainerDuracaoConsulta = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: center;
-  width: 40%;
-  height: 40px;
-  @media (max-width: 1622px) {
-    margin-bottom: 5%;
-  }
-  @media  (max-width: 763px) and (min-width: 697px) {
-    margin-bottom: 9%;
-  }
-  @media (max-width: 560px) {
-    width: 100%;
-    margin-bottom: 5%;
-  }
-  @media (max-width: 1260px) and (min-width: 800px) {
-    width: 90%;
-    margin-bottom: 5%;
-  }
-`;
 
-export const TextoDoisSelects = styled.h3`
-  font-family: ${Fontes.barlow};
-  font-weight: 500;
-  font-size: 1.1em;
-  color: ${Cores.azulEscuro};
-  display: flex;
-  justify-content: start;
-  align-items: center;
-
-  @media (max-width: 560px){
-    margin-top: 15%;
-  }
-`;
 
 export const Usuario = styled.div`
   display: flex;
@@ -164,6 +106,7 @@ export const Usuario = styled.div`
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   margin-bottom: 2%;
   overflow: auto;
+  min-height:60px;
 
   ::-webkit-scrollbar {
     width: 0px;
@@ -173,6 +116,41 @@ export const Usuario = styled.div`
     flex-direction: column;
     height: 70px;
     padding-top: 20%;
+  }
+`;
+
+export const TipoAgendamento = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin-top:18%;
+  margin-bottom:20%;
+
+  @media (max-width: 620px){
+    height: 25%;
+    width: 100%;
+  }
+  @media (max-width: 560px){
+    height: 30%;
+    flex-wrap: nowrap;
+  }
+`;
+
+export const TextoTipoAgendamento = styled.h3`
+  font-family: ${Fontes.barlow};
+  font-weight: 600;
+  font-size: 1.4em;
+  color: ${Cores.azulEscuro};
+  text-align: center;
+
+  @media (max-width: 850px) and (min-width: 560px) {
+    font-size: 1.2em;
+  }
+
+  @media (max-width: 560px) {
+    font-size: 1.1em;
   }
 `;
 
@@ -235,6 +213,7 @@ export const DoisSelect = styled.h3`
   justify-content: space-around;
   align-items: center;
   width: 100%;
+  height:50%;
   font-family: ${Fontes.barlow};
   font-size: 1em;
 
@@ -307,7 +286,7 @@ export const InputData = styled.input`
 
 export const InputHora = styled(Input)`
   width: 100%;
-  height: 35px;
+  height: 34px;
   color: ${Cores.preto};
   font-family: ${Fontes.barlow};
   font-weight: 500;
@@ -385,9 +364,49 @@ export const SelecioneUmaData = styled.div`
   align-items: start;
   justify-content: center;
   width: 90%;
+ 
 
   @media (max-width: 560px) {
     width: 100%;
+  }
+`;
+
+
+export const TextoDoisSelects = styled.h3`
+  font-family: ${Fontes.barlow};
+  font-weight: 500;
+  font-size: 1.1em;
+  color: ${Cores.azulEscuro};
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  
+  @media (max-width: 560px){
+    margin-top: 15%;
+  }
+`;
+
+export const ContainerConsultorio = styled.div`
+    display: flex;
+    flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 40%;
+  height: 35px;
+  padding-top:5%;
+  @media (max-width: 1717px) {
+    margin-bottom: 5%;
+  }
+  @media (max-width: 560px) {
+    width: 100%;
+    margin-bottom: 5%;
+  }
+  @media (max-width: 1260px) and (min-width: 800px) {
+    width: 90%;
+    margin-bottom: 5%;
+  }
+  @media (max-width: 807px) and (min-width: 800px) {
+    padding-top: 15%;
   }
 `;
 
@@ -400,3 +419,26 @@ export const Rotulo = styled.div`
   font-size: 1em;
   color: ${Cores.vermelho};
 `;
+
+    export const ContainerDuracaoConsulta = styled.div`
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: center;
+      width: 40%;
+      height: 40px;
+      @media (max-width: 1622px) {
+        margin-bottom: 5%;
+      }
+      @media  (max-width: 763px) and (min-width: 697px) {
+        margin-bottom: 9%;
+      }
+      @media (max-width: 560px) {
+        width: 100%;
+        margin-bottom: 5%;
+      }
+      @media (max-width: 1260px) and (min-width: 800px) {
+        width: 90%;
+        margin-bottom: 5%;
+      }
+    `;

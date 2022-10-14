@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, Input, Tooltip } from "antd";
+import { Checkbox, Input, Tooltip, Row, Radio } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
@@ -25,6 +25,8 @@ import {
   ContainerConsultorio,
   TextoDoisSelects,
   ContainerNome,
+  TextoTipoAgendamento,
+  TipoAgendamento,
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
@@ -50,6 +52,7 @@ function ModalEditarAgendamentoEspecifico(props) {
   const [novaConsulta, setNovaConsulta] = useState({});
   const [consultorioPorId, setConsultorioPorId] = useState();
   const [data, setData] = useState("");
+  const [tipoRadio, setTipoRadio] = useState("");
   const [hora, setHora] = useState("");
   const [hoje, setHoje] = useState("");
   const [camposVazios, setCamposVazios] = useState({
@@ -151,6 +154,11 @@ function ModalEditarAgendamentoEspecifico(props) {
     });
   }
 
+  function inputsFiltrados(value) {
+    setTipoRadio(value);
+  }
+
+
   function formatacaoDataHora() {
     try {
       const dataHora = `${data} ${hora}:00`;
@@ -232,18 +240,42 @@ function ModalEditarAgendamentoEspecifico(props) {
               <Nome>{usuario.nome}</Nome>
             )}
           </Usuario>
-          <TextAreaDescricao
-            placeholder="Adicione uma descrição"
-            rows={4}
-            name="descricao"
-            value={consulta.descricao}
-            onChange={preenchendoDadosConsulta}
-            style={{
-              borderWidth: "1px",
-              borderColor: "black",
-              color: "black",
-            }}
-          />
+
+
+          <TipoAgendamento>
+            <TextoTipoAgendamento>
+              Selecione o Tipo de Agendamento:
+            </TextoTipoAgendamento>
+            <Row gutter={60} justify={"space-around"}>
+            <Radio.Group 
+            defaultValue=""
+            bordered={false}
+            FiltrarInputs={tipoRadio}
+            onChange={(e) => inputsFiltrados(e.target.value)}
+            >
+              <Radio value="">Exame</Radio>
+              <Radio value="filtrado">Consulta</Radio>
+            </Radio.Group>
+            </Row>
+          </TipoAgendamento>
+          {tipoRadio === "" ? (
+                <></>
+              ) : (
+                <TextAreaDescricao
+                border={tipoRadio}
+                placeholder="Adicione uma descrição"
+                rows={4}
+                name="descricao"
+                value={consulta.descricao}
+                onChange={preenchendoDadosConsulta}
+                style={{
+                  borderWidth: "1px",
+                  borderColor: Cores.azul,
+                  color: "black",
+                }}
+              />
+              )}
+
         </InfoEsquerda>
         <InfoDireita>
           <SelecioneUmaData>
@@ -364,6 +396,9 @@ function ModalEditarAgendamentoEspecifico(props) {
               {camposVazios.hora ? <Rotulo>Digite um horário</Rotulo> : <></>}
             </ContainerHorario>
 
+            {tipoRadio === "" ? (
+                <></>
+              ) : (
             <ContainerDuracaoConsulta>
               <TextoDoisSelects>Selecione uma duração:</TextoDoisSelects>
               <InputDuracao
@@ -380,10 +415,15 @@ function ModalEditarAgendamentoEspecifico(props) {
                 <></>
               )}
             </ContainerDuracaoConsulta>
+            )}
           </DoisSelect>
-          <Checkbox>
-            <TextoCheckbox>Notificar paciente</TextoCheckbox>
-          </Checkbox>
+          {tipoRadio === "" ? (
+                <></>
+              ) : (
+                <Checkbox>
+                  <TextoCheckbox>Notificar paciente</TextoCheckbox>
+                </Checkbox>
+              )}
 
           <Button
             width="80%"
