@@ -267,7 +267,7 @@ function ModalAgendamento(props) {
                     {consultas.length === 1 ? (
                       <>O paciente agendou {consultas.length} consulta</>
                     ) : (
-                      <>O paciente agendou {examesMarcados.length} consultas</>
+                      <>O paciente agendou {consultas.length} consultas</>
                     )}
                   </>
                 ) : (
