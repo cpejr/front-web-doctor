@@ -8,9 +8,8 @@ export const ContainerListadeUsuarios = styled.div`
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  padding: 2% 5% 2% 5%;
+  padding: 25px 5% 2% 5%;
 `;
-
 
 export const TopoPagina = styled.div`
   display: flex;
@@ -18,14 +17,15 @@ export const TopoPagina = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  @media (max-width: 920px) {
+  
+  @media (max-width: 940px) {
     width: 100%;
     height: 70%;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 10px;
   }
 `;
-
 
 export const TopoPaginaCima = styled.div`
   display: flex;
@@ -33,14 +33,15 @@ export const TopoPaginaCima = styled.div`
   justify-content: space-around;
   width: 100%;
   gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 
-@media (max-width: 940px) {
-  flex-direction: column;
-  align-items: center;
-}
+  @media (max-width: 940px) {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+   
+  }
 `;
-
 
 export const BarraPesquisaComUmSelect = styled.div`
   width: 400px;
@@ -48,11 +49,9 @@ export const BarraPesquisaComUmSelect = styled.div`
   flex-direction: row;
   justify-content: space-around;
   @media (max-width: 940px) {
-    width: 80%;
-
+    width: 100%;
   }
- 
-  
+
   .ant-input {
     height: 32px;
   }
@@ -67,9 +66,9 @@ export const BarraPesquisaComDoisSelects = styled.div`
   flex-direction: row;
   justify-content: space-around;
   @media (max-width: 940px) {
-    width: 80%;
+    width: 100%;
   }
-  
+
   .ant-input {
     height: 32px;
   }
@@ -77,7 +76,6 @@ export const BarraPesquisaComDoisSelects = styled.div`
     height: 32px;
   }
 `;
-
 
 export const Filtros = styled.div`
   width: 400px;
@@ -87,17 +85,16 @@ export const Filtros = styled.div`
   align-items: center;
   gap: 10px;
   @media (max-width: 940px) {
-    width: 80%;
+    width: 100%;
+    gap: 10px;
+
   }
   @media (max-width: 448px) {
     width: 100%;
     flex-direction: column;
     justify-content: space-around;
   }
-
 `;
-
-
 
 export const SelectConsultorio = styled(Select)`
   width: 400px;
@@ -109,33 +106,33 @@ export const SelectConsultorio = styled(Select)`
   border-width: 1px;
   border-style: solid;
   border-color: ${Cores.cinza[8]};
- 
 
   @media (max-width: 940px) {
-    width: 80%;
-    
+    width: 100%;
   }
- 
-
 `;
 
 export const BarraEstetica = styled.div`
-  margin-top: 2%;
-  margin-bottom: 1%;
+  margin-top: 25px;
+  margin-bottom: 15px;
   height: 2px;
   width: 100%;
   background-color: ${Cores.azul};
+
+  
 `;
 export const DadosUsuario = styled.div`
   color: ${Cores.azul};
   justify-content: space-around;
   display: flex;
   flex-direction: row;
+  align-items: center;
+  margin-bottom: 15px;
   padding: 0% 2% 0% 2%;
 `;
 
 export const ContainerUsuarios = styled.div`
-  padding: 2% 0% 2% 0%;
+  padding: 0% 0% 2% 0%;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -179,8 +176,7 @@ export const Imagem = styled.div`
 export const Nome = styled.div`
   width: 18%;
   white-space: normal;
- // text-align: center;
-  
+  // text-align: center;
 
   @media (max-width: 880px) {
     width: 18%;
@@ -188,7 +184,6 @@ export const Nome = styled.div`
   }
   @media (max-width: 700px) {
     width: 20%;
-  
   }
   @media (max-width: 600px) {
     width: 33%;
@@ -206,7 +201,6 @@ export const Telefone = styled.div`
   @media (max-width: 880px) {
     display: none;
   }
-  
 `;
 export const Data = styled.div`
   width: 20%;
@@ -218,14 +212,11 @@ export const Data = styled.div`
   }
   @media (max-width: 700px) {
     width: 30%;
-  
   }
   @media (max-width: 650px) {
     display: none;
   }
 `;
-
-
 
 export const Agendamento = styled.div`
   width: 15%;
@@ -262,7 +253,6 @@ export const CódigoPaciente = styled.div`
     height: 0px;
   }
 
-
   @media (max-width: 880px) {
     width: 20%;
   }
@@ -279,14 +269,12 @@ export const BotaoNovoAgendamento = styled.div`
 
 export const InputData = styled.input`
   width: 160px;
-  
-  
 
   height: 32px;
   color: ${Cores.preto};
   padding-left: 4%;
   padding-right: 2%;
-  
+
   border-radius: 3px;
   border-width: 1px;
   border-style: solid;
@@ -294,15 +282,11 @@ export const InputData = styled.input`
 
   @media (max-width: 940px) {
     width: 50%;
-
-  } 
+  }
 
   @media (max-width: 448px) {
-    width: 80%;
-
-  } 
- 
-  
+    width: 100%;
+  }
 `;
 export const SelectData = styled(Select)`
   width: 160px;
@@ -317,25 +301,20 @@ export const SelectData = styled(Select)`
 
   @media (max-width: 940px) {
     width: ${(props) => {
-    let tamanho;
-      if(props.FiltrarData === ""){
+      let tamanho;
+      if (props.FiltrarData === "") {
         tamanho = "100%";
       } else {
         tamanho = "50%";
       }
-     
-    return tamanho;
-  }};
+
+      return tamanho;
+    }};
   }
 
   @media (max-width: 448px) {
-    width: 80%;
-
+    width: 100%;
   }
- 
 `;
 
-export const FiltroInput = styled.div`
-
-`;
-
+export const FiltroInput = styled.div``;

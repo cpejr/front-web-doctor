@@ -1,5 +1,6 @@
-import styled from "styled-components";
-import { Cores, Fontes } from "../../variaveis";
+import styled from 'styled-components';
+import { Cores, Fontes } from '../../variaveis';
+import { Modal as AntdModal } from 'antd';
 
 export const Container = styled.div`
   display: flex;
@@ -17,6 +18,12 @@ export const Container = styled.div`
   @media (max-width: 1100px) and (min-width: 800px) {
     padding: 0% 0% 0% 0%;
   }
+`;
+
+export const Modal = styled(AntdModal).attrs(() => ({
+  footer: null,
+}))`
+  background-color: black;
 `;
 
 export const Caixa = styled.div`
@@ -112,7 +119,7 @@ export const InfoDireita = styled.div`
 
   @media (max-width: 800px) {
     width: 80%;
-    min-height: 40vh; 
+    min-height: 40vh;
   }
 `;
 
@@ -143,7 +150,7 @@ export const NumeroAgendamentos = styled.div`
   }
   @media (max-width: 800px) {
     width: 100%;
-    margin-bottom:0px;
+    margin-bottom: 0px;
   }
   @media (max-width: 560px) {
     font-size: 1em;
@@ -254,14 +261,11 @@ export const BarraEstetica = styled.div`
   }
 `;
 
-
 export const CaixaDataConsulta = styled.div`
   align-items: center;
   justify-content: center;
   width: 40%;
-
 `;
-
 
 export const CaixaNomeConsulta = styled.div`
   align-items: center;

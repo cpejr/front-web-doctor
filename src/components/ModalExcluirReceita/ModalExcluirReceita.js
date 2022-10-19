@@ -16,20 +16,22 @@ import {
  
 function ModalExcluirReceita(props) { 
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
-  const [idReceita, setIdReceita] = useState("");  
+  const [idReceita, setIdReceita] = useState("");
+  const [pdfUrl, setPdfUrl] = useState("");
   const antIconModal = ( 
     <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin /> 
   ); 
  
   async function excluirReceita() { 
       setCarregandoDeletar(true); 
-      await managerService.DeletarReceita(idReceita) 
+      await managerService.DeletarReceita(idReceita, pdfUrl) 
       await sleep(3000); 
       setCarregandoDeletar(false); 
   }
   
   useEffect(() => {
     setIdReceita(props.receita.id);
+    setPdfUrl(props.receita.pdf_url);
   }, [props]);
  
   return ( 
