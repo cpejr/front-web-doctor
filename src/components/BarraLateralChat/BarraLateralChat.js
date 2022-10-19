@@ -153,6 +153,7 @@ export default function BarraLateralChat({ carregandoConversas }) {
         </ListaPessoasChat>
       </BarraLateral>
       <Modal
+        destroyOnClose={true}
         visible={modalAdicionar}
         onCancel={() => setModalAdicionar(false)}
         footer={null}
