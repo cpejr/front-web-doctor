@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Cores } from "../../variaveis";
+import { Select } from "antd";
 
 export const ContainerModalNovaConversa = styled.div`
   display: flex;
@@ -29,9 +30,9 @@ export const Subtitulo = styled.div`
   font-size: 1.3em;
   font-weight:bold;
 
-  @media (max-width: 410px) {
-    align-self:center;
-    margin-left:0%;
+  @media (max-width: 655px) {
+      align-self: flex-start;
+      margin-left: 10%;
   }
 
   @media (max-width: 360px) {
@@ -44,10 +45,6 @@ export const TamanhoSelect = styled.div`
   align-items:center;
   width:80%;
   margin-bottom:25%;
-
-  @media (max-width: 410px) {
-    margin-right:10%;
-  }
 `;
 
 export const LocalBotao = styled.div`
@@ -59,4 +56,23 @@ export const LocalBotao = styled.div`
   min-width:80px;
 `;
 
+export const SelectUsuario = styled(Select)`
+  width: 100%;
+  color: ${Cores.preto};
+  margin-left: 2.5em;
+  border-style: solid;
+  border-radius: 3px;
+  border-width: 1px;
+  border-color: ${(props) =>
+		props.camposVazios ? Cores.vermelho : Cores.azulEscuro};
+
+  ::placeholder {
+    color:${Cores.preto}
+  }
+    color: ${Cores.preto};
+
+    @media (max-width: 655px) {
+      margin-left: 0em;
+  }
+`;
 
