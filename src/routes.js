@@ -159,7 +159,7 @@ function UserHeader() {
           component={ListaUsuarios}
         />
         <RotasPrivadasMedico
-          exact
+          exact 
           path='/web/criacaoreceitas'
           component={CriacaoReceitas}
         />
