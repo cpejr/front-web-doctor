@@ -24,12 +24,16 @@ import {
 } from '@ant-design/icons';
 import { recebeEmail } from '../../services/auth';
 import objCopiaProfunda from '../../utils/objCopiaProfunda';
+import moment from "moment";
+
+moment.locale("pt-br");
 
 export default function ConversaAberta({ socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState('');
   const [carregandoConversa, setCarregandoConversa] = useState(true);
   const [carregandoEnvioMensagem, setCarregandoEnvioMensagem] = useState(false);
+
   const {
     usuarioId,
     conversaSelecionada,
@@ -97,6 +101,7 @@ export default function ConversaAberta({ socket }) {
 
     setConversas(moverArray(copiaConversas, index, 0));
   };
+
   const enviarConversa = async (ultima_mensagem) => {
     const index = conversas.findIndex(
       ({ id }) => id === conversaSelecionada.id
@@ -141,23 +146,38 @@ export default function ConversaAberta({ socket }) {
 
     if (!inputMensagemConteudo) return;
 
+    const horaAtual = moment().hours();
+    const horarioComercial = (horaAtual >= 7 && horaAtual < 19) ? true : false;
+
+    const remetente = conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)].conversaCom;
+
+    let id_remetente = usuarioId;
+    let texto = inputMensagemConteudo;
+
+    if (!horarioComercial) {
+      id_remetente = remetente.id;
+      texto = "Obrigado pela sua mensagem!\n" +
+        "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
+        "Se tiver um assunto urgente favor responder ao formulário de Emergência."
+    }
+
     setCarregandoEnvioMensagem(true);
     const dadosParaCriarNovaMensagem = {
       id_conversa: conversaSelecionada.id,
-      id_usuario: usuarioId,
+      id_usuario: id_remetente,
       media_url: 'nenhuma', // Futuramente permitir a opção de mandar mídias
       foi_visualizado: false,
-      conteudo: inputMensagemConteudo,
+      conteudo: texto,
     };
 
-    setInputMensagemConteudo('');
+    if (horarioComercial) { setInputMensagemConteudo('') };
 
     const { data_cricao, data_atualizacao, media_url, ...dados } =
       await managerService.CriandoMensagem(dadosParaCriarNovaMensagem);
 
     const novaMensagem = {
       ...dados,
-      pertenceAoUsuarioAtual: true,
+      pertenceAoUsuarioAtual: horarioComercial,
     };
 
     if (conversaSelecionada.ativada) {
@@ -172,6 +192,7 @@ export default function ConversaAberta({ socket }) {
     atualizarBarraLateral(novaMensagem);
 
     setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
+
     setCarregandoEnvioMensagem(false);
   };
 
@@ -252,7 +273,7 @@ export default function ConversaAberta({ socket }) {
           widthres='15%'
           height='10%'
           marginTop='0%'
-          onClick={() => {}}
+          onClick={() => { }}
         >
           <PaperClipOutlined
             style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
