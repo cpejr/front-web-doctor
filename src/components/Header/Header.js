@@ -111,10 +111,10 @@ function Header(props) {
             fontSize="1rem"
             height="50px"
             onClick={() => {
-              history.push("/web/listadeusuarios");
+              history.push("/web/home");
             }}
           >
-            Lista de Usuários
+            Home
           </Button>
         </Menu.Item>
       ) : (
@@ -281,10 +281,10 @@ function Header(props) {
               fontSize="1.1rem"
               height="50px"
               onClick={() => {
-                history.push("/web/listadeusuarios");
+                history.push("/web/home");
               }}
             >
-              Lista de Usuários
+              Home
             </Button>
           ) : (
             <Button
