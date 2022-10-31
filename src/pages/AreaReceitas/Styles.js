@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { Cores } from "../../variaveis";
+import { Select } from 'antd';
 
 export const TopoPagina = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-bottom: 1%;
-  @media (max-width: 920px) {
+  @media (max-width: 1100px) {
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -14,14 +15,14 @@ export const TopoPagina = styled.div`
 `;
 
 export const BarraPesquisa = styled.div`
-  width: 50%;
+  width: 40%;
   margin-top: 1.5%;
   display: flex;
   flex-direction: row;
   justify-content: center;
 
-  @media (max-width: 920px) {
-    width: 100%;
+  @media (max-width: 1100px) {
+    width: 80%;
     justify-content: center;
   }
 `;
@@ -32,32 +33,85 @@ export const Botoes = styled.div`
   width: 50%;
   margin: 1%;
   justify-content: space-between;
-  @media (max-width: 920px){
-    width: 500px;
+  @media (max-width: 1100px){
+    width: 80%;
   }
-  @media (max-width: 550px){
+  @media (max-width: 600px){
     margin-top: 2%;
     flex-direction:column;
-    width: 100%;
   }
 `;
 
-export const FiltroPaciente = styled.div`
+export const FiltroData = styled.div`
   width: 50%;
   margin: 1%;
   display: flex;
   flex-direction: row;
-  justify-content: start;
-  gap: 2%;
-  @media (max-width: 920px) {
+  justify-content: space-between;
+  gap: 10px;
+  @media (max-width: 1100px) {
+    margin: 0;
+    padding-right: 5%;
     margin: 1% 0;
     width: 100%;
   }
-  @media (max-width: 550px) {
+  @media (max-width: 600px) {
+    padding: 0%;
+  }
+  @media (max-width: 400px) {
     flex-direction: column;
-    width: 100%;
     justify-content: center;
     align-items: center;
+  }
+`;
+
+export const SelectData = styled(Select)`
+  width: 160px;
+  color: ${Cores.preto};
+  padding-right: 2%;
+  height: 32px;
+
+  border-radius: 3px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${Cores.cinza[8]};
+
+  @media (max-width: 600px) {
+    width: ${(props) => {
+    let tamanho;
+    if (props.FiltrarData === '') {
+      tamanho = '100%';
+    } else {
+      tamanho = '50%';
+    }
+
+    return tamanho;
+  }};
+  }
+
+  @media (max-width: 400px) {
+    width: 100%;
+  }
+`;
+
+export const InputData = styled.input`
+  width: 160px;
+  height: 32px;
+  color: ${Cores.preto};
+  padding-left: 4%;
+  padding-right: 2%;
+
+  border-radius: 3px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${Cores.cinza[8]};
+
+  @media (max-width: 1100px) {
+    width: 50%;
+  }
+
+  @media (max-width: 400px) {
+    width: 100%;
   }
 `;
 
@@ -66,7 +120,7 @@ export const BotaoAdicionar = styled.div`
   width: 50%;
   display: flex;
   justify-content: center;
-  @media (max-width: 920px){
+  @media (max-width: 1100px){
     justify-content: flex-end;
     width: 100%
   }
@@ -78,7 +132,7 @@ export const ContainerListadeReceitas = styled.div`
   width: 100%;
   height: 100%;
   min-height: 100vh;
-  padding: 2% 5% 2% 5%;
+  padding: 25px 5% 2% 5%;
 `;
 
 export const BarraEstetica = styled.div`
@@ -114,14 +168,14 @@ export const Receita = styled.div`
   column-gap: 10px;
   width: 100%;
   height: 80px;
-  padding: 0% 1% 0% 1%;
+  padding: 0% 1%;
   border-color: ${Cores.preto};
   border-style: solid;
   border-radius: 3px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   margin-bottom: 2%;
   @media (max-width: 600px) {
-    padding: 0% 2% 0% 2%;
+    padding: 0% 2%;
   }
 `;
 

@@ -293,6 +293,7 @@ export const InputData = styled.input`
     width: 80%;
   }
 `;
+
 export const SelectData = styled(Select)`
   width: 160px;
   color: ${Cores.preto};
@@ -306,15 +307,15 @@ export const SelectData = styled(Select)`
 
   @media (max-width: 940px) {
     width: ${(props) => {
-      let tamanho;
-      if (props.FiltrarData === '') {
-        tamanho = '100%';
-      } else {
-        tamanho = '50%';
-      }
+    let tamanho;
+    if (props.FiltrarData === '') {
+      tamanho = '100%';
+    } else {
+      tamanho = '50%';
+    }
 
-      return tamanho;
-    }};
+    return tamanho;
+  }};
   }
 
   @media (max-width: 448px) {

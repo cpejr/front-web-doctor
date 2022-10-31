@@ -9,7 +9,9 @@ import {
 	TopoPagina,
 	BarraPesquisa,
 	Botoes,
-	FiltroPaciente,
+	FiltroData,
+	SelectData,
+	InputData,
 	BotaoAdicionar,
 	ContainerListadeReceitas,
 	BarraEstetica,
@@ -28,12 +30,11 @@ import ModalExcluirReceita from "../../components/ModalExcluirReceita";
 
 function AreaReceitas() {
 	const history = useHistory();
-
 	const { Option } = Select;
 	const { Search } = Input;
-	const [pacientes, setPacientes] = useState([]);
 	const [receitas, setReceitas] = useState([]);
-	const [pacienteSelect, setPacienteSelect] = useState("");
+	const [dataSelect, setDataSelect] = useState("");
+	const [dataInput, setDataInput] = useState('');
 	const [busca, setBusca] = useState("");
 	const [modalDeletarReceita, setModalDeletarReceita] = useState(false);
 	const [receitaEspecifica, setReceitaEspecifica] = useState({});
@@ -48,15 +49,12 @@ function AreaReceitas() {
 	);
 
 	const receitasFiltradas = receitas.filter((receita) => {
-		if (lowerBusca === "" && pacienteSelect === "") return receita;
+		if (lowerBusca === "" && dataSelect === "") return receita;
 		else {
+			let dataFormatada = moment(receita.data_criacao).format("YYYY-MM-DD");
 			return (
+				dataFormatada === dataInput &&
 				receita?.nome
-					?.toLowerCase()
-					.normalize("NFD")
-					.replace(/[\u0300-\u036f]/g, "")
-					.includes(pacienteSelect) &&
-				receita?.titulo
 					?.toLowerCase()
 					.normalize("NFD")
 					.replace(/[\u0300-\u036f]/g, "")
@@ -65,8 +63,8 @@ function AreaReceitas() {
 		}
 	});
 
-	function pacientesFiltrados(value) {
-		setPacienteSelect(value);
+	function dataFiltrada(value) {
+		setDataSelect(value);
 	}
 
 	function criandoReceita() {
@@ -78,23 +76,8 @@ function AreaReceitas() {
 	async function pegandoDadosReceitas() {
 		setCarregandoPagina(true);
 		const resposta = await managerService.GetReceitas();
-		const receitasFormatadas = resposta
-			.sort(compararDataRecente)
-			.map(({ data_criacao, ...resto }) => ({
-				data_criacao: moment(data_criacao).format("DD/MM/YYYY"),
-				...resto,
-			}));
+		const receitasFormatadas = resposta.sort(compararDataRecente);
 		setReceitas(receitasFormatadas);
-		setCarregandoPagina(false);
-	}
-
-	async function pegandoDadosPacientes() {
-		setCarregandoPagina(true);
-		const resposta = await managerService.GetDadosPessoais();
-		const filtroDadosPessoais = resposta.filter(
-			({ tipo }) => tipo === "PACIENTE"
-		);
-		setPacientes(filtroDadosPessoais);
 		setCarregandoPagina(false);
 	}
 
@@ -109,7 +92,6 @@ function AreaReceitas() {
 
 	useEffect(() => {
 		pegandoDadosReceitas();
-		pegandoDadosPacientes();
 	}, []);
 
 	return (
@@ -119,32 +101,39 @@ function AreaReceitas() {
 					<BarraPesquisa>
 						<Search
 							placeholder="BUSCAR"
-							style={{ width: 500 }}
 							value={busca}
 							onChange={(e) => setBusca(e.target.value)}
 						/>
 					</BarraPesquisa>
 					<Botoes>
-						<FiltroPaciente>
-							<Select
-								defaultValue=""
-								style={{ width: 200 }}
-								onChange={(value) => pacientesFiltrados(value)}
+						<FiltroData>
+							<SelectData
+								defaultValue=''
+								bordered={false}
+								FiltrarData={dataSelect}
+								onChange={(value) => dataFiltrada(value)}
 							>
-								<Option value="">Todos os Pacientes</Option>
-								{pacientes.map((value) => (
-									<Option value={value.nome.toLowerCase()}>
-										{" "}
-										{value.nome}{" "}
-									</Option>
-								))}
-							</Select>
-						</FiltroPaciente>
+								<Option value=''>Todas as datas</Option>
+								<Option value='filtrado'>Data filtrada</Option>
+							</SelectData>
+							{dataSelect === '' ? (
+								<></>
+							) : (
+								<InputData
+									size='large'
+									name='data'
+									type='date'
+									border={dataSelect}
+									onChange={(e) => setDataInput(e.target.value)}
+									value={dataInput}
+								/>
+							)}
+						</FiltroData>
 						<BotaoAdicionar>
 							<Button
 								backgroundColor={Cores.cinza[7]}
 								color={Cores.azul}
-								width="50%"
+								width="75%"
 								display="flex"
 								height="32px"
 								borderColor={Cores.preto}
@@ -182,7 +171,7 @@ function AreaReceitas() {
 								<Receita key={value?.id}>
 									<Titulo>{value?.titulo}</Titulo>
 									<NomePaciente>{value?.nome}</NomePaciente>
-									<DataCriacao>{value?.data_criacao}</DataCriacao>
+									<DataCriacao>{moment(value?.data_criacao).format("DD/MM/YYYY")}</DataCriacao>
 									<BotaoDeletar>
 										<Button
 											backgroundColor={Cores.cinza[7]}

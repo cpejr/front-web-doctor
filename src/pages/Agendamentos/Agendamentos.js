@@ -520,25 +520,25 @@ function Agendamentos(props) {
                 <Data>
                   {parseInt(value.data_hora.slice(11, 13)) < 12
                     ? value.data_hora.slice(8, 10) +
-                      '/' +
-                      value.data_hora.slice(5, 7) +
-                      '/' +
-                      value.data_hora.slice(0, 4) +
-                      ' - ' +
-                      parseInt(value.data_hora.slice(11, 13)) +
-                      ':' +
-                      value.data_hora.slice(14, 16) +
-                      ' am'
+                    '/' +
+                    value.data_hora.slice(5, 7) +
+                    '/' +
+                    value.data_hora.slice(0, 4) +
+                    ' - ' +
+                    parseInt(value.data_hora.slice(11, 13)) +
+                    ':' +
+                    value.data_hora.slice(14, 16) +
+                    ' am'
                     : value.data_hora.slice(8, 10) +
-                      '/' +
-                      value.data_hora.slice(5, 7) +
-                      '/' +
-                      value.data_hora.slice(0, 4) +
-                      ' - ' +
-                      parseInt(value.data_hora.slice(11, 13) - 12) +
-                      ':' +
-                      value.data_hora.slice(14, 16) +
-                      ' pm'}
+                    '/' +
+                    value.data_hora.slice(5, 7) +
+                    '/' +
+                    value.data_hora.slice(0, 4) +
+                    ' - ' +
+                    parseInt(value.data_hora.slice(11, 13) - 12) +
+                    ':' +
+                    value.data_hora.slice(14, 16) +
+                    ' pm'}
                 </Data>
 
                 <Agendamento onClick={() => abreModalConsultaMarcada(value)}>
