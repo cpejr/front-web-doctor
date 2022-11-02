@@ -50,6 +50,13 @@ function ModalAgendamentoEspecifico(props) {
   const [carregandoCadastro, setCarregandoCadastro] = useState();
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+  const [dataConsulta, setDataConsulta] = useState("");
+  const [hora, setHora] = useState("");
+  const [erro, setErro] = useState(false);
+  const [hoje, setHoje] = useState("");
+
+  moment.locale("pt-br");
+
   const [consulta, setConsulta] = useState({
     data_hora: "",
     duracao_em_minutos: "",
@@ -68,13 +75,32 @@ function ModalAgendamentoEspecifico(props) {
     id_consultorio: "",
     tipo: "",
   };
-  const [dataConsulta, setDataConsulta] = useState("");
-  const [hora, setHora] = useState("");
-  const [erro, setErro] = useState(false);
-  const [camposVazios, setCamposVazios] = useState(false);
-  const [hoje, setHoje] = useState("");
 
-  moment.locale("pt-br");
+  const [camposVazios, setCamposVazios] = useState({
+    data: false,
+    hora: false,
+    duracao_em_minutos: false,
+    id_consultorio: false,
+    tipo: false,
+  });
+
+  const [camposPreenchidos, setCamposPreenchidos] = useState({
+    data: "",
+    hora: "",
+    duracao_em_minutos: "",
+    id_consultorio: "",
+    tipo: "",
+  });
+
+
+  const [referenciaInputNulos, setReferenciaInputNulos] = useState({
+    data: false,
+    hora: false,
+    duracao_em_minutos: false,
+    id_consultorio: false,
+    tipo: false,
+  });
+
 
   async function pegandoPacientes() {
     const resposta = await managerService.GetDadosPessoais();
@@ -85,52 +111,12 @@ function ModalAgendamentoEspecifico(props) {
     });
   }
 
-  async function setandoNomeConsultorioPorId() {
-    const resposta = await managerService.GetConsultorioPorId(
-      consulta.id_consultorio
-    );
-    setNomeConsultorioPorId(resposta.nome);
-  }
-
-  useEffect(() => {
-    pegandoPacientes();
-  }, []);
-
-  useEffect(() => {
-    setandoNomeConsultorioPorId();
-  },);
-
-  const errors = {};
-  const [referenciaInputNulos, setReferenciaInputNulos] = useState({
-    data: false,
-    hora: false,
-    duracao_em_minutos: false,
-    id_consultorio: false,
-    tipo: false,
-  });
-
-  function verificandoIdUsuario() {
-    if (props.abertoPeloUsuario === false) {
-      setReferenciaInputNulos({ ...referenciaInputNulos, id_usuario: false });
-    } else {
-      setConsulta({ ...consulta, id_usuario: usuario.id });
-    }
-  }
-
-  useEffect(() => {
-    verificandoIdUsuario();
-  }, [usuario]);
-
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true);
     const res = await managerService.GetDadosConsultorios();
     setConsultorios(res.dadosConsultorios);
     setCarregandoConsultorios(false);
   }
-
-  useEffect(() => {
-    pegandoConsultorios();
-  }, []);
 
   async function pegandoDadosUsuario() {
     setCarregando(true);
@@ -139,42 +125,18 @@ function ModalAgendamentoEspecifico(props) {
     setCarregando(false);
   }
 
-  useEffect(() => {
-    pegandoDadosUsuario();
-  }, [props]);
+  async function setandoNomeConsultorioPorId() {
+    const resposta = await managerService.GetConsultorioPorId(
+      consulta.id_consultorio
+    );
+    setNomeConsultorioPorId(resposta.nome);
+  }
 
-  async function validacaoCampos(e) {
-    const { value, name } = e.target;
-
-    if (name !== "descricao") {
-      if (value) {
-        setCamposVazios({ ...camposVazios, [name]: false });
-      } else {
-        setCamposVazios({ ...camposVazios, [name]: true });
-      }
-    }
-    if (consulta.duracao_em_minutos === "") {
-      setErro({ ...erro, [name]: true });
+  function verificandoIdUsuario() {
+    if (props.abertoPeloUsuario === false) {
+      setReferenciaInputNulos({ ...referenciaInputNulos, id_usuario: false });
     } else {
-      setErro({ ...erro, [name]: false });
-    }
-
-    if (e.target.name === "data") {
-      setDataConsulta(e.target.value);
-      if (hora !== "" && hora !== undefined) {
-        validacaoHorario(hora, e.target.value);
-      }
-
-      return dataConsulta;
-    } else if (e.target.name === "duracao_em_minutos") {
-      setConsulta({
-        ...consulta,
-        [e.target.name]: apenasNumeros(e.target.value),
-      });
-      return consulta;
-    } else {
-      setConsulta({ ...consulta, [e.target.name]: e.target.value });
-      return consulta;
+      setConsulta({ ...consulta, id_usuario: usuario.id });
     }
   }
 
@@ -198,14 +160,6 @@ function ModalAgendamentoEspecifico(props) {
     document.getElementById("data").setAttribute("min", hoje);
   }
 
-  useEffect(() => {
-    setandoDiaAtual();
-  }, []);
-
-  useEffect(() => {
-    setandoDataMinima();
-  }, [hoje]);
-
   function setandoHoraAtual() {
     let horario = new Date();
     let horaAtual = horario.getHours();
@@ -222,14 +176,94 @@ function ModalAgendamentoEspecifico(props) {
     return horarioAtual;
   }
 
-  function validacaoHorario(horarioConsulta, dataConsulta) {
+
+  useEffect(() => {
+    pegandoPacientes();
+  }, []);
+
+  useEffect(() => {
+    setandoNomeConsultorioPorId();
+  },);
+
+
+  useEffect(() => {
+    verificandoIdUsuario();
+  }, [usuario]);
+
+  
+
+  useEffect(() => {
+    pegandoConsultorios();
+  }, []);
+
+
+  useEffect(() => {
+    pegandoDadosUsuario();
+  }, [props]);
+
+
+  useEffect(() => {
+    setandoDiaAtual();
+  }, []);
+
+  useEffect(() => {
+    setandoDataMinima();
+  }, [hoje]);
+
+
+  async function setandoCamposNulos(){
+    
+    for (const propriedade_camposConsulta in camposPreenchidos)
+    {
+      for (const propriedade_camposVazios in camposVazios) 
+        {
+          if (propriedade_camposConsulta === propriedade_camposVazios)
+          {
+            if(camposPreenchidos[propriedade_camposConsulta] === "")
+            camposVazios[propriedade_camposVazios] = true;
+            else
+            camposVazios[propriedade_camposVazios] = false;
+          }
+        } 
+    }
+   
+}
+
+
+  async function preenchendoCampos(e) {
+    const { value, name } = e.target;
+
+    if (name === "data") {
+      camposPreenchidos.data = value;
+      setDataConsulta(value);
+      if (hora !== "" && hora !== undefined) {
+        validacaoHorario(hora, value);
+      }
+
+    } else if (name === "duracao_em_minutos") {
+      camposPreenchidos[name] = apenasNumeros(value);
+      setConsulta({
+        ...consulta,
+        [name]: apenasNumeros(value),
+      });
+    } else {
+      camposPreenchidos[name] = value;
+      setConsulta({ ...consulta, [name]: value });
+    }
+
+    
+      if (camposPreenchidos[name] === ""  ) { 
+            camposVazios[name]= true;  
+      }
+      else{ 
+            camposVazios[name]=false;
+      }
+
+  }
+
+  async function validacaoHorario(horarioConsulta, dataConsulta) {
     const horaAtual = setandoHoraAtual();
 
-    if (horarioConsulta) {
-      setCamposVazios({ ...camposVazios, hora: false });
-    } else {
-      setCamposVazios({ ...camposVazios, hora: true });
-    }
 
     if (hoje === dataConsulta) {
       if (horarioConsulta <= horaAtual) {
@@ -242,6 +276,15 @@ function ModalAgendamentoEspecifico(props) {
     }
 
     setHora(horarioConsulta);
+    camposPreenchidos.hora = horarioConsulta;
+
+    if (camposPreenchidos.hora === ""  ) { 
+      camposVazios.hora = true;  
+    }
+    else{ 
+      camposVazios.hora = false;
+    }
+    
   }
 
   function formatacaoDataHora() {
@@ -254,14 +297,8 @@ function ModalAgendamentoEspecifico(props) {
   }
 
   async function requisicaoCriarConsulta() {
-    if (!dataConsulta) errors.data = true;
-    if (!hora) errors.hora = true;
-    if (!consulta.duracao_em_minutos) errors.duracao_em_minutos = true;
-    if (!consulta.id_consultorio) errors.id_consultorio = true;
-    if (!consulta.tipo) errors.tipo = true;
-    if (!consulta.id_usuario) errors.id_usuario = true;
-
-    setCamposVazios({ ...camposVazios, ...errors });
+    
+    setandoCamposNulos();
 
     if (
       consulta.duracao_em_minutos === "" ||
@@ -321,7 +358,7 @@ function ModalAgendamentoEspecifico(props) {
                   name="id_usuario"
                   placeholder="Selecione um paciente"
                   onChange={(e) => {
-                    validacaoCampos(e);
+                    preenchendoCampos(e);
                   }}
                 >
                   <option value="" disabled selected>
@@ -367,7 +404,7 @@ function ModalAgendamentoEspecifico(props) {
             rows={4}
             name="descricao"
             value={consulta.descricao}
-            onChange={(e) => validacaoCampos(e)}
+            onChange={(e) => preenchendoCampos(e)}
             style={{
               borderWidth: "1px",
               borderColor: Cores.azul,
@@ -384,7 +421,7 @@ function ModalAgendamentoEspecifico(props) {
               type="date"
               onKeyDown={(e) => e.preventDefault()}
               name="data"
-              onChange={(e) => validacaoCampos(e)}
+              onChange={(e) => preenchendoCampos(e)}
               value={dataConsulta}
               camposVazios={camposVazios.data}
               id="data"
@@ -410,7 +447,7 @@ function ModalAgendamentoEspecifico(props) {
                 name="tipo"
                 placeholder="Tipo"
                 onChange={(e) => {
-                  validacaoCampos(e);
+                  preenchendoCampos(e);
                 }}
                 value={consulta.tipo}
                 camposVazios={camposVazios.tipo}
@@ -454,7 +491,7 @@ function ModalAgendamentoEspecifico(props) {
                 paddingBottom="8px"
                 size="large"
                 onChange={(e) => {
-                  validacaoCampos(e);
+                  preenchendoCampos(e);
                 }}
                 camposVazios={camposVazios.id_consultorio}
               >
@@ -509,7 +546,7 @@ function ModalAgendamentoEspecifico(props) {
                 value={consulta.duracao_em_minutos}
                 placeholder="Duração"
                 name="duracao_em_minutos"
-                onChange={validacaoCampos}
+                onChange={preenchendoCampos}
                 suffix="min"
                 camposVazios={camposVazios.duracao_em_minutos}
                 erro={erro.duracao_em_minutos}
