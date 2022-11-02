@@ -33,6 +33,7 @@ export default function ConversaAberta({ socket }) {
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState('');
   const [carregandoConversa, setCarregandoConversa] = useState(true);
   const [carregandoEnvioMensagem, setCarregandoEnvioMensagem] = useState(false);
+  const [tipoUsuario, setTipoUsuario] = useState(false);
 
   const {
     usuarioId,
@@ -58,6 +59,7 @@ export default function ConversaAberta({ socket }) {
 
       if (componenteEstaMontadoRef.current) {
         setUsuarioAtual(dadosUsuario);
+        setTipoUsuario(dadosUsuario.tipo);
         setCarregandoConversa(false);
       }
     }
@@ -154,12 +156,16 @@ export default function ConversaAberta({ socket }) {
     let id_remetente = usuarioId;
     let texto = inputMensagemConteudo;
 
+    if (tipoUsuario === "MASTER"){
+      id_remetente = remetente.id;
+      texto = inputMensagemConteudo;
+    }else{
     if (!horarioComercial) {
       id_remetente = remetente.id;
       texto = "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
         "Se tiver um assunto urgente favor responder ao formulário de Emergência."
-    }
+    }}
 
     setCarregandoEnvioMensagem(true);
     const dadosParaCriarNovaMensagem = {
@@ -209,6 +215,7 @@ export default function ConversaAberta({ socket }) {
       enviarMensagem(e);
     }
   };
+  
 
   return (
     <Conversa>
