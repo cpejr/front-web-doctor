@@ -68,10 +68,16 @@ function ModalAgendamentoEspecifico(props) {
     id_consultorio: "",
     tipo: "",
   };
-  const [dataConsulta, setDataConsulta] = useState("");
+  const [dataConsulta, setDataConsulta] = useState("valor");
   const [hora, setHora] = useState("");
   const [erro, setErro] = useState(false);
-  const [camposVazios, setCamposVazios] = useState(false);
+  const [camposVazios, setCamposVazios] =  useState({
+    data: false,
+    hora: false,
+    duracao_em_minutos: false,
+    id_consultorio: false,
+    tipo: false,
+  });
   const [hoje, setHoje] = useState("");
 
   moment.locale("pt-br");
@@ -145,10 +151,12 @@ function ModalAgendamentoEspecifico(props) {
 
   async function validacaoCampos(e) {
     const { value, name } = e.target;
+    
 
-    if (name !== "descricao") {
-      if (value) {
+    if (name !== "descricao" && name !== "data") {
+      if (value ) {
         setCamposVazios({ ...camposVazios, [name]: false });
+        
       } else {
         setCamposVazios({ ...camposVazios, [name]: true });
       }
@@ -159,12 +167,18 @@ function ModalAgendamentoEspecifico(props) {
       setErro({ ...erro, [name]: false });
     }
 
-    if (e.target.name === "data") {
-      setDataConsulta(e.target.value);
-      if (hora !== "" && hora !== undefined) {
-        validacaoHorario(hora, e.target.value);
+    if (name === "data") {
+      if(value){
+        setDataConsulta(value);
+        if (hora !== "" && hora !== undefined) {
+          validacaoHorario(hora, value);
+        }
+        setCamposVazios({ ...camposVazios, data: false });
       }
-
+      else{
+        setCamposVazios({ ...camposVazios, data: true });
+      }
+    
       return dataConsulta;
     } else if (e.target.name === "duracao_em_minutos") {
       setConsulta({
@@ -254,15 +268,25 @@ function ModalAgendamentoEspecifico(props) {
   }
 
   async function requisicaoCriarConsulta() {
-    if (!dataConsulta) errors.data = true;
+    if (dataConsulta === "valor") errors.data = true;
     if (!hora) errors.hora = true;
     if (!consulta.duracao_em_minutos) errors.duracao_em_minutos = true;
     if (!consulta.id_consultorio) errors.id_consultorio = true;
     if (!consulta.tipo) errors.tipo = true;
     if (!consulta.id_usuario) errors.id_usuario = true;
 
-    setCamposVazios({ ...camposVazios, ...errors });
 
+    for (const propriedade_errors in errors) {
+      if (errors[propriedade_errors] === true) {
+        for (const propriedade_campos in camposVazios) {
+          if (propriedade_campos === propriedade_errors) {
+            camposVazios[propriedade_campos] = true;
+          }
+        }
+      }
+    }
+
+    
     if (
       consulta.duracao_em_minutos === "" ||
       dataConsulta === "" ||
@@ -285,7 +309,7 @@ function ModalAgendamentoEspecifico(props) {
           setHora("");
         } else {
           setCarregandoCadastro(true);
-          toast.warn("Preencha todos os campos corretamente");
+          toast.warn("Preencha os campos corretamente");
           setCarregandoCadastro(false);
         }
       }
