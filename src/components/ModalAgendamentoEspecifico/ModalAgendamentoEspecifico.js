@@ -53,6 +53,7 @@ function ModalAgendamentoEspecifico(props) {
   const [dataConsulta, setDataConsulta] = useState("");
   const [hora, setHora] = useState("");
   const [erro, setErro] = useState(false);
+  const [testarCampos, setTestarCampos] = useState();
   const [hoje, setHoje] = useState("");
 
   moment.locale("pt-br");
@@ -179,6 +180,8 @@ function ModalAgendamentoEspecifico(props) {
 
   useEffect(() => {
     pegandoPacientes();
+    setandoDiaAtual();
+    pegandoConsultorios();
   }, []);
 
   useEffect(() => {
@@ -190,44 +193,23 @@ function ModalAgendamentoEspecifico(props) {
     verificandoIdUsuario();
   }, [usuario]);
 
-  
-
-  useEffect(() => {
-    pegandoConsultorios();
-  }, []);
-
 
   useEffect(() => {
     pegandoDadosUsuario();
   }, [props]);
-
-
-  useEffect(() => {
-    setandoDiaAtual();
-  }, []);
 
   useEffect(() => {
     setandoDataMinima();
   }, [hoje]);
 
 
-  async function setandoCamposNulos(){
-    
-    for (const propriedade_camposConsulta in camposPreenchidos)
-    {
-      for (const propriedade_camposVazios in camposVazios) 
-        {
-          if (propriedade_camposConsulta === propriedade_camposVazios)
-          {
-            if(camposPreenchidos[propriedade_camposConsulta] === "")
-            camposVazios[propriedade_camposVazios] = true;
-            else
-            camposVazios[propriedade_camposVazios] = false;
-          }
-        } 
-    }
-   
-}
+  function setandoCamposNulos(){
+    Object.entries(camposPreenchidos).forEach(([key, value]) => {
+      if(!value) return setCamposVazios(camposVazios => ({...camposVazios, [key]: true}))
+      setCamposVazios(camposVazios => ({...camposVazios, [key]: false}))
+    })
+  }
+
 
 
   async function preenchendoCampos(e) {
@@ -297,8 +279,9 @@ function ModalAgendamentoEspecifico(props) {
   }
 
   async function requisicaoCriarConsulta() {
-    
+     
     setandoCamposNulos();
+
 
     if (
       consulta.duracao_em_minutos === "" ||
