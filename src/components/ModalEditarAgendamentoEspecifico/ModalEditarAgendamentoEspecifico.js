@@ -1,4 +1,4 @@
-/* import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Checkbox, Input, Tooltip } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
@@ -6,7 +6,7 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import {
   Container,
-  Caixa,
+ /*  Caixa,
   InfoEsquerda,
   InfoDireita,
   Usuario,
@@ -24,7 +24,7 @@ import {
   InputData,
   ContainerConsultorio,
   TextoDoisSelects,
-  ContainerNome,
+  ContainerNome, */
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
@@ -222,7 +222,7 @@ function ModalEditarAgendamentoEspecifico(props) {
 
   return (
     <Container>
-      <Caixa>
+     {/*  <Caixa>
         <InfoEsquerda>
           <Usuario>
             <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
@@ -404,10 +404,9 @@ function ModalEditarAgendamentoEspecifico(props) {
             )}
           </Button>
         </InfoDireita>
-      </Caixa>
+      </Caixa> */}
     </Container>
   );
 }
 
 export default ModalEditarAgendamentoEspecifico;
- */

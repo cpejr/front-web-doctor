@@ -74,7 +74,7 @@ function ModalAgendamento(props) {
 
   async function fechandoModalAgendamentoEspecifico() {
     setModalAgendamentoEspecifico(false);
-    pegandoDados();
+    
   }
 
   async function editandoAgendamento(consulta) {
@@ -94,12 +94,12 @@ function ModalAgendamento(props) {
 
   async function fechandoModalEditarAgendamento() {
     setModalEditarAgendamento(false);
-    pegandoDados();
+   
   }
 
   async function fechandoModalConsultaMarcada() {
     setModalConsultaMarcada(false);
-    pegandoDados();
+    
   }
 
   async function fechandoModalExameMarcado() {
