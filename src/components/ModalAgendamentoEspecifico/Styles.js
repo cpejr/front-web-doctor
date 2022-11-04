@@ -49,7 +49,13 @@ export const InfoEsquerdaEDireita = styled.div`
     padding: 5%;
   }
 
+`;
 
+export const CaixaLoader = styled.div`
+   width: calc(98% - 50px);
+   display: flex;
+   justify-content: center;
+   align-items: center;
 `;
 
 export const InfoEsquerda = styled.div`

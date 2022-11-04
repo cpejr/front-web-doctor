@@ -162,7 +162,7 @@ function ModalAgendamento(props) {
 
                       <BotoesEditarExcluir>
                         <Button
-                          width='45%'
+                          width='48%'
                           height='40px'
                           backgroundColor={Cores.cinza[6]}
                           borderColor={Cores.lilas[3]}
@@ -177,7 +177,7 @@ function ModalAgendamento(props) {
                           EDITAR
                         </Button>
                         <Button
-                          width='45%'
+                          width='48%'
                           height='40px'
                           backgroundColor={Cores.branco}
                           borderColor='rgba(255, 0, 0, 0.25)'

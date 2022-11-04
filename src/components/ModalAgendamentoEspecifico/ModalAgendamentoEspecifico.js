@@ -22,7 +22,8 @@ import {
   NomePaciente,
   InfoEsquerda,
   TextoCheckbox,
-  InputHora
+  InputHora,
+  CaixaLoader
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
@@ -313,7 +314,10 @@ function ModalAgendamentoEspecifico(props) {
             <Usuario>
               <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
               {carregando ? (
-                <Spin indicator={antIcon} />
+                <CaixaLoader>
+                <Spin indicator={antIcon} style={{ color:Cores.azul }}/>
+                </CaixaLoader>
+               
               ) : (
                 <Nome>{usuario.nome}</Nome>
               )}
