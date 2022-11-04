@@ -290,6 +290,7 @@ function ModalAgendamento(props) {
                 fontWeight='bold'
                 fontSizeMedia='0.9em'
                 fontSizeMedia950='1.1em'
+                heightMedia560="73px"
                 marginTop='18%'
                 marginTopMedia='4%'
                 onClick={() => marcandoAgendamento()}
