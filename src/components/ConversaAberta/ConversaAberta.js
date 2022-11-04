@@ -50,6 +50,8 @@ export default function ConversaAberta({ socket }) {
   const scrollRef = useRef(null);
   const inputMensagemConteudoRef = useRef(null);
 
+
+
   const menuBotoes = (
     <Menu>
       <Menu.Item>
@@ -59,6 +61,7 @@ export default function ConversaAberta({ socket }) {
           color={Cores.preto}
           fontSize="1rem"
           height="50px"
+          onClick={() => enviarFormularioPaciente()}
         >
           Enviar Formulário Actigrafia
         </Button>
@@ -106,6 +109,15 @@ export default function ConversaAberta({ socket }) {
 
     return () => (componenteEstaMontadoRef.current = false);
   }, []);
+
+  async function enviarFormularioPaciente(){
+      await managerService.EnviandoFormularioPaciente(
+        false,
+        true,
+        "d98bf5e0-73e0-4d59-9c00-a7d79a1174b0",
+        conversaSelecionada.conversaCom.id
+      )
+  }
 
   useEffect(() => {
     console.log(conversaSelecionada);
