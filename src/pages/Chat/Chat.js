@@ -8,6 +8,7 @@ import * as managerService from '../../services/ManagerService/managerService';
 import io from 'socket.io-client';
 import objCopiaProfunda from '../../utils/objCopiaProfunda';
 import moverArray from '../../utils/moverArray';
+import moment from "moment";
 
 const BACK_END_URL = 'http://localhost:3333';
 
@@ -90,11 +91,17 @@ const Chat = () => {
         conversaNaLista.mensagensNaoVistas++;
       }
 
+    // const horaAtual = moment().hours();
+    // const horarioComercial = (horaAtual >= 7 && horaAtual < 19) ? true : false;
       conversaNaLista.ultima_mensagem = novaMensagem;
       if (componenteEstaMontadoRef.current) {
+        // if (!horarioComercial)
         setConversas(moverArray(copiaConversas, index, 0));
+        // if (horarioComercial){
+        // setConversas(moverArray(copiaConversas, index, 0));
+        }
       }
-    }
+    
 
     atualizarBarraLateralNovaMensagem(mensagemRecebida);
     setMensagemRecebida({});

@@ -143,24 +143,27 @@ export default function ConversaAberta({ socket }) {
       receptorId,
     });
   };
+
   const enviarMensagem = async (e) => {
     e.preventDefault();
 
     if (!inputMensagemConteudo) return;
 
     const horaAtual = moment().hours();
-    const horarioComercial = (horaAtual >= 7 && horaAtual < 19) ? true : false;
+    const horarioComercial = (horaAtual >= 17 && horaAtual < 19) ? true : false;
 
     const remetente = conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)].conversaCom;
 
     let id_remetente = usuarioId;
     let texto = inputMensagemConteudo;
 
-    if (tipoUsuario === "MASTER"){
-      id_remetente = remetente.id;
-      texto = inputMensagemConteudo;
-    }else{
+    // if (tipoUsuario === "MASTER"){
+    //   texto = inputMensagemConteudo;
+    // }else{
     if (!horarioComercial) {
+      if (tipoUsuario === "MASTER"){
+        texto = inputMensagemConteudo;
+      }else{ 
       id_remetente = remetente.id;
       texto = "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
