@@ -223,28 +223,6 @@ export const TextAreaDescricao = styled(TextArea)`
   }
 `;
 
-export const DoisSelect = styled.h3`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  font-family: ${Fontes.barlow};
-  font-size: 1em;
-
-  @media (max-width: 560px) {
-    flex-direction: column;
-    height: 120px;
-  }
-
-  @media (max-width: 1260px) and (min-width: 800px) {
-    flex-direction: column;
-    height: 160px;
-  }
-  @media (max-width: 400px) {
-    height: 180px;
-  }
-`;
 
 export const Select = styled.select`
   border-color: ${Cores.preto};
@@ -363,27 +341,7 @@ export const InputDuracao = styled(Input)`
   }
 `;
 
-export const TextoSelecioneUmaData = styled.h3`
-  font-family: ${Fontes.barlow};
-  font-weight: 500;
-  font-size: 1.1em;
-  color: ${Cores.azulEscuro};
-  display: flex;
-  justify-content: end;
-  align-items: center;
-`;
 
-export const SelecioneUmaData = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: center;
-  width: 90%;
-
-  @media (max-width: 560px) {
-    width: 100%;
-  }
-`;
 
 export const Rotulo = styled.div`
   width: 100%;

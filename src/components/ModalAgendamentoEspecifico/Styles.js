@@ -55,7 +55,7 @@ export const InfoEsquerdaEDireita = styled.div`
 export const InfoEsquerda = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   width: 50%;
   height: 100%;
