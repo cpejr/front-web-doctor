@@ -61,7 +61,7 @@ function ModalAdicionarCodigo(props) {
         {codigo === null ? (
           <Input
             value=""
-            placeholder="Codigo"
+            placeholder="Código"
             backgroundColor="#E4E6F4"
             borderColor="#151B57"
             color="black"
@@ -76,7 +76,7 @@ function ModalAdicionarCodigo(props) {
         ) : (
           <Input
             value={codigo}
-            placeholder="Codigo"
+            placeholder="Código"
             backgroundColor="#E4E6F4"
             borderColor="#151B57"
             color="black"

@@ -230,6 +230,10 @@ function ListaUsuarios() {
     pegandoDadosUsuarios(consultas);
   }
 
+  async function fechandoModalCodigoSemRecarregar() {
+    setModalAdicionarCodigo(false);
+  }
+
   async function verificandoSecretariaOuPaciente(tipo, email) {
     if (tipo === "SECRETARIA") {
       history.push({
@@ -581,7 +585,7 @@ function ListaUsuarios() {
 
       <Modal
         visible={modalAdicionarCodigo}
-        onCancel={fechandoModalCodigo}
+        onCancel={fechandoModalCodigoSemRecarregar}
         footer={null}
         width={"70%"}
         centered={true}
