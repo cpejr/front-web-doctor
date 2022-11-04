@@ -50,6 +50,44 @@ export default function ConversaAberta({ socket }) {
   const scrollRef = useRef(null);
   const inputMensagemConteudoRef = useRef(null);
 
+  const menuBotoes = (
+    <Menu>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+        >
+          Enviar Formulário Actigrafia
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+        >
+          Confirmar Pagamento
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+        >
+          Finalizar Chat
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
+
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
 
@@ -275,6 +313,7 @@ export default function ConversaAberta({ socket }) {
           <MenuConversasTipoExame>
             <Dropdown
               onClick={(e) => e.preventDefault()}
+              overlay={menuBotoes}
               placement={"bottom"}
             >
               <PlusOutlined
