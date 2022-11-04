@@ -74,7 +74,7 @@ function ModalAgendamento(props) {
 
   async function fechandoModalAgendamentoEspecifico() {
     setModalAgendamentoEspecifico(false);
-    pegandoDados();
+    
   }
 
   async function editandoAgendamento(consulta) {
@@ -94,12 +94,12 @@ function ModalAgendamento(props) {
 
   async function fechandoModalEditarAgendamento() {
     setModalEditarAgendamento(false);
-    pegandoDados();
+   
   }
 
   async function fechandoModalConsultaMarcada() {
     setModalConsultaMarcada(false);
-    pegandoDados();
+    
   }
 
   async function fechandoModalExameMarcado() {
@@ -162,7 +162,7 @@ function ModalAgendamento(props) {
 
                       <BotoesEditarExcluir>
                         <Button
-                          width='45%'
+                          width='48%'
                           height='40px'
                           backgroundColor={Cores.cinza[6]}
                           borderColor={Cores.lilas[3]}
@@ -177,7 +177,7 @@ function ModalAgendamento(props) {
                           EDITAR
                         </Button>
                         <Button
-                          width='45%'
+                          width='48%'
                           height='40px'
                           backgroundColor={Cores.branco}
                           borderColor='rgba(255, 0, 0, 0.25)'
@@ -290,6 +290,7 @@ function ModalAgendamento(props) {
                 fontWeight='bold'
                 fontSizeMedia='0.9em'
                 fontSizeMedia950='1.1em'
+                heightMedia560="73px"
                 marginTop='18%'
                 marginTopMedia='4%'
                 onClick={() => marcandoAgendamento()}

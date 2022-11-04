@@ -22,7 +22,7 @@ export const Caixa = styled.div`
   border-style: solid;
   border-radius: 3px;
 
-  @media (max-width: 800px) {
+  @media (max-width: 910px) {
     flex-direction: column;
   }
 `;
@@ -33,24 +33,17 @@ export const InfoEsquerda = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 50%;
-  height: 100%;
-  height: 70vh;
+  height: 78vh;
   padding: 5%;
-  margin-top: 5%;
+  gap: 10px;
 
-  @media (max-width: 800px) {
+
+  @media (max-width: 910px) {
     width: 100%;
     height: 35vh;
   }
 
-  @media (max-width: 800px) {
-    width: 100%;
-    height: 27vh;
-  }
-
-  @media (max-height: 637px) {
-    height: 33vh;
-  }
+ 
 `;
 
 export const InfoDireita = styled.div`
@@ -62,14 +55,23 @@ export const InfoDireita = styled.div`
   height: 100%;
   min-height: 80vh;
   padding: 5%;
+  gap: 8px;
 
-  @media (max-width: 800px) {
+
+  @media (max-width: 910px) {
     width: 100%;
+    padding: 0%;
   }
+
+  @media (max-width: 560px) {
+    width: 100%;
+    padding: 5%;
+  }
+
 `;
 
 export const ContainerConsultorio = styled.div`
-    display: flex;
+  display: flex;
   flex-direction: column;
   align-items: start;
   justify-content: center;
@@ -152,58 +154,49 @@ export const TextoDoisSelects = styled.h3`
 export const Usuario = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 60px;
-  padding: 0% 1% 0% 1%;
-  border-color: ${Cores.preto};
+  height: auto;
+  padding: 2%;
+  border-color: ${Cores.azul};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
-  margin-bottom: 2%;
-  overflow: auto;
-
-  ::-webkit-scrollbar {
-    width: 0px;
-  }
+  
 
   @media (max-width: 500px) {
     flex-direction: column;
-    height: 70px;
-    padding-top: 20%;
+    height: auto;
   }
 `;
 
 export const Imagem = styled.img`
   justify-content: center;
   object-fit: fill;
-  width: 20%;
-  width: 40px;
+  width: 50px;
   display: flex;
+
+  @media (max-width: 500px) {
+    display: none;
+  }
 `;
 
 export const Nome = styled.div`
-  width: 50%;
+  width: calc(98% - 50px);
   display: flex;
-  justify-content: start;
+  justify-content: center;
   font-family: ${Fontes.barlow};
   font-weight: 400;
-  font-size: 1.3em;
+  font-size: 1.2em;
   color: ${Cores.azulEscuro};
+  text-align: center;
+  
 
-  @media (max-width: 800px) {
-    width: 50%;
-    font-size: 1.3em;
-    justify-content: center;
-    text-align: center;
-    align-items: center;
-    padding-right: 5%;
-  }
-  @media (max-width: 1319px) {
-    width: 55%;
-    height: 55px;
+  @media (max-width: 500px) {
+    width: 100%;
+    font-size: 1.1em;
     justify-content: center;
     text-align: center;
   }
@@ -223,34 +216,13 @@ export const TextoCheckbox = styled.h3`
 export const TextAreaDescricao = styled(TextArea)`
   border-color: ${Cores.preto};
   border-width: 1px;
+  position: relative;
   color: ${Cores.preto};
   ::placeholder {
     color: ${Cores.preto};
   }
 `;
 
-export const DoisSelect = styled.h3`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  font-family: ${Fontes.barlow};
-  font-size: 1em;
-
-  @media (max-width: 560px) {
-    flex-direction: column;
-    height: 120px;
-  }
-
-  @media (max-width: 1260px) and (min-width: 800px) {
-    flex-direction: column;
-    height: 160px;
-  }
-  @media (max-width: 400px) {
-    height: 180px;
-  }
-`;
 
 export const Select = styled.select`
   border-color: ${Cores.preto};
@@ -369,27 +341,7 @@ export const InputDuracao = styled(Input)`
   }
 `;
 
-export const TextoSelecioneUmaData = styled.h3`
-  font-family: ${Fontes.barlow};
-  font-weight: 500;
-  font-size: 1.1em;
-  color: ${Cores.azulEscuro};
-  display: flex;
-  justify-content: end;
-  align-items: center;
-`;
 
-export const SelecioneUmaData = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: center;
-  width: 90%;
-
-  @media (max-width: 560px) {
-    width: 100%;
-  }
-`;
 
 export const Rotulo = styled.div`
   width: 100%;
@@ -399,4 +351,27 @@ export const Rotulo = styled.div`
   font-weight: 400;
   font-size: 1em;
   color: ${Cores.vermelho};
+`;
+
+export const TextoCaixaSelect = styled.h3`
+  font-family: ${Fontes.barlow};
+  font-weight: 500;
+  font-size: 1.1em;
+  color: ${Cores.azulEscuro};
+  display: flex;
+  justify-content: end;
+  align-items: center;
+`;
+
+
+export const CaixaSelect = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 90%;
+
+  @media (max-width: 560px) {
+    width: 100%;
+  }
 `;
