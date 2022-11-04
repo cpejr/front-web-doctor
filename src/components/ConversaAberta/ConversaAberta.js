@@ -6,6 +6,7 @@ import {
   BotaoVoltar,
   CorpoConversaAberta,
   FooterConversaAberta,
+  MenuConversasTipoExame,
 } from './Styles';
 import Mensagem from '../Mensagem/Mensagem';
 import { Cores } from '../../variaveis';
@@ -15,12 +16,13 @@ import { ChatContext } from '../../contexts/ChatContext';
 import * as managerService from '../../services/ManagerService/managerService';
 import checarObjVazio from '../../utils/checarObjVazio';
 import moverArray from '../../utils/moverArray';
-import { Spin, Tooltip } from 'antd';
+import { Spin, Tooltip, Menu, Dropdown } from 'antd';
 import {
   ArrowLeftOutlined,
   PaperClipOutlined,
   SendOutlined,
   LoadingOutlined,
+  PlusOutlined
 } from '@ant-design/icons';
 import { recebeEmail } from '../../services/auth';
 import objCopiaProfunda from '../../utils/objCopiaProfunda';
@@ -66,6 +68,10 @@ export default function ConversaAberta({ socket }) {
 
     return () => (componenteEstaMontadoRef.current = false);
   }, []);
+
+  useEffect(() => {
+    console.log(conversaSelecionada);
+  }, [conversaSelecionada]);
 
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
@@ -265,20 +271,34 @@ export default function ConversaAberta({ socket }) {
         )}
       </CorpoConversaAberta>
       <FooterConversaAberta>
-        <Button
-          backgroundColor='transparent'
-          borderColor='transparent'
-          color={Cores.lilas[1]}
-          width='10%'
-          widthres='15%'
-          height='10%'
-          marginTop='0%'
-          onClick={() => { }}
-        >
-          <PaperClipOutlined
-            style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
-          />
-        </Button>
+        {conversaSelecionada.tipo === 'EXAME' ? (
+          <MenuConversasTipoExame>
+            <Dropdown
+              onClick={(e) => e.preventDefault()}
+              placement={"bottom"}
+            >
+              <PlusOutlined
+                style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
+              />
+            </Dropdown>
+          </MenuConversasTipoExame>
+        ) : (
+          <Button
+            backgroundColor='transparent'
+            borderColor='transparent'
+            color={Cores.lilas[1]}
+            width='10%'
+            widthres='15%'
+            height='10%'
+            marginTop='0%'
+            onClick={() => { }}
+          >
+            <PaperClipOutlined
+              style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
+            />
+          </Button>
+        )}
+
         <Input
           placeholder='Mensagem'
           backgroundColor='white'
