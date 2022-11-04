@@ -321,19 +321,6 @@ export const TextoCaixaSelect = styled.h3`
   align-items: center;
 `;
 
-export const TextoDoisSelects = styled.h3`
-  font-family: ${Fontes.barlow};
-  font-weight: 500;
-  font-size: 1.1em;
-  color: ${Cores.azulEscuro};
-  display: flex;
-  justify-content: start;
-  align-items: center;
-
-  @media (max-width: 560px){
-    margin-top: 15%;
-  }
-`;
 
 export const CaixaSelect = styled.div`
   display: flex;

@@ -6,7 +6,7 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import {
   Container,
- /*  Caixa,
+  Caixa,
   InfoEsquerda,
   InfoDireita,
   Usuario,
@@ -24,7 +24,9 @@ import {
   InputData,
   ContainerConsultorio,
   TextoDoisSelects,
-  ContainerNome, */
+  ContainerNome,
+  CaixaSelect,
+  TextoCaixaSelect,
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
@@ -33,10 +35,7 @@ import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import { apenasNumeros } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
-import {
-  ContainerDuracaoConsulta,
-  ContainerHorario,
-} from "../ModalAgendamentoEspecifico/Styles";
+
 import { TiposDeConsulta } from "../listaTiposDeConsultas";
 
 function ModalEditarAgendamentoEspecifico(props) {
@@ -222,7 +221,7 @@ function ModalEditarAgendamentoEspecifico(props) {
 
   return (
     <Container>
-     {/*  <Caixa>
+      <Caixa>
         <InfoEsquerda>
           <Usuario>
             <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
@@ -246,8 +245,8 @@ function ModalEditarAgendamentoEspecifico(props) {
           />
         </InfoEsquerda>
         <InfoDireita>
-          <SelecioneUmaData>
-            <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
+          <CaixaSelect>
+            <TextoCaixaSelect>Selecione uma data:</TextoCaixaSelect>
             <InputData
               placeholder="Selecione uma data"
               value={data}
@@ -262,10 +261,10 @@ function ModalEditarAgendamentoEspecifico(props) {
               }}
             ></InputData>
             {camposVazios.data ? <Rotulo>Escolha uma data</Rotulo> : <></>}
-          </SelecioneUmaData>
-          <DoisSelect>
-            <TamanhoInput>
-              <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
+          </CaixaSelect>
+          
+            <CaixaSelect>
+              <TextoCaixaSelect>Selecione um tipo:</TextoCaixaSelect>
               <Tooltip
                 placement="topLeft"
                 title={consulta.tipo}
@@ -277,9 +276,11 @@ function ModalEditarAgendamentoEspecifico(props) {
                     color: "black",
                     borderColor: "black",
                     borderWidth: "1px",
+                    marginTop:"0px",
+                    height:"36px",
                   }}
-                  paddingTop="8px"
-                  paddingBottom="8px"
+                  paddingTop="5px"
+                  paddingBottom="5px"
                   size="large"
                   value={consulta.tipo}
                   name="tipo"
@@ -301,9 +302,9 @@ function ModalEditarAgendamentoEspecifico(props) {
                   ))}
                 </Select>
               </Tooltip>
-            </TamanhoInput>
-            <ContainerConsultorio>
-              <TextoDoisSelects>Selecione um consultório:</TextoDoisSelects>
+            </CaixaSelect>
+            <CaixaSelect>
+              <TextoCaixaSelect>Selecione um consultório:</TextoCaixaSelect>
               <Tooltip
                 placement="topLeft"
                 title={consultorioPorId}
@@ -317,9 +318,11 @@ function ModalEditarAgendamentoEspecifico(props) {
                     borderColor: "black",
                     borderWidth: "1px",
                     color: "black",
+                    height:"36px",
+                    marginTop:"0px",
                   }}
-                  paddingTop="8px"
-                  paddingBottom="8px"
+                  paddingTop="5px"
+                  paddingBottom="5px"
                   value={consulta.id_consultorio}
                   size="large"
                   onChange={(e) => {
@@ -343,12 +346,12 @@ function ModalEditarAgendamentoEspecifico(props) {
                   ))}
                 </Select>
               </Tooltip>
-            </ContainerConsultorio>
-          </DoisSelect>
+            </CaixaSelect>
+         
 
-          <DoisSelect>
-            <ContainerHorario>
-              <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
+       
+          <CaixaSelect>
+              <TextoCaixaSelect>Selecione um horário:</TextoCaixaSelect>
               <InputHora
                 value={hora}
                 type="text"
@@ -362,10 +365,10 @@ function ModalEditarAgendamentoEspecifico(props) {
                 camposVazios={camposVazios.hora}
               />
               {camposVazios.hora ? <Rotulo>Digite um horário</Rotulo> : <></>}
-            </ContainerHorario>
+            </CaixaSelect>
 
-            <ContainerDuracaoConsulta>
-              <TextoDoisSelects>Selecione uma duração:</TextoDoisSelects>
+            <CaixaSelect>
+              <TextoCaixaSelect>Selecione uma duração:</TextoCaixaSelect>
               <InputDuracao
                 value={consulta.duracao_em_minutos}
                 placeholder="Duração"
@@ -379,8 +382,8 @@ function ModalEditarAgendamentoEspecifico(props) {
               ) : (
                 <></>
               )}
-            </ContainerDuracaoConsulta>
-          </DoisSelect>
+            </CaixaSelect> 
+      
           <Checkbox>
             <TextoCheckbox>Notificar paciente</TextoCheckbox>
           </Checkbox>
@@ -404,7 +407,7 @@ function ModalEditarAgendamentoEspecifico(props) {
             )}
           </Button>
         </InfoDireita>
-      </Caixa> */}
+      </Caixa> 
     </Container>
   );
 }
