@@ -27,6 +27,8 @@ import {
 import { recebeEmail } from '../../services/auth';
 import objCopiaProfunda from '../../utils/objCopiaProfunda';
 import moment from "moment";
+import AddToast from "../AddToast/AddToast";
+import { toast } from "react-toastify";
 
 moment.locale("pt-br");
 
@@ -122,7 +124,13 @@ export default function ConversaAberta({ socket }) {
   }
 
   function finalizarChat() {
-    setConversaFinalizada(true)
+    setConversaFinalizada(true);
+    toast.success("Chat finalizado com sucesso!", {
+      autoClose: 1500,
+      onClose: () => {
+        return false;
+      }
+    })
   }
 
 
@@ -213,18 +221,20 @@ export default function ConversaAberta({ socket }) {
     let id_remetente = usuarioId;
     let texto = inputMensagemConteudo;
 
-    if (!horarioComercial) {
+    if (!horarioComercial && conversaFinalizada === false) {
       id_remetente = remetente.id;
       texto = "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
         "Se tiver um assunto urgente favor responder ao formulário de Emergência."
     }
 
-    if(conversaFinalizada){
+    if (conversaFinalizada) {
       id_remetente = remetente.id;
-      texto = "CHAT FINALIZADO\n" +
-      "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n"
-      setInputMensagemConteudo('')
+      texto = "CHAT FINALIZADO.\n" +
+        "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n"
+      setInputMensagemConteudo('');
+
+
     }
 
     setCarregandoEnvioMensagem(true);
@@ -409,6 +419,7 @@ export default function ConversaAberta({ socket }) {
           </Tooltip>
         )}
       </FooterConversaAberta>
+      <AddToast />
     </Conversa>
   );
 }
