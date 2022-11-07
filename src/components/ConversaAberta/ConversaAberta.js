@@ -35,6 +35,7 @@ export default function ConversaAberta({ socket }) {
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState('');
   const [carregandoConversa, setCarregandoConversa] = useState(true);
   const [carregandoEnvioMensagem, setCarregandoEnvioMensagem] = useState(false);
+  const [conversaFinalizada, setConversaFinalizada] = useState(false);
 
   const {
     usuarioId,
@@ -84,6 +85,7 @@ export default function ConversaAberta({ socket }) {
           color={Cores.preto}
           fontSize="1rem"
           height="50px"
+          onClick={() => finalizarChat()}
         >
           Finalizar Chat
         </Button>
@@ -110,18 +112,19 @@ export default function ConversaAberta({ socket }) {
     return () => (componenteEstaMontadoRef.current = false);
   }, []);
 
-  async function enviarFormularioPaciente(){
-      await managerService.EnviandoFormularioPaciente(
-        false,
-        true,
-        "d98bf5e0-73e0-4d59-9c00-a7d79a1174b0",
-        conversaSelecionada.conversaCom.id
-      )
+  async function enviarFormularioPaciente() {
+    await managerService.EnviandoFormularioPaciente(
+      false,
+      true,
+      "d98bf5e0-73e0-4d59-9c00-a7d79a1174b0",
+      conversaSelecionada.conversaCom.id
+    )
   }
 
-  useEffect(() => {
-    console.log(conversaSelecionada);
-  }, [conversaSelecionada]);
+  function finalizarChat() {
+    setConversaFinalizada(true)
+  }
+
 
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
@@ -217,6 +220,13 @@ export default function ConversaAberta({ socket }) {
         "Se tiver um assunto urgente favor responder ao formulário de Emergência."
     }
 
+    if(conversaFinalizada){
+      id_remetente = remetente.id;
+      texto = "CHAT FINALIZADO\n" +
+      "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n"
+      setInputMensagemConteudo('')
+    }
+
     setCarregandoEnvioMensagem(true);
     const dadosParaCriarNovaMensagem = {
       id_conversa: conversaSelecionada.id,
@@ -226,7 +236,12 @@ export default function ConversaAberta({ socket }) {
       conteudo: texto,
     };
 
-    if (horarioComercial) { setInputMensagemConteudo('') };
+    if (horarioComercial) {
+      setInputMensagemConteudo('')
+
+    };
+
+
 
     const { data_cricao, data_atualizacao, media_url, ...dados } =
       await managerService.CriandoMensagem(dadosParaCriarNovaMensagem);
@@ -295,7 +310,11 @@ export default function ConversaAberta({ socket }) {
           height='70px'
           width='76px'
         ></img>
-        <NomePessoa>{conversaSelecionada?.conversaCom?.nome}</NomePessoa>
+        {conversaSelecionada.tipo === 'EXAME' ? (
+          <NomePessoa>{conversaSelecionada?.conversaCom?.nome} - EXAME</NomePessoa>
+        ) : (
+          <NomePessoa>{conversaSelecionada?.conversaCom?.nome}</NomePessoa>
+        )}
       </HeaderConversaAberta>
       <CorpoConversaAberta>
         {carregandoConversa ? (
