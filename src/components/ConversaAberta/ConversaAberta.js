@@ -65,7 +65,7 @@ export default function ConversaAberta({ socket }) {
           height="50px"
           onClick={() => enviarFormularioPaciente()}
         >
-          Enviar Formulário Actigrafia
+          <b>Enviar Formulário Actigrafia</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -77,7 +77,7 @@ export default function ConversaAberta({ socket }) {
           height="50px"
           onClick={() => confirmarPagamento()}
         >
-          Confirmar Pagamento
+          <b>Confirmar Pagamento</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -89,7 +89,7 @@ export default function ConversaAberta({ socket }) {
           height="50px"
           onClick={() => finalizarChat()}
         >
-          Finalizar Chat
+          <b>Finalizar Chat</b>
         </Button>
       </Menu.Item>
     </Menu>
@@ -123,8 +123,17 @@ export default function ConversaAberta({ socket }) {
     )
   }
 
-  async function confirmarPagamento(){
-    await managerService.MandandoMensagemConfirmarPagamento(usuarioId);
+  async function confirmarPagamento() {
+    const formularioPaciente = await managerService.GetRespostaFormularioIdUsuario(conversaSelecionada.conversaCom.id);
+    if (formularioPaciente.length === 0){
+      toast.error("O paciente não possui um formulário desse exame");
+    }
+    else if(formularioPaciente.length > 0 && formularioPaciente.repostas === undefined){
+      toast.error("O paciente não respondeu as perguntas do formulário");
+    }
+    else{
+      managerService.MandandoMensagemConfirmarPagamento(usuarioId);
+    }
   }
 
   async function finalizarChat() {
@@ -132,7 +141,7 @@ export default function ConversaAberta({ socket }) {
     atualizaConversaFinalizada();
   }
 
-  function atualizaConversaFinalizada(){
+  function atualizaConversaFinalizada() {
     const auxConversa = conversaSelecionada;
     auxConversa.finalizada = true;
     setConversaSelecionada(auxConversa);
@@ -422,6 +431,7 @@ export default function ConversaAberta({ socket }) {
           </Tooltip>
         )}
       </FooterConversaAberta>
+      <AddToast/>
     </Conversa>
   );
 }
