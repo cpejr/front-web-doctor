@@ -37,7 +37,6 @@ export default function ConversaAberta({ socket }) {
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState('');
   const [carregandoConversa, setCarregandoConversa] = useState(true);
   const [carregandoEnvioMensagem, setCarregandoEnvioMensagem] = useState(false);
-  const [conversaFinalizada, setConversaFinalizada] = useState(false);
 
   const {
     usuarioId,
@@ -128,14 +127,15 @@ export default function ConversaAberta({ socket }) {
     await managerService.MandandoMensagemConfirmarPagamento(usuarioId);
   }
 
-  function finalizarChat() {
-    setConversaFinalizada(true);
-    toast.success("Chat finalizado com sucesso!", {
-      autoClose: 1500,
-      onClose: () => {
-        return false;
-      }
-    })
+  async function finalizarChat() {
+    await managerService.UpdateConversaFinalizada(conversaSelecionada.id)
+    atualizaConversaFinalizada();
+  }
+
+  function atualizaConversaFinalizada(){
+    const auxConversa = conversaSelecionada;
+    auxConversa.finalizada = true;
+    setConversaSelecionada(auxConversa);
   }
 
 
@@ -226,20 +226,20 @@ export default function ConversaAberta({ socket }) {
     let id_remetente = usuarioId;
     let texto = inputMensagemConteudo;
 
-    if (!horarioComercial && conversaFinalizada === false) {
+    if (!horarioComercial && conversaSelecionada.finalizada === false) {
       id_remetente = remetente.id;
       texto = "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
         "Se tiver um assunto urgente favor responder ao formulário de Emergência."
     }
 
-    if (conversaFinalizada) {
+    console.log(conversaSelecionada);
+
+    if (conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
       texto = "CHAT FINALIZADO.\n" +
         "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n"
       setInputMensagemConteudo('');
-
-
     }
 
     setCarregandoEnvioMensagem(true);

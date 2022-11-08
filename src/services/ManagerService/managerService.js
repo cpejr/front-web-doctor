@@ -745,6 +745,21 @@ export const UpdateConversaAtiva = async (id) => {
   return dadosConversa;
 };
 
+export const UpdateConversaFinalizada = async (id) => {
+  console.log(id);
+  let dadosConversa = {};
+  await requesterService
+    .updateConversaFinalizada(id)
+    .then((res) => {
+      toast.success("Conversa finalizada com sucesso!")
+      dadosConversa = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConversa;
+};
+
 export const deletarConversasInativas = async (id_usaurio) => {
   let conversasApagadas = {};
   await requesterService
