@@ -24,9 +24,7 @@ import {
 } from '@ant-design/icons';
 import { recebeEmail } from '../../services/auth';
 import objCopiaProfunda from '../../utils/objCopiaProfunda';
-import moment from "moment";
-
-moment.locale("pt-br");
+import formatarData from '../../utils/formatarData';
 
 export default function ConversaAberta({ socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
@@ -146,7 +144,7 @@ export default function ConversaAberta({ socket }) {
 
     if (!inputMensagemConteudo) return;
 
-    const horaAtual = moment().hours();
+    const horaAtual = formatarData({ data: new Date(), formatacao: "HH" });
     const horarioComercial = (horaAtual >= 7 && horaAtual < 19) ? true : false;
 
     const remetente = conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)].conversaCom;
