@@ -233,8 +233,6 @@ export default function ConversaAberta({ socket }) {
         "Se tiver um assunto urgente favor responder ao formulário de Emergência."
     }
 
-    console.log(conversaSelecionada);
-
     if (conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
       texto = "CHAT FINALIZADO.\n" +
@@ -424,7 +422,6 @@ export default function ConversaAberta({ socket }) {
           </Tooltip>
         )}
       </FooterConversaAberta>
-      <AddToast />
     </Conversa>
   );
 }
