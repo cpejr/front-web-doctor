@@ -707,6 +707,18 @@ export const CriandoConversa = async (
   return dadosConversaCriada;
 };
 
+export const MandandoMensagemConfirmarPagamento = async (id_usuario) => {
+  await requesterService
+    .enviarMensagemDeConfirmarPagamento(id_usuario)
+    .then(() => {
+      toast.success("Pagamento solicitado com sucesso!")
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    })
+}
+
+
 export const GetConversasUsuario = async (id_usuario) => {
   let dadosConversas = {};
   await requesterService

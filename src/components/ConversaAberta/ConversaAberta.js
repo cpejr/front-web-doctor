@@ -76,6 +76,7 @@ export default function ConversaAberta({ socket }) {
           color={Cores.preto}
           fontSize="1rem"
           height="50px"
+          onClick={() => confirmarPagamento()}
         >
           Confirmar Pagamento
         </Button>
@@ -121,6 +122,10 @@ export default function ConversaAberta({ socket }) {
       "d98bf5e0-73e0-4d59-9c00-a7d79a1174b0",
       conversaSelecionada.conversaCom.id
     )
+  }
+
+  async function confirmarPagamento(){
+    await managerService.MandandoMensagemConfirmarPagamento(usuarioId);
   }
 
   function finalizarChat() {
