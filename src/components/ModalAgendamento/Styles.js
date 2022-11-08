@@ -11,6 +11,7 @@ export const Container = styled.div`
   padding: 3% 2% 2% 2%;
   background-color: ${Cores.cinza[7]};
 
+
   @media (max-width: 560px) {
     padding: 0% 0% 0% 0%;
     width: 100%;
@@ -119,7 +120,11 @@ export const InfoDireita = styled.div`
 
   @media (max-width: 800px) {
     width: 80%;
-    min-height: 40vh;
+    height: auto;
+    min-height: auto;
+    gap: 10px;
+    margin-top:15px;
+    margin-bottom: 15px; 
   }
 `;
 
@@ -193,7 +198,7 @@ export const CaixaAgendamento = styled.div`
   }
   @media (max-width: 480px) {
     flex-direction: column;
-    height: 65px;
+    height: 73px;
   }
 `;
 
