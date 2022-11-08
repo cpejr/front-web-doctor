@@ -124,16 +124,7 @@ export default function ConversaAberta({ socket }) {
   }
 
   async function confirmarPagamento() {
-    const formularioPaciente = await managerService.GetRespostaFormularioIdUsuario(conversaSelecionada.conversaCom.id);
-    if (formularioPaciente.length === 0){
-      toast.error("O paciente não possui um formulário desse exame");
-    }
-    else if(formularioPaciente.length > 0 && formularioPaciente.repostas === undefined){
-      toast.error("O paciente não respondeu as perguntas do formulário");
-    }
-    else{
-      managerService.MandandoMensagemConfirmarPagamento(usuarioId);
-    }
+    managerService.confirmarPagamentoExame(conversaSelecionada.conversaCom.id, usuarioId);
   }
 
   async function finalizarChat() {
@@ -431,7 +422,6 @@ export default function ConversaAberta({ socket }) {
           </Tooltip>
         )}
       </FooterConversaAberta>
-      <AddToast/>
     </Conversa>
   );
 }

@@ -515,6 +515,19 @@ export const GetRespostaFormularioIdUsuario = async (id_usuario) => {
   return dadosResposta;
 };
 
+export const confirmarPagamentoExame = async(id_paciente, id_usuario) => {
+  const formularioPaciente = await GetRespostaFormularioIdUsuario(id_paciente);
+  if (formularioPaciente.length === 0){
+    toast.error("O paciente não possui um formulário desse exame");
+  }
+  else if(formularioPaciente.length > 0 && formularioPaciente.repostas === undefined){
+    toast.error("O paciente não respondeu as perguntas do formulário");
+  }
+  else{
+    await MandandoMensagemConfirmarPagamento(id_usuario);
+  }
+}
+
 export const GetResposta = async (id) => {
   let dadosResposta = {};
 
