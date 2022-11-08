@@ -746,7 +746,6 @@ export const UpdateConversaAtiva = async (id) => {
 };
 
 export const UpdateConversaFinalizada = async (id) => {
-  console.log(id);
   let dadosConversa = {};
   await requesterService
     .updateConversaFinalizada(id)
