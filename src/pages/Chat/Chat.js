@@ -91,14 +91,9 @@ const Chat = () => {
         conversaNaLista.mensagensNaoVistas++;
       }
 
-    // const horaAtual = moment().hours();
-    // const horarioComercial = (horaAtual >= 7 && horaAtual < 19) ? true : false;
       conversaNaLista.ultima_mensagem = novaMensagem;
       if (componenteEstaMontadoRef.current) {
-        // if (!horarioComercial)
         setConversas(moverArray(copiaConversas, index, 0));
-        // if (horarioComercial){
-        // setConversas(moverArray(copiaConversas, index, 0));
         }
       }
     

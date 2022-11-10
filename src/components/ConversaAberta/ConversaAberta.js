@@ -150,25 +150,19 @@ export default function ConversaAberta({ socket }) {
     if (!inputMensagemConteudo) return;
 
     const horaAtual = moment().hours();
-    const horarioComercial = (horaAtual >= 17 && horaAtual < 19) ? true : false;
-
+    const horarioComercial = (horaAtual >= 7 && horaAtual < 19) ? true : false;
+    const verificaHorarioUsuario = !horarioComercial && (tipoUsuario !== "MASTER");
     const remetente = conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)].conversaCom;
 
     let id_remetente = usuarioId;
     let texto = inputMensagemConteudo;
 
-    // if (tipoUsuario === "MASTER"){
-    //   texto = inputMensagemConteudo;
-    // }else{
-    if (!horarioComercial) {
-      if (tipoUsuario === "MASTER"){
-        texto = inputMensagemConteudo;
-      }else{ 
+    if (verificaHorarioUsuario) {   
       id_remetente = remetente.id;
       texto = "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
         "Se tiver um assunto urgente favor responder ao formulário de Emergência."
-    }}
+    }
 
     setCarregandoEnvioMensagem(true);
     const dadosParaCriarNovaMensagem = {
@@ -179,14 +173,14 @@ export default function ConversaAberta({ socket }) {
       conteudo: texto,
     };
 
-    if (horarioComercial) { setInputMensagemConteudo('') };
+    if (!verificaHorarioUsuario) { setInputMensagemConteudo('') };
 
     const { data_cricao, data_atualizacao, media_url, ...dados } =
       await managerService.CriandoMensagem(dadosParaCriarNovaMensagem);
 
     const novaMensagem = {
       ...dados,
-      pertenceAoUsuarioAtual: horarioComercial,
+      pertenceAoUsuarioAtual: !verificaHorarioUsuario,
     };
 
     if (conversaSelecionada.ativada) {
