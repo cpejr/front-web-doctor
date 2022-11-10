@@ -312,11 +312,13 @@ function Cadastro(props) {
           enderecoBack,
           callBackError
         );
+        
         await sleep(1500);
         
         setCarregando(false);
 
         if (cadastradoComSucesso) {
+          await enviandoFormularioPaciente(cadastradoComSucesso)
           if(tipoUsuarioLogado === "MASTER" || tipoUsuarioLogado === "SECRETARIA(O)")
           history.push("/web/listadeusuario");
           else

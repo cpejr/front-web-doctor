@@ -79,6 +79,8 @@ function PerfilPaciente(props) {
   const [fotoDePerfil, setFotoDePerfil] = useState("");
   const idFormularioUrgencia = "046975f7-d7d0-4635-a9d9-25efbe65d7b7";
   const [tipoAgendamento, setTipoAgendamento] = useState("");
+  const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState("");
+  const emailUsuarioLogado = sessionStorage.getItem("@doctorapp-Email");
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
@@ -97,6 +99,11 @@ function PerfilPaciente(props) {
       .replace(/(\d{3})(\d)/, "$1.$2")
       .replace(/(\d{3})(\d)/, "$1-$2")
       .replace(/(-\d{2})\d+?$/, "$1");
+  }
+
+  async function pegandoTipoUsuarioLogado() {
+    const resposta = await managerService.GetDadosUsuario(emailUsuarioLogado);
+    setTipoUsuarioLogado(resposta.dadosUsuario.tipo);
   }
 
   async function pegandoDados() {
@@ -124,6 +131,7 @@ function PerfilPaciente(props) {
 
   useEffect(() => {
     pegandoDados();
+    pegandoTipoUsuarioLogado();
   }, []);
 
   async function setandoFotoDePerfil() {
@@ -415,17 +423,31 @@ function PerfilPaciente(props) {
                       { deveMostrarFormularios(value.id_formulario, value.status) && (
                         <Formulario>
                           <DadosFormulario>
-                            <TituloFormulario
-                              onClick={() =>
-                                abrindoModalFormulario(
-                                  value.id,
-                                  value.perguntas,
-                                  value.titulo
-                                )
-                              }
+                            {tipoUsuarioLogado === "MASTER"? (
+                               <TituloFormulario
+                               cursor="pointer"
+                               textDecoration="underline"
+                               onClick={() =>
+                                 abrindoModalFormulario(
+                                   value.id,
+                                   value.perguntas,
+                                   value.titulo
+                                 )
+                               }
+                             >
+                               {value.titulo}
+                             </TituloFormulario>
+
+                            ) : (
+                              <TituloFormulario
+                              cursor="null"
+                              textDecoration="none"
+                              
                             >
                               {value.titulo}
                             </TituloFormulario>
+                            )} 
+                           
                             <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
                             <UrgenciaFormulario>
                               <>Urgência: </>
@@ -502,7 +524,7 @@ function PerfilPaciente(props) {
         visible={modalAgendamento}
         onCancel={fechandoModalAgendamento}
         footer={null}
-        width={"70%"}
+        width={"80%"}
         centered={true}
         destroyOnClose
       >

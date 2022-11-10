@@ -3,7 +3,7 @@ import requisicaoErro from '../../utils/HttpErros';
 import * as requesterService from '../RequesterService/requesterService';
 import { toast } from 'react-toastify';
 
-const tipoUsuarioLogado = sessionStorage.getItem("@doctorapp-Tipo");
+const tipoUsuarioLogado = sessionStorage.getItem('@doctorapp-Tipo');
 
 const sleep = (milliseconds) => {
   return new Promise((resolve) => setTimeout(resolve, milliseconds));
@@ -46,31 +46,33 @@ export const requisicaoLogin = async (email, senha) => {
   return;
 };
 
-export const Cadastrando = async (usuario, endereco, callbackError = () => {}) => {
-
+export const Cadastrando = async (
+  usuario,
+  endereco,
+  callbackError = () => {}
+) => {
   const resposta = await requesterService.requisicaoDadosUsuario(usuario.email);
 
   if (resposta.status !== 204) {
     sleep(1500);
-    toast.error("E-mail já cadastrado");
+    toast.error('E-mail já cadastrado');
 
-    callbackError(tipoUsuarioLogado)
+    callbackError(tipoUsuarioLogado);
 
-   
-    
     return false;
   }
 
-  await requesterService
+  const dados = await requesterService
     .criarUsuario(endereco, usuario)
-    .then(() => {
-      toast.success("Usuário cadastrado com sucesso.");
+    .then((res) => {
+      toast.success('Usuário cadastrado com sucesso.');
+      return res;
     })
     .catch((error) => {
-      requisicaoErro(error, () => (window.location.href = "/cadastro"));
+      requisicaoErro(error, () => (window.location.href = '/cadastro'));
       return false;
     });
-  return true;
+  return dados;
 };
 
 export const EnviandoEmail = async (email) => {
@@ -446,7 +448,7 @@ export const EnviandoFormularioPaciente = async (
     )
     .then(() => {
       if (mostrarToast) {
-        toast.success("Formulario enviado com sucesso!");
+        toast.success('Formulario enviado com sucesso!');
       }
     })
     .catch((error) => {
@@ -585,18 +587,26 @@ export const GetReceitas = async () => {
 };
 
 export const CriandoReceita = async (
-  id_usuario, nomePaciente, dataNascimento, tituloReceita, descricao,
+  id_usuario,
+  nomePaciente,
+  dataNascimento,
+  tituloReceita,
+  descricao,
   usarToast = {
     mensagemSucesso: 'Operação bem sucedida',
     tempo: 1500,
     onClose: () => {},
   }
 ) => {
-
-
   return requesterService
-  
-    .criarReceita(id_usuario, nomePaciente, dataNascimento, tituloReceita, descricao)
+
+    .criarReceita(
+      id_usuario,
+      nomePaciente,
+      dataNascimento,
+      tituloReceita,
+      descricao
+    )
     .then(() => {
       if (usarToast) {
         toast.success(usarToast.mensagemSucesso, {
@@ -640,7 +650,6 @@ export const EditarFormularios = async (id, campos) => {
   return false;
 };
 
-
 export const DeletarReceita = async (id) => {
   await requesterService
     .deletarReceita(id)
@@ -658,7 +667,7 @@ export const DeletarReceita = async (id) => {
 };
 
 export const GetArquivoPorChave = async (chave) => {
-  let arquivo = "";
+  let arquivo = '';
 
   await requesterService
     .requisicaoArquivo(chave)
@@ -675,22 +684,22 @@ export const GetArquivoPorChave = async (chave) => {
 export const CriandoConversa = async (
   conversa,
   usarToast = {
-		mensagemSucesso: "Operação bem sucedida",
-		tempo: 1500,
-		onClose: () => {},
-	}
+    mensagemSucesso: 'Operação bem sucedida',
+    tempo: 1500,
+    onClose: () => {},
+  }
 ) => {
   let dadosConversaCriada = {};
   await requesterService
     .criarConversa(conversa)
     .then((res) => {
       if (usarToast) {
-				toast.success(usarToast.mensagemSucesso, {
-					autoClose: usarToast.tempo,
-					onClose: usarToast.onClose,
-				});
-			}
-			return dadosConversaCriada = res.data;
+        toast.success(usarToast.mensagemSucesso, {
+          autoClose: usarToast.tempo,
+          onClose: usarToast.onClose,
+        });
+      }
+      return (dadosConversaCriada = res.data);
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -794,7 +803,6 @@ export const UpdateMensagensVisualizadas = async (id_usuario, id_conversa) => {
   return mensagensAtualizadas;
 };
 
-
 export const UpdateFotoDePerfil = async (id, file) => {
   await requesterService
     .updateFotoDePerfil(id, file)
@@ -807,7 +815,6 @@ export const UpdateFotoDePerfil = async (id, file) => {
     });
   return;
 };
-
 
 export const deletarFotoDePerfil = async (id, file) => {
   await requesterService
@@ -822,13 +829,9 @@ export const deletarFotoDePerfil = async (id, file) => {
   return;
 };
 
-
-
 export const GetUsuarioPorId = async (id_usuario) => {
   try {
-    const res = await requesterService.requisicaoUsuarioPorId(
-      id_usuario
-    );
+    const res = await requesterService.requisicaoUsuarioPorId(id_usuario);
     return res.data;
   } catch (err) {
     requisicaoErro(err);
