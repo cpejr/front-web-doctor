@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { Cores, Fontes } from "../../variaveis";
-import { Select } from "antd";
+import styled from 'styled-components';
+import { Cores, Fontes } from '../../variaveis';
+import { Select } from 'antd';
 
 export const ContainerListadeUsuarios = styled.div`
   display: flex;
@@ -49,7 +49,7 @@ export const BarraPesquisaComUmSelect = styled.div`
   flex-direction: row;
   justify-content: space-around;
   @media (max-width: 940px) {
-    width: 100%;
+    width: 80%;
   }
 
   .ant-input {
@@ -66,7 +66,7 @@ export const BarraPesquisaComDoisSelects = styled.div`
   flex-direction: row;
   justify-content: space-around;
   @media (max-width: 940px) {
-    width: 100%;
+    width: 80%;
   }
 
   .ant-input {
@@ -85,7 +85,7 @@ export const Filtros = styled.div`
   align-items: center;
   gap: 10px;
   @media (max-width: 940px) {
-    width: 100%;
+    width: 80%;
     gap: 10px;
 
   }
@@ -108,7 +108,7 @@ export const SelectConsultorio = styled(Select)`
   border-color: ${Cores.cinza[8]};
 
   @media (max-width: 940px) {
-    width: 100%;
+    width: 80%;
   }
 `;
 
@@ -165,10 +165,14 @@ export const Titulo = styled.div`
 `;
 export const Imagem = styled.div`
   justify-content: center;
+  align-items: center;
   object-fit: fill;
-  width: 10%;
-  width: 40px;
+  width: 60px;
+  height: 60px;
   display: flex;
+  margin-right: 1%;
+  border-radius: 3px;
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   @media (max-width: 880px) {
     display: none;
   }
@@ -176,6 +180,7 @@ export const Imagem = styled.div`
 export const Nome = styled.div`
   width: 18%;
   white-space: normal;
+  margin-left: 2%;
   // text-align: center;
 
   @media (max-width: 880px) {
@@ -285,7 +290,7 @@ export const InputData = styled.input`
   }
 
   @media (max-width: 448px) {
-    width: 100%;
+    width: 80%;
   }
 `;
 export const SelectData = styled(Select)`
@@ -302,10 +307,10 @@ export const SelectData = styled(Select)`
   @media (max-width: 940px) {
     width: ${(props) => {
       let tamanho;
-      if (props.FiltrarData === "") {
-        tamanho = "100%";
+      if (props.FiltrarData === '') {
+        tamanho = '100%';
       } else {
-        tamanho = "50%";
+        tamanho = '50%';
       }
 
       return tamanho;
@@ -313,7 +318,27 @@ export const SelectData = styled(Select)`
   }
 
   @media (max-width: 448px) {
-    width: 100%;
+    width: 80%;
+  }
+`;
+
+export const SelectTipoAgendamento = styled(Select)`
+  width: 160px;
+  color: ${Cores.preto};
+  padding-right: 2%;
+  height: 32px;
+
+  border-radius: 3px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${Cores.cinza[8]};
+
+  @media (max-width: 940px) {
+    width: 80%;
+  }
+
+  @media (max-width: 448px) {
+    width: 80%;
   }
 `;
 
