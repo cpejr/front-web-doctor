@@ -17,12 +17,14 @@
     "axios": "^0.26.1",
     "bootstrap": "5.0.2",
     "date-fns": "^2.28.0",
+    "docx": "^7.6.0",
+    "file-saver": "^2.0.5",
     "lodash": "^4.17.21",
     "moment": "^2.29.3",
     "react": "^18.2.0",
     "react-device-detect": "^2.1.2",
-    "react-dropzone": "^14.2.2",
     "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.2",
     "react-icons": "^4.3.1",
     "react-router-dom": "^5.3.0",
     "react-scripts": "5.0.0",
@@ -30,8 +32,7 @@
     "socket.io-client": "^4.5.2",
     "styled-components": "^5.3.3",
     "timeago.js": "^4.0.2",
-    "web-vitals": "^2.1.0",
-    "bootstrap": "5.0.2"
+    "web-vitals": "^2.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -57,6 +58,4 @@
       "last 1 safari version"
     ]
   }
-		
-		
 }
