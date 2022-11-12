@@ -25,6 +25,7 @@ function Header(props) {
   const [usuario, setUsuario] = useState({});
   const [fotoDePerfil, setFotoDePerfil] = useState('');
   const [carregandoFoto, setCarregandoFoto] = useState(true);
+  const ehMedico = tipo === 'MASTER';
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 20, color: Cores.azulClaro }} spin />
@@ -71,7 +72,7 @@ function Header(props) {
 
   const menu = (
     <Menu>
-      {tipo === 'MASTER' ? (
+      {ehMedico ? (
         <Menu.Item>
           <Button
             backgroundColor='transparent'
@@ -102,20 +103,22 @@ function Header(props) {
           </Button>
         </Menu.Item>
       )}
-      <Menu.Item>
-        <Button
-          backgroundColor='transparent'
-          borderColor='transparent'
-          color={Cores.preto}
-          fontSize='1rem'
-          height='50px'
-          onClick={() => {
-            history.push('/web/home');
-          }}
-        >
-          Home
-        </Button>
-      </Menu.Item>
+      {ehMedico && (
+        <Menu.Item>
+          <Button
+            backgroundColor='transparent'
+            borderColor='transparent'
+            color={Cores.preto}
+            fontSize='1rem'
+            height='50px'
+            onClick={() => {
+              history.push('/web/home');
+            }}
+          >
+            Home
+          </Button>
+        </Menu.Item>
+      )}
       <Menu.Item>
         <Button
           backgroundColor='transparent'
@@ -239,7 +242,7 @@ function Header(props) {
           <img src={logoEscrita} className='logo2' alt='logoEscrita'></img>
         </Logo>
         <BotoesHeader>
-          {tipo === 'MASTER' ? (
+          {ehMedico ? (
             <Button
               fontSizeMedia1080='1rem'
               backgroundColor='transparent'
@@ -268,19 +271,21 @@ function Header(props) {
               Agendamentos
             </Button>
           )}
-          <Button
-            fontSizeMedia1080='1rem'
-            backgroundColor='transparent'
-            borderColor='transparent'
-            color={Cores.branco}
-            fontSize='1.1rem'
-            height='50px'
-            onClick={() => {
-              history.push('/web/home');
-            }}
-          >
-            Home
-          </Button>
+          {ehMedico && (
+            <Button
+              fontSizeMedia1080='1rem'
+              backgroundColor='transparent'
+              borderColor='transparent'
+              color={Cores.branco}
+              fontSize='1.1rem'
+              height='50px'
+              onClick={() => {
+                history.push('/web/home');
+              }}
+            >
+              Home
+            </Button>
+          )}
           <Button
             fontSizeMedia1080='1rem'
             backgroundColor='transparent'
