@@ -44,6 +44,7 @@ function HomeMedico() {
     const verificaNotificacaoAtiva = notificacao.filter(
       (item) => item.notificacao_ativa
     );
+
     setNotificacaoFormularioAtivo(verificaNotificacaoAtiva);
   }
 

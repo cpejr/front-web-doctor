@@ -32,14 +32,9 @@ export const requisicaoLogin = async (email, senha) => {
       login(resposta.data.token, resposta.data.email, resposta.data.tipo);
 
       const ehMedico = resposta.data.tipo === 'MASTER';
-      toast.success('Login realizado com sucesso!', {
-        onClose: () => {
-          window.location.href = ehMedico 
-            ? '/web/home' 
-            : '/web/listadeusuarios'
-        },
-        autoClose: 1500,
-      });
+      toast.success('Login realizado com sucesso!');
+      await sleep(1500);
+      window.location.href = ehMedico ? '/web/home' : '/web/listadeusuarios';
     }
   } catch (error) {}
 
