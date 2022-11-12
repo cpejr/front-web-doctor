@@ -261,6 +261,10 @@ function FormularioEspecifico(props) {
       arrayParagrafos.push(
         new Paragraph(`Resposta: ${conteudoResposta}`)
       )
+      arrayParagrafos.push(
+        new Paragraph(``)
+      )
+
     });
 
     const doc = new Document({
