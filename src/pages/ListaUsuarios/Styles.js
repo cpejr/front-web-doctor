@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import { Cores } from "../../variaveis";
-import { Select , Input} from "antd";
+import styled from 'styled-components';
+import { Cores } from '../../variaveis';
+import { Select, Input } from 'antd';
 const { Search } = Input;
 
 export const ContainerListadeUsuarios = styled.div`
@@ -21,7 +21,6 @@ export const TopoPagina = styled.div`
     justify-content: center;
     gap: 10px;
     margin-bottom: 25px;
-
   }
 
   @media (max-width: 450px) {
@@ -52,15 +51,14 @@ export const FiltrosEsquerda = styled.div`
     align-items: center;
     gap: 10px;
   }
-
 `;
 
 export const SelectTipoBusca = styled(Select)`
-    width: 180px;
-    border-color: ${(props) => {
+  width: 180px;
+  border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
-      if(props.tipoBusca === "codigo"){
+      if (props.tipoBusca === 'codigo') {
         cor = Cores.azul;
       } else {
         cor = Cores.cinza[8];
@@ -74,20 +72,20 @@ export const SelectTipoBusca = styled(Select)`
   border-width: 1px;
   border-style: solid;
 
-  .ant-select-arrow{
+  .ant-select-arrow {
     color: ${(props) => {
-    let cor;
-    if (!props.borderColor) {
-      if(props.tipoBusca === "codigo"){
-        cor = Cores.azul;
+      let cor;
+      if (!props.borderColor) {
+        if (props.tipoBusca === 'codigo') {
+          cor = Cores.azul;
+        } else {
+          cor = Cores.cinza[8];
+        }
       } else {
-        cor = Cores.cinza[8];
+        cor = props.borderColor;
       }
-    } else {
-      cor = props.borderColor;
-    }
-    return cor;
-  }};
+      return cor;
+    }};
   }
 
   @media (max-width: 560px) {
@@ -95,12 +93,12 @@ export const SelectTipoBusca = styled(Select)`
   }
 `;
 
-export const SearchStyle= styled(Search)`
-   width: 100%;
-    border-color: ${(props) => {
+export const SearchStyle = styled(Search)`
+  width: 100%;
+  border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
-      if(props.tipoBusca === "codigo"){
+      if (props.tipoBusca === 'codigo') {
         cor = Cores.azul;
       } else {
         cor = Cores.cinza[8];
@@ -114,11 +112,10 @@ export const SearchStyle= styled(Search)`
   border-width: 1px;
   border-style: solid;
 
-  .ant-input-search-button{
+  .ant-input-search-button {
     border: none;
   }
-
-;`
+`;
 export const BarraPesquisa = styled.div`
   width: 56%;
   display: flex;
@@ -141,7 +138,7 @@ export const Filtros = styled.div`
     justify-content: center;
     gap: 10px;
   }
- 
+
   @media (max-width: 450px) {
     flex-direction: column-reverse;
     width: 100%;
@@ -154,13 +151,11 @@ export const FiltroUsuario = styled(Select)`
   flex-direction: row;
   justify-content: flex-end;
   justify-content: flex-end;
-  
-  @media(max-width: 920px)
-  {
+
+  @media (max-width: 920px) {
     justify-content: center;
     width: 100%;
   }
- 
 `;
 
 export const FiltroDatas = styled(Select)`
@@ -168,12 +163,10 @@ export const FiltroDatas = styled(Select)`
   flex-direction: row;
   width: 180px;
   justify-content: flex-end;
-  @media(max-width: 920px)
-  {
+  @media (max-width: 920px) {
     justify-content: center;
     width: 100%;
   }
- 
 `;
 
 export const BarraEstetica = styled.div`
@@ -182,8 +175,6 @@ export const BarraEstetica = styled.div`
   height: 2px;
   width: 100%;
   background-color: ${Cores.azul};
-
- 
 `;
 export const DadosUsuario = styled.div`
   color: ${Cores.azul};
@@ -202,7 +193,7 @@ export const ContainerUsuarios = styled.div`
 export const Usuario = styled.div`
   display: flex;
   flex-direction: row;
-  column-gap:10px;
+  column-gap: 10px;
   justify-content: space-around;
   align-items: center;
   width: 100%;
@@ -230,10 +221,10 @@ export const Imagem = styled.div`
   width: 60px;
   height: 60px;
   display: flex;
-  margin-right:1%;
+  margin-right: 1%;
   border-radius: 3px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
-  
+
   @media (max-width: 880px) {
     display: none;
   }
@@ -371,41 +362,14 @@ export const CaixaVazia = styled.div`
   }
 `;
 
-export const BotoesMedico = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-  gap: 10px;
-
-  @media (max-width: 560px) {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    
-  }
-`;
-
-export const CaixaBotaoMedico = styled.div`
-   width: 50%;
-
-   @media(max-width: 560px){
-   width: 100%;
-   margin-top: 0px;
-   }
-
-`;
-
 export const BotaoSecretario = styled.div`
-  
   position: relative;
   left: 25%;
   width: 50%;
 
   @media (max-width: 920px) {
     left: 0%;
-    width: 100%
+    width: 100%;
   }
 `;
 
@@ -420,5 +384,4 @@ export const CaixaSpin = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-
 `;

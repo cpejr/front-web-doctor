@@ -31,15 +31,10 @@ export const requisicaoLogin = async (email, senha) => {
     } else {
       login(resposta.data.token, resposta.data.email, resposta.data.tipo);
 
-      if (resposta.data.tipo === 'MASTER') {
-        toast.success('Login realizado com sucesso!');
-        await sleep(1500);
-        window.location.href = '/web/listadeusuarios';
-      } else {
-        toast.success('Login realizado com sucesso!');
-        await sleep(1500);
-        window.location.href = '/web/listadeusuarios';
-      }
+      const ehMedico = resposta.data.tipo === 'MASTER';
+      toast.success('Login realizado com sucesso!');
+      await sleep(1500);
+      window.location.href = ehMedico ? '/web/home' : '/web/listadeusuarios';
     }
   } catch (error) {}
 
