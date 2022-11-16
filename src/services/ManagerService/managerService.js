@@ -527,7 +527,6 @@ export const confirmarPagamentoExame = async(id_paciente, id_usuario) => {
     }
   }
 
-  console.log(formulariosPaciente);
   if(!possuiFormulario)
     toast.error("O paciente não possui um formulário desse exame");
   else if(possuiFormulario && formulariosPaciente[posicao].respostas === null){
