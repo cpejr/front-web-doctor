@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { Cores, Fontes } from "../../variaveis";
+import styled from 'styled-components';
+import { Cores, Fontes } from '../../variaveis';
 
 export const Body = styled.div`
   display: flex;
@@ -22,7 +22,7 @@ export const Board = styled.div`
   overflow: auto;
   padding: 8px;
   margin-top: 3%;
-  background-color:${Cores.cinza[9]};
+  background-color: ${Cores.cinza[9]};
   border-style: solid;
   border-color: ${Cores.preto};
   box-shadow: 0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -40,7 +40,7 @@ export const Notificacao = styled.div`
   padding-right: 2%;
   @media (max-width: 560px) {
     flex-direction: column;
-    height: 20em;
+    height: 140px;
     margin-bottom: 3em;
   }
 `;
@@ -97,11 +97,11 @@ export const Texto = styled.div`
   color: ${Cores.cinza[1]};
   font-family: ${Fontes.roboto};
   font-size: 250%;
-  @media  (max-width: 490px) and (min-width: 300px) {
+  @media (max-width: 490px) and (min-width: 300px) {
     padding-left: 20px;
     padding-right: 20px;
   }
-  @media  (max-width: 560px){
+  @media (max-width: 560px) {
     font-size: 190%;
   }
 `;

@@ -37,6 +37,7 @@ export default function ConversaAberta({ socket }) {
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState('');
   const [carregandoConversa, setCarregandoConversa] = useState(true);
   const [carregandoEnvioMensagem, setCarregandoEnvioMensagem] = useState(false);
+  const [tipoUsuario, setTipoUsuario] = useState(false);
 
   const {
     usuarioId,
@@ -105,6 +106,7 @@ export default function ConversaAberta({ socket }) {
 
       if (componenteEstaMontadoRef.current) {
         setUsuarioAtual(dadosUsuario);
+        setTipoUsuario(dadosUsuario.tipo);
         setCarregandoConversa(false);
       }
     }
@@ -213,6 +215,7 @@ export default function ConversaAberta({ socket }) {
       receptorId,
     });
   };
+
   const enviarMensagem = async (e) => {
     e.preventDefault();
 
@@ -220,13 +223,13 @@ export default function ConversaAberta({ socket }) {
 
     const horaAtual = moment().hours();
     const horarioComercial = (horaAtual >= 7 && horaAtual < 19) ? true : false;
-
+    const verificaHorarioUsuario = !horarioComercial && (tipoUsuario !== "MASTER");
     const remetente = conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)].conversaCom;
 
     let id_remetente = usuarioId;
     let texto = inputMensagemConteudo;
 
-    if (!horarioComercial && conversaSelecionada.finalizada === false) {
+    if (verificaHorarioUsuario) {   
       id_remetente = remetente.id;
       texto = "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
@@ -261,7 +264,7 @@ export default function ConversaAberta({ socket }) {
 
     const novaMensagem = {
       ...dados,
-      pertenceAoUsuarioAtual: horarioComercial,
+      pertenceAoUsuarioAtual: !verificaHorarioUsuario,
     };
 
     if (conversaSelecionada.ativada) {
@@ -293,6 +296,7 @@ export default function ConversaAberta({ socket }) {
       enviarMensagem(e);
     }
   };
+  
 
   return (
     <Conversa>
