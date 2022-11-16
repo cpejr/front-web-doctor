@@ -524,7 +524,7 @@ function PerfilPaciente(props) {
         visible={modalAgendamento}
         onCancel={fechandoModalAgendamento}
         footer={null}
-        width={"70%"}
+        width={"80%"}
         centered={true}
         destroyOnClose
       >

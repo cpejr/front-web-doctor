@@ -26,10 +26,10 @@ export const TopoPagina = styled.div`
     justify-content: center;
     margin-left: 3%;
   }
-  @media (min-width: 591px) and (max-width: 1089px) {
+  @media (min-width: 601px) and (max-width: 1089px) {
     justify-content: center;
   }
-  @media (max-width: 590px) {
+  @media (max-width: 680px) {
     flex-direction: column;
     justify-content: center;
     margin-left: 0%;
@@ -64,7 +64,7 @@ export const Filtros = styled.div`
     width: 50%;
     justify-content: end;
   }
-  @media (max-width: 590px) {
+  @media (max-width: 680px) {
     width: 100%;
     justify-content: center;
     align-items: center;
@@ -72,12 +72,14 @@ export const Filtros = styled.div`
 `;
 
 export const FiltroEspecificoUrgencia = styled(Select)`
+
   width: 200px;
 
-  @media (max-width: 590px) {
-    width: 100%;
+  @media (max-width: 680px) {
+    width: 400px;
     justify-content: center;
     align-items: center;
+    
   }
 `;
 
