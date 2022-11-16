@@ -112,6 +112,20 @@ function AreaReceitas() {
 		pegandoDadosPacientes();
 	}, []);
 
+
+	async function baixarPdf(receita){
+		const chave = receita.pdf_url;
+		const resposta = await managerService.GetArquivoPorChave(chave);
+
+		const fonteLink = `data:application/pdf;base64,${resposta}`;
+		const Linkbaixavel = document.createElement('a');
+		const nome = receita.titulo + ".pdf";
+		
+		Linkbaixavel.href = fonteLink;
+		Linkbaixavel.download = nome;
+		Linkbaixavel.click();
+	}
+
 	return (
 		<div>
 			<ContainerListadeReceitas>
@@ -180,7 +194,8 @@ function AreaReceitas() {
 						<ContainerReceitas>
 							{receitasFiltradas.map((value) => (
 								<Receita key={value?.id}>
-									<Titulo>{value?.titulo}</Titulo>
+									<Titulo
+									onClick={() => baixarPdf(value)}>{value?.titulo}</Titulo>
 									<NomePaciente>{value?.nome}</NomePaciente>
 									<DataCriacao>{value?.data_criacao}</DataCriacao>
 									<BotaoDeletar>
