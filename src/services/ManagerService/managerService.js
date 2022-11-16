@@ -516,11 +516,21 @@ export const GetRespostaFormularioIdUsuario = async (id_usuario) => {
 };
 
 export const confirmarPagamentoExame = async(id_paciente, id_usuario) => {
-  const formularioPaciente = await GetRespostaFormularioIdUsuario(id_paciente);
-  if (formularioPaciente.length === 0){
-    toast.error("O paciente não possui um formulário desse exame");
+  const formulariosPaciente = await GetRespostaFormularioIdUsuario(id_paciente);
+  let possuiFormulario = false;
+  let posicao = -1;
+
+  for (const [index, value] of formulariosPaciente.entries()){
+    if(value.tipo === "exame_actigrafia"){
+      possuiFormulario = true;
+      posicao = index;
+    }
   }
-  else if(formularioPaciente.length > 0 && formularioPaciente.repostas === undefined){
+
+  console.log(formulariosPaciente);
+  if(!possuiFormulario)
+    toast.error("O paciente não possui um formulário desse exame");
+  else if(possuiFormulario && formulariosPaciente[posicao].respostas === null){
     toast.error("O paciente não respondeu as perguntas do formulário");
   }
   else{
