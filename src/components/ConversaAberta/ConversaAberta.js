@@ -254,7 +254,6 @@ export default function ConversaAberta({ socket }) {
 
     if (horarioComercial) {
       setInputMensagemConteudo('')
-
     };
 
 
@@ -280,6 +279,7 @@ export default function ConversaAberta({ socket }) {
 
     setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
 
+    setInputMensagemConteudo('');
     setCarregandoEnvioMensagem(false);
   };
 
