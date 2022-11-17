@@ -38,6 +38,8 @@ export default function ConversaAberta({ socket }) {
   const [carregandoConversa, setCarregandoConversa] = useState(true);
   const [carregandoEnvioMensagem, setCarregandoEnvioMensagem] = useState(false);
   const [tipoUsuario, setTipoUsuario] = useState(false);
+  const mensagemFinalizada = "CHAT FINALIZADO.\n" +
+    "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n"
 
   const {
     usuarioId,
@@ -130,6 +132,7 @@ export default function ConversaAberta({ socket }) {
   }
 
   async function finalizarChat() {
+    await enviandoMensagem('nenhuma', mensagemFinalizada);
     await managerService.UpdateConversaFinalizada(conversaSelecionada.id)
     atualizaConversaFinalizada();
   }
@@ -216,6 +219,43 @@ export default function ConversaAberta({ socket }) {
     });
   };
 
+  const enviandoMensagem = async ({ media_url, conteudo }) => {
+
+    setCarregandoEnvioMensagem(true);
+    const dadosParaCriarNovaMensagem = {
+      id_conversa: conversaSelecionada.id,
+      id_usuario: usuarioId,
+      media_url: media_url,
+      foi_visualizado: false,
+      conteudo: conteudo
+    };
+
+    const { data_cricao, data_atualizacao, ...dados } =
+      await managerService.CriandoMensagem(dadosParaCriarNovaMensagem);
+
+    const novaMensagem = {
+      ...dados,
+      pertenceAoUsuarioAtual: true
+    };
+
+    if (conversaSelecionada.ativada) {
+      socket.emit('enviarMensagem', {
+        novaMensagem,
+        receptorId: conversaSelecionada.conversaCom.id,
+      });
+    } else {
+      enviarConversa(novaMensagem);
+    }
+
+    atualizarBarraLateral(novaMensagem);
+
+    setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
+
+    setInputMensagemConteudo('');
+    setCarregandoEnvioMensagem(false);
+
+  }
+
   const enviarMensagem = async (e) => {
     e.preventDefault();
 
@@ -229,7 +269,7 @@ export default function ConversaAberta({ socket }) {
     let id_remetente = usuarioId;
     let texto = inputMensagemConteudo;
 
-    if (verificaHorarioUsuario) {   
+    if (verificaHorarioUsuario) {
       id_remetente = remetente.id;
       texto = "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
@@ -258,8 +298,9 @@ export default function ConversaAberta({ socket }) {
 
 
 
-    const { data_cricao, data_atualizacao, media_url, ...dados } =
+    const { data_cricao, data_atualizacao, ...dados } =
       await managerService.CriandoMensagem(dadosParaCriarNovaMensagem);
+
 
     const novaMensagem = {
       ...dados,
@@ -296,7 +337,7 @@ export default function ConversaAberta({ socket }) {
       enviarMensagem(e);
     }
   };
-  
+
 
   return (
     <Conversa>
