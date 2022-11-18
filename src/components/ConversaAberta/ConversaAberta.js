@@ -146,7 +146,7 @@ export default function ConversaAberta({ socket }) {
   }
 
   async function finalizarChat() {
-    await enviandoMensagem('nenhuma', mensagemFinalizada);
+    await enviaMensagem('nenhuma', mensagemFinalizada);
     await managerService.UpdateConversaFinalizada(conversaSelecionada.id);
     atualizaConversaFinalizada();
   }
@@ -232,7 +232,7 @@ export default function ConversaAberta({ socket }) {
     });
   };
 
-  const enviandoMensagem = async ( media_url, conteudo ) => {
+  const enviaMensagem = async ( media_url, conteudo ) => {
 
     setCarregandoEnvioMensagem(true);
     const dadosParaCriarNovaMensagem = {
@@ -272,10 +272,11 @@ export default function ConversaAberta({ socket }) {
 
   }
 
-  const enviarMensagem = async (e) => {
+  const enviarMensagemComInput = async (e) => {
     e.preventDefault();
 
     if (!inputMensagemConteudo) return;
+
 
 
     const remetente = conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)].conversaCom;
@@ -291,8 +292,6 @@ export default function ConversaAberta({ socket }) {
         "Se tiver um assunto urgente favor responder ao formulário de Emergência."
     }
 
-    console.log(conversaSelecionada.finalizada);
-
     if (conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
       texto = "CHAT FINALIZADO.\n" +
@@ -300,45 +299,13 @@ export default function ConversaAberta({ socket }) {
       setInputMensagemConteudo('');
     }
 
-    setCarregandoEnvioMensagem(true);
-    const dadosParaCriarNovaMensagem = {
-      id_conversa: conversaSelecionada.id,
-      id_usuario: id_remetente,
-      media_url: 'nenhuma', // Futuramente permitir a opção de mandar mídias
-      foi_visualizado: false,
-      conteudo: texto,
-    };
-
     if (horarioComercial) {
       setInputMensagemConteudo('')
     };
 
 
+    enviaMensagem('nenhuma', texto);
 
-    const { data_cricao, data_atualizacao, ...dados } =
-      await managerService.CriandoMensagem(dadosParaCriarNovaMensagem);
-
-
-    const novaMensagem = {
-      ...dados,
-      pertenceAoUsuarioAtual: horarioPermitidoParaEnvioMensagem,
-    };
-
-    if (conversaSelecionada.ativada) {
-      socket.emit('enviarMensagem', {
-        novaMensagem,
-        receptorId: conversaSelecionada.conversaCom.id,
-      });
-    } else {
-      enviarConversa(novaMensagem);
-    }
-
-    atualizarBarraLateral(novaMensagem);
-
-    setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
-
-    setInputMensagemConteudo('');
-    setCarregandoEnvioMensagem(false);
   };
 
   const antIconConversa = (
@@ -351,7 +318,7 @@ export default function ConversaAberta({ socket }) {
 
   const verificarEnter = (e) => {
     if (e.key === 'Enter' && inputMensagemConteudo) {
-      enviarMensagem(e);
+      enviarMensagemComInput(e);
     }
   };
 
@@ -475,7 +442,7 @@ export default function ConversaAberta({ socket }) {
               widthres='15%'
               height='10%'
               marginTop='0%'
-              onClick={enviarMensagem}
+              onClick={enviarMensagemComInput}
             >
               <SendOutlined
                 style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
