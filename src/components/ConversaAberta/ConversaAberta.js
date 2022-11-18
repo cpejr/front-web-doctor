@@ -38,6 +38,7 @@ export default function ConversaAberta({ socket }) {
   const [carregandoConversa, setCarregandoConversa] = useState(true);
   const [carregandoEnvioMensagem, setCarregandoEnvioMensagem] = useState(false);
   const [tipoUsuario, setTipoUsuario] = useState(false);
+  const [horarioPermitidoParaEnvioMensagem, setHorarioPermitidoParaEnvioMensagem] = useState(null);
   const mensagemFinalizada = "CHAT FINALIZADO.\n" +
     "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n"
 
@@ -54,6 +55,8 @@ export default function ConversaAberta({ socket }) {
   const componenteEstaMontadoRef = useRef(null);
   const scrollRef = useRef(null);
   const inputMensagemConteudoRef = useRef(null);
+  const horaAtual = moment().hours();
+  const horarioComercial = (horaAtual >= 7 && horaAtual < 19) ? true : false;
 
 
 
@@ -118,6 +121,17 @@ export default function ConversaAberta({ socket }) {
     return () => (componenteEstaMontadoRef.current = false);
   }, []);
 
+
+  const verificaHorarioPermitidoParaEnvioDeMensagens = () =>{
+    const verificaHorarioUsuario = !horarioComercial && (tipoUsuario !== "MASTER");
+    setHorarioPermitidoParaEnvioMensagem(verificaHorarioUsuario);
+  }
+
+  useEffect(() => {
+    verificaHorarioPermitidoParaEnvioDeMensagens();
+  })
+
+
   async function enviarFormularioPaciente() {
     await managerService.EnviandoFormularioPaciente(
       false,
@@ -133,7 +147,7 @@ export default function ConversaAberta({ socket }) {
 
   async function finalizarChat() {
     await enviandoMensagem('nenhuma', mensagemFinalizada);
-    await managerService.UpdateConversaFinalizada(conversaSelecionada.id)
+    await managerService.UpdateConversaFinalizada(conversaSelecionada.id);
     atualizaConversaFinalizada();
   }
 
@@ -169,7 +183,6 @@ export default function ConversaAberta({ socket }) {
 
   const atualizarBarraLateral = (novaMensagem) => {
     const id_conversa = novaMensagem.id_conversa;
-
     const index = conversas.findIndex(({ id }) => id === id_conversa);
     const copiaConversas = objCopiaProfunda(conversas);
     const conversaNaLista = copiaConversas[index];
@@ -219,7 +232,7 @@ export default function ConversaAberta({ socket }) {
     });
   };
 
-  const enviandoMensagem = async ({ media_url, conteudo }) => {
+  const enviandoMensagem = async ( media_url, conteudo ) => {
 
     setCarregandoEnvioMensagem(true);
     const dadosParaCriarNovaMensagem = {
@@ -230,13 +243,16 @@ export default function ConversaAberta({ socket }) {
       conteudo: conteudo
     };
 
+
     const { data_cricao, data_atualizacao, ...dados } =
       await managerService.CriandoMensagem(dadosParaCriarNovaMensagem);
 
+
     const novaMensagem = {
       ...dados,
-      pertenceAoUsuarioAtual: true
+      pertenceAoUsuarioAtual: !horarioPermitidoParaEnvioMensagem
     };
+
 
     if (conversaSelecionada.ativada) {
       socket.emit('enviarMensagem', {
@@ -261,20 +277,21 @@ export default function ConversaAberta({ socket }) {
 
     if (!inputMensagemConteudo) return;
 
-    const horaAtual = moment().hours();
-    const horarioComercial = (horaAtual >= 7 && horaAtual < 19) ? true : false;
-    const verificaHorarioUsuario = !horarioComercial && (tipoUsuario !== "MASTER");
+
     const remetente = conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)].conversaCom;
 
     let id_remetente = usuarioId;
     let texto = inputMensagemConteudo;
 
-    if (verificaHorarioUsuario) {
+
+    if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
       texto = "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
         "Se tiver um assunto urgente favor responder ao formulário de Emergência."
     }
+
+    console.log(conversaSelecionada.finalizada);
 
     if (conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
@@ -304,7 +321,7 @@ export default function ConversaAberta({ socket }) {
 
     const novaMensagem = {
       ...dados,
-      pertenceAoUsuarioAtual: !verificaHorarioUsuario,
+      pertenceAoUsuarioAtual: horarioPermitidoParaEnvioMensagem,
     };
 
     if (conversaSelecionada.ativada) {
