@@ -1,16 +1,26 @@
 import React from "react";
-import { ContainerEdicaoComentarios, TituloEdicaoComentario, SubtituloEdicaoComentario, TextAreaComentario, BotaoSalvarAlteracoes, BotaoEditarAlteracoes } from './Styles';
+import { Cores } from "../../variaveis";
+import { EdicaoComentariosPagina, ContainerEdicaoComentarios, TituloEdicaoComentario, SubtituloEdicaoComentario, TextAreaComentario, BotaoSalvarAlteracoes, BotaoEditarAlteracoes } from './Styles';
 
-function EdicaoConteudo() {
+function EdicaoComentarios() {
   return (
+    <EdicaoComentariosPagina>
     <ContainerEdicaoComentarios>
-        <TituloEdicaoComentario>Pagina Comentários</TituloEdicaoComentario>
+        <TituloEdicaoComentario>Página Comentários</TituloEdicaoComentario>
         <SubtituloEdicaoComentario>Comentários e depoimentos:</SubtituloEdicaoComentario>
-        <TextAreaComentario></TextAreaComentario>
+        <TextAreaComentario
+          rows={4}
+          name="comentario"
+          style={{
+            borderWidth: "1px",
+            borderColor: Cores.azul,
+            color: "black",
+          }}></TextAreaComentario>
         <BotaoSalvarAlteracoes>Salvar Alterações</BotaoSalvarAlteracoes>
         <BotaoEditarAlteracoes>Cancelar Alterações</BotaoEditarAlteracoes>
     </ContainerEdicaoComentarios>
+    </EdicaoComentariosPagina>
   );
 }
 
-export default EdicaoConteudo;
+export default EdicaoComentarios;
