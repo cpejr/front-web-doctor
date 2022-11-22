@@ -200,3 +200,12 @@ export const FooterConversaAberta = styled.div`
   border-color: ${Cores.cinza[3]};
   border-left: 0ch;
 `;
+
+export const MenuConversasTipoExame = styled.div`
+  display:flex;
+  justify-content:center;
+  margin-bottom: 1%;
+  width: 10%;
+  height: 20%;
+  background-color: transparent;
+`;
