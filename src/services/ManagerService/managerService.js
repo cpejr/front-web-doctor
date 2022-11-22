@@ -894,3 +894,16 @@ export const dispostivoById = async (id) => {
     });
   return dispositivo;
 };
+
+export const MensagemComArquivo = async (file) => {
+  await requesterService
+    .mensagemComArquivo(file)
+    .then(() => {
+      toast.success('Arquivo criado com sucesso');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return;
+};

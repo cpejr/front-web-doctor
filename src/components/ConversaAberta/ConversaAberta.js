@@ -16,7 +16,7 @@ import { ChatContext } from '../../contexts/ChatContext';
 import * as managerService from '../../services/ManagerService/managerService';
 import checarObjVazio from '../../utils/checarObjVazio';
 import moverArray from '../../utils/moverArray';
-import { Spin, Tooltip, Menu, Dropdown } from 'antd';
+import { Spin, Tooltip, Menu, Dropdown, Modal } from 'antd';
 import {
   ArrowLeftOutlined,
   PaperClipOutlined,
@@ -29,6 +29,7 @@ import objCopiaProfunda from '../../utils/objCopiaProfunda';
 import moment from "moment";
 import AddToast from "../AddToast/AddToast";
 import { toast } from "react-toastify";
+import ModalEnviarArquivo from '../ModalEnviarArquivo';
 
 moment.locale("pt-br");
 
@@ -57,6 +58,7 @@ export default function ConversaAberta({ socket }) {
   const inputMensagemConteudoRef = useRef(null);
   const horaAtual = moment().hours();
   const horarioComercial = (horaAtual >= 7 && horaAtual < 19) ? true : false;
+  const [modalEnviarArquivo, setModalEnviarArquivo] = useState(false);
 
 
 
@@ -100,6 +102,10 @@ export default function ConversaAberta({ socket }) {
       </Menu.Item>
     </Menu>
   );
+
+  async function fechandoModalEnviarArquivo() {
+    setModalEnviarArquivo(false);
+  }
 
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
@@ -403,7 +409,7 @@ export default function ConversaAberta({ socket }) {
             widthres='15%'
             height='10%'
             marginTop='0%'
-            onClick={() => { }}
+            onClick={() => {setModalEnviarArquivo(true);}}
           >
             <PaperClipOutlined
               style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
@@ -451,6 +457,22 @@ export default function ConversaAberta({ socket }) {
           </Tooltip>
         )}
       </FooterConversaAberta>
+
+      <Modal
+        visible={modalEnviarArquivo}
+        onCancel={fechandoModalEnviarArquivo}
+        footer={null}
+        width={"50%"}
+        centered={true}
+        destroyOnClose={true}
+        style={{ maxWidth: "450px", minWidth: "250px" }}
+      >
+        <ModalEnviarArquivo
+          // emailUsuario={usuario.email}
+          fecharModal={() => fechandoModalEnviarArquivo()}
+          // idUsuario={usuario.id}
+        />
+      </Modal>
     </Conversa>
   );
 }
