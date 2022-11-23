@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, forwardRef, useImperativeHandle } from "react";
 import Button from "../../styles/Button";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
+import { LoadingOutlined, PlusOutlined, FilePdfOutlined, FolderOpenOutlined } from "@ant-design/icons";
 import { Spin, Upload } from "antd";
 import AddToast from "../AddToast/AddToast";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -15,7 +15,8 @@ import {
 } from "./Styles";
 import { toast } from "react-toastify";
 
-function ModalEnviarArquivo(props) {
+
+const ModalEnviarArquivo = forwardRef((props, ref)=> {
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
   const [carregando, setCarregando] = useState(false);
   const [file, setFile] = useState();
@@ -35,9 +36,12 @@ function ModalEnviarArquivo(props) {
       <div
         style={{
           marginTop: 8,
+          width: 90,
+          
+
         }}
       >
-        Upload
+        <FolderOpenOutlined />
       </div>
     </div>
   );
@@ -64,22 +68,38 @@ function ModalEnviarArquivo(props) {
     }
   }
 
+  useImperativeHandle(ref, ()=> ({
+    getPDF: ()=> {
+      if(file) return file;
+
+      return null
+    }
+  }))
+
   return (
     <div>
       <ContainerModalExcluir>
         <Titulo>Selecione uma arquivo para enviar:</Titulo>
-        <CaixaBotaoUpload>
-          <Upload
+        {file ? <FilePdfOutlined /> :
+       /*  <CaixaBotaoUpload>
+           <Upload
             name="avatar"
             listType="picture-card"
             className="avatar-uploader"
             showUploadList={false}
             onChange={handleChange}
           >
-            {file ? <div>OI</div> : uploadButton}
+            {uploadButton}
           </Upload>
-        </CaixaBotaoUpload>
-
+         
+        </CaixaBotaoUpload> */
+        <Upload  name="file"
+        
+        showUploadList={false}
+        onChange={handleChange} >
+<Button icon={<FolderOpenOutlined />}><FolderOpenOutlined />Click to Upload</Button>
+</Upload>
+}
         <ContainerFooterModalExcluir>
           <Button
             color={Cores.azulEscuro}
@@ -119,6 +139,6 @@ function ModalEnviarArquivo(props) {
       </ContainerModalExcluir>
     </div>
   );
-}
+})
 
 export default ModalEnviarArquivo;

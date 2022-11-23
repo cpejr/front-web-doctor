@@ -55,6 +55,7 @@ export default function ConversaAberta({ socket }) {
   } = useContext(ChatContext);
   const componenteEstaMontadoRef = useRef(null);
   const scrollRef = useRef(null);
+  const modalRef = useRef(null);
   const inputMensagemConteudoRef = useRef(null);
   const horaAtual = moment().hours();
   const horarioComercial = (horaAtual >= 7 && horaAtual < 19) ? true : false;
@@ -468,9 +469,8 @@ export default function ConversaAberta({ socket }) {
         style={{ maxWidth: "450px", minWidth: "250px" }}
       >
         <ModalEnviarArquivo
-          // emailUsuario={usuario.email}
           fecharModal={() => fechandoModalEnviarArquivo()}
-          // idUsuario={usuario.id}
+          ref={modalRef}      
         />
       </Modal>
     </Conversa>
