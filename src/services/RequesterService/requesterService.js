@@ -15,6 +15,8 @@ export const recuperarSenha = (email) => api.put(`/alterar_senha/${email}`);
 
 export const criarConsulta = (consulta) => api.post('/consultas', consulta);
 
+export const criarExame = (exame) => api.post('/exames', exame);
+
 export const updateConsulta = (id_consulta, consulta) =>
   api.put(`/consultas/${id_consulta}`, consulta);
 

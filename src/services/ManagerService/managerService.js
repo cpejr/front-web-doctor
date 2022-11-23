@@ -90,6 +90,19 @@ export const CriandoConsulta = async (consulta) => {
   return;
 };
 
+export const CriandoExame = async (consulta) => {
+  await requesterService
+    .criarExame(consulta)
+    .then(() => {
+      toast.success('Exame criada com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return;
+};
+
 export const UpdateConsulta = async (id_consulta, consulta) => {
   await requesterService
     .updateConsulta(id_consulta, consulta)

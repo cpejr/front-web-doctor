@@ -14,13 +14,10 @@ export const Container = styled.div`
 export const Caixa = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: 185%;
   height: 100%;
   min-height: 80vh;
-  background-color: ${Cores.branco};
-  border-color: rgba(0, 0, 0, 0.1);
-  border-style: solid;
-  border-radius: 3px;
+
 
   @media (max-width: 800px) {
     flex-direction: column;
@@ -47,11 +44,10 @@ export const InfoEsquerda = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 50%;
   height: 100%;
   height: 73vh;
   padding: 5%;
-  padding-left:5%;
 
   @media (max-width: 800px) {
     width: 100%;
@@ -169,6 +165,8 @@ export const TextAreaDescricao = styled(TextArea)`
   border-color: ${Cores.preto};
   border-width: 1px;
   color: ${Cores.preto};
+  margin-top: 100%;
+  margin-right:35%;
   ::placeholder {
     color: ${Cores.preto};
   }
@@ -229,7 +227,7 @@ export const InputConsultorio = styled.div`
   justify-content: center;
   width: 40%;
   height: 40px;
-  //margin-bottom: 5%;
+  margin-top: 5%;
   @media (max-width: 1717px) {
     margin-bottom: 5%;
   }
