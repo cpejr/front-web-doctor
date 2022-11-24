@@ -246,12 +246,12 @@ export const GetDadosUsuarioPorToken = async (token_usuario) => {
   return { dadosUsuario };
 };
 
-export const GetDadosConsultorios = async () => {
+export const GetDadosConsultorios = async (filtro) => {
   let dadosConsultorios = {};
   let dadosEndereco = {};
 
   await requesterService
-    .requisicaoDadosConsultorios()
+    .requisicaoDadosConsultorios(filtro)
     .then((res) => {
       dadosConsultorios = res.data;
     })

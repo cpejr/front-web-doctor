@@ -176,39 +176,6 @@ function ModalEditarAgendamentoEspecifico(props) {
     }
   }
 
-  function preenchendoDadosConsulta(e) {
-    const { value, name } = e.target;
-
-    if (value !== consulta.descricao) {
-      if (value) {
-        setCamposVazios({ ...camposVazios, [name]: false });
-      } else {
-        setCamposVazios({ ...camposVazios, [name]: true });
-      }
-    }
-
-    if (e.target.name === "hora") {
-      setHora(e.target.value);
-      setEditado(true);
-      return hora;
-    } else if (e.target.name === "data") {
-      setData(e.target.value);
-      setEditado(true);
-      return data;
-    } else if (e.target.name === "duracao_em_minutos") {
-      setConsulta({
-        ...consulta,
-        [e.target.name]: apenasNumeros(e.target.value),
-      });
-      setEditado(true);
-      return consulta;
-    } else {
-      setConsulta({ ...consulta, [name]: value });
-      setEditado(true);
-      return consulta;
-    }
-  }
-
   return (
     <Container>
       <Caixa>
@@ -240,9 +207,9 @@ function ModalEditarAgendamentoEspecifico(props) {
             </Row>
           </TipoAgendamento>
           {tipoRadio === "" ? (
-                <ModalEditarConsulta></ModalEditarConsulta>
+                <></>
               ) : (
-                <ModalEditarExame></ModalEditarExame>
+                <></>
               )}
 
         </InfoEsquerda>

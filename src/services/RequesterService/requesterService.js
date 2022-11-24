@@ -73,7 +73,7 @@ export const requisicaoConsultaUsuario = (id_usuario) =>
 
 export const requisicaoExame = (id) => api.get(`/exames/${id}`);
 
-export const requisicaoDadosConsultorios = () => api.get(`/consultorios`);
+export const requisicaoDadosConsultorios = (filtro) => api.get(`/consultorios`, {params:filtro});
 
 export const requisicaoDadosConsultoriosPorId = (id) =>
   api.get(`/consultorios/${id}`);

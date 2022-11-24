@@ -27,6 +27,7 @@ import { TiposDeConsulta } from "../listaTiposDeConsultas";
 import { apenasNumeros } from "../../utils/masks";
 import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
+import { TiposDeExame } from "../listaTiposDeExames";
 
 function ModalAgendamentoExame(props) {
   const [usuario, setUsuario] = useState({});
@@ -40,16 +41,16 @@ function ModalAgendamentoExame(props) {
   const [exame, setExame] = useState({
     data_hora: "",
     avaliacao: "",
+    tipo: "",
     id_usuario: "",
     id_consultorio: "",
-    tipo: "",
   });
   const valoresIniciaisExame = {
     data_hora: "",
     avaliacao: "",
+    tipo: "",
     id_usuario: "",
     id_consultorio: "",
-    tipo: "",
   };
   const [dataExame, setDataExame] = useState("");
   const [hora, setHora] = useState("");
@@ -110,7 +111,7 @@ function ModalAgendamentoExame(props) {
 
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true);
-    const res = await managerService.GetDadosConsultorios();
+    const res = await managerService.GetDadosConsultorios({tipo:'EXAME'});
     setConsultorios(res.dadosConsultorios);
     setCarregandoConsultorios(false);
   }
@@ -324,7 +325,7 @@ function ModalAgendamentoExame(props) {
                 <option value="" disabled selected>
                   Tipo
                 </option>
-                {TiposDeConsulta.map((tipo) => (
+                {TiposDeExame.map((tipo) => (
                   <>
                     {carregando ? (
                       <Spin indicator={antIcon} />

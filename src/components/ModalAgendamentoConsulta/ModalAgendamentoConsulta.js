@@ -121,7 +121,7 @@ function ModalAgendamentoConsulta(props) {
 
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true);
-    const res = await managerService.GetDadosConsultorios();
+    const res = await managerService.GetDadosConsultorios({tipo:'CONSULTA'});
     setConsultorios(res.dadosConsultorios);
     setCarregandoConsultorios(false);
   }
