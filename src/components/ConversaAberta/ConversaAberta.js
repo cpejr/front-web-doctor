@@ -62,13 +62,11 @@ export default function ConversaAberta({ socket }) {
   const [modalEnviarArquivo, setModalEnviarArquivo] = useState(false);
   
 
-  const [pdf, setPdf] = useState("")
-  console.log(pdf)
-  useEffect(() => {
-      if(!modalEnviarArquivo)
-      {const pdfFromModal = modalRef.current?.getPDF();
-      setPdf(pdfFromModal)}
-  }, [modalEnviarArquivo])
+  // Aqui pega os dados do  modal, vamos por a função de enviar mensagem aqui :)
+  async function EnviandoMensagemComArquivo() {
+    const pdfFromModal = modalRef.current?.getPDF().file;
+    const urlFromModal = modalRef.current?.getPDF().url;
+  }
 
   const menuBotoes = (
     <Menu>
@@ -477,6 +475,7 @@ export default function ConversaAberta({ socket }) {
       >
         <ModalEnviarArquivo
           fecharModal={() => fechandoModalEnviarArquivo()}
+          pegandoDados={() => EnviandoMensagemComArquivo()}
           ref={modalRef}      
         />
       </Modal>

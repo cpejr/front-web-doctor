@@ -20,6 +20,7 @@ const ModalEnviarArquivo = forwardRef((props, ref)=> {
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
   const [carregando, setCarregando] = useState(false);
   const [file, setFile] = useState();
+  const [urlArquivo, setUrlArquivo] = useState();
   const antIconModal = (
     <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin />
   );
@@ -30,21 +31,7 @@ const ModalEnviarArquivo = forwardRef((props, ref)=> {
     reader.readAsDataURL(file);
   };
 
-  const uploadButton = (
-    <div>
-      {carregando ? <LoadingOutlined /> : <PlusOutlined />}
-      <div
-        style={{
-          marginTop: 8,
-          width: 90,
-          
 
-        }}
-      >
-        <FolderOpenOutlined />
-      </div>
-    </div>
-  );
 
   async function handleChange(info) {
     // Get this url from response in real world.
@@ -57,21 +44,35 @@ const ModalEnviarArquivo = forwardRef((props, ref)=> {
   async function enviarArquivo() {
     if (file) {
       setCarregandoDeletar(true);
-      console.log(file);
-      await managerService.MensagemComArquivo(file);
+      const res = await managerService.MensagemComArquivo(file);
+      console.log(res);
+      
       setFile(null);
+
+      // Toda vez que confirmar o envio, vai pegar os dados lá em conversa aberta em EnviandoMensagemComArquivo()
+      props.pegandoDados();
       props.fecharModal();
       //document.location.reload(true);
       setCarregandoDeletar(false);
     } else {
-      toast.error("Selecione uma foto para enviar!");
+      toast.error("Selecione uma arquivo para enviar!");
     }
   }
 
   useImperativeHandle(ref, ()=> ({
     getPDF: ()=> {
-      if(file) return file;
+      let res = {}
+    
+      if(file && setUrlArquivo)
+      {
+         res = {
+           file:file,
+           url: urlArquivo
+        }
 
+        return res ;
+      } 
+       
       return null
     }
   }))

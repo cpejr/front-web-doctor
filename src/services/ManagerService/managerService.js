@@ -898,8 +898,9 @@ export const dispostivoById = async (id) => {
 export const MensagemComArquivo = async (file) => {
   await requesterService
     .mensagemComArquivo(file)
-    .then(() => {
+    .then((res) => {
       toast.success('Arquivo criado com sucesso');
+      return res.data;
     })
     .catch((error) => {
       requisicaoErro(error);
