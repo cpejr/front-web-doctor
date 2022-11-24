@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, Input, Tooltip, Row, Radio } from "antd";
+import { Row, Radio } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
@@ -8,38 +8,19 @@ import {
   Container,
   Caixa,
   InfoEsquerda,
-  InfoDireita,
   Usuario,
   Imagem,
   Nome,
-  TextoCheckbox,
-  DoisSelect,
-  TamanhoInput,
-  InputHora,
-  InputDuracao,
-  SelecioneUmaData,
-  TextoSelecioneUmaData,
-  TextAreaDescricao,
-  Rotulo,
-  InputData,
-  ContainerConsultorio,
-  TextoDoisSelects,
-  ContainerNome,
   TextoTipoAgendamento,
   TipoAgendamento,
 } from "./Styles";
 import Select from "../../styles/Select";
-import Button from "../../styles/Button";
 import logoGuilherme from "../../assets/logoGuilherme.png";
-import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import { apenasNumeros } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
-import {
-  ContainerDuracaoConsulta,
-  ContainerHorario,
-} from "../ModalAgendamentoEspecifico/Styles";
-import { TiposDeConsulta } from "../listaTiposDeConsultas";
+import ModalEditarConsulta from "../ModalEditarConsulta";
+import ModalEditarExame from "../ModalEditarExame";
 
 function ModalEditarAgendamentoEspecifico(props) {
   const { Option } = Select;
@@ -259,191 +240,13 @@ function ModalEditarAgendamentoEspecifico(props) {
             </Row>
           </TipoAgendamento>
           {tipoRadio === "" ? (
-                <></>
+                <ModalEditarConsulta></ModalEditarConsulta>
               ) : (
-                <TextAreaDescricao
-                border={tipoRadio}
-                placeholder="Adicione uma descrição"
-                rows={4}
-                name="descricao"
-                value={consulta.descricao}
-                onChange={preenchendoDadosConsulta}
-                style={{
-                  borderWidth: "1px",
-                  borderColor: Cores.azul,
-                  color: "black",
-                }}
-              />
+                <ModalEditarExame></ModalEditarExame>
               )}
 
         </InfoEsquerda>
-        <InfoDireita>
-          <SelecioneUmaData>
-            <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
-            <InputData
-              placeholder="Selecione uma data"
-              value={data}
-              id="data"
-              type="date"
-              onKeyDown={(e) => e.preventDefault()}
-              size="large"
-              name="data"
-              camposVazios={camposVazios.data}
-              onChange={(e) => {
-                preenchendoDadosConsulta(e);
-              }}
-            ></InputData>
-            {camposVazios.data ? <Rotulo>Escolha uma data</Rotulo> : <></>}
-          </SelecioneUmaData>
-          <DoisSelect>
-            <TamanhoInput>
-              <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
-              <Tooltip
-                placement="topLeft"
-                title={consulta.tipo}
-                color={Cores.azul}
-              >
-                <Select
-                  style={{
-                    width: "100%",
-                    color: "black",
-                    borderColor: "black",
-                    borderWidth: "1px",
-                  }}
-                  paddingTop="8px"
-                  paddingBottom="8px"
-                  size="large"
-                  value={consulta.tipo}
-                  name="tipo"
-                  placeholder="Tipo"
-                  onChange={(e) => {
-                    preenchendoDadosConsulta(e);
-                  }}
-                >
-                  {TiposDeConsulta.map((tipo) => (
-                    <>
-                      {carregando ? (
-                        <Spin indicator={antIcon} />
-                      ) : (
-                        <option key={tipo} value={tipo} color="red">
-                          {tipo}
-                        </option>
-                      )}
-                    </>
-                  ))}
-                </Select>
-              </Tooltip>
-            </TamanhoInput>
-            <ContainerConsultorio>
-              <TextoDoisSelects>Selecione um consultório:</TextoDoisSelects>
-              <Tooltip
-                placement="topLeft"
-                title={consultorioPorId}
-                color={Cores.azul}
-              >
-                <Select
-                  id="id_consultorio"
-                  name="id_consultorio"
-                  style={{
-                    width: "100%",
-                    borderColor: "black",
-                    borderWidth: "1px",
-                    color: "black",
-                  }}
-                  paddingTop="8px"
-                  paddingBottom="8px"
-                  value={consulta.id_consultorio}
-                  size="large"
-                  onChange={(e) => {
-                    preenchendoDadosConsulta(e);
-                  }}
-                >
-                  {consultorios.map((consultorio) => (
-                    <>
-                      {carregandoConsultorios ? (
-                        <Spin indicator={antIcon} />
-                      ) : (
-                        <option
-                          key={consultorio.id}
-                          value={consultorio.id}
-                          color="red"
-                        >
-                          {consultorio.nome}
-                        </option>
-                      )}
-                    </>
-                  ))}
-                </Select>
-              </Tooltip>
-            </ContainerConsultorio>
-          </DoisSelect>
 
-          <DoisSelect>
-            <ContainerHorario>
-              <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
-              <InputHora
-                value={hora}
-                type="text"
-                onKeyDown={(e) => e.preventDefault()}
-                onFocus={(e) => (e.target.type = "time")}
-                onBlur={(e) => (e.target.type = "text")}
-                placeholder="Horário"
-                name="hora"
-                onChange={preenchendoDadosConsulta}
-                style={{ color: "black" }}
-                camposVazios={camposVazios.hora}
-              />
-              {camposVazios.hora ? <Rotulo>Digite um horário</Rotulo> : <></>}
-            </ContainerHorario>
-
-            {tipoRadio === "" ? (
-                <></>
-              ) : (
-            <ContainerDuracaoConsulta>
-              <TextoDoisSelects>Selecione uma duração:</TextoDoisSelects>
-              <InputDuracao
-                value={consulta.duracao_em_minutos}
-                placeholder="Duração"
-                name="duracao_em_minutos"
-                onChange={preenchendoDadosConsulta}
-                suffix="min"
-                camposVazios={camposVazios.duracao_em_minutos}
-              />
-              {camposVazios.duracao_em_minutos ? (
-                <Rotulo>Digite uma duração</Rotulo>
-              ) : (
-                <></>
-              )}
-            </ContainerDuracaoConsulta>
-            )}
-          </DoisSelect>
-          {tipoRadio === "" ? (
-                <></>
-              ) : (
-                <Checkbox>
-                  <TextoCheckbox>Notificar paciente</TextoCheckbox>
-                </Checkbox>
-              )}
-
-          <Button
-            width="80%"
-            height="50px"
-            backgroundColor={Cores.lilas[2]}
-            borderColor={Cores.azul}
-            color={Cores.azulEscuro}
-            fontSize="1.1em"
-            fontWeight="bold"
-            fontSizeMedia="0.9em"
-            fontSizeMedia950="1.1em"
-            onClick={() => requisicaoAtualizarConsulta()}
-          >
-            {carregandoUpdate ? (
-              <Spin indicator={antIcon} />
-            ) : (
-              <div>Editar Agendamento</div>
-            )}
-          </Button>
-        </InfoDireita>
       </Caixa>
     </Container>
   );
