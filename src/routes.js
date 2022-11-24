@@ -8,6 +8,7 @@ import Cadastro from './pages/Cadastro';
 import Chat from './pages/Chat';
 import CriacaoFormulario from './pages/CriacaoFormulario';
 import EdicaoConteudo from './pages/EdicaoConteudo';
+import EdicaoGrupoAmieWeb from './pages/EdicaoGrupoAmieWeb';
 import Header from './components/Header/Header';
 import ListaFormularios from './pages/ListaFormularios';
 import ListaUsuarios from './pages/ListaUsuarios';
@@ -88,6 +89,10 @@ function Routes() {
           exact
           path='/alterarsenha_requisicao'
           component={AlterarSenhaComEmail}
+        />
+        <Route
+        exact path='/utaldu'
+        component={EdicaoGrupoAmieWeb}
         />
         <RotasPrivadas exact path='/cadastro' component={Cadastro} />
         <RotasPrivadasMedico
