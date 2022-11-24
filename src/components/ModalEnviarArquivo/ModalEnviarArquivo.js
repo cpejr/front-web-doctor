@@ -44,14 +44,17 @@ const ModalEnviarArquivo = forwardRef((props, ref)=> {
   async function enviarArquivo() {
     if (file) {
       setCarregandoDeletar(true);
-      const res = await managerService.MensagemComArquivo(file);
-      console.log(res);
+      const res = await managerService.enviarArquivoMensagem(file);
+      setUrlArquivo(res);
+
+      props.pegandoDados();
       
       setFile(null);
 
       // Toda vez que confirmar o envio, vai pegar os dados lá em conversa aberta em EnviandoMensagemComArquivo()
-      props.pegandoDados();
+  
       props.fecharModal();
+      
       //document.location.reload(true);
       setCarregandoDeletar(false);
     } else {
@@ -63,7 +66,7 @@ const ModalEnviarArquivo = forwardRef((props, ref)=> {
     getPDF: ()=> {
       let res = {}
     
-      if(file && setUrlArquivo)
+      if(file && urlArquivo)
       {
          res = {
            file:file,

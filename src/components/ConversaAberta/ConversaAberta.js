@@ -60,13 +60,11 @@ export default function ConversaAberta({ socket }) {
   const horaAtual = moment().hours();
   const horarioComercial = (horaAtual >= 7 && horaAtual < 19) ? true : false;
   const [modalEnviarArquivo, setModalEnviarArquivo] = useState(false);
+  const [pdfFromModal, setPdfFromModal] = useState("");
+  const [urlFromModal, setUrlFromModal] = useState("");
   
 
-  // Aqui pega os dados do  modal, vamos por a função de enviar mensagem aqui :)
-  async function EnviandoMensagemComArquivo() {
-    const pdfFromModal = modalRef.current?.getPDF().file;
-    const urlFromModal = modalRef.current?.getPDF().url;
-  }
+ 
 
   const menuBotoes = (
     <Menu>
@@ -255,7 +253,7 @@ export default function ConversaAberta({ socket }) {
       conteudo: conteudo
     };
 
-
+    
     const { data_cricao, data_atualizacao, ...dados } =
       await managerService.CriandoMensagem(dadosParaCriarNovaMensagem);
 
@@ -297,7 +295,7 @@ export default function ConversaAberta({ socket }) {
     let texto = inputMensagemConteudo;
 
 
-    if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
+   /*  if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
       texto = "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
@@ -309,7 +307,7 @@ export default function ConversaAberta({ socket }) {
       texto = "CHAT FINALIZADO.\n" +
         "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n"
       setInputMensagemConteudo('');
-    }
+    } */
 
     if (horarioComercial) {
       setInputMensagemConteudo('')
@@ -319,6 +317,38 @@ export default function ConversaAberta({ socket }) {
     enviaMensagem('nenhuma', texto);
 
   };
+
+   // Aqui pega os dados do  modal, vamos por a função de enviar mensagem aqui :)
+   async function EnviandoMensagemComArquivo() {
+    
+    setPdfFromModal(modalRef.current?.getPDF().file);
+    const url = modalRef.current?.getPDF().url;
+
+    console.log(url);
+
+    const remetente = conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)].conversaCom;
+
+    let id_remetente = usuarioId;
+    let texto = "ArquivoPDF";
+
+
+   /*  if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
+      id_remetente = remetente.id;
+      texto = "Obrigado pela sua mensagem!\n" +
+        "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
+        "Se tiver um assunto urgente favor responder ao formulário de Emergência."
+    }
+
+    if (conversaSelecionada.finalizada) {
+      id_remetente = remetente.id;
+      texto = "CHAT FINALIZADO.\n" +
+        "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n"
+    } */
+
+
+    enviaMensagem(url, texto);
+
+  }
 
   const antIconConversa = (
     <LoadingOutlined style={{ fontSize: 130, color: Cores.azul }} spin />

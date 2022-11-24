@@ -802,6 +802,19 @@ export const CriandoMensagem = async (mensagem) => {
   return dadosMensagemCriada;
 };
 
+export const CriandoMensagemComArquivo = async (mensagem) => {
+  let dadosMensagemCriada = {};
+  await requesterService
+    .criarMensagemComArquivo(mensagem)
+    .then((res) => {
+      dadosMensagemCriada = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosMensagemCriada;
+};
+
 export const GetMensagensPorConversaUsuario = async (
   id_usuario,
   id_conversa
@@ -895,16 +908,18 @@ export const dispostivoById = async (id) => {
   return dispositivo;
 };
 
-export const MensagemComArquivo = async (file) => {
+export const enviarArquivoMensagem = async (file) => {
+  let id;
   await requesterService
-    .mensagemComArquivo(file)
+    .enviarArquivoMensagem(file)
     .then((res) => {
       toast.success('Arquivo criado com sucesso');
-      return res.data;
+      id = res.data;
+      
     })
     .catch((error) => {
       requisicaoErro(error);
       return;
     });
-  return;
+  return id;
 };
