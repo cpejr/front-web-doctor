@@ -60,8 +60,15 @@ export default function ConversaAberta({ socket }) {
   const horaAtual = moment().hours();
   const horarioComercial = (horaAtual >= 7 && horaAtual < 19) ? true : false;
   const [modalEnviarArquivo, setModalEnviarArquivo] = useState(false);
+  
 
-
+  const [pdf, setPdf] = useState("")
+  console.log(pdf)
+  useEffect(() => {
+      if(!modalEnviarArquivo)
+      {const pdfFromModal = modalRef.current?.getPDF();
+      setPdf(pdfFromModal)}
+  }, [modalEnviarArquivo])
 
   const menuBotoes = (
     <Menu>
