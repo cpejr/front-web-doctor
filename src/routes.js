@@ -22,6 +22,7 @@ import EditarFormulario from './pages/EditarFormulario/EditarFormulario';
 import FormularioEspecifico from './pages/FormularioEspecifico';
 import Home from './pages/Home/Home';
 import CriacaoReceitas from './pages/CriacaoReceitas';
+import EdicaoSobreMim from  "./pages/EdicaoSobreMim"
 
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
@@ -147,6 +148,10 @@ function UserHeader() {
           exact
           path='/web/editarconteudo'
           component={EdicaoConteudo}
+        />
+        <RotasPrivadasMedico
+          path="/web/edicaosobremim"
+          component={EdicaoSobreMim}
         />
         <RotasPrivadas
           exact
