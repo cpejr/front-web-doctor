@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState, useRef } from 'react';
+import React, { useEffect, useContext, useState, useRef } from "react";
 import {
   HeaderConversaAberta,
   Conversa,
@@ -7,41 +7,45 @@ import {
   CorpoConversaAberta,
   FooterConversaAberta,
   MenuConversasTipoExame,
-} from './Styles';
-import Mensagem from '../Mensagem/Mensagem';
-import { Cores } from '../../variaveis';
-import Button from '../../styles/Button';
-import Input from '../../styles/Input';
-import { ChatContext } from '../../contexts/ChatContext';
-import * as managerService from '../../services/ManagerService/managerService';
-import checarObjVazio from '../../utils/checarObjVazio';
-import moverArray from '../../utils/moverArray';
-import { Spin, Tooltip, Menu, Dropdown, Modal } from 'antd';
+} from "./Styles";
+import Mensagem from "../Mensagem/Mensagem";
+import { Cores } from "../../variaveis";
+import Button from "../../styles/Button";
+import Input from "../../styles/Input";
+import { ChatContext } from "../../contexts/ChatContext";
+import * as managerService from "../../services/ManagerService/managerService";
+import checarObjVazio from "../../utils/checarObjVazio";
+import moverArray from "../../utils/moverArray";
+import { Spin, Tooltip, Menu, Dropdown, Modal } from "antd";
 import {
   ArrowLeftOutlined,
   PaperClipOutlined,
   SendOutlined,
   LoadingOutlined,
-  PlusOutlined
-} from '@ant-design/icons';
-import { recebeEmail } from '../../services/auth';
-import objCopiaProfunda from '../../utils/objCopiaProfunda';
+  PlusOutlined,
+} from "@ant-design/icons";
+import { recebeEmail } from "../../services/auth";
+import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import moment from "moment";
 import AddToast from "../AddToast/AddToast";
 import { toast } from "react-toastify";
-import ModalEnviarArquivo from '../ModalEnviarArquivo';
+import ModalEnviarArquivo from "../ModalEnviarArquivo";
 
 moment.locale("pt-br");
 
 export default function ConversaAberta({ socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
-  const [inputMensagemConteudo, setInputMensagemConteudo] = useState('');
+  const [inputMensagemConteudo, setInputMensagemConteudo] = useState("");
   const [carregandoConversa, setCarregandoConversa] = useState(true);
   const [carregandoEnvioMensagem, setCarregandoEnvioMensagem] = useState(false);
   const [tipoUsuario, setTipoUsuario] = useState(false);
-  const [horarioPermitidoParaEnvioMensagem, setHorarioPermitidoParaEnvioMensagem] = useState(null);
-  const mensagemFinalizada = "CHAT FINALIZADO.\n" +
-    "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n"
+  const [
+    horarioPermitidoParaEnvioMensagem,
+    setHorarioPermitidoParaEnvioMensagem,
+  ] = useState(null);
+  const mensagemFinalizada =
+    "CHAT FINALIZADO.\n" +
+    "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n";
 
   const {
     usuarioId,
@@ -58,13 +62,10 @@ export default function ConversaAberta({ socket }) {
   const modalRef = useRef(null);
   const inputMensagemConteudoRef = useRef(null);
   const horaAtual = moment().hours();
-  const horarioComercial = (horaAtual >= 7 && horaAtual < 19) ? true : false;
+  const horarioComercial = horaAtual >= 7 && horaAtual < 19 ? true : false;
   const [modalEnviarArquivo, setModalEnviarArquivo] = useState(false);
   const [pdfFromModal, setPdfFromModal] = useState("");
   const [urlFromModal, setUrlFromModal] = useState("");
-  
-
- 
 
   const menuBotoes = (
     <Menu>
@@ -131,16 +132,15 @@ export default function ConversaAberta({ socket }) {
     return () => (componenteEstaMontadoRef.current = false);
   }, []);
 
-
-  const verificaHorarioPermitidoParaEnvioDeMensagens = () =>{
-    const verificaHorarioUsuario = !horarioComercial && (tipoUsuario !== "MASTER");
+  const verificaHorarioPermitidoParaEnvioDeMensagens = () => {
+    const verificaHorarioUsuario =
+      !horarioComercial && tipoUsuario !== "MASTER";
     setHorarioPermitidoParaEnvioMensagem(verificaHorarioUsuario);
-  }
+  };
 
   useEffect(() => {
     verificaHorarioPermitidoParaEnvioDeMensagens();
-  })
-
+  });
 
   async function enviarFormularioPaciente() {
     await managerService.EnviandoFormularioPaciente(
@@ -148,15 +148,18 @@ export default function ConversaAberta({ socket }) {
       true,
       "d98bf5e0-73e0-4d59-9c00-a7d79a1174b0",
       conversaSelecionada.conversaCom.id
-    )
+    );
   }
 
   async function confirmarPagamento() {
-    managerService.confirmarPagamentoExame(conversaSelecionada.conversaCom.id, usuarioId);
+    managerService.confirmarPagamentoExame(
+      conversaSelecionada.conversaCom.id,
+      usuarioId
+    );
   }
 
   async function finalizarChat() {
-    await enviaMensagem('nenhuma', mensagemFinalizada);
+    await enviaMensagem("nenhuma", mensagemFinalizada);
     await managerService.UpdateConversaFinalizada(conversaSelecionada.id);
     atualizaConversaFinalizada();
   }
@@ -166,7 +169,6 @@ export default function ConversaAberta({ socket }) {
     auxConversa.finalizada = true;
     setConversaSelecionada(auxConversa);
   }
-
 
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
@@ -186,9 +188,11 @@ export default function ConversaAberta({ socket }) {
     return () => (componenteEstaMontadoRef.current = false);
   }, [conversaSelecionada, usuarioId]);
 
+  console.log(mensagens);
+
   useEffect(() => {
     inputMensagemConteudoRef?.current?.focus();
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
   });
 
   const atualizarBarraLateral = (novaMensagem) => {
@@ -236,36 +240,32 @@ export default function ConversaAberta({ socket }) {
       },
     };
 
-    socket.emit('enviarConversa', {
+    socket.emit("enviarConversa", {
       novaConversa: conversaParaEnvio,
       receptorId,
     });
   };
 
-  const enviaMensagem = async ( media_url, conteudo ) => {
-
+  const enviaMensagem = async (media_url, conteudo) => {
     setCarregandoEnvioMensagem(true);
     const dadosParaCriarNovaMensagem = {
       id_conversa: conversaSelecionada.id,
       id_usuario: usuarioId,
       media_url: media_url,
       foi_visualizado: false,
-      conteudo: conteudo
+      conteudo: conteudo,
     };
 
-    
     const { data_cricao, data_atualizacao, ...dados } =
       await managerService.CriandoMensagem(dadosParaCriarNovaMensagem);
 
-
     const novaMensagem = {
       ...dados,
-      pertenceAoUsuarioAtual: !horarioPermitidoParaEnvioMensagem
+      pertenceAoUsuarioAtual: !horarioPermitidoParaEnvioMensagem,
     };
 
-
     if (conversaSelecionada.ativada) {
-      socket.emit('enviarMensagem', {
+      socket.emit("enviarMensagem", {
         novaMensagem,
         receptorId: conversaSelecionada.conversaCom.id,
       });
@@ -277,25 +277,23 @@ export default function ConversaAberta({ socket }) {
 
     setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
 
-    setInputMensagemConteudo('');
+    setInputMensagemConteudo("");
     setCarregandoEnvioMensagem(false);
-
-  }
+  };
 
   const enviarMensagemComInput = async (e) => {
     e.preventDefault();
 
     if (!inputMensagemConteudo) return;
 
-
-
-    const remetente = conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)].conversaCom;
+    const remetente =
+      conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)]
+        .conversaCom;
 
     let id_remetente = usuarioId;
     let texto = inputMensagemConteudo;
 
-
-   /*  if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
+    /*  if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
       texto = "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
@@ -310,29 +308,25 @@ export default function ConversaAberta({ socket }) {
     } */
 
     if (horarioComercial) {
-      setInputMensagemConteudo('')
-    };
+      setInputMensagemConteudo("");
+    }
 
-
-    enviaMensagem('nenhuma', texto);
-
+    enviaMensagem("nenhuma", texto);
   };
 
-   // Aqui pega os dados do  modal, vamos por a função de enviar mensagem aqui :)
-   async function EnviandoMensagemComArquivo() {
-    
+  // Aqui pega os dados do  modal, vamos por a função de enviar mensagem aqui :)
+  async function EnviandoMensagemComArquivo() {
     setPdfFromModal(modalRef.current?.getPDF().file);
     const url = modalRef.current?.getPDF().url;
 
-    console.log(url);
-
-    const remetente = conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)].conversaCom;
+    const remetente =
+      conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)]
+        .conversaCom;
 
     let id_remetente = usuarioId;
     let texto = "ArquivoPDF";
 
-
-   /*  if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
+    /*  if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
       texto = "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
@@ -345,9 +339,7 @@ export default function ConversaAberta({ socket }) {
         "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n"
     } */
 
-
     enviaMensagem(url, texto);
-
   }
 
   const antIconConversa = (
@@ -359,30 +351,29 @@ export default function ConversaAberta({ socket }) {
   );
 
   const verificarEnter = (e) => {
-    if (e.key === 'Enter' && inputMensagemConteudo) {
+    if (e.key === "Enter" && inputMensagemConteudo) {
       enviarMensagemComInput(e);
     }
   };
-
 
   return (
     <Conversa>
       <HeaderConversaAberta>
         <BotaoVoltar>
           <Button
-            backgroundColor='transparent'
-            borderColor='transparent'
+            backgroundColor="transparent"
+            borderColor="transparent"
             color={Cores.lilas[1]}
-            width='10%'
-            widthres='15%'
-            height='10%'
-            marginTop='0%'
+            width="10%"
+            widthres="15%"
+            height="10%"
+            marginTop="0%"
             onClick={() => {
               setConversaSelecionada({});
             }}
           >
             <ArrowLeftOutlined
-              style={{ fontSize: '30px', color: '{Cores.lilas[1]}' }}
+              style={{ fontSize: "30px", color: "{Cores.lilas[1]}" }}
             />
           </Button>
         </BotaoVoltar>
@@ -390,12 +381,14 @@ export default function ConversaAberta({ socket }) {
           src={
             conversaSelecionada?.conversaCom?.avatar_url || imagemPerfilPadrão
           }
-          alt='61'
-          height='70px'
-          width='76px'
+          alt="61"
+          height="70px"
+          width="76px"
         ></img>
-        {conversaSelecionada.tipo === 'EXAME' ? (
-          <NomePessoa>{conversaSelecionada?.conversaCom?.nome} - EXAME</NomePessoa>
+        {conversaSelecionada.tipo === "EXAME" ? (
+          <NomePessoa>
+            {conversaSelecionada?.conversaCom?.nome} - EXAME
+          </NomePessoa>
         ) : (
           <NomePessoa>{conversaSelecionada?.conversaCom?.nome}</NomePessoa>
         )}
@@ -405,10 +398,10 @@ export default function ConversaAberta({ socket }) {
           <Spin
             indicator={antIconConversa}
             style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
             }}
           />
         ) : (
@@ -417,6 +410,7 @@ export default function ConversaAberta({ socket }) {
               key={idx}
               pertenceAoUsuarioAtual={m.pertenceAoUsuarioAtual}
               conteudo={m.conteudo}
+              media_url={m.media_url}
               scrollRef={mensagens?.length - 1 === idx ? scrollRef : null}
               data_criacao={m.data_criacao}
             />
@@ -424,7 +418,7 @@ export default function ConversaAberta({ socket }) {
         )}
       </CorpoConversaAberta>
       <FooterConversaAberta>
-        {conversaSelecionada.tipo === 'EXAME' ? (
+        {conversaSelecionada.tipo === "EXAME" ? (
           <MenuConversasTipoExame>
             <Dropdown
               onClick={(e) => e.preventDefault()}
@@ -432,36 +426,38 @@ export default function ConversaAberta({ socket }) {
               placement={"bottom"}
             >
               <PlusOutlined
-                style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
+                style={{ fontSize: "27px", color: "{Cores.lilas[1]}" }}
               />
             </Dropdown>
           </MenuConversasTipoExame>
         ) : (
           <Button
-            backgroundColor='transparent'
-            borderColor='transparent'
+            backgroundColor="transparent"
+            borderColor="transparent"
             color={Cores.lilas[1]}
-            width='10%'
-            widthres='15%'
-            height='10%'
-            marginTop='0%'
-            onClick={() => {setModalEnviarArquivo(true);}}
+            width="10%"
+            widthres="15%"
+            height="10%"
+            marginTop="0%"
+            onClick={() => {
+              setModalEnviarArquivo(true);
+            }}
           >
             <PaperClipOutlined
-              style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
+              style={{ fontSize: "27px", color: "{Cores.lilas[1]}" }}
             />
           </Button>
         )}
 
         <Input
-          placeholder='Mensagem'
-          backgroundColor='white'
+          placeholder="Mensagem"
+          backgroundColor="white"
           borderColor={Cores.cinza[3]}
-          width='90%'
-          height='100%'
-          minHeight='45px'
-          maxHeight='40px'
-          paddingRight='2%'
+          width="90%"
+          height="100%"
+          minHeight="45px"
+          maxHeight="40px"
+          paddingRight="2%"
           onKeyPress={verificarEnter}
           onChange={(e) => setInputMensagemConteudo(e.target.value)}
           value={inputMensagemConteudo}
@@ -471,23 +467,23 @@ export default function ConversaAberta({ socket }) {
           <Spin
             indicator={antIconEnvioMensagem}
             style={{
-              margin: '0px 1rem',
+              margin: "0px 1rem",
             }}
           />
         ) : (
-          <Tooltip placement='bottom' title='Enviar mensagem'>
+          <Tooltip placement="bottom" title="Enviar mensagem">
             <Button
-              backgroundColor='transparent'
-              borderColor='transparent'
+              backgroundColor="transparent"
+              borderColor="transparent"
               color={Cores.lilas[1]}
-              width='10%'
-              widthres='15%'
-              height='10%'
-              marginTop='0%'
+              width="10%"
+              widthres="15%"
+              height="10%"
+              marginTop="0%"
               onClick={enviarMensagemComInput}
             >
               <SendOutlined
-                style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
+                style={{ fontSize: "27px", color: "{Cores.lilas[1]}" }}
               />
             </Button>
           </Tooltip>
@@ -506,7 +502,7 @@ export default function ConversaAberta({ socket }) {
         <ModalEnviarArquivo
           fecharModal={() => fechandoModalEnviarArquivo()}
           pegandoDados={() => EnviandoMensagemComArquivo()}
-          ref={modalRef}      
+          ref={modalRef}
         />
       </Modal>
     </Conversa>

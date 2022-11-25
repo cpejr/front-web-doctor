@@ -1,6 +1,16 @@
-import React, { useState, useEffect, forwardRef, useImperativeHandle } from "react";
+import React, {
+  useState,
+  useEffect,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import Button from "../../styles/Button";
-import { LoadingOutlined, PlusOutlined, FilePdfOutlined, FolderOpenOutlined } from "@ant-design/icons";
+import {
+  LoadingOutlined,
+  PlusOutlined,
+  FilePdfOutlined,
+  FolderOpenOutlined,
+} from "@ant-design/icons";
 import { Spin, Upload } from "antd";
 import AddToast from "../AddToast/AddToast";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -15,8 +25,7 @@ import {
 } from "./Styles";
 import { toast } from "react-toastify";
 
-
-const ModalEnviarArquivo = forwardRef((props, ref)=> {
+const ModalEnviarArquivo = forwardRef((props, ref) => {
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
   const [carregando, setCarregando] = useState(false);
   const [file, setFile] = useState();
@@ -31,8 +40,6 @@ const ModalEnviarArquivo = forwardRef((props, ref)=> {
     reader.readAsDataURL(file);
   };
 
-
-
   async function handleChange(info) {
     // Get this url from response in real world.
     setCarregando(true);
@@ -41,6 +48,7 @@ const ModalEnviarArquivo = forwardRef((props, ref)=> {
       setFile(url);
     });
   }
+  
   async function enviarArquivo() {
     if (file) {
       setCarregandoDeletar(true);
@@ -48,13 +56,13 @@ const ModalEnviarArquivo = forwardRef((props, ref)=> {
       setUrlArquivo(res);
 
       props.pegandoDados();
-      
+
       setFile(null);
 
       // Toda vez que confirmar o envio, vai pegar os dados lá em conversa aberta em EnviandoMensagemComArquivo()
-  
+
       props.fecharModal();
-      
+
       //document.location.reload(true);
       setCarregandoDeletar(false);
     } else {
@@ -62,30 +70,31 @@ const ModalEnviarArquivo = forwardRef((props, ref)=> {
     }
   }
 
-  useImperativeHandle(ref, ()=> ({
-    getPDF: ()=> {
-      let res = {}
-    
-      if(file && urlArquivo)
-      {
-         res = {
-           file:file,
-           url: urlArquivo
-        }
+  useImperativeHandle(ref, () => ({
+    getPDF: () => {
+      let res = {};
 
-        return res ;
-      } 
-       
-      return null
-    }
-  }))
+      if (file && urlArquivo) {
+        res = {
+          file: file,
+          url: urlArquivo,
+        };
+
+        return res;
+      }
+
+      return null;
+    },
+  }));
 
   return (
     <div>
       <ContainerModalExcluir>
         <Titulo>Selecione uma arquivo para enviar:</Titulo>
-        {file ? <FilePdfOutlined /> :
-       /*  <CaixaBotaoUpload>
+        {file ? (
+          <FilePdfOutlined />
+        ) : (
+          /*  <CaixaBotaoUpload>
            <Upload
             name="avatar"
             listType="picture-card"
@@ -97,13 +106,13 @@ const ModalEnviarArquivo = forwardRef((props, ref)=> {
           </Upload>
          
         </CaixaBotaoUpload> */
-        <Upload  name="file"
-        
-        showUploadList={false}
-        onChange={handleChange} >
-<Button icon={<FolderOpenOutlined />}><FolderOpenOutlined />Click to Upload</Button>
-</Upload>
-}
+          <Upload name="file" showUploadList={false} onChange={handleChange}>
+            <Button icon={<FolderOpenOutlined />}>
+              <FolderOpenOutlined />
+              Click to Upload
+            </Button>
+          </Upload>
+        )}
         <ContainerFooterModalExcluir>
           <Button
             color={Cores.azulEscuro}
@@ -143,6 +152,6 @@ const ModalEnviarArquivo = forwardRef((props, ref)=> {
       </ContainerModalExcluir>
     </div>
   );
-})
+});
 
 export default ModalEnviarArquivo;
