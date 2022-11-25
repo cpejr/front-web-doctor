@@ -311,7 +311,7 @@ export default function ConversaAberta({ socket }) {
       setInputMensagemConteudo("");
     }
 
-    enviaMensagem("nenhuma", texto);
+    enviaMensagem(null, texto);
   };
 
   // Aqui pega os dados do  modal, vamos por a função de enviar mensagem aqui :)
