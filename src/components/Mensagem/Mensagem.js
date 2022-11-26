@@ -1,7 +1,7 @@
 import React from "react";
 import dayjs from "dayjs";
 import { MensagemEnviada, DataHoraMensagem } from "./Styles";
-import { MdLink } from "react-icons/md";
+import { FilePdfOutlined } from "@ant-design/icons";
 
 export default function Mensagem({
   scrollRef,
@@ -17,7 +17,7 @@ export default function Mensagem({
     >
       {media_url ? (
         <a href={media_url} target="_blank" rel="noopener noreferrer">
-          <MdLink style={{ marginRight: 8 }} size={50} color="#222" />
+          <FilePdfOutlined style={{ marginRight: 8, fontSize:20 }}  color="#222" />
         </a>
       ) : (
         <></>

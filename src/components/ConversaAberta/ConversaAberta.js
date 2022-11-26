@@ -105,6 +105,20 @@ export default function ConversaAberta({ socket }) {
           <b>Finalizar Chat</b>
         </Button>
       </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => {
+            setModalEnviarArquivo(true);
+          }}
+        >
+          <b>Finalizar Chat</b>
+        </Button>
+      </Menu.Item>
     </Menu>
   );
 
@@ -324,7 +338,7 @@ export default function ConversaAberta({ socket }) {
         .conversaCom;
 
     let id_remetente = usuarioId;
-    let texto = "ArquivoPDF";
+    let texto = "Arquivo PDF";
 
     /*  if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
       id_remetente = remetente.id;

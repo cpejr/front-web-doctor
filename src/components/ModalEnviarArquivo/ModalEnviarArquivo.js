@@ -7,7 +7,6 @@ import React, {
 import Button from "../../styles/Button";
 import {
   LoadingOutlined,
-  PlusOutlined,
   FilePdfOutlined,
   FolderOpenOutlined,
 } from "@ant-design/icons";
@@ -20,10 +19,11 @@ import {
   ContainerModalExcluir,
   ContainerFooterModalExcluir,
   CaixaLoader,
-  CaixaBotaoUpload,
   Titulo,
+  ArquivoSelecionado,
 } from "./Styles";
 import { toast } from "react-toastify";
+
 
 const ModalEnviarArquivo = forwardRef((props, ref) => {
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
@@ -66,7 +66,7 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
       //document.location.reload(true);
       setCarregandoDeletar(false);
     } else {
-      toast.error("Selecione uma arquivo para enviar!");
+      toast.error("Selecione um arquivo para enviar!");
     }
   }
 
@@ -92,25 +92,29 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
       <ContainerModalExcluir>
         <Titulo>Selecione uma arquivo para enviar:</Titulo>
         {file ? (
-          <FilePdfOutlined />
+          <ArquivoSelecionado>
+          <FilePdfOutlined style={{ fontSize: 20}}/>
+          <div>Arquivo PDF</div>
+          </ArquivoSelecionado>
         ) : (
-          /*  <CaixaBotaoUpload>
-           <Upload
-            name="avatar"
-            listType="picture-card"
-            className="avatar-uploader"
-            showUploadList={false}
-            onChange={handleChange}
+     
+          <Upload name="file" showUploadList={false} onChange={handleChange} style={{width:"400"}}>
+            <Button
+            color={Cores.azulEscuro}
+            backgroundColor={Cores.branco}
+            fontWeight="normal"
+            borderColor={Cores.cinza[3]}
+            height="28px"
+            width="100%"
+            widthMedia670="50%"
+            fontSize="13px"
+            padding="5px"
+            gap="5px"
+            
           >
-            {uploadButton}
-          </Upload>
-         
-        </CaixaBotaoUpload> */
-          <Upload name="file" showUploadList={false} onChange={handleChange}>
-            <Button icon={<FolderOpenOutlined />}>
-              <FolderOpenOutlined />
-              Click to Upload
-            </Button>
+              <FolderOpenOutlined style={{ fontSize: 18}} />
+              Abrir Pastas
+          </Button>
           </Upload>
         )}
         <ContainerFooterModalExcluir>
@@ -145,7 +149,7 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
                 <Spin indicator={antIconModal} />
               </CaixaLoader>
             ) : (
-              "Confirmar"
+              "Enviar"
             )}
           </Button>
         </ContainerFooterModalExcluir>

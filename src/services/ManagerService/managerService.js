@@ -913,7 +913,7 @@ export const enviarArquivoMensagem = async (file) => {
   await requesterService
     .enviarArquivoMensagem(file)
     .then((res) => {
-      toast.success('Arquivo criado com sucesso');
+      toast.success('Arquivo PDF enviado com sucesso');
       id = res.data;
       
     })

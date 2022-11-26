@@ -76,3 +76,19 @@ export const CaixaLoader = styled.div`
   display: flex;
   align-items: center;
 `;
+
+export const ArquivoSelecionado = styled.div`
+   width: 100%;
+   height: auto;
+   padding: 5px;
+   gap: 5px;
+
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   
+   font-size: 16px;
+   color: ${Cores.azul};
+   
+`;
