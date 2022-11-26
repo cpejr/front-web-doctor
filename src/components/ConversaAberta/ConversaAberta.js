@@ -116,7 +116,7 @@ export default function ConversaAberta({ socket }) {
             setModalEnviarArquivo(true);
           }}
         >
-          <b>Finalizar Chat</b>
+          <b>Enviar Arquivo</b>
         </Button>
       </Menu.Item>
     </Menu>
