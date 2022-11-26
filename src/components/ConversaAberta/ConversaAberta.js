@@ -201,8 +201,6 @@ export default function ConversaAberta({ socket }) {
     return () => (componenteEstaMontadoRef.current = false);
   }, [conversaSelecionada, usuarioId]);
 
-  console.log(mensagens);
-
   useEffect(() => {
     inputMensagemConteudoRef?.current?.focus();
     scrollRef.current?.scrollIntoView({ behavior: "smooth" });
