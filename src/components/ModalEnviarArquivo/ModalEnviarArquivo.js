@@ -24,7 +24,6 @@ import {
 } from "./Styles";
 import { toast } from "react-toastify";
 
-
 const ModalEnviarArquivo = forwardRef((props, ref) => {
   const [carregandoDeletar, setCarregandoDeletar] = useState(false);
   const [carregando, setCarregando] = useState(false);
@@ -48,7 +47,18 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
       setFile(url);
     });
   }
-  
+
+  const TestantoTipoArquivo = (file) => {
+    const isPdf = file.type === "application/pdf";
+
+    if (!isPdf) {
+      toast.error("Transforme para pdf antes de enviar");
+      setCarregando(true);
+    }
+
+    return isPdf;
+  };
+
   async function enviarArquivo() {
     if (file) {
       setCarregandoDeletar(true);
@@ -93,28 +103,32 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
         <Titulo>Selecione uma arquivo para enviar:</Titulo>
         {file ? (
           <ArquivoSelecionado>
-          <FilePdfOutlined style={{ fontSize: 20}}/>
-          <div>Arquivo PDF</div>
+            <FilePdfOutlined style={{ fontSize: 20 }} />
+            <div>Arquivo PDF</div>
           </ArquivoSelecionado>
         ) : (
-     
-          <Upload name="file" showUploadList={false} onChange={handleChange} style={{width:"400"}}>
-            <Button
-            color={Cores.azulEscuro}
-            backgroundColor={Cores.branco}
-            fontWeight="normal"
-            borderColor={Cores.cinza[3]}
-            height="28px"
-            width="100%"
-            widthMedia670="50%"
-            fontSize="13px"
-            padding="5px"
-            gap="5px"
-            
+          <Upload
+            name="file"
+            showUploadList={false}
+            beforeUpload={TestantoTipoArquivo}
+            onChange={handleChange}
+            style={{ width: "400" }}
           >
-              <FolderOpenOutlined style={{ fontSize: 18}} />
+            <Button
+              color={Cores.azulEscuro}
+              backgroundColor={Cores.branco}
+              fontWeight="normal"
+              borderColor={Cores.cinza[3]}
+              height="28px"
+              width="100%"
+              widthMedia670="50%"
+              fontSize="13px"
+              padding="5px"
+              gap="5px"
+            >
+              <FolderOpenOutlined style={{ fontSize: 18 }} />
               Abrir Pastas
-          </Button>
+            </Button>
           </Upload>
         )}
         <ContainerFooterModalExcluir>

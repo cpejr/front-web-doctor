@@ -18,7 +18,9 @@ export default function Mensagem({
     >
       {media_url ? (
         <a href={media_url} target="_blank" rel="noopener noreferrer">
-          <FilePdfOutlined style={{ marginRight: 8, fontSize:20, color:Cores.azul }}   />
+          <FilePdfOutlined
+            style={{ marginRight: 8, fontSize: 20, color: Cores.azul }}
+          />
         </a>
       ) : (
         <></>

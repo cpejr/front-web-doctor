@@ -184,18 +184,17 @@ export default function ConversaAberta({ socket }) {
     setConversaSelecionada(auxConversa);
   }
 
+  async function getMensagens() {
+    if (checarObjVazio(conversaSelecionada) || !usuarioId) return;
+
+    const resposta = await managerService.GetMensagensPorConversaUsuario(
+      usuarioId,
+      conversaSelecionada.id
+    );
+    if (componenteEstaMontadoRef.current) setMensagens(resposta);
+  }
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
-
-    async function getMensagens() {
-      if (checarObjVazio(conversaSelecionada) || !usuarioId) return;
-
-      const resposta = await managerService.GetMensagensPorConversaUsuario(
-        usuarioId,
-        conversaSelecionada.id
-      );
-      if (componenteEstaMontadoRef.current) setMensagens(resposta);
-    }
 
     getMensagens();
 
@@ -290,7 +289,7 @@ export default function ConversaAberta({ socket }) {
     atualizarBarraLateral(novaMensagem);
 
     setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
-
+    getMensagens();
     setInputMensagemConteudo("");
     setCarregandoEnvioMensagem(false);
   };
@@ -445,22 +444,24 @@ export default function ConversaAberta({ socket }) {
             </Dropdown>
           </MenuConversasTipoExame>
         ) : (
-          <Button
-            backgroundColor="transparent"
-            borderColor="transparent"
-            color={Cores.lilas[1]}
-            width="10%"
-            widthres="15%"
-            height="10%"
-            marginTop="0%"
-            onClick={() => {
-              setModalEnviarArquivo(true);
-            }}
-          >
-            <PaperClipOutlined
-              style={{ fontSize: "27px", color: "{Cores.lilas[1]}" }}
-            />
-          </Button>
+          <Tooltip placement="bottom" title="Enviar arquivo">
+            <Button
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color={Cores.lilas[1]}
+              width="10%"
+              widthres="15%"
+              height="10%"
+              marginTop="0%"
+              onClick={() => {
+                setModalEnviarArquivo(true);
+              }}
+            >
+              <PaperClipOutlined
+                style={{ fontSize: "27px", color: "{Cores.lilas[1]}" }}
+              />
+            </Button>
+          </Tooltip>
         )}
 
         <Input
