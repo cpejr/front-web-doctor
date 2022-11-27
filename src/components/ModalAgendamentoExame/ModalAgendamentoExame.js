@@ -23,8 +23,6 @@ import {
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
 import { Cores } from "../../variaveis";
-import { TiposDeConsulta } from "../listaTiposDeConsultas";
-import { apenasNumeros } from "../../utils/masks";
 import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 import { TiposDeExame } from "../listaTiposDeExames";
@@ -114,7 +112,7 @@ function ModalAgendamentoExame(props) {
     const res = await managerService.GetDadosConsultorios({tipo:'EXAME'});
     setConsultorios(res.dadosConsultorios);
     setCarregandoConsultorios(false);
-  }
+  }   
 
   useEffect(() => {
     pegandoConsultorios();
@@ -134,18 +132,7 @@ function ModalAgendamentoExame(props) {
   async function validacaoCampos(e) {
     const { value, name } = e.target;
 
-    if (name !== "descricao") {
-      if (value) {
-        setCamposVazios({ ...camposVazios, [name]: false });
-      } else {
-        setCamposVazios({ ...camposVazios, [name]: true });
-      }
-    }
-    if (exame.duracao_em_minutos === "") {
-      setErro({ ...erro, [name]: true });
-    } else {
-      setErro({ ...erro, [name]: false });
-    }
+
 
     if (e.target.name === "data") {
         setDataExame(e.target.value);
@@ -154,13 +141,7 @@ function ModalAgendamentoExame(props) {
       }
 
       return dataExame;
-    } else if (e.target.name === "duracao_em_minutos") {
-      setExame({
-        ...exame,
-        [e.target.name]: apenasNumeros(e.target.value),
-      });
-      return exame;
-    } else {
+    }  else {
       setExame({ ...exame, [e.target.name]: e.target.value });
       return exame;
     }
@@ -251,7 +232,6 @@ function ModalAgendamentoExame(props) {
     setCamposVazios({ ...camposVazios, ...errors });
 
     if (
-        exame.duracao_em_minutos === "" ||
       dataExame === "" ||
       hora === ""
     ) {
