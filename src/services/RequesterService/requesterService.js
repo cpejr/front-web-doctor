@@ -131,7 +131,7 @@ export const editarPerguntasFormulario = (id, perguntas) =>
 export const editarCamposFormulario = (id, campos) =>
   api.put(`/formularios/${id}`, campos);
 
-export const requisicaoTodosFormulariosPaciente = () =>
+  export const requisicaoTodosFormulariosPaciente = () =>
   api.get('/formularios_pacientes');
 
 
@@ -174,3 +174,22 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   api.put(`/mensagems/${id_conversa}/visualizadas/${id_usuario}`);
 
 export const dispostivoById = (id) => api.get(`/dispositivos/${id}`);
+
+export const requisicaoSobreMimDados = () =>
+  api.get('/sobre_mims');
+
+export const criarSobreMim = (dados) => 
+  api.post(`/sobre_mims`, dados, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    }
+  });
+
+export const atualizarSobreMim = (id, dados) => 
+  api.put(`/sobre_mims/${id}`, dados, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    }
+  });
+
+export const deletarSobreMim = (id) => api.delete(`/sobre_mims/${id}`);
