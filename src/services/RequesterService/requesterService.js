@@ -153,10 +153,14 @@ export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
 
 export const criarConversa = (conversa) => api.post(`/conversas`, conversa);
 
+export const enviarMensagemDeConfirmarPagamento = (id_usuario) =>
+  api.post(`/conversas_whatsapp/${id_usuario}`);
+
 export const requisicaoConversasPorUsuario = (id_usuario) =>
   api.get(`/conversas/${id_usuario}/usuario`);
 
 export const updateConversaAtiva = (id) => api.put(`/conversas/ativacao/${id}`);
+export const updateConversaFinalizada = (id) => api.put(`/conversas/finalizacao/${id}`);
 export const deletarConversasInativas = (id_usuario) =>
   api.delete(`/conversas/${id_usuario}/usuario`);
 

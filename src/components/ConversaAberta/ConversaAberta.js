@@ -6,6 +6,7 @@ import {
   BotaoVoltar,
   CorpoConversaAberta,
   FooterConversaAberta,
+  MenuConversasTipoExame,
 } from './Styles';
 import Mensagem from '../Mensagem/Mensagem';
 import { Cores } from '../../variaveis';
@@ -15,16 +16,19 @@ import { ChatContext } from '../../contexts/ChatContext';
 import * as managerService from '../../services/ManagerService/managerService';
 import checarObjVazio from '../../utils/checarObjVazio';
 import moverArray from '../../utils/moverArray';
-import { Spin, Tooltip } from 'antd';
+import { Spin, Tooltip, Menu, Dropdown } from 'antd';
 import {
   ArrowLeftOutlined,
   PaperClipOutlined,
   SendOutlined,
   LoadingOutlined,
+  PlusOutlined
 } from '@ant-design/icons';
 import { recebeEmail } from '../../services/auth';
 import objCopiaProfunda from '../../utils/objCopiaProfunda';
 import moment from "moment";
+import AddToast from "../AddToast/AddToast";
+import { toast } from "react-toastify";
 
 moment.locale("pt-br");
 
@@ -34,6 +38,9 @@ export default function ConversaAberta({ socket }) {
   const [carregandoConversa, setCarregandoConversa] = useState(true);
   const [carregandoEnvioMensagem, setCarregandoEnvioMensagem] = useState(false);
   const [tipoUsuario, setTipoUsuario] = useState(false);
+  const [horarioPermitidoParaEnvioMensagem, setHorarioPermitidoParaEnvioMensagem] = useState(null);
+  const mensagemFinalizada = "CHAT FINALIZADO.\n" +
+    "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n"
 
   const {
     usuarioId,
@@ -48,6 +55,51 @@ export default function ConversaAberta({ socket }) {
   const componenteEstaMontadoRef = useRef(null);
   const scrollRef = useRef(null);
   const inputMensagemConteudoRef = useRef(null);
+  const horaAtual = moment().hours();
+  const horarioComercial = (horaAtual >= 7 && horaAtual < 19) ? true : false;
+
+
+
+  const menuBotoes = (
+    <Menu>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => enviarFormularioPaciente()}
+        >
+          <b>Enviar Formulário Actigrafia</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => confirmarPagamento()}
+        >
+          <b>Confirmar Pagamento</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => finalizarChat()}
+        >
+          <b>Finalizar Chat</b>
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
 
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
@@ -68,6 +120,43 @@ export default function ConversaAberta({ socket }) {
 
     return () => (componenteEstaMontadoRef.current = false);
   }, []);
+
+
+  const verificaHorarioPermitidoParaEnvioDeMensagens = () =>{
+    const verificaHorarioUsuario = !horarioComercial && (tipoUsuario !== "MASTER");
+    setHorarioPermitidoParaEnvioMensagem(verificaHorarioUsuario);
+  }
+
+  useEffect(() => {
+    verificaHorarioPermitidoParaEnvioDeMensagens();
+  })
+
+
+  async function enviarFormularioPaciente() {
+    await managerService.EnviandoFormularioPaciente(
+      false,
+      true,
+      "d98bf5e0-73e0-4d59-9c00-a7d79a1174b0",
+      conversaSelecionada.conversaCom.id
+    )
+  }
+
+  async function confirmarPagamento() {
+    managerService.confirmarPagamentoExame(conversaSelecionada.conversaCom.id, usuarioId);
+  }
+
+  async function finalizarChat() {
+    await enviaMensagem('nenhuma', mensagemFinalizada);
+    await managerService.UpdateConversaFinalizada(conversaSelecionada.id);
+    atualizaConversaFinalizada();
+  }
+
+  function atualizaConversaFinalizada() {
+    const auxConversa = conversaSelecionada;
+    auxConversa.finalizada = true;
+    setConversaSelecionada(auxConversa);
+  }
+
 
   useEffect(() => {
     componenteEstaMontadoRef.current = true;
@@ -94,7 +183,6 @@ export default function ConversaAberta({ socket }) {
 
   const atualizarBarraLateral = (novaMensagem) => {
     const id_conversa = novaMensagem.id_conversa;
-
     const index = conversas.findIndex(({ id }) => id === id_conversa);
     const copiaConversas = objCopiaProfunda(conversas);
     const conversaNaLista = copiaConversas[index];
@@ -144,44 +232,27 @@ export default function ConversaAberta({ socket }) {
     });
   };
 
-  const enviarMensagem = async (e) => {
-    e.preventDefault();
-
-    if (!inputMensagemConteudo) return;
-
-    const horaAtual = moment().hours();
-    const horarioComercial = (horaAtual >= 7 && horaAtual < 19) ? true : false;
-    const verificaHorarioUsuario = !horarioComercial && (tipoUsuario !== "MASTER");
-    const remetente = conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)].conversaCom;
-
-    let id_remetente = usuarioId;
-    let texto = inputMensagemConteudo;
-
-    if (verificaHorarioUsuario) {   
-      id_remetente = remetente.id;
-      texto = "Obrigado pela sua mensagem!\n" +
-        "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
-        "Se tiver um assunto urgente favor responder ao formulário de Emergência."
-    }
+  const enviaMensagem = async ( media_url, conteudo ) => {
 
     setCarregandoEnvioMensagem(true);
     const dadosParaCriarNovaMensagem = {
       id_conversa: conversaSelecionada.id,
-      id_usuario: id_remetente,
-      media_url: 'nenhuma', // Futuramente permitir a opção de mandar mídias
+      id_usuario: usuarioId,
+      media_url: media_url,
       foi_visualizado: false,
-      conteudo: texto,
+      conteudo: conteudo
     };
 
-    if (!verificaHorarioUsuario) { setInputMensagemConteudo('') };
 
-    const { data_cricao, data_atualizacao, media_url, ...dados } =
+    const { data_cricao, data_atualizacao, ...dados } =
       await managerService.CriandoMensagem(dadosParaCriarNovaMensagem);
+
 
     const novaMensagem = {
       ...dados,
-      pertenceAoUsuarioAtual: !verificaHorarioUsuario,
+      pertenceAoUsuarioAtual: !horarioPermitidoParaEnvioMensagem
     };
+
 
     if (conversaSelecionada.ativada) {
       socket.emit('enviarMensagem', {
@@ -196,7 +267,45 @@ export default function ConversaAberta({ socket }) {
 
     setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
 
+    setInputMensagemConteudo('');
     setCarregandoEnvioMensagem(false);
+
+  }
+
+  const enviarMensagemComInput = async (e) => {
+    e.preventDefault();
+
+    if (!inputMensagemConteudo) return;
+
+
+
+    const remetente = conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)].conversaCom;
+
+    let id_remetente = usuarioId;
+    let texto = inputMensagemConteudo;
+
+
+    if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
+      id_remetente = remetente.id;
+      texto = "Obrigado pela sua mensagem!\n" +
+        "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
+        "Se tiver um assunto urgente favor responder ao formulário de Emergência."
+    }
+
+    if (conversaSelecionada.finalizada) {
+      id_remetente = remetente.id;
+      texto = "CHAT FINALIZADO.\n" +
+        "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n"
+      setInputMensagemConteudo('');
+    }
+
+    if (horarioComercial) {
+      setInputMensagemConteudo('')
+    };
+
+
+    enviaMensagem('nenhuma', texto);
+
   };
 
   const antIconConversa = (
@@ -209,10 +318,10 @@ export default function ConversaAberta({ socket }) {
 
   const verificarEnter = (e) => {
     if (e.key === 'Enter' && inputMensagemConteudo) {
-      enviarMensagem(e);
+      enviarMensagemComInput(e);
     }
   };
-  
+
 
   return (
     <Conversa>
@@ -243,7 +352,11 @@ export default function ConversaAberta({ socket }) {
           height='70px'
           width='76px'
         ></img>
-        <NomePessoa>{conversaSelecionada?.conversaCom?.nome}</NomePessoa>
+        {conversaSelecionada.tipo === 'EXAME' ? (
+          <NomePessoa>{conversaSelecionada?.conversaCom?.nome} - EXAME</NomePessoa>
+        ) : (
+          <NomePessoa>{conversaSelecionada?.conversaCom?.nome}</NomePessoa>
+        )}
       </HeaderConversaAberta>
       <CorpoConversaAberta>
         {carregandoConversa ? (
@@ -269,20 +382,35 @@ export default function ConversaAberta({ socket }) {
         )}
       </CorpoConversaAberta>
       <FooterConversaAberta>
-        <Button
-          backgroundColor='transparent'
-          borderColor='transparent'
-          color={Cores.lilas[1]}
-          width='10%'
-          widthres='15%'
-          height='10%'
-          marginTop='0%'
-          onClick={() => { }}
-        >
-          <PaperClipOutlined
-            style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
-          />
-        </Button>
+        {conversaSelecionada.tipo === 'EXAME' ? (
+          <MenuConversasTipoExame>
+            <Dropdown
+              onClick={(e) => e.preventDefault()}
+              overlay={menuBotoes}
+              placement={"bottom"}
+            >
+              <PlusOutlined
+                style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
+              />
+            </Dropdown>
+          </MenuConversasTipoExame>
+        ) : (
+          <Button
+            backgroundColor='transparent'
+            borderColor='transparent'
+            color={Cores.lilas[1]}
+            width='10%'
+            widthres='15%'
+            height='10%'
+            marginTop='0%'
+            onClick={() => { }}
+          >
+            <PaperClipOutlined
+              style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
+            />
+          </Button>
+        )}
+
         <Input
           placeholder='Mensagem'
           backgroundColor='white'
@@ -314,7 +442,7 @@ export default function ConversaAberta({ socket }) {
               widthres='15%'
               height='10%'
               marginTop='0%'
-              onClick={enviarMensagem}
+              onClick={enviarMensagemComInput}
             >
               <SendOutlined
                 style={{ fontSize: '27px', color: '{Cores.lilas[1]}' }}
