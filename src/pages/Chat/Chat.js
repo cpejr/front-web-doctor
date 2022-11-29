@@ -1,16 +1,15 @@
-import React, { useState, useContext, useEffect, useRef } from 'react';
-import BarraLateralChat from '../../components/BarraLateralChat';
-import ConversaAberta from '../../components/ConversaAberta';
-import { ChatContext } from '../../contexts/ChatContext';
-import checarObjVazio from '../../utils/checarObjVazio';
-import { Container, MensagemInicialChat, ContainerMobile } from './Styles';
-import * as managerService from '../../services/ManagerService/managerService';
-import io from 'socket.io-client';
-import objCopiaProfunda from '../../utils/objCopiaProfunda';
-import moverArray from '../../utils/moverArray';
-import moment from "moment";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import io from "socket.io-client";
+import BarraLateralChat from "../../components/BarraLateralChat";
+import ConversaAberta from "../../components/ConversaAberta";
+import { ChatContext } from "../../contexts/ChatContext";
+import * as managerService from "../../services/ManagerService/managerService";
+import checarObjVazio from "../../utils/checarObjVazio";
+import moverArray from "../../utils/moverArray";
+import objCopiaProfunda from "../../utils/objCopiaProfunda";
+import { Container, ContainerMobile, MensagemInicialChat } from "./Styles";
 
-const BACK_END_URL = 'http://localhost:3333';
+const BACK_END_URL = "http://localhost:3333";
 
 const Chat = () => {
   const [mensagemRecebida, setMensagemRecebida] = useState({});
@@ -26,24 +25,25 @@ const Chat = () => {
   const componenteEstaMontadoRef = useRef(null);
   const socket = useRef(null);
 
+  async function getConversas(componenteEstaMontadoRef) {
+    setCarregandoConversas(true);
+
+    await managerService.deletarConversasInativas(usuarioId);
+    const resposta = await managerService.GetConversasUsuario(usuarioId);
+
+    if (componenteEstaMontadoRef) {
+      setConversas(resposta);
+      setCarregandoConversas(false);
+    }
+    console.log("chamou");
+  }
+
   useEffect(() => {
     if (!usuarioId) return;
 
     componenteEstaMontadoRef.current = true;
 
-    async function getConversas() {
-      setCarregandoConversas(true);
-
-      await managerService.deletarConversasInativas(usuarioId);
-      const resposta = await managerService.GetConversasUsuario(usuarioId);
-
-      if (componenteEstaMontadoRef.current) {
-        setConversas(resposta);
-        setCarregandoConversas(false);
-      }
-    }
-
-    getConversas();
+    getConversas(componenteEstaMontadoRef.current);
 
     return () => (componenteEstaMontadoRef.current = false);
   }, [usuarioId]);
@@ -53,13 +53,13 @@ const Chat = () => {
 
     socket.current = io(BACK_END_URL);
 
-    socket.current.emit('adicionarUsuario', usuarioId);
+    socket.current.emit("adicionarUsuario", usuarioId);
 
-    socket.current.on('mensagemRecebida', (novaMensagem) => {
+    socket.current.on("mensagemRecebida", (novaMensagem) => {
       setMensagemRecebida(novaMensagem);
     });
 
-    socket.current.on('conversaRecebida', (novaConversa) => {
+    socket.current.on("conversaRecebida", (novaConversa) => {
       setConversaRecebida(novaConversa);
     });
 
@@ -69,34 +69,32 @@ const Chat = () => {
     };
   }, [usuarioId]);
 
+  async function atualizarBarraLateralNovaMensagem(novaMensagem) {
+    const index = conversas?.findIndex(
+      ({ id }) => id === novaMensagem.id_conversa
+    );
+    const copiaConversas = objCopiaProfunda(conversas);
+    const conversaNaLista = copiaConversas[index];
+
+    novaMensagem.pertenceAoUsuarioAtual = false;
+    if (novaMensagem.id_conversa === conversaSelecionada.id) {
+      setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
+      await managerService.UpdateMensagemVisualizada(novaMensagem.id, {
+        foi_visualizado: true,
+      });
+    } else {
+      conversaNaLista.mensagensNaoVistas++;
+    }
+
+    conversaNaLista.ultima_mensagem = novaMensagem;
+    if (componenteEstaMontadoRef.current) {
+      setConversas(moverArray(copiaConversas, index, 0));
+    }
+  }
   useEffect(() => {
     if (checarObjVazio(mensagemRecebida) || !usuarioId) return;
 
     componenteEstaMontadoRef.current = true;
-
-    async function atualizarBarraLateralNovaMensagem(novaMensagem) {
-      const index = conversas?.findIndex(
-        ({ id }) => id === novaMensagem.id_conversa
-      );
-      const copiaConversas = objCopiaProfunda(conversas);
-      const conversaNaLista = copiaConversas[index];
-
-      novaMensagem.pertenceAoUsuarioAtual = false;
-      if (novaMensagem.id_conversa === conversaSelecionada.id) {
-        setMensagens((mensagensLista) => [...mensagensLista, novaMensagem]);
-        await managerService.UpdateMensagemVisualizada(novaMensagem.id, {
-          foi_visualizado: true,
-        });
-      } else {
-        conversaNaLista.mensagensNaoVistas++;
-      }
-
-      conversaNaLista.ultima_mensagem = novaMensagem;
-      if (componenteEstaMontadoRef.current) {
-        setConversas(moverArray(copiaConversas, index, 0));
-        }
-      }
-    
 
     atualizarBarraLateralNovaMensagem(mensagemRecebida);
     setMensagemRecebida({});
@@ -104,26 +102,25 @@ const Chat = () => {
     return () => (componenteEstaMontadoRef.current = false);
   }, [mensagemRecebida, usuarioId]);
 
+  function atualizarBarraLateralNovaConversa(novaConversa) {
+    const index = conversas?.findIndex(
+      (conversa) => conversa.id === novaConversa.id
+    );
+
+    if (index === -1) {
+      return setConversas((conversasLista) => [
+        novaConversa,
+        ...conversasLista,
+      ]);
+    }
+
+    const copiaConversas = objCopiaProfunda(conversas);
+    copiaConversas[index] = novaConversa;
+
+    setConversas(copiaConversas);
+  }
   useEffect(() => {
     if (checarObjVazio(conversaRecebida)) return;
-
-    function atualizarBarraLateralNovaConversa(novaConversa) {
-      const index = conversas?.findIndex(
-        (conversa) => conversa.id === novaConversa.id
-      );
-
-      if (index === -1) {
-        return setConversas((conversasLista) => [
-          novaConversa,
-          ...conversasLista,
-        ]);
-      }
-
-      const copiaConversas = objCopiaProfunda(conversas);
-      copiaConversas[index] = novaConversa;
-
-      setConversas(copiaConversas);
-    }
 
     atualizarBarraLateralNovaConversa(conversaRecebida);
     setConversaRecebida({});
