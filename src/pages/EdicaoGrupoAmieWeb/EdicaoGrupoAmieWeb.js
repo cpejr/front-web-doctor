@@ -53,7 +53,7 @@ function EdicaoGrupoAmieWeb() {
     const imagem2 = await managerService.GetArquivoPorChave(chave2);
     setImagem_um(imagem1);
     setImagem_dois(imagem2);
-    await sleep(1500);
+    await sleep(1000);
     setCarregando(false);
   }
 
@@ -82,25 +82,17 @@ function EdicaoGrupoAmieWeb() {
     </UploadButton>
   );
 
-  async function handleChange1(info) {
+  async function handleChange(index ,info) {
     // Get this url from response in real world.
     setCarregando(true);
     getBase64(info.file.originFileObj, (url) => {
       setCarregando(false);
-      setImagem_um(url);
       setAlterou(true);
+      if(index === 1) {setImagem_um(url);}
+      else {setImagem_dois(url);}
     });
   }
 
-  async function handleChange2(info) {
-    // Get this url from response in real world.
-    setCarregando(true);
-    getBase64(info.file.originFileObj, (url) => {
-      setCarregando(false);
-      setImagem_dois(url);
-      setAlterou(true);
-    });
-  }
 
   async function updateAmie() {
     if (alterou) {
@@ -153,7 +145,7 @@ function EdicaoGrupoAmieWeb() {
             listType='picture'
             showUploadList={false}
             beforeUpload={beforeUpload}
-            onChange={handleChange1}
+            onChange={(e) => handleChange(1, e)}
           >
             {!carregando ? (
               <img
@@ -180,11 +172,11 @@ function EdicaoGrupoAmieWeb() {
           ></TextArea>
           <CaixaBotaoUpload>
             <Upload
-              name='avatar'
+              name='imagem2'
               listType='picture'
               showUploadList={false}
               beforeUpload={beforeUpload}
-              onChange={handleChange2}
+              onChange={(e) => handleChange(2, e)}
             >
               {!carregando ? (
                 <img
