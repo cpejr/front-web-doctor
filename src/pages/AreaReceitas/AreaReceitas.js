@@ -54,7 +54,7 @@ function AreaReceitas() {
 			let dataFormatada = moment(receita.data_criacao).format("YYYY-MM-DD");
 			return (
 				dataFormatada === dataInput &&
-				receita?.nome
+				receita?.titulo
 					?.toLowerCase()
 					.normalize("NFD")
 					.replace(/[\u0300-\u036f]/g, "")
