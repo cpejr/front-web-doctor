@@ -118,9 +118,8 @@ export const TextAreaComentario = styled(TextArea)`
   box-shadow: 0px 4px 4px 0px #00000040;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
-  ::placeholder {
-    color: ${Cores.preto};
-  }
+  box-shadow: none !important;
+
 
   @media (max-width: 755px) {
     width: 296px;

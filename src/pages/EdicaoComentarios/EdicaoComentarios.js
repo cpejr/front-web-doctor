@@ -43,7 +43,6 @@ function EdicaoComentarios(props) {
   async function atualizarDados() {
     setCarregando(true);
       await managerService.UpdateComentario(comentario.id, comentario.comentario);
-    props.fechandoModal();
   }
 
   function preenchendoDados(e) {
@@ -53,12 +52,13 @@ function EdicaoComentarios(props) {
 
 
 
+
   return (
     <EdicaoComentariosPagina>
     <ContainerEdicaoComentarios>
         <TituloEdicaoComentario>Página Comentários</TituloEdicaoComentario>
         <SubtituloEdicaoComentario>Comentários e depoimentos:</SubtituloEdicaoComentario>
-        <TextAreaComentario
+        <TextAreaComentario  
           value={comentario.comentario}
           name="comentario"
           style={{
@@ -66,6 +66,7 @@ function EdicaoComentarios(props) {
             borderColor: Cores.azul,
             color: "black",
             minHeight: "100px",
+
           }}
           onKeyPress={verificandoEnter}
           onChange={preenchendoDados}

@@ -354,6 +354,7 @@ export const UpdateComentario = async (id, comentario) => {
   await requesterService
     .UpdateComentario(id, comentario)
     .then(() => {
+      sleep(1500);
       toast.success('Comentário atualizado com sucesso.');
     })
     .catch((error) => {
@@ -363,6 +364,7 @@ export const UpdateComentario = async (id, comentario) => {
 
   return false;
 };
+
 
 export const GetComentario = async () => {
   let dadosComentario = {};
