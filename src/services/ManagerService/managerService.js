@@ -540,6 +540,28 @@ export const GetRespostaFormularioIdUsuario = async (id_usuario) => {
   return dadosResposta;
 };
 
+export const confirmarPagamentoExame = async(id_paciente, id_usuario) => {
+  const formulariosPaciente = await GetRespostaFormularioIdUsuario(id_paciente);
+  let possuiFormulario = false;
+  let posicao = -1;
+
+  for (const [index, value] of formulariosPaciente.entries()){
+    if(value.tipo === "exame_actigrafia"){
+      possuiFormulario = true;
+      posicao = index;
+    }
+  }
+
+  if(!possuiFormulario)
+    toast.error("O paciente não possui um formulário desse exame");
+  else if(possuiFormulario && formulariosPaciente[posicao].respostas === null){
+    toast.error("O paciente não respondeu as perguntas do formulário");
+  }
+  else{
+    await MandandoMensagemConfirmarPagamento(id_usuario);
+  }
+}
+
 export const GetResposta = async (id) => {
   let dadosResposta = {};
 
@@ -732,6 +754,18 @@ export const CriandoConversa = async (
   return dadosConversaCriada;
 };
 
+export const MandandoMensagemConfirmarPagamento = async (id_usuario) => {
+  await requesterService
+    .enviarMensagemDeConfirmarPagamento(id_usuario)
+    .then(() => {
+      toast.success("Pagamento solicitado com sucesso!")
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    })
+}
+
+
 export const GetConversasUsuario = async (id_usuario) => {
   let dadosConversas = {};
   await requesterService
@@ -750,6 +784,20 @@ export const UpdateConversaAtiva = async (id) => {
   await requesterService
     .updateConversaAtiva(id)
     .then((res) => {
+      dadosConversa = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosConversa;
+};
+
+export const UpdateConversaFinalizada = async (id) => {
+  let dadosConversa = {};
+  await requesterService
+    .updateConversaFinalizada(id)
+    .then((res) => {
+      toast.success("Conversa finalizada com sucesso!")
       dadosConversa = res.data;
     })
     .catch((error) => {
