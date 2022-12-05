@@ -74,23 +74,23 @@ function EdicaoSobreMim() {
   }
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     const dados = new FormData(e.target);
     const formDados = Object.fromEntries(dados.entries());
-    
-    if (!formDados.imagem_um.size) dados.delete("imagem_um");
-    if (!formDados.imagem_dois.size) dados.delete("imagem_dois");    
-
-    setCarregando(true)
-    const id = sobreMimDados.id;
-    await managerService.atualizarSobreMim(id, dados)
 
     delete formDados.imagem_um;
     delete formDados.imagem_dois;
 
+    if (!formDados.imagem_um.size) dados.delete("imagem_um");
+    if (!formDados.imagem_dois.size) dados.delete("imagem_dois");
+
+    const id = sobreMimDados.id;
+
+    setCarregando(true);
+    await managerService.atualizarSobreMim(id, dados);
     setSobreMimDados((prev) => ({ ...prev, ...formDados }));
-    setCarregando(false)
+    setCarregando(false);
   };
   const handleCancelar = () => {
     getSobreMimDados();

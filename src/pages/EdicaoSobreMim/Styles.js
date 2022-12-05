@@ -40,7 +40,14 @@ export const Titulo = styled.h1`
   font-family: "Barlow";
   font-weight: 500;
   font-size: 50px;
-  line-height: 60px;
+
+  @media (max-width: 700px) {
+    font-size: 40px;
+  }
+
+  @media (max-width: 350px) {
+    font-size: 30px;
+  }
 `;
 export const Inputs = styled.form`
   position: relative;
