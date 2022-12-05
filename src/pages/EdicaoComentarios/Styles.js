@@ -78,12 +78,12 @@ export const SubtituloEdicaoComentario = styled.div`
   letter-spacing: 0em;
   text-align: center;
   border-color: ${Cores.preto};
-  border-width: 1px;
+  border-width: 0px;
   border-style: solid;
   border-bottom: 0;
   border-top-left-radius: 3px;
   border-top-right-radius: 3px;
-  padding:19px;
+  padding:20px;
   box-shadow: 0px 4px 4px 0px #00000040;
   padding-top: 10px;
 
@@ -112,17 +112,16 @@ export const SubtituloEdicaoComentario = styled.div`
 
 export const TextAreaComentario = styled.textarea`
   border-color: ${Cores.preto};
-  border-width: 1px;
-  border-top: 0;
   color: ${Cores.preto};
   padding-left: 12px;
+  border: 0;
   padding-right: 3px;
   width: 360px;
   max-height:400px;
   box-shadow: 0px 4px 4px 0px #00000040;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
-  box-shadow: none !important;
+
 
 
   @media (max-width: 755px) {
