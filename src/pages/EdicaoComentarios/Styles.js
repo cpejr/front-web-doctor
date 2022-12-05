@@ -192,7 +192,7 @@ export const BotaoEditarAlteracoes = styled.button`
   width: 363px;
   border-radius: 3px;
   box-shadow: 0px 4px 4px 0px #00000040;
-  background-color: #F8CFCF80;
+  background-color: green;
   font-family: 'Barlow', sans-serif;
   font-size: 30px;
   font-weight: 600;
