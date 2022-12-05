@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Cores } from "../../variaveis";
-import { Input } from "antd";
-const { TextArea } = Input;
+
 
 export const EdicaoComentariosPagina = styled.div`
   display: flex;
@@ -9,6 +8,8 @@ export const EdicaoComentariosPagina = styled.div`
   width: 100%;
   height: 100%;
 `;
+
+
 
 export const ContainerEdicaoComentarios = styled.div`
   display: flex;
@@ -86,6 +87,7 @@ export const SubtituloEdicaoComentario = styled.div`
   box-shadow: 0px 4px 4px 0px #00000040;
   padding-top: 10px;
 
+
   @media (max-width: 755px) {
     font-size: 20px;
     font-weight: 500;
@@ -108,11 +110,13 @@ export const SubtituloEdicaoComentario = styled.div`
 
 `;
 
-export const TextAreaComentario = styled(TextArea)`
+export const TextAreaComentario = styled.textarea`
   border-color: ${Cores.preto};
   border-width: 1px;
   border-top: 0;
   color: ${Cores.preto};
+  padding-left: 12px;
+  padding-right: 3px;
   width: 360px;
   max-height:400px;
   box-shadow: 0px 4px 4px 0px #00000040;

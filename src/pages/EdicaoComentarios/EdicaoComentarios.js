@@ -6,10 +6,9 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 
 
-function EdicaoComentarios(props) {
+function EdicaoComentarios() {
   const [comentario, setComentario] = useState({});
   const [carregando, setCarregando] = useState(false);
-  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   async function verificandoEnter(e) {
     if (e.key === "Enter") {
@@ -18,40 +17,55 @@ function EdicaoComentarios(props) {
   }
 
   async function pegandoDados() {
+    setCarregando(true);
     const resposta = await managerService.GetComentario();
     setComentario(resposta[0]);
+    setCarregando(false)
   }
-  
 
   useEffect(() => {
     pegandoDados();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props]);
-
-
-  function setandoComentario() {
-    setCarregando(true);
-    setComentario(comentario);
-    setCarregando(false);
-  }
-
-  useEffect(() => {
-    setandoComentario();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // function setandoComentario() {
+  //   setCarregando(true);
+  //   setComentario(comentario);
+  //   setCarregando(false);
+  // }
+
+  // useEffect(() => {
+  //   setandoComentario();
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   async function atualizarDados() {
     setCarregando(true);
-      await managerService.UpdateComentario(comentario.id, comentario.comentario);
+    await managerService.UpdateComentario(comentario.id, comentario.comentario);
+    setCarregando(false);
   }
 
   function preenchendoDados(e) {
-    setComentario(e.target.value);
+    setComentario((prev) => ({ ...prev, comentario: e.target.value }));
     console.log(e);
   }
 
+    const antLoadingIcon = (
+    <LoadingOutlined style={{ fontSize: 130, color: Cores.azul }} spin />
+  );
 
+  if (carregando) return (
+    <Spin
+      indicator={antLoadingIcon}
+      style={{
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+      }}
+    />
+  )
 
+console.log(comentario);
 
   return (
     <EdicaoComentariosPagina>
@@ -59,7 +73,7 @@ function EdicaoComentarios(props) {
         <TituloEdicaoComentario>Página Comentários</TituloEdicaoComentario>
         <SubtituloEdicaoComentario>Comentários e depoimentos:</SubtituloEdicaoComentario>
         <TextAreaComentario  
-          value={comentario.comentario}
+          defaultValue={comentario?.comentario}
           name="comentario"
           style={{
             borderWidth: "1px",
@@ -73,7 +87,7 @@ function EdicaoComentarios(props) {
           ></TextAreaComentario>
         <BotaoSalvarAlteracoes
         onClick={() => atualizarDados()}
-        >{carregando ? <Spin indicator={antIcon} /> : "Salvar Alterações"}</BotaoSalvarAlteracoes>
+        >Salvar Alterações</BotaoSalvarAlteracoes>
         <BotaoEditarAlteracoes>Cancelar Alterações</BotaoEditarAlteracoes>
     </ContainerEdicaoComentarios>
     </EdicaoComentariosPagina>
