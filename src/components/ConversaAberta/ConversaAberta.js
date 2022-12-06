@@ -304,7 +304,7 @@ export default function ConversaAberta({ socket }) {
     let id_remetente = usuarioId;
     let texto = inputMensagemConteudo;
 
-    /*  if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
+     if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
       texto = "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
@@ -316,7 +316,7 @@ export default function ConversaAberta({ socket }) {
       texto = "CHAT FINALIZADO.\n" +
         "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n"
       setInputMensagemConteudo('');
-    } */
+    } 
 
     if (horarioComercial) {
       setInputMensagemConteudo("");
@@ -337,7 +337,7 @@ export default function ConversaAberta({ socket }) {
     let id_remetente = usuarioId;
     let texto = "Arquivo PDF";
 
-    /*  if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
+     if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
       texto = "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
@@ -348,7 +348,7 @@ export default function ConversaAberta({ socket }) {
       id_remetente = remetente.id;
       texto = "CHAT FINALIZADO.\n" +
         "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n"
-    } */
+    } 
 
     enviaMensagem(url, texto);
   }

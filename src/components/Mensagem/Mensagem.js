@@ -1,7 +1,7 @@
 import React from "react";
 import dayjs from "dayjs";
 import { MensagemEnviada, DataHoraMensagem } from "./Styles";
-import { FilePdfOutlined } from "@ant-design/icons";
+import { FilePdfOutlined, PictureOutlined } from "@ant-design/icons";
 import { Cores } from "../../variaveis";
 
 export default function Mensagem({
@@ -18,9 +18,10 @@ export default function Mensagem({
     >
       {media_url ? (
         <a href={media_url} target="_blank" rel="noopener noreferrer">
+          {conteudo === "Imagem" ? <PictureOutlined  style={{ marginRight: 8, fontSize: 20, color: Cores.azul }} />:
           <FilePdfOutlined
             style={{ marginRight: 8, fontSize: 20, color: Cores.azul }}
-          />
+          />}
         </a>
       ) : (
         <></>
