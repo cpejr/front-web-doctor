@@ -328,7 +328,7 @@ export default function ConversaAberta({ socket }) {
   // Aqui pega os dados do  modal, vamos por a função de enviar mensagem aqui :)
   async function EnviandoMensagemComArquivo() {
     setPdfFromModal(modalRef.current?.getPDF().file);
-    const url = modalRef.current?.getPDF().url;
+    let url = modalRef.current?.getPDF().url;
 
     const remetente =
       conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)]
@@ -342,12 +342,15 @@ export default function ConversaAberta({ socket }) {
       texto = "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
         "Se tiver um assunto urgente favor responder ao formulário de Emergência."
+
+      url = null;
     }
 
     if (conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
       texto = "CHAT FINALIZADO.\n" +
         "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n"
+      url = null;
     } 
 
     enviaMensagem(url, texto);
