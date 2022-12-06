@@ -9,8 +9,8 @@ import {
   TextArea,
   Titulo,
   TheOneAboveAll,
+  UploadContainer,
   UploadButton,
-  UploadSymbol
 
 } from "./Styles";
 import Button from "../../styles/Button";
@@ -63,33 +63,14 @@ function EdicaoGrupoAmieWeb() {
     reader.readAsDataURL(img);
   };
 
-  const uploadButton = (
-    <UploadButton>
-      {carregando ? <LoadingOutlined /> :
-        (
-          <UploadSymbol
-          >
-            <PlusOutlined />
-            <div
-              style={{
-                marginTop: 8,
-              }}
-            >
-              Alterar Imagem
-            </div>
-          </UploadSymbol>
-        )}
-    </UploadButton>
-  );
-
-  async function handleChange(index ,info) {
+  async function handleChange(index, info) {
     // Get this url from response in real world.
     setCarregando(true);
     getBase64(info.file.originFileObj, (url) => {
       setCarregando(false);
       setAlterou(true);
-      if(index === 1) {setImagem_um(url);}
-      else {setImagem_dois(url);}
+      if (index === 1) { setImagem_um(url); }
+      else { setImagem_dois(url); }
     });
   }
 
@@ -140,26 +121,31 @@ function EdicaoGrupoAmieWeb() {
         </Titulo>
 
         <DadosGrupoAmie>
-          <Upload
-            name='imagem1'
-            listType='picture'
-            showUploadList={false}
-            beforeUpload={beforeUpload}
-            onChange={(e) => handleChange(1, e)}
+          <UploadContainer
+            src={imagem_um}
           >
-            {!carregando ? (
-              <img
-                src={imagem_um}
-                alt='imagem1'
-                style={{
-                  maxHeight: '300px',
-                  width: '100%',
-                  height: '100%',
-                }}
-              />
-            ) : ('')}
-            {uploadButton}
-          </Upload>
+            {carregando ? <LoadingOutlined /> :
+              (
+                <UploadButton>
+                  <Upload
+                    name='imagem1'
+                    listType='picture'
+                    showContainerList={false}
+                    beforeUpload={beforeUpload}
+                    onChange={(e) => handleChange(1, e)}
+                  >
+                    <PlusOutlined />
+                    <div
+                      style={{
+                        marginTop: 8,
+                      }}
+                    >
+                      Alterar Imagem
+                    </div>
+                  </Upload>
+                </UploadButton>
+              )}
+          </UploadContainer>
           <TextArea
             value={texto}
             onChange={(event) => {
@@ -170,7 +156,30 @@ function EdicaoGrupoAmieWeb() {
             }
             }
           ></TextArea>
-          <CaixaBotaoUpload>
+          <UploadContainer
+            src={imagem_dois}
+          >
+            {carregando ? <LoadingOutlined /> :
+              (
+                <Upload
+                  name='imagem2'
+                  listType='picture'
+                  showContainerList={false}
+                  beforeUpload={beforeUpload}
+                  onChange={(e) => handleChange(2, e)}
+                >
+                  <PlusOutlined />
+                  <div
+                    style={{
+                      marginTop: 8,
+                    }}
+                  >
+                    Alterar Imagem
+                  </div>
+                </Upload>
+              )}
+          </UploadContainer>
+          {/* <CaixaBotaoUpload>
             <Upload
               name='imagem2'
               listType='picture'
@@ -192,7 +201,7 @@ function EdicaoGrupoAmieWeb() {
               }
               {uploadButton}
             </Upload>
-          </CaixaBotaoUpload>
+          </CaixaBotaoUpload> */}
         </DadosGrupoAmie>
 
         <Botoes>

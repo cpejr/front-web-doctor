@@ -74,7 +74,12 @@ export const UploadButton = styled.div`
   justify-content: center;
 `
 
-export const UploadSymbol = styled.div`
+export const UploadContainer = styled.div`
+  background-image: url(${(props) => props.src});
+  background-repeat: no-repeat;
+  background-size:cover;
+  background-position: 50% 50%;
+
   display: flex;
   flex-direction: column;
   align-items:center;
