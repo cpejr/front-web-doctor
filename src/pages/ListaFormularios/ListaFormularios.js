@@ -55,9 +55,9 @@ function ListaFormularios() {
   );
 
   const formulariosFiltrados = formularios.filter((formulario) => {
-    if (lowerBusca === '' && tipoSelect === '') {
+    if (lowerBusca === "" && tipoSelect === "") {
       return formularios;
-    } else {
+    }else{
       if (tipoSelect === '1') {
         return (
           (formulario?.titulo?.toLowerCase().includes(lowerBusca) ||
@@ -193,19 +193,17 @@ function ListaFormularios() {
                 />
               </BarraPesquisa>
               <Filtros>
-                <FiltroEspecificoUrgencia>
-                  <Select
-                    defaultValue='Urgências'
-                    style={{ width: 200 }}
+                
+                  <FiltroEspecificoUrgencia
+                    defaultValue='Urgencias'
                     onChange={(value) => urgenciasFiltradas(value)}
                   >
-                    <Option value=''>Todas as Urgências</Option>
+                    <Option value=''>Todas as Urgencias</Option>
                     <Option value='1'>Urgência: 1</Option>
                     <Option value='2'>Urgência: 2</Option>
                     <Option value='3'>Urgência: 3</Option>
-                  </Select>
-                </FiltroEspecificoUrgencia>
-              </Filtros>
+                  </FiltroEspecificoUrgencia>
+                   </Filtros> 
             </TopoPagina>
             <TopoPaginaBotao>
               {tipoUsuarioLogado === "MASTER" && (

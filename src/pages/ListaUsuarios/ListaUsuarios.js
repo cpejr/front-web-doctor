@@ -35,7 +35,7 @@ import {
   SearchStyle,
   FiltrosEsquerda,
   CaixaBotaoMedico,
-  NomeCima
+  NomeCima,
 } from "./Styles";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
@@ -264,8 +264,7 @@ function ListaUsuarios() {
       Object.defineProperty(usuario, "fotoDePerfil", {
         value: arquivo,
       });
-    }
-    else {
+    } else {
       setCarregandoFoto(false);
       return;
     }
@@ -385,50 +384,7 @@ function ListaUsuarios() {
             )}
           </Filtros>
         </TopoPagina>
-        {tipoUsuarioLogado === "MASTER" ? (
-          <BotoesMedico>
-            <CaixaBotaoMedico>
-              <Button
-                backgroundColor={Cores.cinza[7]}
-                color={Cores.azul}
-                width="100%"
-                height="50px"
-                marginTop="0px"
-                borderColor={Cores.azul}
-                fontSize="1.45em"
-                fontSizeMedia480="1em"
-                fontWeight="bold"
-                fontSizeMedia950="1.1em"
-                fontSizeMedia1080="1.3em"
-                boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-                widthMedia600="100%"
-                onClick={() => passandoTipoParaCadastro("PACIENTE")}
-              >
-                Cadastrar Novo Paciente
-              </Button>
-            </CaixaBotaoMedico>
-            <CaixaBotaoMedico>
-              <Button
-                backgroundColor={Cores.cinza[7]}
-                marginTop="0px"
-                color={Cores.azul}
-                width="100%"
-                height="50px"
-                borderColor={Cores.azul}
-                fontSize="1.45em"
-                fontWeight="bold"
-                fontSizeMedia950="1.1em"
-                fontSizeMedia480="1em"
-                fontSizeMedia1080="1.3em"
-                boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-                widthMedia600="100%"
-                onClick={() => passandoTipoParaCadastro("SECRETARIA(O)")}
-              >
-                Cadastrar Nova(o) Secretária(o)
-              </Button>
-            </CaixaBotaoMedico>
-          </BotoesMedico>
-        ) : (
+        {tipoUsuarioLogado === "SECRETARIA(O)" && (
           <BotaoSecretario>
             <Button
               backgroundColor={Cores.cinza[7]}
