@@ -26,6 +26,7 @@ import ModalExameMarcado from '../ModalExameMarcado';
 import { compararDataAntiga } from '../../utils/tratamentoErros';
 import * as managerService from '../../services/ManagerService/managerService';
 import { sleep } from '../../utils/sleep';
+import formatarData from '../../utils/formatarData';
 
 function ModalAgendamento(props) {
   const [consultas, setConsultas] = useState([]);
@@ -139,9 +140,7 @@ function ModalAgendamento(props) {
                         <DiaHorarioAgendamento
                           onClick={() => abreModalConsultaMarcada(value)}
                         >
-                          {value.data_hora.slice(8, -14)}/
-                          {value.data_hora.slice(5, -17)}/
-                          {value.data_hora.slice(0, -20)}
+                          {formatarData({ data: value.data_hora, formatacao: "dd/MM/yyyy" })}
                         </DiaHorarioAgendamento>
                         <BarraEstetica></BarraEstetica>
                         <TextoAgendamentoEspecifico
@@ -153,8 +152,7 @@ function ModalAgendamento(props) {
                         <DiaHorarioAgendamento
                           onClick={() => abreModalConsultaMarcada(value)}
                         >
-                          {value.data_hora.slice(11, -11)}
-                          {value.data_hora.slice(13, -8)}
+                          {formatarData({ data: value.data_hora, formatacao: "HH:mm" })}
                           {` - `}
                           {value.duracao_em_minutos} min
                         </DiaHorarioAgendamento>
@@ -204,9 +202,7 @@ function ModalAgendamento(props) {
                         <DiaHorarioAgendamento
                           onClick={() => abreModalExameMarcado(value)}
                         >
-                          {value.data_hora.slice(8, -14)}/
-                          {value.data_hora.slice(5, -17)}/
-                          {value.data_hora.slice(0, -20)}
+                          {formatarData({ data: value.data_hora, formatacao: "dd/MM/yyyy" })}
                         </DiaHorarioAgendamento>
                         <BarraEstetica></BarraEstetica>
                         <TextoAgendamentoEspecifico
@@ -218,8 +214,7 @@ function ModalAgendamento(props) {
                         <DiaHorarioAgendamento
                           onClick={() => abreModalExameMarcado(value)}
                         >
-                          {value.data_hora.slice(11, -11)}
-                          {value.data_hora.slice(13, -8)}
+                          {formatarData({ data: value.data_hora, formatacao: "HH:mm" })}
                         </DiaHorarioAgendamento>
                       </CaixaAgendamento>
 
