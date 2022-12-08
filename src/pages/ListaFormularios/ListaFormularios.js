@@ -346,6 +346,7 @@ function ListaFormularios() {
         footer={null}
         width={'70%'}
         centered={true}
+        destroyOnClose
       >
         <ModalEnvioFormulario
           usuarios={usuarios}
