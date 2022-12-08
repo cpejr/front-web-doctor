@@ -25,37 +25,31 @@ import Button from "../../styles/Button";
 import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
-import { TiposDeExame } from "../listaTiposDeExames";
+
 
 function ModalAgendamentoExame(props) {
   const [usuario, setUsuario] = useState({});
   const [usuarios, setUsuarios] = useState([]);
   const [consultorios, setConsultorios] = useState([]);
+  const [consultorio, setConsultorio] = useState({});
+  const [exames, setExames] = useState([]);
   const [carregando, setCarregando] = useState();
-  const [nomeConsultorioPorId, setNomeConsultorioPorId] = useState();
   const [carregandoCadastro, setCarregandoCadastro] = useState();
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
+  const [carregandoExames, setCarregandoExames] = useState();
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-  const [exame, setExame] = useState({
-    data_hora: "",
-    avaliacao: "",
-    tipo: "",
-    id_usuario: "",
-    id_consultorio: "",
-  });
+  const [exame, setExame] = useState({});
   const valoresIniciaisExame = {
-    data_hora: "",
-    avaliacao: "",
-    tipo: "",
+    hora: "",
+    titulo: "",
     id_usuario: "",
-    id_consultorio: "",
+    nome: "",
   };
   const [dataExame, setDataExame] = useState("");
   const [hora, setHora] = useState("");
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [hoje, setHoje] = useState("");
-  
   
 
   moment.locale("pt-br");
@@ -69,29 +63,19 @@ function ModalAgendamentoExame(props) {
     });
   }
 
-  async function setandoNomeConsultorioPorId() {
-    const resposta = await managerService.GetConsultorioPorId(
-        exame.id_consultorio
-    );
-    setNomeConsultorioPorId(resposta.nome);
-  }
 
   useEffect(() => {
     pegandoPacientes();
   }, []);
 
-  useEffect(() => {
-    setandoNomeConsultorioPorId();
-  },);
-
   
 
   const errors = {};
   const [referenciaInputNulos, setReferenciaInputNulos] = useState({
-    data: false,
     hora: false,
-    id_consultorio: false,
-    tipo: false,
+    titulo: false,
+    id_usuario: false,
+    nome: false,
   });
 
   function verificandoIdUsuario() {
@@ -101,7 +85,6 @@ function ModalAgendamentoExame(props) {
       setExame({ ...exame, id_usuario: usuario.id });
     }
   }
-
 
   useEffect(() => {
     verificandoIdUsuario();
@@ -118,6 +101,17 @@ function ModalAgendamentoExame(props) {
     pegandoConsultorios();
   }, []);
 
+  async function pegandoExames() {
+    setCarregandoExames(true);
+    const res = await managerService.GetDadosExames();
+    setExames(res);
+    setCarregandoExames(false);
+  } 
+
+  useEffect(() => {
+    pegandoExames();
+  }, []);
+
   async function pegandoDadosUsuario() {
     setCarregando(true);
     const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
@@ -132,17 +126,25 @@ function ModalAgendamentoExame(props) {
   async function validacaoCampos(e) {
     const { value, name } = e.target;
 
+    if (value) {
+      setCamposVazios({ ...camposVazios, [name]: false });
+    } else {
+      setCamposVazios({ ...camposVazios, [name]: true });
+    }
 
-
-    if (e.target.name === "data") {
-        setDataExame(e.target.value);
+    if (name === "data") {
+        setDataExame(value);
       if (hora !== "" && hora !== undefined) {
-        validacaoHorario(hora, e.target.value);
+        validacaoHorario(hora, value);
       }
 
       return dataExame;
+    } else if (name === "nome") {
+      const consultorioSelecionado = consultorios.find((consultorioAtual) => consultorioAtual.id === value);
+      setConsultorio(consultorioSelecionado);
     }  else {
-      setExame({ ...exame, [e.target.name]: e.target.value });
+      const exameSelecionado = exames.find((exameAtual) => exameAtual.id === value);
+      setExame((exameAtual) => ({...exameAtual, ...exameSelecionado}));
       return exame;
     }
   }
@@ -216,7 +218,7 @@ function ModalAgendamentoExame(props) {
   function formatacaoDataHora() {
     try {
       const dataHora = `${dataExame} ${hora}:00`;
-      exame.data_hora = dataHora;
+      exame.hora = dataHora;
     } catch {
       alert("DataHora inválida.");
     }
@@ -225,11 +227,12 @@ function ModalAgendamentoExame(props) {
   async function requisicaoCriarExame() {
     if (!dataExame) errors.data = true;
     if (!hora) errors.hora = true;
-    if (!exame.id_consultorio) errors.id_consultorio = true;
-    if (!exame.tipo) errors.tipo = true;
+    if (!consultorio.nome) errors.nome = true;
+    if (!exame.titulo) errors.titulo = true;
     if (!exame.id_usuario) errors.id_usuario = true;
 
     setCamposVazios({ ...camposVazios, ...errors });
+    console.log({camposVazios, referenciaInputNulos})
 
     if (
       dataExame === "" ||
@@ -283,9 +286,10 @@ function ModalAgendamentoExame(props) {
             <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
             <Tooltip 
                 placement="topLeft" 
-                title={exame.tipo} 
+                title={exame?.titulo} 
                 color = {Cores.azul}>
               <Select
+                value={exame?.id}
                 style={{
                   width: "100%",
                   color: "black",
@@ -294,30 +298,30 @@ function ModalAgendamentoExame(props) {
                 paddingTop="8px"
                 paddingBottom="8px"
                 size="large"
-                name="tipo"
+                name="titulo"
                 placeholder="Tipo"
                 onChange={(e) => {
                   validacaoCampos(e);
                 }}
-                value={exame.tipo}
-                camposVazios={camposVazios.tipo}
+                camposVazios={camposVazios.titulo}
               >
                 <option value="" disabled selected>
+                {exame?.titulo} 
                   Tipo
                 </option>
-                {TiposDeExame.map((tipo) => (
+                {exames?.map((exame) => (
                   <>
-                    {carregando ? (
+                    {carregandoExames ? (
                       <Spin indicator={antIcon} />
                     ) : (
-                      <option key={tipo} value={tipo} color="red">
-                        {tipo}
+                      <option key={exame.id} value={exame.id} color="red">
+                        {exame.titulo}
                       </option>
                     )}
                   </>
                 ))}
               </Select></Tooltip>
-              {camposVazios.tipo && (
+              {camposVazios.titulo && (
                 <Rotulo>Selecione um tipo de exame</Rotulo>
               )}
             </TamanhoInput>
@@ -325,12 +329,12 @@ function ModalAgendamentoExame(props) {
             <TextoDoisSelects>Selecione um consultório:</TextoDoisSelects>
             <Tooltip 
                 placement="topLeft" 
-                title =  {nomeConsultorioPorId}
+                title =  {consultorio?.nome}
                 color = {Cores.azul}>
               <Select
-                value={exame.id_consultorio}
-                id="id_consultorio"
-                name="id_consultorio"
+                value={consultorio?.id}
+                id="nome"
+                name="nome"
                 style={{
                   width: "100%",
                   borderWidth: "1px",
@@ -343,13 +347,13 @@ function ModalAgendamentoExame(props) {
                 onChange={(e) => {
                   validacaoCampos(e);
                 }}
-                camposVazios={camposVazios.id_consultorio}
+                camposVazios={camposVazios.nome}
               >
                 <option value="" disabled selected>
-                  {nomeConsultorioPorId}
+                  {consultorio.nome}
                   Consultório
                 </option>
-                {consultorios.map((consultorio) => (
+                {consultorios?.map((consultorio) => (
                   <>
                     {carregandoConsultorios ? (
                       <Spin indicator={antIcon} />
@@ -365,7 +369,7 @@ function ModalAgendamentoExame(props) {
                   </>
                 ))}
               </Select></Tooltip>
-              {camposVazios.id_consultorio && (
+              {camposVazios.nome && (
                 <Rotulo>Selecione um consultório</Rotulo>
               )}
               

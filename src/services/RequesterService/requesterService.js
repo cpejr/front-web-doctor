@@ -15,7 +15,7 @@ export const recuperarSenha = (email) => api.put(`/alterar_senha/${email}`);
 
 export const criarConsulta = (consulta) => api.post('/consultas', consulta);
 
-export const criarExame = (exame) => api.post('/exames', exame);
+export const criarExame = (exame) => api.post('/exame_marcados', exame);
 
 export const updateConsulta = (id_consulta, consulta) =>
   api.put(`/consultas/${id_consulta}`, consulta);
@@ -74,6 +74,8 @@ export const requisicaoConsultaUsuario = (id_usuario) =>
 export const requisicaoExame = (id) => api.get(`/exames/${id}`);
 
 export const requisicaoDadosConsultorios = (filtro) => api.get(`/consultorios`, {params:filtro});
+
+export const requisicaoDadosExames = () => api.get(`/exames`);
 
 export const requisicaoDadosConsultoriosPorId = (id) =>
   api.get(`/consultorios/${id}`);

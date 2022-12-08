@@ -90,9 +90,10 @@ export const CriandoConsulta = async (consulta) => {
   return;
 };
 
-export const CriandoExame = async (consulta) => {
+export const CriandoExame = async (exame) => {
+  console.log(exame)
   await requesterService
-    .criarExame(consulta)
+    .criarExame(exame)
     .then(() => {
       toast.success('Exame criada com sucesso.');
     })
@@ -269,6 +270,22 @@ export const GetDadosConsultorios = async (filtro) => {
     });
   return { dadosEndereco, dadosConsultorios };
 };
+
+export const GetDadosExames = async () => {
+  let dadosExames = {};
+
+  await requesterService
+    .requisicaoDadosExames()
+    .then((res) => {
+      dadosExames = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return dadosExames;
+};
+
 
 export const GetConsultorioPorId = async (id) => {
   let dadosConsultorio = {};
