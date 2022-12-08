@@ -122,7 +122,7 @@ function CriacaoReceitas() {
 
 		setCarregandoCriacao(true);
 		const id = estado.id_usuario
-		const res = await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
+		await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
 			mensagemSucesso: "Receita criada com sucesso",
 			tempo: 1500,
 			onClose: () => {
@@ -130,7 +130,7 @@ function CriacaoReceitas() {
 			},
 		});
 
-		if (!res) setCarregandoCriacao(false);
+		setCarregandoCriacao(false);
 	}
 
 	const antIcon = (

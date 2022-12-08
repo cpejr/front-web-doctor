@@ -121,6 +121,7 @@ function HomeSecretaria() {
                         color={Cores.branco}
                         fontSize='1.5em'
                         fontWeight='medium'
+                        fontSizeMedia350='1.1em'
                         fontSizeMedia='0.8em'
                         fontSizeMedia950='1em'
                         heightMedia='2em'
@@ -137,6 +138,7 @@ function HomeSecretaria() {
                         fontSize='1.5em'
                         fontWeight='medium'
                         fontSizeMedia='0.8em'
+                        fontSizeMedia350='1.2em'
                         fontSizeMedia950='1em'
                         heightMedia='2em'
                         onClick={() => apagaNotificacaoFormulario(value.id)}
@@ -164,6 +166,7 @@ function HomeSecretaria() {
             fontSize='1.5em'
             fontWeight='medium'
             fontSizeMedia='1em'
+            fontSizeMedia350='1.3em'
             fontSizeMedia950='1.2em'
             boxShadow='0 4px 2px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
             onClick={() => passandoTipoParaCadastro('PACIENTE')}

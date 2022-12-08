@@ -62,6 +62,7 @@ export default function BarraLateralChat({ carregandoConversas }) {
     <LoadingOutlined style={{ fontSize: 90, color: Cores.azul }} spin />
   );
 
+
   return (
     <>
       <BarraLateral>
@@ -112,10 +113,10 @@ export default function BarraLateralChat({ carregandoConversas }) {
               ?.filter((c) => {
                 return searchTerm
                   ? c.conversaCom.nome
-                      .toLowerCase()
-                      .normalize('NFD')
-                      .replace(/[\u0300-\u036f]/g, '')
-                      .includes(searchTerm.toLowerCase())
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .includes(searchTerm.toLowerCase())
                   : true;
               })
               .map((c, idx) => (
@@ -137,7 +138,11 @@ export default function BarraLateralChat({ carregandoConversas }) {
                         justifyContent: 'space-between',
                       }}
                     >
-                      <NomePessoa>{c.conversaCom.nome}</NomePessoa>
+                      {c.tipo === 'EXAME' ? (
+                        <NomePessoa>{c.conversaCom.nome} - EXAME</NomePessoa>
+                      ) : (
+                        <NomePessoa>{c.conversaCom.nome}</NomePessoa>
+                      )}
                       <MensagemPessoa naoVisto={c.mensagensNaoVistas}>
                         {c?.ultima_mensagem?.pertenceAoUsuarioAtual && 'Você: '}
                         {c?.ultima_mensagem?.conteudo}

@@ -26,15 +26,17 @@ function ModalEnvioFormulario(props) {
 
   async function enviandoFormularioPaciente() {
     setCarregando(true);
-
     if (formularioPaciente) {
       await managerService.EnviandoFormularioPaciente(
         false,
-        true,
+        false,
         props.idFormulario,
         formularioPaciente
       );
-      props.fecharModal()
+      await sleep(2000);
+      setCarregando(false);
+      await sleep(1000);
+      props.fechandoModal()
     } else {
       toast.error("Escolha um paciente para enviar o formulario");
     }
