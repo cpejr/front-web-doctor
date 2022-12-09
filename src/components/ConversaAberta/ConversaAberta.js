@@ -145,10 +145,8 @@ export default function ConversaAberta({ socket }) {
   }, []);
 
   const verificaHorarioPermitidoParaEnvioDeMensagens = () => {
-    var verificaHorarioUsuario = true;
-    if (horarioComercial === false && tipoUsuario !== "MASTER") {
-      verificaHorarioUsuario = false;
-    }
+    const verificaHorarioUsuario =
+      horarioComercial === false && tipoUsuario !== "MASTER" ? false : true;
     setHorarioPermitidoParaEnvioMensagem(verificaHorarioUsuario);
   };
 
