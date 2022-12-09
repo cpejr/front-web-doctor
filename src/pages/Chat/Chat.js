@@ -35,7 +35,6 @@ const Chat = () => {
       setConversas(resposta);
       setCarregandoConversas(false);
     }
-    console.log("chamou");
   }
 
   useEffect(() => {

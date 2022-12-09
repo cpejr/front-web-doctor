@@ -1,35 +1,33 @@
-import React, { useEffect, useContext, useState, useRef } from "react";
-import {
-  HeaderConversaAberta,
-  Conversa,
-  NomePessoa,
-  BotaoVoltar,
-  CorpoConversaAberta,
-  FooterConversaAberta,
-  MenuConversasTipoExame,
-} from "./Styles";
-import Mensagem from "../Mensagem/Mensagem";
-import { Cores } from "../../variaveis";
-import Button from "../../styles/Button";
-import Input from "../../styles/Input";
-import { ChatContext } from "../../contexts/ChatContext";
-import * as managerService from "../../services/ManagerService/managerService";
-import checarObjVazio from "../../utils/checarObjVazio";
-import moverArray from "../../utils/moverArray";
-import { Spin, Tooltip, Menu, Dropdown, Modal } from "antd";
 import {
   ArrowLeftOutlined,
-  PaperClipOutlined,
-  SendOutlined,
   LoadingOutlined,
+  PaperClipOutlined,
   PlusOutlined,
+  SendOutlined,
 } from "@ant-design/icons";
-import { recebeEmail } from "../../services/auth";
-import objCopiaProfunda from "../../utils/objCopiaProfunda";
+import { Dropdown, Menu, Modal, Spin, Tooltip } from "antd";
 import moment from "moment";
-import AddToast from "../AddToast/AddToast";
-import { toast } from "react-toastify";
+import React, { useContext, useEffect, useRef, useState } from "react";
+import { ChatContext } from "../../contexts/ChatContext";
+import { recebeEmail } from "../../services/auth";
+import * as managerService from "../../services/ManagerService/managerService";
+import Button from "../../styles/Button";
+import Input from "../../styles/Input";
+import checarObjVazio from "../../utils/checarObjVazio";
+import moverArray from "../../utils/moverArray";
+import objCopiaProfunda from "../../utils/objCopiaProfunda";
+import { Cores } from "../../variaveis";
+import Mensagem from "../Mensagem/Mensagem";
 import ModalEnviarArquivo from "../ModalEnviarArquivo";
+import {
+  BotaoVoltar,
+  Conversa,
+  CorpoConversaAberta,
+  FooterConversaAberta,
+  HeaderConversaAberta,
+  MenuConversasTipoExame,
+  NomePessoa,
+} from "./Styles";
 
 moment.locale("pt-br");
 
@@ -62,7 +60,7 @@ export default function ConversaAberta({ socket }) {
   const modalRef = useRef(null);
   const inputMensagemConteudoRef = useRef(null);
   const horaAtual = moment().hours();
-  const horarioComercial = horaAtual >= 7 && horaAtual < 19 ? true : false;
+  const horarioComercial = horaAtual >= 7 && horaAtual < 21 ? true : false;
   const [modalEnviarArquivo, setModalEnviarArquivo] = useState(false);
   const [pdfFromModal, setPdfFromModal] = useState("");
   const [urlFromModal, setUrlFromModal] = useState("");
@@ -147,8 +145,10 @@ export default function ConversaAberta({ socket }) {
   }, []);
 
   const verificaHorarioPermitidoParaEnvioDeMensagens = () => {
-    const verificaHorarioUsuario =
-      !horarioComercial && tipoUsuario !== "MASTER";
+    var verificaHorarioUsuario = true;
+    if (horarioComercial === false && tipoUsuario !== "MASTER") {
+      verificaHorarioUsuario = false;
+    }
     setHorarioPermitidoParaEnvioMensagem(verificaHorarioUsuario);
   };
 
@@ -304,19 +304,21 @@ export default function ConversaAberta({ socket }) {
     let id_remetente = usuarioId;
     let texto = inputMensagemConteudo;
 
-     if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
+    if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
-      texto = "Obrigado pela sua mensagem!\n" +
+      texto =
+        "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
-        "Se tiver um assunto urgente favor responder ao formulário de Emergência."
+        "Se tiver um assunto urgente favor responder ao formulário de Emergência.";
     }
 
     if (conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
-      texto = "CHAT FINALIZADO.\n" +
-        "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n"
-      setInputMensagemConteudo('');
-    } 
+      texto =
+        "CHAT FINALIZADO.\n" +
+        "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n";
+      setInputMensagemConteudo("");
+    }
 
     if (horarioComercial) {
       setInputMensagemConteudo("");
@@ -337,21 +339,23 @@ export default function ConversaAberta({ socket }) {
     let id_remetente = usuarioId;
     let texto = "Arquivo PDF";
 
-     if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
+    if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
-      texto = "Obrigado pela sua mensagem!\n" +
+      texto =
+        "Obrigado pela sua mensagem!\n" +
         "Estarei fora do consultório de 19h até 7h e não poderei responder durante esse período.\n" +
-        "Se tiver um assunto urgente favor responder ao formulário de Emergência."
+        "Se tiver um assunto urgente favor responder ao formulário de Emergência.";
 
       url = null;
     }
 
     if (conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
-      texto = "CHAT FINALIZADO.\n" +
-        "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n"
+      texto =
+        "CHAT FINALIZADO.\n" +
+        "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n";
       url = null;
-    } 
+    }
 
     enviaMensagem(url, texto);
   }
