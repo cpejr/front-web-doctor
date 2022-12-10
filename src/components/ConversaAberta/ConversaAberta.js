@@ -29,8 +29,6 @@ import {
   NomePessoa,
 } from "./Styles";
 
-moment.locale("pt-br");
-
 export default function ConversaAberta({ socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState("");

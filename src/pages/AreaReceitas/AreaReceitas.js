@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Input, Select } from "antd";
-import moment from "moment";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin, Modal } from "antd";
+import formatarData from "../../utils/formatarData";
 import { compararDataRecente } from "../../utils/tratamentoErros";
 import {
 	TopoPagina,
@@ -81,7 +81,7 @@ function AreaReceitas() {
 		const receitasFormatadas = resposta
 			.sort(compararDataRecente)
 			.map(({ data_criacao, ...resto }) => ({
-				data_criacao: moment(data_criacao).format("DD/MM/YYYY"),
+				data_criacao: formatarData({ data: data_criacao, formatacao: "dd/MM/yyyy" }),
 				...resto,
 			}));
 		setReceitas(receitasFormatadas);
