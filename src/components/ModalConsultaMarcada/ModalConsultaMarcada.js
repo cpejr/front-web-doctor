@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { LoadingOutlined, UserOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { Caixa, CaixaInformações, CaixaNome, Container, FotoPerfil, Texto, TextoDescricao, TextoInformacoes } from "./Styles";
-import logoGuilherme from "../../assets/logoGuilherme.png";
 import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
+import formatarData from "../../utils/formatarData";
 
 function ModalConsultaMarcada(props) {
 
@@ -135,13 +135,10 @@ function ModalConsultaMarcada(props) {
               <b>Consultório: </b> {consultorio}
             </TextoInformacoes>
             <TextoInformacoes>
-              <b>Data: </b> {dataHora.slice(8, 10)}/{dataHora.slice(5, 7)}/{dataHora.slice(0, 4)}
+              <b>Data: </b> {formatarData({ data: dataHora, formatacao: "dd/MM/yyyy" })}
             </TextoInformacoes>
             <TextoInformacoes>
-              <b>Horário: </b> {parseInt(dataHora.slice(11, 13)) < 12 ? (
-                parseInt(dataHora.slice(11, 13)) + ":" + dataHora.slice(14, 16) + " am"
-              ) : (
-                parseInt(dataHora.slice(11, 13) - 12) + ":" + dataHora.slice(14, 16) + " pm")}
+              <b>Horário: </b> {formatarData({ data: dataHora, formatacao: "h:mm aaa" })}
             </TextoInformacoes>
             <TextoInformacoes>
               <b>Duração: </b> {consulta.duracao_em_minutos} min

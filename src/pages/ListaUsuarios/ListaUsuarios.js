@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { Input, Select, Modal } from "antd";
 import {
   LoadingOutlined,
-  PlusCircleOutlined,
   UserOutlined,
 } from "@ant-design/icons";
 import { Spin } from "antd";
@@ -28,9 +27,6 @@ import {
   CaixaVazia,
   BotoesMedico,
   BotaoSecretario,
-  LogoCarregando,
-  ContainerSpin,
-  CaixaSpin,
   SelectTipoBusca,
   SearchStyle,
   FiltrosEsquerda,
@@ -40,8 +36,9 @@ import {
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../../components/ModalAgendamentoEspecifico";
 import ModalAdicionarCodigo from "../../components/ModalAdicionarCodigo/ModalAdicionarCodigo";
-import { compararDataAntiga, compararNomes } from "../../utils/tratamentoErros";
+import { compararDataAntiga } from "../../utils/tratamentoErros";
 import { sleep } from "../../utils/sleep";
+import formatarData from "../../utils/formatarData";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 
@@ -49,7 +46,6 @@ function ListaUsuarios() {
   const history = useHistory();
 
   const { Option } = Select;
-  const { Search } = Input;
   const [usuarios, setUsuarios] = useState([]);
   const [carregandoPagina, setCarregandoPagina] = useState(true);
   const [carregandoFoto, setCarregandoFoto] = useState(true);
@@ -230,6 +226,10 @@ function ListaUsuarios() {
     pegandoDadosUsuarios(consultas);
   }
 
+  async function fechandoModalCodigoSemRecarregar() {
+    setModalAdicionarCodigo(false);
+  }
+
   async function verificandoSecretariaOuPaciente(tipo, email) {
     if (tipo === "SECRETARIA") {
       history.push({
@@ -291,7 +291,7 @@ function ListaUsuarios() {
       if (new Date(dataHora[i]) > hoje) {
         const consultaMaisRecente = dataHora[i - 1];
         Object.defineProperty(usuario, "ultimaConsulta", {
-          value: consultaMaisRecente,
+          value: formatarData({ data: consultaMaisRecente, formatacao: "dd/MM/yyyy" }),
         });
         return;
       }
@@ -303,7 +303,7 @@ function ListaUsuarios() {
       new Date(primeiraConsulta) < hoje
     ) {
       const consultaMaisRecente = dataHora[dataHora.length - 1];
-      usuario.ultimaConsulta = consultaMaisRecente;
+      usuario.ultimaConsulta = formatarData({ data: consultaMaisRecente, formatacao: "dd/MM/yyyy" });
     }
   }
 
@@ -473,11 +473,7 @@ function ListaUsuarios() {
                     <UltimaVisita> - </UltimaVisita>
                   ) : (
                     <UltimaVisita>
-                      {value.ultimaConsulta.slice(8, 10) +
-                        "/" +
-                        value.ultimaConsulta.slice(5, 7) +
-                        "/" +
-                        value.ultimaConsulta.slice(0, 4)}
+                      {value.ultimaConsulta}
                     </UltimaVisita>
                   )}
                   <CódigoPaciente>{value.codigo}</CódigoPaciente>
@@ -537,7 +533,7 @@ function ListaUsuarios() {
 
       <Modal
         visible={modalAdicionarCodigo}
-        onCancel={fechandoModalCodigo}
+        onCancel={fechandoModalCodigoSemRecarregar}
         footer={null}
         width={"70%"}
         centered={true}

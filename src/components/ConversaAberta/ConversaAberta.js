@@ -30,8 +30,6 @@ import moment from "moment";
 import AddToast from "../AddToast/AddToast";
 import { toast } from "react-toastify";
 
-moment.locale("pt-br");
-
 export default function ConversaAberta({ socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState('');

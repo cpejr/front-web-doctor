@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Checkbox, Row, Col, Tooltip } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
-import moment from "moment";
 import { toast } from "react-toastify";
-import _, { set } from "lodash";
+import _ from "lodash";
 import {
   Container,
   Caixa,
@@ -30,12 +29,11 @@ import Button from "../../styles/Button";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import { Cores } from "../../variaveis";
 import { TiposDeConsulta } from "../listaTiposDeConsultas";
-import { apenasNumeros, data, dataAgendamentoBack } from "../../utils/masks";
+import { apenasNumeros } from "../../utils/masks";
 import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAgendamentoEspecifico(props) {
-  const { Option } = Select;
   const [usuario, setUsuario] = useState({});
   const [usuarios, setUsuarios] = useState([]);
   const [consultorios, setConsultorios] = useState([]);
@@ -47,10 +45,7 @@ function ModalAgendamentoEspecifico(props) {
   const [dataConsulta, setDataConsulta] = useState("");
   const [hora, setHora] = useState("");
   const [erro, setErro] = useState(false);
-  const [testarCampos, setTestarCampos] = useState();
   const [hoje, setHoje] = useState("");
-
-  moment.locale("pt-br");
 
   const [consulta, setConsulta] = useState({
     data_hora: "",
@@ -226,8 +221,6 @@ function ModalAgendamentoEspecifico(props) {
       camposPreenchidos[name] = value;
       setConsulta({ ...consulta, [name]: value });
     }
-
-    
       if (camposPreenchidos[name] === ""  ) { 
             camposVazios[name]= true;  
       }
