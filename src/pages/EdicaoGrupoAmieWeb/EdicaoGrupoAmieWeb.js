@@ -25,7 +25,7 @@ import { CaixaBotaoUpload } from "../../components/ModalAlterarFoto/Styles";
 
 function EdicaoGrupoAmieWeb() {
 
-  const [carregando, setCarregando] = useState(false);
+  const [carregando, setCarregando] = useState(true);
   const [id, setId] = useState();
   const [imagem_um, setImagem_um] = useState();
   const [texto, setTexto] = useState('');
@@ -35,7 +35,7 @@ function EdicaoGrupoAmieWeb() {
 
   async function getAmie() {
     const res = await managerService.getAmie();
-    console.log(res);
+    console.log(res[0]);
     setImagem_um(res[0].imagem_um);
     setTexto(res[0].texto);
     setImagem_dois(res[0].imagem_dois);
@@ -44,13 +44,8 @@ function EdicaoGrupoAmieWeb() {
 
 
   async function setandoImagens() {
-    const chave1 = imagem_um;
-    const chave2 = imagem_dois;
-    if (chave1 === null || chave1 === "" || chave2 === null || chave2 === "")
-      return;
-    setCarregando(true);
-    const imagem1 = await managerService.GetArquivoPorChave(chave1);
-    const imagem2 = await managerService.GetArquivoPorChave(chave2);
+    const imagem1 = await managerService.GetArquivoPorChave(imagem_um);
+    const imagem2 = await managerService.GetArquivoPorChave(imagem_dois);
     setImagem_um(imagem1);
     setImagem_dois(imagem2);
     await sleep(1000);
@@ -103,15 +98,12 @@ function EdicaoGrupoAmieWeb() {
 
   useEffect(() => {
     getAmie();
+    setandoImagens();
   }, []);
 
   useEffect(() => {
-    console.log(texto)
+    console.log(texto);
   }, [texto]);
-
-  useEffect(() => {
-    setandoImagens()
-  }, [id]);
 
   return (
     <TheOneAboveAll>
@@ -121,11 +113,12 @@ function EdicaoGrupoAmieWeb() {
         </Titulo>
 
         <DadosGrupoAmie>
-          <UploadContainer
-            src={imagem_um}
-          >
-            {carregando ? <LoadingOutlined /> :
-              (
+
+          {carregando ? <LoadingOutlined /> :
+            (
+              <UploadContainer
+                src={imagem_um}
+              >
                 <UploadButton>
                   <Upload
                     name='imagem1'
@@ -144,8 +137,9 @@ function EdicaoGrupoAmieWeb() {
                     </div>
                   </Upload>
                 </UploadButton>
-              )}
-          </UploadContainer>
+              </UploadContainer>
+            )}
+
           <TextArea
             value={texto}
             onChange={(event) => {

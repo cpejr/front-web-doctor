@@ -75,6 +75,8 @@ export const UploadButton = styled.div`
 `
 
 export const UploadContainer = styled.div`
+  height: 100%;
+  width: 100%;
   background-image: url(${(props) => props.src});
   background-repeat: no-repeat;
   background-size:cover;
