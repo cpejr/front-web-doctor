@@ -47,7 +47,7 @@ const RotasPrivadasMedico = ({ component: Component, ...rest }) => (
       ) : (
         <Redirect
           to={{
-            pathname: '/web/home',
+            pathname: '/web/listadeusuarios',
             state: { from: props.location },
           }}
         />
@@ -179,7 +179,7 @@ function UserHeader() {
           path='/web/formularioespecifico'
           component={FormularioEspecifico}
         />
-        <RotasPrivadas exact path='/web/home' component={Home} />
+        <RotasPrivadasMedico exact path='/web/home' component={Home} />
         <RotasPrivadas
           component={() => <Redirect to='/web/listadeusuarios' />}
         />
