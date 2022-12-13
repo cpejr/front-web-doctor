@@ -3,12 +3,12 @@ import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { Upload } from "antd";
 
 import {
+  Container,
   ContainerEditarGrupoAmieWeb,
   DadosGrupoAmie,
   Botoes,
   TextArea,
   Titulo,
-  TheOneAboveAll,
   UploadContainer,
   UploadButton,
 
@@ -20,7 +20,6 @@ import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 
 import { toast } from "react-toastify";
-import { CaixaBotaoUpload } from "../../components/ModalAlterarFoto/Styles";
 
 
 function EdicaoGrupoAmieWeb() {
@@ -35,7 +34,6 @@ function EdicaoGrupoAmieWeb() {
 
   async function getAmie() {
     const res = await managerService.getAmie();
-    console.log(res[0]);
     setImagem_um(res[0].imagem_um);
     setTexto(res[0].texto);
     setImagem_dois(res[0].imagem_dois);
@@ -44,10 +42,18 @@ function EdicaoGrupoAmieWeb() {
 
 
   async function setandoImagens() {
-    const imagem1 = await managerService.GetArquivoPorChave(imagem_um);
-    const imagem2 = await managerService.GetArquivoPorChave(imagem_dois);
-    setImagem_um(imagem1);
-    setImagem_dois(imagem2);
+
+    setCarregando(true);
+
+    if (imagem_um !== null || imagem_um !== "") {
+      const arquivo = await managerService.GetArquivoPorChave(imagem_um);
+      setImagem_um(arquivo);
+    }
+
+    if (imagem_dois !== null || imagem_dois !== "") {
+      const arquivo = await managerService.GetArquivoPorChave(imagem_dois);
+      setImagem_dois(arquivo);
+    }
     await sleep(1000);
     setCarregando(false);
   }
@@ -71,8 +77,12 @@ function EdicaoGrupoAmieWeb() {
 
 
   async function updateAmie() {
+
     if (alterou) {
+      setCarregando(true);
+      toast.success("Foto adicionada com sucesso");
       await managerService.UpdateAmie(id, imagem_um, texto, imagem_dois);
+      setCarregando(false);
     } else {
       toast.error('Selecione uma foto para editar!');
     }
@@ -98,27 +108,22 @@ function EdicaoGrupoAmieWeb() {
 
   useEffect(() => {
     getAmie();
-    setandoImagens();
   }, []);
 
   useEffect(() => {
-    console.log(texto);
-  }, [texto]);
+    setandoImagens();
+  }, [id]);
 
   return (
-    <TheOneAboveAll>
+    <Container>
       <ContainerEditarGrupoAmieWeb>
-        <Titulo>
-          Página Grupo AMIE
-        </Titulo>
-
+        <Titulo>Página Grupo AMIE</Titulo>
         <DadosGrupoAmie>
-
-          {carregando ? <LoadingOutlined /> :
-            (
-              <UploadContainer
-                src={imagem_um}
-              >
+          <UploadContainer
+            src={imagem_um}
+          >
+            {carregando ? <LoadingOutlined /> :
+              (
                 <UploadButton>
                   <Upload
                     name='imagem1'
@@ -127,18 +132,18 @@ function EdicaoGrupoAmieWeb() {
                     beforeUpload={beforeUpload}
                     onChange={(e) => handleChange(1, e)}
                   >
-                    <PlusOutlined />
+
                     <div
                       style={{
-                        marginTop: 8,
+                        margin: 8,
                       }}
                     >
                       Alterar Imagem
                     </div>
                   </Upload>
                 </UploadButton>
-              </UploadContainer>
-            )}
+              )}
+          </UploadContainer>
 
           <TextArea
             value={texto}
@@ -155,47 +160,25 @@ function EdicaoGrupoAmieWeb() {
           >
             {carregando ? <LoadingOutlined /> :
               (
-                <Upload
-                  name='imagem2'
-                  listType='picture'
-                  showContainerList={false}
-                  beforeUpload={beforeUpload}
-                  onChange={(e) => handleChange(2, e)}
-                >
-                  <PlusOutlined />
-                  <div
-                    style={{
-                      marginTop: 8,
-                    }}
+                <UploadButton>
+                  <Upload
+                    name='imagem2'
+                    listType='picture'
+                    showContainerList={false}
+                    beforeUpload={beforeUpload}
+                    onChange={(e) => handleChange(2, e)}
                   >
-                    Alterar Imagem
-                  </div>
-                </Upload>
+                    <div
+                      style={{
+                        margin: 8,
+                      }}
+                    >
+                      Alterar Imagem
+                    </div>
+                  </Upload>
+                </UploadButton>
               )}
           </UploadContainer>
-          {/* <CaixaBotaoUpload>
-            <Upload
-              name='imagem2'
-              listType='picture'
-              showUploadList={false}
-              beforeUpload={beforeUpload}
-              onChange={(e) => handleChange(2, e)}
-            >
-              {!carregando ? (
-                <img
-                  src={imagem_dois}
-                  alt='imagem2'
-                  style={{
-                    maxHeight: '300px',
-                    width: '100%',
-                    height: '100%',
-                  }}
-                />
-              ) : ('')
-              }
-              {uploadButton}
-            </Upload>
-          </CaixaBotaoUpload> */}
         </DadosGrupoAmie>
 
         <Botoes>
@@ -205,6 +188,9 @@ function EdicaoGrupoAmieWeb() {
             backgroundColor={Cores.cinza[2]}
             color={Cores.branco}
             fontSize='24px'
+            fontSizeMedia350='18px'
+            paddingLeft='10px'
+            paddingRight='10px'
             onClick={() => (updateAmie())}
           >
             Salvar Alterações
@@ -212,16 +198,17 @@ function EdicaoGrupoAmieWeb() {
           <Button
             width='300px'
             height='60px'
-            backgroundColor={Cores.amarelo}
+            backgroundColor={Cores.verde}
             fontSize='24px'
+            fontSizeMedia350='16px'
+            paddingLeft='10px'
+            paddingRight='10px'
           >
             Cancelar Alterações
           </Button>
         </Botoes>
-
       </ContainerEditarGrupoAmieWeb>
-
-    </TheOneAboveAll>
+    </Container>
   )
 }
 export default EdicaoGrupoAmieWeb;

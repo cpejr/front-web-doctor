@@ -90,10 +90,6 @@ function Routes() {
           path='/alterarsenha_requisicao'
           component={AlterarSenhaComEmail}
         />
-        <Route
-        exact path='/utaldu'
-        component={EdicaoGrupoAmieWeb}
-        />
         <RotasPrivadas exact path='/cadastro' component={Cadastro} />
         <RotasPrivadasMedico
           exact
@@ -145,6 +141,11 @@ function UserHeader() {
         />
         <RotasPrivadasMedico
           exact
+          path='/web/edicaogrupoamieweb'
+          component={EdicaoGrupoAmieWeb}
+        />
+        <RotasPrivadasMedico
+          exact
           path='/web/editarformulario'
           component={EditarFormulario}
         />
@@ -164,7 +165,7 @@ function UserHeader() {
           component={ListaUsuarios}
         />
         <RotasPrivadasMedico
-          exact 
+          exact
           path='/web/criacaoreceitas'
           component={CriacaoReceitas}
         />
