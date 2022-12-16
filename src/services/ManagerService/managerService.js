@@ -302,14 +302,16 @@ export const AlterarSenha = async (novaSenha, id) => {
     .alterarSenha(id, novaSenha)
     .then(() => {
       toast.success('Senha alterada com sucesso!');
+      sleep(2000);
       setTimeout(() => {
-        window.location.href = '/wb/perfil';
+        window.location.href = '/web/perfil';
       }, 2000);
     })
     .catch(() => {
       toast.error(
         'Erro ao alterar senha. Reenvie o e-mail de recuperação e entre no link mais atual para alterá-la com sucesso'
       );
+      sleep(5200);
       setTimeout(() => {
         window.location.href = '/alterarsenha_requisicao';
       }, 5200);

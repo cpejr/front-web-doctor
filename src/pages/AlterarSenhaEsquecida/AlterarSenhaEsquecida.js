@@ -150,7 +150,7 @@ function AlterarSenhaEsquecida() {
                 color={Cores.preto}
                 fontSize="1em"
                 width="100%"
-                marginTop="5%"
+                marginTop="2%"
                 type="password"
                 name="confirmarSenha"
                 camposVazios={camposVazios.confirmarSenha}
