@@ -18,6 +18,7 @@ import {
 	CriacaoReceitaCorpo,
 	Titulo,
 	NomeDoPaciente,
+	Assinatura,
 	Descricao,
 	CriacaoReceitaBotoes,
 	BotaoEnviar,
@@ -180,6 +181,25 @@ function CriacaoReceitas() {
 									{usuario.nome}
 								</option>
 							))}
+						</Select>
+					</SelectContainer>
+					<Assinatura>Assinatura:</Assinatura>
+					<SelectContainer>
+						<Select
+							backgroundColor={Cores.cinza[7]}
+							color={Cores.preto}
+							borderColor="transparent"
+							fontSize="1em"
+							width="97%"
+							marginTop="0px"
+							size="large"
+							placeholder="Tipo da Assinatura"
+							height="45px"
+							borderWidth820="97%"
+						>
+							<option value="" disabled selected>
+								Tipo da Assinatura
+							</option>
 						</Select>
 					</SelectContainer>
 					<Descricao>Descrição:</Descricao>

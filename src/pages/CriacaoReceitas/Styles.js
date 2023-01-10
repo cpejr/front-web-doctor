@@ -92,6 +92,19 @@ export const NomeDoPaciente = styled.div`
 	}
 `;
 
+export const Assinatura = styled.div`
+	display: flex;
+	font-size: 17px;
+	font-weight: 500;
+	line-height: 24px;
+	letter-spacing: 0em;
+	margin-top: 4%;
+
+	@media (max-width: 280px) {
+		font-size: 16px;
+	}
+`;
+
 export const SelectContainer = styled.div`
 	height: 50px;
 	width: 100%;
