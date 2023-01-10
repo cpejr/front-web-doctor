@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Cores, Fontes } from '../../variaveis';
+import styled from "styled-components";
+import { Cores, Fontes } from "../../variaveis";
 
 export const Body = styled.div`
   display: flex;
@@ -12,6 +12,7 @@ export const Body = styled.div`
   padding: 1%;
   background-color: ${Cores.branco};
 `;
+
 export const Board = styled.div`
   display: flex;
   align-items: center;
@@ -38,6 +39,7 @@ export const Notificacao = styled.div`
   height: 6.5em;
   padding-left: 2%;
   padding-right: 2%;
+
   @media (max-width: 560px) {
     flex-direction: column;
     height: 140px;
