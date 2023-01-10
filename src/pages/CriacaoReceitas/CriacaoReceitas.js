@@ -28,12 +28,14 @@ import {
 const camposVaziosReferencia = {
 	id_usuario: false,
 	titulo: false,
+	assinatura: false,
 	descricao: false,
 };
 
 const estadoIncial = {
 	id_usuario: "",
 	titulo: "",
+	assinatura: "",
 	descricao: "",
 };
 
@@ -64,6 +66,10 @@ function CriacaoReceitas() {
 		}
 
 		if (name === "id_usuario") {
+			armazenaInformacoesUsuario(value);
+		}
+
+		if (name === "assinatura") {
 			armazenaInformacoesUsuario(value);
 		}
 
@@ -111,6 +117,7 @@ function CriacaoReceitas() {
 		const camposVaziosAtual = {
 			id_usuario: !estado.id_usuario,
 			titulo: !estado.titulo,
+			assinatura: !estado.assinatura,
 			descricao: !estado.descricao,
 		};
 
@@ -196,10 +203,16 @@ function CriacaoReceitas() {
 							placeholder="Tipo da Assinatura"
 							height="45px"
 							borderWidth820="97%"
+							name="assinatura"
 						>
 							<option value="" disabled selected>
 								Tipo da Assinatura
 							</option>
+							{usuarios.map((usuario) => (
+								<option key={usuario.id} value={usuario.id} color="red">
+									{usuario.nome}
+								</option>
+							))} //falta adaptar esse trecho
 						</Select>
 					</SelectContainer>
 					<Descricao>Descrição:</Descricao>
