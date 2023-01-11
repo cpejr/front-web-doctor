@@ -145,7 +145,7 @@ function UploadReceita() {
 					<Titulo>Título:</Titulo>
 					<Input
 						placeholder="Título"
-						backgroundColor={Cores.cinza[7]}
+						backgroundColor={Cores.verde}
 						color={Cores.preto}
 						fontSize="1em"
 						width="100%"
@@ -195,7 +195,7 @@ function UploadReceita() {
 						<Button
 							height="47px"
 							width="100%"
-							backgroundColor={Cores.branco}
+							backgroundColor={Cores.verde}
 							borderColor={Cores.cinza[3]}
 							color={Cores.cinza[2]}
 							fontSize="1em"
@@ -208,7 +208,7 @@ function UploadReceita() {
 						<Button
 							height="47px"
 							width="100%"
-							backgroundColor={Cores.lilas[1]}
+							backgroundColor={Cores.verde}
 							borderColor={Cores.azul}
 							color={Cores.branco}
 							fontSize="1em"
