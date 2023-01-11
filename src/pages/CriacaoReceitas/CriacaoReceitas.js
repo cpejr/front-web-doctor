@@ -208,11 +208,13 @@ function CriacaoReceitas() {
 							<option value="" disabled selected>
 								Tipo da Assinatura
 							</option>
-							{usuarios.map((usuario) => (
-								<option key={usuario.id} value={usuario.id} color="red">
-									{usuario.nome}
-								</option>
-							))} //falta adaptar esse trecho
+							<option value="sem">
+								Sem Assinatura
+							</option>
+							<option value="auto">
+								Assinatura Automática
+							</option>
+
 						</Select>
 					</SelectContainer>
 					<Descricao>Descrição:</Descricao>
