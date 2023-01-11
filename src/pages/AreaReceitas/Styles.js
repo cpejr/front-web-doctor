@@ -206,3 +206,16 @@ export const BotaoDeletar = styled.div`
     width: 25%;
   }
 `;
+
+export const ContainerBotoes = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  @media (max-width: 920px){
+    justify-content: flex-end;
+    width: 100%
+  }
+`;
