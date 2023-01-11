@@ -204,6 +204,9 @@ function CriacaoReceitas() {
 							height="45px"
 							borderWidth820="97%"
 							name="assinatura"
+							camposVazios = {camposVazios.assinatura}
+							onChange={preenchendoDados}
+
 						>
 							<option value="" disabled selected>
 								Tipo da Assinatura
