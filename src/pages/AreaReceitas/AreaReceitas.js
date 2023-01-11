@@ -76,6 +76,12 @@ function AreaReceitas() {
 		});
 	}
 
+	function uploadReceita(){
+		history.push({
+			pathname: "/web/uploadreceita",
+		});
+	}
+
 	async function pegandoDadosReceitas() {
 		setCarregandoPagina(true);
 		const resposta = await managerService.GetReceitas();
@@ -167,7 +173,7 @@ function AreaReceitas() {
 									fontSize="1em"
 									gap="5%"
 									widthMedia600="100%"
-									onClick={() => criandoReceita()}
+									onClick={() => uploadReceita()}
 								>
 									Upload de Receita
 								</Button>
