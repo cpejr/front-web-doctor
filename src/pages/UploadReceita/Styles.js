@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Cores } from "../../variaveis";
+import { Upload } from "antd";
 
 export const ContainerUploadReceitas = styled.div`
 	display: flex;
@@ -105,7 +106,7 @@ export const SelectContainer = styled.div`
 	box-shadow: 0px 4px 4px 0px #00000040;
 `;
 
-export const Upload = styled.div`
+export const UploadBox = styled.div`
 	display: flex;
 	font-size: 17px;
 	font-weight: 500;
@@ -116,10 +117,10 @@ export const Upload = styled.div`
 		font-size: 16px;
 	}
 `;
+export const Area = styled.div`
 
-export const EnviarUploadArea = styled.textarea`
 	padding-bottom: 100px;
-	background-color: ${Cores.cinza[7]};
+	background: ${Cores.cinza[7]};
 	color: ${Cores.preto};
 	font-size: 1em;
 	width: 100%;
@@ -146,10 +147,11 @@ export const EnviarUploadArea = styled.textarea`
 	padding: 2%;
 	padding-top: 3%;
 	overflow: hidden;
-	max-height: 150px;
-	min-height: 150px;
 	font-size: 1em;
 `;
+
+export const EnviarUploadArea = styled(Upload)`width:100%;height:100%`;
+
 
 export const UploadReceitaBotoes = styled.div`
 	display: flex;

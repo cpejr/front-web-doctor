@@ -9,7 +9,9 @@ import { Spin } from "antd";
 import _ from "lodash";
 import { toast } from "react-toastify";
 import * as managerService from "../../services/ManagerService/managerService";
-//import { Upload } from "antd";
+import { Upload } from "antd";
+
+
 import {
 	ContainerUploadReceitas,
 	CardUploadReceitas,
@@ -19,10 +21,11 @@ import {
 	UploadReceitaCorpo,
 	Titulo,
 	NomeDoPaciente,
-	Upload,
+	UploadBox,
 	UploadReceitaBotoes,
 	BotaoEnviar,
 	BotaoCancelar,
+	Area,
 } from "./Styles";
 
 const camposVaziosReferencia = {
@@ -138,6 +141,8 @@ function UploadReceita() {
 		<LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
 	);
 
+
+
 	return (
 		<ContainerUploadReceitas>
 			<CardUploadReceitas>
@@ -183,13 +188,17 @@ function UploadReceita() {
 							))}
 						</Select>
 					</SelectContainer>
-					<Upload>Upload:</Upload>
-					<EnviarUploadArea
-						placeholder="Buscar Receita"
-						name="upload"
-						camposVazios={camposVazios.descricao}
-						onChange={preenchendoDados}
-					/>
+					<UploadBox>Upload:</UploadBox>
+					<Area>
+					<EnviarUploadArea multiple={false} action={"http://localhost:3000/"}>
+					<div>
+						+ Receita
+					</div>
+					</EnviarUploadArea>
+					</Area>
+					
+					
+					
 				</UploadReceitaCorpo>
 				<UploadReceitaBotoes>
 					<BotaoCancelar>
