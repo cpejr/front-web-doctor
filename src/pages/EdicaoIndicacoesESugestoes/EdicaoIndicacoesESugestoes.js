@@ -4,17 +4,21 @@ import {Container,
         ContainerSelecao,
         Titulo,
         Descricao,
-        ContainerIndicacao,
-        Sugestao} from "./Styles";
+        ContainerSugestao,
+        Sugestao,
+        Divisoria,
+        ContainerIndicacao} from "./Styles";
 
 function EdicaoIndicacoesESugestoes (){
     return(
         <Container>
             <EdicaoContainer>
                 <ContainerSelecao>
-                    <Titulo>Indicações e Sugestões<br/>Exames e profissionais</Titulo>
-                    <Descricao>São sugestões de profissionais de confiança para realização de exames ou tratamentos específicos, não oferecidos em meu consultório:</Descricao>
-                    <ContainerIndicacao>
+                    <div>
+                        <Titulo>Indicações e Sugestões<br/>Exames e profissionais</Titulo>
+                        <Descricao>São sugestões de profissionais de confiança para realização de exames ou tratamentos específicos, não oferecidos em meu consultório:</Descricao>
+                    </div>
+                    <ContainerSugestao>
                         <Sugestao>Eletroneuromiografia</Sugestao>
                         <Sugestao>Ressonância Magnética em Epilespsia</Sugestao>
                         <Sugestao>Punção Lombar</Sugestao>
@@ -24,8 +28,10 @@ function EdicaoIndicacoesESugestoes (){
                         <Sugestao>Eletroneuromiografia</Sugestao>
                         <Sugestao>Psicologia - TCC Insônia</Sugestao>
                         <Sugestao>Avaiação Neuropsicológica</Sugestao>
-                    </ContainerIndicacao>
+                    </ContainerSugestao>
                 </ContainerSelecao>
+                <Divisoria></Divisoria>
+                <ContainerIndicacao></ContainerIndicacao>
             </EdicaoContainer>
         </Container>
         )
