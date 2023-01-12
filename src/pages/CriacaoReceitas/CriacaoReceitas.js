@@ -144,7 +144,19 @@ function CriacaoReceitas() {
 	const antIcon = (
 		<LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
 	);
+    async function baixarPdf(receita){
+		const chave = receita.pdf_url;
+		//resposta = pdf em base 64
+		const resposta = await managerService.GetArquivoPorChave(chave);
 
+		const fonteLink = `data:application/pdf;base64,${resposta}`;
+		const Linkbaixavel = document.createElement('a');
+		const nome = receita.tituloReceita + ".pdf";
+		
+		Linkbaixavel.href = fonteLink;
+		Linkbaixavel.download = nome;
+		Linkbaixavel.click();
+	}
 	return (
 		<ContainerCriacaoReceitas>
 			<CardCriacaoReceitas>
@@ -250,7 +262,7 @@ function CriacaoReceitas() {
 							borderColor={Cores.azul}
 							color={Cores.branco}
 							fontSize="1em"
-							onClick={criarReceita}
+							onClick={() => baixarPdf(criarReceita)}
 						>
 							{carregandoCriacao ? (
 								<Spin indicator={antIcon} />
