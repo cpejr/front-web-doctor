@@ -46,7 +46,7 @@ export const FiltroPaciente = styled.div`
   width: 50%;
   margin: 1%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: start;
   gap: 2%;
   @media (max-width: 920px) {
@@ -209,7 +209,6 @@ export const BotaoDeletar = styled.div`
 
 export const ContainerBotoes = styled.div`
   position: relative;
-  display: flex;
   flex-direction: column;
   width: 100%;
   display: flex;

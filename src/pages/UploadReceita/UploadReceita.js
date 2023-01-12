@@ -9,6 +9,7 @@ import { Spin } from "antd";
 import _ from "lodash";
 import { toast } from "react-toastify";
 import * as managerService from "../../services/ManagerService/managerService";
+//import { Upload } from "antd";
 import {
 	ContainerUploadReceitas,
 	CardUploadReceitas,
@@ -145,7 +146,7 @@ function UploadReceita() {
 					<Titulo>Título:</Titulo>
 					<Input
 						placeholder="Título"
-						backgroundColor={Cores.verde}
+						backgroundColor={Cores.cinza[7]}
 						color={Cores.preto}
 						fontSize="1em"
 						width="100%"
