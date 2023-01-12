@@ -37,18 +37,28 @@ export const ContainerSelecao = styled.div`
 
 export const Titulo = styled.h1`
     font-family: ${Fontes.barlow};
-    font-size: 25px;
+    font-size: 28px;
     font-weight: 500;
+    margin-top: 20px;
+
+    width:300px;
 `;
 
 export const Descricao = styled.p`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     font-family: ${Fontes.barlow};
+    font-size: 15px;
+    font-weight: 500;
     border: none;
     background-color: white;
 
-    width:100%;
+    width:300px;
     height: auto;
     flex-wrap: wrap;
+    margin-top: 20px;
 
 `;
 
@@ -60,4 +70,29 @@ export const ContainerIndicacao = styled.div`
 
     height: 100%;
     width:50%;
+`;
+
+export const Sugestao = styled.button`
+
+    font-size: 16px;
+    font-weight: 500;
+    font-family: ${Fontes.barlow};
+    background-color: ${Cores.cinza[7]};
+
+    padding: 5px 5px;
+    width: 300px;
+    border: 2px solid #0A0E3C;
+    color: ${Cores.preto};
+
+    border: 2px solid #0A0E3C;
+    border-radius: 4px;
+    margin-bottom: 10px;
+
+    /* .Sugestão{
+        transition-duration: 0.4s;
+    }
+    .Sugestão:hover {
+        background-color:${Cores.azulEscuro};
+        color: ${Cores.branco};
+    } */
 `;
