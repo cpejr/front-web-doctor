@@ -22,7 +22,7 @@ import EditarFormulario from './pages/EditarFormulario/EditarFormulario';
 import FormularioEspecifico from './pages/FormularioEspecifico';
 import Home from './pages/Home/Home';
 import CriacaoReceitas from './pages/CriacaoReceitas';
-import EdicaoIndicacoesESugestoesWeb from './pages/EdicaoIndicacoesESugestoesWeb';
+import EdicaoIndicacoesESugestoes from './pages/EdicaoIndicacoesESugestoes';
 
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
@@ -182,8 +182,8 @@ function UserHeader() {
         />
         <RotasPrivadas
           exact
-          path='/web/edicaoindicacoesesugestoesweb'
-          component={EdicaoIndicacoesESugestoesWeb}
+          path='/web/edicaoindicacoesesugestoes'
+          component={EdicaoIndicacoesESugestoes}
         />
         <RotasPrivadas exact path='/web/home' component={Home} />
         <RotasPrivadas

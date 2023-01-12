@@ -6,7 +6,7 @@ import {Container,
         Descricao,
         ContainerIndicacao} from "./Styles";
 
-function EdicaoIndicacoesESugestoesWeb (){
+function EdicaoIndicacoesESugestoes (){
     return(
         <Container>
             <EdicaoContainer>
@@ -20,4 +20,4 @@ function EdicaoIndicacoesESugestoesWeb (){
     )
 }
 
-export default EdicaoIndicacoesESugestoesWeb;
+export default EdicaoIndicacoesESugestoes;
