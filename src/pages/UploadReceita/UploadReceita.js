@@ -26,6 +26,8 @@ import {
 	BotaoEnviar,
 	BotaoCancelar,
 	Area,
+	UploadText,
+	TextLegenda,
 } from "./Styles";
 
 const camposVaziosReferencia = {
@@ -190,15 +192,20 @@ function UploadReceita() {
 					</SelectContainer>
 					<UploadBox>Upload:</UploadBox>
 					<Area>
-					<EnviarUploadArea multiple={false} action={"http://localhost:3000/"}>
-					<div>
-						+ Receita
-					</div>
-					</EnviarUploadArea>
+						<EnviarUploadArea multiple={false} action={"http://localhost:3000/"}>
+							<UploadText>
+								<div>
+									+
+								</div>
+								<div>
+									Buscar Receita
+								</div>
+							</UploadText>
+						</EnviarUploadArea>
 					</Area>
-					
-					
-					
+
+
+
 				</UploadReceitaCorpo>
 				<UploadReceitaBotoes>
 					<BotaoCancelar>

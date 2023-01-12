@@ -112,20 +112,19 @@ export const UploadBox = styled.div`
 	font-weight: 500;
 	line-height: 24px;
 	margin-top: 4%;
+	margin-bottom: 2%;
 
 	@media (max-width: 280px) {
 		font-size: 16px;
 	}
 `;
 export const Area = styled.div`
-
 	padding-bottom: 100px;
 	background: ${Cores.cinza[7]};
 	color: ${Cores.preto};
 	font-size: 1em;
 	width: 100%;
-	height: 150px;
-	margin-top: 2%;
+	height: auto;
 	box-shadow: 0px 4px 4px 0px #00000040;
 	padding-right: 3px;
 	border-radius: 3px;
@@ -150,8 +149,29 @@ export const Area = styled.div`
 	font-size: 1em;
 `;
 
-export const EnviarUploadArea = styled(Upload)`width:100%;height:100%`;
+export const EnviarUploadArea = styled(Upload)`
+.antd-upload{
+	width:100px;
+	height:100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+`;
 
+export const UploadText = styled.div`
+	width:auto;
+	height:100%;
+	font-size: 20px;
+	display: flex;
+	flex-direction: column;	
+	line-height: 30px;
+	margin-bottom: 2%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: grey;
+`;
 
 export const UploadReceitaBotoes = styled.div`
 	display: flex;
