@@ -122,7 +122,6 @@ export const Area = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding-bottom: 100px;
 	background: ${Cores.cinza[7]};
 	color: ${Cores.preto};
 	font-size: 1em;
@@ -146,27 +145,23 @@ export const Area = styled.div`
 		}
 		return cor;
 	}};
-	padding: 2%;
-	padding-top: 3%;
+	
 	overflow: hidden;
 	font-size: 1em;
 `;
 
 export const EnviarUploadArea = styled(Upload)`
-.antd-upload{
-	width:100px;
+.ant-upload{
+	width:100%;
 	height:100%;
 	display: flex;
-	align-items: center;
 	justify-content: center;
+	align-items: center;
 }
 `;
 
 export const UploadText = styled.div`
-	width:auto;
-	height:100%;
 	font-size: 20px;
-	display: flex;
 	flex-direction: column;	
 	line-height: 30px;
 	margin-bottom: 2%;

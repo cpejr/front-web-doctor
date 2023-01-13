@@ -192,7 +192,7 @@ function UploadReceita() {
 					</SelectContainer>
 					<UploadBox>Upload:</UploadBox>
 					<Area>
-						<EnviarUploadArea multiple={false} action={"http://localhost:3000/"}>
+						<EnviarUploadArea multiple={true} action={"http://localhost:3000/"}>
 							<UploadText>
 								<div>
 									+
