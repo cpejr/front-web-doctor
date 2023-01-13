@@ -119,6 +119,9 @@ export const UploadBox = styled.div`
 	}
 `;
 export const Area = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	padding-bottom: 100px;
 	background: ${Cores.cinza[7]};
 	color: ${Cores.preto};
