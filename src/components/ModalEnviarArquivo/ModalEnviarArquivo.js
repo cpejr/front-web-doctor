@@ -29,6 +29,7 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
   const [carregando, setCarregando] = useState(false);
   const [file, setFile] = useState();
   const [urlArquivo, setUrlArquivo] = useState();
+  const [nomeArquivo, setNomeArquivo] = useState();
   const antIconModal = (
     <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin />
   );
@@ -45,6 +46,7 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
     getBase64(info.file.originFileObj, (url) => {
       setCarregando(false);
       setFile(url);
+      setNomeArquivo(info.file.name);
     });
   }
 
@@ -68,6 +70,7 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
       props.pegandoDados();
 
       setFile(null);
+      setNomeArquivo(null);
 
       // Toda vez que confirmar o envio, vai pegar os dados lá em conversa aberta em EnviandoMensagemComArquivo()
 
@@ -104,7 +107,7 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
         {file ? (
           <ArquivoSelecionado>
             <FilePdfOutlined style={{ fontSize: 20 }} />
-            <div>Arquivo PDF</div>
+            <div>{nomeArquivo}</div>
           </ArquivoSelecionado>
         ) : (
           <Upload
