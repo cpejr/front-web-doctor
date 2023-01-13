@@ -5,7 +5,7 @@ export const Container = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
 
     height:100%;
     width:100%;
@@ -28,7 +28,7 @@ export const EdicaoContainer = styled.div`
     padding-bottom: 20px;
 `;
 
-export const ContainerSelecao = styled.div`
+export const ContainerInterno = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -103,6 +103,54 @@ export const Divisoria = styled.div`
     align-self: stretch;
 `;
 
-export const ContainerIndicacao = styled.div`
+export const Informacoes = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    flex-grow: 1;
+    height: 60%;
+    width: 100%;
+    background-color: ${Cores.cinza[3]};
+    overflow-y: hidden;
+    padding: 10%;
 
+    &:hover{
+        overflow-y: scroll;
+    }
+    
+`;
+
+export const DescricaoInformacoes = styled.input`
+    height: 100%;
+    display: flex;
+    flex-grow: 1;
+
+    background-color: ${Cores.cinza[3]};
+    border: none;
+    font-size: 1em;
+    font-family: ${Fontes.barlow};
+`;
+
+export const TituloInfo = styled.h2`
+    font-size: 20px;
+`;
+
+export const BotoesIndicacao = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-content: stretch;
+    gap: 19px;
+    margin-top: 30px;
+
+    width: 100%;
+    border-radius: 4px;
+`;
+
+export const Indicacao = styled.button`
+    background-color: ${Cores.azul};
+    color: ${Cores.branco};
+    font-size: 24px;
+    font-weight: 600;
 `;
