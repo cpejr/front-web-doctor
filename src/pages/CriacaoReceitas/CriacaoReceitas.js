@@ -48,7 +48,7 @@ function CriacaoReceitas() {
 	const [tituloReceita, setTituloReceita] = useState();
 	const [dataNascimentoPaciente, setDataNascimentoPaciente] = useState();
 	const [descricaoReceita, setDescricaoReceita] = useState();
-    const [tipoAssinatura, settipoAssinatura] = useState();
+    const [tipoAssinatura, setTipoAssinatura] = useState();
 	const history = useHistory();
 
 	function preenchendoDados(e) {
@@ -70,7 +70,7 @@ function CriacaoReceitas() {
 		}
 
 		if (name === "assinatura") {
-			armazenaInformacoesUsuario(value);
+			setTipoAssinatura(value);
 		}
 
 		if (name === "descricao") {
@@ -110,9 +110,7 @@ function CriacaoReceitas() {
 	function cancelarCriacaoReceita() {
 		history.push("/web/areareceitas");
 	}
-    function assinaturaFiltrada(value){
-		settipoAssinatura(value)
-	}
+
 	async function criarReceita(e) {
 		e.preventDefault();
 
@@ -125,30 +123,24 @@ function CriacaoReceitas() {
 
 		setCamposVazios(camposVaziosAtual);
 
-		if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
+		if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia || tipoAssinatura === "")) {
 			toast.warn("Preencha todos os campos");
 			return;
 		}
 
 		setCarregandoCriacao(true);
 		const id = estado.id_usuario;
-		let receitaPdf = await managerService.GetReceitasPorUsuarioId(id);
-		if (tipoAssinatura === "auto"){
-		return(
+		
 		await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
 			mensagemSucesso: "Receita criada com sucesso",
 			tempo: 1500,
 			onClose: () => {
 				history.push("/web/areareceitas");
 			},
-		}));}else{
-		if(tipoAssinatura === "sem"){
-		   return(
-		receitaPdf = await managerService.GetReceitasPorUsuarioId(id),
-	    baixarPdf(receitaPdf)
-		);
-	}
-	}
+		});
+		
+	    baixarPdf()
+		
 		setCarregandoCriacao(false);
 	}
 
@@ -232,15 +224,10 @@ function CriacaoReceitas() {
 							<option value="" disabled selected>
 								Tipo da Assinatura
 							</option>
-							<option 
-							onChange={(value) => assinaturaFiltrada(value)}
-							value="sem"
-						    >
+							<option value="sem">
 								Sem Assinatura
 							</option>
-							<option
-							onChange={(value) => assinaturaFiltrada(value)} 
-							value="auto">
+							<option value="auto">
 								Assinatura Automática
 							</option>
 
