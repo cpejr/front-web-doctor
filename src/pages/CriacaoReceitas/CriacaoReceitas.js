@@ -137,7 +137,8 @@ function CriacaoReceitas() {
 				history.push("/web/areareceitas");
 			},
 		});
-
+		const receitaPdf = await managerService.GetReceitasPorUsuarioId(id)
+	    baixarPdf(receitaPdf)
 		setCarregandoCriacao(false);
 	}
 
@@ -151,7 +152,7 @@ function CriacaoReceitas() {
 
 		const fonteLink = `data:application/pdf;base64,${resposta}`;
 		const Linkbaixavel = document.createElement('a');
-		const nome = receita.tituloReceita + ".pdf";
+		const nome = receita.titulo + ".pdf";
 		
 		Linkbaixavel.href = fonteLink;
 		Linkbaixavel.download = nome;
@@ -203,7 +204,7 @@ function CriacaoReceitas() {
 						</Select>
 					</SelectContainer>
 					<Assinatura>Assinatura:</Assinatura>
-					<SelectContainer>
+					<SelectContainer camposVazios = {camposVazios.assinatura}>
 						<Select
 							backgroundColor={Cores.cinza[7]}
 							color={Cores.preto}
@@ -216,7 +217,6 @@ function CriacaoReceitas() {
 							height="45px"
 							borderWidth820="97%"
 							name="assinatura"
-							camposVazios = {camposVazios.assinatura}
 							onChange={preenchendoDados}
 
 						>
@@ -262,7 +262,7 @@ function CriacaoReceitas() {
 							borderColor={Cores.azul}
 							color={Cores.branco}
 							fontSize="1em"
-							onClick={() => baixarPdf(criarReceita)}
+							onClick={criarReceita}
 						>
 							{carregandoCriacao ? (
 								<Spin indicator={antIcon} />
