@@ -48,7 +48,7 @@ function CriacaoReceitas() {
 	const [tituloReceita, setTituloReceita] = useState();
 	const [dataNascimentoPaciente, setDataNascimentoPaciente] = useState();
 	const [descricaoReceita, setDescricaoReceita] = useState();
-
+    const [tipoAssinatura, settipoAssinatura] = useState();
 	const history = useHistory();
 
 	function preenchendoDados(e) {
@@ -110,7 +110,9 @@ function CriacaoReceitas() {
 	function cancelarCriacaoReceita() {
 		history.push("/web/areareceitas");
 	}
-
+    function assinaturaFiltrada(value){
+		settipoAssinatura(value)
+	}
 	async function criarReceita(e) {
 		e.preventDefault();
 
@@ -129,16 +131,24 @@ function CriacaoReceitas() {
 		}
 
 		setCarregandoCriacao(true);
-		const id = estado.id_usuario
+		const id = estado.id_usuario;
+		let receitaPdf = await managerService.GetReceitasPorUsuarioId(id);
+		if (tipoAssinatura === "auto"){
+		return(
 		await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
 			mensagemSucesso: "Receita criada com sucesso",
 			tempo: 1500,
 			onClose: () => {
 				history.push("/web/areareceitas");
 			},
-		});
-		const receitaPdf = await managerService.GetReceitasPorUsuarioId(id)
+		}));}else{
+		if(tipoAssinatura === "sem"){
+		   return(
+		receitaPdf = await managerService.GetReceitasPorUsuarioId(id),
 	    baixarPdf(receitaPdf)
+		);
+	}
+	}
 		setCarregandoCriacao(false);
 	}
 
@@ -218,15 +228,19 @@ function CriacaoReceitas() {
 							borderWidth820="97%"
 							name="assinatura"
 							onChange={preenchendoDados}
-
 						>
 							<option value="" disabled selected>
 								Tipo da Assinatura
 							</option>
-							<option value="sem">
+							<option 
+							onChange={(value) => assinaturaFiltrada(value)}
+							value="sem"
+						    >
 								Sem Assinatura
 							</option>
-							<option value="auto">
+							<option
+							onChange={(value) => assinaturaFiltrada(value)} 
+							value="auto">
 								Assinatura Automática
 							</option>
 
