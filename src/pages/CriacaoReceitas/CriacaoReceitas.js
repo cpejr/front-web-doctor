@@ -48,7 +48,7 @@ function CriacaoReceitas() {
 	const [tituloReceita, setTituloReceita] = useState();
 	const [dataNascimentoPaciente, setDataNascimentoPaciente] = useState();
 	const [descricaoReceita, setDescricaoReceita] = useState();
-    const [tipoAssinatura, setTipoAssinatura] = useState();
+	const [tipoAssinatura, setTipoAssinatura] = useState();
 	const history = useHistory();
 
 	function preenchendoDados(e) {
@@ -130,24 +130,28 @@ function CriacaoReceitas() {
 
 		setCarregandoCriacao(true);
 		const id = estado.id_usuario;
-		
-		await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
-			mensagemSucesso: "Receita criada com sucesso",
-			tempo: 1500,
-			onClose: () => {
-				history.push("/web/areareceitas");
-			},
-		});
-		
-	    baixarPdf()
-		
+
+		if (tipoAssinatura === 'auto') {
+			await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
+				mensagemSucesso: "Receita criada com sucesso",
+				tempo: 1500,
+				onClose: () => {
+					history.push("/web/areareceitas");
+				},
+			});
+		}
+		else if (tipoAssinatura === 'sem') {
+			baixarPdf();
+			return;
+		}
+
 		setCarregandoCriacao(false);
 	}
 
 	const antIcon = (
 		<LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
 	);
-    async function baixarPdf(receita){
+	async function baixarPdf(receita) {
 		const chave = receita.pdf_url;
 		//resposta = pdf em base 64
 		const resposta = await managerService.GetArquivoPorChave(chave);
@@ -155,7 +159,7 @@ function CriacaoReceitas() {
 		const fonteLink = `data:application/pdf;base64,${resposta}`;
 		const Linkbaixavel = document.createElement('a');
 		const nome = receita.titulo + ".pdf";
-		
+
 		Linkbaixavel.href = fonteLink;
 		Linkbaixavel.download = nome;
 		Linkbaixavel.click();
@@ -206,7 +210,7 @@ function CriacaoReceitas() {
 						</Select>
 					</SelectContainer>
 					<Assinatura>Assinatura:</Assinatura>
-					<SelectContainer camposVazios = {camposVazios.assinatura}>
+					<SelectContainer camposVazios={camposVazios.assinatura}>
 						<Select
 							backgroundColor={Cores.cinza[7]}
 							color={Cores.preto}
