@@ -78,6 +78,7 @@ export const Titulo = styled.div`
 	@media (max-width: 280px) {
 		font-size: 16px;
 	}
+	
 `;
 
 export const NomeDoPaciente = styled.div`
@@ -118,6 +119,7 @@ export const UploadBox = styled.div`
 		font-size: 16px;
 	}
 `;
+
 export const Area = styled.div`
 	display: flex;
 	justify-content: center;
@@ -182,6 +184,12 @@ export const UploadReceitaBotoes = styled.div`
 		margin-bottom: 7px;
 		width: 85%;
 	}
+
+	@media (max-width: 400px) {
+		margin-bottom: 7px;
+		width: 85%;
+		flex-direction: column;
+	}
 `;
 
 export const BotaoCancelar = styled.div`
@@ -192,6 +200,12 @@ export const BotaoCancelar = styled.div`
 	@media (max-width: 280px) {
 		width: 55%;
 	}
+
+	@media (max-width: 400px) {
+		align-self: center;
+		margin-right: 0%;
+		margin-bottom: 2%;
+	}
 `;
 
 export const BotaoEnviar = styled.div`
@@ -201,5 +215,10 @@ export const BotaoEnviar = styled.div`
 
 	@media (max-width: 280px) {
 		width: 55%;
+	}
+
+	@media (max-width: 400px) {
+		align-self: center;
+		margin-left: 0%;
 	}
 `;
