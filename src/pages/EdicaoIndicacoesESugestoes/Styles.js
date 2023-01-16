@@ -21,7 +21,6 @@ export const EdicaoContainer = styled.div`
     display: flex;
     flex-direction: row;
     
-    
     width: 100%;
     border: 1px solid ${Cores.preto};
     padding-top: 20px;
@@ -33,15 +32,18 @@ export const ContainerInterno = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    flex-grow: 1;
     gap: 20px;
-    height: 100%;
     width:50%;
     padding: 20px 10%;
+    @media(max-width: 900px) {
+        padding: 15px 5%;
+    }
 `;
 
 export const Titulo = styled.h1`
     font-family: ${Fontes.barlow};
-    font-size: 30px;
+    font-size: 25px;
     font-weight: 500;
     text-align: center;
 `;
@@ -53,7 +55,7 @@ export const Descricao = styled.p`
     align-items: center;
 
     font-family: ${Fontes.barlow};
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 350;
     text-align: center;
 
@@ -80,7 +82,7 @@ export const ContainerSugestao = styled.div`
 
 export const Sugestao = styled.button`
 
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     font-family: ${Fontes.barlow};
     background-color: ${Cores.cinza[7]};
@@ -92,7 +94,6 @@ export const Sugestao = styled.button`
 
     border: 2px solid ${Cores.azulEscuro};
     border-radius: 4px;
-    margin-bottom: 10px;
 
 `;
 
@@ -106,35 +107,35 @@ export const Divisoria = styled.div`
 export const Informacoes = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: flex-start;
-    flex-wrap: wrap;
     flex-grow: 1;
     height: 60%;
     width: 100%;
-    background-color: ${Cores.cinza[3]};
-    overflow-y: hidden;
-    padding: 10%;
-
-    &:hover{
-        overflow-y: scroll;
-    }
-    
+    background-color: ${Cores.cinza[9]};
+    border: 1px solid ${Cores.cinza[3]};
+    padding: 10% 5%;
+    overflow: auto;
+    gap: 10px;
+    margin-top: 25px;
 `;
 
-export const DescricaoInformacoes = styled.input`
-    height: 100%;
+export const DescricaoInformacoes = styled.textarea`
+    
     display: flex;
+    align-self: flex-start;
+    width: 100%;
     flex-grow: 1;
-
-    background-color: ${Cores.cinza[3]};
+    background-color: ${Cores.cinza[9]};
     border: none;
     font-size: 1em;
     font-family: ${Fontes.barlow};
+    resize: none;
 `;
 
 export const TituloInfo = styled.h2`
     font-size: 20px;
+    display: flex;
+    align-self: center;
 `;
 
 export const BotoesIndicacao = styled.div`
@@ -143,14 +144,28 @@ export const BotoesIndicacao = styled.div`
     align-content: stretch;
     gap: 19px;
     margin-top: 30px;
+    flex-grow: 0;
 
     width: 100%;
     border-radius: 4px;
 `;
 
 export const Indicacao = styled.button`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    gap: 5px;
     background-color: ${Cores.azul};
     color: ${Cores.branco};
     font-size: 24px;
-    font-weight: 600;
+    font-weight: 500;
+    font-family: ${Fontes.barlow};
+    border: 3px solid ${Cores.azulEscuro};
+    border-radius: 4px;
+    
+    height: 100%;
+    @media(max-width: 1037px){
+        font-size: 19px;
+    }
 `;
