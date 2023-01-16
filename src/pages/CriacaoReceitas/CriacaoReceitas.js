@@ -131,18 +131,23 @@ function CriacaoReceitas() {
 		setCarregandoCriacao(true);
 		const id = estado.id_usuario;
 
-		if (tipoAssinatura === 'auto') {
-			await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
-				mensagemSucesso: "Receita criada com sucesso",
+
+		await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
+			mensagemSucesso: "Receita criada com sucesso",
+			tempo: 1500,
+			onClose: () => {
+				history.push("/web/areareceitas");
+			},
+		});
+
+		if (tipoAssinatura === 'sem') {
+			baixarPdf();
+			await managerService.DeletarReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
 				tempo: 1500,
 				onClose: () => {
 					history.push("/web/areareceitas");
 				},
 			});
-		}
-		else if (tipoAssinatura === 'sem') {
-			baixarPdf();
-			return;
 		}
 
 		setCarregandoCriacao(false);
