@@ -17,13 +17,13 @@ import {Container,
         Indicacao,
         DescricaoInformacoes} from "./Styles";
 import { wait } from "@testing-library/user-event/dist/utils";
-import { ModalAdicionarIndicaçao } from "../../components/ModalAdicionarIndicaçao"
+import { ModalAdicionarIndicaçao } from "../../components/ModalAdicionarIndicaçao/ModalAdicionarIndicaçao"
 
 function EdicaoIndicacoesESugestoes (){
     const [atualizando,setAtualizando] = useState();
     const [dadosIndicacao,setDadosIndicacao] = useState({"Titulo":"Eletroneuromiografia",
                                                         "Descricao":""});
-    const [modalAdicionarIndicacao, setModalAdicionarIndicacao] = useState(false);
+    const [ModalAdicionarIndicaçao, setModalAdicionarIndicacao] = useState(false);
 
     const antIcon = (
         <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
@@ -40,6 +40,10 @@ function EdicaoIndicacoesESugestoes (){
 
     async function abrirModalAdicionarIndicacao() {
         setModalAdicionarIndicacao(true);
+    }
+
+    async function fechandoModalAdicionarIndiacao() {
+        setModalAdicionarIndicacao(false);
     }
     
     return(
@@ -75,14 +79,27 @@ function EdicaoIndicacoesESugestoes (){
                     </Informacoes>
                     <BotoesIndicacao>
                         <Indicacao
-                            onClick={() => abrirModalAdicionarIndicacao}
+                            onClick={ () => abrirModalAdicionarIndicacao() }
                         >Adicionar Indicação <PlusSquareOutlined /> </Indicacao>
                         <Indicacao>Alterar Indicação <EditOutlined /></Indicacao>
                         <Indicacao>Excluir Indicação <DeleteOutlined /></Indicacao>
                     </BotoesIndicacao>
                 </ContainerInterno>
             </EdicaoContainer>
+
+            {/* <Modal
+            visible={ModalAdicionarIndicaçao}
+            onCancel={() => fechandoModalAdicionarIndiacao}
+            footer={null}
+            width={"70%"}
+            centered={true}
+            >
+                <ModalAdicionarIndicaçao
+                fechandoModal={ fechandoModalAdicionarIndiacao() }
+                />
+            </Modal> */}
         </Container>
+
         )
 }
 

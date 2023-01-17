@@ -5,13 +5,11 @@ import Input from "../../styles/Input";
 import { PlusSquareOutlined } from "@ant-design/icons";
 
 
-function ModalAdicionarIndicaçao () {
+function ModalAdicionarIndicaçao (props) {
 
     const [nome, setNome] = useState("");
     const [numeroTel, setNumeroTel] = useState("");
     const [localAtendimento, setLocalAtendimento] = useState("");
-
-
 
 
     return(
@@ -21,18 +19,39 @@ function ModalAdicionarIndicaçao () {
             <Input
               backgroundColor = "#EAECF"
               borderColor = "black"
+              value={nome}
+              placeholder="Insira o Nome do(a) Médico(a)"
+              color="black"
+              fontSize="1em"
+              width="100%"
+              marginTop="2%"
+              paddingRight="2%"
             >
             </Input>
             <p>Telefone:</p>
             <Input
               backgroundColor = "#EAECF"
               borderColor = "black"
+              value={numeroTel}
+              placeholder="Insira o telefone do(a) Médico(a)"
+              color="black"
+              fontSize="1em"
+              width="100%"
+              marginTop="2%"
+              paddingRight="2%"
             >
             </Input>
             <p>Local de Atendimento:</p>
             <Input
               backgroundColor = "#EAECF"
               borderColor = "black"
+              value={localAtendimento}
+              placeholder="Insira o local de atendimento do(a) Médico(a)"
+              color="black"
+              fontSize="1em"
+              width="100%"
+              marginTop="2%"
+              paddingRight="2%"
             >
             </Input>
             <Button
