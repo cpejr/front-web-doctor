@@ -27,7 +27,7 @@ import {
 } from "./Styles";
 
 import PdfReceita from "../../components/PdfReceita/PdfReceita";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import ReactPDF from '@react-pdf/renderer';
 
 const camposVaziosReferencia = {
 	id_usuario: false,
@@ -144,35 +144,18 @@ function CriacaoReceitas() {
 			},
 		});
 
+		setCarregandoCriacao(false);
+
 		if (tipoAssinatura === 'sem') {
-			baixarPdf();
-			await managerService.DeletarReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
-				tempo: 1500,
-				onClose: () => {
-					history.push("/web/areareceitas");
-				},
-			});
+			ReactPDF.render(<PdfReceita />, `${__dirname}/example.pdf`);
 		}
 
-		setCarregandoCriacao(false);
 	}
 
 	const antIcon = (
 		<LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
 	);
-	async function baixarPdf(receita) {
-		const chave = receita.pdf_url;
-		//resposta = pdf em base 64
-		const resposta = await managerService.GetArquivoPorChave(chave);
 
-		const fonteLink = `data:application/pdf;base64,${resposta}`;
-		const Linkbaixavel = document.createElement('a');
-		const nome = receita.titulo + ".pdf";
-
-		Linkbaixavel.href = fonteLink;
-		Linkbaixavel.download = nome;
-		Linkbaixavel.click();
-	}
 	return (
 		<ContainerCriacaoReceitas>
 			<CardCriacaoReceitas>
@@ -269,36 +252,23 @@ function CriacaoReceitas() {
 						</Button>
 					</BotaoCancelar>
 					<BotaoEnviar>
-						{(tipoAssinatura === '' || tipoAssinatura === 'auto') ? (
-							<Button
-								height="47px"
-								width="100%"
-								backgroundColor={Cores.lilas[1]}
-								borderColor={Cores.azul}
-								color={Cores.branco}
-								fontSize="1em"
-								onClick={criarReceita}
-							>
-								{carregandoCriacao ? (
-									<Spin indicator={antIcon} />
-								) : (
-									<div>ENVIAR</div>
-								)}
-							</Button>
-						) : (
-							<PDFDownloadLink document={<PdfReceita />}>
-								<Button
-									height="47px"
-									width="100%"
-									backgroundColor={Cores.lilas[1]}
-									borderColor={Cores.azul}
-									color={Cores.branco}
-									fontSize="1em"
-								>
-									ENVIAR
-								</Button>
-							</PDFDownloadLink>
-						)}
+
+						<Button
+							height="47px"
+							width="100%"
+							backgroundColor={Cores.lilas[1]}
+							borderColor={Cores.azul}
+							color={Cores.branco}
+							fontSize="1em"
+							onClick={criarReceita}
+						>
+							{carregandoCriacao ? (
+								<Spin indicator={antIcon} />
+							) : (
+								<div>ENVIAR</div>
+							)}
+						</Button>
+
 					</BotaoEnviar>
 				</CriacaoReceitaBotoes>
 			</CardCriacaoReceitas>
