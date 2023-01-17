@@ -8,6 +8,7 @@
     "@ginkgo-bioworks/react-json-schema-form-builder": "^2.9.0",
     "@mui/icons-material": "^5.4.2",
     "@mui/material": "^5.4.2",
+    "@react-pdf/renderer": "^3.0.2",
     "@rjsf/antd": "^4.2.0",
     "@rjsf/core": "^4.2.0",
     "@testing-library/jest-dom": "^5.14.1",

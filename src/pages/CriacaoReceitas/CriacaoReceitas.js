@@ -23,7 +23,11 @@ import {
 	CriacaoReceitaBotoes,
 	BotaoEnviar,
 	BotaoCancelar,
+	Pdf
 } from "./Styles";
+
+import PdfReceita from "../../components/PdfReceita/PdfReceita";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 const camposVaziosReferencia = {
 	id_usuario: false,
@@ -230,7 +234,7 @@ function CriacaoReceitas() {
 							name="assinatura"
 							onChange={preenchendoDados}
 						>
-							<option value="" disabled selected>
+							<option value="">
 								Tipo da Assinatura
 							</option>
 							<option value="sem">
@@ -265,21 +269,36 @@ function CriacaoReceitas() {
 						</Button>
 					</BotaoCancelar>
 					<BotaoEnviar>
-						<Button
-							height="47px"
-							width="100%"
-							backgroundColor={Cores.lilas[1]}
-							borderColor={Cores.azul}
-							color={Cores.branco}
-							fontSize="1em"
-							onClick={criarReceita}
-						>
-							{carregandoCriacao ? (
-								<Spin indicator={antIcon} />
-							) : (
-								<div>ENVIAR</div>
-							)}
-						</Button>
+						{(tipoAssinatura === '' || tipoAssinatura === 'auto') ? (
+							<Button
+								height="47px"
+								width="100%"
+								backgroundColor={Cores.lilas[1]}
+								borderColor={Cores.azul}
+								color={Cores.branco}
+								fontSize="1em"
+								onClick={criarReceita}
+							>
+								{carregandoCriacao ? (
+									<Spin indicator={antIcon} />
+								) : (
+									<div>ENVIAR</div>
+								)}
+							</Button>
+						) : (
+							<PDFDownloadLink document={<PdfReceita />}>
+								<Button
+									height="47px"
+									width="100%"
+									backgroundColor={Cores.lilas[1]}
+									borderColor={Cores.azul}
+									color={Cores.branco}
+									fontSize="1em"
+								>
+									ENVIAR
+								</Button>
+							</PDFDownloadLink>
+						)}
 					</BotaoEnviar>
 				</CriacaoReceitaBotoes>
 			</CardCriacaoReceitas>
