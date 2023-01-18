@@ -1,48 +1,50 @@
 import React from "react";
-import { Container } from "./Styles";
-import { BotaoGenerico } from "./Styles";
-import { BotaoSemLinkagem } from "./Styles";
-import { TituloPaginaEdicao } from "./Styles";
-import { Corpo } from "./Styles";
-import { useHistory } from 'react-router-dom';
+import { Corpo, Container, TituloPaginaEdicao, BotaoGenerico } from "./Styles";
+import { useHistory } from "react-router-dom";
 
 function EdicaoConteudo() {
   const history = useHistory();
   return (
     <Corpo>
       <Container>
-          <TituloPaginaEdicao>Selecione a página do aplicativo que deseja editar</TituloPaginaEdicao>
-
-          <BotaoGenerico
+        <TituloPaginaEdicao>
+          Selecione a página do aplicativo que deseja editar
+        </TituloPaginaEdicao>
+        <BotaoGenerico
           onClick={() => {
-            history.push('/web/Home');
+            history.push("/web/Home");
           }}
-          >Home</BotaoGenerico>
-
-          <BotaoSemLinkagem
-          /*</Container>onClick={() => {
-            history.push('/web/Home');
-          }}*/
-          >Sobre mim</BotaoSemLinkagem>
-
-          <BotaoSemLinkagem
-          /*onClick={() => {
-            history.push('/web/Home');
-          }}*/
-          >Comentários</BotaoSemLinkagem>
-
-          <BotaoSemLinkagem
-          /*onClick={() => {
-            history.push('/web/Home');
-          }}*/
-          >Grupo AIME</BotaoSemLinkagem>
-
-          <BotaoSemLinkagem
-          /*onClick={() => {
-            history.push('/web/Home');
-          }}*/
-          >Indicações e Sugestões</BotaoSemLinkagem>
-
+        >
+          Home
+        </BotaoGenerico>
+        <BotaoGenerico
+        // onClick={() => {
+        //   history.push("/web/Home");
+        // }}
+        >
+          Sobre mim
+        </BotaoGenerico>
+        <BotaoGenerico
+        // onClick={() => {
+        //   history.push("/web/Home");
+        // }}
+        >
+          Comentários
+        </BotaoGenerico>
+        <BotaoGenerico
+        // onClick={() => {
+        //   history.push("/web/Home");
+        // }}
+        >
+          Grupo AIME
+        </BotaoGenerico>
+        <BotaoGenerico
+        // onClick={() => {
+        //   history.push("/web/Home");
+        // }}
+        >
+          Indicações e Sugestões
+        </BotaoGenerico>
       </Container>
     </Corpo>
   );
