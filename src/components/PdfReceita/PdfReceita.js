@@ -4,6 +4,7 @@ import {
     Logo,
     TextoPdf,
     Corpo,
+    TituloPDF
 } from "./Styles";
 import LogoPdf from "../../assets/LogoPdf.png"
 
@@ -14,6 +15,7 @@ const PdfReceita = () => {
                 <Logo src={LogoPdf}/>
                 <TextoPdf>Nome do paciente:</TextoPdf>
                 <TextoPdf>Data de nascimento:</TextoPdf>
+                <TituloPDF>Titulo:</TituloPDF>
                 <TextoPdf>Receita</TextoPdf>
             </Corpo>
         </Document>
