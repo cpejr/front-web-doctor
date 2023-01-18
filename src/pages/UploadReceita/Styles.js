@@ -222,3 +222,25 @@ export const BotaoEnviar = styled.div`
 		margin-left: 0%;
 	}
 `;
+
+export const ArquivoSelecionado = styled.div`
+   width: 100%;
+   height: auto;
+   padding: 5px;
+   gap: 5px;
+
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+   align-items: center;
+   
+   font-size: 16px;
+   color: ${Cores.azul};
+
+`;
+
+export const UploadVazio = styled.div`
+	word-break: break-all;
+  	text-align: center;
+	padding: 10px;
+`;

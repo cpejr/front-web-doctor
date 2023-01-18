@@ -213,6 +213,7 @@ export const ContainerBotoes = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  
   @media (max-width: 920px){
     justify-content: flex-end;
     width: 100%

@@ -9,7 +9,7 @@ import { Spin } from "antd";
 import _ from "lodash";
 import { toast } from "react-toastify";
 import * as managerService from "../../services/ManagerService/managerService";
-import { Upload } from "antd";
+import { FilePdfOutlined } from "@ant-design/icons";
 
 
 import {
@@ -27,7 +27,8 @@ import {
 	BotaoCancelar,
 	Area,
 	UploadText,
-	TextLegenda,
+	ArquivoSelecionado,
+	UploadVazio,
 } from "./Styles";
 
 const camposVaziosReferencia = {
@@ -51,6 +52,8 @@ function UploadReceita() {
 	const [tituloReceita, setTituloReceita] = useState();
 	const [dataNascimentoPaciente, setDataNascimentoPaciente] = useState();
 	const [descricaoReceita, setDescricaoReceita] = useState();
+	const [nomeArquivo, setNomeArquivo] = useState();
+	const [file, setFile] = useState();
 
 	const history = useHistory();
 
@@ -143,7 +146,19 @@ function UploadReceita() {
 		<LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
 	);
 
+	const getBase64 = (file, callback) => {
+		const reader = new FileReader();
+		reader.addEventListener("load", () => callback(reader.result));
+		reader.readAsDataURL(file);
+	};
 
+	async function handleChange(info) {
+		// Get this url from response in real world.
+		getBase64(info.file.originFileObj, (url) => {
+			setFile(url);
+			setNomeArquivo(info.file.name);
+		});
+	}
 
 	return (
 		<ContainerUploadReceitas>
@@ -192,7 +207,17 @@ function UploadReceita() {
 					</SelectContainer>
 					<UploadBox>Upload:</UploadBox>
 					<Area>
-						<EnviarUploadArea multiple={true} maxCount={1} action={"http://localhost:3000/"}>
+					{file ? (
+						<ArquivoSelecionado>
+						<FilePdfOutlined style={{ fontSize: 20 }} />
+						<UploadVazio>{nomeArquivo}</UploadVazio>
+					  </ArquivoSelecionado>
+					) : (
+						<EnviarUploadArea
+							multiple={true}
+							showUploadList={true}
+							onChange={handleChange}
+							action={"http://localhost:3000/"}>
 							<UploadText>
 								<div>
 									+
@@ -202,6 +227,7 @@ function UploadReceita() {
 								</div>
 							</UploadText>
 						</EnviarUploadArea>
+					)}
 					</Area>
 
 
