@@ -17,13 +17,13 @@ import {Container,
         Indicacao,
         DescricaoInformacoes} from "./Styles";
 import { wait } from "@testing-library/user-event/dist/utils";
-import { ModalAdicionarIndicaçao } from "../../components/ModalAdicionarIndicaçao/ModalAdicionarIndicaçao"
+import  ModalAdicionarIndicacao  from "../../components/ModalAdicionarIndicacao";
 
 function EdicaoIndicacoesESugestoes (){
     const [atualizando,setAtualizando] = useState();
     const [dadosIndicacao,setDadosIndicacao] = useState({"Titulo":"Eletroneuromiografia",
                                                         "Descricao":""});
-    const [ModalAdicionarIndicaçao, setModalAdicionarIndicacao] = useState(false);
+    const [modalAdicionarIndicacao, setModalAdicionarIndicacao] = useState(false);
 
     const antIcon = (
         <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
@@ -87,17 +87,18 @@ function EdicaoIndicacoesESugestoes (){
                 </ContainerInterno>
             </EdicaoContainer>
 
-            {/* <Modal
-            visible={ModalAdicionarIndicaçao}
-            onCancel={() => fechandoModalAdicionarIndiacao}
+            
+            <Modal
+            visible={modalAdicionarIndicacao}
+            onCancel={() => fechandoModalAdicionarIndiacao()}
             footer={null}
-            width={"70%"}
+            width={"50%"}
             centered={true}
             >
-                <ModalAdicionarIndicaçao
-                fechandoModal={ fechandoModalAdicionarIndiacao() }
+                <ModalAdicionarIndicacao
+                fechandoModal={()=> fechandoModalAdicionarIndiacao() }
                 />
-            </Modal> */}
+            </Modal> 
         </Container>
 
         )
