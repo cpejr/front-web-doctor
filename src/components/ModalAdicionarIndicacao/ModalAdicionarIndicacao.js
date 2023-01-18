@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Button from "../../styles/Button";
 import { Titulo, Container, ContainerInputs, Labels, Botao } from "./Styles";
 import Input from "../../styles/Input";
@@ -19,7 +19,7 @@ function ModalAdicionarIndicacao (props) {
             <ContainerInputs>
               <Labels>Nome:</Labels>
               <Input
-                backgroundColor = "#EAECF"
+                backgroundColor = "#EAECFF"
                 borderColor = "black"
                 value={nome}
                 placeholder="Insira o Nome do(a) Médico(a)"
@@ -33,7 +33,7 @@ function ModalAdicionarIndicacao (props) {
             <ContainerInputs>
               <Labels>Telefone:</Labels>
               <Input
-                backgroundColor = "#EAECF"
+                backgroundColor = "#EAECFF"
                 borderColor = "black"
                 value={numeroTel}
                 placeholder="Insira o telefone do(a) Médico(a)"
@@ -47,7 +47,7 @@ function ModalAdicionarIndicacao (props) {
             <ContainerInputs>
               <Labels>Local de Atendimento:</Labels>
               <Input
-                backgroundColor = "#EAECF"
+                backgroundColor = "#EAECFF"
                 borderColor = "black"
                 value={localAtendimento}
                 placeholder="Insira o local de atendimento do(a) Médico(a)"

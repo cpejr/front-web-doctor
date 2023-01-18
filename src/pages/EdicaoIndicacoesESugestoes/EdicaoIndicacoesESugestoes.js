@@ -18,12 +18,16 @@ import {Container,
         DescricaoInformacoes} from "./Styles";
 import { wait } from "@testing-library/user-event/dist/utils";
 import  ModalAdicionarIndicacao  from "../../components/ModalAdicionarIndicacao";
+import ModalExcluirIndicacao from "../../components/ModalExcluirIndicacao";
+import ModalAlterarIndicacao from "../../components/ModalAlterarIndicacao";
 
 function EdicaoIndicacoesESugestoes (){
     const [atualizando,setAtualizando] = useState();
     const [dadosIndicacao,setDadosIndicacao] = useState({"Titulo":"Eletroneuromiografia",
                                                         "Descricao":""});
     const [modalAdicionarIndicacao, setModalAdicionarIndicacao] = useState(false);
+    const [modalExcluirIndicacao, setModalExcluirIndicacao] = useState(false);
+    const [modalAlterarIndicacao, setModalAlterarIndicacao] = useState(false);
 
     const antIcon = (
         <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
@@ -42,8 +46,24 @@ function EdicaoIndicacoesESugestoes (){
         setModalAdicionarIndicacao(true);
     }
 
-    async function fechandoModalAdicionarIndiacao() {
+    async function abrirModalExcluirIndicacao() {
+        setModalExcluirIndicacao(true);
+    }
+
+    async function abrirModalAlterarIndicacao() {
+        setModalAlterarIndicacao(true);
+    }
+
+    async function fecharModalAdicionarIndicacao() {
         setModalAdicionarIndicacao(false);
+    }
+
+    async function fecharModalExcluirIndicacao() {
+        setModalExcluirIndicacao(false);
+    }
+
+    async function fecharModalAlterarIndicacao() {
+        setModalAlterarIndicacao(false);
     }
     
     return(
@@ -81,8 +101,12 @@ function EdicaoIndicacoesESugestoes (){
                         <Indicacao
                             onClick={ () => abrirModalAdicionarIndicacao() }
                         >Adicionar Indicação <PlusSquareOutlined /> </Indicacao>
-                        <Indicacao>Alterar Indicação <EditOutlined /></Indicacao>
-                        <Indicacao>Excluir Indicação <DeleteOutlined /></Indicacao>
+                        <Indicacao
+                             onClick={ () => abrirModalAlterarIndicacao() }
+                        >Alterar Indicação <EditOutlined /></Indicacao>
+                        <Indicacao
+                            onClick={ () => abrirModalExcluirIndicacao() }
+                        >Excluir Indicação <DeleteOutlined /></Indicacao>
                     </BotoesIndicacao>
                 </ContainerInterno>
             </EdicaoContainer>
@@ -90,13 +114,37 @@ function EdicaoIndicacoesESugestoes (){
             
             <Modal
             visible={modalAdicionarIndicacao}
-            onCancel={() => fechandoModalAdicionarIndiacao()}
+            onCancel={() => fecharModalAdicionarIndicacao()}
             footer={null}
             width={"50%"}
             centered={true}
             >
                 <ModalAdicionarIndicacao
-                fechandoModal={()=> fechandoModalAdicionarIndiacao() }
+                fechandoModal={()=> fecharModalAdicionarIndicacao() }
+                />
+            </Modal> 
+
+            <Modal
+            visible={modalExcluirIndicacao}
+            onCancel={() => fecharModalExcluirIndicacao()}
+            footer={null}
+            width={"50%"}
+            centered={true}
+            >
+                <ModalExcluirIndicacao
+                fechandoModal={()=> fecharModalExcluirIndicacao() }
+                />
+            </Modal> 
+
+            <Modal
+            visible={modalAlterarIndicacao}
+            onCancel={() => fecharModalAlterarIndicacao()}
+            footer={null}
+            width={"50%"}
+            centered={true}
+            >
+                <ModalAlterarIndicacao
+                fechandoModal={()=> fecharModalAlterarIndicacao() }
                 />
             </Modal> 
         </Container>
