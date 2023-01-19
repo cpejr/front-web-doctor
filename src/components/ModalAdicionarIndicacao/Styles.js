@@ -39,21 +39,11 @@ export const Labels = styled.label`
   font-size: 1.2em;
 `;
 
-export const Botao = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-  gap: 5px;
-  background-color: ${Cores.azul};
-  color: ${Cores.branco};
-  font-size: 24px;
-  font-weight: 500;
-  font-family: ${Fontes.barlow};
-  border: 3px solid ${Cores.azulEscuro};
-  border-radius: 4px;
 
-  margin-top: 20px;
-  width: 80%;
-  height: 50px;
+export const Rotulo = styled.div`
+  width: 100%;
+  font-family: ${Fontes.barlow};
+  font-weight: 400;
+  font-size: 1em;
+  color: ${Cores.vermelho};
 `;

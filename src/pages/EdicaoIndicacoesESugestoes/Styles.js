@@ -40,6 +40,22 @@ export const ContainerInterno = styled.div`
         padding: 15px 5%;
     }
 `;
+export const ContainerDireita = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    gap: 20px;
+    width:50%;
+    padding: 20px 10%;
+    @media(max-width: 900px) {
+        padding: 15px 5%;
+    }
+    @media (max-width: 600px) {
+        display: none;   
+    }
+`;
 
 export const Titulo = styled.h1`
     font-family: ${Fontes.barlow};
@@ -80,28 +96,15 @@ export const ContainerSugestao = styled.div`
     width:100%;
 `;
 
-export const Sugestao = styled.button`
-
-    font-size: 14px;
-    font-weight: 500;
-    font-family: ${Fontes.barlow};
-    background-color: ${Cores.cinza[7]};
-
-    padding: 5px 5px;
-    width: 100%;
-    border: 2px solid ${Cores.azulEscuro};
-    color: ${Cores.preto};
-
-    border: 2px solid ${Cores.azulEscuro};
-    border-radius: 4px;
-
-`;
 
 export const Divisoria = styled.div`
     display: flex;
     border: 1px solid ${Cores.cinza[3]};
     border-radius: 4px;
     align-self: stretch;
+    @media (max-width: 600px) {
+        display: none;   
+    }
 `;
 
 export const Informacoes = styled.div`
@@ -148,24 +151,4 @@ export const BotoesIndicacao = styled.div`
 
     width: 100%;
     border-radius: 4px;
-`;
-
-export const Indicacao = styled.button`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    gap: 5px;
-    background-color: ${Cores.azul};
-    color: ${Cores.branco};
-    font-size: 24px;
-    font-weight: 500;
-    font-family: ${Fontes.barlow};
-    border: 3px solid ${Cores.azulEscuro};
-    border-radius: 4px;
-    
-    height: 100%;
-    @media(max-width: 1037px){
-        font-size: 19px;
-    }
 `;

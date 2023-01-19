@@ -29,8 +29,7 @@ export const ContainerInputs = styled.div`
   align-items: flex-start;
 
   width: 100%;
-  margin-bottom: 15px;
-  margin-top: 15px;
+  margin-top: 10px;
 `;
 
 export const Labels = styled.label`
@@ -38,44 +37,3 @@ export const Labels = styled.label`
   font-weight: 600;
   font-size: 1.2em;
 `;
-
-export const Botao = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  
-  gap: 5px;
-  background-color: ${Cores.azul};
-  color: ${Cores.branco};
-  font-size: 24px;
-  font-weight: 500;
-  font-family: ${Fontes.barlow};
-  border: 3px solid ${Cores.azulEscuro};
-  border-radius: 4px;
-
-  margin-top: 20px;
-  width: 80%;
-  height: 50px;
-`;
-
-export const Selecionar = styled.select`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width:383px;
-  height: 50px;
-  left: 531px;
-  top: 465px;
-
-  font-family:${Fontes.barlow};
-  font-style: italic;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 24px;
-
-  background-color : "#EAECFF";
-  border: 2px solid #000000;
-  border-radius: 3px;
-  font-size: 1em;
-  padding-right:"2%";
-`
