@@ -1,4 +1,4 @@
-import React, { useEffect, useState, StyleSheet } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import Button from "../../styles/Button";
 import Input from "../../styles/Input";
@@ -30,7 +30,8 @@ import {
 	Document,
 	Page,
 	Image,
-	PDFDownloadLink
+	PDFDownloadLink,
+	StyleSheet
 } from '@react-pdf/renderer';
 
 import LogoPdf from "../../assets/LogoPdf.png"
@@ -160,16 +161,39 @@ function CriacaoReceitas() {
 	const PdfTeste = () => {
 		return (
 			<Document>
-				<Page size="A4">
-					<Image src={LogoPdf}/>
-					<Text>Nome do paciente: {NomePaciente}</Text>
-					<Text>Data de nascimento: {dataNascimentoPaciente}</Text>
-					<Text>{tituloReceita}</Text>
-					<Text>{descricaoReceita}</Text>
+				<Page style={styles.corpo} size="A4">
+					<Image style={styles.logo} src={LogoPdf} />
+					<Text style={styles.texto}>Nome do paciente: {NomePaciente}</Text>
+					<Text style={styles.texto}>Data de nascimento: {dataNascimentoPaciente}</Text>
+					<Text style={styles.titulo}>{tituloReceita}</Text>
+					<Text style={styles.texto}>{descricaoReceita}</Text>
 				</Page>
 			</Document>
 		)
 	}
+
+	const styles = StyleSheet.create({
+		corpo: {
+			paddingBottom: 5,
+			paddingHorizontal: 30,
+		},
+		logo: {
+			marginHorizontal: 150,
+			size: 8,
+			marginBottom: 20,
+		},
+		texto: {
+			margin: 12,
+			fontSize: 14,
+			textAlign: "justify",
+			fontFamily: "Times-Roman",
+		},
+		titulo: {
+			fontSize: 18,
+			marginBottom: 20,
+			textAlign: "center",
+		},
+	});
 
 	return (
 		<ContainerCriacaoReceitas>
@@ -268,18 +292,18 @@ function CriacaoReceitas() {
 					</BotaoCancelar>
 					<BotaoEnviar>
 						{tipoAssinatura === 'sem' ? (
-								<PDFDownloadLink document={<PdfTeste />}>
-							<Button height="47px"
-								width="100%"
-								backgroundColor={Cores.lilas[1]}
-								borderColor={Cores.azul}
-								color={Cores.branco}
-								fontSize="1em"
-							>
-								ENVIAR
+							<PDFDownloadLink document={<PdfTeste />}>
+								<Button height="47px"
+									width="100%"
+									backgroundColor={Cores.lilas[1]}
+									borderColor={Cores.azul}
+									color={Cores.branco}
+									fontSize="1em"
+								>
+									ENVIAR
 
-							</Button>
-								</PDFDownloadLink>
+								</Button>
+							</PDFDownloadLink>
 						) : (
 							<Button
 								height="47px"
