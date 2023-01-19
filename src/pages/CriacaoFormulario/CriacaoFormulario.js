@@ -78,7 +78,7 @@ function CriacaoFormulario() {
     if (!estado.tipo) errors.tipo = true;
     if (!estado.urgencia) errors.urgencia = true;
     if (!estado.titulo) errors.titulo = true;
-
+    if (!estado.assinatura_secretaria) errors.titulo = true;
     setCamposVazios({ ...camposVazios, ...errors });
 
     if (_.isEqual(camposVazios, referenciaInputNulos)) {
@@ -160,6 +160,8 @@ function CriacaoFormulario() {
         </SelectContainer>
         <Checkbox
            marginTop='20'
+           camposVazios = {camposVazios.assinatura_secretaria}
+           onChange={preenchendoDados}
         >Permitir a visualização da secretária
         </Checkbox>
         <Button
