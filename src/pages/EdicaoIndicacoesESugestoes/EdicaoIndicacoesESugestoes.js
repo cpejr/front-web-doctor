@@ -35,7 +35,6 @@ function EdicaoIndicacoesESugestoes (){
 
     async function alterarIndicacao(nomeIndicacao){
         var largura = window.innerWidth;
-        console.log("Largura:",largura);
         if(largura < 600){
             setDadosIndicacao({"Titulo": nomeIndicacao,
                 "Descricao":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras non velit sed dolor viverra cursus. Quisque bibendum est eu massa mollis, eu tincidunt nisi lacinia. Morbi ut augue pulvinar, rhoncus libero eget, hendrerit velit. Integer faucibus diam velit, id luctus leo ultrices ac. Mauris laoreet rhoncus pellentesque. Aliquam risus ex, fringilla dapibus mauris at, viverra volutpat mauris. Mauris mi ante, semper vitae bibendum at, dignissim ac augue. Etiam non magna enim. Cras eu posuere libero, ut lobortis nulla. Etiam eget eros erat. Mauris ullamcorper rutrum augue, eget venenatis diam semper eu. Praesent sodales, ipsum sed fermentum imperdiet, risus ipsum viverra."});
