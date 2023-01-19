@@ -1,24 +1,28 @@
 import styled from "styled-components";
 import { Cores, Fontes } from "../../variaveis";
 
-export const Container = styled.dic`
+export const Container = styled.div`
     height: 100%;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-items:center;
 `;
 
 export const Informacoes = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    height: 60%;
-    width: 95%;
+    width: 90%;
     max-width: 800px;
     background-color: ${Cores.cinza[9]};
     border: 1px solid ${Cores.cinza[3]};
-    padding: 10% 5%;
+    padding: 10% 5px;
     overflow: auto;
     gap: 10px;
     margin-top: 25px;
+    min-height: 300px;
 `;
 
 export const DescricaoInformacoes = styled.textarea`
@@ -35,7 +39,7 @@ export const DescricaoInformacoes = styled.textarea`
 `;
 
 export const TituloInfo = styled.h2`
-    font-size: 20px;
+    font-size: 16px;
     display: flex;
     align-self: center;
 `;
@@ -48,6 +52,6 @@ export const BotoesIndicacao = styled.div`
     margin-top: 30px;
     flex-grow: 0;
 
-    width: 100%;
+    width: 75%;
     border-radius: 4px;
 `;
