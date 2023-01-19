@@ -11,6 +11,7 @@ export const Container = styled.div`
   width: 100%;
   @media (max-width: 600px) {
     padding: 0 5%;
+    font-size: 17px;
   }
 `;
 

@@ -15,6 +15,7 @@ const Button = styled.button`
   padding-top: ${(props) => props.paddingTop};
   padding-left: ${(props) => props.paddingLeft};
   padding-right: ${(props) => props.paddingRight};
+  padding-bottom:${(props) => props.paddingBottom};
   height: ${(props) => props.height};
   gap: ${(props) => props.gap};
   width: ${(props) => props.width};

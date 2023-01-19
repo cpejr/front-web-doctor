@@ -8,6 +8,8 @@ export const Container = styled.div`
     flex-direction: column;
     align-items:center;
     justify-items:center;
+    font-size: 17px;
+    
 `;
 
 export const Informacoes = styled.div`
@@ -23,6 +25,9 @@ export const Informacoes = styled.div`
     gap: 10px;
     margin-top: 25px;
     min-height: 300px;
+    @media (max-width: 320px){
+        width: 100%;
+    }
 `;
 
 export const DescricaoInformacoes = styled.textarea`
@@ -54,4 +59,7 @@ export const BotoesIndicacao = styled.div`
 
     width: 75%;
     border-radius: 4px;
+    @media (max-width: 320px){
+        width: 100%;
+    }
 `;

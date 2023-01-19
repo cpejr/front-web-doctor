@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {LeftCircleOutlined} from "@ant-design/icons"
 import { Cores, Fontes } from "../../variaveis";
 
 export const Container = styled.div`
@@ -15,6 +16,23 @@ export const Container = styled.div`
     padding-bottom: 40px;
     padding-left: 10%;
     padding-right: 10%;
+    @media (max-width: 600px) {
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 8%;
+        padding-right: 8%;
+    }
+`;
+export const SaidaMobile = styled.div`
+    display: none;
+    position: relative;
+    top: 5px;
+    left: 10px;
+    width: auto;
+    height: auto;
+    @media (max-width: 600px){
+        display: flex;
+    }
 `;
 
 export const EdicaoContainer = styled.div`
@@ -23,8 +41,11 @@ export const EdicaoContainer = styled.div`
     
     width: 100%;
     border: 1px solid ${Cores.preto};
-    padding-top: 20px;
+    padding-top: 10px;
     padding-bottom: 20px;
+    @media (max-width: 600px) {
+        border: none;   
+    }
 `;
 
 export const ContainerInterno = styled.div`
@@ -60,8 +81,9 @@ export const ContainerDireita = styled.div`
 export const Titulo = styled.h1`
     font-family: ${Fontes.barlow};
     font-size: 25px;
-    font-weight: 500;
+    font-weight: 600;
     text-align: center;
+    
 `;
 
 export const Descricao = styled.p`
@@ -152,3 +174,4 @@ export const BotoesIndicacao = styled.div`
     width: 100%;
     border-radius: 4px;
 `;
+

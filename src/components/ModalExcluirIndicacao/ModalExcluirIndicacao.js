@@ -32,7 +32,8 @@ function ModalExcluirIndicacao (props) {
               width="80%"
               borderColor={Cores.azulEscuro}
               color={Cores.branco}
-              height="50px"
+              paddingTop="5px"
+              paddingBottom="5px"
               marginTop="10%"
               >
                Excluir Indicação <DeleteOutlined/>

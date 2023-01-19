@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from "../../styles/Button";
-import { Titulo, Container, ContainerInputs, Labels} from "./Styles";
+import { Titulo, Container, ContainerInputs, Labels,Rotulo} from "./Styles";
 import Input from "../../styles/Input";
 import Select from "../../styles/Select/Select";
 import { Cores } from "../../variaveis";
@@ -21,14 +21,8 @@ function ModalAlterarIndicacao (props) {
   });
   function preenchendoDados(e) {
     const { value, name } = e.target;
-    if (
-      name !== 'convenio' &&
-      name !== 'nome_cuidador' &&
-      name !== 'telefone_cuidador' &&
-      name !== 'nome'
-    ) {
       if (value) setCamposVazios({ ...camposVazios, [name]: false });
-    }
+    
 
     if (name === 'telefone' && value.length < 15) {
       setErro({ ...erro, [name]: true });
@@ -117,6 +111,9 @@ function ModalAlterarIndicacao (props) {
                 value={estado.telefone}
               >
               </Input>
+              {erro.telefone && (
+                <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
+              )}
             </ContainerInputs>
             <ContainerInputs>
               <Labels>Local de Atendimento:</Labels>
@@ -143,7 +140,8 @@ function ModalAlterarIndicacao (props) {
               width="80%"
               borderColor={Cores.azulEscuro}
               color={Cores.branco}
-              height="50px"
+              paddingTop="5px"
+              paddingBottom="5px"
               marginTop="10%"
               >
               Alterar Indicação <PlusSquareOutlined/>

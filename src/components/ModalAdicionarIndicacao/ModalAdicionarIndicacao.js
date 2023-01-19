@@ -20,14 +20,7 @@ function ModalAdicionarIndicacao (props) {
     });
     function preenchendoDados(e) {
       const { value, name } = e.target;
-      if (
-        name !== 'convenio' &&
-        name !== 'nome_cuidador' &&
-        name !== 'telefone_cuidador' &&
-        name !== 'nome'
-      ) {
-        if (value) setCamposVazios({ ...camposVazios, [name]: false });
-      }
+      if (value) setCamposVazios({ ...camposVazios, [name]: false });
   
       if (name === 'telefone' && value.length < 15) {
         setErro({ ...erro, [name]: true });
@@ -130,7 +123,8 @@ function ModalAdicionarIndicacao (props) {
               width="80%"
               borderColor={Cores.azulEscuro}
               color={Cores.branco}
-              height="50px"
+              paddingTop="5px"
+              paddingBottom="5px"
               marginTop="10%"
               >
                Adicionar Indicação <PlusSquareOutlined/>

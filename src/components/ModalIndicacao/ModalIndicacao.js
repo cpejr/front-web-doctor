@@ -54,7 +54,7 @@ function ModalIndicacao (props){
                 <Button
                 gap="5px"
                 backgroundColor={Cores.azul}
-                fontSize="1.3em"
+                fontSize="1.1em"
                 width="70%"
                 borderColor={Cores.azulEscuro}
                 color={Cores.branco}
@@ -66,7 +66,7 @@ function ModalIndicacao (props){
                 <Button
                 gap="5px"
                 backgroundColor={Cores.azul}
-                fontSize="1.3em"
+                fontSize="1.1em"
                 width="70%"
                 borderColor={Cores.azulEscuro}
                 color={Cores.branco}
@@ -78,7 +78,7 @@ function ModalIndicacao (props){
                 <Button
                 gap="5px"
                 backgroundColor={Cores.azul}
-                fontSize="1.3em"
+                fontSize="1.1em"
                 width="50%"
                 borderColor={Cores.azulEscuro}
                 color={Cores.branco}

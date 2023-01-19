@@ -2,7 +2,8 @@ import React, { useState} from "react";
 import {Cores} from "../../variaveis";
 import { Modal, Spin } from "antd";
 import { sleep } from "../../utils/sleep";
-import {PlusSquareOutlined,EditOutlined,DeleteOutlined,LoadingOutlined} from "@ant-design/icons";
+import { useHistory } from "react-router-dom";
+import {PlusSquareOutlined,EditOutlined,DeleteOutlined,LoadingOutlined,LeftCircleOutlined} from "@ant-design/icons";
 import {Container,
         EdicaoContainer,
         ContainerInterno,
@@ -14,7 +15,9 @@ import {Container,
         Informacoes,
         TituloInfo,
         BotoesIndicacao,
-        DescricaoInformacoes} from "./Styles";
+        DescricaoInformacoes,
+        SaidaMobile
+        } from "./Styles";
 import ModalAdicionarIndicacao  from "../../components/ModalAdicionarIndicacao";
 import ModalExcluirIndicacao from "../../components/ModalExcluirIndicacao";
 import ModalAlterarIndicacao from "../../components/ModalAlterarIndicacao";
@@ -27,7 +30,9 @@ function EdicaoIndicacoesESugestoes (){
     const [modalAdicionarIndicacao, setModalAdicionarIndicacao] = useState(false);
     const [modalExcluirIndicacao, setModalExcluirIndicacao] = useState(false);
     const [modalAlterarIndicacao, setModalAlterarIndicacao] = useState(false);
-    const [modalIndicacao,setModalIndicacao] = useState(false)
+    const [modalIndicacao,setModalIndicacao] = useState(false);
+    const [botaoSelecionado,setBotaoSelecionado] = useState("");
+    const history = useHistory();
 
     const antIcon = (
         <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
@@ -41,6 +46,11 @@ function EdicaoIndicacoesESugestoes (){
             
             abrirModalIndicacao();
         }else{
+            if(botaoSelecionado !== ""){
+                document.getElementById(botaoSelecionado).style.boxShadow = "";
+            }
+            setBotaoSelecionado(nomeIndicacao);
+            document.getElementById(nomeIndicacao).style.boxShadow = `3px 3px 5px ${Cores.preto}`;
             setAtualizando(true);
             await sleep(1500);
             setDadosIndicacao({"Titulo": nomeIndicacao,
@@ -85,6 +95,8 @@ function EdicaoIndicacoesESugestoes (){
     
     return(
         <Container>
+            <SaidaMobile onClick={() => {history.push('/web/home')}}><LeftCircleOutlined style={{fontSize:"30px",color:`${Cores.azul}`}}/></SaidaMobile>
+            
             <EdicaoContainer>
                 <ContainerInterno>
                     <div>
@@ -97,8 +109,10 @@ function EdicaoIndicacoesESugestoes (){
                             width="100%"
                             backgroundColor={Cores.cinza[7]}
                             borderColor={Cores.azulEscuro}
-                            height="36px"
+                            paddingTop="5px"
+                            paddingBottom="5px"
                             onClick={()=>{alterarIndicacao("Eletroneuromiografia")}}
+                            id="Eletroneuromiografia"
                             >
                             Eletroneuromiografia
                         </Button>
@@ -107,8 +121,10 @@ function EdicaoIndicacoesESugestoes (){
                             width="100%"
                             backgroundColor={Cores.cinza[7]}
                             borderColor={Cores.azulEscuro}
-                            height="36px"
+                            paddingTop="5px"
+                            paddingBottom="5px"
                             onClick={()=>{alterarIndicacao("Ressonância Magnética em Epilespsia")}}
+                            id="Ressonância Magnética em Epilespsia"
                             >
                             Ressonância Magnética em Epilespsia
                         </Button>
@@ -117,8 +133,10 @@ function EdicaoIndicacoesESugestoes (){
                             width="100%"
                             backgroundColor={Cores.cinza[7]}
                             borderColor={Cores.azulEscuro}
-                            height="36px"
+                            paddingTop="5px"
+                            paddingBottom="5px"
                             onClick={()=>{alterarIndicacao("Punção Lombar")}}
+                            id="Punção Lombar"
                             >
                             Punção Lombar
                         </Button>
@@ -127,8 +145,10 @@ function EdicaoIndicacoesESugestoes (){
                             width="100%"
                             backgroundColor={Cores.cinza[7]}
                             borderColor={Cores.azulEscuro}
-                            height="36px"
+                            paddingTop="5px"
+                            paddingBottom="5px"
                             onClick={()=>{alterarIndicacao("Fisioterapia CPAP")}}
+                            id="Fisioterapia CPAP"
                             >
                             Fisioterapia CPAP
                         </Button>
@@ -137,8 +157,10 @@ function EdicaoIndicacoesESugestoes (){
                             width="100%"
                             backgroundColor={Cores.cinza[7]}
                             borderColor={Cores.azulEscuro}
-                            height="36px"
+                            paddingTop="5px"
+                            paddingBottom="5px"
                             onClick={()=>{alterarIndicacao("Fonoaudiologia - Apneia de Sono")}}
+                            id="Fonoaudiologia - Apneia de Sono"
                             >
                             Fonoaudiologia - Apneia de Sono
                         </Button>
@@ -147,8 +169,10 @@ function EdicaoIndicacoesESugestoes (){
                             width="100%"
                             backgroundColor={Cores.cinza[7]}
                             borderColor={Cores.azulEscuro}
-                            height="36px"
+                            paddingTop="5px"
+                            paddingBottom="5px"
                             onClick={()=>{alterarIndicacao("Odontologia do Sono")}}
+                            id="Odontologia do Sono"
                             >
                             Odontologia do Sono
                         </Button>
@@ -157,8 +181,10 @@ function EdicaoIndicacoesESugestoes (){
                             width="100%"
                             backgroundColor={Cores.cinza[7]}
                             borderColor={Cores.azulEscuro}
-                            height="36px"
+                            paddingTop="5px"
+                            paddingBottom="5px"
                             onClick={()=>{alterarIndicacao("Psicologia - TCC Insônia")}}
+                            id="Psicologia - TCC Insônia"
                             >
                             Psicologia - TCC Insônia
                         </Button>
@@ -167,8 +193,10 @@ function EdicaoIndicacoesESugestoes (){
                             width="100%"
                             backgroundColor={Cores.cinza[7]}
                             borderColor={Cores.azulEscuro}
-                            height="36px"
+                            paddingTop="5px"
+                            paddingBottom="5px"
                             onClick={()=>{alterarIndicacao("Avaiação Neuropsicológica")}}
+                            id="Avaiação Neuropsicológica"
                             >
                             Avaiação Neuropsicológica
                         </Button>
