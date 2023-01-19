@@ -21,7 +21,7 @@ import { toast } from "react-toastify";
 import { sleep } from "../../utils/sleep";
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as managerService from "../../services/ManagerService/managerService";
-
+import { Checkbox } from 'antd';
 function EditarFormulario(props) {
   const [formularios, setFormularios] = useState();
   const [carregando, setCarregando] = useState(true);
@@ -220,6 +220,7 @@ function EditarFormulario(props) {
                 3
               </option>
             </Select>
+            <Checkbox>Permitir a visualização da secretária</Checkbox>
             <Button
               height="50px"
               width="100%"

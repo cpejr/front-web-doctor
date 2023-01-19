@@ -22,6 +22,7 @@ import { Select, SelectContainer } from './SelectTeste';
 import Button from '../../styles/Button';
 import { sleep } from '../../utils/sleep';
 import * as managerService from '../../services/ManagerService/managerService';
+import { Checkbox } from 'antd';
 
 function CriacaoFormulario() {
   const [uiSchema, setUiSchema] = useState('');
@@ -41,6 +42,7 @@ function CriacaoFormulario() {
     tipo: false,
     titulo: false,
     urgencia: false,
+    assinatura_secretaria: false,
   };
 
   const TirandoCabecalho = {
@@ -156,6 +158,10 @@ function CriacaoFormulario() {
             </option>
           </Select>
         </SelectContainer>
+        <Checkbox
+           marginTop='20'
+        >Permitir a visualização da secretária
+        </Checkbox>
         <Button
           height='50px'
           width='100%'
