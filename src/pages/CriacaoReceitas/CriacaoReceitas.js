@@ -162,12 +162,12 @@ function CriacaoReceitas() {
 			<Document>
 				<Page size="A4">
 					<Image src={LogoPdf}/>
-					<Text>Nome do paciente:</Text>
-					<Text>Data de nascimento:</Text>
-					<Text>*Nome Receita</Text>
+					<Text>Nome do paciente: {NomePaciente}</Text>
+					<Text>Data de nascimento: {dataNascimentoPaciente}</Text>
+					<Text>{tituloReceita}</Text>
+					<Text>{descricaoReceita}</Text>
 				</Page>
 			</Document>
-
 		)
 	}
 
@@ -268,6 +268,7 @@ function CriacaoReceitas() {
 					</BotaoCancelar>
 					<BotaoEnviar>
 						{tipoAssinatura === 'sem' ? (
+								<PDFDownloadLink document={<PdfTeste />}>
 							<Button height="47px"
 								width="100%"
 								backgroundColor={Cores.lilas[1]}
@@ -276,8 +277,9 @@ function CriacaoReceitas() {
 								fontSize="1em"
 							>
 								ENVIAR
-								<PDFDownloadLink document={<PdfTeste />} />
+
 							</Button>
+								</PDFDownloadLink>
 						) : (
 							<Button
 								height="47px"
