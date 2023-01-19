@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, StyleSheet } from "react";
 import { useHistory } from "react-router-dom";
 import Button from "../../styles/Button";
 import Input from "../../styles/Input";
@@ -23,11 +23,17 @@ import {
 	CriacaoReceitaBotoes,
 	BotaoEnviar,
 	BotaoCancelar,
-	Pdf
 } from "./Styles";
 
-import PdfReceita from "../../components/PdfReceita/PdfReceita";
-import ReactPDF from '@react-pdf/renderer';
+import {
+	Text,
+	Document,
+	Page,
+	Image,
+	PDFDownloadLink
+} from '@react-pdf/renderer';
+
+import LogoPdf from "../../assets/LogoPdf.png"
 
 const camposVaziosReferencia = {
 	id_usuario: false,
@@ -145,16 +151,25 @@ function CriacaoReceitas() {
 		});
 
 		setCarregandoCriacao(false);
-
-		if (tipoAssinatura === 'sem') {
-			ReactPDF.render(<PdfReceita />, `${__dirname}/example.pdf`);
-		}
-
 	}
 
 	const antIcon = (
 		<LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
 	);
+
+	const PdfTeste = () => {
+		return (
+			<Document>
+				<Page size="A4">
+					<Image src={LogoPdf}/>
+					<Text>Nome do paciente:</Text>
+					<Text>Data de nascimento:</Text>
+					<Text>*Nome Receita</Text>
+				</Page>
+			</Document>
+
+		)
+	}
 
 	return (
 		<ContainerCriacaoReceitas>
@@ -252,23 +267,34 @@ function CriacaoReceitas() {
 						</Button>
 					</BotaoCancelar>
 					<BotaoEnviar>
-
-						<Button
-							height="47px"
-							width="100%"
-							backgroundColor={Cores.lilas[1]}
-							borderColor={Cores.azul}
-							color={Cores.branco}
-							fontSize="1em"
-							onClick={criarReceita}
-						>
-							{carregandoCriacao ? (
-								<Spin indicator={antIcon} />
-							) : (
-								<div>ENVIAR</div>
-							)}
-						</Button>
-
+						{tipoAssinatura === 'sem' ? (
+							<Button height="47px"
+								width="100%"
+								backgroundColor={Cores.lilas[1]}
+								borderColor={Cores.azul}
+								color={Cores.branco}
+								fontSize="1em"
+							>
+								ENVIAR
+								<PDFDownloadLink document={<PdfTeste />} />
+							</Button>
+						) : (
+							<Button
+								height="47px"
+								width="100%"
+								backgroundColor={Cores.lilas[1]}
+								borderColor={Cores.azul}
+								color={Cores.branco}
+								fontSize="1em"
+								onClick={criarReceita}
+							>
+								{carregandoCriacao ? (
+									<Spin indicator={antIcon} />
+								) : (
+									<div>ENVIAR</div>
+								)}
+							</Button>
+						)}
 					</BotaoEnviar>
 				</CriacaoReceitaBotoes>
 			</CardCriacaoReceitas>
