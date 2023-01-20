@@ -132,7 +132,7 @@ export const Divisoria = styled.div`
 export const Informacoes = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     flex-grow: 1;
     height: 60%;
     width: 100%;
@@ -142,6 +142,10 @@ export const Informacoes = styled.div`
     overflow: auto;
     gap: 10px;
     margin-top: 25px;
+
+    ::-webkit-scrollbar {
+        width: 0px;
+    }
 `;
 
 export const DescricaoInformacoes = styled.textarea`

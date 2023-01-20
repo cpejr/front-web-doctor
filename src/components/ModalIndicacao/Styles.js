@@ -28,6 +28,9 @@ export const Informacoes = styled.div`
     @media (max-width: 320px){
         width: 100%;
     }
+    ::-webkit-scrollbar {
+        width: 0px;
+    }
 `;
 
 export const DescricaoInformacoes = styled.textarea`

@@ -207,7 +207,7 @@ function EdicaoIndicacoesESugestoes (){
 
                 <ContainerDireita>
                     <Informacoes>
-                    {atualizando ? (<Spin indicator={antIcon}/>
+                    {atualizando ? (<Spin style={{display: "flex", alignSelf: "center", justifySelf: "center"}} indicator={antIcon}/>
                     ):(
                         <>
                         <TituloInfo>{dadosIndicacao.Titulo}</TituloInfo>

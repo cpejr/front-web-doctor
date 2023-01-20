@@ -22,7 +22,7 @@ import EditarFormulario from './pages/EditarFormulario/EditarFormulario';
 import FormularioEspecifico from './pages/FormularioEspecifico';
 import Home from './pages/Home/Home';
 import CriacaoReceitas from './pages/CriacaoReceitas';
-import EdicaoIndicacoesESugestoes from './pages/EdicaoIndicacoesESugestoes';
+import EdicaoIndicacoesESugestoes from './pages/EdicaoIndicacoesESugestoes/EdicaoIndicacoesESugestoes';
 
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
