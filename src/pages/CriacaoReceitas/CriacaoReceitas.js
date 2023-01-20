@@ -35,6 +35,7 @@ import {
 } from '@react-pdf/renderer';
 
 import LogoPdf from "../../assets/LogoPdf.png"
+import footerPDF from "../../assets/footerPDF.png"
 
 const camposVaziosReferencia = {
 	id_usuario: false,
@@ -167,6 +168,7 @@ function CriacaoReceitas() {
 					<Text style={styles.texto}>Data de nascimento: {dataNascimentoPaciente}</Text>
 					<Text style={styles.titulo}>{tituloReceita}</Text>
 					<Text style={styles.texto}>{descricaoReceita}</Text>
+					<Image style={styles.footer} src={footerPDF}/>
 				</Page>
 			</Document>
 		)
@@ -192,6 +194,10 @@ function CriacaoReceitas() {
 			fontSize: 18,
 			marginBottom: 20,
 			textAlign: "center",
+		},
+		footer: {
+			width: '100%',
+			marginTop: '83.5%',
 		},
 	});
 
