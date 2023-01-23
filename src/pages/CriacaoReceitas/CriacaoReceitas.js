@@ -160,6 +160,17 @@ function CriacaoReceitas() {
 	);
 
 	const PdfTeste = () => {
+		const camposVaziosPdf = {
+			id_usuario: !estado.id_usuario,
+			titulo: !estado.titulo,
+			assinatura: !estado.assinatura,
+			descricao: !estado.descricao,
+		}
+
+		if (!_.isEqual(camposVaziosPdf, camposVaziosReferencia)) {
+			return (toast.warn("Preencha todos os campos"))
+		}
+       else{
 		return (
 			<Document>
 				<Page style={styles.corpo} size="A4">
@@ -172,6 +183,7 @@ function CriacaoReceitas() {
 				</Page>
 			</Document>
 		)
+	   }
 	}
 
 	const styles = StyleSheet.create({
