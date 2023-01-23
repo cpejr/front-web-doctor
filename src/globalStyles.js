@@ -2,6 +2,9 @@ import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
 
+@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@200;500;600&display=swap');
+
+
   * {
     -webkit-box-sizing: border-box;
     box-sizing: border-box;

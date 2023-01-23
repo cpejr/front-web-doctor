@@ -350,6 +350,36 @@ export const UpdateCodigo = async (id_usuario, codigo) => {
   return false;
 };
 
+export const UpdateComentario = async (id, comentario) => {
+  await requesterService
+    .UpdateComentario(id, comentario)
+    .then(() => {
+      toast.success('Comentário atualizado com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/edicaocomentario'));
+      return false;
+    });
+
+  return false;
+};
+
+
+export const GetComentario = async () => {
+  let dadosComentario = {};
+
+  await requesterService
+    .requisicaoComentario()
+
+    .then((res) => {
+      dadosComentario = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosComentario;
+};
+
 export const DeletarEnderecoEUsuario = async (id_endereco) => {
   await requesterService
     .deletarEnderecoEUsuario(id_endereco)
