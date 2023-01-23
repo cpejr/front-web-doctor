@@ -312,7 +312,7 @@ function CriacaoReceitas() {
 						{tipoAssinatura === 'sem' ? (
 							<PDFDownloadLink document={<PdfTeste />}>
 								<Button height="47px"
-									width="100%"
+									width="142px"
 									backgroundColor={Cores.lilas[1]}
 									borderColor={Cores.azul}
 									color={Cores.branco}
