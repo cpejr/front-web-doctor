@@ -9,11 +9,11 @@ export const EdicaoComentariosPagina = styled.div`
   height: 100%;
 `;
 
-
-
 export const ContainerEdicaoComentarios = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  height: auto;
   align-items: center;
   border-width: 1px;
   border-style:solid;
@@ -68,6 +68,19 @@ export const TituloEdicaoComentario = styled.div`
   }
   
   
+`;
+
+export const ContainerComentarioBotoes = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+`;
+
+export const ComentariosDepoimentos = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 5%;
+  height: 100%;
 `;
 
 export const SubtituloEdicaoComentario = styled.div`
@@ -140,15 +153,20 @@ export const TextAreaComentario = styled.textarea`
 
 `;
 
+export const ContainerBotoes = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 5%;
+`;
 
 export const BotaoSalvarAlteracoes = styled.button`
   height: 60px;
-  width: 363px;
+  width: 280px;
   border-radius: 3px;
   box-shadow: 0px 4px 4px 0px #00000040;
-  background-color: #8F95D2;
+  background-color: #434B97;
   font-family: 'Barlow', sans-serif;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 600;
   line-height: 36px;
   letter-spacing: 0em;
@@ -179,6 +197,7 @@ export const BotaoSalvarAlteracoes = styled.button`
     font-size: 18px;
     font-weight: 600;
   }
+
   @media (max-width: 321px) {
     height: 45px;
     width: 200px;
@@ -187,19 +206,23 @@ export const BotaoSalvarAlteracoes = styled.button`
   }
 `;
 
-export const BotaoEditarAlteracoes = styled.button`
+export const BotaoCancelarAlteracoes = styled.button`
   height: 60px;
-  width: 363px;
+  width: 280px;
   border-radius: 3px;
   box-shadow: 0px 4px 4px 0px #00000040;
-  background-color: green;
+  background-color: #434B97;
   font-family: 'Barlow', sans-serif;
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 600;
   line-height: 36px;
   letter-spacing: 0em;
-  color: #0A0E3C99;
-  border-width: 1px;
+  color: white;
+  border-color: #000000;
+  border-width: 3px;
+  margin-top: 10%;
+  margin-bottom:3%;
+  border-style:solid;
 
   @media (max-width: 755px) {
     height: 50px;

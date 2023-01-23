@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Cores } from "../../variaveis";
-import { EdicaoComentariosPagina, ContainerEdicaoComentarios, TituloEdicaoComentario, SubtituloEdicaoComentario, TextAreaComentario, BotaoSalvarAlteracoes, BotaoEditarAlteracoes } from './Styles';
+import {
+  EdicaoComentariosPagina,
+  ContainerEdicaoComentarios,
+  TituloEdicaoComentario,
+  ContainerComentarioBotoes,
+  ComentariosDepoimentos,
+  SubtituloEdicaoComentario,
+  TextAreaComentario,
+  ContainerBotoes,
+  BotaoSalvarAlteracoes,
+  BotaoCancelarAlteracoes
+} from './Styles';
 import * as managerService from "../../services/ManagerService/managerService";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
@@ -49,7 +60,7 @@ function EdicaoComentarios() {
     console.log(e);
   }
 
-    const antLoadingIcon = (
+  const antLoadingIcon = (
     <LoadingOutlined style={{ fontSize: 130, color: Cores.azul }} spin />
   );
 
@@ -65,31 +76,37 @@ function EdicaoComentarios() {
     />
   )
 
-console.log(comentario);
+  console.log(comentario);
 
   return (
     <EdicaoComentariosPagina>
-    <ContainerEdicaoComentarios>
+      <ContainerEdicaoComentarios>
         <TituloEdicaoComentario>Página Comentários</TituloEdicaoComentario>
-        <SubtituloEdicaoComentario>Comentários e depoimentos:</SubtituloEdicaoComentario>
-        <TextAreaComentario  
-          defaultValue={comentario?.comentario}
-          name="comentario"
-          style={{
-            borderWidth: "1px",
-            borderColor: Cores.azul,
-            color: "black",
-            minHeight: "100px",
+        <ContainerComentarioBotoes>
+          <ComentariosDepoimentos>
+            <SubtituloEdicaoComentario>Comentários e depoimentos:</SubtituloEdicaoComentario>
+            <TextAreaComentario
+              defaultValue={comentario?.comentario}
+              name="comentario"
+              style={{
+                borderWidth: "1px",
+                borderColor: Cores.azul,
+                color: "black",
+                minHeight: "100px",
 
-          }}
-          onKeyPress={verificandoEnter}
-          onChange={preenchendoDados}
-          ></TextAreaComentario>
-        <BotaoSalvarAlteracoes
-        onClick={() => atualizarDados()}
-        >Salvar Alterações</BotaoSalvarAlteracoes>
-        <BotaoEditarAlteracoes>Cancelar Alterações</BotaoEditarAlteracoes>
-    </ContainerEdicaoComentarios>
+              }}
+              onKeyPress={verificandoEnter}
+              onChange={preenchendoDados}
+            ></TextAreaComentario>
+          </ComentariosDepoimentos>
+          <ContainerBotoes>
+            <BotaoSalvarAlteracoes
+              onClick={() => atualizarDados()}
+            >Salvar Alterações</BotaoSalvarAlteracoes>
+            <BotaoCancelarAlteracoes>Cancelar Alterações</BotaoCancelarAlteracoes>
+          </ContainerBotoes>
+        </ContainerComentarioBotoes>
+      </ContainerEdicaoComentarios>
     </EdicaoComentariosPagina>
   );
 }
