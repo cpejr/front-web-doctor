@@ -18,21 +18,36 @@ import {
 	CriacaoReceitaCorpo,
 	Titulo,
 	NomeDoPaciente,
+	Assinatura,
 	Descricao,
 	CriacaoReceitaBotoes,
 	BotaoEnviar,
 	BotaoCancelar,
 } from "./Styles";
 
+import {
+	Text,
+	Document,
+	Page,
+	Image,
+	PDFDownloadLink,
+	StyleSheet
+} from '@react-pdf/renderer';
+
+import LogoPdf from "../../assets/LogoPdf.png"
+import footerPDF from "../../assets/footerPDF.png"
+
 const camposVaziosReferencia = {
 	id_usuario: false,
 	titulo: false,
+	assinatura: false,
 	descricao: false,
 };
 
 const estadoIncial = {
 	id_usuario: "",
 	titulo: "",
+	assinatura: "",
 	descricao: "",
 };
 
@@ -45,7 +60,8 @@ function CriacaoReceitas() {
 	const [tituloReceita, setTituloReceita] = useState();
 	const [dataNascimentoPaciente, setDataNascimentoPaciente] = useState();
 	const [descricaoReceita, setDescricaoReceita] = useState();
-
+	const [tipoAssinatura, setTipoAssinatura] = useState();
+	const [preenchido, setPreenchido] = useState(false);
 	const history = useHistory();
 
 	function preenchendoDados(e) {
@@ -66,10 +82,13 @@ function CriacaoReceitas() {
 			armazenaInformacoesUsuario(value);
 		}
 
+		if (name === "assinatura") {
+			setTipoAssinatura(value);
+		}
+
 		if (name === "descricao") {
 			setDescricaoReceita(value);
 		}
-
 	}
 
 	async function armazenaInformacoesUsuario(id) {
@@ -84,6 +103,8 @@ function CriacaoReceitas() {
 		setDataNascimentoPaciente(dataFormatada);
 		setNomePaciente(resposta.nome);
 	}
+
+
 
 	useEffect(() => {
 		async function pegandoPacientes() {
@@ -100,6 +121,14 @@ function CriacaoReceitas() {
 		pegandoPacientes();
 	}, []);
 
+	useEffect(() => {
+		if (tituloReceita !== undefined && tipoAssinatura !== undefined && descricaoReceita !== undefined && NomePaciente !== undefined) {
+			setPreenchido(true);
+		}
+
+	}, [tituloReceita, descricaoReceita, tipoAssinatura, NomePaciente]);
+
+
 	function cancelarCriacaoReceita() {
 		history.push("/web/areareceitas");
 	}
@@ -110,6 +139,7 @@ function CriacaoReceitas() {
 		const camposVaziosAtual = {
 			id_usuario: !estado.id_usuario,
 			titulo: !estado.titulo,
+			assinatura: !estado.assinatura,
 			descricao: !estado.descricao,
 		};
 
@@ -121,7 +151,13 @@ function CriacaoReceitas() {
 		}
 
 		setCarregandoCriacao(true);
-		const id = estado.id_usuario
+		const id = estado.id_usuario;
+
+		if (tipoAssinatura === 'sem') {
+			return;
+		}
+
+
 		await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
 			mensagemSucesso: "Receita criada com sucesso",
 			tempo: 1500,
@@ -136,6 +172,48 @@ function CriacaoReceitas() {
 	const antIcon = (
 		<LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
 	);
+
+	const PdfTeste = () => {
+		return (
+			<Document>
+				<Page style={styles.corpo} size="A4">
+					<Image style={styles.logo} src={LogoPdf} />
+					<Text style={styles.texto}>Nome do paciente: {NomePaciente}</Text>
+					<Text style={styles.texto}>Data de nascimento: {dataNascimentoPaciente}</Text>
+					<Text style={styles.titulo}>{tituloReceita}</Text>
+					<Text style={styles.texto}>{descricaoReceita}</Text>
+					<Image style={styles.footer} src={footerPDF} />
+				</Page>
+			</Document>
+		)
+	}
+
+	const styles = StyleSheet.create({
+		corpo: {
+			paddingBottom: 5,
+			paddingHorizontal: 30,
+		},
+		logo: {
+			marginHorizontal: 150,
+			size: 8,
+			marginBottom: 20,
+		},
+		texto: {
+			margin: 12,
+			fontSize: 14,
+			textAlign: "justify",
+			fontFamily: "Times-Roman",
+		},
+		titulo: {
+			fontSize: 18,
+			marginBottom: 20,
+			textAlign: "center",
+		},
+		footer: {
+			width: '100%',
+			marginTop: '83.5%',
+		},
+	});
 
 	return (
 		<ContainerCriacaoReceitas>
@@ -182,6 +260,34 @@ function CriacaoReceitas() {
 							))}
 						</Select>
 					</SelectContainer>
+					<Assinatura>Assinatura:</Assinatura>
+					<SelectContainer camposVazios={camposVazios.assinatura}>
+						<Select
+							backgroundColor={Cores.cinza[7]}
+							color={Cores.preto}
+							borderColor="transparent"
+							fontSize="1em"
+							width="97%"
+							marginTop="0px"
+							size="large"
+							placeholder="Tipo da Assinatura"
+							height="45px"
+							borderWidth820="97%"
+							name="assinatura"
+							onChange={preenchendoDados}
+						>
+							<option value="">
+								Tipo da Assinatura
+							</option>
+							<option value="sem">
+								Sem Assinatura
+							</option>
+							<option value="auto">
+								Assinatura Automática
+							</option>
+
+						</Select>
+					</SelectContainer>
 					<Descricao>Descrição:</Descricao>
 					<DescricaoTextarea
 						placeholder="Descrição"
@@ -205,21 +311,36 @@ function CriacaoReceitas() {
 						</Button>
 					</BotaoCancelar>
 					<BotaoEnviar>
-						<Button
-							height="47px"
-							width="100%"
-							backgroundColor={Cores.lilas[1]}
-							borderColor={Cores.azul}
-							color={Cores.branco}
-							fontSize="1em"
-							onClick={criarReceita}
-						>
-							{carregandoCriacao ? (
-								<Spin indicator={antIcon} />
-							) : (
-								<div>ENVIAR</div>
-							)}
-						</Button>
+						{tipoAssinatura === 'sem' && preenchido === true ? (
+							<PDFDownloadLink document={<PdfTeste />}>
+								<Button height="47px"
+									width="142px"
+									backgroundColor={Cores.lilas[1]}
+									borderColor={Cores.azul}
+									color={Cores.branco}
+									fontSize="1em"
+								>
+									ENVIAR
+
+								</Button>
+							</PDFDownloadLink>
+						) : (
+							<Button
+								height="47px"
+								width="100%"
+								backgroundColor={Cores.lilas[1]}
+								borderColor={Cores.azul}
+								color={Cores.branco}
+								fontSize="1em"
+								onClick={criarReceita}
+							>
+								{carregandoCriacao ? (
+									<Spin indicator={antIcon} />
+								) : (
+									<div>ENVIAR</div>
+								)}
+							</Button>
+						)}
 					</BotaoEnviar>
 				</CriacaoReceitaBotoes>
 			</CardCriacaoReceitas>
