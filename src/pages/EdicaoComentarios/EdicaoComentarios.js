@@ -14,6 +14,12 @@ import {
   TituloComentariosDepoimentos,
   Comentarios
 } from './Styles';
+
+import { Modal } from 'antd';
+
+import ModalAdicionarComentario from "../../components/ModalAdicionarComentario";
+import ModalExcluirComentario from "../../components/ModalExcluirComentario";
+
 import * as managerService from "../../services/ManagerService/managerService";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
@@ -22,6 +28,11 @@ import { Spin } from "antd";
 function EdicaoComentarios() {
   const [comentario, setComentario] = useState({});
   const [carregando, setCarregando] = useState(false);
+  const [modalAdicionarComentario, setModalAdicionarComentario] = useState(false);
+  const [modalExcluirComentario, setModalExcluirComentario] = useState(false);
+
+  const abertoPeloUsuario = false;
+
 
   async function verificandoEnter(e) {
     if (e.key === "Enter") {
@@ -78,7 +89,23 @@ function EdicaoComentarios() {
     />
   )
 
-  console.log(comentario);
+  async function adicionandoComentario() {
+    setModalAdicionarComentario(true);
+  }
+
+  async function excluindoComentario() {
+    setModalExcluirComentario(true);
+  }
+
+  async function fechandoModalAdicionarComentario() {
+    setModalAdicionarComentario(false);
+    pegandoDados();
+  }
+
+  async function fechandoModalExcluirComentario() {
+    setModalExcluirComentario(false);
+    pegandoDados();
+  }
 
   return (
     <div>
@@ -100,8 +127,14 @@ function EdicaoComentarios() {
 
             <MetadeBotoes>
               <ContainerBotoes>
-                <BotaoAdicionar> Adicionar Comentário </BotaoAdicionar>
-                <BotaoExcluir> Excluir Comentário </BotaoExcluir>
+                <BotaoAdicionar
+                  onClick={() => adicionandoComentario()}>
+                  Adicionar Comentário
+                </BotaoAdicionar>
+                <BotaoExcluir
+                  onClick={() => excluindoComentario()}>
+                  Excluir Comentário
+                </BotaoExcluir>
               </ContainerBotoes>
             </MetadeBotoes>
 
@@ -111,7 +144,36 @@ function EdicaoComentarios() {
 
       </PaginaEdicaoComentario>
 
+
+      <Modal
+        visible={modalAdicionarComentario}
+        onCancel={() => fechandoModalAdicionarComentario()}
+        footer={null}
+        width={'70%'}
+        centered={true}
+      >
+        <ModalAdicionarComentario
+          abertoPeloUsuario={abertoPeloUsuario}
+          fechandoModal={() => fechandoModalAdicionarComentario()}
+        />
+      </Modal>
+
+      <Modal
+        visible={modalExcluirComentario}
+        onCancel={() => fechandoModalExcluirComentario()}
+        footer={null}
+        width={'70%'}
+        centered={true}
+      >
+        <ModalExcluirComentario
+          abertoPeloUsuario={abertoPeloUsuario}
+          fechandoModal={() => fechandoModalExcluirComentario()}
+        />
+      </Modal>
+
     </div >
+
+
   );
 }
 
