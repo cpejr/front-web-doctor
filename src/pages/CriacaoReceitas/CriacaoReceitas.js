@@ -61,6 +61,7 @@ function CriacaoReceitas() {
 	const [dataNascimentoPaciente, setDataNascimentoPaciente] = useState();
 	const [descricaoReceita, setDescricaoReceita] = useState();
 	const [tipoAssinatura, setTipoAssinatura] = useState();
+	const [preenchido, setPreenchido] = useState(false);
 	const history = useHistory();
 
 	function preenchendoDados(e) {
@@ -89,6 +90,7 @@ function CriacaoReceitas() {
 			setDescricaoReceita(value);
 		}
 
+		
 	}
 
 	async function armazenaInformacoesUsuario(id) {
@@ -135,13 +137,17 @@ function CriacaoReceitas() {
 
 		setCamposVazios(camposVaziosAtual);
 
-		if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia || tipoAssinatura === "")) {
+		if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
 			toast.warn("Preencha todos os campos");
 			return;
 		}
 
 		setCarregandoCriacao(true);
 		const id = estado.id_usuario;
+
+		if (tipoAssinatura === 'sem') {
+			return;
+		}
 
 
 		await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
@@ -160,17 +166,6 @@ function CriacaoReceitas() {
 	);
 
 	const PdfTeste = () => {
-		const camposVaziosPdf = {
-			id_usuario: !estado.id_usuario,
-			titulo: !estado.titulo,
-			assinatura: !estado.assinatura,
-			descricao: !estado.descricao,
-		}
-
-		if (!_.isEqual(camposVaziosPdf, camposVaziosReferencia)) {
-			return (toast.warn("Preencha todos os campos"))
-		}
-       else{
 		return (
 			<Document>
 				<Page style={styles.corpo} size="A4">
@@ -179,11 +174,10 @@ function CriacaoReceitas() {
 					<Text style={styles.texto}>Data de nascimento: {dataNascimentoPaciente}</Text>
 					<Text style={styles.titulo}>{tituloReceita}</Text>
 					<Text style={styles.texto}>{descricaoReceita}</Text>
-					<Image style={styles.footer} src={footerPDF}/>
+					<Image style={styles.footer} src={footerPDF} />
 				</Page>
 			</Document>
 		)
-	   }
 	}
 
 	const styles = StyleSheet.create({
@@ -309,7 +303,7 @@ function CriacaoReceitas() {
 						</Button>
 					</BotaoCancelar>
 					<BotaoEnviar>
-						{tipoAssinatura === 'sem' ? (
+						{tipoAssinatura === 'sem' && preenchido ? (
 							<PDFDownloadLink document={<PdfTeste />}>
 								<Button height="47px"
 									width="142px"
