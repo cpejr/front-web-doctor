@@ -111,6 +111,8 @@ function CriacaoReceitas() {
 		setNomePaciente(resposta.nome);
 	}
 
+
+
 	useEffect(() => {
 		async function pegandoPacientes() {
 			setCarregandoCriacao(true);
@@ -123,21 +125,16 @@ function CriacaoReceitas() {
 			setCarregandoCriacao(false);
 		}
 
-		function verificandoPreenchido() {
-			if (tituloReceita !== undefined && tipoAssinatura !== undefined && descricaoReceita !== undefined && NomePaciente !== undefined) {
-				console.log(tituloReceita)
-				console.log(tipoAssinatura)
-				console.log(descricaoReceita)
-				console.log(NomePaciente)
-				setPreenchido(true);
-			}
+		pegandoPacientes();
+	}, []);
+
+	useEffect(() => {
+		if (tituloReceita !== undefined && tipoAssinatura !== undefined && descricaoReceita !== undefined && NomePaciente !== undefined) {
+			setPreenchido(true);
 		}
 
-		pegandoPacientes();
-
-		verificandoPreenchido();
-
 	}, [tituloReceita, descricaoReceita, tipoAssinatura, NomePaciente]);
+
 
 	function cancelarCriacaoReceita() {
 		history.push("/web/areareceitas");
