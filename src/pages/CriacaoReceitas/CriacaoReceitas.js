@@ -90,7 +90,12 @@ function CriacaoReceitas() {
 			setDescricaoReceita(value);
 		}
 
-		
+		console.log(tituloReceita)
+		console.log(tipoAssinatura)
+		console.log(descricaoReceita)
+		console.log(NomePaciente)
+
+
 	}
 
 	async function armazenaInformacoesUsuario(id) {
@@ -118,8 +123,21 @@ function CriacaoReceitas() {
 			setCarregandoCriacao(false);
 		}
 
+		function verificandoPreenchido() {
+			if (tituloReceita !== undefined && tipoAssinatura !== undefined && descricaoReceita !== undefined && NomePaciente !== undefined) {
+				console.log(tituloReceita)
+				console.log(tipoAssinatura)
+				console.log(descricaoReceita)
+				console.log(NomePaciente)
+				setPreenchido(true);
+			}
+		}
+
 		pegandoPacientes();
-	}, []);
+
+		verificandoPreenchido();
+
+	}, [tituloReceita, descricaoReceita, tipoAssinatura, NomePaciente]);
 
 	function cancelarCriacaoReceita() {
 		history.push("/web/areareceitas");
@@ -303,7 +321,7 @@ function CriacaoReceitas() {
 						</Button>
 					</BotaoCancelar>
 					<BotaoEnviar>
-						{tipoAssinatura === 'sem' && preenchido ? (
+						{tipoAssinatura === 'sem' && preenchido === true ? (
 							<PDFDownloadLink document={<PdfTeste />}>
 								<Button height="47px"
 									width="142px"
