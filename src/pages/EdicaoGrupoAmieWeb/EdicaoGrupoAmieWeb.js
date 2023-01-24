@@ -188,7 +188,6 @@ function EdicaoGrupoAmieWeb() {
             backgroundColor={Cores.cinza[2]}
             color={Cores.branco}
             fontSize='24px'
-            fontSizeMedia350='18px'
             paddingLeft='10px'
             paddingRight='10px'
             onClick={() => (updateAmie())}
@@ -200,7 +199,7 @@ function EdicaoGrupoAmieWeb() {
             height='60px'
             backgroundColor={Cores.verde}
             fontSize='24px'
-            fontSizeMedia350='16px'
+            fontSizeMedia350='22px'
             paddingLeft='10px'
             paddingRight='10px'
           >
