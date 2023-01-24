@@ -89,13 +89,6 @@ function CriacaoReceitas() {
 		if (name === "descricao") {
 			setDescricaoReceita(value);
 		}
-
-		console.log(tituloReceita)
-		console.log(tipoAssinatura)
-		console.log(descricaoReceita)
-		console.log(NomePaciente)
-
-
 	}
 
 	async function armazenaInformacoesUsuario(id) {
