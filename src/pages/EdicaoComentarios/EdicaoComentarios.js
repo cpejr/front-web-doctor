@@ -1,16 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { Cores } from "../../variaveis";
 import {
-  EdicaoComentariosPagina,
-  ContainerEdicaoComentarios,
-  TituloEdicaoComentario,
-  ContainerComentarioBotoes,
-  ComentariosDepoimentos,
-  SubtituloEdicaoComentario,
-  TextAreaComentario,
+  BoxComentario,
+  MetadeComentario,
+  MetadeBotoes,
   ContainerBotoes,
-  BotaoSalvarAlteracoes,
-  BotaoCancelarAlteracoes
+  ContainerComentario,
+  PaginaEdicaoComentario,
+  BoxComentarioBotao,
+  Titulo,
+  BotaoAdicionar,
+  BotaoExcluir,
+  TituloComentariosDepoimentos,
+  Comentarios
 } from './Styles';
 import * as managerService from "../../services/ManagerService/managerService";
 import { LoadingOutlined } from "@ant-design/icons";
@@ -79,35 +81,37 @@ function EdicaoComentarios() {
   console.log(comentario);
 
   return (
-    <EdicaoComentariosPagina>
-      <ContainerEdicaoComentarios>
-        <TituloEdicaoComentario>Página Comentários</TituloEdicaoComentario>
-        <ContainerComentarioBotoes>
-          <ComentariosDepoimentos>
-            <SubtituloEdicaoComentario>Comentários e depoimentos:</SubtituloEdicaoComentario>
-            <TextAreaComentario
-              defaultValue={comentario?.comentario}
-              name="comentario"
-              style={{
-                borderWidth: "1px",
-                borderColor: Cores.azul,
-                color: "black",
-                minHeight: "100px",
+    <div>
 
-              }}
-              onKeyPress={verificandoEnter}
-              onChange={preenchendoDados}
-            ></TextAreaComentario>
-          </ComentariosDepoimentos>
-          <ContainerBotoes>
-            <BotaoSalvarAlteracoes
-              onClick={() => atualizarDados()}
-            >Salvar Alterações</BotaoSalvarAlteracoes>
-            <BotaoCancelarAlteracoes>Cancelar Alterações</BotaoCancelarAlteracoes>
-          </ContainerBotoes>
-        </ContainerComentarioBotoes>
-      </ContainerEdicaoComentarios>
-    </EdicaoComentariosPagina>
+      <PaginaEdicaoComentario>
+
+        <BoxComentario>
+
+          <Titulo>Página Comentários</Titulo>
+
+          <BoxComentarioBotao>
+
+            <MetadeComentario>
+              <ContainerComentario>
+                <TituloComentariosDepoimentos>Comentários e Depoimentos:</TituloComentariosDepoimentos>
+                <Comentarios></Comentarios>
+              </ContainerComentario>
+            </MetadeComentario>
+
+            <MetadeBotoes>
+              <ContainerBotoes>
+                <BotaoAdicionar> Adicionar Comentário </BotaoAdicionar>
+                <BotaoExcluir> Excluir Comentário </BotaoExcluir>
+              </ContainerBotoes>
+            </MetadeBotoes>
+
+          </BoxComentarioBotao>
+
+        </BoxComentario>
+
+      </PaginaEdicaoComentario>
+
+    </div >
   );
 }
 
