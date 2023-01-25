@@ -384,16 +384,16 @@ export const CriandoComentario = async (comentario) => {
     .then(() => {
       toast.success('Comentário criado com sucesso.');
     })
-    /* .catch((error) => {
+    .catch((error) => {
       requisicaoErro(error, () => (window.location.href = '/web/edicaocomentario'));
       return false;
-    }); */
+    });
 
   return;
 };
 
 export const GetComentario = async () => {
-  let dadosComentario = {};
+  let dadosComentario = [];
 
   await requesterService
     .requisicaoComentario()

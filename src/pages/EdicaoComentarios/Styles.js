@@ -41,10 +41,10 @@ export const Titulo = styled.div`
 export const BoxComentarioBotao = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   width: 100%;
-  height: 600px;
+  height: auto;
   padding: 2%;
-  background-color: blue;
 
   @media (max-width: 800px) {
     flex-direction: column;
@@ -55,9 +55,11 @@ export const MetadeComentario = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: auto;
   padding: 2%;
-  background-color: brown;
+  box-shadow: 10px;
+  margin-right: 50px;
+
 `;
 
 export const MetadeBotoes = styled.div`
@@ -66,11 +68,13 @@ export const MetadeBotoes = styled.div`
   height: 100%;
   padding: 2%;
   background-color: yellow;
+  vertical-align: middle;
+  margin-left: 50px;
 `;
 
 export const ContainerComentario = styled.div`
   width: 100%;
-  height: 100%;
+  height: auto;
   background-color: white;
 `;
 
@@ -79,20 +83,19 @@ export const TituloComentariosDepoimentos = styled.div`
   flex-direction: column;
   font-family: 'Barlow', sans-serif;
   font-size: 25px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 48px;
   letter-spacing: 0em;
   text-align: center;
   padding: 2%;
   width: 100%;
-  height: 20%;
+  height: 10%;
 `;
 
 export const TodosComentarios = styled.div`
   display: flex;
   flex-direction: column;
-  height: 80%;
-  padding: 2%;
+  height: auto;
 `;
 
 export const Comentario = styled.div`
@@ -102,13 +105,14 @@ export const Comentario = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: 90px;
-  padding: 0% 1% 0% 1%;
-  border-color: ${Cores.preto};
-  border-style: solid;
-  border-radius: 3px;
-  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
+  height: auto;
+  padding: 3%;
   margin-bottom: 2%;
+  font-size: 16px;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 550;
+  line-height: 22px;
+  text-align: center;
 `;
 
 export const ContainerBotoes = styled.div`

@@ -27,7 +27,7 @@ import { Spin } from "antd";
 
 
 function EdicaoComentarios() {
-  const [comentario, setComentario] = useState({});
+  const [comentario, setComentario] = useState([]);
   const [carregando, setCarregando] = useState(false);
   const [modalAdicionarComentario, setModalAdicionarComentario] = useState(false);
   const [modalExcluirComentario, setModalExcluirComentario] = useState(false);
@@ -116,8 +116,9 @@ function EdicaoComentarios() {
               <ContainerComentario>
                 <TituloComentariosDepoimentos>Comentários e Depoimentos:</TituloComentariosDepoimentos>
                 <TodosComentarios>
-        
-                  <Comentario></Comentario>
+                  {comentario.map((value) => (
+                    <Comentario>"{value.comentario}"</Comentario>
+                  ))}
                 </TodosComentarios>
               </ContainerComentario>
             </MetadeComentario>

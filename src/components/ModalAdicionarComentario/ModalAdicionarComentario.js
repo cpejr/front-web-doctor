@@ -10,7 +10,7 @@ import Button from "../../styles/Button";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAdicionarComentario(props) {
-  const [comentario, setComentario] = useState();
+  const [comentario, setComentario] = useState({});
   const [carregando, setCarregando] = useState(false);
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
@@ -21,10 +21,8 @@ function ModalAdicionarComentario(props) {
     e.preventDefault();
     const { value } = e.target;
 
-    setComentario(value);
-
-    /* console.log(comentario) 
-    console.log(value) */
+    setComentario({...comentario, comentario: value});
+    
   }
 
   async function criarComentario(e) {
@@ -37,14 +35,12 @@ function ModalAdicionarComentario(props) {
 
     setCarregando(true);
 
-    console.log(comentario);
-
     await managerService.CriandoComentario(comentario, {
       mensagemSucesso: "Receita criada com sucesso",
       tempo: 1500,
-      /* onClose: () => {
+      onClose: () => {
         history.push("/web/edicaocomentario");
-      }, */
+      },
     });
 
     setCarregando(false);
