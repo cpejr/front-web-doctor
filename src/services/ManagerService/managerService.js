@@ -350,6 +350,20 @@ export const UpdateCodigo = async (id_usuario, codigo) => {
   return false;
 };
 
+export const DeleteComentario = async (id, comentario) => {
+  await requesterService
+    .DeleteComentario(id, comentario)
+    .then(() => {
+      toast.success('Comentário deletado com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/edicaocomentario'));
+      return false;
+    });
+
+  return false;
+};
+
 export const UpdateComentario = async (id, comentario) => {
   await requesterService
     .UpdateComentario(id, comentario)
@@ -364,6 +378,19 @@ export const UpdateComentario = async (id, comentario) => {
   return false;
 };
 
+export const CriandoComentario = async (comentario) => {
+  await requesterService
+    .CriandoComentario(comentario)
+    .then(() => {
+      toast.success('Comentário criado com sucesso.');
+    })
+    /* .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/edicaocomentario'));
+      return false;
+    }); */
+
+  return;
+};
 
 export const GetComentario = async () => {
   let dadosComentario = {};
