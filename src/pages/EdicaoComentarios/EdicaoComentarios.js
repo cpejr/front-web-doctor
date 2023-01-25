@@ -12,7 +12,8 @@ import {
   BotaoAdicionar,
   BotaoExcluir,
   TituloComentariosDepoimentos,
-  Comentarios
+  TodosComentarios,
+  Comentario
 } from './Styles';
 
 import { Modal } from 'antd';
@@ -33,17 +34,10 @@ function EdicaoComentarios() {
 
   const abertoPeloUsuario = false;
 
-
-  async function verificandoEnter(e) {
-    if (e.key === "Enter") {
-      atualizarDados();
-    }
-  }
-
   async function pegandoDados() {
     setCarregando(true);
     const resposta = await managerService.GetComentario();
-    setComentario(resposta[0]);
+    setComentario(resposta);
     setCarregando(false)
   }
 
@@ -62,16 +56,16 @@ function EdicaoComentarios() {
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, []);
 
-  async function atualizarDados() {
+  /* async function atualizarDados() {
     setCarregando(true);
     await managerService.UpdateComentario(comentario.id, comentario.comentario);
     setCarregando(false);
-  }
+  } */
 
-  function preenchendoDados(e) {
+  /* function preenchendoDados(e) {
     setComentario((prev) => ({ ...prev, comentario: e.target.value }));
     console.log(e);
-  }
+  } */
 
   const antLoadingIcon = (
     <LoadingOutlined style={{ fontSize: 130, color: Cores.azul }} spin />
@@ -121,7 +115,10 @@ function EdicaoComentarios() {
             <MetadeComentario>
               <ContainerComentario>
                 <TituloComentariosDepoimentos>Comentários e Depoimentos:</TituloComentariosDepoimentos>
-                <Comentarios></Comentarios>
+                <TodosComentarios>
+        
+                  <Comentario></Comentario>
+                </TodosComentarios>
               </ContainerComentario>
             </MetadeComentario>
 

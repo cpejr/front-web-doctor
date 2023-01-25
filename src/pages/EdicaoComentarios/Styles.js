@@ -77,25 +77,38 @@ export const ContainerComentario = styled.div`
 export const TituloComentariosDepoimentos = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 1;
   font-family: 'Barlow', sans-serif;
   font-size: 25px;
   font-weight: 600;
   line-height: 48px;
   letter-spacing: 0em;
   text-align: center;
-  margin-bottom: 2%;
   padding: 2%;
   width: 100%;
+  height: 20%;
 `;
 
-export const Comentarios = styled.div`
+export const TodosComentarios = styled.div`
   display: flex;
   flex-direction: column;
-  flex: 4;
-  height: 85%;
-  background-color: black;
+  height: 80%;
   padding: 2%;
+`;
+
+export const Comentario = styled.div`
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 90px;
+  padding: 0% 1% 0% 1%;
+  border-color: ${Cores.preto};
+  border-style: solid;
+  border-radius: 3px;
+  box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
+  margin-bottom: 2%;
 `;
 
 export const ContainerBotoes = styled.div`
