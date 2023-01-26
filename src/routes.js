@@ -170,6 +170,11 @@ function UserHeader() {
           path='/web/uploadreceita'
           component={UploadReceita}
         />
+         <RotasPrivadasMedico
+          exact 
+          path='/web/edicaoconteudo'
+          component={EdicaoConteudo}
+        />
         <RotasPrivadas exact path='/web/perfil' component={Perfil} />
         <RotasPrivadas
           exact
