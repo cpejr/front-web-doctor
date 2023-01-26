@@ -437,6 +437,7 @@ export const UrgenciaFormulario = styled.div`
   justify-content: center;
   width: 33%;
   align-items: center;
+  gap: 3.1px;
   @media (max-width: 820px) {
     font-size: 1em;
   }
