@@ -123,7 +123,9 @@ function CriacaoReceitas() {
 
 	useEffect(() => {
 		if (tituloReceita !== "" && tipoAssinatura !== "" && descricaoReceita !== "" && NomePaciente !== "") {
-			setPreenchido(true);
+			if (tituloReceita !== undefined && tipoAssinatura !== undefined && descricaoReceita !== undefined && NomePaciente !== undefined) {
+				setPreenchido(true);
+			}
 		} else {
 			setPreenchido(false);
 		}
