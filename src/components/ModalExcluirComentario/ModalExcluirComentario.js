@@ -1,20 +1,50 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { ContainerModalCodigo, Titulo } from "./Styles";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
+import Select from "../../styles/Select";
+import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalExcluirComentario(props) {
-    const [comentario, setComentario] = useState({});
+    const [comentarios, setComentarios] = useState([]);
+    const [comentarioEscolhido, setComentarioEscolhido] = useState();
     const [carregando, setCarregando] = useState(false);
     const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
+    const history = useHistory();
+
+    useEffect(() => {
+        async function pegandoComentarios() {
+            setCarregando(true);
+            const resposta = await managerService.GetComentario();
+
+            setComentarios(resposta);
+            setCarregando(false);
+        }
+
+        pegandoComentarios();
+    }, []);
+
+    function escolhendoComentario(value) {
+        setComentarioEscolhido(value);
+    }
+
     async function deletandoComentario() {
         setCarregando(true);
-        await managerService.DeleteComentario(comentario.id, comentario);
-        props.fechandoModal();
+
+        await managerService.DeleteComentario(comentarioEscolhido, {
+            mensagemSucesso: "Receita deletada com sucesso",
+            tempo: 1500,
+            onClose: () => {
+                history.push("/web/edicaocomentario");
+            },
+        });
+
+        setCarregando(false);
     }
 
     return (
@@ -22,7 +52,7 @@ function ModalExcluirComentario(props) {
             <ContainerModalCodigo>
                 <Titulo>Excluir Comentário:</Titulo>
 
-                <Input
+                <Select
                     value=""
                     placeholder="Escolher Comentário para deletar"
                     backgroundColor="#E4E6F4"
@@ -35,8 +65,17 @@ function ModalExcluirComentario(props) {
                     paddingRight="2%"
                     name="codigo"
                     //onKeyPress={verificandoEnter}
-                    //onChange={preenchendoDados}
-                ></Input>
+                    onChange={escolhendoComentario}
+                >
+                    <option value="" disabled selected>
+                        Escolher Comentário para deletar
+                    </option>
+                    {comentarios.map((value) => (
+                        <option key={value.comentarios} value={value.comentarios} color="red">
+                            {value.comentarios}
+                        </option>
+                    ))}
+                </Select>
 
                 <Button
                     width="60%"

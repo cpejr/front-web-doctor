@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
-import _ from "lodash";
 import { ContainerModalCodigo, Titulo, Texto } from "./Styles";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
