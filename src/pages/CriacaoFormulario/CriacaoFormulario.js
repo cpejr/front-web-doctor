@@ -31,7 +31,7 @@ function CriacaoFormulario() {
   const [camposVazios, setCamposVazios] = useState(false);
   const [carregandoCriacao, setCarregandoCriacao] = useState();
   const [campoPerguntas, setCampoPerguntas] = useState(false);
-
+  const [visualizar, setVisualizacao] = useState(false);
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
   );
@@ -42,7 +42,6 @@ function CriacaoFormulario() {
     tipo: false,
     titulo: false,
     urgencia: false,
-    assinatura_secretaria: false,
   };
 
   const TirandoCabecalho = {
@@ -72,24 +71,45 @@ function CriacaoFormulario() {
 
     setEstado({ ...estado, [e.target.name]: e.target.value });
   }
+  function mudandoVisualizacao() {
+    if(visualizar === false)
+     setVisualizacao(true)
+    else
+     setVisualizacao(false)
 
+    console.log(visualizar)
+  }
+    
   async function requisicaoFormularios() {
     if (!estado.finalidade) errors.finalidade = true;
     if (!estado.tipo) errors.tipo = true;
     if (!estado.urgencia) errors.urgencia = true;
     if (!estado.titulo) errors.titulo = true;
-    if (!estado.assinatura_secretaria) errors.titulo = true;
     setCamposVazios({ ...camposVazios, ...errors });
-
+    console.log(referenciaInputNulos)
+    console.log(camposVazios)
     if (_.isEqual(camposVazios, referenciaInputNulos)) {
       if (campoPerguntas === false) {
         toast.warn('Adicione alguma pergunta.');
       } else {
+        if(visualizar === false){
         setCarregandoCriacao(true);
+        estado.visualizacao_secretaria = true;
+        console.log(estado)
         await managerService.CriarFormulario(estado);
         await sleep(1500);
         setCarregandoCriacao(false);
         window.location.href = '/web/listaformularios';
+        }
+        if(visualizar === true){
+          setCarregandoCriacao(true);
+          estado.visualizacao_secretaria = false;
+          console.log(estado)
+          await managerService.CriarFormulario(estado);
+          await sleep(1500);
+          setCarregandoCriacao(false);
+          window.location.href = '/web/listaformularios'; 
+        }
       }
     } else {
       setCarregandoCriacao(true);
@@ -160,8 +180,7 @@ function CriacaoFormulario() {
         </SelectContainer>
         <Checkbox
            marginTop='20'
-           camposVazios = {camposVazios.assinatura_secretaria}
-           onChange={preenchendoDados}
+           onChange={mudandoVisualizacao}
         >Permitir a visualização da secretária
         </Checkbox>
         <Button
