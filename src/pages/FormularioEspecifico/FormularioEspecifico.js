@@ -340,7 +340,7 @@ function FormularioEspecifico(props) {
                     )}
                   </BarraEsquerda>
                   <BarraCentro>
-                    {tipoUsuarioLogado === "MASTER" ? (
+                    {tipoUsuarioLogado === "MASTER" || (tipoUsuarioLogado === "SECRETARIA" && formularioEspecifico.visualizacao_secretaria === true)? (
                       <NomePacienteMaster
                         onClick={() =>
                           abrindoModalFormulario(
