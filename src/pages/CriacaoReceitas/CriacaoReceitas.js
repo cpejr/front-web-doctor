@@ -89,6 +89,7 @@ function CriacaoReceitas() {
 		if (name === "descricao") {
 			setDescricaoReceita(value);
 		}
+
 	}
 
 	async function armazenaInformacoesUsuario(id) {
@@ -122,7 +123,7 @@ function CriacaoReceitas() {
 	}, []);
 
 	useEffect(() => {
-		if (tituloReceita !== undefined && tipoAssinatura !== undefined && descricaoReceita !== undefined && NomePaciente !== undefined) {
+		if (tituloReceita !== "" && tipoAssinatura !== "" && descricaoReceita !== "" && NomePaciente !== "") {
 			setPreenchido(true);
 		}
 
@@ -312,7 +313,7 @@ function CriacaoReceitas() {
 					</BotaoCancelar>
 					<BotaoEnviar>
 						{tipoAssinatura === 'sem' && preenchido === true ? (
-							<PDFDownloadLink document={<PdfTeste />}>
+							<PDFDownloadLink document={<PdfTeste />} fileName={tituloReceita}>
 								<Button height="47px"
 									width="142px"
 									backgroundColor={Cores.lilas[1]}

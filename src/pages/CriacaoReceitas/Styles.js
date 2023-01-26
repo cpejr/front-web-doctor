@@ -11,7 +11,8 @@ export const ContainerCriacaoReceitas = styled.div`
 
 export const CardCriacaoReceitas = styled.div`
 	width: 570px;
-	margin-top: 3%;
+	margin-top: 2%;
+	margin-bottom: 2%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
