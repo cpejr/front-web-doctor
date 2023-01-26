@@ -13,7 +13,7 @@ export const Container = styled.div`
   height: auto;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: top;
   justify-content: center;
   margin-top: 3%;
   margin-bottom: 3%;
@@ -34,7 +34,7 @@ export const Container = styled.div`
 
 export const MetadeEsquerda = styled.div`
   width: 85%;
-  height: 1000px;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -42,7 +42,8 @@ export const MetadeEsquerda = styled.div`
   margin-top: 10%;
   margin-bottom: 3%;
   font-weight: 400;
-
+  border-right: 2px solid #151B57;
+  
   @media (max-width: 900px) {
     margin-top: 10%;
     margin-bottom: 10%;
@@ -57,7 +58,7 @@ export const MetadeEsquerda = styled.div`
 
 export const MetadeDireita = styled.div`
   width: 85%;
-  height: 1000px;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -65,6 +66,7 @@ export const MetadeDireita = styled.div`
   margin-top: 10%;
   margin-bottom: 3%;
   font-weight: 400;
+  
 
   @media (max-width: 900px) {
     margin-top: 10%;
@@ -78,37 +80,52 @@ export const MetadeDireita = styled.div`
   }
 `;
 
-export const TituloPaginaEdicao = styled.p`
-  padding-left: 20%;
-  padding-right: 20%;
+export const TituloCentral = styled.p`
+  padding-left: 10%;
+  padding-right: 10%;
   padding-top: 18px;
-  padding-bottom: 18px;
   font-size: 30px;
   text-align: center;
   font-family: "Roboto Condensed", sans-serif;
-
-  @media (max-width: 479px) {
-    font-size: 27px;
-  }
-  @media (max-width: 780px) {
-    padding-left: 10%;
-    padding-right: 10%;
-  }
-  @media (max-width: 431px) {
-    font-size: 25px;
-  }
-  @media (max-width: 400px) {
-    font-size: 22px;
-  }
-  @media (max-width: 360px) {
-    font-size: 18px;
-    padding-top: 0px;
-  }
+  font-weight: 600;
+  color: #0A0E3C;
+`;
+export const SubtituloCentral = styled.p`
+  padding-bottom: 18px;
+  font-size: 25px;
+  text-align: center;
+  font-family: "Roboto Condensed", sans-serif;
+`;
+export const TituloEsquerda = styled.p`
+  padding-left: 10%;
+  padding-top: 18px;
+  font-size: 30px;
+  text-align: left;
+  width: 100%;
+  font-family: "Roboto Condensed", sans-serif;
+  color: ${(props) => props.color};
+`;
+export const Conteudo = styled.p`
+  padding-left: 10%;
+  padding-right: 10%;
+  width: 100%;
+  font-size: 20px;
+  text-align: left;
+  font-family: "Roboto Condensed", sans-serif;
+  color: ${(props) => props.color};
 `;
 
-export const BoxGenerico = styled.div`
-  /* background-color: #CFD3F8; */
-  background-color: green;
+export const TextoSaibaMais = styled.p`
+padding-left: 10%;
+width: 100%;
+font-size: 30px;
+font-family: "Roboto Condensed", sans-serif;
+color: ${(props) => props.color};
+text-align: left;
+`;
+
+export const BoxBemVindo = styled.div`
+  background-color: #FFFFFF; 
   font-size: 20px;
   height: auto;
   width: 76%;
@@ -131,6 +148,106 @@ export const BoxGenerico = styled.div`
     font-size: 14px;
   }
 `;
+export const BoxVideo = styled.div`
+  background-color: #C4C4C4; 
+  font-size: 20px;
+  height: 90%;
+  width: 40%;
+  margin-bottom: 4%;
+  border-radius: 6px;
+  border: solid 3px #bbc0f4;
+  font-family: "Roboto Condensed", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 600px) {
+    margin-bottom: 5%;
+  }
+  @media (max-width: 425px) {
+    font-size: 18px;
+  }
+  @media (max-width: 360px) {
+    font-size: 14px;
+  }
+`;
+
+export const BoxTime = styled.div`
+  background-color: #FFFFFF; 
+  font-size: 20px;
+  height: auto;
+  width: 76%;
+  margin-bottom: 4%;
+  border-radius: 6px;
+  border: solid 3px #bbc0f4;
+  font-family: "Roboto Condensed", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 600px) {
+    margin-bottom: 5%;
+  }
+  @media (max-width: 425px) {
+    font-size: 18px;
+  }
+  @media (max-width: 360px) {
+    font-size: 14px;
+  }
+`;
+
+export const BoxSaibaMais = styled.div`
+  background-color: ${(props) => props.backgroundColor};
+  font-size: 20px;
+  height: auto;
+  width: 76%;
+  margin-bottom: 4%;
+  border-radius: 6px;
+  border: solid 3px #bbc0f4;
+  font-family: "Roboto Condensed", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 600px) {
+    margin-bottom: 5%;
+  }
+  @media (max-width: 425px) {
+    font-size: 18px;
+  }
+  @media (max-width: 360px) {
+    font-size: 14px;
+  }
+`;
+
+export const BoxAlterarImagem = styled.div`
+  background-color: #FFFFFF; 
+  font-size: 20px;
+  height: auto;
+  width: 76%;
+  margin-bottom: 4%;
+  border-radius: 6px;
+  border: solid 3px #bbc0f4;
+  font-family: "Roboto Condensed", sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 600px) {
+    margin-bottom: 5%;
+  }
+  @media (max-width: 425px) {
+    font-size: 18px;
+  }
+  @media (max-width: 360px) {
+    font-size: 14px;
+  }
+`;
+
 
 export const SubTitulo = styled.div`
   /* background-color: #CFD3F8; */
