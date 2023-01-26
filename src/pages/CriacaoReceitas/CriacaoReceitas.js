@@ -317,7 +317,7 @@ function CriacaoReceitas() {
 					</BotaoCancelar>
 					<BotaoEnviar>
 						{tipoAssinatura === 'sem' && preenchido === true ? (
-							<PDFDownloadLink document={<PdfTeste />} fileName={ "Receita" + tituloReceita }>
+							<PDFDownloadLink document={<PdfTeste />} fileName={ "Receita - " + tituloReceita }>
 								<Button height="47px"
 									width="142px"
 									backgroundColor={Cores.lilas[1]}
