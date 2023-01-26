@@ -1,316 +1,280 @@
-import React, { useState} from "react";
-import {Cores} from "../../variaveis";
+import React, { useState } from "react";
+import { Cores } from "../../variaveis";
 import { Modal, Spin } from "antd";
 import { sleep } from "../../utils/sleep";
 import { useHistory } from "react-router-dom";
-import {PlusSquareOutlined,EditOutlined,DeleteOutlined,LoadingOutlined,LeftCircleOutlined} from "@ant-design/icons";
-import {Container,
-        EdicaoContainer,
-        ContainerInterno,
-        ContainerDireita,
-        Titulo,
-        Descricao,
-        ContainerSugestao,
-        Divisoria,
-        Informacoes,
-        TituloInfo,
-        BotoesIndicacao,
-        DescricaoInformacoes,
-        SaidaMobile
-        } from "./Styles";
-import ModalAdicionarIndicacao  from "../../components/ModalAdicionarIndicacao";
+import {
+  PlusSquareOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  LoadingOutlined,
+  LeftCircleOutlined,
+} from "@ant-design/icons";
+import {
+  Container,
+  EdicaoContainer,
+  ContainerInterno,
+  ContainerDireita,
+  Titulo,
+  Descricao,
+  ContainerSugestao,
+  Divisoria,
+  Informacoes,
+  TituloInfo,
+  BotoesIndicacao,
+  DescricaoInformacoes,
+  SaidaMobile,
+  mobilePontoDeQuebra,
+} from "./Styles";
+import ModalAdicionarIndicacao from "../../components/ModalAdicionarIndicacao";
 import ModalExcluirIndicacao from "../../components/ModalExcluirIndicacao";
 import ModalAlterarIndicacao from "../../components/ModalAlterarIndicacao";
 import ModalIndicacao from "../../components/ModalIndicacao";
 import Button from "../../styles/Button";
 
-function EdicaoIndicacoesESugestoes (){
-    const [atualizando,setAtualizando] = useState();
-    const [dadosIndicacao,setDadosIndicacao] = useState({Titulo:"",Descricao:""});
-    const [modalAdicionarIndicacao, setModalAdicionarIndicacao] = useState(false);
-    const [modalExcluirIndicacao, setModalExcluirIndicacao] = useState(false);
-    const [modalAlterarIndicacao, setModalAlterarIndicacao] = useState(false);
-    const [modalIndicacao,setModalIndicacao] = useState(false);
-    const [botaoSelecionado,setBotaoSelecionado] = useState("");
-    const history = useHistory();
+const examesDisponiveis = [
+  "Eletroneuromiografia",
+  "Ressonância Magnética em Epilespsia",
+  "Punção Lombar",
+  "Fisioterapia CPAP",
+  "Fonoaudiologia - Apneia de Sono",
+  "Odontologia do Sono",
+  "Psicologia - TCC Insônia",
+  "Avaliação Neuropsicológica",
+];
 
-    const antIcon = (
-        <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
-      );
+function EdicaoIndicacoesESugestoes() {
+  const [exameSelecionado, setExameSelecionado] = useState("");
+  const [dadosIndicacao, setDadosIndicacao] = useState({});
+  const [carregando, setCarregando] = useState();
+  const [modalAdicionarIndicacao, setModalAdicionarIndicacao] = useState(false);
+  const [modalExcluirIndicacao, setModalExcluirIndicacao] = useState(false);
+  const [modalAlterarIndicacao, setModalAlterarIndicacao] = useState(false);
+  const [modalIndicacao, setModalIndicacao] = useState(false);
+  const history = useHistory();
 
-    async function alterarIndicacao(nomeIndicacao){
-        var largura = window.innerWidth;
-        if(largura < 600){
-            setDadosIndicacao({"Titulo": nomeIndicacao,
-                "Descricao":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras non velit sed dolor viverra cursus. Quisque bibendum est eu massa mollis, eu tincidunt nisi lacinia. Morbi ut augue pulvinar, rhoncus libero eget, hendrerit velit. Integer faucibus diam velit, id luctus leo ultrices ac. Mauris laoreet rhoncus pellentesque. Aliquam risus ex, fringilla dapibus mauris at, viverra volutpat mauris. Mauris mi ante, semper vitae bibendum at, dignissim ac augue. Etiam non magna enim. Cras eu posuere libero, ut lobortis nulla. Etiam eget eros erat. Mauris ullamcorper rutrum augue, eget venenatis diam semper eu. Praesent sodales, ipsum sed fermentum imperdiet, risus ipsum viverra."});
-            
-            abrirModalIndicacao();
-        }else{
-            if(botaoSelecionado !== ""){
-                document.getElementById(botaoSelecionado).style.boxShadow = "";
-            }
-            setBotaoSelecionado(nomeIndicacao);
-            document.getElementById(nomeIndicacao).style.boxShadow = `3px 3px 5px ${Cores.preto}`;
-            setAtualizando(true);
-            await sleep(1500);
-            setDadosIndicacao({"Titulo": nomeIndicacao,
-                "Descricao":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras non velit sed dolor viverra cursus. Quisque bibendum est eu massa mollis, eu tincidunt nisi lacinia. Morbi ut augue pulvinar, rhoncus libero eget, hendrerit velit. Integer faucibus diam velit, id luctus leo ultrices ac. Mauris laoreet rhoncus pellentesque. Aliquam risus ex, fringilla dapibus mauris at, viverra volutpat mauris. Mauris mi ante, semper vitae bibendum at, dignissim ac augue. Etiam non magna enim. Cras eu posuere libero, ut lobortis nulla. Etiam eget eros erat. Mauris ullamcorper rutrum augue, eget venenatis diam semper eu. Praesent sodales, ipsum sed fermentum imperdiet, risus ipsum viverra."});
-            
-            setAtualizando(false);  
-        }
-          
+  const antIcon = (
+    <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
+  );
+
+  async function alterarIndicacao(exame) {
+    const larguraJanela = window.innerWidth;
+    const mobilePontoDeQuebraNumero = +/\d+/.exec(mobilePontoDeQuebra);
+    if (larguraJanela <= mobilePontoDeQuebraNumero) {
+      abrirModalIndicacao();
+      setExameSelecionado("");
+    } else {
+      setExameSelecionado(exame);
     }
+    setCarregando(true);
+    await sleep(1500); // Simular requisição ao back
+    const dadosDoBackend = {
+      titulo: exame,
+      descricao:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras non velit sed dolor viverra cursus. Quisque bibendum est eu massa mollis, eu tincidunt nisi lacinia. Morbi ut augue pulvinar, rhoncus libero eget, hendrerit velit. Integer faucibus diam velit, id luctus leo ultrices ac. Mauris laoreet rhoncus pellentesque. Aliquam risus ex, fringilla dapibus mauris at, viverra volutpat mauris. Mauris mi ante, semper vitae bibendum at, dignissim ac augue. Etiam non magna enim. Cras eu posuere libero, ut lobortis nulla. Etiam eget eros erat. Mauris ullamcorper rutrum augue, eget venenatis diam semper eu. Praesent sodales, ipsum sed fermentum imperdiet, risus ipsum viverra.",
+    };
+    setDadosIndicacao(dadosDoBackend);
+    setCarregando(false);
+  }
 
-    async function abrirModalAdicionarIndicacao() {
-        setModalAdicionarIndicacao(true);
-    }
+  async function abrirModalAdicionarIndicacao() {
+    setModalAdicionarIndicacao(true);
+  }
 
-    async function abrirModalExcluirIndicacao() {
-        setModalExcluirIndicacao(true);
-    }
+  async function abrirModalExcluirIndicacao() {
+    setModalExcluirIndicacao(true);
+  }
 
-    async function abrirModalAlterarIndicacao() {
-        setModalAlterarIndicacao(true);
-    }
+  async function abrirModalAlterarIndicacao() {
+    setModalAlterarIndicacao(true);
+  }
 
-    async function abrirModalIndicacao(){
-        setModalIndicacao(true);
-    }
+  async function abrirModalIndicacao() {
+    setModalIndicacao(true);
+  }
 
-    async function fecharModalAdicionarIndicacao() {
-        setModalAdicionarIndicacao(false);
-    }
+  async function fecharModalAdicionarIndicacao() {
+    setModalAdicionarIndicacao(false);
+  }
 
-    async function fecharModalExcluirIndicacao() {
-        setModalExcluirIndicacao(false);
-    }
+  async function fecharModalExcluirIndicacao() {
+    setModalExcluirIndicacao(false);
+  }
 
-    async function fecharModalAlterarIndicacao() {
-        setModalAlterarIndicacao(false);
-    }
+  async function fecharModalAlterarIndicacao() {
+    setModalAlterarIndicacao(false);
+  }
 
-    async function fecharModalIndicacao(){
-        setModalIndicacao(false);
-    }
-    
-    return(
-        <Container>
-            <SaidaMobile onClick={() => {history.push('/web/home')}}><LeftCircleOutlined style={{fontSize:"30px",color:`${Cores.azul}`}}/></SaidaMobile>
-            
-            <EdicaoContainer>
-                <ContainerInterno>
-                    <div>
-                        <Titulo>Indicações e Sugestões<br/>Exames e profissionais</Titulo>
-                        <Descricao>São sugestões de profissionais de confiança para realização de exames ou tratamentos específicos, não oferecidos em meu consultório:</Descricao>
-                    </div>
-                    <ContainerSugestao>
-                        <Button
-                            fontSize="14px"
-                            width="100%"
-                            backgroundColor={Cores.cinza[7]}
-                            borderColor={Cores.azulEscuro}
-                            paddingTop="5px"
-                            paddingBottom="5px"
-                            onClick={()=>{alterarIndicacao("Eletroneuromiografia")}}
-                            id="Eletroneuromiografia"
-                            >
-                            Eletroneuromiografia
-                        </Button>
-                        <Button
-                            fontSize="14px"
-                            width="100%"
-                            backgroundColor={Cores.cinza[7]}
-                            borderColor={Cores.azulEscuro}
-                            paddingTop="5px"
-                            paddingBottom="5px"
-                            onClick={()=>{alterarIndicacao("Ressonância Magnética em Epilespsia")}}
-                            id="Ressonância Magnética em Epilespsia"
-                            >
-                            Ressonância Magnética em Epilespsia
-                        </Button>
-                        <Button
-                            fontSize="14px"
-                            width="100%"
-                            backgroundColor={Cores.cinza[7]}
-                            borderColor={Cores.azulEscuro}
-                            paddingTop="5px"
-                            paddingBottom="5px"
-                            onClick={()=>{alterarIndicacao("Punção Lombar")}}
-                            id="Punção Lombar"
-                            >
-                            Punção Lombar
-                        </Button>
-                        <Button
-                            fontSize="14px"
-                            width="100%"
-                            backgroundColor={Cores.cinza[7]}
-                            borderColor={Cores.azulEscuro}
-                            paddingTop="5px"
-                            paddingBottom="5px"
-                            onClick={()=>{alterarIndicacao("Fisioterapia CPAP")}}
-                            id="Fisioterapia CPAP"
-                            >
-                            Fisioterapia CPAP
-                        </Button>
-                        <Button
-                            fontSize="14px"
-                            width="100%"
-                            backgroundColor={Cores.cinza[7]}
-                            borderColor={Cores.azulEscuro}
-                            paddingTop="5px"
-                            paddingBottom="5px"
-                            onClick={()=>{alterarIndicacao("Fonoaudiologia - Apneia de Sono")}}
-                            id="Fonoaudiologia - Apneia de Sono"
-                            >
-                            Fonoaudiologia - Apneia de Sono
-                        </Button>
-                        <Button
-                            fontSize="14px"
-                            width="100%"
-                            backgroundColor={Cores.cinza[7]}
-                            borderColor={Cores.azulEscuro}
-                            paddingTop="5px"
-                            paddingBottom="5px"
-                            onClick={()=>{alterarIndicacao("Odontologia do Sono")}}
-                            id="Odontologia do Sono"
-                            >
-                            Odontologia do Sono
-                        </Button>
-                        <Button
-                            fontSize="14px"
-                            width="100%"
-                            backgroundColor={Cores.cinza[7]}
-                            borderColor={Cores.azulEscuro}
-                            paddingTop="5px"
-                            paddingBottom="5px"
-                            onClick={()=>{alterarIndicacao("Psicologia - TCC Insônia")}}
-                            id="Psicologia - TCC Insônia"
-                            >
-                            Psicologia - TCC Insônia
-                        </Button>
-                        <Button
-                            fontSize="14px"
-                            width="100%"
-                            backgroundColor={Cores.cinza[7]}
-                            borderColor={Cores.azulEscuro}
-                            paddingTop="5px"
-                            paddingBottom="5px"
-                            onClick={()=>{alterarIndicacao("Avaiação Neuropsicológica")}}
-                            id="Avaiação Neuropsicológica"
-                            >
-                            Avaiação Neuropsicológica
-                        </Button>
-                    </ContainerSugestao>
-                </ContainerInterno>
+  async function fecharModalIndicacao() {
+    setModalIndicacao(false);
+  }
 
-                <Divisoria/>
+  return (
+    <Container>
+      <SaidaMobile
+        onClick={() => {
+          history.push("/web/home");
+        }}
+      >
+        <LeftCircleOutlined
+          style={{ fontSize: "30px", color: `${Cores.azul}` }}
+        />
+      </SaidaMobile>
 
-                <ContainerDireita>
-                    <Informacoes>
-                    {atualizando ? (<Spin style={{display: "flex", alignSelf: "center", justifySelf: "center"}} indicator={antIcon}/>
-                    ):(
-                        <>
-                        <TituloInfo>{dadosIndicacao.Titulo}</TituloInfo>
-                        <DescricaoInformacoes type="" disabled >{dadosIndicacao.Descricao}</DescricaoInformacoes>
-                        </>
-                    )}
-                        
-                    </Informacoes>
-                    <BotoesIndicacao>
-                        <Button
-                        gap="5px"
-                        backgroundColor={Cores.azul}
-                        fontSize="1.7em"
-                        width="100%"
-                        borderColor={Cores.azulEscuro}
-                        color={Cores.branco}
-                        height="100%"
-                        onClick={()=>abrirModalAdicionarIndicacao()}
-                        >
-                        Adicionar Indicação <PlusSquareOutlined/>
-                        </Button>
-                        <Button
-                        gap="5px"
-                        backgroundColor={Cores.azul}
-                        fontSize="1.7em"
-                        width="100%"
-                        borderColor={Cores.azulEscuro}
-                        color={Cores.branco}
-                        height="100%"
-                        onClick={()=>abrirModalAlterarIndicacao()}
-                        >
-                        Alterar Indicação <EditOutlined/>
-                        </Button>
-                        <Button
-                        gap="5px"
-                        backgroundColor={Cores.azul}
-                        fontSize="1.7em"
-                        width="100%"
-                        borderColor={Cores.azulEscuro}
-                        color={Cores.branco}
-                        height="100%"
-                        onClick={()=>abrirModalExcluirIndicacao()}
-                        >
-                        Excluir Indicação <DeleteOutlined/>
-                        </Button>
-                    </BotoesIndicacao>
-                </ContainerDireita>
-            </EdicaoContainer>
+      <EdicaoContainer>
+        <ContainerInterno>
+          <div>
+            <Titulo>
+              Indicações e Sugestões
+              <br />
+              Exames e profissionais
+            </Titulo>
+            <Descricao>
+              São sugestões de profissionais de confiança para realização de
+              exames ou tratamentos específicos, não oferecidos em meu
+              consultório:
+            </Descricao>
+          </div>
+          <ContainerSugestao>
+            {examesDisponiveis.map((exame) => (
+              <Button
+                key={exame}
+                fontSize="14px"
+                width="100%"
+                backgroundColor={Cores.cinza[7]}
+                borderColor={Cores.azulEscuro}
+                paddingTop="5px"
+                paddingBottom="5px"
+                boxShadow={
+                  exame === exameSelecionado
+                    ? `3px 3px 5px ${Cores.preto}`
+                    : "none"
+                }
+                onClick={() => alterarIndicacao(exame)}
+              >
+                {exame}
+              </Button>
+            ))}
+          </ContainerSugestao>
+        </ContainerInterno>
 
-            
-            <Modal
-            visible={modalAdicionarIndicacao}
-            onCancel={() => fecharModalAdicionarIndicacao()}
-            footer={null}
-            width={"50%"}
-            centered={true}
+        <Divisoria />
+
+        <ContainerDireita>
+          <Informacoes>
+            {carregando ? (
+              <Spin
+                style={{
+                  display: "flex",
+                  alignSelf: "center",
+                  justifySelf: "center",
+                }}
+                indicator={antIcon}
+              />
+            ) : (
+              <>
+                <TituloInfo>{dadosIndicacao.titulo}</TituloInfo>
+                <DescricaoInformacoes>
+                  {dadosIndicacao.descricao}
+                </DescricaoInformacoes>
+              </>
+            )}
+          </Informacoes>
+          <BotoesIndicacao>
+            <Button
+              gap="5px"
+              backgroundColor={Cores.azul}
+              fontSize="1.7em"
+              fontSizeMedia1080="18px"
+              width="100%"
+              borderColor={Cores.azulEscuro}
+              color={Cores.branco}
+              height="100%"
+              onClick={abrirModalAdicionarIndicacao}
             >
-                <ModalAdicionarIndicacao
-                fechandoModal={()=> fecharModalAdicionarIndicacao() }
-                />
-            </Modal> 
-
-            <Modal
-            visible={modalExcluirIndicacao}
-            onCancel={() => fecharModalExcluirIndicacao()}
-            footer={null}
-            width={"50%"}
-            centered={true}
+              Adicionar Indicação <PlusSquareOutlined />
+            </Button>
+            <Button
+              gap="5px"
+              backgroundColor={Cores.azul}
+              fontSize="1.7em"
+              fontSizeMedia1080="18px"
+              width="100%"
+              borderColor={Cores.azulEscuro}
+              color={Cores.branco}
+              height="100%"
+              onClick={abrirModalAlterarIndicacao}
             >
-                <ModalExcluirIndicacao
-                fechandoModal={()=> fecharModalExcluirIndicacao() }
-                />
-            </Modal> 
-
-            <Modal
-            visible={modalAlterarIndicacao}
-            onCancel={() => fecharModalAlterarIndicacao()}
-            footer={null}
-            width={"50%"}
-            centered={true}
+              Alterar Indicação <EditOutlined />
+            </Button>
+            <Button
+              gap="5px"
+              backgroundColor={Cores.azul}
+              fontSize="1.7em"
+              fontSizeMedia1080="18px"
+              width="100%"
+              borderColor={Cores.azulEscuro}
+              color={Cores.branco}
+              height="100%"
+              onClick={abrirModalExcluirIndicacao}
             >
-                <ModalAlterarIndicacao
-                fechandoModal={()=> fecharModalAlterarIndicacao() }
-                />
-            </Modal>
+              Excluir Indicação <DeleteOutlined />
+            </Button>
+          </BotoesIndicacao>
+        </ContainerDireita>
+      </EdicaoContainer>
 
-            <Modal
-            visible={modalIndicacao}
-            onCancel={() => fecharModalIndicacao()}
-            footer={null}
-            width={"100%"}
-            centered={true}
-            >
-                <ModalIndicacao
-                indicacao={{Titulo:dadosIndicacao.Titulo,Descricao:dadosIndicacao.Descricao}}
-                fechandoModal={()=> fecharModalIndicacao() }
-                />
-            </Modal>
+      <Modal
+        visible={modalAdicionarIndicacao}
+        onCancel={fecharModalAdicionarIndicacao}
+        footer={null}
+        width={"50%"}
+        centered={true}
+        destroyOnClose
+      >
+        <ModalAdicionarIndicacao
+          fechandoModal={fecharModalAdicionarIndicacao}
+        />
+      </Modal>
 
-            
-        </Container>
+      <Modal
+        visible={modalExcluirIndicacao}
+        onCancel={fecharModalExcluirIndicacao}
+        footer={null}
+        width={"50%"}
+        centered={true}
+        destroyOnClose
+      >
+        <ModalExcluirIndicacao fechandoModal={fecharModalExcluirIndicacao} />
+      </Modal>
 
-        )
+      <Modal
+        visible={modalAlterarIndicacao}
+        onCancel={fecharModalAlterarIndicacao}
+        footer={null}
+        width={"50%"}
+        centered={true}
+        destroyOnClose
+      >
+        <ModalAlterarIndicacao fechandoModal={fecharModalAlterarIndicacao} />
+      </Modal>
+
+      <Modal
+        visible={modalIndicacao}
+        onCancel={fecharModalIndicacao}
+        footer={null}
+        width={"100%"}
+        centered={true}
+        destroyOnClose
+      >
+        <ModalIndicacao
+          dadosIndicacao={dadosIndicacao}
+          carregando={carregando}
+          fechandoModal={fecharModalIndicacao}
+        />
+      </Modal>
+    </Container>
+  );
 }
 
 export default EdicaoIndicacoesESugestoes;
