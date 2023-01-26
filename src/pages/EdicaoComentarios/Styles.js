@@ -16,7 +16,7 @@ export const BoxComentario = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 50%;
   padding: 2%;
   border-color: black;
   border-width: 2px;
@@ -65,9 +65,9 @@ export const MetadeComentario = styled.div`
 export const MetadeBotoes = styled.div`
   display: flex;
   width: 100%;
-  height: 100%;
+  height: auto;
   padding: 2%;
-  background-color: yellow;
+
   vertical-align: middle;
   margin-left: 50px;
 `;
@@ -90,6 +90,14 @@ export const TituloComentariosDepoimentos = styled.div`
   padding: 2%;
   width: 100%;
   height: 10%;
+`;
+
+export const ContainerTodosComentarios = styled.div`
+  width: 100%;
+  height: 50%;
+  max-height: 512px;
+  overflow: auto;
+  background-color: white;
 `;
 
 export const TodosComentarios = styled.div`
@@ -121,7 +129,7 @@ export const ContainerBotoes = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 100%;
+  height: 50%;
   background-color: white;
   padding: 20%;
 `;

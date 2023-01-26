@@ -13,7 +13,8 @@ import {
   BotaoExcluir,
   TituloComentariosDepoimentos,
   TodosComentarios,
-  Comentario
+  Comentario,
+  ContainerTodosComentarios
 } from './Styles';
 
 import { Modal } from 'antd';
@@ -115,11 +116,13 @@ function EdicaoComentarios() {
             <MetadeComentario>
               <ContainerComentario>
                 <TituloComentariosDepoimentos>Comentários e Depoimentos:</TituloComentariosDepoimentos>
-                <TodosComentarios>
-                  {comentario.map((value) => (
-                    <Comentario>"{value.comentario}"</Comentario>
-                  ))}
-                </TodosComentarios>
+                <ContainerTodosComentarios>
+                  <TodosComentarios>
+                    {comentario.map((value) => (
+                      <Comentario>"{value.comentario}"</Comentario>
+                    ))}
+                  </TodosComentarios>
+                </ContainerTodosComentarios>
               </ContainerComentario>
             </MetadeComentario>
 
