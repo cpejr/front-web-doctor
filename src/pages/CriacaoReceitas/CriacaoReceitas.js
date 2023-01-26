@@ -89,7 +89,6 @@ function CriacaoReceitas() {
 		if (name === "descricao") {
 			setDescricaoReceita(value);
 		}
-
 	}
 
 	async function armazenaInformacoesUsuario(id) {
@@ -125,9 +124,11 @@ function CriacaoReceitas() {
 	useEffect(() => {
 		if (tituloReceita !== "" && tipoAssinatura !== "" && descricaoReceita !== "" && NomePaciente !== "") {
 			setPreenchido(true);
+		} else {
+			setPreenchido(false);
 		}
 
-	}, [tituloReceita, descricaoReceita, tipoAssinatura, NomePaciente]);
+	}, [tituloReceita, descricaoReceita, tipoAssinatura, NomePaciente, preenchido]);
 
 
 	function cancelarCriacaoReceita() {
@@ -155,6 +156,7 @@ function CriacaoReceitas() {
 		const id = estado.id_usuario;
 
 		if (tipoAssinatura === 'sem') {
+			setCarregandoCriacao(false);
 			return;
 		}
 
