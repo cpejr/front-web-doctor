@@ -5,6 +5,8 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { ContainerModalCodigo, Titulo } from "./Styles";
 import Button from "../../styles/Button";
 import Select from "../../styles/Select";
+import _ from "lodash";
+import { toast } from "react-toastify";
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from "../../variaveis";
 
@@ -21,6 +23,7 @@ function ModalExcluirComentario(props) {
     const [id, setId] = useState();
     const [carregando, setCarregando] = useState(false);
     const [camposVazios, setCamposVazios] = useState({});
+    const [estado, setEstado] = useState(estadoInicial);
     const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
     const history = useHistory();
@@ -31,6 +34,8 @@ function ModalExcluirComentario(props) {
 
         if (camposVazios[value])
             setCamposVazios((valorAnterior) => ({ ...valorAnterior, [value]: false }));
+
+        setEstado({ ...estado, [value]: value });
 
         setId(value);
 
@@ -51,6 +56,19 @@ function ModalExcluirComentario(props) {
 
 
     async function deletandoComentario(id) {
+
+        const camposVaziosAtual = {
+			id_usuario: !estado.id_usuario,
+			titulo: !estado.titulo,
+			descricao: !estado.descricao,
+		};
+
+		setCamposVazios(camposVaziosAtual);
+
+		if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
+			toast.warn("Preencha todos os campos");
+			return;
+		}
 
         setCarregando(true);
 
