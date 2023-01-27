@@ -16,7 +16,8 @@ import {
   SubtituloCentral,
   TituloEsquerda,
   Conteudo,
-  TextoSaibaMais
+  TextoSaibaMais,
+  ScrollSobreMim
 } from "./Styles";
 import { useHistory } from "react-router-dom";
 import { Cores } from "../../variaveis";
@@ -131,29 +132,40 @@ function EdicaoHome() {
               textAlign="left"
               overflow="auto"
             />
-            <Conteudo>
-              {sobreEle.map((value) => (
-                <div>"{value.titulo_um}"</div>
-              ))}
-            </Conteudo>
+            <ScrollSobreMim>
 
-            <Conteudo>
-              {sobreEle.map((value) => (
-                <div>"{value.texto_um}"</div>
-              ))}
-            </Conteudo>
+              <Conteudo
+                color={Cores.branco}
+              >
+                {sobreEle.map((value) => (
+                  <div>"{value.titulo_um}"</div>
+                ))}
+              </Conteudo>
 
-            <Conteudo>
-              {sobreEle.map((value) => (
-                <div>"{value.titulo_dois}"</div>
-              ))}
-            </Conteudo>
+              <Conteudo
+                color={Cores.branco}
+              >
+                {sobreEle.map((value) => (
+                  <div>"{value.texto_um}"</div>
+                ))}
+              </Conteudo>
 
-            <Conteudo>
-              {sobreEle.map((value) => (
-                <div>"{value.texto_dois}"</div>
-              ))}
-            </Conteudo>
+              <Conteudo
+                color={Cores.branco}
+              >
+                {sobreEle.map((value) => (
+                  <div>"{value.titulo_dois}"</div>
+                ))}
+              </Conteudo>
+
+              <Conteudo
+                color={Cores.branco}
+              >
+                {sobreEle.map((value) => (
+                  <div>"{value.texto_dois}"</div>
+                ))}
+              </Conteudo>
+            </ScrollSobreMim>
 
             <TextoSaibaMais color={Cores.branco}>
               Saiba Mais
