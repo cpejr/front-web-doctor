@@ -47,6 +47,7 @@ export const MetadeEsquerda = styled.div`
   @media (max-width: 900px) {
     margin-top: 10%;
     margin-bottom: 10%;
+    border-right: 0px;
   }
   @media (max-width: 780px) {
     width: 85%;
