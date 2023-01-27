@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Corpo, Container, TituloPaginaEdicao, BoxGenerico, MetadeEsquerda, MetadeDireita, BotaoGenerico, ContainerBotoes, BoxBemVindo, BoxTime, BoxSaibaMais, BoxAlterarImagem, BoxVideo, TituloCentral, SubtituloCentral, TituloEsquerda, Conteudo, TextoSaibaMais } from "./Styles";
 import { useHistory } from "react-router-dom";
 import { Cores } from "../../variaveis";
+import * as managerService from "../../services/ManagerService/managerService";
+import Input from "../../styles/Input";
 
+
+/*const [tituloUm, setTituloUm] = useState([]);
+
+async function GetTituloUm() {
+ await managerService.GetInputsHome().then((res) => {
+    setTiluloUm(res.dadosTituloUm);
+  });
+}
+
+useEffect(() => {
+  GetTituloUm();
+}, []);
+*/
 function EdicaoHome() {
   //const history = useHistory();
 
@@ -39,7 +54,19 @@ function EdicaoHome() {
 
           <BoxSaibaMais backgroundColor="#7757A0"
           >
-            <TituloEsquerda color= {Cores.branco}>Sobre Mim</TituloEsquerda>
+            <TituloEsquerda>
+            <Input
+						/*placeholder= {tituloUm}
+						backgroundColor={Cores.cinza[7]}
+						color={Cores.preto}
+						fontSize="1em"
+						width="100%"
+						marginTop="2%"
+						boxShadow="0px 4px 4px 0px #00000040"
+						name="titulo"
+            */
+					/>
+            </TituloEsquerda>
             <Conteudo color= {Cores.branco}>Lorem Ipsum is simply dummy text of
               the printing and typesetting industry.
               Lorem Ipsum has been the industry's
@@ -48,7 +75,7 @@ function EdicaoHome() {
               of type and scrambled it to make a type
               specimen book.</Conteudo>
               <TextoSaibaMais color={Cores.branco}>
-              SAIBA MAIS
+              Saiba Mais
             </TextoSaibaMais>
           </BoxSaibaMais>
 
@@ -75,7 +102,7 @@ function EdicaoHome() {
               of type and scrambled it to make a type
               specimen book.</Conteudo>
               <TextoSaibaMais color={Cores.preto}>
-              SAIBA MAIS
+              Saiba Mais
             </TextoSaibaMais>
           </BoxSaibaMais>
 
@@ -90,7 +117,7 @@ function EdicaoHome() {
               of type and scrambled it to make a type
               specimen book.</Conteudo>
               <TextoSaibaMais color={Cores.branco}>
-              SAIBA MAIS
+              Saiba Mais
             </TextoSaibaMais>
           </BoxSaibaMais>
           <BoxSaibaMais>
@@ -103,13 +130,13 @@ function EdicaoHome() {
               of type and scrambled it to make a type
               specimen book.</Conteudo>
             <TextoSaibaMais color={Cores.preto}>
-              SAIBA MAIS
+              Saiba Mais
             </TextoSaibaMais>
           </BoxSaibaMais>
-          <ContainerBotoes>
-            <BotaoGenerico>Salvar Alterações</BotaoGenerico>
-            <BotaoGenerico>Cancelar Alterações</BotaoGenerico>
-          </ContainerBotoes>
+          
+            <BotaoGenerico color={Cores.verde}>Salvar Alterações</BotaoGenerico>
+            <BotaoGenerico color={Cores.verde}>Cancelar Alterações</BotaoGenerico>
+          
         </MetadeDireita>
       </Container>
     </Corpo>

@@ -178,3 +178,15 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   api.put(`/mensagems/${id_conversa}/visualizadas/${id_usuario}`);
 
 export const dispostivoById = (id) => api.get(`/dispositivos/${id}`);
+
+export const requisicaoTituloUmHome = () => api.get(`/homes/titulo_um`);
+export const requisicaoTextoUmHome = () => api.get(`/homes/texto_um`);
+
+export const requisicaoTituloDoisHome = () => api.get(`/homes/titulo_dois`);
+export const requisicaoTextoDoisHome = () => api.get(`/homes/texto_dois`);
+
+export const requisicaoTituloTresHome = () => api.get(`/homes/titulo_tres`);
+export const requisicaoTextoTresHome = () => api.get(`/homes/texto_tres`);
+
+export const requisicaoTituloQuatroHome = () => api.get(`/homes/titulo_quatro`);
+export const requisicaoTextoQuatroHome = () => api.get(`/homes/texto_quatro`);
