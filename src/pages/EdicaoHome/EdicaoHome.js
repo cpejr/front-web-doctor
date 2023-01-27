@@ -24,21 +24,44 @@ import * as managerService from "../../services/ManagerService/managerService";
 
 import Input from "../../styles/Input";
 
-
-/*const [tituloUm, setTituloUm] = useState([]);
-
-async function GetTituloUm() {
- await managerService.GetInputsHome().then((res) => {
-    setTiluloUm(res.dadosTituloUm);
-  });
-}
-
-useEffect(() => {
-  GetTituloUm();
-}, []);
-*/
 function EdicaoHome() {
   //const history = useHistory();
+  const [indicacoes, setIndicacoes] = useState([]);
+  const [comentarios, setComentarios] = useState([]);
+  const [amie, setAmie] = useState([]);
+  const [sobreEle, setSobreEle] = useState([]);
+
+
+  async function pegandoDados() {
+    const dadosIndicacoes = await managerService.GetIndicacoes();
+    setIndicacoes(dadosIndicacoes);
+
+    const dadosComentarios = await managerService.GetComentarios();
+    setComentarios(dadosComentarios);
+
+    const dadosAmie = await managerService.GetAmie();
+    setAmie(dadosAmie);
+
+    const dadosSobreEle = await managerService.GetSobreMim();
+    setSobreEle(dadosSobreEle);
+  }
+
+  useEffect(() => {
+    pegandoDados();
+  }, []);
+
+  /*const [tituloUm, setTituloUm] = useState([]);
+  
+  async function GetTituloUm() {
+   await managerService.GetInputsHome().then((res) => {
+      setTiluloUm(res.dadosTituloUm);
+    });
+  }
+  
+  useEffect(() => {
+    GetTituloUm();
+  }, []);
+  */
 
   return (
     <Corpo>
@@ -73,19 +96,19 @@ function EdicaoHome() {
 
           <BoxSaibaMais backgroundColor="#7757A0"
           >
-              <Input
-                //placeholder= {tituloUm}
-                value="Sobre mim"
-                textAlign="center"
-                backgroundColor="#7757A0"
-                color={Cores.branco}
-                fontSize="120%"
-                width="100%"
-                marginTop="2%"
-                name="titulo"
-                borderWidth='0px'
-                marginLeft="10px"
-              />
+            <Input
+              //placeholder= {tituloUm}
+              value="Sobre mim"
+              textAlign="center"
+              backgroundColor="#7757A0"
+              color={Cores.branco}
+              fontSize="120%"
+              width="100%"
+              marginTop="2%"
+              name="titulo"
+              borderWidth='0px'
+              marginLeft="10px"
+            />
             <Input
               //placeholder= {tituloUm}
               value="Lorem Ipsum is simply dummy text of
@@ -108,6 +131,30 @@ function EdicaoHome() {
               textAlign="left"
               overflow="auto"
             />
+            <Conteudo>
+              {sobreEle.map((value) => (
+                <div>"{value.titulo_um}"</div>
+              ))}
+            </Conteudo>
+
+            <Conteudo>
+              {sobreEle.map((value) => (
+                <div>"{value.texto_um}"</div>
+              ))}
+            </Conteudo>
+
+            <Conteudo>
+              {sobreEle.map((value) => (
+                <div>"{value.titulo_dois}"</div>
+              ))}
+            </Conteudo>
+
+            <Conteudo>
+              {sobreEle.map((value) => (
+                <div>"{value.texto_dois}"</div>
+              ))}
+            </Conteudo>
+
             <TextoSaibaMais color={Cores.branco}>
               Saiba Mais
             </TextoSaibaMais>
@@ -161,6 +208,11 @@ function EdicaoHome() {
               textAlign="left"
               lineBreak="auto"
             />
+            <Conteudo>
+              {indicacoes.map((value) => (
+                <div>"{value.texto}"</div>
+              ))}
+            </Conteudo>
             <TextoSaibaMais color={Cores.preto}>
               Saiba Mais
             </TextoSaibaMais>
@@ -202,6 +254,11 @@ function EdicaoHome() {
               textAlign="left"
               lineBreak="auto"
             />
+            <Conteudo>
+              {comentarios.map((value) => (
+                <div>"{value.comentario}"</div>
+              ))}
+            </Conteudo>
             <TextoSaibaMais color={Cores.branco}>
               Saiba Mais
             </TextoSaibaMais>
@@ -241,6 +298,11 @@ function EdicaoHome() {
               textAlign="left"
               lineBreak="auto"
             />
+            <Conteudo>
+              {amie.map((value) => (
+                <div>"{value.texto}"</div>
+              ))}
+            </Conteudo>
             <TextoSaibaMais color={Cores.preto}>
               Saiba Mais
             </TextoSaibaMais>

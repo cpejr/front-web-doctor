@@ -998,3 +998,63 @@ export const GetTextoQuatroHome = async () => {
     });
   return dadosTextoQuatro;
 };
+
+export const GetIndicacoes = async () => {
+  let dadosIndicacoes = {};
+
+  await requesterService
+    .requisicaoIndicacoes()
+
+    .then((res) => {
+      dadosIndicacoes = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosIndicacoes;
+};
+
+export const GetComentarios = async () => {
+  let dadosComentario = {};
+
+  await requesterService
+    .requisicaoComentario()
+
+    .then((res) => {
+      dadosComentario = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosComentario;
+};
+
+export const GetAmie = async () => {
+  let dadosAmie = {};
+
+  await requesterService
+    .requisicaoAmie()
+
+    .then((res) => {
+      dadosAmie = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosAmie;
+};
+
+export const GetSobreMim = async () => {
+  let dadosSobre = {};
+
+  await requesterService
+    .requisicaoSobreMim()
+
+    .then((res) => {
+      dadosSobre = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosSobre;
+};
