@@ -350,9 +350,9 @@ export const UpdateCodigo = async (id_usuario, codigo) => {
   return false;
 };
 
-export const DeleteComentario = async (id, comentario) => {
+export const DeleteComentario = async (id) => {
   await requesterService
-    .DeleteComentario(id, comentario)
+    .DeleteComentario(id)
     .then(() => {
       toast.success('Comentário deletado com sucesso.');
     })

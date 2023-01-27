@@ -3,40 +3,58 @@ import { useHistory } from "react-router-dom";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { ContainerModalCodigo, Titulo } from "./Styles";
-import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import Select from "../../styles/Select";
-import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
+import { Cores } from "../../variaveis";
+
+const camposVaziosReferencia = {
+    id: false,
+};
+
+const estadoInicial = {
+    id: "",
+};
 
 function ModalExcluirComentario(props) {
     const [comentarios, setComentarios] = useState([]);
-    const [comentarioEscolhido, setComentarioEscolhido] = useState();
+    const [id, setId] = useState();
     const [carregando, setCarregando] = useState(false);
+    const [camposVazios, setCamposVazios] = useState({});
     const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
     const history = useHistory();
 
+    function escolhendoComentario(e) {
+        e.preventDefault();
+        const { value } = e.target;
+
+        if (camposVazios[value])
+            setCamposVazios((valorAnterior) => ({ ...valorAnterior, [value]: false }));
+
+        setId(value);
+
+        console.log(id);
+    }
+
+    async function pegandoComentarios() {
+        setCarregando(true);
+        const resposta = await managerService.GetComentario();
+
+        setComentarios(resposta);
+        setCarregando(false);
+    }
+
     useEffect(() => {
-        async function pegandoComentarios() {
-            setCarregando(true);
-            const resposta = await managerService.GetComentario();
-
-            setComentarios(resposta);
-            setCarregando(false);
-        }
-
         pegandoComentarios();
     }, []);
 
-    function escolhendoComentario(value) {
-        setComentarioEscolhido(value);
-    }
 
-    async function deletandoComentario() {
+    async function deletandoComentario(id) {
+
         setCarregando(true);
 
-        await managerService.DeleteComentario(comentarioEscolhido, {
+        await managerService.DeleteComentario(id, {
             mensagemSucesso: "Receita deletada com sucesso",
             tempo: 1500,
             onClose: () => {
@@ -53,26 +71,27 @@ function ModalExcluirComentario(props) {
                 <Titulo>Excluir Comentário:</Titulo>
 
                 <Select
-                    value=""
-                    placeholder="Escolher Comentário para deletar"
+                    color={Cores.preto}
                     backgroundColor="#E4E6F4"
                     borderColor="#151B57"
-                    color="black"
                     fontSize="1em"
-                    width="70%"
-                    marginTop="2%"
-                    marginBottom="2%"
-                    paddingRight="2%"
-                    name="codigo"
-                    //onKeyPress={verificandoEnter}
+                    width="97%"
+                    marginTop="5%"
+                    marginBottom="5%"
+                    size="large"
+                    name="id"
+                    placeholder="Escolher Comentário para deletar"
+                    height="45px"
+                    borderWidth820="97%"
+                    nome="id"
                     onChange={escolhendoComentario}
                 >
                     <option value="" disabled selected>
                         Escolher Comentário para deletar
                     </option>
                     {comentarios.map((value) => (
-                        <option key={value.comentarios} value={value.comentarios} color="red">
-                            {value.comentarios}
+                        <option key={value.id} value={value.id} color="red">
+                            {value.comentario}
                         </option>
                     ))}
                 </Select>
@@ -86,7 +105,7 @@ function ModalExcluirComentario(props) {
                     fontSize="1.5em"
                     fontWeight="bold"
                     fontSizeMedia="1.2em"
-                    onClick={() => deletandoComentario()}
+                    onClick={() => deletandoComentario(id)}
                 >
                     {carregando ? <Spin indicator={antIcon} /> : "Excluir Comentário"}
                 </Button>
