@@ -73,27 +73,41 @@ function EdicaoHome() {
 
           <BoxSaibaMais backgroundColor="#7757A0"
           >
-            <TituloEsquerda>
+              <Input
+                //placeholder= {tituloUm}
+                value="Sobre mim"
+                textAlign="center"
+                backgroundColor="#7757A0"
+                color={Cores.branco}
+                fontSize="120%"
+                width="100%"
+                marginTop="2%"
+                name="titulo"
+                borderWidth='0px'
+                marginLeft="10px"
+              />
             <Input
               //placeholder= {tituloUm}
-              value="Sobre mim"
-              textAlign="center"
-              backgroundColor="#7757A0"
-              color={Cores.branco}
-              fontSize="1em"
-              width="100%"
-              marginTop="2%"
-              name="titulo"
-              borderWidth='0px'
-              />
-            </TituloEsquerda>
-            <Conteudo color={Cores.branco}>Lorem Ipsum is simply dummy text of
+              value="Lorem Ipsum is simply dummy text of
               the printing and typesetting industry.
               Lorem Ipsum has been the industry's
               standard dummy text ever since the 1500s,
               when an unknown printer took a galley
               of type and scrambled it to make a type
-              specimen book.</Conteudo>
+              specimen book."
+              backgroundColor="#7757A0"
+              color={Cores.branco}
+              width="100%"
+              height="auto"
+              marginTop="2%"
+              name="titulo"
+              borderWidth='0px'
+              paddingLeft="10%"
+              paddingRight="10%"
+              fontSize="120%"
+              textAlign="left"
+              overflow="auto"
+            />
             <TextoSaibaMais color={Cores.branco}>
               Saiba Mais
             </TextoSaibaMais>
@@ -119,19 +133,34 @@ function EdicaoHome() {
               textAlign="center"
               backgroundColor="#FBCB4C"
               color={Cores.preto}
-              fontSize="1em"
+              fontSize="120%"
               width="100%"
               marginTop="2%"
               name="titulo"
               borderWidth='0px'
-              />
-            <Conteudo color={Cores.preto}>Lorem Ipsum is simply dummy text of
+            />
+            <Input
+              //placeholder= {tituloUm}
+              value="Lorem Ipsum is simply dummy text of
               the printing and typesetting industry.
               Lorem Ipsum has been the industry's
               standard dummy text ever since the 1500s,
               when an unknown printer took a galley
               of type and scrambled it to make a type
-              specimen book.</Conteudo>
+              specimen book."
+              backgroundColor="#FBCB4C"
+              color={Cores.preto}
+              width="100%"
+              height="auto"
+              marginTop="2%"
+              name="titulo"
+              borderWidth='0px'
+              paddingLeft="10%"
+              paddingRight="10%"
+              fontSize="120%"
+              textAlign="left"
+              lineBreak="auto"
+            />
             <TextoSaibaMais color={Cores.preto}>
               Saiba Mais
             </TextoSaibaMais>
@@ -145,43 +174,73 @@ function EdicaoHome() {
               textAlign="center"
               backgroundColor={Cores.lilas[1]}
               color={Cores.branco}
-              fontSize="1em"
+              fontSize="120%"
               width="100%"
               marginTop="2%"
               name="titulo"
               borderWidth='0px'
-              />
-            <Conteudo color={Cores.branco}>Lorem Ipsum is simply dummy text of
+            />
+            <Input
+              //placeholder= {tituloUm}
+              value="Lorem Ipsum is simply dummy text of
               the printing and typesetting industry.
               Lorem Ipsum has been the industry's
               standard dummy text ever since the 1500s,
               when an unknown printer took a galley
               of type and scrambled it to make a type
-              specimen book.</Conteudo>
+              specimen book."
+              backgroundColor={Cores.lilas[1]}
+              color={Cores.branco}
+              width="100%"
+              height="auto"
+              marginTop="2%"
+              name="titulo"
+              borderWidth='0px'
+              paddingLeft="10%"
+              paddingRight="10%"
+              fontSize="120%"
+              textAlign="left"
+              lineBreak="auto"
+            />
             <TextoSaibaMais color={Cores.branco}>
               Saiba Mais
             </TextoSaibaMais>
           </BoxSaibaMais>
           <BoxSaibaMais>
-          <Input
+            <Input
               //placeholder= {tituloUm}
               value="Grupo AMIE (Epilepsia)"
               textAlign="center"
               backgroundColor={Cores.branco}
               color={Cores.preto}
-              fontSize="1em"
+              fontSize="120%"
               width="100%"
               marginTop="2%"
               name="titulo"
               borderWidth='0px'
-              />
-            <Conteudo color={Cores.preto}>Lorem Ipsum is simply dummy text of
+            />
+            <Input
+              //placeholder= {tituloUm}
+              value="Lorem Ipsum is simply dummy text of
               the printing and typesetting industry.
               Lorem Ipsum has been the industry's
               standard dummy text ever since the 1500s,
               when an unknown printer took a galley
               of type and scrambled it to make a type
-              specimen book.</Conteudo>
+              specimen book."
+              backgroundColor={Cores.branco}
+              color={Cores.preto}
+              width="100%"
+              height="auto"
+              marginTop="2%"
+              name="titulo"
+              borderWidth='0px'
+              paddingLeft="10%"
+              paddingRight="10%"
+              fontSize="120%"
+              textAlign="left"
+              lineBreak="auto"
+            />
             <TextoSaibaMais color={Cores.preto}>
               Saiba Mais
             </TextoSaibaMais>

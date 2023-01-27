@@ -118,8 +118,9 @@ export const Conteudo = styled.p`
 
 export const TextoSaibaMais = styled.p`
 padding-left: 10%;
+padding-top: 5%;
 width: 100%;
-font-size: 30px;
+font-size: 130%;
 font-family: "Roboto Condensed", sans-serif;
 color: ${(props) => props.color};
 text-align: left;
