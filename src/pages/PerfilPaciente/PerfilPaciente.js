@@ -81,7 +81,9 @@ function PerfilPaciente(props) {
   const [tipoAgendamento, setTipoAgendamento] = useState("");
   const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState("");
   const emailUsuarioLogado = sessionStorage.getItem("@doctorapp-Email");
-
+  const [formularioEspecifico, setFormularioEspecifico] = useState({}); 
+  const [formularios, setFormularios] = useState();
+  const [booleanoFormulario, setbooleanFormulario] = useState();
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
   );
@@ -128,7 +130,6 @@ function PerfilPaciente(props) {
       setTipoUsuario(true);
     }
   }
-
   useEffect(() => {
     pegandoDados();
     pegandoTipoUsuarioLogado();
@@ -236,7 +237,56 @@ function PerfilPaciente(props) {
 
     return statusForm === FORMULARIO_RESPONDIDO;
   }
+  
+   async function pegandoDadosFormularioEspecifico(id) {
+    const formularioEscolhido =  await managerService.GetFormularioEspecifico(
+      id
+    );
+    setFormularioEspecifico(formularioEscolhido);
+    await sleep(3000);
+    if(formularioEscolhido.visualizacao_secretaria === true)
+     setbooleanFormulario(true);
+     else
+     setbooleanFormulario(false);
 
+    await sleep(3000);
+    return booleanoFormulario;
+   
+  }
+
+  /* function filtravisualizacaosecretaria(id, titulo) {
+  pegandoDadosFormularioEspecifico(id);
+  console.log(formularioEspecifico.visualizacao_secretaria);
+  const fitrarVisualizacao = formularioEspecifico.filter((formularioEspecifico) => {
+     if(formularioEspecifico.titulo === titulo && formularioEspecifico.visualizacao_secretaria === true){
+     return true;
+     }else{
+      return false;
+     }
+  });
+  if(fitrarVisualizacao === true){
+    return true;
+  }else
+    return false;
+ }
+  async function getFormularios() {
+    const todosFormularios = await managerService.GetFormularios();
+    setFormularioEspecifico(todosFormularios);
+    console.log(formularioEspecifico);
+  }
+  useEffect(() => {
+    getFormularios();
+  }, [formularioEspecifico]);
+
+const formulariosFiltrados = formularioEspecifico.filter((value) => {
+     if (formularioEspecifico.visualizacao_secretaria === true) {
+       if(formularioEspecifico.id === value){
+        return true;
+       }else{
+        return false; 
+       }
+     }
+  });*/
   return (
     <div>
       <ContainerPerfil>
@@ -420,10 +470,10 @@ function PerfilPaciente(props) {
                   <Titulo>FORMULÁRIOS</Titulo>
                   {respostas?.map((value) => (
                     <>
-                      { deveMostrarFormularios(value.id_formulario, value.status) && (
+                      { deveMostrarFormularios(value.id_formulario, value.status)  && (
                         <Formulario>
                           <DadosFormulario>
-                            {tipoUsuarioLogado === "MASTER"? (
+                            {tipoUsuarioLogado === "MASTER" || (tipoUsuarioLogado === "SECRETARIA(O)" && pegandoDadosFormularioEspecifico(value.id_formulario) === true)? (
                                <TituloFormulario
                                cursor="pointer"
                                textDecoration="underline"
@@ -445,6 +495,7 @@ function PerfilPaciente(props) {
                               
                             >
                               {value.titulo}
+                              
                             </TituloFormulario>
                             )} 
                            
