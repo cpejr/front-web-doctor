@@ -23,6 +23,20 @@ export const EnviandoImagem = async (file) => {
   return;
 };
 
+export const EnviandoArquivo = async (file) => {
+  await requesterService
+    .EnviandoArquivo(file)
+    .then(() => {
+      return;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+
+  return;
+};
+
 export const requisicaoLogin = async (email, senha) => {
   try {
     const resposta = await requesterService.logarUsuario(email, senha);
@@ -623,6 +637,40 @@ export const CriandoReceita = async (
       dataNascimento,
       tituloReceita,
       descricao
+    )
+    .then(() => {
+      if (usarToast) {
+        toast.success(usarToast.mensagemSucesso, {
+          autoClose: usarToast.tempo,
+          onClose: usarToast.onClose,
+        });
+      }
+      return true;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+};
+
+export const CriandoReceitasemArquivo = async (
+  id_usuario,
+  tituloReceita,
+  descricao,
+  pdf_url,
+  usarToast = {
+    mensagemSucesso: 'Operação bem sucedida',
+    tempo: 1500,
+    onClose: () => {},
+  }
+) => {
+  return requesterService
+
+    .criarReceitasemArquivo(
+      id_usuario,
+      tituloReceita,
+      descricao,
+      pdf_url,
     )
     .then(() => {
       if (usarToast) {
