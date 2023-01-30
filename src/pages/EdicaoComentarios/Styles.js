@@ -16,7 +16,7 @@ export const BoxComentario = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  height: 50%;
+  height: auto;
   padding: 2%;
   border-color: black;
   border-width: 2px;
@@ -48,6 +48,7 @@ export const BoxComentarioBotao = styled.div`
 
   @media (max-width: 800px) {
     flex-direction: column;
+    align-items: center;
   }
 `;
 
@@ -58,7 +59,6 @@ export const MetadeComentario = styled.div`
   height: auto;
   padding: 2%;
   box-shadow: 10px;
-  margin-right: 50px;
 
 `;
 
@@ -70,11 +70,15 @@ export const MetadeBotoes = styled.div`
 
   vertical-align: middle;
   margin-left: 50px;
+
+  @media (max-width: 800px) {
+    margin-left: 0px;
+  }
 `;
 
 export const ContainerComentario = styled.div`
   width: 100%;
-  height: auto;
+  height: 100%;
   background-color: white;
 `;
 
@@ -88,8 +92,17 @@ export const TituloComentariosDepoimentos = styled.div`
   letter-spacing: 0em;
   text-align: center;
   padding: 2%;
+  margin-bottom: 5%;
   width: 100%;
   height: 10%;
+
+  @media (max-width: 1100px) {
+    margin-bottom:10%;
+  }
+
+  @media (max-width: 800px) {
+    margin-bottom:2%;
+  }
 `;
 
 export const ContainerTodosComentarios = styled.div`
@@ -104,6 +117,10 @@ export const TodosComentarios = styled.div`
   display: flex;
   flex-direction: column;
   height: auto;
+
+  @media (max-width: 800px) {
+    align-items: center;
+  }
 `;
 
 export const Comentario = styled.div`
@@ -132,10 +149,18 @@ export const ContainerBotoes = styled.div`
   height: 50%;
   background-color: white;
   padding: 20%;
+
+  @media (max-width: 900px) {
+    width:100%;
+  }
+
+  @media (max-width: 800px) {
+    padding: 10%;
+  }
 `;
 
 export const BotaoAdicionar = styled.button`
-  height: 60px;
+  height: 200px;
   width: 100%;
   border-radius: 3px;
   box-shadow: 0px 4px 4px 0px #00000040;
@@ -152,9 +177,19 @@ export const BotaoAdicionar = styled.button`
   margin-bottom:3%;
   border-style:solid;
 
+  @media (max-width: 800px) {
+    height: 80px;
+    font-size: 25px;
+  }
+
+  @media (max-width: 500px) {
+    height: 80px;
+    font-size: 20px;
+  }
+
 `;
 export const BotaoExcluir = styled.button`
-  height: 60px;
+  height: 200px;
   width: 100%;
   border-radius: 3px;
   box-shadow: 0px 4px 4px 0px #00000040;
@@ -170,4 +205,14 @@ export const BotaoExcluir = styled.button`
   margin-top: 5%;
   margin-bottom:3%;
   border-style:solid;
+
+  @media (max-width: 800px) {
+    height: 80px;
+    font-size: 25px;
+  }
+
+  @media (max-width: 500px) {
+    height: 80px;
+    font-size: 20px;
+  }
 `;
