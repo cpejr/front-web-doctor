@@ -27,42 +27,17 @@ import Input from "../../styles/Input";
 
 function EdicaoHome() {
   //const history = useHistory();
-  const [indicacoes, setIndicacoes] = useState([]);
-  const [comentarios, setComentarios] = useState([]);
-  const [amie, setAmie] = useState([]);
-  const [sobreEle, setSobreEle] = useState([]);
+  const [homes, setHomes] = useState([]);
 
 
   async function pegandoDados() {
-    const dadosIndicacoes = await managerService.GetIndicacoes();
-    setIndicacoes(dadosIndicacoes);
-
-    const dadosComentarios = await managerService.GetComentarios();
-    setComentarios(dadosComentarios);
-
-    const dadosAmie = await managerService.GetAmie();
-    setAmie(dadosAmie);
-
-    const dadosSobreEle = await managerService.GetSobreMim();
-    setSobreEle(dadosSobreEle);
+    const dadosHomes = await managerService.GetHomes();
+    setHomes(dadosHomes);
   }
 
   useEffect(() => {
     pegandoDados();
   }, []);
-
-  /*const [tituloUm, setTituloUm] = useState([]);
-  
-  async function GetTituloUm() {
-   await managerService.GetInputsHome().then((res) => {
-      setTiluloUm(res.dadosTituloUm);
-    });
-  }
-  
-  useEffect(() => {
-    GetTituloUm();
-  }, []);
-  */
 
   return (
     <Corpo>
@@ -98,7 +73,6 @@ function EdicaoHome() {
           <BoxSaibaMais backgroundColor="#7757A0"
           >
             <Input
-              //placeholder= {tituloUm}
               value="Sobre mim"
               textAlign="center"
               backgroundColor="#7757A0"
@@ -111,7 +85,6 @@ function EdicaoHome() {
               marginLeft="10px"
             />
             <Input
-              //placeholder= {tituloUm}
               value="Lorem Ipsum is simply dummy text of
               the printing and typesetting industry.
               Lorem Ipsum has been the industry's
@@ -137,32 +110,11 @@ function EdicaoHome() {
               <Conteudo
                 color={Cores.branco}
               >
-                {sobreEle.map((value) => (
+                {homes.map((value) => (
                   <div>"{value.titulo_um}"</div>
                 ))}
-              </Conteudo>
-
-              <Conteudo
-                color={Cores.branco}
-              >
-                {sobreEle.map((value) => (
+                {homes.map((value) => (
                   <div>"{value.texto_um}"</div>
-                ))}
-              </Conteudo>
-
-              <Conteudo
-                color={Cores.branco}
-              >
-                {sobreEle.map((value) => (
-                  <div>"{value.titulo_dois}"</div>
-                ))}
-              </Conteudo>
-
-              <Conteudo
-                color={Cores.branco}
-              >
-                {sobreEle.map((value) => (
-                  <div>"{value.texto_dois}"</div>
                 ))}
               </Conteudo>
             </ScrollSobreMim>
@@ -187,7 +139,6 @@ function EdicaoHome() {
             backgroundColor="#FBCB4C"
           >
             <Input
-              //placeholder= {tituloUm}
               value="Indicações e Sugestões"
               textAlign="center"
               backgroundColor="#FBCB4C"
@@ -199,7 +150,6 @@ function EdicaoHome() {
               borderWidth='0px'
             />
             <Input
-              //placeholder= {tituloUm}
               value="Lorem Ipsum is simply dummy text of
               the printing and typesetting industry.
               Lorem Ipsum has been the industry's
@@ -221,8 +171,11 @@ function EdicaoHome() {
               lineBreak="auto"
             />
             <Conteudo>
-              {indicacoes.map((value) => (
-                <div>"{value.texto}"</div>
+              {homes.map((value) => (
+                <div>"{value.titulo_dois}"</div>
+              ))}
+              {homes.map((value) => (
+                <div>"{value.texto_dois}"</div>
               ))}
             </Conteudo>
             <TextoSaibaMais color={Cores.preto}>
@@ -233,7 +186,6 @@ function EdicaoHome() {
           <BoxSaibaMais backgroundColor={Cores.lilas[1]}
           >
             <Input
-              //placeholder= {tituloUm}
               value="Comentarios e Depoimentos"
               textAlign="center"
               backgroundColor={Cores.lilas[1]}
@@ -245,7 +197,6 @@ function EdicaoHome() {
               borderWidth='0px'
             />
             <Input
-              //placeholder= {tituloUm}
               value="Lorem Ipsum is simply dummy text of
               the printing and typesetting industry.
               Lorem Ipsum has been the industry's
@@ -267,8 +218,11 @@ function EdicaoHome() {
               lineBreak="auto"
             />
             <Conteudo>
-              {comentarios.map((value) => (
-                <div>"{value.comentario}"</div>
+              {homes.map((value) => (
+                <div>"{value.titulo_tres}"</div>
+              ))}
+              {homes.map((value) => (
+                <div>"{value.texto_tres}"</div>
               ))}
             </Conteudo>
             <TextoSaibaMais color={Cores.branco}>
@@ -277,7 +231,6 @@ function EdicaoHome() {
           </BoxSaibaMais>
           <BoxSaibaMais>
             <Input
-              //placeholder= {tituloUm}
               value="Grupo AMIE (Epilepsia)"
               textAlign="center"
               backgroundColor={Cores.branco}
@@ -289,7 +242,6 @@ function EdicaoHome() {
               borderWidth='0px'
             />
             <Input
-              //placeholder= {tituloUm}
               value="Lorem Ipsum is simply dummy text of
               the printing and typesetting industry.
               Lorem Ipsum has been the industry's
@@ -311,8 +263,11 @@ function EdicaoHome() {
               lineBreak="auto"
             />
             <Conteudo>
-              {amie.map((value) => (
-                <div>"{value.texto}"</div>
+              {homes.map((value) => (
+                <div>"{value.titulo_quatro}"</div>
+              ))}
+              {homes.map((value) => (
+                <div>"{value.texto_quatro}"</div>
               ))}
             </Conteudo>
             <TextoSaibaMais color={Cores.preto}>

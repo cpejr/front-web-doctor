@@ -895,166 +895,17 @@ export const dispostivoById = async (id) => {
   return dispositivo;
 };
 
-export const GetTituloUmHome = async () => {
-  let dadosTituloUm = {};
+export const GetHomes = async () => {
+  let dadosHomes = {};
+
   await requesterService
-    .requisicaoTituloUmHome()
+    .requisicaoHomes()
+
     .then((res) => {
-      dadosTituloUm = res.data;
+      dadosHomes = res.data;
     })
     .catch((error) => {
       requisicaoErro(error);
     });
-  return dadosTituloUm;
-};
-
-export const GetTextoUmHome = async () => {
-  let dadosTextoUm = {};
-  await requesterService
-    .requisicaoTextoUmHome()
-    .then((res) => {
-      dadosTextoUm = res.data;
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-  return dadosTextoUm;
-};
-
-export const GetTituloDoisHome = async () => {
-  let dadosTituloDois = {};
-  await requesterService
-    .requisicaoTituloDoisHome()
-    .then((res) => {
-      dadosTituloDois = res.data;
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-  return dadosTituloDois;
-};
-
-export const GetTextoDoisHome = async () => {
-  let dadosTextoDois = {};
-  await requesterService
-    .requisicaoTextoDoisHome()
-    .then((res) => {
-      dadosTextoDois = res.data;
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-  return dadosTextoDois;
-};
-
-export const GetTituloTresHome = async () => {
-  let dadosTituloTres = {};
-  await requesterService
-    .requisicaoTituloTresHome()
-    .then((res) => {
-      dadosTituloTres = res.data;
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-  return dadosTituloTres;
-};
-
-export const GetTextoTresHome = async () => {
-  let dadosTextoTres = {};
-  await requesterService
-    .requisicaoTextoTresHome()
-    .then((res) => {
-      dadosTextoTres = res.data;
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-  return dadosTextoTres;
-};
-
-export const GetTituloQuatroHome = async () => {
-  let dadosTituloQuatro = {};
-  await requesterService
-    .requisicaoTituloQuatroHome()
-    .then((res) => {
-      dadosTituloQuatro = res.data;
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-  return dadosTituloQuatro;
-};
-
-export const GetTextoQuatroHome = async () => {
-  let dadosTextoQuatro = {};
-  await requesterService
-    .requisicaoTextoQuatroHome()
-    .then((res) => {
-      dadosTextoQuatro = res.data;
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-  return dadosTextoQuatro;
-};
-
-export const GetIndicacoes = async () => {
-  let dadosIndicacoes = {};
-
-  await requesterService
-    .requisicaoIndicacoes()
-
-    .then((res) => {
-      dadosIndicacoes = res.data;
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-  return dadosIndicacoes;
-};
-
-export const GetComentarios = async () => {
-  let dadosComentario = {};
-
-  await requesterService
-    .requisicaoComentario()
-
-    .then((res) => {
-      dadosComentario = res.data;
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-  return dadosComentario;
-};
-
-export const GetAmie = async () => {
-  let dadosAmie = {};
-
-  await requesterService
-    .requisicaoAmie()
-
-    .then((res) => {
-      dadosAmie = res.data;
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-  return dadosAmie;
-};
-
-export const GetSobreMim = async () => {
-  let dadosSobre = {};
-
-  await requesterService
-    .requisicaoSobreMim()
-
-    .then((res) => {
-      dadosSobre = res.data;
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-  return dadosSobre;
+  return dadosHomes;
 };
