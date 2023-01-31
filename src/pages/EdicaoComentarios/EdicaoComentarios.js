@@ -17,6 +17,7 @@ import {
   ContainerTodosComentarios,
   TextoIcone
 } from './Styles';
+import { sleep } from "../../utils/sleep";
 
 import { Modal } from 'antd';
 
@@ -81,6 +82,11 @@ function EdicaoComentarios() {
     pegandoDados();
   }
 
+  async function fechandoModalSemRecarregar() {
+    setModalAdicionarComentario(false);
+    setModalExcluirComentario(false);
+  }
+
   return (
     <div>
       <PaginaEdicaoComentario>
@@ -124,7 +130,7 @@ function EdicaoComentarios() {
 
       <Modal
         visible={modalAdicionarComentario}
-        onCancel={() => fechandoModalAdicionarComentario()}
+        onCancel={fechandoModalSemRecarregar}
         footer={null}
         width={'70%'}
         centered={true}
@@ -137,7 +143,7 @@ function EdicaoComentarios() {
       </Modal>
       <Modal
         visible={modalExcluirComentario}
-        onCancel={() => fechandoModalExcluirComentario()}
+        onCancel={fechandoModalSemRecarregar}
         footer={null}
         width={'70%'}
         centered={true}

@@ -57,13 +57,13 @@ function ModalAdicionarComentario(props) {
     setCarregando(true);
 
     await managerService.CriandoComentario(comentario, {
-      mensagemSucesso: "Comentário criada com sucesso",
+      mensagemSucesso: "Comentário criado com sucesso",
       tempo: 1500,
       onClose: () => {
         history.push("/web/edicaocomentario");
       },
     });
-
+    props.fechandoModal();
     setCarregando(false);
   }
 
