@@ -131,7 +131,7 @@ function UploadReceita() {
 
 		setCarregandoCriacao(true);
 		const id = estado.id_usuario
-		await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
+		await managerService.CriandoReceitasemArquivo(id,tituloReceita, "teste", file, {
 			mensagemSucesso: "Receita criada com sucesso",
 			tempo: 1500,
 			onClose: () => {
