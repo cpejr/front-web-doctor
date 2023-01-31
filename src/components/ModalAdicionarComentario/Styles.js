@@ -57,3 +57,35 @@ export const Texto = styled.div`
     margin-bottom: 8%;
   }
 `;
+
+export const BotaoAdicionar = styled.button`
+  height: 50px;
+  width: 50%;
+  border-radius: 3px;
+  box-shadow: 0px 4px 4px 0px #00000040;
+  background-color: #434B97;
+  font-family: 'Barlow', sans-serif;
+  font-size: 1.8em;
+  font-weight: 500;
+  line-height: 36px;
+  letter-spacing: 0em;
+  color: white;
+  border-color: #000000;
+  border-width: 3px;
+  margin-bottom:3%;
+  margin-top: 2%;
+  border-style:solid;
+
+  @media (max-width: 500px) {
+    font-size: 1.2em;
+    height: auto;
+  }
+`;
+
+export const TextoIcone = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-evenly;
+`;

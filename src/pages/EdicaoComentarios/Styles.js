@@ -21,6 +21,7 @@ export const BoxComentario = styled.div`
   border-color: black;
   border-width: 2px;
   border-style: solid;
+  border-radius: 8px;
 `;
 
 export const Titulo = styled.div`
@@ -32,9 +33,8 @@ export const Titulo = styled.div`
   line-height: 48px;
   letter-spacing: 0em;
   text-align: center;
-  margin-bottom: 2%;
   width: 100%;
-  height: 100%;
+  height: 30%;
 
 `;
 
@@ -43,7 +43,7 @@ export const BoxComentarioBotao = styled.div`
   flex-direction: row;
   justify-content: space-between;
   width: 100%;
-  height: auto;
+  height: 70%;
   padding: 2%;
 
   @media (max-width: 800px) {
@@ -56,24 +56,18 @@ export const MetadeComentario = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: auto;
+  height: 100%;
   padding: 2%;
-  box-shadow: 10px;
-
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.2);
 `;
 
 export const MetadeBotoes = styled.div`
   display: flex;
   width: 100%;
-  height: auto;
-  padding: 2%;
-
+  height: 50%;
+  padding: 10% 2% 10% 2%;
   vertical-align: middle;
-  margin-left: 50px;
 
-  @media (max-width: 800px) {
-    margin-left: 0px;
-  }
 `;
 
 export const ContainerComentario = styled.div`
@@ -92,7 +86,6 @@ export const TituloComentariosDepoimentos = styled.div`
   letter-spacing: 0em;
   text-align: center;
   padding: 2%;
-  margin-bottom: 5%;
   width: 100%;
   height: 10%;
 
@@ -108,7 +101,7 @@ export const TituloComentariosDepoimentos = styled.div`
 export const ContainerTodosComentarios = styled.div`
   width: 100%;
   height: 50%;
-  max-height: 512px;
+  max-height: 600px;
   overflow: auto;
   background-color: white;
 `;
@@ -116,7 +109,7 @@ export const ContainerTodosComentarios = styled.div`
 export const TodosComentarios = styled.div`
   display: flex;
   flex-direction: column;
-  height: auto;
+  height: 100%;
 
   @media (max-width: 800px) {
     align-items: center;
@@ -130,9 +123,8 @@ export const Comentario = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: auto;
-  padding: 3%;
-  margin-bottom: 2%;
+  height: 100%;
+  padding: 8%;
   font-size: 16px;
   font-family: 'Barlow', sans-serif;
   font-weight: 550;
@@ -160,7 +152,7 @@ export const ContainerBotoes = styled.div`
 `;
 
 export const BotaoAdicionar = styled.button`
-  height: 200px;
+  height: 80px;
   width: 100%;
   border-radius: 3px;
   box-shadow: 0px 4px 4px 0px #00000040;
@@ -176,11 +168,6 @@ export const BotaoAdicionar = styled.button`
   margin-top: 5%;
   margin-bottom:3%;
   border-style:solid;
-
-  @media (max-width: 800px) {
-    height: 80px;
-    font-size: 25px;
-  }
 
   @media (max-width: 500px) {
     height: 80px;
@@ -189,7 +176,7 @@ export const BotaoAdicionar = styled.button`
 
 `;
 export const BotaoExcluir = styled.button`
-  height: 200px;
+  height: 80px;
   width: 100%;
   border-radius: 3px;
   box-shadow: 0px 4px 4px 0px #00000040;
@@ -206,13 +193,16 @@ export const BotaoExcluir = styled.button`
   margin-bottom:3%;
   border-style:solid;
 
-  @media (max-width: 800px) {
-    height: 80px;
-    font-size: 25px;
-  }
-
   @media (max-width: 500px) {
     height: 80px;
     font-size: 20px;
   }
+`;
+
+export const TextoIcone = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: space-evenly;
 `;

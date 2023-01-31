@@ -14,7 +14,8 @@ import {
   TituloComentariosDepoimentos,
   TodosComentarios,
   Comentario,
-  ContainerTodosComentarios
+  ContainerTodosComentarios,
+  TextoIcone
 } from './Styles';
 
 import { Modal } from 'antd';
@@ -23,7 +24,7 @@ import ModalAdicionarComentario from "../../components/ModalAdicionarComentario"
 import ModalExcluirComentario from "../../components/ModalExcluirComentario";
 
 import * as managerService from "../../services/ManagerService/managerService";
-import { LoadingOutlined } from "@ant-design/icons";
+import { LoadingOutlined, PlusSquareOutlined, DeleteOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 
 
@@ -45,28 +46,6 @@ function EdicaoComentarios() {
   useEffect(() => {
     pegandoDados();
   }, []);
-
-  // function setandoComentario() {
-  //   setCarregando(true);
-  //   setComentario(comentario);
-  //   setCarregando(false);
-  // }
-
-  // useEffect(() => {
-  //   setandoComentario();
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
-  /* async function atualizarDados() {
-    setCarregando(true);
-    await managerService.UpdateComentario(comentario.id, comentario.comentario);
-    setCarregando(false);
-  } */
-
-  /* function preenchendoDados(e) {
-    setComentario((prev) => ({ ...prev, comentario: e.target.value }));
-    console.log(e);
-  } */
 
   const antLoadingIcon = (
     <LoadingOutlined style={{ fontSize: 130, color: Cores.azul }} spin />
@@ -104,15 +83,10 @@ function EdicaoComentarios() {
 
   return (
     <div>
-
       <PaginaEdicaoComentario>
-
         <BoxComentario>
-
           <Titulo>Página Comentários</Titulo>
-
           <BoxComentarioBotao>
-
             <MetadeComentario>
               <ContainerComentario>
                 <TituloComentariosDepoimentos>Comentários e Depoimentos:</TituloComentariosDepoimentos>
@@ -125,24 +99,26 @@ function EdicaoComentarios() {
                 </ContainerTodosComentarios>
               </ContainerComentario>
             </MetadeComentario>
-
             <MetadeBotoes>
               <ContainerBotoes>
                 <BotaoAdicionar
                   onClick={() => adicionandoComentario()}>
-                  Adicionar Comentário
+                  <TextoIcone>
+                    Adicionar Comentário
+                    <PlusSquareOutlined />
+                  </TextoIcone>
                 </BotaoAdicionar>
                 <BotaoExcluir
                   onClick={() => excluindoComentario()}>
-                  Excluir Comentário
+                  <TextoIcone>
+                    Excluir Comentário
+                    <DeleteOutlined />
+                  </TextoIcone>
                 </BotaoExcluir>
               </ContainerBotoes>
             </MetadeBotoes>
-
           </BoxComentarioBotao>
-
         </BoxComentario>
-
       </PaginaEdicaoComentario>
 
 
@@ -152,29 +128,27 @@ function EdicaoComentarios() {
         footer={null}
         width={'70%'}
         centered={true}
+        destroyOnClose
       >
         <ModalAdicionarComentario
           abertoPeloUsuario={abertoPeloUsuario}
           fechandoModal={() => fechandoModalAdicionarComentario()}
         />
       </Modal>
-
       <Modal
         visible={modalExcluirComentario}
         onCancel={() => fechandoModalExcluirComentario()}
         footer={null}
         width={'70%'}
         centered={true}
+        destroyOnClose
       >
         <ModalExcluirComentario
           abertoPeloUsuario={abertoPeloUsuario}
           fechandoModal={() => fechandoModalExcluirComentario()}
         />
       </Modal>
-
     </div >
-
-
   );
 }
 

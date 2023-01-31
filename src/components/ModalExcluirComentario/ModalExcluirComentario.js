@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Spin } from "antd";
-import { LoadingOutlined } from "@ant-design/icons";
-import { ContainerModalCodigo, Titulo } from "./Styles";
+import { LoadingOutlined, DeleteOutlined } from "@ant-design/icons";
+import { BotaoExcluir, ContainerModalCodigo, TextoIcone, Titulo } from "./Styles";
 import Button from "../../styles/Button";
 import Select from "../../styles/Select";
 import _ from "lodash";
@@ -84,12 +84,11 @@ function ModalExcluirComentario(props) {
         <>
             <ContainerModalCodigo>
                 <Titulo>Excluir Comentário:</Titulo>
-
                 <Select
                     color={Cores.preto}
                     backgroundColor="#E4E6F4"
                     fontSize="1em"
-                    width="97%"
+                    width="100%"
                     marginTop="5%"
                     marginBottom="5%"
                     size="large"
@@ -105,24 +104,24 @@ function ModalExcluirComentario(props) {
                     </option>
                     {comentarios.map((value) => (
                         <option key={value.id} value={value.id}>
-                            {value.comentario}
+                            {value.comentario.length <= 85 ?
+                                (
+                                    <div> {value.comentario} </div>
+                                ) : (
+                                    <div> {(value.comentario).substr(0, 85 ) + "..."} </div>
+                                )
+                            }
                         </option>
                     ))}
                 </Select>
-
-                <Button
-                    width="60%"
-                    height="50px"
-                    backgroundColor="#434B97"
-                    borderColor="#151B57"
-                    color="white"
-                    fontSize="1.5em"
-                    fontWeight="bold"
-                    fontSizeMedia="1.2em"
+                <BotaoExcluir
                     onClick={() => deletandoComentario(id)}
                 >
-                    {carregando ? <Spin indicator={antIcon} /> : "Excluir Comentário"}
-                </Button>
+                    {carregando ? <Spin indicator={antIcon} /> : <TextoIcone>
+                        Excluir Comentário
+                        <DeleteOutlined />
+                    </TextoIcone>}
+                </BotaoExcluir>
             </ContainerModalCodigo>
         </>
     );
