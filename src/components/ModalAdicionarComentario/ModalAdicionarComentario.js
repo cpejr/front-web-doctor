@@ -10,18 +10,18 @@ import _ from "lodash";
 import * as managerService from "../../services/ManagerService/managerService";
 
 const camposVaziosReferencia = {
-	comentario: false,
+  comentario: false,
 };
 
 const estadoIncial = {
-	comentario: "",
+  comentario: "",
 };
 
 function ModalAdicionarComentario(props) {
   const [comentario, setComentario] = useState({});
   const [carregando, setCarregando] = useState(false);
   const [estado, setEstado] = useState(estadoIncial);
-	const [camposVazios, setCamposVazios] = useState({});
+  const [camposVazios, setCamposVazios] = useState({});
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const history = useHistory();
@@ -29,35 +29,35 @@ function ModalAdicionarComentario(props) {
 
   function preenchendoDados(e) {
     e.preventDefault();
-    const { value } = e.target;
+    const { value, name } = e.target;
 
-    if (camposVazios[value])
-			setCamposVazios((valorAnterior) => ({ ...valorAnterior, [value]: false }));
+    if (camposVazios[name])
+      setCamposVazios((valorAnterior) => ({ ...valorAnterior, [name]: false }));
 
-		setEstado({ ...estado, [value]: value });
+    setEstado({ ...estado, [name]: value });
 
-    setComentario({...comentario, comentario: value});
-    
+    setComentario({ ...comentario, comentario: value });
+
   }
 
   async function criarComentario(e) {
     e.preventDefault();
 
     const camposVaziosAtual = {
-			comentario: !estado.comentario
-		};
+      comentario: !estado.comentario
+    };
 
-		setCamposVazios(camposVaziosAtual);
+    setCamposVazios(camposVaziosAtual);
 
-		if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
-			toast.warn("Preencha todos os campos");
-			return;
-		}
+    if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
+      toast.warn("Preencha todos os campos");
+      return;
+    }
 
     setCarregando(true);
 
     await managerService.CriandoComentario(comentario, {
-      mensagemSucesso: "Receita criada com sucesso",
+      mensagemSucesso: "Comentário criada com sucesso",
       tempo: 1500,
       onClose: () => {
         history.push("/web/edicaocomentario");
@@ -76,7 +76,7 @@ function ModalAdicionarComentario(props) {
         <Input
           placeholder="Insira um novo Comentário"
           backgroundColor="#E4E6F4"
-          borderColor="#151B57"
+
           color="black"
           fontSize="1em"
           width="70%"
@@ -85,6 +85,7 @@ function ModalAdicionarComentario(props) {
           paddingRight="2%"
           name="comentario"
           onChange={preenchendoDados}
+          camposVazios={camposVazios.comentario}
         ></Input>
 
         <Button

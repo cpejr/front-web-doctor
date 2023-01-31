@@ -30,16 +30,15 @@ function ModalExcluirComentario(props) {
 
     function escolhendoComentario(e) {
         e.preventDefault();
-        const { value } = e.target;
+        const { value, name } = e.target;
 
-        if (camposVazios[value])
-            setCamposVazios((valorAnterior) => ({ ...valorAnterior, [value]: false }));
+        if (camposVazios[name])
+            setCamposVazios((valorAnterior) => ({ ...valorAnterior, [name]: false }));
 
-        setEstado({ ...estado, [value]: value });
+        setEstado({ ...estado, [name]: value });
 
         setId(value);
 
-        console.log(id);
     }
 
     async function pegandoComentarios() {
@@ -58,22 +57,20 @@ function ModalExcluirComentario(props) {
     async function deletandoComentario(id) {
 
         const camposVaziosAtual = {
-			id_usuario: !estado.id_usuario,
-			titulo: !estado.titulo,
-			descricao: !estado.descricao,
-		};
+            id: !estado.id
+        };
 
-		setCamposVazios(camposVaziosAtual);
+        setCamposVazios(camposVaziosAtual);
 
-		if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
-			toast.warn("Preencha todos os campos");
-			return;
-		}
+        if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
+            toast.warn("Preencha todos os campos");
+            return;
+        }
 
         setCarregando(true);
 
         await managerService.DeleteComentario(id, {
-            mensagemSucesso: "Receita deletada com sucesso",
+            mensagemSucesso: "Comentário deletado com sucesso",
             tempo: 1500,
             onClose: () => {
                 history.push("/web/edicaocomentario");
@@ -91,7 +88,6 @@ function ModalExcluirComentario(props) {
                 <Select
                     color={Cores.preto}
                     backgroundColor="#E4E6F4"
-                    borderColor="#151B57"
                     fontSize="1em"
                     width="97%"
                     marginTop="5%"
@@ -101,14 +97,14 @@ function ModalExcluirComentario(props) {
                     placeholder="Escolher Comentário para deletar"
                     height="45px"
                     borderWidth820="97%"
-                    nome="id"
                     onChange={escolhendoComentario}
+                    camposVazios={camposVazios.id}
                 >
                     <option value="" disabled selected>
                         Escolher Comentário para deletar
                     </option>
                     {comentarios.map((value) => (
-                        <option key={value.id} value={value.id} color="red">
+                        <option key={value.id} value={value.id}>
                             {value.comentario}
                         </option>
                     ))}
