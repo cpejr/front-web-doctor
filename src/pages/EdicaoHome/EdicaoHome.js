@@ -26,13 +26,17 @@ import * as managerService from "../../services/ManagerService/managerService";
 import Input from "../../styles/Input";
 
 function EdicaoHome() {
-  //const history = useHistory();
   const [homes, setHomes] = useState([]);
 
 
   async function pegandoDados() {
     const dadosHomes = await managerService.GetHomes();
     setHomes(dadosHomes);
+  }
+
+  function preenchendoDados(e) {
+    const { value, name } = e.target;
+    setHomes({ ...homes, [name]: value });
   }
 
   useEffect(() => {
@@ -73,9 +77,6 @@ function EdicaoHome() {
           <BoxSaibaMais backgroundColor="#7757A0"
           >
             <Input
-              type={homes.map((value) => (
-                <div>"{value.titulo_um}"</div>
-              ))}
               textAlign="center"
               backgroundColor="#7757A0"
               color={Cores.branco}
@@ -84,9 +85,11 @@ function EdicaoHome() {
               marginTop="2%"
               borderWidth='0px'
               marginLeft="10%"
+              value={homes.titulo_um}
+              name="titulo_um"
+              onChange={preenchendoDados}
             />
             <Input
-            
               backgroundColor="#7757A0"
               color={Cores.branco}
               width="100%"
@@ -98,17 +101,11 @@ function EdicaoHome() {
               fontSize="120%"
               textAlign="left"
               overflow="auto"
+              value={homes.texto_um}
+              name="texto_um"
+              onChange={preenchendoDados}
             />
             <ScrollSobreMim>
-
-              <Conteudo
-                color={Cores.branco}
-              >
-                
-                {homes.map((value) => (
-                  <div>"{value.texto_um}"</div>
-                ))}
-              </Conteudo>
             </ScrollSobreMim>
 
             <TextoSaibaMais color={Cores.branco}>
@@ -131,18 +128,18 @@ function EdicaoHome() {
             backgroundColor="#FBCB4C"
           >
             <Input
-              value="Indicações e Sugestões"
               textAlign="center"
               backgroundColor="#FBCB4C"
               color={Cores.preto}
               fontSize="120%"
               width="100%"
               marginTop="2%"
-              name="titulo"
               borderWidth='0px'
+              value={homes.titulo_dois}
+              name="titulo_dois"
+              onChange={preenchendoDados}
             />
             <Input
-            
               backgroundColor="#FBCB4C"
               color={Cores.preto}
               width="100%"
@@ -154,15 +151,10 @@ function EdicaoHome() {
               fontSize="120%"
               textAlign="left"
               lineBreak="auto"
+              value={homes.texto_dois}
+              name="texto_dois"
+              onChange={preenchendoDados}
             />
-            <Conteudo>
-              {homes.map((value) => (
-                <div>"{value.titulo_dois}"</div>
-              ))}
-              {homes.map((value) => (
-                <div>"{value.texto_dois}"</div>
-              ))}
-            </Conteudo>
             <TextoSaibaMais color={Cores.preto}>
               Saiba Mais
             </TextoSaibaMais>
@@ -171,15 +163,16 @@ function EdicaoHome() {
           <BoxSaibaMais backgroundColor={Cores.lilas[1]}
           >
             <Input
-              value="Comentarios e Depoimentos"
               textAlign="center"
               backgroundColor={Cores.lilas[1]}
               color={Cores.branco}
               fontSize="120%"
               width="100%"
               marginTop="2%"
-              name="titulo"
               borderWidth='0px'
+              value={homes.titulo_tres}
+              name="titulo_tres"
+              onChange={preenchendoDados}
             />
             <Input
               backgroundColor={Cores.lilas[1]}
@@ -193,33 +186,29 @@ function EdicaoHome() {
               fontSize="120%"
               textAlign="left"
               lineBreak="auto"
+              value={homes.texto_tres}
+              name="texto_tres"
+              onChange={preenchendoDados}
             />
-            <Conteudo>
-              {homes.map((value) => (
-                <div>"{value.titulo_tres}"</div>
-              ))}
-              {homes.map((value) => (
-                <div>"{value.texto_tres}"</div>
-              ))}
-            </Conteudo>
             <TextoSaibaMais color={Cores.branco}>
               Saiba Mais
             </TextoSaibaMais>
           </BoxSaibaMais>
           <BoxSaibaMais>
             <Input
-              value="Grupo AMIE (Epilepsia)"
               textAlign="center"
               backgroundColor={Cores.branco}
               color={Cores.preto}
               fontSize="120%"
               width="100%"
               marginTop="2%"
-              name="titulo"
               borderWidth='0px'
+              value={homes.titulo_quatro}
+              name="titulo_quatro"
+              onChange={preenchendoDados}
             />
             <Input
-            
+
               backgroundColor={Cores.branco}
               color={Cores.preto}
               width="100%"
@@ -231,15 +220,10 @@ function EdicaoHome() {
               fontSize="120%"
               textAlign="left"
               lineBreak="auto"
+              value={homes.texto_quatro}
+              name="texto_quatro"
+              onChange={preenchendoDados}
             />
-            <Conteudo>
-              {homes.map((value) => (
-                <div>"{value.titulo_quatro}"</div>
-              ))}
-              {homes.map((value) => (
-                <div>"{value.texto_quatro}"</div>
-              ))}
-            </Conteudo>
             <TextoSaibaMais color={Cores.preto}>
               Saiba Mais
             </TextoSaibaMais>

@@ -907,5 +907,5 @@ export const GetHomes = async () => {
     .catch((error) => {
       requisicaoErro(error);
     });
-  return dadosHomes;
+  return dadosHomes[0];
 };
