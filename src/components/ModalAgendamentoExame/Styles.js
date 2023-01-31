@@ -14,17 +14,13 @@ export const Container = styled.div`
 export const Caixa = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
+  width: 185%;
   height: 100%;
   min-height: 80vh;
-  background-color: ${Cores.branco};
-  border-color: rgba(0, 0, 0, 0.1);
-  border-style: solid;
-  border-radius: 3px;
 
-  @media (max-width: 910px) {
+
+  @media (max-width: 800px) {
     flex-direction: column;
-    
   }
 `;
 
@@ -37,91 +33,68 @@ export const InfoEsquerdaEDireita = styled.div`
   height: 100%;
   min-height: 80vh;
   padding: 5%;
-  gap: 8px;
 
-  @media (max-width: 910px) {
+  @media (max-width: 800px) {
     width: 100%;
-    padding: 0%;
   }
-
-  @media (max-width: 560px) {
-    width: 100%;
-    padding: 5%;
-  }
-
-`;
-
-export const CaixaLoader = styled.div`
-   width: calc(98% - 50px);
-   display: flex;
-   justify-content: center;
-   align-items: center;
 `;
 
 export const InfoEsquerda = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 50%;
   height: 100%;
   height: 73vh;
   padding: 5%;
-  gap: 10px;
 
-  @media (max-width: 910px) {
+  @media (max-width: 800px) {
     width: 100%;
     height: 50vh;
-    
   }
 `;
 
 export const Usuario = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: auto;
-  padding: 2%;
+  height: 60px;
+  padding: 0% 1% 0% 1%;
   border-color: ${Cores.azul};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
-  
+  margin-bottom: 2%;
 
   @media (max-width: 500px) {
     flex-direction: column;
-    height: auto;
+    height: 60px;
   }
 `;
-
 
 export const Imagem = styled.img`
   justify-content: center;
   object-fit: fill;
-  width: 50px;
+  width: 20%;
+  width: 40px;
   display: flex;
-
-  @media (max-width: 500px) {
-    display: none;
-  }
 `;
 
 export const Nome = styled.div`
-  width: calc(98% - 50px);
+  width: 40%;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   font-family: ${Fontes.barlow};
   font-weight: 400;
-  font-size: 1.2em;
+  font-size: 1.4em;
   color: ${Cores.azulEscuro};
-  text-align: center;
-  
 
   @media (max-width: 500px) {
-    width: 100%;
+    width: 50%;
     font-size: 1.1em;
     justify-content: center;
     text-align: center;
@@ -145,7 +118,6 @@ export const NomePaciente = styled.div`
 
 export const TipoAgendamento = styled.div`
   display: flex;
-  padding: 2%;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
@@ -153,11 +125,11 @@ export const TipoAgendamento = styled.div`
   margin-top:18%;
   margin-bottom:20%;
   @media (max-width: 620px){
-    height: auto;
+    height: 25%;
     width: 100%;
   }
   @media (max-width: 560px){
-    height: auto;
+    height: 30%;
     flex-wrap: nowrap;
   }
 `;
@@ -193,12 +165,35 @@ export const TextAreaDescricao = styled(TextArea)`
   border-color: ${Cores.preto};
   border-width: 1px;
   color: ${Cores.preto};
+  margin-top: 100%;
+  margin-right:35%;
   ::placeholder {
     color: ${Cores.preto};
   }
 `;
 
+export const DoisSelect = styled.h3`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  font-family: ${Fontes.barlow};
+  font-size: 1em;
 
+  @media (max-width: 560px) {
+    flex-direction: column;
+    height: 120px;
+  }
+
+  @media (max-width: 1260px) and (min-width: 800px) {
+    flex-direction: column;
+    height: 160px;
+  }
+  @media (max-width: 400px) {
+    height: 180px;
+  }
+`;
 
 export const Select = styled.select`
   border-color: ${Cores.preto};
@@ -225,9 +220,78 @@ export const TamanhoInput = styled.div`
   }
 `;
 
+export const InputConsultorio = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 40%;
+  height: 40px;
+  margin-top: 5%;
+  @media (max-width: 1717px) {
+    margin-bottom: 5%;
+  }
+  @media (max-width: 560px) {
+    width: 100%;
+    margin-bottom: 5%;
+  }
+  @media (max-width: 1260px) and (min-width: 800px) {
+    width: 90%;
+    margin-bottom: 5%;
+  }
+  @media (max-width: 807px) and (min-width: 800px) {
+    padding-top: 15%;
+  }
+`;
+
+export const ContainerDuracaoConsulta = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 40%;
+  height: 40px;
+  //margin-bottom: 5%;
+  @media (max-width: 1622px) {
+    margin-bottom: 5%;
+  }
+  @media  (max-width: 763px) and (min-width: 697px) {
+    margin-bottom: 9%;
+  }
+  @media (max-width: 560px) {
+    width: 100%;
+    margin-bottom: 5%;
+  }
+  @media (max-width: 1260px) and (min-width: 800px) {
+    width: 90%;
+    margin-bottom: 5%;
+  }
+`;
+
+export const ContainerHorario = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 40%;
+  height: 40px;
+  //margin-bottom: 5%;
+  @media (max-width: 1470px) {
+    margin-bottom: 5%;
+  }
+  @media (max-width: 560px) {
+    width: 100%;
+    margin-bottom: 13%;
+  }
+  @media (max-width: 1260px) and (min-width: 800px) {
+    width: 90%;
+    margin-bottom: 5%;
+  }
+`;
+
 export const InputData = styled.input`
   width: 100%;
-  height: 35px;
+  height: 36px;
   color: ${Cores.preto};
   font-family: ${Fontes.barlow};
   font-weight: 500;
@@ -317,7 +381,7 @@ export const InputDuracao = styled(Input)`
   }
 `;
 
-export const TextoCaixaSelect = styled.h3`
+export const TextoSelecioneUmaData = styled.h3`
   font-family: ${Fontes.barlow};
   font-weight: 500;
   font-size: 1.1em;
@@ -327,8 +391,21 @@ export const TextoCaixaSelect = styled.h3`
   align-items: center;
 `;
 
+export const TextoDoisSelects = styled.h3`
+  font-family: ${Fontes.barlow};
+  font-weight: 500;
+  font-size: 1.1em;
+  color: ${Cores.azulEscuro};
+  display: flex;
+  justify-content: start;
+  align-items: center;
 
-export const CaixaSelect = styled.div`
+  @media (max-width: 560px){
+    margin-top: 15%;
+  }
+`;
+
+export const SelecioneUmaData = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -348,8 +425,4 @@ export const Rotulo = styled.div`
   font-weight: 400;
   font-size: 1em;
   color: ${Cores.vermelho};
-
-  @media (max-width: 400px){
-    margin-bottom: 35px;
-  }
 `;

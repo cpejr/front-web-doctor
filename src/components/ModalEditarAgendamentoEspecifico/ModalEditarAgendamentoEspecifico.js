@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, Input, Tooltip } from "antd";
+import { Row, Radio } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { toast } from "react-toastify";
@@ -7,10 +7,11 @@ import {
   Container,
   Caixa,
   InfoEsquerda,
-  InfoDireita,
   Usuario,
   Imagem,
   Nome,
+  TextoTipoAgendamento,
+  TipoAgendamento,
   TextoCheckbox,
   InputHora,
   InputDuracao,
@@ -21,14 +22,14 @@ import {
   TextoCaixaSelect,
 } from "./Styles";
 import Select from "../../styles/Select";
-import Button from "../../styles/Button";
 import logoGuilherme from "../../assets/logoGuilherme.png";
-import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import { apenasNumeros } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
 
 import { TiposDeConsulta } from "../listaTiposDeConsultas";
+import ModalEditarConsulta from "../ModalEditarConsulta";
+import ModalEditarExame from "../ModalEditarExame";
 
 function ModalEditarAgendamentoEspecifico(props) {
   const [usuario, setUsuario] = useState({});
@@ -39,6 +40,7 @@ function ModalEditarAgendamentoEspecifico(props) {
   const [consulta, setConsulta] = useState({});
   const [consultorioPorId, setConsultorioPorId] = useState();
   const [data, setData] = useState("");
+  const [tipoRadio, setTipoRadio] = useState("");
   const [hora, setHora] = useState("");
   const [hoje, setHoje] = useState("");
   const [camposVazios, setCamposVazios] = useState({
@@ -138,6 +140,11 @@ function ModalEditarAgendamentoEspecifico(props) {
     });
   }
 
+  function inputsFiltrados(value) {
+    setTipoRadio(value);
+  }
+
+
   function formatacaoDataHora() {
     try {
       const dataHora = `${data} ${hora}:00`;
@@ -171,39 +178,6 @@ function ModalEditarAgendamentoEspecifico(props) {
       setCarregandoUpdate(false);
       props.fechandoModal();
       return;
-    }
-  }
-
-  function preenchendoDadosConsulta(e) {
-    const { value, name } = e.target;
-
-    if (value !== consulta.descricao) {
-      if (value) {
-        setCamposVazios({ ...camposVazios, [name]: false });
-      } else {
-        setCamposVazios({ ...camposVazios, [name]: true });
-      }
-    }
-
-    if (e.target.name === "hora") {
-      setHora(e.target.value);
-      setEditado(true);
-      return hora;
-    } else if (e.target.name === "data") {
-      setData(e.target.value);
-      setEditado(true);
-      return data;
-    } else if (e.target.name === "duracao_em_minutos") {
-      setConsulta({
-        ...consulta,
-        [e.target.name]: apenasNumeros(e.target.value),
-      });
-      setEditado(true);
-      return consulta;
-    } else {
-      setConsulta({ ...consulta, [name]: value });
-      setEditado(true);
-      return consulta;
     }
   }
 
@@ -355,6 +329,24 @@ function ModalEditarAgendamentoEspecifico(props) {
               {camposVazios.hora ? <Rotulo>Digite um horário</Rotulo> : <></>}
             </CaixaSelect>
 
+          <TipoAgendamento>
+            <TextoTipoAgendamento>
+              Selecione o Tipo de Agendamento:
+            </TextoTipoAgendamento>
+            <Row gutter={60} justify={"space-around"}>
+            <Radio.Group 
+            defaultValue=""
+            bordered={false}
+            FiltrarInputs={tipoRadio}
+            onChange={(e) => inputsFiltrados(e.target.value)}
+            >
+              <Radio value="">Exame</Radio>
+              <Radio value="filtrado">Consulta</Radio>
+            </Radio.Group>
+            </Row>
+          </TipoAgendamento>
+          {tipoRadio === "" ? (
+                <></>
             <CaixaSelect>
               <TextoCaixaSelect>Selecione uma duração:</TextoCaixaSelect>
               <InputDuracao

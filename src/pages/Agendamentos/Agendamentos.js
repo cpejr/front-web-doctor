@@ -70,6 +70,8 @@ function Agendamentos(props) {
   const [consultorioSelect, setConsultorioSelect] = useState('');
   const [tipoAgendamento, setTipoAgendamento] = useState('');
   const [carregandoFoto, setCarregandoFoto] = useState(true);
+  const [consultorioSelect, setConsultorioSelect] = useState("");
+  
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
