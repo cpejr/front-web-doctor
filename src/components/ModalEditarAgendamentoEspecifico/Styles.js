@@ -37,7 +37,6 @@ export const InfoEsquerda = styled.div`
   padding: 5%;
   gap: 10px;
 
-
   @media (max-width: 910px) {
     width: 100%;
     height: 35vh;
@@ -47,7 +46,6 @@ export const InfoEsquerda = styled.div`
     width: 100%;
     height: 27vh;
   }
-
 `;
 
 export const InfoDireita = styled.div`
@@ -61,7 +59,6 @@ export const InfoDireita = styled.div`
   padding: 5%;
   gap: 8px;
 
-
   @media (max-width: 910px) {
     width: 100%;
     padding: 0%;
@@ -71,32 +68,7 @@ export const InfoDireita = styled.div`
     width: 100%;
     padding: 5%;
   }
-
 `;
-
-export const ContainerConsultorio = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: start;
-  justify-content: center;
-  width: 40%;
-  height: 40px;
-  @media (max-width: 1717px) {
-    margin-bottom: 5%;
-  }
-  @media (max-width: 560px) {
-    width: 100%;
-    margin-bottom: 5%;
-  }
-  @media (max-width: 1260px) and (min-width: 800px) {
-    width: 90%;
-    margin-bottom: 5%;
-  }
-  @media (max-width: 807px) and (min-width: 800px) {
-    padding-top: 15%;
-  }
-`;
-
 
 export const ContainerHorario = styled.div`
   display: flex;
@@ -118,8 +90,6 @@ export const ContainerHorario = styled.div`
     margin-bottom: 5%;
   }
 `;
-
-
 
 export const Usuario = styled.div`
   display: flex;
@@ -149,14 +119,14 @@ export const TipoAgendamento = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  margin-top:18%;
-  margin-bottom:20%;
+  margin-top: 18%;
+  margin-bottom: 20%;
 
-  @media (max-width: 620px){
+  @media (max-width: 620px) {
     height: 25%;
     width: 100%;
   }
-  @media (max-width: 560px){
+  @media (max-width: 560px) {
     height: 30%;
     flex-wrap: nowrap;
   }
@@ -198,7 +168,6 @@ export const Nome = styled.div`
   font-size: 1.2em;
   color: ${Cores.azulEscuro};
   text-align: center;
-  
 
   @media (max-width: 500px) {
     width: 100%;
@@ -235,10 +204,10 @@ export const DoisSelect = styled.h3`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height:50%;
+  height: 50%;
   font-family: ${Fontes.barlow};
   font-size: 1em;
-
+`;
 export const Select = styled.select`
   border-color: ${Cores.preto};
   border-width: 1px;
@@ -252,7 +221,7 @@ export const TamanhoInput = styled.div`
   width: 40%;
   height: 40px;
 
-  @media  (max-width: 601px) and (min-width: 560px) {
+  @media (max-width: 601px) and (min-width: 560px) {
     margin-bottom: 5%;
   }
   @media (max-width: 560px) {
@@ -283,11 +252,11 @@ export const InputData = styled.input`
   border-width: 1px;
   border-color: ${(props) => {
     let cor;
-      if(props.camposVazios){
-        cor = Cores.vermelho;
-      } else {
-        cor = Cores.azul;
-      }
+    if (props.camposVazios) {
+      cor = Cores.vermelho;
+    } else {
+      cor = Cores.azul;
+    }
     return cor;
   }};
 `;
@@ -308,7 +277,7 @@ export const InputHora = styled(Input)`
   border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
-      if(props.camposVazios){
+      if (props.camposVazios) {
         cor = Cores.vermelho;
       } else {
         cor = Cores.azul;
@@ -320,7 +289,7 @@ export const InputHora = styled(Input)`
   }};
 
   ::placeholder {
-    color:${Cores.preto}
+    color: ${Cores.preto};
   }
 `;
 
@@ -338,7 +307,7 @@ export const InputDuracao = styled(Input)`
   border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
-      if(props.camposVazios){
+      if (props.camposVazios) {
         cor = Cores.vermelho;
       } else {
         cor = Cores.azul;
@@ -356,18 +325,6 @@ export const InputDuracao = styled(Input)`
   }
 `;
 
-
-
-export const Rotulo = styled.div`
-  width: 100%;
-  height: 10px;
-  margin-bottom: 10px;
-  font-family: ${Fontes.barlow};
-  font-weight: 400;
-  font-size: 1em;
-  color: ${Cores.vermelho};
-`;
-
 export const TextoCaixaSelect = styled.h3`
   font-family: ${Fontes.barlow};
   font-weight: 500;
@@ -378,20 +335,17 @@ export const TextoCaixaSelect = styled.h3`
   align-items: center;
 `;
 
-
 export const CaixaSelect = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
   justify-content: center;
   width: 90%;
- 
 
   @media (max-width: 560px) {
     width: 100%;
   }
 `;
-
 
 export const TextoDoisSelects = styled.h3`
   font-family: ${Fontes.barlow};
@@ -401,20 +355,20 @@ export const TextoDoisSelects = styled.h3`
   display: flex;
   justify-content: start;
   align-items: center;
-  
-  @media (max-width: 560px){
+
+  @media (max-width: 560px) {
     margin-top: 15%;
   }
 `;
 
 export const ContainerConsultorio = styled.div`
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
   align-items: start;
   justify-content: center;
   width: 40%;
   height: 35px;
-  padding-top:5%;
+  padding-top: 5%;
   @media (max-width: 1717px) {
     margin-bottom: 5%;
   }
@@ -441,25 +395,25 @@ export const Rotulo = styled.div`
   color: ${Cores.vermelho};
 `;
 
-    export const ContainerDuracaoConsulta = styled.div`
-      display: flex;
-      flex-direction: column;
-      align-items: start;
-      justify-content: center;
-      width: 40%;
-      height: 40px;
-      @media (max-width: 1622px) {
-        margin-bottom: 5%;
-      }
-      @media  (max-width: 763px) and (min-width: 697px) {
-        margin-bottom: 9%;
-      }
-      @media (max-width: 560px) {
-        width: 100%;
-        margin-bottom: 5%;
-      }
-      @media (max-width: 1260px) and (min-width: 800px) {
-        width: 90%;
-        margin-bottom: 5%;
-      }
-    `;
+export const ContainerDuracaoConsulta = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 40%;
+  height: 40px;
+  @media (max-width: 1622px) {
+    margin-bottom: 5%;
+  }
+  @media (max-width: 763px) and (min-width: 697px) {
+    margin-bottom: 9%;
+  }
+  @media (max-width: 560px) {
+    width: 100%;
+    margin-bottom: 5%;
+  }
+  @media (max-width: 1260px) and (min-width: 800px) {
+    width: 90%;
+    margin-bottom: 5%;
+  }
+`;

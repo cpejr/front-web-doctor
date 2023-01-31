@@ -20,16 +20,19 @@ import {
   InputData,
   CaixaSelect,
   TextoCaixaSelect,
+  InfoDireita
 } from "./Styles";
 import Select from "../../styles/Select";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import { sleep } from "../../utils/sleep";
 import { apenasNumeros } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
-
 import { TiposDeConsulta } from "../listaTiposDeConsultas";
 import ModalEditarConsulta from "../ModalEditarConsulta";
 import ModalEditarExame from "../ModalEditarExame";
+import { Checkbox, Tooltip } from "antd";
+import { Cores } from "../../variaveis";
+import Button from "../../styles/Button";
 
 function ModalEditarAgendamentoEspecifico(props) {
   const [usuario, setUsuario] = useState({});
@@ -144,7 +147,6 @@ function ModalEditarAgendamentoEspecifico(props) {
     setTipoRadio(value);
   }
 
-
   function formatacaoDataHora() {
     try {
       const dataHora = `${data} ${hora}:00`;
@@ -178,6 +180,39 @@ function ModalEditarAgendamentoEspecifico(props) {
       setCarregandoUpdate(false);
       props.fechandoModal();
       return;
+    }
+  }
+
+  function preenchendoDadosConsulta(e) {
+    const { value, name } = e.target;
+
+    if (value !== consulta.descricao) {
+      if (value) {
+        setCamposVazios({ ...camposVazios, [name]: false });
+      } else {
+        setCamposVazios({ ...camposVazios, [name]: true });
+      }
+    }
+
+    if (e.target.name === "hora") {
+      setHora(e.target.value);
+      setEditado(true);
+      return hora;
+    } else if (e.target.name === "data") {
+      setData(e.target.value);
+      setEditado(true);
+      return data;
+    } else if (e.target.name === "duracao_em_minutos") {
+      setConsulta({
+        ...consulta,
+        [e.target.name]: apenasNumeros(e.target.value),
+      });
+      setEditado(true);
+      return consulta;
+    } else {
+      setConsulta({ ...consulta, [name]: value });
+      setEditado(true);
+      return consulta;
     }
   }
 
@@ -224,146 +259,148 @@ function ModalEditarAgendamentoEspecifico(props) {
             ></InputData>
             {camposVazios.data ? <Rotulo>Escolha uma data</Rotulo> : <></>}
           </CaixaSelect>
-          
-            <CaixaSelect>
-              <TextoCaixaSelect>Selecione um tipo:</TextoCaixaSelect>
-              <Tooltip
-                placement="topLeft"
-                title={consulta.tipo}
-                color={Cores.azul}
-              >
-                <Select
-                  style={{
-                    width: "100%",
-                    color: "black",
-                    borderColor: "black",
-                    borderWidth: "1px",
-                    marginTop:"0px",
-                    height:"36px",
-                  }}
-                  paddingTop="5px"
-                  paddingBottom="5px"
-                  size="large"
-                  value={consulta.tipo}
-                  name="tipo"
-                  placeholder="Tipo"
-                  onChange={(e) => {
-                    preenchendoDadosConsulta(e);
-                  }}
-                >
-                  {TiposDeConsulta.map((tipo) => (
-                    <>
-                      {carregando ? (
-                        <Spin indicator={antIcon} />
-                      ) : (
-                        <option key={tipo} value={tipo} color="red">
-                          {tipo}
-                        </option>
-                      )}
-                    </>
-                  ))}
-                </Select>
-              </Tooltip>
-            </CaixaSelect>
-            <CaixaSelect>
-              <TextoCaixaSelect>Selecione um consultório:</TextoCaixaSelect>
-              <Tooltip
-                placement="topLeft"
-                title={consultorioPorId}
-                color={Cores.azul}
-              >
-                <Select
-                  id="id_consultorio"
-                  name="id_consultorio"
-                  style={{
-                    width: "100%",
-                    borderColor: "black",
-                    borderWidth: "1px",
-                    color: "black",
-                    height:"36px",
-                    marginTop:"0px",
-                  }}
-                  paddingTop="5px"
-                  paddingBottom="5px"
-                  value={consulta.id_consultorio}
-                  size="large"
-                  onChange={(e) => {
-                    preenchendoDadosConsulta(e);
-                  }}
-                >
-                  {consultorios.map((consultorio) => (
-                    <>
-                      {carregandoConsultorios ? (
-                        <Spin indicator={antIcon} />
-                      ) : (
-                        <option
-                          key={consultorio.id}
-                          value={consultorio.id}
-                          color="red"
-                        >
-                          {consultorio.nome}
-                        </option>
-                      )}
-                    </>
-                  ))}
-                </Select>
-              </Tooltip>
-            </CaixaSelect>
-         
 
-       
           <CaixaSelect>
-              <TextoCaixaSelect>Selecione um horário:</TextoCaixaSelect>
-              <InputHora
-                value={hora}
-                type="text"
-                onKeyDown={(e) => e.preventDefault()}
-                onFocus={(e) => (e.target.type = "time")}
-                onBlur={(e) => (e.target.type = "text")}
-                placeholder="Horário"
-                name="hora"
-                onChange={preenchendoDadosConsulta}
-                style={{ color: "black" }}
-                camposVazios={camposVazios.hora}
-              />
-              {camposVazios.hora ? <Rotulo>Digite um horário</Rotulo> : <></>}
-            </CaixaSelect>
+            <TextoCaixaSelect>Selecione um tipo:</TextoCaixaSelect>
+            <Tooltip
+              placement="topLeft"
+              title={consulta.tipo}
+              color={Cores.azul}
+            >
+              <Select
+                style={{
+                  width: "100%",
+                  color: "black",
+                  borderColor: "black",
+                  borderWidth: "1px",
+                  marginTop: "0px",
+                  height: "36px",
+                }}
+                paddingTop="5px"
+                paddingBottom="5px"
+                size="large"
+                value={consulta.tipo}
+                name="tipo"
+                placeholder="Tipo"
+                onChange={(e) => {
+                  preenchendoDadosConsulta(e);
+                }}
+              >
+                {TiposDeConsulta.map((tipo) => (
+                  <>
+                    {carregando ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <option key={tipo} value={tipo} color="red">
+                        {tipo}
+                      </option>
+                    )}
+                  </>
+                ))}
+              </Select>
+            </Tooltip>
+          </CaixaSelect>
+          <CaixaSelect>
+            <TextoCaixaSelect>Selecione um consultório:</TextoCaixaSelect>
+            <Tooltip
+              placement="topLeft"
+              title={consultorioPorId}
+              color={Cores.azul}
+            >
+              <Select
+                id="id_consultorio"
+                name="id_consultorio"
+                style={{
+                  width: "100%",
+                  borderColor: "black",
+                  borderWidth: "1px",
+                  color: "black",
+                  height: "36px",
+                  marginTop: "0px",
+                }}
+                paddingTop="5px"
+                paddingBottom="5px"
+                value={consulta.id_consultorio}
+                size="large"
+                onChange={(e) => {
+                  preenchendoDadosConsulta(e);
+                }}
+              >
+                {consultorios.map((consultorio) => (
+                  <>
+                    {carregandoConsultorios ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <option
+                        key={consultorio.id}
+                        value={consultorio.id}
+                        color="red"
+                      >
+                        {consultorio.nome}
+                      </option>
+                    )}
+                  </>
+                ))}
+              </Select>
+            </Tooltip>
+          </CaixaSelect>
+
+          <CaixaSelect>
+            <TextoCaixaSelect>Selecione um horário:</TextoCaixaSelect>
+            <InputHora
+              value={hora}
+              type="text"
+              onKeyDown={(e) => e.preventDefault()}
+              onFocus={(e) => (e.target.type = "time")}
+              onBlur={(e) => (e.target.type = "text")}
+              placeholder="Horário"
+              name="hora"
+              onChange={preenchendoDadosConsulta}
+              style={{ color: "black" }}
+              camposVazios={camposVazios.hora}
+            />
+            {camposVazios.hora ? <Rotulo>Digite um horário</Rotulo> : <></>}
+          </CaixaSelect>
 
           <TipoAgendamento>
             <TextoTipoAgendamento>
               Selecione o Tipo de Agendamento:
             </TextoTipoAgendamento>
             <Row gutter={60} justify={"space-around"}>
-            <Radio.Group 
-            defaultValue=""
-            bordered={false}
-            FiltrarInputs={tipoRadio}
-            onChange={(e) => inputsFiltrados(e.target.value)}
-            >
-              <Radio value="">Exame</Radio>
-              <Radio value="filtrado">Consulta</Radio>
-            </Radio.Group>
+              <Radio.Group
+                defaultValue=""
+                bordered={false}
+                FiltrarInputs={tipoRadio}
+                onChange={(e) => inputsFiltrados(e.target.value)}
+              >
+                <Radio value="">Exame</Radio>
+                <Radio value="filtrado">Consulta</Radio>
+              </Radio.Group>
             </Row>
           </TipoAgendamento>
           {tipoRadio === "" ? (
-                <></>
-            <CaixaSelect>
-              <TextoCaixaSelect>Selecione uma duração:</TextoCaixaSelect>
-              <InputDuracao
-                value={consulta.duracao_em_minutos}
-                placeholder="Duração"
-                name="duracao_em_minutos"
-                onChange={preenchendoDadosConsulta}
-                suffix="min"
-                camposVazios={camposVazios.duracao_em_minutos}
-              />
-              {camposVazios.duracao_em_minutos ? (
-                <Rotulo>Digite uma duração</Rotulo>
-              ) : (
-                <></>
-              )}
-            </CaixaSelect> 
-      
+            <>
+              <CaixaSelect>
+                <TextoCaixaSelect>Selecione uma duração:</TextoCaixaSelect>
+                <InputDuracao
+                  value={consulta.duracao_em_minutos}
+                  placeholder="Duração"
+                  name="duracao_em_minutos"
+                  onChange={preenchendoDadosConsulta}
+                  suffix="min"
+                  camposVazios={camposVazios.duracao_em_minutos}
+                />
+                {camposVazios.duracao_em_minutos ? (
+                  <Rotulo>Digite uma duração</Rotulo>
+                ) : (
+                  <></>
+                )}
+              </CaixaSelect>
+            </>
+          ) : (
+            <></>
+          )}
+
           <Checkbox>
             <TextoCheckbox>Notificar paciente</TextoCheckbox>
           </Checkbox>
@@ -387,7 +424,7 @@ function ModalEditarAgendamentoEspecifico(props) {
             )}
           </Button>
         </InfoDireita>
-      </Caixa> 
+      </Caixa>
     </Container>
   );
 }

@@ -27,6 +27,7 @@ import {
   ContainerNome,
   TextoTipoAgendamento,
   TipoAgendamento,
+  ContainerHorario,
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
@@ -37,7 +38,7 @@ import { apenasNumeros } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
 import {
   ContainerDuracaoConsulta,
-  ContainerHorario,
+  
 } from "../ModalAgendamentoEspecifico/Styles";
 import { TiposDeConsulta } from "../listaTiposDeConsultas";
 

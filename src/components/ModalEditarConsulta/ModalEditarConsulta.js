@@ -27,6 +27,8 @@ import {
   ContainerNome,
   TextoTipoAgendamento,
   TipoAgendamento,
+  ContainerHorario,
+  ContainerDuracaoConsulta,
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
@@ -35,10 +37,6 @@ import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import { apenasNumeros } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
-import {
-  ContainerDuracaoConsulta,
-  ContainerHorario,
-} from "../ModalAgendamentoEspecifico/Styles";
 import { TiposDeConsulta } from "../listaTiposDeConsultas";
 
 function ModalEditarConsulta(props) {
@@ -158,7 +156,6 @@ function ModalEditarConsulta(props) {
     setTipoRadio(value);
   }
 
-
   function formatacaoDataHora() {
     try {
       const dataHora = `${data} ${hora}:00`;
@@ -232,21 +229,19 @@ function ModalEditarConsulta(props) {
     <Container>
       <Caixa>
         <InfoEsquerda>
-        
-                <TextAreaDescricao
-                border={tipoRadio}
-                placeholder="Adicione uma descrição"
-                rows={4}
-                name="descricao"
-                value={consulta.descricao}
-                onChange={preenchendoDadosConsulta}
-                style={{
-                  borderWidth: "1px",
-                  borderColor: Cores.azul,
-                  color: "black",
-                }}
-              />
-
+          <TextAreaDescricao
+            border={tipoRadio}
+            placeholder="Adicione uma descrição"
+            rows={4}
+            name="descricao"
+            value={consulta.descricao}
+            onChange={preenchendoDadosConsulta}
+            style={{
+              borderWidth: "1px",
+              borderColor: Cores.azul,
+              color: "black",
+            }}
+          />
         </InfoEsquerda>
         <InfoDireita>
           <SelecioneUmaData>
@@ -367,7 +362,6 @@ function ModalEditarConsulta(props) {
               {camposVazios.hora ? <Rotulo>Digite um horário</Rotulo> : <></>}
             </ContainerHorario>
 
-
             <ContainerDuracaoConsulta>
               <TextoDoisSelects>Selecione uma duração:</TextoDoisSelects>
               <InputDuracao
@@ -384,12 +378,11 @@ function ModalEditarConsulta(props) {
                 <></>
               )}
             </ContainerDuracaoConsulta>
-            
           </DoisSelect>
 
-                <Checkbox>
-                  <TextoCheckbox>Notificar paciente</TextoCheckbox>
-                </Checkbox>
+          <Checkbox>
+            <TextoCheckbox>Notificar paciente</TextoCheckbox>
+          </Checkbox>
 
           <Button
             width="80%"

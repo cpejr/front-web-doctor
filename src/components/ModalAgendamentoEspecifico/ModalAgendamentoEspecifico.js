@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Radio} from "antd";
+import { Row, Radio } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { toast } from "react-toastify";
@@ -22,7 +22,8 @@ import {
   InfoEsquerda,
   TextoCheckbox,
   InputHora,
-  CaixaLoader
+  CaixaLoader,
+  InfoEsquerdaEDireita,
 } from "./Styles";
 import Select from "../../styles/Select";
 import logoGuilherme from "../../assets/logoGuilherme.png";
@@ -33,6 +34,8 @@ import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 import ModalAgendamentoConsulta from "../ModalAgendamentoConsulta";
 import ModalAgendamentoExame from "../ModalAgendamentoExame";
+import Button from "../../styles/Button";
+import { Checkbox, Tooltip } from "antd";
 
 function ModalAgendamentoEspecifico(props) {
   const [usuario, setUsuario] = useState({});
@@ -67,13 +70,6 @@ function ModalAgendamentoEspecifico(props) {
     id_consultorio: "",
     tipo: "",
   };
-  const [dataConsulta, setDataConsulta] = useState("");
-  const [hora, setHora] = useState("");
-  const [erro, setErro] = useState(false);
-  const [camposVazios, setCamposVazios] = useState(false);
-  const [hoje, setHoje] = useState("");
-  
-  
 
   const [camposVazios, setCamposVazios] = useState({
     data: false,
@@ -91,16 +87,13 @@ function ModalAgendamentoEspecifico(props) {
     tipo: "",
   });
 
-
   useEffect(() => {
     pegandoPacientes();
   }, []);
 
   useEffect(() => {
     setandoNomeConsultorioPorId();
-  },);
-
-  
+  });
 
   const errors = {};
   const [referenciaInputNulos, setReferenciaInputNulos] = useState({
@@ -110,7 +103,6 @@ function ModalAgendamentoEspecifico(props) {
     id_consultorio: false,
     tipo: false,
   });
-
 
   async function pegandoPacientes() {
     const resposta = await managerService.GetDadosPessoais();
@@ -194,7 +186,6 @@ function ModalAgendamentoEspecifico(props) {
     return horarioAtual;
   }
 
-
   useEffect(() => {
     pegandoPacientes();
     setandoDiaAtual();
@@ -203,13 +194,11 @@ function ModalAgendamentoEspecifico(props) {
 
   useEffect(() => {
     setandoNomeConsultorioPorId();
-  },);
-
+  });
 
   useEffect(() => {
     verificandoIdUsuario();
   }, [usuario]);
-
 
   useEffect(() => {
     pegandoDadosUsuario();
@@ -219,15 +208,16 @@ function ModalAgendamentoEspecifico(props) {
     setandoDataMinima();
   }, [hoje]);
 
-
-  function setandoCamposNulos(){
+  function setandoCamposNulos() {
     Object.entries(camposPreenchidos).forEach(([key, value]) => {
-      if(!value) return setCamposVazios(camposVazios => ({...camposVazios, [key]: true}))
-      setCamposVazios(camposVazios => ({...camposVazios, [key]: false}))
-    })
+      if (!value)
+        return setCamposVazios((camposVazios) => ({
+          ...camposVazios,
+          [key]: true,
+        }));
+      setCamposVazios((camposVazios) => ({ ...camposVazios, [key]: false }));
+    });
   }
-
-
 
   async function preenchendoCampos(e) {
     const { value, name } = e.target;
@@ -238,7 +228,6 @@ function ModalAgendamentoEspecifico(props) {
       if (hora !== "" && hora !== undefined) {
         validacaoHorario(hora, value);
       }
-
     } else if (name === "duracao_em_minutos") {
       camposPreenchidos[name] = apenasNumeros(value);
       setConsulta({
@@ -249,18 +238,15 @@ function ModalAgendamentoEspecifico(props) {
       camposPreenchidos[name] = value;
       setConsulta({ ...consulta, [name]: value });
     }
-      if (camposPreenchidos[name] === ""  ) { 
-            camposVazios[name]= true;  
-      }
-      else{ 
-            camposVazios[name]=false;
-      }
-
+    if (camposPreenchidos[name] === "") {
+      camposVazios[name] = true;
+    } else {
+      camposVazios[name] = false;
+    }
   }
 
   async function validacaoHorario(horarioConsulta, dataConsulta) {
     const horaAtual = setandoHoraAtual();
-
 
     if (hoje === dataConsulta) {
       if (horarioConsulta <= horaAtual) {
@@ -275,13 +261,11 @@ function ModalAgendamentoEspecifico(props) {
     setHora(horarioConsulta);
     camposPreenchidos.hora = horarioConsulta;
 
-    if (camposPreenchidos.hora === ""  ) { 
-      camposVazios.hora = true;  
-    }
-    else{ 
+    if (camposPreenchidos.hora === "") {
+      camposVazios.hora = true;
+    } else {
       camposVazios.hora = false;
     }
-    
   }
 
   function formatacaoDataHora() {
@@ -294,9 +278,7 @@ function ModalAgendamentoEspecifico(props) {
   }
 
   async function requisicaoCriarConsulta() {
-     
     setandoCamposNulos();
-
 
     if (
       consulta.duracao_em_minutos === "" ||
@@ -336,9 +318,8 @@ function ModalAgendamentoEspecifico(props) {
               <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
               {carregando ? (
                 <CaixaLoader>
-                <Spin indicator={antIcon} style={{ color:Cores.azul }}/>
+                  <Spin indicator={antIcon} style={{ color: Cores.azul }} />
                 </CaixaLoader>
-               
               ) : (
                 <Nome>{usuario.nome}</Nome>
               )}
@@ -385,15 +366,15 @@ function ModalAgendamentoEspecifico(props) {
               Selecione o Tipo de Agendamento:
             </TextoCaixaSelect>
             <Row gutter={60} justify={"space-around"}>
-            <Radio.Group 
-            defaultValue=""
-            bordered={false}
-            FiltrarInputs={tipoRadio}
-            onChange={(e) => inputsFiltrados(e.target.value)}
-            >
-              <Radio value="">Exame</Radio>
-              <Radio value="filtrado">Consulta</Radio>
-            </Radio.Group>
+              <Radio.Group
+                defaultValue=""
+                bordered={false}
+                FiltrarInputs={tipoRadio}
+                onChange={(e) => inputsFiltrados(e.target.value)}
+              >
+                <Radio value="">Exame</Radio>
+                <Radio value="filtrado">Consulta</Radio>
+              </Radio.Group>
             </Row>
           </TipoAgendamento>
           <TextAreaDescricao
@@ -424,13 +405,13 @@ function ModalAgendamentoEspecifico(props) {
             />
             {camposVazios.data && <Rotulo>Selecione uma data</Rotulo>}
           </CaixaSelect>
-         
-            <CaixaSelect>
+          <CaixaSelect>
             <TextoCaixaSelect>Selecione um tipo:</TextoCaixaSelect>
-            <Tooltip 
-                placement="topLeft" 
-                title={consulta.tipo} 
-                color = {Cores.azul}>
+            <Tooltip
+              placement="topLeft"
+              title={consulta.tipo}
+              color={Cores.azul}
+            >
               <Select
                 style={{
                   width: "100%",
@@ -464,17 +445,19 @@ function ModalAgendamentoEspecifico(props) {
                     )}
                   </>
                 ))}
-              </Select></Tooltip>
-              {camposVazios.tipo && (
-                <Rotulo>Selecione um tipo de consulta</Rotulo>
-              )}
-            </CaixaSelect>
-            <CaixaSelect>
+              </Select>
+            </Tooltip>
+            {camposVazios.tipo && (
+              <Rotulo>Selecione um tipo de consulta</Rotulo>
+            )}
+          </CaixaSelect>
+          <CaixaSelect>
             <TextoCaixaSelect>Selecione um consultório:</TextoCaixaSelect>
-            <Tooltip 
-                placement="topLeft" 
-                title =  {nomeConsultorioPorId}
-                color = {Cores.azul}>
+            <Tooltip
+              placement="topLeft"
+              title={nomeConsultorioPorId}
+              color={Cores.azul}
+            >
               <Select
                 value={consulta.id_consultorio}
                 id="id_consultorio"
@@ -513,50 +496,52 @@ function ModalAgendamentoEspecifico(props) {
                     )}
                   </>
                 ))}
-              </Select></Tooltip>
-              {camposVazios.id_consultorio && (
-                <Rotulo>Selecione um consultório</Rotulo>
-              )}
-              
-            </CaixaSelect>
-            <CaixaSelect>
+              </Select>
+            </Tooltip>
+            {camposVazios.id_consultorio && (
+              <Rotulo>Selecione um consultório</Rotulo>
+            )}
+          </CaixaSelect>
+          <CaixaSelect>
             <TextoCaixaSelect>Selecione um horário:</TextoCaixaSelect>
-              <InputHora
-                value={hora}
-                type="time"
-                onKeyDown={(e) => e.preventDefault()}
-                placeholder="Horário"
-                name="hora"
-                id="hora"
-                onChange={(e) => validacaoHorario(e.target.value, dataConsulta)}
-                camposVazios={camposVazios.hora}
-                erro={erro.hora}
-              />
-              {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
-              {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
-            </CaixaSelect>
+            <InputHora
+              value={hora}
+              type="time"
+              onKeyDown={(e) => e.preventDefault()}
+              placeholder="Horário"
+              name="hora"
+              id="hora"
+              onChange={(e) => validacaoHorario(e.target.value, dataConsulta)}
+              camposVazios={camposVazios.hora}
+              erro={erro.hora}
+            />
+            {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
+            {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
+          </CaixaSelect>
 
-            <CaixaSelect>
+          <CaixaSelect>
             <TextoCaixaSelect>Selecione uma duração:</TextoCaixaSelect>
-              <InputDuracao
-                value={consulta.duracao_em_minutos}
-                placeholder="Duração"
-                name="duracao_em_minutos"
-                onChange={preenchendoCampos}
-                suffix="min"
-                camposVazios={camposVazios.duracao_em_minutos}
-                erro={erro.duracao_em_minutos}
-              />
-              {camposVazios.duracao_em_minutos ? (
-                <Rotulo>Digite uma duração</Rotulo>
-          </InfoEsquerda>
-          {tipoRadio === "" ? (
-                <ModalAgendamentoExame></ModalAgendamentoExame>
-              ) : (
-                <ModalAgendamentoConsulta></ModalAgendamentoConsulta>
-              )}
-            </CaixaSelect>
-          
+            <InputDuracao
+              value={consulta.duracao_em_minutos}
+              placeholder="Duração"
+              name="duracao_em_minutos"
+              onChange={preenchendoCampos}
+              suffix="min"
+              camposVazios={camposVazios.duracao_em_minutos}
+              erro={erro.duracao_em_minutos}
+            />
+            {camposVazios.duracao_em_minutos ? (
+              <Rotulo>Digite uma duração</Rotulo>
+            ) : (
+              <></>
+            )}
+            {tipoRadio === "" ? (
+              <ModalAgendamentoExame></ModalAgendamentoExame>
+            ) : (
+              <ModalAgendamentoConsulta></ModalAgendamentoConsulta>
+            )}
+          </CaixaSelect>
+
           <Checkbox>
             <TextoCheckbox>Notificar paciente</TextoCheckbox>
           </Checkbox>
