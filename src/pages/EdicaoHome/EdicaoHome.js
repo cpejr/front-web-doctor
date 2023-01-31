@@ -73,31 +73,25 @@ function EdicaoHome() {
           <BoxSaibaMais backgroundColor="#7757A0"
           >
             <Input
-              value="Sobre mim"
+              type={homes.map((value) => (
+                <div>"{value.titulo_um}"</div>
+              ))}
               textAlign="center"
               backgroundColor="#7757A0"
               color={Cores.branco}
               fontSize="120%"
               width="100%"
               marginTop="2%"
-              name="titulo"
               borderWidth='0px'
-              marginLeft="10px"
+              marginLeft="10%"
             />
             <Input
-              value="Lorem Ipsum is simply dummy text of
-              the printing and typesetting industry.
-              Lorem Ipsum has been the industry's
-              standard dummy text ever since the 1500s,
-              when an unknown printer took a galley
-              of type and scrambled it to make a type
-              specimen book."
+            
               backgroundColor="#7757A0"
               color={Cores.branco}
               width="100%"
               height="auto"
               marginTop="2%"
-              name="titulo"
               borderWidth='0px'
               paddingLeft="10%"
               paddingRight="10%"
@@ -110,9 +104,7 @@ function EdicaoHome() {
               <Conteudo
                 color={Cores.branco}
               >
-                {homes.map((value) => (
-                  <div>"{value.titulo_um}"</div>
-                ))}
+                
                 {homes.map((value) => (
                   <div>"{value.texto_um}"</div>
                 ))}
@@ -150,19 +142,12 @@ function EdicaoHome() {
               borderWidth='0px'
             />
             <Input
-              value="Lorem Ipsum is simply dummy text of
-              the printing and typesetting industry.
-              Lorem Ipsum has been the industry's
-              standard dummy text ever since the 1500s,
-              when an unknown printer took a galley
-              of type and scrambled it to make a type
-              specimen book."
+            
               backgroundColor="#FBCB4C"
               color={Cores.preto}
               width="100%"
               height="auto"
               marginTop="2%"
-              name="titulo"
               borderWidth='0px'
               paddingLeft="10%"
               paddingRight="10%"
@@ -197,19 +182,11 @@ function EdicaoHome() {
               borderWidth='0px'
             />
             <Input
-              value="Lorem Ipsum is simply dummy text of
-              the printing and typesetting industry.
-              Lorem Ipsum has been the industry's
-              standard dummy text ever since the 1500s,
-              when an unknown printer took a galley
-              of type and scrambled it to make a type
-              specimen book."
               backgroundColor={Cores.lilas[1]}
               color={Cores.branco}
               width="100%"
               height="auto"
               marginTop="2%"
-              name="titulo"
               borderWidth='0px'
               paddingLeft="10%"
               paddingRight="10%"
@@ -242,19 +219,12 @@ function EdicaoHome() {
               borderWidth='0px'
             />
             <Input
-              value="Lorem Ipsum is simply dummy text of
-              the printing and typesetting industry.
-              Lorem Ipsum has been the industry's
-              standard dummy text ever since the 1500s,
-              when an unknown printer took a galley
-              of type and scrambled it to make a type
-              specimen book."
+            
               backgroundColor={Cores.branco}
               color={Cores.preto}
               width="100%"
               height="auto"
               marginTop="2%"
-              name="titulo"
               borderWidth='0px'
               paddingLeft="10%"
               paddingRight="10%"

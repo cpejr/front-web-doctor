@@ -23,6 +23,7 @@ export const Container = styled.div`
     margin-top: 10%;
     margin-bottom: 10%;
     flex-direction: column;
+    align-items: center;
   }
   @media (max-width: 780px) {
     width: 85%;
