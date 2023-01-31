@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Corpo, Container,
   TituloPaginaEdicao,
@@ -26,18 +26,21 @@ import * as managerService from "../../services/ManagerService/managerService";
 import Input from "../../styles/Input";
 
 function EdicaoHome() {
-  //const history = useHistory();
   const [homes, setHomes] = useState([]);
+  //const tituloUmRef = useRef(null);
 
 
   async function pegandoDados() {
     const dadosHomes = await managerService.GetHomes();
     setHomes(dadosHomes);
+    
   }
-
+  console.log({pegandoDados});
   useEffect(() => {
     pegandoDados();
   }, []);
+
+  
 
   return (
     <Corpo>
@@ -73,10 +76,11 @@ function EdicaoHome() {
           <BoxSaibaMais backgroundColor="#7757A0"
           >
             <Input
-              type={homes.map((value) => (
-                <div>"{value.titulo_um}"</div>
-              ))}
-              textAlign="center"
+              //name="titulo_um" 
+              //ref={tituloUmRef} 
+              //defaultValue={homes?.titulo_um}
+              textAlign="left"
+              paddingLeft="10%"
               backgroundColor="#7757A0"
               color={Cores.branco}
               fontSize="120%"
@@ -85,6 +89,7 @@ function EdicaoHome() {
               borderWidth='0px'
               marginLeft="10%"
             />
+             
             <Input
             
               backgroundColor="#7757A0"
@@ -104,7 +109,10 @@ function EdicaoHome() {
               <Conteudo
                 color={Cores.branco}
               >
-                
+                {homes.map((value) => (
+                <div>"{value.titulo_um}"</div>
+              ))}
+            
                 {homes.map((value) => (
                   <div>"{value.texto_um}"</div>
                 ))}
@@ -118,9 +126,8 @@ function EdicaoHome() {
 
           <BoxAlterarImagem
           >
-            <BotaoGenerico>
+            
               <BotaoGenerico>Alterar Imagens</BotaoGenerico>
-            </BotaoGenerico>
           </BoxAlterarImagem>
 
         </MetadeEsquerda>
@@ -132,7 +139,8 @@ function EdicaoHome() {
           >
             <Input
               value="Indicações e Sugestões"
-              textAlign="center"
+              textAlign="left"
+              paddingLeft="10%"
               backgroundColor="#FBCB4C"
               color={Cores.preto}
               fontSize="120%"
@@ -172,7 +180,8 @@ function EdicaoHome() {
           >
             <Input
               value="Comentarios e Depoimentos"
-              textAlign="center"
+              textAlign="left"
+              paddingLeft="10%"
               backgroundColor={Cores.lilas[1]}
               color={Cores.branco}
               fontSize="120%"
@@ -209,7 +218,8 @@ function EdicaoHome() {
           <BoxSaibaMais>
             <Input
               value="Grupo AMIE (Epilepsia)"
-              textAlign="center"
+              textAlign="left"
+              paddingLeft="10%"
               backgroundColor={Cores.branco}
               color={Cores.preto}
               fontSize="120%"
