@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Corpo, Container,
   TituloPaginaEdicao,
@@ -27,11 +27,13 @@ import Input from "../../styles/Input";
 
 function EdicaoHome() {
   const [homes, setHomes] = useState([]);
+  //const tituloUmRef = useRef(null);
 
 
   async function pegandoDados() {
     const dadosHomes = await managerService.GetHomes();
     setHomes(dadosHomes);
+    
   }
 
   function preenchendoDados(e) {
@@ -42,6 +44,8 @@ function EdicaoHome() {
   useEffect(() => {
     pegandoDados();
   }, []);
+
+  
 
   return (
     <Corpo>
@@ -77,6 +81,9 @@ function EdicaoHome() {
           <BoxSaibaMais backgroundColor="#7757A0"
           >
             <Input
+              type={homes.map((value) => (
+                <div>"{value.titulo_um}"</div>
+              ))}
               textAlign="center"
               backgroundColor="#7757A0"
               color={Cores.branco}
@@ -89,6 +96,7 @@ function EdicaoHome() {
               name="titulo_um"
               onChange={preenchendoDados}
             />
+             
             <Input
               backgroundColor="#7757A0"
               color={Cores.branco}
@@ -106,6 +114,15 @@ function EdicaoHome() {
               onChange={preenchendoDados}
             />
             <ScrollSobreMim>
+
+              <Conteudo
+                color={Cores.branco}
+              >
+                
+                {homes.map((value) => (
+                  <div>"{value.texto_um}"</div>
+                ))}
+              </Conteudo>
             </ScrollSobreMim>
 
             <TextoSaibaMais color={Cores.branco}>
@@ -115,9 +132,8 @@ function EdicaoHome() {
 
           <BoxAlterarImagem
           >
-            <BotaoGenerico>
+            
               <BotaoGenerico>Alterar Imagens</BotaoGenerico>
-            </BotaoGenerico>
           </BoxAlterarImagem>
 
         </MetadeEsquerda>
@@ -128,6 +144,7 @@ function EdicaoHome() {
             backgroundColor="#FBCB4C"
           >
             <Input
+              value="Indicações e Sugestões"
               textAlign="center"
               backgroundColor="#FBCB4C"
               color={Cores.preto}
@@ -163,6 +180,7 @@ function EdicaoHome() {
           <BoxSaibaMais backgroundColor={Cores.lilas[1]}
           >
             <Input
+              value="Comentarios e Depoimentos"
               textAlign="center"
               backgroundColor={Cores.lilas[1]}
               color={Cores.branco}
@@ -196,6 +214,7 @@ function EdicaoHome() {
           </BoxSaibaMais>
           <BoxSaibaMais>
             <Input
+              value="Grupo AMIE (Epilepsia)"
               textAlign="center"
               backgroundColor={Cores.branco}
               color={Cores.preto}

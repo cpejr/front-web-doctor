@@ -28,9 +28,7 @@ export const Container = styled.div`
   @media (max-width: 780px) {
     width: 85%;
   }
-  @media (max-width: 360px) {
-    height: 450px;
-  }
+ 
 `;
 
 export const MetadeEsquerda = styled.div`
@@ -53,9 +51,7 @@ export const MetadeEsquerda = styled.div`
   @media (max-width: 780px) {
     width: 85%;
   }
-  @media (max-width: 360px) {
-    height: 450px;
-  }
+ 
 `;
 
 export const MetadeDireita = styled.div`
@@ -77,9 +73,7 @@ export const MetadeDireita = styled.div`
   @media (max-width: 780px) {
     width: 85%;
   }
-  @media (max-width: 360px) {
-    height: 450px;
-  }
+  
 `;
 
 export const TituloCentral = styled.p`
@@ -293,6 +287,7 @@ export const BotaoGenerico = styled.button`
   border-radius: 6px;
   border: solid 3px #bbc0f4;
   font-family: "Roboto Condensed", sans-serif;
+  align-items: center;
 
   @media (max-width: 600px) {
     margin-bottom: 5%;
