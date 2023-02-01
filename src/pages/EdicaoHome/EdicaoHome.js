@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   Corpo, Container,
   MetadeEsquerda,
@@ -17,6 +17,7 @@ import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 
 import Input from "../../styles/Input";
+import CarrosselEditarHome from "../../components/CarrosselEditarHome.js/CarrosselEditarHome";
 
 function EdicaoHome() {
   const [homes, setHomes] = useState([]);
@@ -24,7 +25,7 @@ function EdicaoHome() {
   async function pegandoDados() {
     const dadosHomes = await managerService.GetHomes();
     setHomes(dadosHomes);
-    
+
   }
 
   function preenchendoDados(e) {
@@ -36,7 +37,7 @@ function EdicaoHome() {
     pegandoDados();
   }, []);
 
-  
+
 
   return (
     <Corpo>
@@ -84,9 +85,9 @@ function EdicaoHome() {
               name="titulo_um"
               onChange={preenchendoDados}
               paddingLeft="10%"
-              
+
             />
-             
+
             <Input
               backgroundColor="#7757A0"
               color={Cores.branco}
@@ -111,7 +112,7 @@ function EdicaoHome() {
 
           <BoxAlterarImagem
           >
-              <BotaoGenerico>Alterar Imagens</BotaoGenerico>
+            <CarrosselEditarHome />
           </BoxAlterarImagem>
 
         </MetadeEsquerda>
@@ -122,7 +123,7 @@ function EdicaoHome() {
             backgroundColor="#FBCB4C"
           >
             <Input
-              
+
               textAlign="left"
               backgroundColor="#FBCB4C"
               color={Cores.preto}
@@ -160,7 +161,7 @@ function EdicaoHome() {
           <BoxSaibaMais backgroundColor={Cores.lilas[1]}
           >
             <Input
-              
+
               textAlign="left"
               backgroundColor={Cores.lilas[1]}
               color={Cores.branco}
@@ -195,7 +196,7 @@ function EdicaoHome() {
           </BoxSaibaMais>
           <BoxSaibaMais>
             <Input
-              
+
               textAlign="left"
               backgroundColor={Cores.branco}
               color={Cores.preto}
