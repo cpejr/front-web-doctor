@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Tooltip} from "antd";
+import { Tooltip } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
@@ -26,7 +26,6 @@ import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 
-
 function ModalAgendamentoExame(props) {
   const [usuario, setUsuario] = useState({});
   const [usuarios, setUsuarios] = useState([]);
@@ -42,7 +41,6 @@ function ModalAgendamentoExame(props) {
   const valoresIniciaisExame = {
     hora: "",
     titulo: "",
-    id_usuario: "",
     nome: "",
   };
   const [dataExame, setDataExame] = useState("");
@@ -50,63 +48,22 @@ function ModalAgendamentoExame(props) {
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [hoje, setHoje] = useState("");
-  
 
   moment.locale("pt-br");
-
-  async function pegandoPacientes() {
-    const resposta = await managerService.GetDadosPessoais();
-    resposta.forEach((usuario) => {
-      if (usuario.tipo === "PACIENTE") {
-        setUsuarios((usuarios) => [...usuarios, usuario]);
-      }
-    });
-  }
-
-
-  useEffect(() => {
-    pegandoPacientes();
-  }, []);
-
-  
-
   const errors = {};
   const [referenciaInputNulos, setReferenciaInputNulos] = useState({
     hora: false,
     titulo: false,
-    id_usuario: false,
     nome: false,
+    data: false,
   });
-
-  function verificandoIdUsuario() {
-    if (props.abertoPeloUsuario === false) {
-      setReferenciaInputNulos({ ...referenciaInputNulos, id_usuario: false });
-    } else {
-      setExame({ ...exame, id_usuario: usuario.id });
-    }
-  }
-
-  useEffect(() => {
-    verificandoIdUsuario();
-  }, [usuario]);
-
-  async function pegandoDadosUsuario() {
-    setCarregando(true);
-    const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
-    setUsuario(resposta.dadosUsuario);
-    setCarregando(false);
-  }
-
-  useEffect(() => {
-    pegandoDadosUsuario();
-  }, [props]);
 
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true);
-    const res = await managerService.GetDadosConsultorios({tipo:'EXAME'});
+    const res = await managerService.GetDadosConsultorios({ tipo: "EXAME" });
     setConsultorios(res.dadosConsultorios);
     setCarregandoConsultorios(false);
-  }   
+  }
 
   useEffect(() => {
     pegandoConsultorios();
@@ -117,13 +74,11 @@ function ModalAgendamentoExame(props) {
     const res = await managerService.GetDadosExames();
     setExames(res);
     setCarregandoExames(false);
-  } 
+  }
 
   useEffect(() => {
     pegandoExames();
   }, []);
-
-  
 
   async function validacaoCampos(e) {
     const { value, name } = e.target;
@@ -135,18 +90,22 @@ function ModalAgendamentoExame(props) {
     }
 
     if (name === "data") {
-        setDataExame(value);
+      setDataExame(value);
       if (hora !== "" && hora !== undefined) {
         validacaoHorario(hora, value);
       }
 
       return dataExame;
     } else if (name === "nome") {
-      const consultorioSelecionado = consultorios.find((consultorioAtual) => consultorioAtual.id === value);
+      const consultorioSelecionado = consultorios.find(
+        (consultorioAtual) => consultorioAtual.id === value
+      );
       setConsultorio(consultorioSelecionado);
-    }  else {
-      const exameSelecionado = exames.find((exameAtual) => exameAtual.id === value);
-      setExame((exameAtual) => ({...exameAtual, ...exameSelecionado}));
+    } else {
+      const exameSelecionado = exames.find(
+        (exameAtual) => exameAtual.id === value
+      );
+      setExame((exameAtual) => ({ ...exameAtual, ...exameSelecionado }));
       return exame;
     }
   }
@@ -227,33 +186,31 @@ function ModalAgendamentoExame(props) {
   }
 
   async function requisicaoCriarExame() {
-    console.log(
-      "🚀 ~ file: ModalAgendamentoExame.js:249 ~ requisicaoCriarExame ~ exame",
-      exame
-    );
+    exame.id_usuario = props.idUsuario;
     if (!dataExame) errors.data = true;
     if (!hora) errors.hora = true;
     if (!consultorio.nome) errors.nome = true;
     if (!exame.titulo) errors.titulo = true;
-    if (!exame.id_usuario) errors.id_usuario = true;
 
     setCamposVazios({ ...camposVazios, ...errors });
-
-    if (
-      dataExame === "" ||
-      hora === ""
-    ) {
+    if (dataExame === "" || hora === "") {
       toast.warn("Preencha todos os campos");
     } else {
       if (erro.hora) {
         toast.warn("Preencha todos os campos corretamente");
       } else {
+        console.log(
+          "🚀 ~ file: ModalAgendamentoExame.js:205 ~ requisicaoCriarExame ~ referenciaInputNulos",
+          referenciaInputNulos
+        );
+        console.log(
+          "🚀 ~ file: ModalAgendamentoExame.js:205 ~ requisicaoCriarExame ~ camposVazios",
+          camposVazios
+        );
         if (_.isEqual(camposVazios, referenciaInputNulos)) {
           setCarregandoCadastro(true);
           formatacaoDataHora();
-          
           // await managerService.CriandoExame(exame);
-          
           setCarregandoCadastro(false);
           // await sleep(1500);
           // props.fechandoModal();
@@ -290,102 +247,103 @@ function ModalAgendamentoExame(props) {
           </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
-            <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
-            <Tooltip 
-                placement="topLeft" 
-                title={exame?.titulo} 
-                color = {Cores.azul}>
-              <Select
-                value={exame?.id}
-                style={{
-                  width: "100%",
-                  color: "black",
-                  borderWidth: "1px",
-                }}
-                paddingTop="8px"
-                paddingBottom="8px"
-                size="large"
-                name="titulo"
-                placeholder="Tipo"
-                onChange={(e) => {
-                  validacaoCampos(e);
-                }}
-                camposVazios={camposVazios.titulo}
+              <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
+              <Tooltip
+                placement="topLeft"
+                title={exame?.titulo}
+                color={Cores.azul}
               >
-                <option value="" disabled selected>
-                {exame?.titulo} 
-                  Tipo
-                </option>
-                {exames?.map((exame) => (
-                  <>
-                    {carregandoExames ? (
-                      <Spin indicator={antIcon} />
-                    ) : (
-                      <option key={exame.id} value={exame.id} color="red">
-                        {exame.titulo}
-                      </option>
-                    )}
-                  </>
-                ))}
-              </Select></Tooltip>
+                <Select
+                  value={exame?.id}
+                  style={{
+                    width: "100%",
+                    color: "black",
+                    borderWidth: "1px",
+                  }}
+                  paddingTop="8px"
+                  paddingBottom="8px"
+                  size="large"
+                  name="titulo"
+                  placeholder="Tipo"
+                  onChange={(e) => {
+                    validacaoCampos(e);
+                  }}
+                  camposVazios={camposVazios.titulo}
+                >
+                  <option value="" disabled selected>
+                    {exame?.titulo}
+                    Tipo
+                  </option>
+                  {exames?.map((exame) => (
+                    <>
+                      {carregandoExames ? (
+                        <Spin indicator={antIcon} />
+                      ) : (
+                        <option key={exame.id} value={exame.id} color="red">
+                          {exame.titulo}
+                        </option>
+                      )}
+                    </>
+                  ))}
+                </Select>
+              </Tooltip>
               {camposVazios.titulo && (
                 <Rotulo>Selecione um tipo de exame</Rotulo>
               )}
             </TamanhoInput>
             <InputConsultorio>
-            <TextoDoisSelects>Selecione um consultório:</TextoDoisSelects>
-            <Tooltip 
-                placement="topLeft" 
-                title =  {consultorio?.nome}
-                color = {Cores.azul}>
-              <Select
-                value={consultorio?.id}
-                id="nome"
-                name="nome"
-                style={{
-                  width: "100%",
-                  borderWidth: "1px",
-                  borderColor: "black",
-                  color: "black",
-                }}
-                paddingTop="8px"
-                paddingBottom="8px"
-                size="large"
-                onChange={(e) => {
-                  validacaoCampos(e);
-                }}
-                camposVazios={camposVazios.nome}
+              <TextoDoisSelects>Selecione um consultório:</TextoDoisSelects>
+              <Tooltip
+                placement="topLeft"
+                title={consultorio?.nome}
+                color={Cores.azul}
               >
-                <option value="" disabled selected>
-                  {consultorio.nome}
-                  Consultório
-                </option>
-                {consultorios?.map((consultorio) => (
-                  <>
-                    {carregandoConsultorios ? (
-                      <Spin indicator={antIcon} />
-                    ) : (
-                      <option
-                        key={consultorio.id}
-                        value={consultorio.id}
-                        color="red"
-                      >
-                        {consultorio.nome}
-                      </option>
-                    )}
-                  </>
-                ))}
-              </Select></Tooltip>
-              {camposVazios.nome && (
-                <Rotulo>Selecione um consultório</Rotulo>
-              )}
-              
+                <Select
+                  value={consultorio?.id}
+                  id="nome"
+                  name="nome"
+                  style={{
+                    width: "100%",
+                    borderWidth: "1px",
+                    borderColor: "black",
+                    color: "black",
+                  }}
+                  paddingTop="8px"
+                  paddingBottom="8px"
+                  size="large"
+                  onChange={(e) => {
+                    validacaoCampos(e);
+                  }}
+                  camposVazios={camposVazios.nome}
+                >
+                  <option value="" disabled selected>
+                    {consultorio.nome}
+                    Consultório
+                  </option>
+                  {consultorios?.map((consultorio) => (
+                    <>
+                      {carregandoConsultorios ? (
+                        <Spin indicator={antIcon} />
+                      ) : (
+                        <option
+                          key={consultorio.id}
+                          value={consultorio.id}
+                          color="red"
+                        >
+                          {consultorio.nome}
+                        </option>
+                      )}
+                    </>
+                  ))}
+                </Select>
+              </Tooltip>
+              {camposVazios.nome && <Rotulo>Selecione um consultório</Rotulo>}
             </InputConsultorio>
           </DoisSelect>
 
           <DoisSelect>
             <ContainerHorario>
-            <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
+              <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
               <InputHora
                 value={hora}
                 type="time"

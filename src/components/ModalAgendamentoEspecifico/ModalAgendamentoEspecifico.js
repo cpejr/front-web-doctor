@@ -39,6 +39,7 @@ import { Checkbox, Tooltip } from "antd";
 
 function ModalAgendamentoEspecifico(props) {
   const [usuario, setUsuario] = useState({});
+  const [idUsuario, setIdUsuario] = useState({});
   const [usuarios, setUsuarios] = useState([]);
   const [carregando, setCarregando] = useState();
   const [tipoRadio, setTipoRadio] = useState("");
@@ -49,6 +50,7 @@ function ModalAgendamentoEspecifico(props) {
     if (props.abertoPeloUsuario) {
       const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
       setUsuario(resposta.dadosUsuario);
+      setIdUsuario(resposta.dadosUsuario.id)
     } else {
       const resposta = await managerService.GetDadosPessoais();
       resposta.forEach((usuario) => {
@@ -57,7 +59,7 @@ function ModalAgendamentoEspecifico(props) {
         }
       });
     }
-    setCarregando(false)
+    setCarregando(false);
   }
 
   useEffect(() => {
@@ -99,7 +101,7 @@ function ModalAgendamentoEspecifico(props) {
                   name="id_usuario"
                   placeholder="Selecione um paciente"
                   onChange={(e) => {
-                    setUsuario(e.target.value);
+                    setIdUsuario(e.target.value);
                   }}
                 >
                   <option value="" disabled selected>
@@ -110,7 +112,7 @@ function ModalAgendamentoEspecifico(props) {
                       {carregando ? (
                         <Spin indicator={antIcon} />
                       ) : (
-                        <option key={usuario.id} value={usuario} color="red">
+                        <option key={usuario.id} value={usuario.id} color="red">
                           {usuario.nome}
                         </option>
                       )}
@@ -141,7 +143,7 @@ function ModalAgendamentoEspecifico(props) {
           {tipoRadio === "" ? (
             <ModalAgendamentoExame
               abertoPeloUsuario={props.abertoPeloUsuario}
-              usuario={usuario}
+              idUsuario={idUsuario}
             />
           ) : (
             <ModalAgendamentoConsulta />
