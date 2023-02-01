@@ -41,9 +41,27 @@ export const Titulo = styled.div`
 
 export const Texto = styled.div`
   display: flex;
+  padding-right: 10%;
+  justify-content: start;
+  font-family: "Roboto Condensed", sans-serif;
+  font-size: 18px;
+  font-weight:700;
+  color: #000000;
+  align-self: flex-start;
+  margin-left: 15%;
+
+  @media (max-width: 560px) {
+    font-size: 1.2em;
+    margin-bottom: 8%;
+  }
+`;
+
+export const TextoTextArea = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
   align-items: center;
-  justify-content:start;
-  text-align: left;
   font-family: "Roboto Condensed", sans-serif;
   font-size: 18px;
   font-weight:700;
@@ -76,9 +94,20 @@ export const BotaoAdicionar = styled.button`
   margin-top: 2%;
   border-style:solid;
 
-  @media (max-width: 500px) {
+  @media (max-width: 1300px) {
     font-size: 1.2em;
     height: auto;
+  }
+
+  @media (max-width: 800px) {
+    font-size: 1.2em;
+    height: auto;
+  }
+
+  @media (max-width: 300px) {
+    font-size: 1.2em;
+    height: auto;
+    width: auto;
   }
 `;
 

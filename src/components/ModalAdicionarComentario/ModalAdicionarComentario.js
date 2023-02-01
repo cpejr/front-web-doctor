@@ -3,9 +3,10 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Spin } from "antd";
 import { LoadingOutlined, PlusSquareOutlined } from "@ant-design/icons";
-import { ContainerModalCodigo, Titulo, Texto, BotaoAdicionar, TextoIcone } from "./Styles";
+import { ContainerModalCodigo, Titulo, Texto, BotaoAdicionar, TextoIcone, TextoTextArea } from "./Styles";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
+import TextArea from "../../styles/TextArea"
 import _ from "lodash";
 import * as managerService from "../../services/ManagerService/managerService";
 
@@ -71,20 +72,23 @@ function ModalAdicionarComentario(props) {
     <>
       <ContainerModalCodigo>
         <Titulo>Adicionar Comentário:</Titulo>
-        <Texto>Comentário:</Texto>
-        <Input
-          placeholder="Insira um novo Comentário"
-          backgroundColor="#E4E6F4"
-          color="black"
-          fontSize="1em"
-          width="70%"
-          marginTop="2%"
-          marginBottom="2%"
-          paddingRight="2%"
-          name="comentario"
-          onChange={preenchendoDados}
-          camposVazios={camposVazios.comentario}
-        ></Input>
+        <TextoTextArea>
+          <Texto>Comentário:</Texto>
+          <TextArea
+            placeholder="Insira um novo Comentário"
+            backgroundColor="#E4E6F4"
+            color="black"
+            fontSize="1em"
+            width="70%"
+            marginTop="2%"
+            marginBottom="2%"
+            paddingRight="2%"
+            line-height="30px"
+            name="comentario"
+            onChange={preenchendoDados}
+            camposVazios={camposVazios.comentario}
+          ></TextArea>
+        </TextoTextArea>
         <BotaoAdicionar
           onClick={criarComentario}
         >

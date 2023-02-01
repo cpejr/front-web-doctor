@@ -57,14 +57,20 @@ export const BotaoExcluir = styled.button`
   margin-bottom:3%;
   border-style:solid;
 
-  @media (max-width: 1000px) {
+  @media (max-width: 1300px) {
     font-size: 1.2em;
     height: auto;
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 800px) {
     font-size: 1.2em;
     height: auto;
+  }
+
+  @media (max-width: 300px) {
+    font-size: 1.2em;
+    height: auto;
+    width: auto;
   }
 `;
 
