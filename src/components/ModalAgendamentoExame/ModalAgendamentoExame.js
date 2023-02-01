@@ -90,6 +90,17 @@ function ModalAgendamentoExame(props) {
     verificandoIdUsuario();
   }, [usuario]);
 
+  async function pegandoDadosUsuario() {
+    setCarregando(true);
+    const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
+    setUsuario(resposta.dadosUsuario);
+    setCarregando(false);
+  }
+
+  useEffect(() => {
+    pegandoDadosUsuario();
+  }, [props]);
+
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true);
     const res = await managerService.GetDadosConsultorios({tipo:'EXAME'});
@@ -112,16 +123,7 @@ function ModalAgendamentoExame(props) {
     pegandoExames();
   }, []);
 
-  async function pegandoDadosUsuario() {
-    setCarregando(true);
-    const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
-    setUsuario(resposta.dadosUsuario);
-    setCarregando(false);
-  }
-
-  useEffect(() => {
-    pegandoDadosUsuario();
-  }, [props]);
+  
 
   async function validacaoCampos(e) {
     const { value, name } = e.target;
@@ -225,6 +227,10 @@ function ModalAgendamentoExame(props) {
   }
 
   async function requisicaoCriarExame() {
+    console.log(
+      "🚀 ~ file: ModalAgendamentoExame.js:249 ~ requisicaoCriarExame ~ exame",
+      exame
+    );
     if (!dataExame) errors.data = true;
     if (!hora) errors.hora = true;
     if (!consultorio.nome) errors.nome = true;
@@ -232,7 +238,6 @@ function ModalAgendamentoExame(props) {
     if (!exame.id_usuario) errors.id_usuario = true;
 
     setCamposVazios({ ...camposVazios, ...errors });
-    console.log({camposVazios, referenciaInputNulos})
 
     if (
       dataExame === "" ||
@@ -246,13 +251,15 @@ function ModalAgendamentoExame(props) {
         if (_.isEqual(camposVazios, referenciaInputNulos)) {
           setCarregandoCadastro(true);
           formatacaoDataHora();
-          await managerService.CriandoExame(exame);
+          
+          // await managerService.CriandoExame(exame);
+          
           setCarregandoCadastro(false);
-          await sleep(1500);
-          props.fechandoModal();
-          setExame(valoresIniciaisExame);
-          setDataExame("");
-          setHora("");
+          // await sleep(1500);
+          // props.fechandoModal();
+          // setExame(valoresIniciaisExame);
+          // setDataExame("");
+          // setHora("");
         } else {
           setCarregandoCadastro(true);
           toast.warn("Preencha todos os campos corretamente");
