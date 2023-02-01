@@ -94,7 +94,7 @@ function CriacaoFormulario() {
       } else {
         if(visualizar === false){
         setCarregandoCriacao(true);
-        estado.visualizacao_secretaria = true;
+        estado.visualizacao_secretaria = false;
         console.log(estado)
         await managerService.CriarFormulario(estado);
         await sleep(1500);
@@ -103,7 +103,7 @@ function CriacaoFormulario() {
         }
         if(visualizar === true){
           setCarregandoCriacao(true);
-          estado.visualizacao_secretaria = false;
+          estado.visualizacao_secretaria = true;
           console.log(estado)
           await managerService.CriarFormulario(estado);
           await sleep(1500);
@@ -179,7 +179,6 @@ function CriacaoFormulario() {
           </Select>
         </SelectContainer>
         <Checkbox
-           marginTop='20'
            onChange={mudandoVisualizacao}
         >Permitir a visualização da secretária
         </Checkbox>
