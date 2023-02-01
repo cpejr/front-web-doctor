@@ -1,12 +1,9 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect} from "react";
 import {
   Corpo, Container,
-  TituloPaginaEdicao,
-  BoxGenerico,
   MetadeEsquerda,
   MetadeDireita,
   BotaoGenerico,
-  ContainerBotoes,
   BoxBemVindo,
   BoxTime,
   BoxSaibaMais,
@@ -14,12 +11,8 @@ import {
   BoxVideo,
   TituloCentral,
   SubtituloCentral,
-  TituloEsquerda,
-  Conteudo,
   TextoSaibaMais,
-  ScrollSobreMim
 } from "./Styles";
-import { useHistory } from "react-router-dom";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 
@@ -27,8 +20,6 @@ import Input from "../../styles/Input";
 
 function EdicaoHome() {
   const [homes, setHomes] = useState([]);
-  //const tituloUmRef = useRef(null);
-
 
   async function pegandoDados() {
     const dadosHomes = await managerService.GetHomes();
@@ -81,10 +72,8 @@ function EdicaoHome() {
           <BoxSaibaMais backgroundColor="#7757A0"
           >
             <Input
-              type={homes.map((value) => (
-                <div>"{value.titulo_um}"</div>
-              ))}
-              textAlign="center"
+              value={homes.titulo_um}
+              textAlign="left"
               backgroundColor="#7757A0"
               color={Cores.branco}
               fontSize="120%"
@@ -92,9 +81,10 @@ function EdicaoHome() {
               marginTop="2%"
               borderWidth='0px'
               marginLeft="10%"
-              value={homes.titulo_um}
               name="titulo_um"
               onChange={preenchendoDados}
+              paddingLeft="10%"
+              
             />
              
             <Input
@@ -113,17 +103,6 @@ function EdicaoHome() {
               name="texto_um"
               onChange={preenchendoDados}
             />
-            <ScrollSobreMim>
-
-              <Conteudo
-                color={Cores.branco}
-              >
-                
-                {homes.map((value) => (
-                  <div>"{value.texto_um}"</div>
-                ))}
-              </Conteudo>
-            </ScrollSobreMim>
 
             <TextoSaibaMais color={Cores.branco}>
               Saiba Mais
@@ -132,7 +111,6 @@ function EdicaoHome() {
 
           <BoxAlterarImagem
           >
-            
               <BotaoGenerico>Alterar Imagens</BotaoGenerico>
           </BoxAlterarImagem>
 
@@ -144,8 +122,8 @@ function EdicaoHome() {
             backgroundColor="#FBCB4C"
           >
             <Input
-              value="Indicações e Sugestões"
-              textAlign="center"
+              
+              textAlign="left"
               backgroundColor="#FBCB4C"
               color={Cores.preto}
               fontSize="120%"
@@ -155,6 +133,8 @@ function EdicaoHome() {
               value={homes.titulo_dois}
               name="titulo_dois"
               onChange={preenchendoDados}
+              paddingLeft="10%"
+
             />
             <Input
               backgroundColor="#FBCB4C"
@@ -180,8 +160,8 @@ function EdicaoHome() {
           <BoxSaibaMais backgroundColor={Cores.lilas[1]}
           >
             <Input
-              value="Comentarios e Depoimentos"
-              textAlign="center"
+              
+              textAlign="left"
               backgroundColor={Cores.lilas[1]}
               color={Cores.branco}
               fontSize="120%"
@@ -191,6 +171,7 @@ function EdicaoHome() {
               value={homes.titulo_tres}
               name="titulo_tres"
               onChange={preenchendoDados}
+              paddingLeft="10%"
             />
             <Input
               backgroundColor={Cores.lilas[1]}
@@ -214,8 +195,8 @@ function EdicaoHome() {
           </BoxSaibaMais>
           <BoxSaibaMais>
             <Input
-              value="Grupo AMIE (Epilepsia)"
-              textAlign="center"
+              
+              textAlign="left"
               backgroundColor={Cores.branco}
               color={Cores.preto}
               fontSize="120%"
@@ -225,6 +206,7 @@ function EdicaoHome() {
               value={homes.titulo_quatro}
               name="titulo_quatro"
               onChange={preenchendoDados}
+              paddingLeft="10%"
             />
             <Input
 

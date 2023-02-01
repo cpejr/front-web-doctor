@@ -111,16 +111,6 @@ export const Conteudo = styled.p`
   color: ${(props) => props.color};
 `;
 
-export const ScrollSobreMim = styled.p`
-  width: 100%;
-  font-size: 20px;
-  text-align: center;
-  font-family: "Roboto Condensed", sans-serif;
-  color: ${(props) => props.color};
-  max-height: 200px;
-  overflow: auto;
-`;
-
 export const TextoSaibaMais = styled.p`
 padding-left: 10%;
 padding-top: 5%;
