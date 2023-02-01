@@ -18,7 +18,7 @@ import {
 } from './Styles';
 import Input from '../../styles/Input';
 import { Cores } from '../../variaveis';
-import { Select, SelectContainer } from './SelectTeste';
+import Select from "../../styles/Select/Select";
 import Button from '../../styles/Button';
 import { sleep } from '../../utils/sleep';
 import * as managerService from '../../services/ManagerService/managerService';
@@ -156,7 +156,7 @@ function CriacaoFormulario() {
           onChange={preenchendoDados}
         ></Input>
         <TitulosInput>Urgência:</TitulosInput>
-        <SelectContainer borderWidth='2px' width='100%'>
+        
           <Select
             id='urgencia'
             marginTop='0px'
@@ -165,6 +165,9 @@ function CriacaoFormulario() {
             name='urgencia'
             camposVazios={camposVazios.urgencia}
             onChange={preenchendoDados}
+            borderWidth='2px'
+            width='100%'
+            marginBottom="2%"
           >
             <option value=''>Urgência</option>
             <option value='1' borderColor={Cores.azul}>
@@ -177,7 +180,7 @@ function CriacaoFormulario() {
               3
             </option>
           </Select>
-        </SelectContainer>
+         
         <Checkbox
            onChange={mudandoVisualizacao}
         >Permitir a visualização da secretária
