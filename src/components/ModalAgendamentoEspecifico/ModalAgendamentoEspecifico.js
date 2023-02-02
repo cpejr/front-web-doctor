@@ -50,7 +50,7 @@ function ModalAgendamentoEspecifico(props) {
     if (props.abertoPeloUsuario) {
       const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
       setUsuario(resposta.dadosUsuario);
-      setIdUsuario(resposta.dadosUsuario.id)
+      setIdUsuario(resposta.dadosUsuario.id);
     } else {
       const resposta = await managerService.GetDadosPessoais();
       resposta.forEach((usuario) => {
@@ -144,6 +144,7 @@ function ModalAgendamentoEspecifico(props) {
             <ModalAgendamentoExame
               abertoPeloUsuario={props.abertoPeloUsuario}
               idUsuario={idUsuario}
+              fechandoModal={() => props.fechandoModal()}
             />
           ) : (
             <ModalAgendamentoConsulta />

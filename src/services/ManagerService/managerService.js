@@ -105,13 +105,13 @@ export const CriandoConsulta = async (consulta) => {
 };
 
 export const CriandoExame = async (exame) => {
-  console.log(exame)
   await requesterService
     .criarExame(exame)
     .then(() => {
       toast.success('Exame criada com sucesso.');
     })
     .catch((error) => {
+      console.log("🚀 ~ file: managerService.js:114 ~ CriandoExame ~ error", error)
       requisicaoErro(error);
       return false;
     });

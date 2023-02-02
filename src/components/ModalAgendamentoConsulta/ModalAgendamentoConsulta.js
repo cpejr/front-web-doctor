@@ -258,7 +258,7 @@ function ModalAgendamentoConsulta(props) {
     if (!consulta.id_consultorio) errors.id_consultorio = true;
     if (!consulta.tipo) errors.tipo = true;
     if (!consulta.id_usuario) errors.id_usuario = true;
-
+    
     setCamposVazios({ ...camposVazios, ...errors });
 
     if (

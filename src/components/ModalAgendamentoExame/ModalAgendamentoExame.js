@@ -27,8 +27,6 @@ import { sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAgendamentoExame(props) {
-  const [usuario, setUsuario] = useState({});
-  const [usuarios, setUsuarios] = useState([]);
   const [consultorios, setConsultorios] = useState([]);
   const [consultorio, setConsultorio] = useState({});
   const [exames, setExames] = useState([]);
@@ -101,11 +99,9 @@ function ModalAgendamentoExame(props) {
         (consultorioAtual) => consultorioAtual.id === value
       );
       setConsultorio(consultorioSelecionado);
+      setExame({ ...exame, id_consultorio: value });
     } else {
-      const exameSelecionado = exames.find(
-        (exameAtual) => exameAtual.id === value
-      );
-      setExame((exameAtual) => ({ ...exameAtual, ...exameSelecionado }));
+      setExame({ ...exame, id_exame: value });
       return exame;
     }
   }
@@ -179,7 +175,7 @@ function ModalAgendamentoExame(props) {
   function formatacaoDataHora() {
     try {
       const dataHora = `${dataExame} ${hora}:00`;
-      exame.hora = dataHora;
+      exame.data_hora = dataHora;
     } catch {
       alert("DataHora inválida.");
     }
@@ -190,7 +186,6 @@ function ModalAgendamentoExame(props) {
     if (!dataExame) errors.data = true;
     if (!hora) errors.hora = true;
     if (!consultorio.nome) errors.nome = true;
-    if (!exame.titulo) errors.titulo = true;
 
     setCamposVazios({ ...camposVazios, ...errors });
     if (dataExame === "" || hora === "") {
@@ -199,24 +194,16 @@ function ModalAgendamentoExame(props) {
       if (erro.hora) {
         toast.warn("Preencha todos os campos corretamente");
       } else {
-        console.log(
-          "🚀 ~ file: ModalAgendamentoExame.js:205 ~ requisicaoCriarExame ~ referenciaInputNulos",
-          referenciaInputNulos
-        );
-        console.log(
-          "🚀 ~ file: ModalAgendamentoExame.js:205 ~ requisicaoCriarExame ~ camposVazios",
-          camposVazios
-        );
         if (_.isEqual(camposVazios, referenciaInputNulos)) {
           setCarregandoCadastro(true);
           formatacaoDataHora();
-          // await managerService.CriandoExame(exame);
+          await managerService.CriandoExame(exame);
           setCarregandoCadastro(false);
-          // await sleep(1500);
-          // props.fechandoModal();
-          // setExame(valoresIniciaisExame);
-          // setDataExame("");
-          // setHora("");
+          await sleep(1500);
+          props.fechandoModal();
+          setExame(valoresIniciaisExame);
+          setDataExame("");
+          setHora("");
         } else {
           setCarregandoCadastro(true);
           toast.warn("Preencha todos os campos corretamente");
