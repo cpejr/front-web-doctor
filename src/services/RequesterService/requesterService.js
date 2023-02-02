@@ -178,3 +178,5 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   api.put(`/mensagems/${id_conversa}/visualizadas/${id_usuario}`);
 
 export const dispostivoById = (id) => api.get(`/dispositivos/${id}`);
+
+export const TokenById = (id_usuario) => api.get(`/token_usuarios/${id_usuario}`);

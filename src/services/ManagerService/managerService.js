@@ -894,3 +894,17 @@ export const dispostivoById = async (id) => {
     });
   return dispositivo;
 };
+
+export const TokenById = async (id_usuario) => {
+  let dispositivo = {};
+
+  await requesterService
+    .TokenById(id_usuario)
+    .then((res) => {
+      dispositivo = res.data
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dispositivo;
+};

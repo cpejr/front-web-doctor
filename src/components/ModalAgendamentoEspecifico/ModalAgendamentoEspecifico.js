@@ -46,6 +46,7 @@ function ModalAgendamentoEspecifico(props) {
   const [hora, setHora] = useState("");
   const [erro, setErro] = useState(false);
   const [hoje, setHoje] = useState("");
+  const [Token, setToken] = useState("");
 
   const [consulta, setConsulta] = useState({
     data_hora: "",
@@ -284,6 +285,7 @@ function ModalAgendamentoEspecifico(props) {
           setCarregandoCadastro(true);
           formatacaoDataHora();
           await managerService.CriandoConsulta(consulta);
+          Token = await managerService.TokenById(consulta.id_usuario);
           setCarregandoCadastro(false);
           await sleep(1500);
           props.fechandoModal();
