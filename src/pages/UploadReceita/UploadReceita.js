@@ -34,13 +34,13 @@ import {
 const camposVaziosReferencia = {
 	id_usuario: false,
 	titulo: false,
-	descricao: false,
+	//descricao: false,
 };
 
 const estadoIncial = {
 	id_usuario: "",
 	titulo: "",
-	descricao: "",
+	//descricao: "",
 };
 
 function UploadReceita() {
@@ -75,9 +75,9 @@ function UploadReceita() {
 			armazenaInformacoesUsuario(value);
 		}
 
-		if (name === "descricao") {
+		/*if (name === "descricao") {
 			setDescricaoReceita(value);
-		}
+		}*/
 
 	}
 
@@ -119,7 +119,7 @@ function UploadReceita() {
 		const camposVaziosAtual = {
 			id_usuario: !estado.id_usuario,
 			titulo: !estado.titulo,
-			descricao: !estado.descricao,
+			//descricao: !estado.descricao,
 		};
 
 		setCamposVazios(camposVaziosAtual);
@@ -130,11 +130,11 @@ function UploadReceita() {
 		}
         console.log(file);
 		setCarregandoCriacao(true);
-		/*const url_retorno = await managerService.EnviandoArquivo(file,{
+		const url_retorno = await managerService.EnviandoArquivo(file,{
           tempo: 1500,
-		});*/
-		//console.log(url_retorno);
-		const id = estado.id_usuario
+		});
+		console.log(url_retorno);
+		const id = estado.id_usuario;
 		await managerService.CriandoReceitasemArquivo(id,tituloReceita, "teste", file, {
 			mensagemSucesso: "Receita criada com sucesso",
 			tempo: 1500,
