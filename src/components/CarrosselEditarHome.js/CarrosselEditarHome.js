@@ -8,6 +8,8 @@ import {
     InteriorCarrossel
 } from './Styles';
 import { LeftOutlined, RightOutlined } from "@ant-design/icons";
+import Button from '../../styles/Button';
+import { Cores } from '../../variaveis';
 
 import Patinho from "../../assets/patinho.jpg"
 import Patao from "../../assets/patao.jpg"
@@ -36,7 +38,22 @@ function CarrosselEditarHome() {
                     <LeftOutlined style={{ fontSize: 30 }} />
                 </Esquerda>
                 <Centro>
-                    <BotaoGenerico>Alterar Imagens</BotaoGenerico>
+                    <Button
+                        backgroundColor="green"
+                        borderRadius="3px"
+                        borderWidth="1px"
+                        borderColor={Cores.preto}
+                        boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                        color={Cores.preto}
+                        fontSize="15px"
+                        height="50px"
+                        width="60%"
+                        marginTop="0%"
+                        marginLeft="0%"
+                        fontSizeMedia950="0.9em"
+                    >
+                        Alterar Imagens
+                    </Button>
                 </Centro>
                 <Direita
                     onClick={() => {

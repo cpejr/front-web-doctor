@@ -38,14 +38,14 @@ export const MetadeEsquerda = styled.div`
   flex-direction: column;
   align-items: center;
   /* justify-content: center; */
-  margin-top: 10%;
-  margin-bottom: 3%;
+  margin-top: 6%;
+  margin-bottom: 8%;
   font-weight: 400;
-  border-right: 2px solid #151B57;
+  border-right: 1px solid #151B57;
   
   @media (max-width: 900px) {
     margin-top: 10%;
-    margin-bottom: 10%;
+    margin-bottom: -7%;
     border-right: 0px;
   }
   @media (max-width: 780px) {
@@ -61,14 +61,15 @@ export const MetadeDireita = styled.div`
   flex-direction: column;
   align-items: center;
   /* justify-content: center; */
-  margin-top: 10%;
-  margin-bottom: 3%;
+  margin-top: 6%;
+  margin-bottom: 8%;
   font-weight: 400;
-  
+  border-left: 1px solid #151B57;
 
   @media (max-width: 900px) {
     margin-top: 10%;
     margin-bottom: 10%;
+    border-left: 0px;
   }
   @media (max-width: 780px) {
     width: 85%;
@@ -127,13 +128,15 @@ export const BoxBemVindo = styled.div`
   height: auto;
   width: 76%;
   margin-bottom: 4%;
-  border-radius: 6px;
-  border: solid 3px #bbc0f4;
   font-family: "Roboto Condensed", sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-radius: 4px;
+  border: solid 3px;
+  border-color: ${(props) => props.borderColor ?? "white"};
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.25);
 
   @media (max-width: 600px) {
     margin-bottom: 5%;
@@ -176,13 +179,15 @@ export const BoxTime = styled.div`
   height: auto;
   width: 76%;
   margin-bottom: 4%;
-  border-radius: 6px;
-  border: solid 3px #bbc0f4;
   font-family: "Roboto Condensed", sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-radius: 4px;
+  border: solid 3px;
+  border-color: ${(props) => props.borderColor ?? "white"};
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.25);
 
   @media (max-width: 600px) {
     margin-bottom: 5%;
@@ -201,13 +206,15 @@ export const BoxSaibaMais = styled.div`
   height: auto;
   width: 76%;
   margin-bottom: 4%;
-  border-radius: 6px;
-  border: solid 3px #bbc0f4;
   font-family: "Roboto Condensed", sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-radius: 4px;
+  border: solid 3px;
+  border-color: ${(props) => props.borderColor};
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.25);
 
   @media (max-width: 600px) {
     margin-bottom: 5%;
@@ -225,14 +232,14 @@ export const BoxAlterarImagem = styled.div`
   font-size: 20px;
   height: auto;
   width: 76%;
-  margin-bottom: 4%;
-  border-radius: 6px;
-  border: solid 3px #bbc0f4;
   font-family: "Roboto Condensed", sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  border-radius: 4px;
+  border: solid 3px white;
+  box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.25);
 
   @media (max-width: 600px) {
     margin-bottom: 5%;
@@ -290,21 +297,22 @@ export const BotaoGenerico = styled.button`
   }
 `;
 
-export const ContainerBotoes = styled.button`
-  background-color: green;
-  font-size: 20px;
-  height: auto;
-  width: 76%;
-  margin-top: 10%;
-  margin-bottom: 4%;
-  border-radius: 6px;
-  border: solid 3px #bbc0f4;
-  font-family: "Roboto Condensed", sans-serif;
+export const ContainerBotoes = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
+  height: 20%;
+  width: 76%;
+  gap: 10%;
+  font-size: 20px;
+  border-radius: 6px;
+  border: solid 3px #bbc0f4;
+  font-family: "Roboto Condensed", sans-serif;
+  border-color: transparent;
+  @media (max-width: 900px) {
+    gap: 20px;
+  }
   @media (max-width: 600px) {
     margin-bottom: 5%;
   }

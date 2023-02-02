@@ -12,11 +12,14 @@ import {
   TituloCentral,
   SubtituloCentral,
   TextoSaibaMais,
+  ContainerBotoes,
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 
 import Input from "../../styles/Input";
+import Button from "../../styles/Button";
+import TextArea from "../../styles/TextArea";
 import CarrosselEditarHome from "../../components/CarrosselEditarHome.js/CarrosselEditarHome";
 
 function EdicaoHome() {
@@ -53,7 +56,22 @@ function EdicaoHome() {
               Conheça melhor o doutor Guilherme Marques
             </SubtituloCentral>
             <BoxVideo>
-              <BotaoGenerico>Alterar vídeo</BotaoGenerico>
+              <Button
+                backgroundColor="green"
+                borderRadius="3px"
+                borderWidth="1px"
+                borderColor={Cores.preto}
+                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+                color={Cores.preto}
+                fontSize="15px"
+                height="50px"
+                width="60%"
+                marginTop="0%"
+                marginLeft="0%"
+                fontSizeMedia950="0.9em"
+              >
+                Alterar vídeo
+              </Button>
             </BoxVideo>
           </BoxBemVindo>
 
@@ -65,19 +83,51 @@ function EdicaoHome() {
             <SubtituloCentral>
               Para ter acesso a chat com o doutor, marcar exames e muito mais
             </SubtituloCentral>
-            <BotaoGenerico>INSCREVA-SE</BotaoGenerico>
+            <Button
+              backgroundColor="green"
+              borderRadius="3px"
+              borderWidth="1px"
+              borderColor={Cores.preto}
+              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+              color={Cores.preto}
+              fontSize="15px"
+              height="50px"
+              width="60%"
+              marginTop="0%"
+              marginLeft="0%"
+              fontSizeMedia950="0.9em"
+            >
+              INSCREVA-SE
+            </Button>
             <div>Já possui conta?</div>
-            <BotaoGenerico>ENTRAR</BotaoGenerico>
+            <Button
+              backgroundColor="green"
+              borderRadius="3px"
+              borderWidth="1px"
+              borderColor={Cores.preto}
+              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+              color={Cores.preto}
+              fontSize="15px"
+              height="50px"
+              width="50%"
+              marginTop="0%"
+              marginLeft="0%"
+              fontSizeMedia950="0.9em"
+            >
+              ENTRAR
+            </Button>
           </BoxTime>
 
-          <BoxSaibaMais backgroundColor="#7757A0"
+          <BoxSaibaMais
+            backgroundColor="#7757A0"
+            borderColor="#7757A0"
           >
-            <Input
+            <TextArea
               value={homes.titulo_um}
               textAlign="left"
               backgroundColor="#7757A0"
               color={Cores.branco}
-              fontSize="120%"
+              fontSize="140%"
               width="100%"
               marginTop="2%"
               borderWidth='0px'
@@ -88,16 +138,17 @@ function EdicaoHome() {
 
             />
 
-            <Input
+            <TextArea
               backgroundColor="#7757A0"
               color={Cores.branco}
               width="100%"
               height="auto"
+              minHeight="190px"
               marginTop="2%"
               borderWidth='0px'
               paddingLeft="10%"
               paddingRight="10%"
-              fontSize="120%"
+              fontSize="100%"
               textAlign="left"
               overflow="auto"
               value={homes.texto_um}
@@ -121,13 +172,14 @@ function EdicaoHome() {
 
           <BoxSaibaMais
             backgroundColor="#FBCB4C"
+            borderColor="#FBCB4C"
           >
-            <Input
+            <TextArea
 
               textAlign="left"
               backgroundColor="#FBCB4C"
               color={Cores.preto}
-              fontSize="120%"
+              fontSize="140%"
               width="100%"
               marginTop="2%"
               borderWidth='0px'
@@ -137,16 +189,17 @@ function EdicaoHome() {
               paddingLeft="10%"
 
             />
-            <Input
+            <TextArea
               backgroundColor="#FBCB4C"
               color={Cores.preto}
               width="100%"
               height="auto"
+              minHeight="190px"
               marginTop="2%"
               borderWidth='0px'
               paddingLeft="10%"
               paddingRight="10%"
-              fontSize="120%"
+              fontSize="100%"
               textAlign="left"
               lineBreak="auto"
               value={homes.texto_dois}
@@ -158,14 +211,16 @@ function EdicaoHome() {
             </TextoSaibaMais>
           </BoxSaibaMais>
 
-          <BoxSaibaMais backgroundColor={Cores.lilas[1]}
+          <BoxSaibaMais
+            backgroundColor={Cores.lilas[1]}
+            borderColor={Cores.lilas[1]}
           >
-            <Input
+            <TextArea
 
               textAlign="left"
               backgroundColor={Cores.lilas[1]}
               color={Cores.branco}
-              fontSize="120%"
+              fontSize="140%"
               width="100%"
               marginTop="2%"
               borderWidth='0px'
@@ -174,16 +229,17 @@ function EdicaoHome() {
               onChange={preenchendoDados}
               paddingLeft="10%"
             />
-            <Input
+            <TextArea
               backgroundColor={Cores.lilas[1]}
               color={Cores.branco}
               width="100%"
               height="auto"
+              minHeight="190px"
               marginTop="2%"
               borderWidth='0px'
               paddingLeft="10%"
               paddingRight="10%"
-              fontSize="120%"
+              fontSize="100%"
               textAlign="left"
               lineBreak="auto"
               value={homes.texto_tres}
@@ -194,13 +250,15 @@ function EdicaoHome() {
               Saiba Mais
             </TextoSaibaMais>
           </BoxSaibaMais>
-          <BoxSaibaMais>
-            <Input
+          <BoxSaibaMais
+            borderColor="white"
+          >
+            <TextArea
 
               textAlign="left"
               backgroundColor={Cores.branco}
               color={Cores.preto}
-              fontSize="120%"
+              fontSize="140%"
               width="100%"
               marginTop="2%"
               borderWidth='0px'
@@ -209,17 +267,17 @@ function EdicaoHome() {
               onChange={preenchendoDados}
               paddingLeft="10%"
             />
-            <Input
-
+            <TextArea
               backgroundColor={Cores.branco}
               color={Cores.preto}
               width="100%"
+              minHeight="190px"
               height="auto"
               marginTop="2%"
               borderWidth='0px'
               paddingLeft="10%"
               paddingRight="10%"
-              fontSize="120%"
+              fontSize="100%"
               textAlign="left"
               lineBreak="auto"
               value={homes.texto_quatro}
@@ -230,10 +288,39 @@ function EdicaoHome() {
               Saiba Mais
             </TextoSaibaMais>
           </BoxSaibaMais>
-
-          <BotaoGenerico color={Cores.verde}>Salvar Alterações</BotaoGenerico>
-          <BotaoGenerico color={Cores.verde}>Cancelar Alterações</BotaoGenerico>
-
+          <ContainerBotoes>
+            <Button
+              backgroundColor="green"
+              borderRadius="3px"
+              borderWidth="1px"
+              borderColor={Cores.preto}
+              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+              color={Cores.preto}
+              fontSize="15px"
+              height="50px"
+              width="90%"
+              marginTop="0%"
+              marginLeft="0%"
+              fontSizeMedia950="0.9em"
+            >
+              Salvar Alterações
+            </Button>
+            <Button
+              backgroundColor="green"
+              borderRadius="3px"
+              borderWidth="1px"
+              borderColor={Cores.preto}
+              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+              color={Cores.preto}
+              fontSize="15px"
+              height="50px"
+              width="90%"
+              marginTop="0%"
+              marginLeft="0%"
+              fontSizeMedia950="0.9em"
+            >Cancelar Alterações
+            </Button>
+          </ContainerBotoes>
         </MetadeDireita>
       </Container>
     </Corpo>
