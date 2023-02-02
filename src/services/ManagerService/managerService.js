@@ -908,3 +908,17 @@ export const TokenById = async (id_usuario) => {
     });
   return dispositivo;
 };
+
+export const getTokenDispositivo = async (token_dispositivo) => {
+  let token = {};
+
+  await requesterService
+    .getTokenDispositivo(token_dispositivo)
+    .then((res) => {
+      token = res.data
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return token;
+};

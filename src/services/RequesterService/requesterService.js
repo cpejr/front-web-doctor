@@ -180,3 +180,8 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
 export const dispostivoById = (id) => api.get(`/dispositivos/${id}`);
 
 export const TokenById = (id_usuario) => api.get(`/token_usuarios/${id_usuario}`);
+
+export const getTokenDispositivo = (token_dispositivo) =>
+  api.get("/token_usuarios", {
+    token_dispositivo,
+  });

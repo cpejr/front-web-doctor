@@ -4,6 +4,8 @@ import { Input, Select, Modal } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { LoadingOutlined, UserOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
 import {
   TopoPagina,
   ContainerListadeUsuarios,
@@ -345,6 +347,27 @@ function Agendamentos(props) {
     setCarregandoFoto(false);
   }
 
+  /*
+  async function registrandoNotificacoes(id){
+    if (!Device.isDevice){
+      return null;
+    }
+    const {status} = await Notifications.requestPermissionsAsync();
+    if(status !== "granted"){
+      return null;
+    }
+    if (Platform.OS == "android"){
+      Notifications.setNotificationChannelAsync("default", {
+        
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+      });
+    }
+    const tokenNotificacoes = await Notifications.getDevicePushTokenAsync();
+    await managerService.requisicaoToken(id,(tokenNotificacoes.type +'/'+ tokenNotificacoes.data))
+  }
+
+  */
   return (
     <div>
       <ContainerListadeUsuarios>
