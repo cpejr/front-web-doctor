@@ -123,12 +123,17 @@ export const criarReceita = (id_usuario, nomePaciente, dataNascimento, tituloRec
     titulo: tituloReceita,
     descricao: descricao,
   });
-export const criarReceitasemArquivo = (id_usuario, tituloReceita, descricao, pdf_url) => 
-  api.post(`/receitas`, {
+export const criarReceitaComArquivo = (
+  id_usuario,
+  tituloReceita,
+  descricao,
+  base64
+) =>
+  api.post(`/receitasarquivo`, {
     id_usuario: id_usuario,
     titulo: tituloReceita,
     descricao: descricao,
-    pdf_url: pdf_url,
+    file:base64,
   });
 
 export const deletarReceita = (id) => api.delete(`/receitas/${id}`);
