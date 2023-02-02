@@ -128,8 +128,12 @@ function UploadReceita() {
 			toast.warn("Preencha todos os campos");
 			return;
 		}
-
+        console.log(file);
 		setCarregandoCriacao(true);
+		/*const url_retorno = await managerService.EnviandoArquivo(file,{
+          tempo: 1500,
+		});*/
+		//console.log(url_retorno);
 		const id = estado.id_usuario
 		await managerService.CriandoReceitasemArquivo(id,tituloReceita, "teste", file, {
 			mensagemSucesso: "Receita criada com sucesso",
@@ -238,7 +242,7 @@ function UploadReceita() {
 						<Button
 							height="47px"
 							width="100%"
-							backgroundColor={Cores.verde}
+							backgroundColor={Cores.azulClaro}
 							borderColor={Cores.cinza[3]}
 							color={Cores.cinza[2]}
 							fontSize="1em"
@@ -251,7 +255,7 @@ function UploadReceita() {
 						<Button
 							height="47px"
 							width="100%"
-							backgroundColor={Cores.verde}
+							backgroundColor={Cores.azul}
 							borderColor={Cores.azul}
 							color={Cores.branco}
 							fontSize="1em"
