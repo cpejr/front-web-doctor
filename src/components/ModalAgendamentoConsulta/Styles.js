@@ -14,13 +14,14 @@ export const Container = styled.div`
 export const Caixa = styled.div`
   display: flex;
   flex-direction: row;
-  width: 185%;
+  width: 100%;
   height: 100%;
   min-height: 80vh;
   margin-left:-90%;
 
-  @media (max-width: 800px) {
+  @media (max-width: 910px) {
     flex-direction: column;
+    margin-left:0;
   }
 `;
 
@@ -29,22 +30,26 @@ export const InfoEsquerdaEDireita = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 50%;
+  width: 100%;
   height: 100%;
   min-height: 80vh;
   padding: 5%;
+  flex:20%;
+  margin-right:-90%;
+  margin-top: -5%;
 
   @media (max-width: 800px) {
     width: 100%;
+    margin-right: 0;
   }
 `;
 
 export const InfoEsquerda = styled.div`
-  display: flex;
+  /* display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  width: 50%;
+  width: 100%;
   height: 100%;
   height: 73vh;
   padding: 5%;
@@ -52,6 +57,52 @@ export const InfoEsquerda = styled.div`
   @media (max-width: 800px) {
     width: 100%;
     height: 50vh;
+  } */
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  width: 80%;
+  height: auto;
+  padding: 5%;
+  gap: 8px;
+  margin-bottom: 20%;
+  margin-right: 20%;
+  flex: 80%;
+  margin-left:-62%;
+
+  @media (max-width: 910px) {
+    width: 100%;
+    padding: 0%;
+    margin-left:0;
+    margin-top: 0;
+    margin-right: 0;
+  }
+
+  @media (max-width: 560px) {
+    width: 100%;
+    padding: 5%;
+  }
+`;
+
+export const TextAreaDescricao = styled(TextArea)`
+  width: 310px;
+  height: auto;
+  border-color: ${Cores.preto};
+  border-width: 2px;
+  color: ${Cores.preto};
+  ::placeholder {
+    color: ${Cores.preto};
+  }
+
+  @media (max-width: 1200px) {
+    width: 200px;
+  }
+
+  @media (max-width: 910px) {
+    margin-bottom: 5%;
+    margin-top: -10%;
   }
 `;
 
@@ -158,17 +209,11 @@ export const TextoCheckbox = styled.h3`
 
   @media (max-width: 560px) {
     font-size: 1em;
+    margin-top: 30%;
+    margin-bottom: 10%;
   }
-`;
-
-export const TextAreaDescricao = styled(TextArea)`
-  border-color: ${Cores.preto};
-  border-width: 1px;
-  color: ${Cores.preto};
-  margin-top: 100%;
-  margin-right:35%;
-  ::placeholder {
-    color: ${Cores.preto};
+  @media (max-width: 300px){
+    margin-bottom: 20%;
   }
 `;
 
@@ -239,9 +284,6 @@ export const InputConsultorio = styled.div`
     width: 90%;
     margin-bottom: 5%;
   }
-  @media (max-width: 807px) and (min-width: 800px) {
-    padding-top: 15%;
-  }
 `;
 
 export const ContainerDuracaoConsulta = styled.div`
@@ -304,7 +346,7 @@ export const InputData = styled.input`
   border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
-      if(props.camposVazios){
+      if (props.camposVazios) {
         cor = Cores.vermelho;
       } else {
         cor = Cores.azul;
@@ -332,7 +374,7 @@ export const InputHora = styled(Input)`
   border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
-      if(props.erro || props.camposVazios){
+      if (props.erro || props.camposVazios) {
         cor = Cores.vermelho;
       } else {
         cor = Cores.azul;
@@ -363,7 +405,7 @@ export const InputDuracao = styled(Input)`
   border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
-      if(props.camposVazios){
+      if (props.camposVazios) {
         cor = Cores.vermelho;
       } else {
         cor = Cores.azul;
@@ -411,6 +453,10 @@ export const SelecioneUmaData = styled.div`
   align-items: start;
   justify-content: center;
   width: 90%;
+
+  @media (max-width: 910px) {
+    margin-bottom: 5%;
+  }
 
   @media (max-width: 560px) {
     width: 100%;

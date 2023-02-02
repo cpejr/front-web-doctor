@@ -61,18 +61,19 @@ export const CaixaLoader = styled.div`
 export const InfoEsquerda = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-evenly;
   align-items: center;
   width: 90%;
   height: 100%;
-  height: 73vh;
   padding: 5%;
   gap: 10px;
+  margin-top: 4%;
 
   @media (max-width: 910px) {
     width: 100%;
-    height: 50vh;
-    
+    height: 200px;
+    margin-top: 15%;
+    margin-bottom: 5%;
   }
 `;
 
@@ -152,6 +153,9 @@ export const TipoAgendamento = styled.div`
   width: 100%;
   margin-top:18%;
   margin-bottom:20%;
+  @media (max-width: 910px){
+    margin-top: 2%;
+  }
   @media (max-width: 620px){
     height: auto;
     width: 100%;
