@@ -3,10 +3,11 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Spin } from "antd";
 import { LoadingOutlined, PlusSquareOutlined } from "@ant-design/icons";
-import { ContainerModalCodigo, Titulo, Texto, BotaoAdicionar, TextoIcone, TextoTextArea } from "./Styles";
+import { ContainerModalComentario, Titulo, Texto, BotaoAdicionar, TextoIcone, TextoTextArea } from "./Styles";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import TextArea from "../../styles/TextArea"
+import { Cores } from "../../variaveis";
 import _ from "lodash";
 import * as managerService from "../../services/ManagerService/managerService";
 
@@ -70,7 +71,7 @@ function ModalAdicionarComentario(props) {
 
   return (
     <>
-      <ContainerModalCodigo>
+      <ContainerModalComentario>
         <Titulo>Adicionar Comentário:</Titulo>
         <TextoTextArea>
           <Texto>Comentário:</Texto>
@@ -79,7 +80,7 @@ function ModalAdicionarComentario(props) {
             backgroundColor="#E4E6F4"
             color="black"
             fontSize="1em"
-            width="70%"
+            width="100%"
             marginTop="2%"
             marginBottom="2%"
             paddingRight="2%"
@@ -89,16 +90,36 @@ function ModalAdicionarComentario(props) {
             camposVazios={camposVazios.comentario}
           ></TextArea>
         </TextoTextArea>
-        <BotaoAdicionar
+        <Button
+          backgroundColor={Cores.lilas[1]}
+          borderColor={Cores.azul}
+          color={Cores.branco}
+          fontWeight='medium'
+          fontSize='1.7em'
+          fontSizeMedia1080='1.5em'
+          fontSizeMedia950='1.2em'
+          fontSizeMedia480='1em'
+          fontSizeMedia400="0.8em"
+          heightMedia='2em'
+          width='70%'
+          widthMedia560="70%"
+          widthMedia280="58%"
+          height='50px'
+          gap='1%'
+          boxShadow='3px 3px 5px 0px rgba(0, 0, 0, 0.2)'
           onClick={criarComentario}
         >
           {carregando ? <Spin indicator={antIcon} /> :
             <TextoIcone>
-              Adicionar Comentário
+              <div>
+                Adicionar Comentário
+              </div>
               <PlusSquareOutlined />
-            </TextoIcone>}
-        </BotaoAdicionar>
-      </ContainerModalCodigo>
+            </TextoIcone>
+          }
+        </Button>
+        <TextoIcone></TextoIcone>
+      </ContainerModalComentario>
     </>
   );
 }

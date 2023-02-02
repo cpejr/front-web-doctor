@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Cores, Fontes } from '../../variaveis';
 import { Modal as AntdModal } from 'antd';
 
-export const ContainerModalCodigo = styled.div`
+export const ContainerModalComentario = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -77,7 +77,7 @@ export const BotaoExcluir = styled.button`
 export const TextoIcone = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  width: 100%;
 `;

@@ -46,7 +46,7 @@ export const BoxComentarioBotao = styled.div`
   height: 70%;
   padding: 2%;
 
-  @media (max-width: 800px) {
+  @media (max-width: 1000px) {
     flex-direction: column;
     align-items: center;
   }
@@ -136,14 +136,16 @@ export const ContainerBotoes = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   width: 100%;
   height: 50%;
   background-color: white;
-  padding: 20%;
+  padding: 10%;
+  row-gap: 10%;
+  margin-left: 10%;
 
-  @media (max-width: 900px) {
-    width:100%;
+  @media (max-width: 1000px) {
+    margin-left: 0%;
   }
 
   @media (max-width: 800px) {
@@ -151,58 +153,10 @@ export const ContainerBotoes = styled.div`
   }
 `;
 
-export const BotaoAdicionar = styled.button`
-  height: 80px;
-  width: 100%;
-  border-radius: 3px;
-  box-shadow: 0px 4px 4px 0px #00000040;
-  background-color: #434B97;
-  font-family: 'Barlow', sans-serif;
-  font-size: 25px;
-  font-weight: 500;
-  line-height: 36px;
-  letter-spacing: 0em;
-  color: white;
-  border-color: #000000;
-  border-width: 3px;
-  margin-top: 5%;
-  margin-bottom:3%;
-  border-style:solid;
-
-  @media (max-width: 500px) {
-    height: 80px;
-    font-size: 20px;
-  }
-
-`;
-export const BotaoExcluir = styled.button`
-  height: 80px;
-  width: 100%;
-  border-radius: 3px;
-  box-shadow: 0px 4px 4px 0px #00000040;
-  background-color: #434B97;
-  font-family: 'Barlow', sans-serif;
-  font-size: 25px;
-  font-weight: 500;
-  line-height: 36px;
-  letter-spacing: 0em;
-  color: white;
-  border-color: #000000;
-  border-width: 3px;
-  margin-top: 5%;
-  margin-bottom:3%;
-  border-style:solid;
-
-  @media (max-width: 500px) {
-    height: 80px;
-    font-size: 20px;
-  }
-`;
-
 export const TextoIcone = styled.div`
   display: flex;
-  flex-direction: row;
-  width: 100%;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  width: 100%;
 `;

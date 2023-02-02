@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Cores, Fontes } from '../../variaveis';
 import { Modal as AntdModal } from 'antd';
 
-export const ContainerModalCodigo = styled.div`
+export const ContainerModalComentario = styled.div`
   display: flex;
   flex-direction: column;
 
@@ -30,29 +30,23 @@ export const Titulo = styled.div`
   color: #0a0e3c;
   margin-top: 2%;
   margin-bottom: 2%;
-  @media (max-width: 950px) and (min-width: 560px) {
-    font-size: 1.5em;
-  }
+
   @media (max-width: 560px) {
-    font-size: 1.2em;
     margin-bottom: 8%;
   }
 `;
 
 export const Texto = styled.div`
   display: flex;
-  padding-right: 10%;
   justify-content: start;
   font-family: "Roboto Condensed", sans-serif;
-  font-size: 18px;
-  font-weight:700;
+  font-size: 1em;
+  font-weight:600;
   color: #000000;
   align-self: flex-start;
-  margin-left: 15%;
 
-  @media (max-width: 560px) {
-    font-size: 1.2em;
-    margin-bottom: 8%;
+  @media (max-width: 280px) {
+    align-self: center;
   }
 `;
 
@@ -60,7 +54,7 @@ export const TextoTextArea = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%;
+  width: 70%;
   align-items: center;
   font-family: "Roboto Condensed", sans-serif;
   font-size: 18px;
@@ -114,7 +108,11 @@ export const BotaoAdicionar = styled.button`
 export const TextoIcone = styled.div`
   display: flex;
   flex-direction: row;
-  width: 100%;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-around;
+  width: 100%;
+
+  @media (max-width: 400px) {
+    flex-direction: column;
+  }
 `;

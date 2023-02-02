@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Spin } from "antd";
 import { LoadingOutlined, DeleteOutlined } from "@ant-design/icons";
-import { BotaoExcluir, ContainerModalCodigo, TextoIcone, Titulo } from "./Styles";
+import { ContainerModalComentario, TextoIcone, Titulo } from "./Styles";
 import Button from "../../styles/Button";
 import Select from "../../styles/Select";
 import _ from "lodash";
@@ -82,7 +82,7 @@ function ModalExcluirComentario(props) {
 
     return (
         <>
-            <ContainerModalCodigo>
+            <ContainerModalComentario>
                 <Titulo>Excluir Comentário:</Titulo>
                 <Select
                     color={Cores.preto}
@@ -93,14 +93,14 @@ function ModalExcluirComentario(props) {
                     marginBottom="5%"
                     size="large"
                     name="id"
-                    placeholder="Escolher Comentário para deletar"
+                    placeholder="Escolher Comentário"
                     height="45px"
-                    borderWidth820="97%"
+                    borderWidth820="100%"
                     onChange={escolhendoComentario}
                     camposVazios={camposVazios.id}
                 >
                     <option value="" disabled selected>
-                        Escolher Comentário para deletar
+                        Escolher Comentário
                     </option>
                     {comentarios.map((value) => (
                         <option key={value.id} value={value.id}>
@@ -108,21 +108,37 @@ function ModalExcluirComentario(props) {
                                 (
                                     <div> {value.comentario} </div>
                                 ) : (
-                                    <div> {(value.comentario).substr(0, 85 ) + "..."} </div>
+                                    <div> {(value.comentario).substr(0, 85) + "..."} </div>
                                 )
                             }
                         </option>
                     ))}
                 </Select>
-                <BotaoExcluir
+                <Button
+                    backgroundColor={Cores.lilas[1]}
+                    borderColor={Cores.azul}
+                    color={Cores.branco}
+                    fontWeight='medium'
+                    fontSize='1.7em'
+                    fontSizeMedia1080='1.5em'
+                    fontSizeMedia950='1.2em'
+                    fontSizeMedia480='1em'
+                    heightMedia='2em'
+                    width='70%'
+                    height='50px'
+                    gap='1%'
+                    boxShadow='3px 3px 5px 0px rgba(0, 0, 0, 0.2)'
                     onClick={() => deletandoComentario(id)}
                 >
-                    {carregando ? <Spin indicator={antIcon} /> : <TextoIcone>
-                        Excluir Comentário
-                        <DeleteOutlined />
-                    </TextoIcone>}
-                </BotaoExcluir>
-            </ContainerModalCodigo>
+                    {carregando ? <Spin indicator={antIcon} /> :
+                        <TextoIcone>
+                            <div>
+                                Excluir Comentário
+                            </div>
+                            <DeleteOutlined />
+                        </TextoIcone>}
+                </Button>
+            </ContainerModalComentario>
         </>
     );
 }

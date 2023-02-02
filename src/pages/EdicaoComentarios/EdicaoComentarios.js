@@ -20,6 +20,7 @@ import {
 import { sleep } from "../../utils/sleep";
 
 import { Modal } from 'antd';
+import Button from "../../styles/Button";
 
 import ModalAdicionarComentario from "../../components/ModalAdicionarComentario";
 import ModalExcluirComentario from "../../components/ModalExcluirComentario";
@@ -107,20 +108,49 @@ function EdicaoComentarios() {
             </MetadeComentario>
             <MetadeBotoes>
               <ContainerBotoes>
-                <BotaoAdicionar
-                  onClick={() => adicionandoComentario()}>
-                  <TextoIcone>
-                    Adicionar Comentário
-                    <PlusSquareOutlined />
-                  </TextoIcone>
-                </BotaoAdicionar>
-                <BotaoExcluir
-                  onClick={() => excluindoComentario()}>
-                  <TextoIcone>
-                    Excluir Comentário
-                    <DeleteOutlined />
-                  </TextoIcone>
-                </BotaoExcluir>
+                <TextoIcone>
+                  <Button
+                    backgroundColor={Cores.lilas[1]}
+                    borderColor={Cores.azul}
+                    color={Cores.branco}
+                    fontWeight='medium'
+                    fontSize='1.7em'
+                    fontSizeMedia950='1.5em'
+                    fontSizeMedia480='1.2em'
+                    heightMedia='2em'
+                    width='100%'
+                    height='50px'
+                    gap='1%'
+                    boxShadow='3px 3px 5px 0px rgba(0, 0, 0, 0.2)'
+                    onClick={() => adicionandoComentario()}>
+                    <div>
+                      Adicionar Comentário
+                    </div>
+                    <PlusSquareOutlined style={{ marginRight: "3%"}}/>
+                  </Button>
+                </TextoIcone>
+                <TextoIcone>
+                  <Button
+                    backgroundColor={Cores.lilas[1]}
+                    borderColor={Cores.azul}
+                    color={Cores.branco}
+                    fontWeight='medium'
+                    fontSize='1.7em'
+                    fontSizeMedia950='1.5em'
+                    fontSizeMedia480='1.2em'
+                    heightMedia='2em'
+                    width='100%'
+                    height='50px'
+                    gap='1%'
+                    boxShadow='3px 3px 5px 0px rgba(0, 0, 0, 0.2)'
+                    onClick={() => excluindoComentario()}
+                  >
+                    <div>
+                      Excluir Comentário
+                    </div>
+                    <DeleteOutlined style={{ marginLeft: '2%' }}/>
+                  </Button>
+                </TextoIcone>
               </ContainerBotoes>
             </MetadeBotoes>
           </BoxComentarioBotao>
