@@ -14,13 +14,14 @@ export const Container = styled.div`
 export const Caixa = styled.div`
   display: flex;
   flex-direction: row;
-  width: 185%;
+  width: 100%;
   height: 100%;
   min-height: 80vh;
 
 
-  @media (max-width: 800px) {
+  @media (max-width: 910px) {
     flex-direction: column;
+    margin-right: 0;
   }
 `;
 
@@ -29,13 +30,16 @@ export const InfoEsquerdaEDireita = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 50%;
+  width: 100%;
   height: 100%;
   min-height: 80vh;
   padding: 5%;
-
+  flex:20%;
+  margin-right:-20%;
+  margin-top: -5%;
   @media (max-width: 800px) {
     width: 100%;
+    margin-right: 0;
   }
 `;
 
@@ -44,7 +48,7 @@ export const InfoEsquerda = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 50%;
+  width: 100%;
   height: 100%;
   height: 73vh;
   padding: 5%;
@@ -52,7 +56,36 @@ export const InfoEsquerda = styled.div`
   @media (max-width: 800px) {
     width: 100%;
     height: 50vh;
-  }
+    @media (max-width: 800px) {
+      width: 100%;
+      height: 50vh;
+    } */
+  
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    width: 80%;
+    height: auto;
+    padding: 5%;
+    gap: 8px;
+    margin-bottom: 20%;
+    margin-right: 20%;
+    flex: 80%;
+    margin-left:-62%;
+  
+    @media (max-width: 910px) {
+      width: 100%;
+      padding: 0%;
+      margin-left:0;
+      margin-top: 0;
+      margin-right: 0;
+    }
+  
+    @media (max-width: 560px) {
+      width: 100%;
+      padding: 5%;
+    }
 `;
 
 export const Usuario = styled.div`
