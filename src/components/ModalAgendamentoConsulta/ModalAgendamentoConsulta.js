@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, Tooltip} from "antd";
+import { Checkbox, Tooltip } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
@@ -66,19 +66,8 @@ function ModalAgendamentoConsulta(props) {
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [hoje, setHoje] = useState("");
-  
-  
 
   moment.locale("pt-br");
-
-  async function pegandoPacientes() {
-    const resposta = await managerService.GetDadosPessoais();
-    resposta.forEach((usuario) => {
-      if (usuario.tipo === "PACIENTE") {
-        setUsuarios((usuarios) => [...usuarios, usuario]);
-      }
-    });
-  }
 
   async function setandoNomeConsultorioPorId() {
     const resposta = await managerService.GetConsultorioPorId(
@@ -88,14 +77,8 @@ function ModalAgendamentoConsulta(props) {
   }
 
   useEffect(() => {
-    pegandoPacientes();
-  }, []);
-
-  useEffect(() => {
     setandoNomeConsultorioPorId();
-  },);
-
-  
+  });
 
   const errors = {};
   const [referenciaInputNulos, setReferenciaInputNulos] = useState({
@@ -106,22 +89,9 @@ function ModalAgendamentoConsulta(props) {
     tipo: false,
   });
 
-  function verificandoIdUsuario() {
-    if (props.abertoPeloUsuario === false) {
-      setReferenciaInputNulos({ ...referenciaInputNulos, id_usuario: false });
-    } else {
-      setConsulta({ ...consulta, id_usuario: usuario.id });
-    }
-  }
-
-
-  useEffect(() => {
-    verificandoIdUsuario();
-  }, [usuario]);
-
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true);
-    const res = await managerService.GetDadosConsultorios({tipo:'CONSULTA'});
+    const res = await managerService.GetDadosConsultorios({ tipo: "CONSULTA" });
     setConsultorios(res.dadosConsultorios);
     setCarregandoConsultorios(false);
   }
@@ -129,17 +99,6 @@ function ModalAgendamentoConsulta(props) {
   useEffect(() => {
     pegandoConsultorios();
   }, []);
-
-  async function pegandoDadosUsuario() {
-    setCarregando(true);
-    const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
-    setUsuario(resposta.dadosUsuario);
-    setCarregando(false);
-  }
-
-  useEffect(() => {
-    pegandoDadosUsuario();
-  }, [props]);
 
   async function validacaoCampos(e) {
     const { value, name } = e.target;
@@ -252,13 +211,13 @@ function ModalAgendamentoConsulta(props) {
   }
 
   async function requisicaoCriarConsulta() {
+    consulta.id_usuario=props.idUsuario
     if (!dataConsulta) errors.data = true;
     if (!hora) errors.hora = true;
     if (!consulta.duracao_em_minutos) errors.duracao_em_minutos = true;
     if (!consulta.id_consultorio) errors.id_consultorio = true;
     if (!consulta.tipo) errors.tipo = true;
-    if (!consulta.id_usuario) errors.id_usuario = true;
-    
+
     setCamposVazios({ ...camposVazios, ...errors });
 
     if (
@@ -294,19 +253,19 @@ function ModalAgendamentoConsulta(props) {
     <Container>
       <Caixa>
         <InfoEsquerda>
-                <TextAreaDescricao
-                border={tipoRadio}
-                placeholder="Adicione uma descrição"
-                rows={4}
-                name="descricao"
-                value={consulta.descricao}
-                onChange={(e) => validacaoCampos(e)}
-                style={{
-                  borderWidth: "1px",
-                  borderColor: Cores.azul,
-                  color: "black",
-                }}
-              />
+          <TextAreaDescricao
+            border={tipoRadio}
+            placeholder="Adicione uma descrição"
+            rows={4}
+            name="descricao"
+            value={consulta.descricao}
+            onChange={(e) => validacaoCampos(e)}
+            style={{
+              borderWidth: "1px",
+              borderColor: Cores.azul,
+              color: "black",
+            }}
+          />
         </InfoEsquerda>
         <InfoEsquerdaEDireita>
           <SelecioneUmaData>
@@ -326,101 +285,104 @@ function ModalAgendamentoConsulta(props) {
           </SelecioneUmaData>
           <DoisSelect>
             <TamanhoInput>
-            <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
-            <Tooltip 
-                placement="topLeft" 
-                title={consulta.tipo} 
-                color = {Cores.azul}>
-              <Select
-                style={{
-                  width: "100%",
-                  color: "black",
-                  borderWidth: "1px",
-                }}
-                paddingTop="8px"
-                paddingBottom="8px"
-                size="large"
-                name="tipo"
-                placeholder="Tipo"
-                onChange={(e) => {
-                  validacaoCampos(e);
-                }}
-                value={consulta.tipo}
-                camposVazios={camposVazios.tipo}
+              <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
+              <Tooltip
+                placement="topLeft"
+                title={consulta.tipo}
+                color={Cores.azul}
               >
-                <option value="" disabled selected>
-                  Tipo
-                </option>
-                {TiposDeConsulta.map((tipo) => (
-                  <>
-                    {carregando ? (
-                      <Spin indicator={antIcon} />
-                    ) : (
-                      <option key={tipo} value={tipo} color="red">
-                        {tipo}
-                      </option>
-                    )}
-                  </>
-                ))}
-              </Select></Tooltip>
+                <Select
+                  style={{
+                    width: "100%",
+                    color: "black",
+                    borderWidth: "1px",
+                  }}
+                  paddingTop="8px"
+                  paddingBottom="8px"
+                  size="large"
+                  name="tipo"
+                  placeholder="Tipo"
+                  onChange={(e) => {
+                    validacaoCampos(e);
+                  }}
+                  value={consulta.tipo}
+                  camposVazios={camposVazios.tipo}
+                >
+                  <option value="" disabled selected>
+                    Tipo
+                  </option>
+                  {TiposDeConsulta.map((tipo) => (
+                    <>
+                      {carregando ? (
+                        <Spin indicator={antIcon} />
+                      ) : (
+                        <option key={tipo} value={tipo} color="red">
+                          {tipo}
+                        </option>
+                      )}
+                    </>
+                  ))}
+                </Select>
+              </Tooltip>
               {camposVazios.tipo && (
                 <Rotulo>Selecione um tipo de consulta</Rotulo>
               )}
             </TamanhoInput>
             <InputConsultorio>
-            <TextoDoisSelects>Selecione um consultório:</TextoDoisSelects>
-            <Tooltip 
-                placement="topLeft" 
-                title =  {nomeConsultorioPorId}
-                color = {Cores.azul}>
-              <Select
-                value={consulta.id_consultorio}
-                id="id_consultorio"
-                name="id_consultorio"
-                style={{
-                  width: "100%",
-                  borderWidth: "1px",
-                  borderColor: "black",
-                  color: "black",
-                }}
-                paddingTop="8px"
-                paddingBottom="8px"
-                size="large"
-                onChange={(e) => {
-                  validacaoCampos(e);
-                }}
-                camposVazios={camposVazios.id_consultorio}
+              <TextoDoisSelects>Selecione um consultório:</TextoDoisSelects>
+              <Tooltip
+                placement="topLeft"
+                title={nomeConsultorioPorId}
+                color={Cores.azul}
               >
-                <option value="" disabled selected>
-                  {nomeConsultorioPorId}
-                  Consultório
-                </option>
-                {consultorios.map((consultorio) => (
-                  <>
-                    {carregandoConsultorios ? (
-                      <Spin indicator={antIcon} />
-                    ) : (
-                      <option
-                        key={consultorio.id}
-                        value={consultorio.id}
-                        color="red"
-                      >
-                        {consultorio.nome}
-                      </option>
-                    )}
-                  </>
-                ))}
-              </Select></Tooltip>
+                <Select
+                  value={consulta.id_consultorio}
+                  id="id_consultorio"
+                  name="id_consultorio"
+                  style={{
+                    width: "100%",
+                    borderWidth: "1px",
+                    borderColor: "black",
+                    color: "black",
+                  }}
+                  paddingTop="8px"
+                  paddingBottom="8px"
+                  size="large"
+                  onChange={(e) => {
+                    validacaoCampos(e);
+                  }}
+                  camposVazios={camposVazios.id_consultorio}
+                >
+                  <option value="" disabled selected>
+                    {nomeConsultorioPorId}
+                    Consultório
+                  </option>
+                  {consultorios.map((consultorio) => (
+                    <>
+                      {carregandoConsultorios ? (
+                        <Spin indicator={antIcon} />
+                      ) : (
+                        <option
+                          key={consultorio.id}
+                          value={consultorio.id}
+                          color="red"
+                        >
+                          {consultorio.nome}
+                        </option>
+                      )}
+                    </>
+                  ))}
+                </Select>
+              </Tooltip>
               {camposVazios.id_consultorio && (
                 <Rotulo>Selecione um consultório</Rotulo>
               )}
-              
             </InputConsultorio>
           </DoisSelect>
 
           <DoisSelect>
             <ContainerHorario>
-            <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
+              <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
               <InputHora
                 value={hora}
                 type="time"
@@ -435,8 +397,8 @@ function ModalAgendamentoConsulta(props) {
               {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
               {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
             </ContainerHorario>
-                <ContainerDuracaoConsulta>
-            <TextoDoisSelects>Selecione uma duração:</TextoDoisSelects>
+            <ContainerDuracaoConsulta>
+              <TextoDoisSelects>Selecione uma duração:</TextoDoisSelects>
               <InputDuracao
                 value={consulta.duracao_em_minutos}
                 placeholder="Duração"
@@ -457,11 +419,11 @@ function ModalAgendamentoConsulta(props) {
                   )}
                 </>
               )}
-            </ContainerDuracaoConsulta>    
+            </ContainerDuracaoConsulta>
           </DoisSelect>
-                <Checkbox>
-                  <TextoCheckbox>Notificar paciente</TextoCheckbox>
-                </Checkbox>
+          <Checkbox>
+            <TextoCheckbox>Notificar paciente</TextoCheckbox>
+          </Checkbox>
           <Button
             width="80%"
             height="50px"

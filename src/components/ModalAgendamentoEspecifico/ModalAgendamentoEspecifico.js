@@ -147,7 +147,11 @@ function ModalAgendamentoEspecifico(props) {
               fechandoModal={() => props.fechandoModal()}
             />
           ) : (
-            <ModalAgendamentoConsulta />
+            <ModalAgendamentoConsulta
+              abertoPeloUsuario={props.abertoPeloUsuario}
+              idUsuario={idUsuario}
+              fechandoModal={() => props.fechandoModal()}
+            />
           )}
         </InfoEsquerdaEDireita>
       </Caixa>
