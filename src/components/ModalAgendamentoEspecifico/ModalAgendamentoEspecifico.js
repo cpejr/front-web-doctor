@@ -283,25 +283,20 @@ function ModalAgendamentoEspecifico(props) {
           formatacaoDataHora();
           await managerService.CriandoConsulta(consulta);
           toast.warn("teste1");
-          const Token = managerService.TokenById(consulta.id_usuario);
+          const Token = 
+            await managerService.TokenById(consulta.id_usuario);
           toast.warn("teste2");
-          //toast.warn(Token.dispositivo.token_dispositivo);
+          toast.warn(typeof Token.token_dispositivo);
           const Message = {
-            //to: Token.token_dispositivo.replace("expo/", ''),
-            to: 'ExponentPushToken[I6VI_BKlNeVRYQ2gxHV12i]',
+            to: Token.token_dispositivo.replace("expo/", ''),
             sound: 'default',
             title: 'teste',
             body: 'teste',
             data: {data: 'goes here'},
           };
           toast.warn("teste3");
-          await fetch('https://exo.host/--/api/v2/push/send',{
+          await fetch('https://exp.host/--/api/v2/push/send',{
             method: 'POST',
-            headers:{
-              Accept: 'application/json',
-              'Accept-enconding': 'gzip, deflate',
-              'Content-Type': 'application/json'
-            },
             body: JSON.stringify(Message),
             }
           );
