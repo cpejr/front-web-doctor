@@ -42,6 +42,7 @@ export const MetadeEsquerda = styled.div`
   margin-bottom: 8%;
   font-weight: 400;
   border-right: 1px solid #151B57;
+
   
   @media (max-width: 900px) {
     margin-top: 10%;
@@ -86,43 +87,48 @@ export const TituloCentral = styled.p`
   font-family: "Roboto Condensed", sans-serif;
   font-weight: 600;
   color: #0A0E3C;
+
+  @media (max-width: 425px) {
+    font-size: 20px;
+  }
+  @media (max-width: 360px) {
+    font-size: 16px;
+  }
+  
 `;
 export const SubtituloCentral = styled.p`
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 18px;
   padding-bottom: 18px;
   font-size: 25px;
   text-align: center;
   font-family: "Roboto Condensed", sans-serif;
-`;
-export const TituloEsquerda = styled.p`
-  padding-left: 10%;
-  padding-top: 18px;
-  font-size: 30px;
-  text-align: left;
-  width: 100%;
-  font-family: "Roboto Condensed", sans-serif;
-  color: ${(props) => props.color};
-`;
-export const Conteudo = styled.p`
-  padding-left: 10%;
-  padding-right: 10%;
-  width: 100%;
-  font-size: 20px;
-  text-align: left;
-  font-family: "Roboto Condensed", sans-serif;
-  color: ${(props) => props.color};
+
+  @media (max-width: 425px) {
+    font-size: 18px;
+  }
+  @media (max-width: 360px) {
+    font-size: 14px;
+  }
 `;
 
 export const TextoSaibaMais = styled.p`
 padding-left: 10%;
-padding-top: 5%;
 width: 100%;
 font-size: 130%;
 font-family: "Roboto Condensed", sans-serif;
 color: ${(props) => props.color};
 text-align: left;
+margin-bottom: 0%;
+@media (max-width: 280px) {
+  padding-left: 20%;
+}
 `;
 
 export const BoxBemVindo = styled.div`
+padding-top: 15px;
+padding-bottom: 15px;
   background-color: #FFFFFF; 
   font-size: 20px;
   height: auto;
@@ -210,8 +216,9 @@ export const BoxSaibaMais = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   border-radius: 4px;
+  padding: 4% 0%;
   border: solid 3px;
   border-color: ${(props) => props.borderColor};
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.25);
@@ -224,6 +231,9 @@ export const BoxSaibaMais = styled.div`
   }
   @media (max-width: 360px) {
     font-size: 14px;
+  }
+  @media (max-width: 280px) {
+    align-items: left;
   }
 `;
 
@@ -253,50 +263,6 @@ export const BoxAlterarImagem = styled.div`
 `;
 
 
-export const SubTitulo = styled.div`
-  /* background-color: #CFD3F8; */
-  font-size: 20px;
-  height: 10%;
-  width: 76%;
-  margin-bottom: 4%;
-  border-radius: 6px;
-  border: solid 3px #bbc0f4;
-  font-family: "Roboto Condensed", sans-serif;
-
-  @media (max-width: 600px) {
-    margin-bottom: 5%;
-  }
-  @media (max-width: 425px) {
-    font-size: 18px;
-  }
-  @media (max-width: 360px) {
-    font-size: 14px;
-  }
-`;
-
-export const BotaoGenerico = styled.button`
-  /* background-color: #CFD3F8; */
-  background-color: green;
-  font-size: 20px;
-  height: auto;
-  width: 76%;
-  margin-bottom: 4%;
-  border-radius: 6px;
-  border: solid 3px #bbc0f4;
-  font-family: "Roboto Condensed", sans-serif;
-  align-items: center;
-
-  @media (max-width: 600px) {
-    margin-bottom: 5%;
-  }
-  @media (max-width: 425px) {
-    font-size: 18px;
-  }
-  @media (max-width: 360px) {
-    font-size: 14px;
-  }
-`;
-
 export const ContainerBotoes = styled.div`
   display: flex;
   flex-direction: column;
@@ -318,6 +284,7 @@ export const ContainerBotoes = styled.div`
   }
   @media (max-width: 425px) {
     font-size: 18px;
+    
   }
   @media (max-width: 360px) {
     font-size: 14px;

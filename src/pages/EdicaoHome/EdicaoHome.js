@@ -3,7 +3,6 @@ import {
   Corpo, Container,
   MetadeEsquerda,
   MetadeDireita,
-  BotaoGenerico,
   BoxBemVindo,
   BoxTime,
   BoxSaibaMais,
@@ -16,8 +15,6 @@ import {
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
-
-import Input from "../../styles/Input";
 import Button from "../../styles/Button";
 import TextArea from "../../styles/TextArea";
 import CarrosselEditarHome from "../../components/CarrosselEditarHome.js/CarrosselEditarHome";
@@ -83,6 +80,7 @@ function EdicaoHome() {
             <SubtituloCentral>
               Para ter acesso a chat com o doutor, marcar exames e muito mais
             </SubtituloCentral>
+            
             <Button
               backgroundColor="green"
               borderRadius="3px"
@@ -96,10 +94,13 @@ function EdicaoHome() {
               marginTop="0%"
               marginLeft="0%"
               fontSizeMedia950="0.9em"
+              widthMedia560 = "60%"
             >
               INSCREVA-SE
             </Button>
+            
             <div>Já possui conta?</div>
+ 
             <Button
               backgroundColor="green"
               borderRadius="3px"
@@ -111,16 +112,20 @@ function EdicaoHome() {
               height="50px"
               width="50%"
               marginTop="0%"
+              marginBottom="4%"
               marginLeft="0%"
               fontSizeMedia950="0.9em"
+              widthMedia560 = "50%"
             >
               ENTRAR
-            </Button>
+              </Button>
+            
           </BoxTime>
 
           <BoxSaibaMais
             backgroundColor="#7757A0"
             borderColor="#7757A0"
+            fontSize="140%"
           >
             <TextArea
               value={homes.titulo_um}
@@ -129,12 +134,12 @@ function EdicaoHome() {
               color={Cores.branco}
               fontSize="140%"
               width="100%"
-              marginTop="2%"
               borderWidth='0px'
               marginLeft="10%"
               name="titulo_um"
               onChange={preenchendoDados}
               paddingLeft="10%"
+              
 
             />
 
@@ -144,7 +149,6 @@ function EdicaoHome() {
               width="100%"
               height="auto"
               minHeight="190px"
-              marginTop="2%"
               borderWidth='0px'
               paddingLeft="10%"
               paddingRight="10%"

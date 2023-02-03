@@ -10,6 +10,7 @@ const Button = styled.button`
   /*Medidas*/
   border-radius: 3px;
   margin-top: ${(props) => props.marginTop?? "2%"};
+  margin-bottom: ${(props) => props.marginBottom};
   margin-left: ${(props) => props.marginLeft};
   min-width: ${(props) => props.minWidth};
   padding-top: ${(props) => props.paddingTop};
@@ -38,6 +39,11 @@ const Button = styled.button`
     width: 100%;
     height: ${(props) => props.heightMedia560};
   }
+
+  @media (max-width: 560px) {
+    width: ${(props) => props.widthMedia560};
+  }
+
   @media (max-width: 920px) and (min-width: 560px){
     width: ${(props) => props.widthMedia ?? props.width};
   }

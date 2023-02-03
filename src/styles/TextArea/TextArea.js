@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Cores } from '../../variaveis';
 
 const TextArea = styled.textarea`
+  resize: none;
   background-color: ${(props) => props.backgroundColor};
   text-align: ${(props) => props.textAlign ?? 'left'};
   color: ${(props) => props.color};
