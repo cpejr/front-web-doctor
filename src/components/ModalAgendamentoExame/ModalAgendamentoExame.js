@@ -229,6 +229,8 @@ function ModalAgendamentoExame(props) {
               placeholder="Selecione uma data"
               size="large"
               type="date"
+              paddingTop="8px"
+              paddingBottom="8px"
               onKeyDown={(e) => e.preventDefault()}
               name="data"
               onChange={(e) => validacaoCampos(e)}
@@ -353,7 +355,7 @@ function ModalAgendamentoExame(props) {
             </ContainerHorario>
           </DoisSelect>
           <Button
-            width="80%"
+            width="100%"
             height="50px"
             backgroundColor={Cores.lilas[2]}
             borderColor={Cores.azul}

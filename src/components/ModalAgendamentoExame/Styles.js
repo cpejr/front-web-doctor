@@ -16,7 +16,7 @@ export const Caixa = styled.div`
   flex-direction: row;
   width: 100%;
   height: 100%;
-  min-height: 80vh;
+  min-height: 90vh;
 
 
   @media (max-width: 910px) {
@@ -34,7 +34,7 @@ export const InfoEsquerdaEDireita = styled.div`
   height: 100%;
   min-height: 80vh;
   padding: 5%;
-  flex:20%;
+  flex:100%;
   margin-right:-20%;
   margin-top: -5%;
   @media (max-width: 800px) {
