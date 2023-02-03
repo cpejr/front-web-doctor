@@ -51,7 +51,7 @@ function ModalEditarExame(props) {
   const [consultorioPorId, setConsultorioPorId] = useState();
   const [data, setData] = useState("");
   const [dataHora, setDataHora] = useState("");
-  const [tipoRadio, setTipoRadio] = useState("");
+  const [titulo, setTitulo] = useState("");
   const [hora, setHora] = useState("");
   const [hoje, setHoje] = useState("");
   const [camposVazios, setCamposVazios] = useState({
@@ -119,22 +119,8 @@ function ModalEditarExame(props) {
       id_usuario: props.exame.id_usuario,
       data_hora: props.exame.data_hora,
     };
+    setTitulo(props.exame.titulo);
     setExame(aux);
-    // for (var prop in props.exame) {
-    //   if (
-    //     prop === "id" ||
-    //     prop === "titulo" ||
-    //     prop === "id_consultorio" ||
-    //     prop === "id_exame" ||
-    //     prop === "id_usuario"
-    //   ) {
-    //     setExame({ ...exame, [prop]: props.exame[prop] });
-    //   }
-    //   if (prop === "data_hora") {
-    //     setDataHora(props.exame[prop]);
-    //     setExame({ ...exame, [prop]: props.exame[prop] });
-    //   }
-    // }
     setCarregando(false);
   }
 
@@ -146,14 +132,20 @@ function ModalEditarExame(props) {
   }
 
   function setandoDataEHora() {
-    // let dataString = String(exame.data_hora);
-    // let dataFormatada = dataString.slice(0, 10);
-    // let horaString = String(exame.data_hora);
-    // let horaFormatada = horaString.slice(14, 19);
-    // setData(dataFormatada);
-    // setHora(horaFormatada);
-    const aux = new Date(exame.data_hora)
-    
+    let dataString = String(exame.data_hora);
+    let dataFormatada = dataString.slice(0, 10);
+    setData(dataFormatada);
+    const aux = new Date(exame.data_hora);
+    let horas = aux.getHours();
+    if (horas < 10) {
+      horas = `0${horas}`;
+    }
+    let minutos = aux.getMinutes();
+    if (minutos < 10) {
+      minutos = `0${minutos}`;
+    }
+    const tempo_formatado = `${horas}:${minutos}`;
+    setHora(tempo_formatado);
   }
 
   function setandoDiaAtual() {
@@ -184,10 +176,6 @@ function ModalEditarExame(props) {
     });
   }
 
-  function inputsFiltrados(value) {
-    setTipoRadio(value);
-  }
-
   function formatacaoDataHora() {
     try {
       const dataHora = `${data} ${hora}:00`;
@@ -196,8 +184,19 @@ function ModalEditarExame(props) {
       alert("DataHora inválida.");
     }
   }
+  async function requisicaoExames() {
+    let aux;
+    const exames = await managerService.GetDadosExames();
+    exames.forEach((exame) => {
+      if (exame.titulo === titulo) {
+        aux = exame.id;
+      }
+    });
+    exame.id_exame=aux
+  }
 
   async function requisicaoAtualizarExame() {
+    await requisicaoExames();
     if (
       camposVazios.duracao_em_minutos === true ||
       camposVazios.hora === true ||
@@ -215,8 +214,9 @@ function ModalEditarExame(props) {
     } else {
       setCarregandoUpdate(true);
       formatacaoDataHora();
-      delete exame.titulo
+      delete exame.titulo;
       await managerService.UpdateExame(exame.id, exame);
+      console.log("🚀 ~ file: ModalEditarExame.js:219 ~ requisicaoAtualizarExame ~ exame", exame)
       sleep(3000);
       setCarregandoUpdate(false);
       props.fechandoModal();
@@ -291,6 +291,7 @@ function ModalEditarExame(props) {
                   name="titulo"
                   placeholder="Tipo"
                   onChange={(e) => {
+                    setTitulo(e.target.value);
                     preenchendoDadosExame(e);
                   }}
                 >

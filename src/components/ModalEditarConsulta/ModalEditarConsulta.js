@@ -40,14 +40,12 @@ import * as managerService from "../../services/ManagerService/managerService";
 import { TiposDeConsulta } from "../listaTiposDeConsultas";
 
 function ModalEditarConsulta(props) {
-  const { Option } = Select;
   const [usuario, setUsuario] = useState({});
   const [consultorios, setConsultorios] = useState([]);
   const [carregando, setCarregando] = useState();
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
   const [carregandoUpdate, setCarregandoUpdate] = useState();
   const [consulta, setConsulta] = useState({});
-  const [novaConsulta, setNovaConsulta] = useState({});
   const [consultorioPorId, setConsultorioPorId] = useState();
   const [data, setData] = useState("");
   const [tipoRadio, setTipoRadio] = useState("");
@@ -124,10 +122,18 @@ function ModalEditarConsulta(props) {
   function setandoDataEHora() {
     let dataString = String(consulta.data_hora);
     let dataFormatada = dataString.slice(0, 10);
-    let horaString = String(consulta.data_hora);
-    let horaFormatada = horaString.slice(14, 19);
     setData(dataFormatada);
-    setHora(horaFormatada);
+    const aux = new Date(consulta.data_hora);
+    let horas = aux.getHours();
+    if (horas < 10) {
+      horas = `0${horas}`;
+    }
+    let minutos = aux.getMinutes();
+    if (minutos < 10) {
+      minutos = `0${minutos}`;
+    }
+    const tempo_formatado = `${horas}:${minutos}`;
+    setHora(tempo_formatado);
   }
 
   function setandoDiaAtual() {
