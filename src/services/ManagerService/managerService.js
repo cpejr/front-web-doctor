@@ -111,7 +111,6 @@ export const CriandoExame = async (exame) => {
       toast.success('Exame criada com sucesso.');
     })
     .catch((error) => {
-      console.log("🚀 ~ file: managerService.js:114 ~ CriandoExame ~ error", error)
       requisicaoErro(error);
       return false;
     });
@@ -123,6 +122,18 @@ export const UpdateConsulta = async (id_consulta, consulta) => {
     .updateConsulta(id_consulta, consulta)
     .then(() => {
       toast.success('Consulta atualizada com sucesso!');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return;
+};
+export const UpdateExame = async (id_exame, exame) => {
+  await requesterService
+    .updateExameMarcado(id_exame, exame)
+    .then(() => {
+      toast.success("Exame atualizado com sucesso!");
     })
     .catch((error) => {
       requisicaoErro(error);

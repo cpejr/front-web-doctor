@@ -90,7 +90,13 @@ function ModalEditarConsulta(props) {
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true);
     const res = await managerService.GetDadosConsultorios();
-    setConsultorios(res.dadosConsultorios);
+    let aux = [];
+    res.dadosConsultorios.forEach((consultorio) => {
+      if (consultorio.tipo === "CONSULTA") {
+        aux.push(consultorio);
+      }
+    });
+    setConsultorios(aux);
     setCarregandoConsultorios(false);
   }
 

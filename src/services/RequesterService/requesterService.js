@@ -28,6 +28,9 @@ export const criarExame = (exame) => api.post("/exame_marcados", exame);
 export const updateConsulta = (id_consulta, consulta) =>
   api.put(`/consultas/${id_consulta}`, consulta);
 
+export const updateExameMarcado = (id, exame) =>
+  api.put(`/exame_marcados/${id}`, exame);
+
 export const updateDadosUsuario = (id_usuario, id_endereco, endereco, estado) =>
   api.put(`/enderecos/${id_endereco}`, endereco).then((res) => {
     api.put(`/usuarios/${id_usuario}`, { ...estado, id_endereco: res.data.id });

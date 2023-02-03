@@ -36,10 +36,7 @@ import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import { apenasNumeros } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
-import {
-  ContainerDuracaoConsulta,
-  
-} from "../ModalAgendamentoEspecifico/Styles";
+import { ContainerDuracaoConsulta } from "../ModalAgendamentoEspecifico/Styles";
 import { TiposDeExame } from "../listaTiposDeExames";
 
 function ModalEditarExame(props) {
@@ -53,6 +50,7 @@ function ModalEditarExame(props) {
   const [novoExame, setNovoExame] = useState({});
   const [consultorioPorId, setConsultorioPorId] = useState();
   const [data, setData] = useState("");
+  const [dataHora, setDataHora] = useState("");
   const [tipoRadio, setTipoRadio] = useState("");
   const [hora, setHora] = useState("");
   const [hoje, setHoje] = useState("");
@@ -93,7 +91,13 @@ function ModalEditarExame(props) {
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true);
     const res = await managerService.GetDadosConsultorios();
-    setConsultorios(res.dadosConsultorios);
+    let aux = [];
+    res.dadosConsultorios.forEach((consultorio) => {
+      if (consultorio.tipo === "EXAME") {
+        aux.push(consultorio);
+      }
+    });
+    setConsultorios(aux);
     setCarregandoConsultorios(false);
   }
 
@@ -107,7 +111,30 @@ function ModalEditarExame(props) {
 
   async function setandoValoresExame() {
     setCarregando(true);
-    setExame(props.exame);
+    let aux = {
+      id: props.exame.id,
+      titulo: props.exame.titulo,
+      id_consultorio: props.exame.id_consultorio,
+      id_exame: props.exame.id_exame,
+      id_usuario: props.exame.id_usuario,
+      data_hora: props.exame.data_hora,
+    };
+    setExame(aux);
+    // for (var prop in props.exame) {
+    //   if (
+    //     prop === "id" ||
+    //     prop === "titulo" ||
+    //     prop === "id_consultorio" ||
+    //     prop === "id_exame" ||
+    //     prop === "id_usuario"
+    //   ) {
+    //     setExame({ ...exame, [prop]: props.exame[prop] });
+    //   }
+    //   if (prop === "data_hora") {
+    //     setDataHora(props.exame[prop]);
+    //     setExame({ ...exame, [prop]: props.exame[prop] });
+    //   }
+    // }
     setCarregando(false);
   }
 
@@ -119,12 +146,14 @@ function ModalEditarExame(props) {
   }
 
   function setandoDataEHora() {
-    let dataString = String(exame.data_hora);
-    let dataFormatada = dataString.slice(0, 10);
-    let horaString = String(exame.data_hora);
-    let horaFormatada = horaString.slice(14, 19);
-    setData(dataFormatada);
-    setHora(horaFormatada);
+    // let dataString = String(exame.data_hora);
+    // let dataFormatada = dataString.slice(0, 10);
+    // let horaString = String(exame.data_hora);
+    // let horaFormatada = horaString.slice(14, 19);
+    // setData(dataFormatada);
+    // setHora(horaFormatada);
+    const aux = new Date(exame.data_hora)
+    
   }
 
   function setandoDiaAtual() {
@@ -159,7 +188,6 @@ function ModalEditarExame(props) {
     setTipoRadio(value);
   }
 
-
   function formatacaoDataHora() {
     try {
       const dataHora = `${data} ${hora}:00`;
@@ -186,9 +214,9 @@ function ModalEditarExame(props) {
       return;
     } else {
       setCarregandoUpdate(true);
-      exame.id_usuario = usuario.id;
       formatacaoDataHora();
-      // await managerService.UpdateExame(exame.id, exame);
+      delete exame.titulo
+      await managerService.UpdateExame(exame.id, exame);
       sleep(3000);
       setCarregandoUpdate(false);
       props.fechandoModal();
@@ -199,12 +227,10 @@ function ModalEditarExame(props) {
   function preenchendoDadosExame(e) {
     const { value, name } = e.target;
 
-    if (value !== exame.descricao) {
-      if (value) {
-        setCamposVazios({ ...camposVazios, [name]: false });
-      } else {
-        setCamposVazios({ ...camposVazios, [name]: true });
-      }
+    if (value) {
+      setCamposVazios({ ...camposVazios, [name]: false });
+    } else {
+      setCamposVazios({ ...camposVazios, [name]: true });
     }
 
     if (e.target.name === "hora") {
@@ -215,13 +241,6 @@ function ModalEditarExame(props) {
       setData(e.target.value);
       setEditado(true);
       return data;
-    } else if (e.target.name === "duracao_em_minutos") {
-      setExame({
-        ...exame,
-        [e.target.name]: apenasNumeros(e.target.value),
-      });
-      setEditado(true);
-      return exame;
     } else {
       setExame({ ...exame, [name]: value });
       setEditado(true);
@@ -255,7 +274,7 @@ function ModalEditarExame(props) {
               <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
               <Tooltip
                 placement="topLeft"
-                title={exame.tipo}
+                title={exame.titulo}
                 color={Cores.azul}
               >
                 <Select
@@ -268,8 +287,8 @@ function ModalEditarExame(props) {
                   paddingTop="8px"
                   paddingBottom="8px"
                   size="large"
-                  value={exame.tipo}
-                  name="tipo"
+                  value={exame.titulo}
+                  name="titulo"
                   placeholder="Tipo"
                   onChange={(e) => {
                     preenchendoDadosExame(e);

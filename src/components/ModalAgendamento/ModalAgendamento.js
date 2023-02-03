@@ -52,6 +52,7 @@ function ModalAgendamento(props) {
   async function pegandoDados() {
     setCarregando(true);
     setConsultas([]);
+    setExamesMarcados([])
     await sleep(400);
     setExamesMarcados([]);
     const respostaConsultas =
@@ -106,6 +107,7 @@ function ModalAgendamento(props) {
     } else if (tipo === "exame") {
       setModalEditarExame(false);
     }
+    pegandoDados()
   }
 
   async function fechandoModalConsultaMarcada() {
