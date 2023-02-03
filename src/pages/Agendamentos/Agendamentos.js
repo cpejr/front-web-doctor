@@ -4,8 +4,6 @@ import { Input, Select, Modal } from 'antd';
 import { PlusCircleOutlined } from '@ant-design/icons';
 import { LoadingOutlined, UserOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
-import * as Device from 'expo-device';
-import * as Notifications from 'expo-notifications';
 import {
   TopoPagina,
   ContainerListadeUsuarios,

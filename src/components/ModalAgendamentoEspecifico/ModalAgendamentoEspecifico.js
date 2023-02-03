@@ -46,7 +46,6 @@ function ModalAgendamentoEspecifico(props) {
   const [hora, setHora] = useState("");
   const [erro, setErro] = useState(false);
   const [hoje, setHoje] = useState("");
-  const [Token, setToken] = useState("");
 
   const [consulta, setConsulta] = useState({
     data_hora: "",
@@ -267,16 +266,14 @@ function ModalAgendamentoEspecifico(props) {
   }
 
   async function requisicaoCriarConsulta() {
-     
-    setandoCamposNulos();
-
-
+    setandoCamposNulos();   
     if (
       consulta.duracao_em_minutos === "" ||
       dataConsulta === "" ||
       hora === ""
     ) {
       toast.warn("Preencha todos os campos");
+      
     } else {
       if (erro.hora) {
         toast.warn("Preencha todos os campos corretamente");
@@ -285,7 +282,30 @@ function ModalAgendamentoEspecifico(props) {
           setCarregandoCadastro(true);
           formatacaoDataHora();
           await managerService.CriandoConsulta(consulta);
-          Token = await managerService.TokenById(consulta.id_usuario);
+          toast.warn("teste1");
+          const Token = managerService.TokenById(consulta.id_usuario);
+          toast.warn("teste2");
+          //toast.warn(Token.dispositivo.token_dispositivo);
+          const Message = {
+            //to: Token.token_dispositivo.replace("expo/", ''),
+            to: 'ExponentPushToken[I6VI_BKlNeVRYQ2gxHV12i]',
+            sound: 'default',
+            title: 'teste',
+            body: 'teste',
+            data: {data: 'goes here'},
+          };
+          toast.warn("teste3");
+          await fetch('https://exo.host/--/api/v2/push/send',{
+            method: 'POST',
+            headers:{
+              Accept: 'application/json',
+              'Accept-enconding': 'gzip, deflate',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(Message),
+            }
+          );
+          toast.warn("teste4");
           setCarregandoCadastro(false);
           await sleep(1500);
           props.fechandoModal();
