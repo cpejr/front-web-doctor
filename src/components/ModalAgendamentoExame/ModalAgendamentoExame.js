@@ -59,7 +59,13 @@ function ModalAgendamentoExame(props) {
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true);
     const res = await managerService.GetDadosConsultorios({ tipo: "EXAME" });
-    setConsultorios(res.dadosConsultorios);
+    let aux = [];
+    res.dadosConsultorios.forEach((consultorio) => {
+      if (consultorio.tipo === "EXAME") {
+        aux.push(consultorio);
+      }
+    });
+    setConsultorios(aux);
     setCarregandoConsultorios(false);
   }
 

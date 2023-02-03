@@ -91,8 +91,14 @@ function ModalAgendamentoConsulta(props) {
 
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true);
-    const res = await managerService.GetDadosConsultorios({ tipo: "CONSULTA" });
-    setConsultorios(res.dadosConsultorios);
+    const res = await managerService.GetDadosConsultorios();
+    let aux = []
+    res.dadosConsultorios.forEach((consultorio) => {
+      if (consultorio.tipo === "CONSULTA") {
+        aux.push(consultorio)
+      }
+    });
+    setConsultorios(aux)
     setCarregandoConsultorios(false);
   }
 
@@ -211,7 +217,7 @@ function ModalAgendamentoConsulta(props) {
   }
 
   async function requisicaoCriarConsulta() {
-    consulta.id_usuario=props.idUsuario
+    consulta.id_usuario = props.idUsuario;
     if (!dataConsulta) errors.data = true;
     if (!hora) errors.hora = true;
     if (!consulta.duracao_em_minutos) errors.duracao_em_minutos = true;

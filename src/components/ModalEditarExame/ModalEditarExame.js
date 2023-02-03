@@ -40,7 +40,7 @@ import {
   ContainerDuracaoConsulta,
   
 } from "../ModalAgendamentoEspecifico/Styles";
-import { TiposDeConsulta } from "../listaTiposDeConsultas";
+import { TiposDeExame } from "../listaTiposDeExames";
 
 function ModalEditarExame(props) {
   const { Option } = Select;
@@ -49,8 +49,8 @@ function ModalEditarExame(props) {
   const [carregando, setCarregando] = useState();
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
   const [carregandoUpdate, setCarregandoUpdate] = useState();
-  const [consulta, setConsulta] = useState({});
-  const [novaConsulta, setNovaConsulta] = useState({});
+  const [exame, setExame] = useState({});
+  const [novoExame, setNovoExame] = useState({});
   const [consultorioPorId, setConsultorioPorId] = useState();
   const [data, setData] = useState("");
   const [tipoRadio, setTipoRadio] = useState("");
@@ -74,12 +74,12 @@ function ModalEditarExame(props) {
   useEffect(() => {
     setandoNomeConsultorioPorId();
     setandoDataEHora();
-  }, [consulta]);
+  }, [exame]);
 
   useEffect(() => {
     setEditado(false);
     pegandoDadosUsuario();
-    setandoValoresConsulta();
+    setandoValoresExame();
   }, [props]);
 
   useEffect(() => {
@@ -105,23 +105,23 @@ function ModalEditarExame(props) {
     setCarregando(false);
   }
 
-  async function setandoValoresConsulta() {
+  async function setandoValoresExame() {
     setCarregando(true);
-    setConsulta(props.consulta);
+    setExame(props.exame);
     setCarregando(false);
   }
 
   async function setandoNomeConsultorioPorId() {
     const resposta = await managerService.GetConsultorioPorId(
-      consulta.id_consultorio
+      exame.id_consultorio
     );
     setConsultorioPorId(resposta.nome);
   }
 
   function setandoDataEHora() {
-    let dataString = String(consulta.data_hora);
+    let dataString = String(exame.data_hora);
     let dataFormatada = dataString.slice(0, 10);
-    let horaString = String(consulta.data_hora);
+    let horaString = String(exame.data_hora);
     let horaFormatada = horaString.slice(14, 19);
     setData(dataFormatada);
     setHora(horaFormatada);
@@ -163,13 +163,13 @@ function ModalEditarExame(props) {
   function formatacaoDataHora() {
     try {
       const dataHora = `${data} ${hora}:00`;
-      consulta.data_hora = dataHora;
+      exame.data_hora = dataHora;
     } catch {
       alert("DataHora inválida.");
     }
   }
 
-  async function requisicaoAtualizarConsulta() {
+  async function requisicaoAtualizarExame() {
     if (
       camposVazios.duracao_em_minutos === true ||
       camposVazios.hora === true ||
@@ -186,9 +186,9 @@ function ModalEditarExame(props) {
       return;
     } else {
       setCarregandoUpdate(true);
-      consulta.id_usuario = usuario.id;
+      exame.id_usuario = usuario.id;
       formatacaoDataHora();
-      await managerService.UpdateConsulta(consulta.id, consulta);
+      // await managerService.UpdateExame(exame.id, exame);
       sleep(3000);
       setCarregandoUpdate(false);
       props.fechandoModal();
@@ -196,10 +196,10 @@ function ModalEditarExame(props) {
     }
   }
 
-  function preenchendoDadosConsulta(e) {
+  function preenchendoDadosExame(e) {
     const { value, name } = e.target;
 
-    if (value !== consulta.descricao) {
+    if (value !== exame.descricao) {
       if (value) {
         setCamposVazios({ ...camposVazios, [name]: false });
       } else {
@@ -216,16 +216,16 @@ function ModalEditarExame(props) {
       setEditado(true);
       return data;
     } else if (e.target.name === "duracao_em_minutos") {
-      setConsulta({
-        ...consulta,
+      setExame({
+        ...exame,
         [e.target.name]: apenasNumeros(e.target.value),
       });
       setEditado(true);
-      return consulta;
+      return exame;
     } else {
-      setConsulta({ ...consulta, [name]: value });
+      setExame({ ...exame, [name]: value });
       setEditado(true);
-      return consulta;
+      return exame;
     }
   }
 
@@ -245,7 +245,7 @@ function ModalEditarExame(props) {
               name="data"
               camposVazios={camposVazios.data}
               onChange={(e) => {
-                preenchendoDadosConsulta(e);
+                preenchendoDadosExame(e);
               }}
             ></InputData>
             {camposVazios.data ? <Rotulo>Escolha uma data</Rotulo> : <></>}
@@ -255,7 +255,7 @@ function ModalEditarExame(props) {
               <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
               <Tooltip
                 placement="topLeft"
-                title={consulta.tipo}
+                title={exame.tipo}
                 color={Cores.azul}
               >
                 <Select
@@ -268,14 +268,14 @@ function ModalEditarExame(props) {
                   paddingTop="8px"
                   paddingBottom="8px"
                   size="large"
-                  value={consulta.tipo}
+                  value={exame.tipo}
                   name="tipo"
                   placeholder="Tipo"
                   onChange={(e) => {
-                    preenchendoDadosConsulta(e);
+                    preenchendoDadosExame(e);
                   }}
                 >
-                  {TiposDeConsulta.map((tipo) => (
+                  {TiposDeExame.map((tipo) => (
                     <>
                       {carregando ? (
                         <Spin indicator={antIcon} />
@@ -307,10 +307,10 @@ function ModalEditarExame(props) {
                   }}
                   paddingTop="8px"
                   paddingBottom="8px"
-                  value={consulta.id_consultorio}
+                  value={exame.id_consultorio}
                   size="large"
                   onChange={(e) => {
-                    preenchendoDadosConsulta(e);
+                    preenchendoDadosExame(e);
                   }}
                 >
                   {consultorios.map((consultorio) => (
@@ -344,7 +344,7 @@ function ModalEditarExame(props) {
                 onBlur={(e) => (e.target.type = "text")}
                 placeholder="Horário"
                 name="hora"
-                onChange={preenchendoDadosConsulta}
+                onChange={preenchendoDadosExame}
                 style={{ color: "black" }}
                 camposVazios={camposVazios.hora}
               />
@@ -362,7 +362,7 @@ function ModalEditarExame(props) {
             fontWeight="bold"
             fontSizeMedia="0.9em"
             fontSizeMedia950="1.1em"
-            onClick={() => requisicaoAtualizarConsulta()}
+            onClick={() => requisicaoAtualizarExame()}
           >
             {carregandoUpdate ? (
               <Spin indicator={antIcon} />
