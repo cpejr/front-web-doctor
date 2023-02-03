@@ -252,6 +252,14 @@ function ModalEditarExame(props) {
     <Container>
       <Caixa>
         <InfoDireita>
+        <Usuario>
+            <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
+            {carregando ? (
+              <Spin indicator={antIcon} />
+            ) : (
+              <Nome>{usuario.nome}</Nome>
+            )}
+          </Usuario>
           <SelecioneUmaData>
             <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
             <InputData
