@@ -41,9 +41,9 @@ const estadoIncial = {
   titulo: "",
   descricao: "",
 };
-const upload = {
+/*const upload = {
   erro: false,
-};
+};*/
 function UploadReceita() {
   const [usuarios, setUsuarios] = useState([]);
   const [estado, setEstado] = useState(estadoIncial);
@@ -120,8 +120,6 @@ function UploadReceita() {
       titulo: !estado.titulo,
       descricao: estado.descricao,
     };
-    console.log(camposVaziosAtual);
-    console.log(estado);
     setCamposVazios(camposVaziosAtual);
     if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia) ) {
       toast.warn("Preencha todos os campos");
