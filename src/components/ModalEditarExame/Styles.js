@@ -16,15 +16,14 @@ export const Caixa = styled.div`
   flex-direction: row;
   width: 100%;
   height: 100%;
-  min-height: 90vh;
+  min-height: 80vh;
   background-color: ${Cores.branco};
   border-color: rgba(0, 0, 0, 0.1);
   border-style: solid;
   border-radius: 3px;
 
-  @media (max-width: 910px) {
+  @media (max-width: 800px) {
     flex-direction: column;
-    margin-right: 0;
   }
 `;
 
@@ -33,10 +32,10 @@ export const InfoEsquerda = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 50%;
   height: 100%;
   height: 63vh;
-  padding: 1%;
+  padding: 5%;
   padding-top:3%;
   margin-top: 5%;
 
@@ -57,17 +56,15 @@ export const InfoDireita = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 100%;
+  width: 60%;
   height: 100%;
   min-height: 80vh;
   padding: 5%;
-  padding: 5%;
-  flex:100%;
-  margin-right:-20%;
-  margin-top: -5%;
-
+  margin-left: 20%;
+  margin-top: 5%;
   @media (max-width: 800px) {
     width: 100%;
+    margin-left:0;
   }
 `;
 
@@ -78,9 +75,10 @@ export const ContainerHorario = styled.div`
   flex-direction: column;
   align-items: start;
   justify-content: center;
-  width: 100%;
+  width: 40%;
   height: 40px;
-  //margin-bottom: 5%;
+  margin-left: 2%;
+  margin-top: 10%;
   @media (max-width: 1470px) {
     margin-bottom: 5%;
   }
@@ -385,20 +383,21 @@ export const TextoDoisSelects = styled.h3`
   display: flex;
   justify-content: start;
   align-items: center;
-  
+  margin-right: -100%;
   @media (max-width: 560px){
     margin-top: 15%;
+    margin-right: 0%;
   }
 `;
 
 export const ContainerConsultorio = styled.div`
     display: flex;
     flex-direction: column;
-  align-items: start;
-  justify-content: center;
+    align-items: start;
+    justify-content: center;
   width: 40%;
-  height: 35px;
-  padding-top:5%;
+  height: 40px;
+  padding-top:10%;
   @media (max-width: 1717px) {
     margin-bottom: 5%;
   }
