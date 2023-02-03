@@ -92,6 +92,7 @@ function EdicaoHome() {
               height="50px"
               width="60%"
               marginTop="0%"
+              marginBottom="6%"
               marginLeft="0%"
               fontSizeMedia950="0.9em"
               widthMedia560 = "60%"
@@ -99,7 +100,9 @@ function EdicaoHome() {
               INSCREVA-SE
             </Button>
             
-            <div>Já possui conta?</div>
+            <SubtituloCentral>
+            Já possui conta?
+            </SubtituloCentral>
  
             <Button
               backgroundColor="green"
@@ -110,12 +113,13 @@ function EdicaoHome() {
               color={Cores.preto}
               fontSize="15px"
               height="50px"
-              width="50%"
+              width="60%"
               marginTop="0%"
               marginBottom="4%"
               marginLeft="0%"
               fontSizeMedia950="0.9em"
-              widthMedia560 = "50%"
+              widthMedia560 = "60%"
+              
             >
               ENTRAR
               </Button>

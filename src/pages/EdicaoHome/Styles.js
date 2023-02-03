@@ -78,7 +78,7 @@ export const MetadeDireita = styled.div`
   
 `;
 
-export const TituloCentral = styled.p`
+export const TituloCentral = styled.div`
   padding-left: 10%;
   padding-right: 10%;
   padding-top: 18px;
@@ -96,11 +96,11 @@ export const TituloCentral = styled.p`
   }
   
 `;
-export const SubtituloCentral = styled.p`
+export const SubtituloCentral = styled.div`
   padding-left: 5%;
   padding-right: 5%;
   padding-top: 18px;
-  padding-bottom: 18px;
+  padding-bottom: 15px;
   font-size: 25px;
   text-align: center;
   font-family: "Roboto Condensed", sans-serif;
@@ -113,7 +113,7 @@ export const SubtituloCentral = styled.p`
   }
 `;
 
-export const TextoSaibaMais = styled.p`
+export const TextoSaibaMais = styled.div`
 padding-left: 10%;
 width: 100%;
 font-size: 130%;
