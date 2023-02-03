@@ -33,15 +33,17 @@ import {
 const camposVaziosReferencia = {
   id_usuario: false,
   titulo: false,
-  //descricao: false,
+  descricao: false,
 };
 
 const estadoIncial = {
   id_usuario: "",
   titulo: "",
-  //descricao: "",
+  descricao: "",
 };
-
+const upload = {
+  erro: false,
+};
 function UploadReceita() {
   const [usuarios, setUsuarios] = useState([]);
   const [estado, setEstado] = useState(estadoIncial);
@@ -53,10 +55,10 @@ function UploadReceita() {
   const [descricaoReceita, setDescricaoReceita] = useState();
   const [nomeArquivo, setNomeArquivo] = useState();
   const [file, setFile] = useState();
-
   const history = useHistory();
 
   function preenchendoDados(e) {
+    //camposVazios.upload = false;
     e.preventDefault();
     const { value, name } = e.target;
 
@@ -73,9 +75,9 @@ function UploadReceita() {
       armazenaInformacoesUsuario(value);
     }
 
-    /*if (name === "descricao") {
+    if (name === "descricao") {
 			setDescricaoReceita(value);
-		}*/
+		}
   }
 
   async function armazenaInformacoesUsuario(id) {
@@ -116,14 +118,19 @@ function UploadReceita() {
     const camposVaziosAtual = {
       id_usuario: !estado.id_usuario,
       titulo: !estado.titulo,
+      descricao: estado.descricao,
     };
-
+    console.log(camposVaziosAtual);
+    console.log(estado);
     setCamposVazios(camposVaziosAtual);
-
-    if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
+    if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia) ) {
       toast.warn("Preencha todos os campos");
       return;
     }
+    /*if(camposVazios.upload !== false){
+      toast.warn("Preencha todos os campos");
+      return;
+    }*/
     setCarregandoCriacao(true);
     const id = estado.id_usuario;
     await managerService.CriandoReceitaComArquivo(
@@ -155,6 +162,8 @@ function UploadReceita() {
 
   async function handleChange(info) {
     // Get this url from response in real world.
+    //camposVazios.upload = false;
+    estado.descricao = false;
     getBase64(info.file.originFileObj, (url) => {
       setFile(url);
       setNomeArquivo(info.file.name);
@@ -207,7 +216,7 @@ function UploadReceita() {
             </Select>
           </SelectContainer>
           <UploadBox>Upload:</UploadBox>
-          <Area>
+          <Area camposVazios = {camposVazios.descricao}>
             {file ? (
               <ArquivoSelecionado>
                 <FilePdfOutlined style={{ fontSize: 20 }} />
