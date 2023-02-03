@@ -241,6 +241,14 @@ function ModalEditarConsulta(props) {
     <Container>
       <Caixa>
         <InfoEsquerda>
+        <Usuario>
+            <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
+            {carregando ? (
+              <Spin indicator={antIcon} />
+            ) : (
+              <Nome>{usuario.nome}</Nome>
+            )}
+          </Usuario>
           <TextAreaDescricao
             border={tipoRadio}
             placeholder="Adicione uma descrição"
