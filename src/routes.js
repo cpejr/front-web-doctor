@@ -8,6 +8,7 @@ import Cadastro from './pages/Cadastro';
 import Chat from './pages/Chat';
 import CriacaoFormulario from './pages/CriacaoFormulario';
 import EdicaoConteudo from './pages/EdicaoConteudo';
+import EdicaoGrupoAmieWeb from './pages/EdicaoGrupoAmieWeb';
 import Header from './components/Header/Header';
 import ListaFormularios from './pages/ListaFormularios';
 import ListaUsuarios from './pages/ListaUsuarios';
@@ -142,6 +143,11 @@ function UserHeader() {
         />
         <RotasPrivadasMedico
           exact
+          path='/web/edicaogrupoamieweb'
+          component={EdicaoGrupoAmieWeb}
+        />
+        <RotasPrivadasMedico
+          exact
           path='/web/editarformulario'
           component={EditarFormulario}
         />
@@ -161,7 +167,7 @@ function UserHeader() {
           component={ListaUsuarios}
         />
         <RotasPrivadasMedico
-          exact 
+          exact
           path='/web/criacaoreceitas'
           component={CriacaoReceitas}
         />

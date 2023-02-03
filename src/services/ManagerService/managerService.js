@@ -36,7 +36,7 @@ export const requisicaoLogin = async (email, senha) => {
       await sleep(1500);
       window.location.href = ehMedico ? '/web/home' : '/web/listadeusuarios';
     }
-  } catch (error) {}
+  } catch (error) { }
 
   return;
 };
@@ -44,7 +44,7 @@ export const requisicaoLogin = async (email, senha) => {
 export const Cadastrando = async (
   usuario,
   endereco,
-  callbackError = () => {}
+  callbackError = () => { }
 ) => {
   const resposta = await requesterService.requisicaoDadosUsuario(usuario.email);
 
@@ -510,24 +510,24 @@ export const GetRespostaFormularioIdUsuario = async (id_usuario) => {
   return dadosResposta;
 };
 
-export const confirmarPagamentoExame = async(id_paciente, id_usuario) => {
+export const confirmarPagamentoExame = async (id_paciente, id_usuario) => {
   const formulariosPaciente = await GetRespostaFormularioIdUsuario(id_paciente);
   let possuiFormulario = false;
   let posicao = -1;
 
-  for (const [index, value] of formulariosPaciente.entries()){
-    if(value.tipo === "exame_actigrafia"){
+  for (const [index, value] of formulariosPaciente.entries()) {
+    if (value.tipo === "exame_actigrafia") {
       possuiFormulario = true;
       posicao = index;
     }
   }
 
-  if(!possuiFormulario)
+  if (!possuiFormulario)
     toast.error("O paciente não possui um formulário desse exame");
-  else if(possuiFormulario && formulariosPaciente[posicao].respostas === null){
+  else if (possuiFormulario && formulariosPaciente[posicao].respostas === null) {
     toast.error("O paciente não respondeu as perguntas do formulário");
   }
-  else{
+  else {
     await MandandoMensagemConfirmarPagamento(id_usuario);
   }
 }
@@ -612,7 +612,7 @@ export const CriandoReceita = async (
   usarToast = {
     mensagemSucesso: 'Operação bem sucedida',
     tempo: 1500,
-    onClose: () => {},
+    onClose: () => { },
   }
 ) => {
   return requesterService
@@ -703,7 +703,7 @@ export const CriandoConversa = async (
   usarToast = {
     mensagemSucesso: 'Operação bem sucedida',
     tempo: 1500,
-    onClose: () => {},
+    onClose: () => { },
   }
 ) => {
   let dadosConversaCriada = {};
@@ -858,6 +858,38 @@ export const UpdateFotoDePerfil = async (id, file) => {
     });
   return;
 };
+
+export const getAmie = async () => {
+  let Amies = {};
+
+  await requesterService
+    .getAmie()
+    .then((res) => {
+      Amies = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return Amies;
+};
+
+export const UpdateAmie = async (id, imagem_um, texto, imagem_dois) => {
+  try {
+    await requesterService
+      .updateAmie(id, imagem_um, texto, imagem_dois)
+      .then(() => {
+        console.log("asldkf")
+        toast.success('Informações Amie atualizadas com sucesso!');
+      })
+  }
+  catch (error) {
+    console.log(error);
+    requisicaoErro(error);
+    return;
+  };
+  return;
+}
 
 export const deletarFotoDePerfil = async (id, file) => {
   await requesterService
