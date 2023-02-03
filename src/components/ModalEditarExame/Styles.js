@@ -16,14 +16,15 @@ export const Caixa = styled.div`
   flex-direction: row;
   width: 100%;
   height: 100%;
-  min-height: 80vh;
+  min-height: 90vh;
   background-color: ${Cores.branco};
   border-color: rgba(0, 0, 0, 0.1);
   border-style: solid;
   border-radius: 3px;
 
-  @media (max-width: 800px) {
+  @media (max-width: 910px) {
     flex-direction: column;
+    margin-right: 0;
   }
 `;
 
@@ -32,10 +33,10 @@ export const InfoEsquerda = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 50%;
+  width: 100%;
   height: 100%;
   height: 63vh;
-  padding: 5%;
+  padding: 1%;
   padding-top:3%;
   margin-top: 5%;
 
@@ -56,10 +57,14 @@ export const InfoDireita = styled.div`
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  width: 50%;
+  width: 100%;
   height: 100%;
   min-height: 80vh;
   padding: 5%;
+  padding: 5%;
+  flex:100%;
+  margin-right:-20%;
+  margin-top: -5%;
 
   @media (max-width: 800px) {
     width: 100%;
@@ -73,7 +78,7 @@ export const ContainerHorario = styled.div`
   flex-direction: column;
   align-items: start;
   justify-content: center;
-  width: 40%;
+  width: 100%;
   height: 40px;
   //margin-bottom: 5%;
   @media (max-width: 1470px) {
