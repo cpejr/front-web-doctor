@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { Cores } from '../../variaveis';
 
 const TextArea = styled.textarea`
+  resize: none;
   background-color: ${(props) => props.backgroundColor};
   text-align: ${(props) => props.textAlign ?? 'left'};
   color: ${(props) => props.color};
@@ -58,6 +59,10 @@ const TextArea = styled.textarea`
 
   @media (max-width: 281px) {
     width: 80%;
+  }
+
+  @media (max-width: 950px) {
+    font-size: ${(props) => props.fontSizeMedia950};
   }
 `;
 

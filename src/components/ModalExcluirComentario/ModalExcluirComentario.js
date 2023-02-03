@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Spin } from "antd";
 import { LoadingOutlined, DeleteOutlined } from "@ant-design/icons";
-import { ContainerModalComentario, TextoIcone, Titulo } from "./Styles";
+import { ContainerModalComentario, TextoIcone, Titulo, Icone } from "./Styles";
 import Button from "../../styles/Button";
 import Select from "../../styles/Select";
 import _ from "lodash";
@@ -114,30 +114,35 @@ function ModalExcluirComentario(props) {
                         </option>
                     ))}
                 </Select>
-                <Button
-                    backgroundColor={Cores.lilas[1]}
-                    borderColor={Cores.azul}
-                    color={Cores.branco}
-                    fontWeight='medium'
-                    fontSize='1.7em'
-                    fontSizeMedia1080='1.5em'
-                    fontSizeMedia950='1.2em'
-                    fontSizeMedia480='1em'
-                    heightMedia='2em'
-                    width='70%'
-                    height='50px'
-                    gap='1%'
-                    boxShadow='3px 3px 5px 0px rgba(0, 0, 0, 0.2)'
-                    onClick={() => deletandoComentario(id)}
-                >
-                    {carregando ? <Spin indicator={antIcon} /> :
-                        <TextoIcone>
-                            <div>
-                                Excluir Comentário
-                            </div>
-                            <DeleteOutlined />
-                        </TextoIcone>}
-                </Button>
+                <TextoIcone>
+                    <Button
+                        backgroundColor={Cores.lilas[1]}
+                        borderColor={Cores.azul}
+                        color={Cores.branco}
+                        fontWeight='medium'
+                        fontSize='1.7em'
+                        fontSizeMedia1080='1.5em'
+                        fontSizeMedia950='1.2em'
+                        fontSizeMedia480='1em'
+                        heightMedia='2em'
+                        width='70%'
+                        height='50px'
+                        gap='1%'
+                        boxShadow='3px 3px 5px 0px rgba(0, 0, 0, 0.2)'
+                        onClick={() => deletandoComentario(id)}
+                    >
+                        {carregando ? <Spin indicator={antIcon} /> :
+                            <TextoIcone>
+                                <div>
+                                    Excluir Comentário
+                                </div>
+                                <Icone>
+                                    <DeleteOutlined style={{ marginLeft: "4%" }} />
+                                </Icone>
+                            </TextoIcone>
+                        }
+                    </Button>
+                </TextoIcone>
             </ContainerModalComentario>
         </>
     );

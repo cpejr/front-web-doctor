@@ -89,10 +89,6 @@ export const TituloComentariosDepoimentos = styled.div`
   width: 100%;
   height: 10%;
 
-  @media (max-width: 1100px) {
-    margin-bottom:10%;
-  }
-
   @media (max-width: 800px) {
     margin-bottom:2%;
   }
@@ -119,17 +115,17 @@ export const TodosComentarios = styled.div`
 export const Comentario = styled.div`
   display: flex;
   flex-direction: row;
-  column-gap: 10px;
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: 100%;
-  padding: 8%;
+  height: auto;
+  padding: 3%;
   font-size: 16px;
   font-family: 'Barlow', sans-serif;
   font-weight: 550;
   line-height: 22px;
   text-align: center;
+  white-space: pre-wrap;
 `;
 
 export const ContainerBotoes = styled.div`
@@ -155,8 +151,15 @@ export const ContainerBotoes = styled.div`
 
 export const TextoIcone = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
+  padding: 2%;
   width: 100%;
+`;
+
+export const TextoBotoes = styled.div`
+  width: 220px;
+  display: flex;
+  justify-content: flex-start;
 `;

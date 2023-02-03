@@ -78,6 +78,17 @@ export const TextoIcone = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   width: 100%;
+  gap: 2%;
+`;
+
+export const Icone = styled.div`
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  @media (max-width: 400px) {
+    display: none;
+  }
 `;

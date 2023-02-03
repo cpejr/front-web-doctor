@@ -15,7 +15,9 @@ import {
   TodosComentarios,
   Comentario,
   ContainerTodosComentarios,
-  TextoIcone
+  TextoIcone,
+  IconeLixeira,
+  TextoBotoes
 } from './Styles';
 import { sleep } from "../../utils/sleep";
 
@@ -100,7 +102,9 @@ function EdicaoComentarios() {
                 <ContainerTodosComentarios>
                   <TodosComentarios>
                     {comentario.map((value) => (
-                      <Comentario>"{value.comentario}"</Comentario>
+                      <Comentario>
+                        "{value.comentario}"
+                      </Comentario>
                     ))}
                   </TodosComentarios>
                 </ContainerTodosComentarios>
@@ -114,19 +118,22 @@ function EdicaoComentarios() {
                     borderColor={Cores.azul}
                     color={Cores.branco}
                     fontWeight='medium'
-                    fontSize='1.7em'
-                    fontSizeMedia950='1.5em'
+                    fontSize='1.6em'
+                    fontSizeMedia1080='1.5em'
                     fontSizeMedia480='1.2em'
-                    heightMedia='2em'
+                    fontSizeMedia350='0.2em'
+                    heightMedia='1.5em'
                     width='100%'
                     height='50px'
                     gap='1%'
                     boxShadow='3px 3px 5px 0px rgba(0, 0, 0, 0.2)'
                     onClick={() => adicionandoComentario()}>
-                    <div>
-                      Adicionar Comentário
-                    </div>
-                    <PlusSquareOutlined style={{ marginRight: "3%"}}/>
+                    <TextoIcone>
+                      <TextoBotoes>
+                        Adicionar Comentário
+                      </TextoBotoes>
+                      <PlusSquareOutlined style={{ width: "10%" }} />
+                    </TextoIcone>
                   </Button>
                 </TextoIcone>
                 <TextoIcone>
@@ -135,20 +142,23 @@ function EdicaoComentarios() {
                     borderColor={Cores.azul}
                     color={Cores.branco}
                     fontWeight='medium'
-                    fontSize='1.7em'
-                    fontSizeMedia950='1.5em'
+                    fontSize='1.6em'
+                    fontSizeMedia1080='1.5em'
                     fontSizeMedia480='1.2em'
-                    heightMedia='2em'
+                    fontSizeMedia350='0.8em'
+                    heightMedia='1.5em'
                     width='100%'
                     height='50px'
                     gap='1%'
                     boxShadow='3px 3px 5px 0px rgba(0, 0, 0, 0.2)'
                     onClick={() => excluindoComentario()}
                   >
-                    <div>
-                      Excluir Comentário
-                    </div>
-                    <DeleteOutlined style={{ marginLeft: '2%' }}/>
+                    <TextoIcone>
+                      <TextoBotoes>
+                        Excluir Comentário
+                      </TextoBotoes>
+                        <DeleteOutlined style={{ width: "10%" }} />
+                    </TextoIcone>
                   </Button>
                 </TextoIcone>
               </ContainerBotoes>

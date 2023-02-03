@@ -45,6 +45,10 @@ export const Texto = styled.div`
   color: #000000;
   align-self: flex-start;
 
+  @media (max-width: 950px) {
+    font-size: 0.8em;
+  }
+
   @media (max-width: 280px) {
     align-self: center;
   }
@@ -109,10 +113,17 @@ export const TextoIcone = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   width: 100%;
+  gap: 2%;
+`;
 
+export const Icone = styled.div`
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
   @media (max-width: 400px) {
-    flex-direction: column;
+    display: none;
   }
 `;
