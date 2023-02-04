@@ -67,6 +67,7 @@ function PerfilPaciente(props) {
   const [dataNascimento, setDataNascimento] = useState("");
   const [carregando, setCarregando] = useState(true);
   const [respostas, setRespostas] = useState([]);
+  const [receitas, setReceitas] = useState([]);
   const [perguntas, setPerguntas] = useState();
   const [titulo, setTitulo] = useState();
   const [cpf, setCpf] = useState();
@@ -122,7 +123,7 @@ function PerfilPaciente(props) {
     setConvenio(resposta.dadosUsuario.convenio);
     setCarregando(false);
 
-    
+
 
     if (resposta.dadosUsuario.tipo === "PACIENTE") {
       setTipoUsuario(true);
@@ -155,8 +156,16 @@ function PerfilPaciente(props) {
     setRespostas(resposta);
   }
 
+  async function pegandoListaReceitas() {
+    const resposta = await managerService.GetRespostaReceitasIdUsuario(
+      usuario.id
+    );
+    setReceitas(resposta);
+  }
+
   useEffect(() => {
     pegandoListaFormularios();
+    pegandoListaReceitas();
   }, [usuario]);
 
   async function deletarEnderecoEUsuario() {
@@ -174,12 +183,12 @@ function PerfilPaciente(props) {
     }
   }
 
- 
+
 
   async function setandoTipoExame() {
     setTipoAgendamento("Exame");
     setModalAgendamento(true);
-    
+
   }
 
   async function setandoTipoConsulta() {
@@ -354,37 +363,37 @@ function PerfilPaciente(props) {
                   </Botao>
                   {tipoUsuario ? (
                     <>
-                    <Botao>
-                      <Button
-                        backgroundColor={Cores.lilas[2]}
-                        color={Cores.azulEscuro}
-                        fontWeight="bold"
-                        borderColor={Cores.azulEscuro}
-                        height="40px"
-                        width="100%"
-                        fontSize="1.3em"
-                        fontSizeMedia="1em"
-                        onClick={() => setandoTipoConsulta()}
-                      >
-                        Consultas Agendadas
-                      </Button>
-                    </Botao>
-                     <Botao>
-                     <Button
-                       backgroundColor={Cores.lilas[2]}
-                       color={Cores.azulEscuro}
-                       fontWeight="bold"
-                       borderColor={Cores.azulEscuro}
-                       height="40px"
-                       width="100%"
-                       fontSize="1.3em"
-                       fontSizeMedia="1em"
-                       onClick={() =>setandoTipoExame()}
-                     >
-                       Exames Agendados
-                     </Button>
-                   </Botao>
-                   </>
+                      <Botao>
+                        <Button
+                          backgroundColor={Cores.lilas[2]}
+                          color={Cores.azulEscuro}
+                          fontWeight="bold"
+                          borderColor={Cores.azulEscuro}
+                          height="40px"
+                          width="100%"
+                          fontSize="1.3em"
+                          fontSizeMedia="1em"
+                          onClick={() => setandoTipoConsulta()}
+                        >
+                          Consultas Agendadas
+                        </Button>
+                      </Botao>
+                      <Botao>
+                        <Button
+                          backgroundColor={Cores.lilas[2]}
+                          color={Cores.azulEscuro}
+                          fontWeight="bold"
+                          borderColor={Cores.azulEscuro}
+                          height="40px"
+                          width="100%"
+                          fontSize="1.3em"
+                          fontSizeMedia="1em"
+                          onClick={() => setandoTipoExame()}
+                        >
+                          Exames Agendados
+                        </Button>
+                      </Botao>
+                    </>
                   ) : (
                     <></>
                   )}
@@ -420,34 +429,34 @@ function PerfilPaciente(props) {
                   <Titulo>FORMULÁRIOS</Titulo>
                   {respostas?.map((value) => (
                     <>
-                      { deveMostrarFormularios(value.id_formulario, value.status) && (
+                      {deveMostrarFormularios(value.id_formulario, value.status) && (
                         <Formulario>
                           <DadosFormulario>
-                            {tipoUsuarioLogado === "MASTER"? (
-                               <TituloFormulario
-                               cursor="pointer"
-                               textDecoration="underline"
-                               onClick={() =>
-                                 abrindoModalFormulario(
-                                   value.id,
-                                   value.perguntas,
-                                   value.titulo
-                                 )
-                               }
-                             >
-                               {value.titulo}
-                             </TituloFormulario>
+                            {tipoUsuarioLogado === "MASTER" ? (
+                              <TituloFormulario
+                                cursor="pointer"
+                                textDecoration="underline"
+                                onClick={() =>
+                                  abrindoModalFormulario(
+                                    value.id,
+                                    value.perguntas,
+                                    value.titulo
+                                  )
+                                }
+                              >
+                                {value.titulo}
+                              </TituloFormulario>
 
                             ) : (
                               <TituloFormulario
-                              cursor="null"
-                              textDecoration="none"
-                              
-                            >
-                              {value.titulo}
-                            </TituloFormulario>
-                            )} 
-                           
+                                cursor="null"
+                                textDecoration="none"
+
+                              >
+                                {value.titulo}
+                              </TituloFormulario>
+                            )}
+
                             <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
                             <UrgenciaFormulario>
                               <>Urgência: </>
@@ -485,32 +494,37 @@ function PerfilPaciente(props) {
               ) : (
                 <>
                   <Titulo>RECEITAS</Titulo>
-                  <Receita>
-                    <DadosReceita>
-                      <TituloReceita
-                        textDecoration="underline"
-                        color={Cores.preto}
-                        fontSize="1.5em"
-                      >
-                        Título
-                      </TituloReceita>
-                      <TituloReceita color={Cores.lilas[1]} fontSize="1.2em">
-                        xx/xx/2022
-                      </TituloReceita>
-                    </DadosReceita>
-                    <BotaoReceita>
-                      <Button
-                        backgroundColor="green"
-                        color={Cores.azulEscuro}
-                        fontWeight="bold"
-                        borderColor={Cores.azulEscuro}
-                        height="40px"
-                        width="25%"
-                      >
-                        DOWNLOAD
-                      </Button>
-                    </BotaoReceita>
-                  </Receita>
+                  {receitas?.map((value) =>
+                    <>
+                      <Receita>
+                        <DadosReceita>
+                          <TituloReceita
+                            color={Cores.preto}
+                            justifyContent="flex-start"
+                          >
+                            {value.titulo}
+                          </TituloReceita>
+                          <TituloReceita 
+                          color={Cores.lilas[1]}
+                          justifyContent="flex-end"
+                          >
+                            Data: {value.data_criacao}
+                          </TituloReceita>
+                        </DadosReceita>
+                        <BotaoReceita>
+                          <Button
+                            backgroundColor="green"
+                            color={Cores.azulEscuro}
+                            fontWeight="bold"
+                            borderColor={Cores.azulEscuro}
+                            height="40px"
+                            width="25%"
+                          >
+                            DOWNLOAD
+                          </Button>
+                        </BotaoReceita>
+                      </Receita>
+                    </>)}
                 </>
               )}
             </Receitas>
@@ -533,7 +547,7 @@ function PerfilPaciente(props) {
           id_usuario={usuario.id}
           email={usuario.email}
           tipoAgendamento={tipoAgendamento}
-          
+
         />
       </Modal>
       <Modal
