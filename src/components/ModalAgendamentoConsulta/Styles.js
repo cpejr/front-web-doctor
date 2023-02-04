@@ -31,7 +31,7 @@ export const InfoEsquerdaEDireita = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: 100%;
+  height: 80%;
   min-height: 80vh;
   padding: 5%;
   flex:20%;

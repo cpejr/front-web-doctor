@@ -29,6 +29,8 @@ import {
   TipoAgendamento,
   ContainerHorario,
   ContainerDuracaoConsulta,
+  ContainerNotificar,
+  ContainerBotaoCheckbox,
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
@@ -241,7 +243,7 @@ function ModalEditarConsulta(props) {
     <Container>
       <Caixa>
         <InfoEsquerda>
-        <Usuario>
+          <Usuario>
             <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
             {carregando ? (
               <Spin indicator={antIcon} />
@@ -400,28 +402,32 @@ function ModalEditarConsulta(props) {
             </ContainerDuracaoConsulta>
           </DoisSelect>
 
-          <Checkbox>
-            <TextoCheckbox>Notificar paciente</TextoCheckbox>
-          </Checkbox>
+          <ContainerBotaoCheckbox>
+            <ContainerNotificar>
+              <Checkbox>
+                <TextoCheckbox>Notificar paciente</TextoCheckbox>
+              </Checkbox>
+            </ContainerNotificar>
 
-          <Button
-            width="80%"
-            height="50px"
-            backgroundColor={Cores.lilas[2]}
-            borderColor={Cores.azul}
-            color={Cores.azulEscuro}
-            fontSize="1.1em"
-            fontWeight="bold"
-            fontSizeMedia="0.9em"
-            fontSizeMedia950="1.1em"
-            onClick={() => requisicaoAtualizarConsulta()}
-          >
-            {carregandoUpdate ? (
-              <Spin indicator={antIcon} />
-            ) : (
-              <div>Editar Agendamento</div>
-            )}
-          </Button>
+            <Button
+              width="100%"
+              height="50px"
+              backgroundColor={Cores.lilas[2]}
+              borderColor={Cores.azul}
+              color={Cores.azulEscuro}
+              fontSize="0.7em"
+              fontSizeMedia950="0.65em"
+              fontSizeMedia480="0.60em"
+              fontWeight="bold"
+              onClick={() => requisicaoAtualizarConsulta()}
+            >
+              {carregandoUpdate ? (
+                <Spin indicator={antIcon} />
+              ) : (
+                <div>Editar Agendamento</div>
+              )}
+            </Button>
+          </ContainerBotaoCheckbox>
         </InfoDireita>
       </Caixa>
     </Container>

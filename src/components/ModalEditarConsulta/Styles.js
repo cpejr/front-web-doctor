@@ -35,19 +35,15 @@ export const InfoEsquerda = styled.div`
   align-items: center;
   width: 50%;
   height: 100%;
-  height: 63vh;
   padding: 5%;
   padding-top: 3%;
   margin-top: 5%;
 
   @media (max-width: 800px) {
     width: 100%;
-    height: 35vh;
-  }
-
-  @media (max-width: 800px) {
-    width: 100%;
-    height: 27vh;
+    height: 20%;
+    padding-top: 10%;
+    margin-top: 0%;
   }
 `;
 
@@ -73,17 +69,17 @@ export const ContainerHorario = styled.div`
   justify-content: center;
   width: 40%;
   height: 40px;
-  //margin-bottom: 5%;
   @media (max-width: 1470px) {
+    margin-bottom: 5%;
+  }
+  @media (max-width: 1260px) and (min-width: 800px) {
+    width: 90%;
     margin-bottom: 5%;
   }
   @media (max-width: 560px) {
     width: 100%;
     margin-bottom: 13%;
-  }
-  @media (max-width: 1260px) and (min-width: 800px) {
-    width: 90%;
-    margin-bottom: 5%;
+    margin-top: 13%;
   }
 `;
 
@@ -108,10 +104,17 @@ export const Usuario = styled.div`
     width: 0px;
   }
 
+  @media (max-width: 800px) {
+    margin-bottom: 10%;
+  }
+
   @media (max-width: 500px) {
     flex-direction: column;
-    height: 70px;
-    padding-top: 20%;
+    height: 100%;
+    padding: 2%;
+  }
+  @media (max-width: 470px) {
+    height: 120px;
   }
 `;
 
@@ -167,19 +170,28 @@ export const Nome = styled.div`
   font-size: 1.3em;
   color: ${Cores.azulEscuro};
 
+  @media (max-width: 1319px) {
+    width: 55%;
+    height: 55px;
+    justify-content: center;
+    text-align: center;
+  }
+  @media (max-width: 900px) {
+    font-size: 1.2em;
+  }
   @media (max-width: 800px) {
     width: 50%;
     font-size: 1.3em;
     justify-content: center;
     text-align: center;
     align-items: center;
-    padding-right: 5%;
   }
-  @media (max-width: 1319px) {
-    width: 55%;
-    height: 55px;
-    justify-content: center;
-    text-align: center;
+  @media (max-width: 460px) {
+    font-size: 1.1em;
+    width: 80%;
+  }
+  @media (max-width: 370px) {
+    width: 80%;
   }
 `;
 
@@ -194,12 +206,35 @@ export const TextoCheckbox = styled.h3`
   }
 `;
 
+export const ContainerNotificar = styled.h3`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 0;
+`;
+
+export const ContainerBotaoCheckbox = styled.h3`
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin-top: 10%;
+
+  @media (max-width: 560px) {
+    width: 100%;
+  }
+`;
+
 export const TextAreaDescricao = styled(TextArea)`
   border-color: ${Cores.preto};
   border-width: 1px;
   color: ${Cores.preto};
   ::placeholder {
     color: ${Cores.preto};
+
+    @media (max-width: 1260px) and (min-width: 800px) {
+    margin-top: 6%;
+  }
   }
 `;
 
@@ -391,16 +426,13 @@ export const ContainerConsultorio = styled.div`
   @media (max-width: 1717px) {
     margin-bottom: 5%;
   }
-  @media (max-width: 560px) {
-    width: 100%;
-    margin-bottom: 5%;
-  }
   @media (max-width: 1260px) and (min-width: 800px) {
     width: 90%;
     margin-bottom: 5%;
   }
-  @media (max-width: 807px) and (min-width: 800px) {
-    padding-top: 15%;
+  @media (max-width: 560px) {
+    width: 100%;
+    margin-bottom: 5%;
   }
 `;
 
@@ -429,7 +461,7 @@ export const ContainerDuracaoConsulta = styled.div`
   }
   @media (max-width: 560px) {
     width: 100%;
-    margin-bottom: 5%;
+    //margin-bottom: 13%;
   }
   @media (max-width: 1260px) and (min-width: 800px) {
     width: 90%;
