@@ -53,6 +53,8 @@ import ModalFormulario from "../../components/ModalFormulario";
 import { redirecionamento, sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 import { cep } from "../../utils/masks";
+import { compararDataRecente } from "../../utils/tratamentoErros";
+import formatarData from "../../utils/formatarData";
 
 function PerfilPaciente(props) {
   const [modalAgendamento, setModalAgendamento] = useState(false);
@@ -160,7 +162,13 @@ function PerfilPaciente(props) {
     const resposta = await managerService.GetRespostaReceitasIdUsuario(
       usuario.id
     );
-    setReceitas(resposta);
+    const receitasFormatadas = resposta
+			.sort(compararDataRecente)
+			.map(({ data_criacao, ...resto }) => ({
+				data_criacao: formatarData({ data: data_criacao, formatacao: "dd/MM/yyyy" }),
+				...resto,
+			}));
+		setReceitas(receitasFormatadas);
   }
 
   useEffect(() => {
