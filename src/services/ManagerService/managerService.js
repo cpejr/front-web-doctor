@@ -894,3 +894,18 @@ export const dispostivoById = async (id) => {
     });
   return dispositivo;
 };
+
+export const GetHomes = async () => {
+  let dadosHomes = {};
+
+  await requesterService
+    .requisicaoHomes()
+
+    .then((res) => {
+      dadosHomes = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosHomes[0];
+};

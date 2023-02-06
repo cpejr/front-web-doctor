@@ -1,7 +1,7 @@
 import api from '../../services/api';
 
 
-export const EnviandoImagem = (base64) => api.post("/arquivo", {file: base64});
+export const EnviandoImagem = (base64) => api.post("/arquivo", { file: base64 });
 
 
 export const logarUsuario = (email, senha) =>
@@ -51,7 +51,7 @@ export const requisicaoUsuarioPorId = (id_usuario) =>
 
 export const requisicaoReceitasPorUsuarioId = (id_usuario) =>
   api.get(`/usuarios_receitas/${id_usuario}`);
-  
+
 export const requisicaoDadosUsuarioPorToken = (token_usuario) =>
   api.get(`/usuarios_token/${token_usuario}`);
 
@@ -113,7 +113,7 @@ export const requisicaoFormularioPacientes = (id_formulario) =>
 
 export const requisicaoReceitas = () => api.get(`/receitas/`);
 
-export const criarReceita = (id_usuario, nomePaciente, dataNascimento, tituloReceita, descricao) => 
+export const criarReceita = (id_usuario, nomePaciente, dataNascimento, tituloReceita, descricao) =>
   api.post(`/receitas`, {
     id_usuario: id_usuario,
     nome: nomePaciente,
@@ -136,13 +136,13 @@ export const requisicaoTodosFormulariosPaciente = () =>
 
 
 export const updateFotoDePerfil = (id, base64) =>
-  api.post(`/usuariosimagem/${id}`,{
+  api.post(`/usuariosimagem/${id}`, {
     file: base64
   });
 
 
-  export const deleteFotoDePerfil = (id, base64) =>
-  api.put(`/usuariosdeletarimagem/${id}`,{
+export const deleteFotoDePerfil = (id, base64) =>
+  api.put(`/usuariosdeletarimagem/${id}`, {
     file: base64
   });
 
@@ -178,3 +178,6 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   api.put(`/mensagems/${id_conversa}/visualizadas/${id_usuario}`);
 
 export const dispostivoById = (id) => api.get(`/dispositivos/${id}`);
+
+export const requisicaoHomes = () =>
+  api.get(`/homes`);
