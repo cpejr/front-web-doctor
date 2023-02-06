@@ -163,12 +163,12 @@ function PerfilPaciente(props) {
       usuario.id
     );
     const receitasFormatadas = resposta
-			.sort(compararDataRecente)
-			.map(({ data_criacao, ...resto }) => ({
-				data_criacao: formatarData({ data: data_criacao, formatacao: "dd/MM/yyyy" }),
-				...resto,
-			}));
-		setReceitas(receitasFormatadas);
+      .sort(compararDataRecente)
+      .map(({ data_criacao, ...resto }) => ({
+        data_criacao: formatarData({ data: data_criacao, formatacao: "dd/MM/yyyy" }),
+        ...resto,
+      }));
+    setReceitas(receitasFormatadas);
   }
 
   useEffect(() => {
@@ -190,8 +190,6 @@ function PerfilPaciente(props) {
       redirecionamento("/login");
     }
   }
-
-
 
   async function setandoTipoExame() {
     setTipoAgendamento("Exame");
@@ -252,6 +250,19 @@ function PerfilPaciente(props) {
     const FORMULARIO_RESPONDIDO = true;
 
     return statusForm === FORMULARIO_RESPONDIDO;
+  }
+
+  async function baixarPdf(receitaPdf) {
+    const chave = receitaPdf.pdf_url;
+    const resposta = await managerService.GetArquivoPorChave(chave);
+
+    const fonteLink = `data:application/pdf;base64,${resposta}`;
+    const Linkbaixavel = document.createElement('a');
+    const nome = receitaPdf.titulo + ".pdf";
+
+    Linkbaixavel.href = fonteLink;
+    Linkbaixavel.download = nome;
+    Linkbaixavel.click();
   }
 
   return (
@@ -505,28 +516,29 @@ function PerfilPaciente(props) {
                   {receitas?.map((value) =>
                     <>
                       <Receita>
-                        <DadosReceita>
+                        <DadosReceita key={value?.id}>
                           <TituloReceita
                             color={Cores.preto}
                             justifyContent="flex-start"
                           >
                             {value.titulo}
                           </TituloReceita>
-                          <TituloReceita 
-                          color={Cores.lilas[1]}
-                          justifyContent="flex-end"
+                          <TituloReceita
+                            color={Cores.lilas[1]}
+                            justifyContent="flex-end"
                           >
                             Data: {value.data_criacao}
                           </TituloReceita>
                         </DadosReceita>
                         <BotaoReceita>
                           <Button
-                            backgroundColor="green"
+                            backgroundColor={Cores.lilas[2]}
                             color={Cores.azulEscuro}
                             fontWeight="bold"
                             borderColor={Cores.azulEscuro}
                             height="40px"
                             width="25%"
+                            onClick={() => baixarPdf(value)}
                           >
                             DOWNLOAD
                           </Button>
