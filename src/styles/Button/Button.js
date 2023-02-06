@@ -33,7 +33,6 @@ const Button = styled.button`
   text-align: center;
   font-weight: ${(props) => props.fontWeight};
 
-
   @media (max-width: 560px) {
     width: 100%;
     height: ${(props) => props.heightMedia560};
