@@ -25,6 +25,7 @@ export const Container = styled.div`
     flex-direction: column;
     align-items: center;
   }
+
   @media (max-width: 780px) {
     width: 85%;
   }
@@ -49,6 +50,7 @@ export const MetadeEsquerda = styled.div`
     margin-bottom: -7%;
     border-right: 0px;
   }
+
   @media (max-width: 780px) {
     width: 85%;
   }
@@ -72,6 +74,7 @@ export const MetadeDireita = styled.div`
     margin-bottom: 10%;
     border-left: 0px;
   }
+
   @media (max-width: 780px) {
     width: 85%;
   }
@@ -121,6 +124,7 @@ font-family: "Roboto Condensed", sans-serif;
 color: ${(props) => props.color};
 text-align: left;
 margin-bottom: 0%;
+
 @media (max-width: 280px) {
   padding-left: 20%;
 }
@@ -254,9 +258,11 @@ export const BoxAlterarImagem = styled.div`
   @media (max-width: 600px) {
     margin-bottom: 5%;
   }
+
   @media (max-width: 425px) {
     font-size: 18px;
   }
+  
   @media (max-width: 360px) {
     font-size: 14px;
   }
