@@ -37,13 +37,10 @@ function EdicaoHome() {
     pegandoDados();
   }, []);
 
-
-
   return (
     <Corpo>
       <Container>
         <MetadeEsquerda>
-
           <BoxBemVindo
           >
             <TituloCentral>
@@ -71,7 +68,6 @@ function EdicaoHome() {
               </Button>
             </BoxVideo>
           </BoxBemVindo>
-
           <BoxTime
           >
             <TituloCentral>
@@ -80,7 +76,6 @@ function EdicaoHome() {
             <SubtituloCentral>
               Para ter acesso a chat com o doutor, marcar exames e muito mais
             </SubtituloCentral>
-            
             <Button
               backgroundColor="green"
               borderRadius="3px"
@@ -95,15 +90,13 @@ function EdicaoHome() {
               marginBottom="6%"
               marginLeft="0%"
               fontSizeMedia950="0.9em"
-              widthMedia560 = "60%"
+              widthMedia560="60%"
             >
               INSCREVA-SE
             </Button>
-            
             <SubtituloCentral>
-            Já possui conta?
+              Já possui conta?
             </SubtituloCentral>
- 
             <Button
               backgroundColor="green"
               borderRadius="3px"
@@ -118,14 +111,11 @@ function EdicaoHome() {
               marginBottom="4%"
               marginLeft="0%"
               fontSizeMedia950="0.9em"
-              widthMedia560 = "60%"
-              
+              widthMedia560="60%"
             >
               ENTRAR
-              </Button>
-            
+            </Button>
           </BoxTime>
-
           <BoxSaibaMais
             backgroundColor="#7757A0"
             borderColor="#7757A0"
@@ -143,10 +133,7 @@ function EdicaoHome() {
               name="titulo_um"
               onChange={preenchendoDados}
               paddingLeft="10%"
-              
-
             />
-
             <TextArea
               backgroundColor="#7757A0"
               color={Cores.branco}
@@ -163,27 +150,21 @@ function EdicaoHome() {
               name="texto_um"
               onChange={preenchendoDados}
             />
-
             <TextoSaibaMais color={Cores.branco}>
               Saiba Mais
             </TextoSaibaMais>
           </BoxSaibaMais>
-
           <BoxAlterarImagem
           >
             <CarrosselEditarHome />
           </BoxAlterarImagem>
-
         </MetadeEsquerda>
-
         <MetadeDireita>
-
           <BoxSaibaMais
             backgroundColor="#FBCB4C"
             borderColor="#FBCB4C"
           >
             <TextArea
-
               textAlign="left"
               backgroundColor="#FBCB4C"
               color={Cores.preto}
@@ -195,7 +176,6 @@ function EdicaoHome() {
               name="titulo_dois"
               onChange={preenchendoDados}
               paddingLeft="10%"
-
             />
             <TextArea
               backgroundColor="#FBCB4C"
@@ -218,13 +198,11 @@ function EdicaoHome() {
               Saiba Mais
             </TextoSaibaMais>
           </BoxSaibaMais>
-
           <BoxSaibaMais
             backgroundColor={Cores.lilas[1]}
             borderColor={Cores.lilas[1]}
           >
             <TextArea
-
               textAlign="left"
               backgroundColor={Cores.lilas[1]}
               color={Cores.branco}
@@ -262,7 +240,6 @@ function EdicaoHome() {
             borderColor="white"
           >
             <TextArea
-
               textAlign="left"
               backgroundColor={Cores.branco}
               color={Cores.preto}
@@ -326,7 +303,8 @@ function EdicaoHome() {
               marginTop="0%"
               marginLeft="0%"
               fontSizeMedia950="0.9em"
-            >Cancelar Alterações
+            >
+              Cancelar Alterações
             </Button>
           </ContainerBotoes>
         </MetadeDireita>
