@@ -87,10 +87,23 @@ export const InfoEsquerda = styled.div`
 `;
 
 export const TextAreaDescricao = styled(TextArea)`
+  resize: none;
   width: 310px;
   height: auto;
-  border-color: ${Cores.preto};
-  border-width: 2px;
+  border-color: ${(props) => {
+		let cor;
+		if (!props.borderColor) {
+			if (props.erro || props.camposVazios) {
+				cor = Cores.vermelho;
+			} else {
+				cor = Cores.azulEscuro;
+			}
+		} else {
+			cor = props.borderColor;
+		}
+		return cor;
+	}};
+  border-width: 3px;
   color: ${Cores.preto};
   ::placeholder {
     color: ${Cores.preto};

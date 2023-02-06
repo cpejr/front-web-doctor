@@ -85,6 +85,7 @@ function ModalAgendamentoConsulta(props) {
     data: false,
     hora: false,
     duracao_em_minutos: false,
+    descricao: false,
     id_consultorio: false,
     tipo: false,
   });
@@ -109,13 +110,12 @@ function ModalAgendamentoConsulta(props) {
   async function validacaoCampos(e) {
     const { value, name } = e.target;
 
-    if (name !== "descricao") {
-      if (value) {
-        setCamposVazios({ ...camposVazios, [name]: false });
-      } else {
-        setCamposVazios({ ...camposVazios, [name]: true });
-      }
+    if (value) {
+     setCamposVazios({ ...camposVazios, [name]: false });
+    } else {
+      setCamposVazios({ ...camposVazios, [name]: true });
     }
+    
     if (consulta.duracao_em_minutos === "") {
       setErro({ ...erro, [name]: true });
     } else {
@@ -223,6 +223,7 @@ function ModalAgendamentoConsulta(props) {
     if (!consulta.duracao_em_minutos) errors.duracao_em_minutos = true;
     if (!consulta.id_consultorio) errors.id_consultorio = true;
     if (!consulta.tipo) errors.tipo = true;
+    if (!consulta.descricao) errors.descricao = true;
 
     setCamposVazios({ ...camposVazios, ...errors });
 
@@ -266,9 +267,9 @@ function ModalAgendamentoConsulta(props) {
             name="descricao"
             value={consulta.descricao}
             onChange={(e) => validacaoCampos(e)}
+            camposVazios={camposVazios.descricao}
             style={{
               borderWidth: "1px",
-              borderColor: Cores.azul,
               color: "black",
             }}
           />
@@ -348,7 +349,6 @@ function ModalAgendamentoConsulta(props) {
                   style={{
                     width: "100%",
                     borderWidth: "1px",
-                    borderColor: "black",
                     color: "black",
                   }}
                   paddingTop="8px"
