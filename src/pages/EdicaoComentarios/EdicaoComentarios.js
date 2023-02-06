@@ -86,8 +86,12 @@ function EdicaoComentarios() {
   }
 
   async function fechandoModalSemRecarregar() {
-    setModalAdicionarComentario(false);
-    setModalExcluirComentario(false);
+    if (modalAdicionarComentario === true) {
+      setModalAdicionarComentario(false);
+    }
+    if (modalExcluirComentario === true) {
+      setModalExcluirComentario(false);
+    }
   }
 
   return (
@@ -157,7 +161,7 @@ function EdicaoComentarios() {
                       <TextoBotoes>
                         Excluir Comentário
                       </TextoBotoes>
-                        <DeleteOutlined style={{ width: "10%" }} />
+                      <DeleteOutlined style={{ width: "10%" }} />
                     </TextoIcone>
                   </Button>
                 </TextoIcone>
@@ -166,7 +170,6 @@ function EdicaoComentarios() {
           </BoxComentarioBotao>
         </BoxComentario>
       </PaginaEdicaoComentario>
-
 
       <Modal
         visible={modalAdicionarComentario}

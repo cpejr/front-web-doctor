@@ -76,7 +76,7 @@ function ModalExcluirComentario(props) {
                 history.push("/web/edicaocomentario");
             },
         });
-
+        props.fechandoModal();
         setCarregando(false);
     }
 
