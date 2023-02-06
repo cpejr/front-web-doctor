@@ -546,6 +546,21 @@ export const GetResposta = async (id) => {
     });
   return dadosResposta;
 };
+export const GetIndicacaoEspecifica = async (id) => {
+  let dadosIndicacaoEspecifica = {};
+
+  await requesterService
+    .requisicaoIndicacaoEspecifica(id)
+
+    .then((res) => {
+      dadosIndicacaoEspecifica = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosIndicacaoEspecifica;
+};
+
 
 export const GetFormularioPacientesPorFormulario = async (id_formulario) => {
   let dadosResposta = {};
