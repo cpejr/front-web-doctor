@@ -64,7 +64,6 @@ export const InfoEsquerda = styled.div`
   justify-content: flex-end;
   align-items: center;
   width: 80%;
-  height: auto;
   padding: 5%;
   gap: 8px;
   margin-bottom: 20%;

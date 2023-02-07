@@ -267,54 +267,6 @@ function ModalAgendamentoConsulta(props) {
     <Container>
       <Caixa>
         <InfoEsquerda>
-        {props.abertoPeloUsuario === true ? (
-            <Usuario>
-              <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
-              {carregando ? (
-                <CaixaLoader>
-                  <Spin indicator={antIcon} style={{ color: Cores.azul }} />
-                </CaixaLoader>
-              ) : (
-                <Nome>{usuario.nome}</Nome>
-              )}
-            </Usuario>
-          ) : (
-            <Usuario>
-              <NomePaciente>
-                <Select
-                  style={{
-                    width: "100%",
-                    color: "black",
-                    borderColor: "black",
-                    borderWidth: "0px",
-                    marginBottom: "0.5em",
-                    paddingLeft: "2.5em",
-                  }}
-                  size="large"
-                  name="id_usuario"
-                  placeholder="Selecione um paciente"
-                  onChange={(e) => {
-                    setIdUsuario(e.target.value);
-                  }}
-                >
-                  <option value="" disabled selected>
-                    Paciente
-                  </option>
-                  {usuarios.map((usuario) => (
-                    <>
-                      {carregando ? (
-                        <Spin indicator={antIcon} />
-                      ) : (
-                        <option key={usuario.id} value={usuario.id} color="red">
-                          {usuario.nome}
-                        </option>
-                      )}
-                    </>
-                  ))}
-                </Select>
-              </NomePaciente>
-            </Usuario>
-          )}
           <TextAreaDescricao
             border={tipoRadio}
             placeholder="Adicione uma descrição"
