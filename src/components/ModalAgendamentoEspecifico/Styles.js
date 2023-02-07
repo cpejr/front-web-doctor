@@ -5,38 +5,17 @@ const { TextArea } = Input;
 
 export const Container = styled.div`
   display: flex;
-  flex-direction: column;
   width: 100%;
   height: 100%;
-  padding: 3% 2% 2% 2%;
-`;
-
-export const Caixa = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 100%;
-  min-height: 80vh;
-  background-color: ${Cores.branco};
-  border-color: rgba(0, 0, 0, 0.1);
-  border-style: solid;
-  border-radius: 3px;
-
-  @media (max-width: 910px) {
-    flex-direction: column;
-    
-  }
 `;
 
 export const InfoEsquerdaEDireita = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-  width: 50%;
+  width: 100%;
   height: 100%;
-  min-height: 80vh;
-  padding: 5%;
   gap: 8px;
 
   @media (max-width: 910px) {
@@ -63,7 +42,7 @@ export const InfoEsquerda = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  width: 90%;
+  width: 100%;
   height: 100%;
   padding: 5%;
   gap: 10px;
@@ -71,9 +50,6 @@ export const InfoEsquerda = styled.div`
 
   @media (max-width: 910px) {
     width: 100%;
-    height: 200px;
-    margin-top: 15%;
-    margin-bottom: 5%;
   }
 `;
 

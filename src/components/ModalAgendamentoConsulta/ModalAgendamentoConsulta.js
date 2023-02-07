@@ -9,7 +9,7 @@ import _, { set } from "lodash";
 import {
   Container,
   Caixa,
-  InfoEsquerdaEDireita,
+  InfoEsquerda,
   TextoCheckbox,
   DoisSelect,
   TamanhoInput,
@@ -24,7 +24,7 @@ import {
   InputConsultorio,
   InputData,
   ContainerHorario,
-  InfoEsquerda,
+  InfoDireita,
   Usuario,
   Imagem,
   Nome,
@@ -271,7 +271,6 @@ function ModalAgendamentoConsulta(props) {
   }
 
   return (
-    <Container>
       <Caixa>
         <InfoEsquerda>
           {props.abertoPeloUsuario === true ? (
@@ -352,7 +351,7 @@ function ModalAgendamentoConsulta(props) {
             }}
           />
         </InfoEsquerda>
-        <InfoEsquerdaEDireita>
+        <InfoDireita>
           <SelecioneUmaData>
             <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
             <InputData
@@ -526,9 +525,8 @@ function ModalAgendamentoConsulta(props) {
               <div>Cadastrar novo agendamento</div>
             )}
           </Button>
-        </InfoEsquerdaEDireita>
+        </InfoDireita>
       </Caixa>
-    </Container>
   );
 }
 

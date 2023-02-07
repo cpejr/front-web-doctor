@@ -3,91 +3,54 @@ import { Input } from "antd";
 import { Cores, Fontes } from "../../variaveis";
 const { TextArea } = Input;
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  padding: 3% 2% 2% 2%;
-`;
-
 export const Caixa = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
   width: 100%;
   height: 100%;
-  min-height: 80vh;
-  margin-left:-90%;
 
-  @media (max-width: 910px) {
+  @media (max-width: 900px) {
     flex-direction: column;
-    margin-left:0;
-  }
-`;
-
-export const InfoEsquerdaEDireita = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  height: 80%;
-  min-height: 80vh;
-  padding: 5%;
-  flex:20%;
-  margin-right:-90%;
-  margin-top: -5%;
-
-  @media (max-width: 800px) {
-    width: 100%;
-    margin-right: 0;
+    padding: 5% 10% 5% 10%;
   }
 `;
 
 export const InfoEsquerda = styled.div`
-  /* display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  height: 73vh;
-  padding: 5%;
-
-  @media (max-width: 800px) {
-    width: 100%;
-    height: 50vh;
-  } */
-
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
   align-items: center;
-  width: 80%;
+  width: 50%;
+  height: 100%;
+  min-height: 80vh;
   padding: 5%;
-  gap: 8px;
-  margin-bottom: 20%;
-  margin-right: 20%;
-  flex: 80%;
-  margin-left:-62%;
+  justify-content: space-between;
 
-  @media (max-width: 910px) {
+  @media (max-width: 900px) {
     width: 100%;
-    padding: 0%;
-    margin-left:0;
-    margin-top: 0;
-    margin-right: 0;
+    min-height: 0;
   }
+`;
 
-  @media (max-width: 560px) {
+export const InfoDireita = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+  min-height: 80vh;
+  padding: 5%;
+  justify-content: space-between;
+
+  @media (max-width: 900px) {
     width: 100%;
-    padding: 5%;
+    min-height: 0;
   }
 `;
 
 export const TextAreaDescricao = styled(TextArea)`
   resize: none;
-  width: 310px;
+  width: 80%;
   height: auto;
   border-color: ${(props) => {
 		let cor;
@@ -106,15 +69,6 @@ export const TextAreaDescricao = styled(TextArea)`
   color: ${Cores.preto};
   ::placeholder {
     color: ${Cores.preto};
-  }
-
-  @media (max-width: 1200px) {
-    width: 200px;
-  }
-
-  @media (max-width: 910px) {
-    margin-bottom: 5%;
-    margin-top: -10%;
   }
 `;
 
@@ -457,7 +411,7 @@ export const TextoCaixaSelect = styled.h3`
   font-size: 1.1em;
   color: ${Cores.azulEscuro};
   display: flex;
-  justify-content: end;
+  justify-content: center;
   align-items: center;
 `;
 

@@ -10,7 +10,7 @@ import _, { set } from "lodash";
 import {
   Container,
   Caixa,
-  InfoEsquerdaEDireita,
+  InfoDireita,
   DoisSelect,
   TamanhoInput,
   InputHora,
@@ -236,7 +236,6 @@ function ModalAgendamentoExame(props) {
   }
 
   return (
-    <Container>
       <Caixa>
         <InfoEsquerda>
           {props.abertoPeloUsuario === true ? (
@@ -303,7 +302,7 @@ function ModalAgendamentoExame(props) {
             </Row>
           </TipoAgendamento>
         </InfoEsquerda>
-        <InfoEsquerdaEDireita>
+        <InfoDireita>
           <SelecioneUmaData>
             <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
             <InputData
@@ -453,9 +452,8 @@ function ModalAgendamentoExame(props) {
               <div>Cadastrar novo agendamento</div>
             )}
           </Button>
-        </InfoEsquerdaEDireita>
+        </InfoDireita>
       </Caixa>
-    </Container>
   );
 }
 

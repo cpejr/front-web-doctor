@@ -3,89 +3,49 @@ import { Input } from "antd";
 import { Cores, Fontes } from "../../variaveis";
 const { TextArea } = Input;
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
-  padding: 3% 2% 2% 2%;
-`;
-
 export const Caixa = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
   width: 100%;
   height: 100%;
-  min-height: 90vh;
 
-
-  @media (max-width: 910px) {
+  @media (max-width: 900px) {
     flex-direction: column;
-    margin-right: 0;
-  }
-`;
-
-export const InfoEsquerdaEDireita = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  min-height: 80vh;
-  padding: 5%;
-  flex:100%;
-  margin-right:-20%;
-  margin-top: -5%;
-  @media (max-width: 800px) {
-    width: 100%;
-    margin-right: 0;
+    padding: 5% 10% 5% 10%;
   }
 `;
 
 export const InfoEsquerda = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 50%;
   height: 100%;
-  height: 73vh;
+  min-height: 80vh;
   padding: 5%;
+  justify-content: space-around;
 
-  @media (max-width: 800px) {
+  @media (max-width: 900px) {
     width: 100%;
-    height: 50vh;
-    @media (max-width: 800px) {
-      width: 100%;
-      height: 50vh;
-    } */
-  
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-    width: 80%;
-    height: auto;
-    padding: 5%;
-    gap: 8px;
-    margin-bottom: 20%;
-    margin-right: 20%;
-    flex: 80%;
-    margin-left:-62%;
-  
-    @media (max-width: 910px) {
-      width: 100%;
-      padding: 0%;
-      margin-left:0;
-      margin-top: 0;
-      margin-right: 0;
-    }
-  
-    @media (max-width: 560px) {
-      width: 100%;
-      padding: 5%;
-    }
+    min-height: 0;
+  }
+`;
+
+export const InfoDireita = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+  min-height: 80vh;
+  padding: 5%;
+  justify-content: space-between;
+
+  @media (max-width: 900px) {
+    width: 100%;
+    min-height: 0;
+  }
 `;
 
 export const Usuario = styled.div`

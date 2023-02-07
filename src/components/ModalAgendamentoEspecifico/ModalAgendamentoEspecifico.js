@@ -67,8 +67,6 @@ function ModalAgendamentoEspecifico(props) {
 
   return (
     <Container>
-      <Caixa>
-        <InfoEsquerda></InfoEsquerda>
         <InfoEsquerdaEDireita>
           {tipoRadio === "exame" ? (
             <ModalAgendamentoExame
@@ -88,7 +86,6 @@ function ModalAgendamentoEspecifico(props) {
             />
           )}
         </InfoEsquerdaEDireita>
-      </Caixa>
     </Container>
   );
 }
