@@ -451,6 +451,15 @@ export const TextoSelecioneUmaData = styled.h3`
   justify-content: end;
   align-items: center;
 `;
+export const TextoCaixaSelect = styled.h3`
+  font-family: ${Fontes.barlow};
+  font-weight: 500;
+  font-size: 1.1em;
+  color: ${Cores.azulEscuro};
+  display: flex;
+  justify-content: end;
+  align-items: center;
+`;
 
 export const TextoDoisSelects = styled.h3`
   font-family: ${Fontes.barlow};

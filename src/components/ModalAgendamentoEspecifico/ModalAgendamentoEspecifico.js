@@ -50,7 +50,6 @@ function ModalAgendamentoEspecifico(props) {
     if (props.abertoPeloUsuario) {
       const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
       setUsuario(resposta.dadosUsuario);
-      setIdUsuario(resposta.dadosUsuario.id);
     } else {
       const resposta = await managerService.GetDadosPessoais();
       resposta.forEach((usuario) => {
@@ -66,91 +65,26 @@ function ModalAgendamentoEspecifico(props) {
     pegandoPacientes();
   }, [props]);
 
-  function inputsFiltrados(value) {
-    setTipoRadio(value);
-  }
-
   return (
     <Container>
       <Caixa>
-        <InfoEsquerda>
-          {props.abertoPeloUsuario === true ? (
-            <Usuario>
-              <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
-              {carregando ? (
-                <CaixaLoader>
-                  <Spin indicator={antIcon} style={{ color: Cores.azul }} />
-                </CaixaLoader>
-              ) : (
-                <Nome>{usuario.nome}</Nome>
-              )}
-            </Usuario>
-          ) : (
-            <Usuario>
-              <NomePaciente>
-                <Select
-                  style={{
-                    width: "100%",
-                    color: "black",
-                    borderColor: "black",
-                    borderWidth: "0px",
-                    marginBottom: "0.5em",
-                    paddingLeft: "2.5em",
-                  }}
-                  size="large"
-                  name="id_usuario"
-                  placeholder="Selecione um paciente"
-                  onChange={(e) => {
-                    setIdUsuario(e.target.value);
-                  }}
-                >
-                  <option value="" disabled selected>
-                    Paciente
-                  </option>
-                  {usuarios.map((usuario) => (
-                    <>
-                      {carregando ? (
-                        <Spin indicator={antIcon} />
-                      ) : (
-                        <option key={usuario.id} value={usuario.id} color="red">
-                          {usuario.nome}
-                        </option>
-                      )}
-                    </>
-                  ))}
-                </Select>
-              </NomePaciente>
-            </Usuario>
-          )}
-          <TipoAgendamento>
-            <TextoCaixaSelect>
-              Selecione o Tipo de Agendamento:
-            </TextoCaixaSelect>
-            <Row gutter={60} justify={"space-around"}>
-              <Radio.Group
-                defaultValue=""
-                bordered={false}
-                FiltrarInputs={tipoRadio}
-                onChange={(e) => inputsFiltrados(e.target.value)}
-              >
-                <Radio value="">Exame</Radio>
-                <Radio value="filtrado">Consulta</Radio>
-              </Radio.Group>
-            </Row>
-          </TipoAgendamento>
-        </InfoEsquerda>
+        <InfoEsquerda></InfoEsquerda>
         <InfoEsquerdaEDireita>
-          {tipoRadio === "" ? (
+          {tipoRadio === "exame" ? (
             <ModalAgendamentoExame
               abertoPeloUsuario={props.abertoPeloUsuario}
-              idUsuario={idUsuario}
+              usuario={usuario}
+              usuarios={usuarios}
               fechandoModal={() => props.fechandoModal()}
+              trocarTipo={(e) => setTipoRadio(e)}
             />
           ) : (
             <ModalAgendamentoConsulta
               abertoPeloUsuario={props.abertoPeloUsuario}
-              idUsuario={idUsuario}
+              usuario={usuario}
+              usuarios={usuarios}
               fechandoModal={() => props.fechandoModal()}
+              trocarTipo={(e) => setTipoRadio(e)}
             />
           )}
         </InfoEsquerdaEDireita>

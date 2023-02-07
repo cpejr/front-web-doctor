@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Checkbox, Tooltip } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import { Row, Radio } from "antd";
 import moment from "moment";
 import { toast } from "react-toastify";
 import _, { set } from "lodash";
@@ -28,7 +29,9 @@ import {
   Imagem,
   Nome,
   CaixaLoader,
-  NomePaciente
+  NomePaciente,
+  TipoAgendamento,
+  TextoCaixaSelect,
 } from "./Styles";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import Select from "../../styles/Select";
@@ -100,13 +103,13 @@ function ModalAgendamentoConsulta(props) {
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true);
     const res = await managerService.GetDadosConsultorios();
-    let aux = []
+    let aux = [];
     res.dadosConsultorios.forEach((consultorio) => {
       if (consultorio.tipo === "CONSULTA") {
-        aux.push(consultorio)
+        aux.push(consultorio);
       }
     });
-    setConsultorios(aux)
+    setConsultorios(aux);
     setCarregandoConsultorios(false);
   }
 
@@ -118,11 +121,11 @@ function ModalAgendamentoConsulta(props) {
     const { value, name } = e.target;
 
     if (value) {
-     setCamposVazios({ ...camposVazios, [name]: false });
+      setCamposVazios({ ...camposVazios, [name]: false });
     } else {
       setCamposVazios({ ...camposVazios, [name]: true });
     }
-    
+
     if (consulta.duracao_em_minutos === "") {
       setErro({ ...erro, [name]: true });
     } else {
@@ -224,7 +227,11 @@ function ModalAgendamentoConsulta(props) {
   }
 
   async function requisicaoCriarConsulta() {
-    consulta.id_usuario = props.idUsuario;
+    if (props.usuario) {
+      consulta.id_usuario = props.usuario.id_usuario;
+    } else {
+      consulta.id_usuario = idUsuario;
+    }
     if (!dataConsulta) errors.data = true;
     if (!hora) errors.hora = true;
     if (!consulta.duracao_em_minutos) errors.duracao_em_minutos = true;
@@ -267,6 +274,70 @@ function ModalAgendamentoConsulta(props) {
     <Container>
       <Caixa>
         <InfoEsquerda>
+          {props.abertoPeloUsuario === true ? (
+            <Usuario>
+              <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
+              {carregando ? (
+                <CaixaLoader>
+                  <Spin indicator={antIcon} style={{ color: Cores.azul }} />
+                </CaixaLoader>
+              ) : (
+                <Nome>{props.usuario.nome}</Nome>
+              )}
+            </Usuario>
+          ) : (
+            <Usuario>
+              <NomePaciente>
+                <Select
+                  style={{
+                    width: "100%",
+                    color: "black",
+                    borderColor: "black",
+                    borderWidth: "0px",
+                    marginBottom: "0.5em",
+                    paddingLeft: "2.5em",
+                  }}
+                  size="large"
+                  name="id_usuario"
+                  placeholder="Selecione um paciente"
+                  onChange={(e) => {
+                    setIdUsuario(e.target.value);
+                  }}
+                >
+                  <option value="" disabled selected>
+                    Paciente
+                  </option>
+                  {props.usuarios.map((usuario) => (
+                    <>
+                      {carregando ? (
+                        <Spin indicator={antIcon} />
+                      ) : (
+                        <option key={usuario.id} value={usuario.id} color="red">
+                          {usuario.nome}
+                        </option>
+                      )}
+                    </>
+                  ))}
+                </Select>
+              </NomePaciente>
+            </Usuario>
+          )}
+          <TipoAgendamento>
+            <TextoCaixaSelect>
+              Selecione o Tipo de Agendamento:
+            </TextoCaixaSelect>
+            <Row gutter={60} justify={"space-around"}>
+              <Radio.Group
+                defaultValue="consulta"
+                bordered={false}
+                FiltrarInputs={tipoRadio}
+                onChange={(e) => props.trocarTipo(e.target.value)}
+              >
+                <Radio value="exame">Exame</Radio>
+                <Radio value="consulta">Consulta</Radio>
+              </Radio.Group>
+            </Row>
+          </TipoAgendamento>
           <TextAreaDescricao
             border={tipoRadio}
             placeholder="Adicione uma descrição"

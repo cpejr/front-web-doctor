@@ -4,6 +4,8 @@ import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
 import { toast } from "react-toastify";
+import logoGuilherme from "../../assets/logoGuilherme.png";
+import { Row, Radio } from "antd";
 import _, { set } from "lodash";
 import {
   Container,
@@ -19,6 +21,14 @@ import {
   InputConsultorio,
   InputData,
   ContainerHorario,
+  InfoEsquerda,
+  TipoAgendamento,
+  TextoCaixaSelect,
+  Usuario,
+  Imagem,
+  Nome,
+  NomePaciente,
+  CaixaLoader,
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
@@ -34,6 +44,7 @@ function ModalAgendamentoExame(props) {
   const [carregandoCadastro, setCarregandoCadastro] = useState();
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
   const [carregandoExames, setCarregandoExames] = useState();
+   const [idUsuario, setIdUsuario] = useState({});
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const [exame, setExame] = useState({});
   const valoresIniciaisExame = {
@@ -136,6 +147,7 @@ function ModalAgendamentoExame(props) {
     setandoDiaAtual();
   }, []);
 
+
   useEffect(() => {
     setandoDataMinima();
   }, [hoje]);
@@ -188,7 +200,11 @@ function ModalAgendamentoExame(props) {
   }
 
   async function requisicaoCriarExame() {
-    exame.id_usuario = props.idUsuario;
+    if (props.usuario) {
+      exame.id_usuario = props.usuario.id_usuario;
+    } else {
+      exame.id_usuario = idUsuario;
+    }
     if (!dataExame) errors.data = true;
     if (!hora) errors.hora = true;
     if (!consultorio.nome) errors.nome = true;
@@ -222,6 +238,71 @@ function ModalAgendamentoExame(props) {
   return (
     <Container>
       <Caixa>
+        <InfoEsquerda>
+          {props.abertoPeloUsuario === true ? (
+            <Usuario>
+              <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
+              {carregando ? (
+                <CaixaLoader>
+                  <Spin indicator={antIcon} style={{ color: Cores.azul }} />
+                </CaixaLoader>
+              ) : (
+                <Nome>{props.usuario.nome}</Nome>
+              )}
+            </Usuario>
+          ) : (
+            <Usuario>
+              <NomePaciente>
+                <Select
+                  style={{
+                    width: "100%",
+                    color: "black",
+                    borderColor: "black",
+                    borderWidth: "0px",
+                    marginBottom: "0.5em",
+                    paddingLeft: "2.5em",
+                  }}
+                  size="large"
+                  name="id_usuario"
+                  placeholder="Selecione um paciente"
+                  onChange={(e) => {
+                    setIdUsuario(e.target.value);
+                  }}
+                >
+                  <option value="" disabled selected>
+                    Paciente
+                  </option>
+                  {props.usuarios.map((usuario) => (
+                    <>
+                      {carregando ? (
+                        <Spin indicator={antIcon} />
+                      ) : (
+                        <option key={usuario.id} value={usuario.id} color="red">
+                          {usuario.nome}
+                        </option>
+                      )}
+                    </>
+                  ))}
+                </Select>
+              </NomePaciente>
+            </Usuario>
+          )}
+          <TipoAgendamento>
+            <TextoCaixaSelect>
+              Selecione o Tipo de Agendamento:
+            </TextoCaixaSelect>
+            <Row gutter={60} justify={"space-around"}>
+              <Radio.Group
+                defaultValue="exame"
+                bordered={false}
+                onChange={(e) => props.trocarTipo(e.target.value)}
+              >
+                <Radio value="exame">Exame</Radio>
+                <Radio value="consulta">Consulta</Radio>
+              </Radio.Group>
+            </Row>
+          </TipoAgendamento>
+        </InfoEsquerda>
         <InfoEsquerdaEDireita>
           <SelecioneUmaData>
             <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
