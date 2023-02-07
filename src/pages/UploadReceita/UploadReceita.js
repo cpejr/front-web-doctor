@@ -11,38 +11,39 @@ import { toast } from "react-toastify";
 import * as managerService from "../../services/ManagerService/managerService";
 import { FilePdfOutlined } from "@ant-design/icons";
 
-
 import {
-	ContainerUploadReceitas,
-	CardUploadReceitas,
-	SelectContainer,
-	UploadReceitaNome,
-	EnviarUploadArea,
-	UploadReceitaCorpo,
-	Titulo,
-	NomeDoPaciente,
-	UploadBox,
-	UploadReceitaBotoes,
-	BotaoEnviar,
-	BotaoCancelar,
-	Area,
-	UploadText,
-	ArquivoSelecionado,
-	UploadVazio,
+  ContainerUploadReceitas,
+  CardUploadReceitas,
+  SelectContainer,
+  UploadReceitaNome,
+  EnviarUploadArea,
+  UploadReceitaCorpo,
+  Titulo,
+  NomeDoPaciente,
+  UploadBox,
+  UploadReceitaBotoes,
+  BotaoEnviar,
+  BotaoCancelar,
+  Area,
+  UploadText,
+  ArquivoSelecionado,
+  UploadVazio,
 } from "./Styles";
 
 const camposVaziosReferencia = {
-	id_usuario: false,
-	titulo: false,
-	nomeArquivo: false,
+  id_usuario: false,
+  titulo: false,
+  descricao: false,
 };
 
 const estadoIncial = {
-	id_usuario: "",
-	titulo: "",
-	nomeArquivo: "",
+  id_usuario: "",
+  titulo: "",
+  descricao: "",
 };
-
+/*const upload = {
+  erro: false,
+};*/
 function UploadReceita() {
   const [usuarios, setUsuarios] = useState([]);
   const [estado, setEstado] = useState(estadoIncial);
@@ -54,57 +55,66 @@ function UploadReceita() {
   const [descricaoReceita, setDescricaoReceita] = useState();
   const [nomeArquivo, setNomeArquivo] = useState(false);
   const [file, setFile] = useState();
+  const history = useHistory();
   const [arquivoEscolhido, setarquivoEscolhido] = useState(false);
 
+  function preenchendoDados(e) {
+    //camposVazios.upload = false;
+    e.preventDefault();
+    const { value, name } = e.target;
 
-	function preenchendoDados(e) {
-		e.preventDefault();
-		const { value, name } = e.target;
+    if (camposVazios[name])
+      setCamposVazios((valorAnterior) => ({ ...valorAnterior, [name]: false }));
 
+    setEstado({ ...estado, [name]: value });
 
-		if (camposVazios[name])
-			setCamposVazios((valorAnterior) => ({ ...valorAnterior, [name]: false }));
+    if (name === "titulo") {
+      setTituloReceita(value);
+    }
 
-		setEstado({ ...estado, [name]: value });
+    if (name === "id_usuario") {
+      armazenaInformacoesUsuario(value);
+    }
 
-		if (name === "titulo") {
-			setTituloReceita(value);
+    if (name === "descricao") {
+			setDescricaoReceita(value);
 		}
+  }
 
-		if (name === "id_usuario") {
-			armazenaInformacoesUsuario(value);
-		}
+  async function armazenaInformacoesUsuario(id) {
+    const resposta = await managerService.GetUsuarioPorId(id);
 
-		if (name === "nomeArquivo") {
-			estado.nomeArquivo = false;
-		}
+    const dataDesformatada = resposta.data_nascimento;
+    const dia = dataDesformatada.slice(8, 10);
+    const mes = dataDesformatada.slice(5, 7);
+    const ano = dataDesformatada.slice(0, 4);
+    const dataFormatada = dia + "/" + mes + "/" + ano;
 
-	}
+    setDataNascimentoPaciente(dataFormatada);
+    setNomePaciente(resposta.nome);
+  }
 
-	async function armazenaInformacoesUsuario(id) {
-		const resposta = await managerService.GetUsuarioPorId(id);
+  useEffect(() => {
+    async function pegandoPacientes() {
+      setCarregandoCriacao(true);
+      const resposta = await managerService.GetDadosPessoais();
+      const pacientes = resposta.filter(
+        (usuario) => usuario.tipo === "PACIENTE"
+      );
 
-		const dataDesformatada = resposta.data_nascimento;
-		const dia = dataDesformatada.slice(8, 10);
-		const mes = dataDesformatada.slice(5, 7);
-		const ano = dataDesformatada.slice(0, 4);
-		const dataFormatada = dia + '/' + mes + '/' + ano;
+      setUsuarios(pacientes);
+      setCarregandoCriacao(false);
+    }
 
-		setDataNascimentoPaciente(dataFormatada);
-		setNomePaciente(resposta.nome);
-	}
+    pegandoPacientes();
+  }, []);
 
-	useEffect(() => {
-		async function pegandoPacientes() {
-			setCarregandoCriacao(true);
-			const resposta = await managerService.GetDadosPessoais();
-			const pacientes = resposta.filter(
-				(usuario) => usuario.tipo === "PACIENTE"
-			);
+  function cancelarCriacaoReceita() {
+    history.push("/web/areareceitas");
+  }
 
-			setUsuarios(pacientes);
-			setCarregandoCriacao(false);
-		}
+  async function criarReceita(e) {
+    e.preventDefault();
 
     const camposVaziosAtual = {
       id_usuario: !estado.id_usuario,
@@ -139,18 +149,18 @@ function UploadReceita() {
       }
     );
 
-	function cancelarCriacaoReceita() {
-		history.push("/web/areareceitas");
-	}
+    setCarregandoCriacao(false);
+  }
 
-	async function criarReceita(e) {
-		e.preventDefault();
+  const antIcon = (
+    <LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
+  );
 
-		const camposVaziosAtual = {
-			id_usuario: !estado.id_usuario,
-			titulo: !estado.titulo,
-			nomeArquivo: !estado.nomeArquivo,
-		};
+  const getBase64 = (file, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(file);
+  };
 
   async function handleChange(info) {
     // Get this url from response in real world.
