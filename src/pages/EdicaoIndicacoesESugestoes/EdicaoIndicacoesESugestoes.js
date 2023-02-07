@@ -31,6 +31,8 @@ import ModalExcluirIndicacao from "../../components/ModalExcluirIndicacao";
 import ModalAlterarIndicacao from "../../components/ModalAlterarIndicacao";
 import ModalIndicacao from "../../components/ModalIndicacao";
 import Button from "../../styles/Button";
+import * as managerService from "../../services/ManagerService/managerService";
+import { toast } from "react-toastify";
 
 const examesDisponiveis = [
   "Eletroneuromiografia",
@@ -51,6 +53,8 @@ function EdicaoIndicacoesESugestoes() {
   const [modalExcluirIndicacao, setModalExcluirIndicacao] = useState(false);
   const [modalAlterarIndicacao, setModalAlterarIndicacao] = useState(false);
   const [modalIndicacao, setModalIndicacao] = useState(false);
+  const [Indicados, setIndicados] = useState();
+  const [indicacoesEspecificas, setIndicacoesEspecificas] = useState();
   const history = useHistory();
 
   const antIcon = (
@@ -67,26 +71,54 @@ function EdicaoIndicacoesESugestoes() {
       setExameSelecionado(exame);
     }
     setCarregando(true);
-    await sleep(1500); // Simular requisição ao back
+    //await sleep(1500); // Simular requisição ao back
+    let Texto = {};
+    const Indicacoes = await managerService.GetIndicacaoEspecifica();
+    console.log(Indicacoes);
+    setIndicacoesEspecificas(Indicacoes);
+    const IndicacaoEspecifica = indicacoesEspecificas.map((Indicacao) => {
+      if(Indicacao.titulo === exame){
+        Texto = Indicacao.texto;
+        
+        return Texto;
+      }
+       else {
+        Texto = "";
+        return Texto;
+      }
+  }
+       
+      
+    )
+    setIndicados(true);
     const dadosDoBackend = {
       titulo: exame,
-      descricao:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras non velit sed dolor viverra cursus. Quisque bibendum est eu massa mollis, eu tincidunt nisi lacinia. Morbi ut augue pulvinar, rhoncus libero eget, hendrerit velit. Integer faucibus diam velit, id luctus leo ultrices ac. Mauris laoreet rhoncus pellentesque. Aliquam risus ex, fringilla dapibus mauris at, viverra volutpat mauris. Mauris mi ante, semper vitae bibendum at, dignissim ac augue. Etiam non magna enim. Cras eu posuere libero, ut lobortis nulla. Etiam eget eros erat. Mauris ullamcorper rutrum augue, eget venenatis diam semper eu. Praesent sodales, ipsum sed fermentum imperdiet, risus ipsum viverra.",
+      descricao: IndicacaoEspecifica,
+        
     };
     setDadosIndicacao(dadosDoBackend);
     setCarregando(false);
   }
 
   async function abrirModalAdicionarIndicacao() {
-    setModalAdicionarIndicacao(true);
+    if(Indicados === true){setModalAdicionarIndicacao(true);}
+    else
+    toast.warn("Selecione uma especialidade ao lado para alterar!");
+    
   }
 
   async function abrirModalExcluirIndicacao() {
+    if(Indicados === true){
     setModalExcluirIndicacao(true);
-  }
+    }else
+    toast.warn("Selecione uma especialidade ao lado para alterar!");
+    }
 
   async function abrirModalAlterarIndicacao() {
-    setModalAlterarIndicacao(true);
+    if(Indicados === true){setModalAlterarIndicacao(true);}
+    else
+    toast.warn("Selecione uma especialidade ao lado para alterar!");
+    
   }
 
   async function abrirModalIndicacao() {

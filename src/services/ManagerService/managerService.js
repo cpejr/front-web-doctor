@@ -546,11 +546,11 @@ export const GetResposta = async (id) => {
     });
   return dadosResposta;
 };
-export const GetIndicacaoEspecifica = async (id) => {
+export const GetIndicacaoEspecifica = async () => {
   let dadosIndicacaoEspecifica = {};
 
   await requesterService
-    .requisicaoIndicacaoEspecifica(id)
+    .requisicaoIndicacaoEspecifica()
 
     .then((res) => {
       dadosIndicacaoEspecifica = res.data;
@@ -560,6 +560,7 @@ export const GetIndicacaoEspecifica = async (id) => {
     });
   return dadosIndicacaoEspecifica;
 };
+
 
 
 export const GetFormularioPacientesPorFormulario = async (id_formulario) => {

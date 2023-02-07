@@ -95,9 +95,8 @@ export const deletarExameMarcado = (id) => api.delete(`/exame_marcados/${id}`);
 
 export const requisicaoFormularios = () => api.get(`/formularios/`);
  
-export const requisicaoIndicacaoEspecifica = (id) => api.get(`/indicacao_especificas/${id}`);
+export const requisicaoIndicacaoEspecifica = () => api.get(`/indicacoes_especificas/`);
 
-export const requisicaoIndicacao = () => api.get(`/indicacaos/`);
 
 export const requisicaoFormularioEspecifico = (id) =>
   api.get(`/formularios/${id}`);
