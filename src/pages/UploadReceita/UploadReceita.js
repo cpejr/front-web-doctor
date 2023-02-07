@@ -11,39 +11,38 @@ import { toast } from "react-toastify";
 import * as managerService from "../../services/ManagerService/managerService";
 import { FilePdfOutlined } from "@ant-design/icons";
 
+
 import {
-  ContainerUploadReceitas,
-  CardUploadReceitas,
-  SelectContainer,
-  UploadReceitaNome,
-  EnviarUploadArea,
-  UploadReceitaCorpo,
-  Titulo,
-  NomeDoPaciente,
-  UploadBox,
-  UploadReceitaBotoes,
-  BotaoEnviar,
-  BotaoCancelar,
-  Area,
-  UploadText,
-  ArquivoSelecionado,
-  UploadVazio,
+	ContainerUploadReceitas,
+	CardUploadReceitas,
+	SelectContainer,
+	UploadReceitaNome,
+	EnviarUploadArea,
+	UploadReceitaCorpo,
+	Titulo,
+	NomeDoPaciente,
+	UploadBox,
+	UploadReceitaBotoes,
+	BotaoEnviar,
+	BotaoCancelar,
+	Area,
+	UploadText,
+	ArquivoSelecionado,
+	UploadVazio,
 } from "./Styles";
 
 const camposVaziosReferencia = {
-  id_usuario: false,
-  titulo: false,
-  descricao: false,
+	id_usuario: false,
+	titulo: false,
+	nomeArquivo: false,
 };
 
 const estadoIncial = {
-  id_usuario: "",
-  titulo: "",
-  descricao: "",
+	id_usuario: "",
+	titulo: "",
+	nomeArquivo: "",
 };
-/*const upload = {
-  erro: false,
-};*/
+
 function UploadReceita() {
   const [usuarios, setUsuarios] = useState([]);
   const [estado, setEstado] = useState(estadoIncial);
@@ -55,66 +54,57 @@ function UploadReceita() {
   const [descricaoReceita, setDescricaoReceita] = useState();
   const [nomeArquivo, setNomeArquivo] = useState(false);
   const [file, setFile] = useState();
-  const history = useHistory();
   const [arquivoEscolhido, setarquivoEscolhido] = useState(false);
 
-  function preenchendoDados(e) {
-    //camposVazios.upload = false;
-    e.preventDefault();
-    const { value, name } = e.target;
 
-    if (camposVazios[name])
-      setCamposVazios((valorAnterior) => ({ ...valorAnterior, [name]: false }));
+	function preenchendoDados(e) {
+		e.preventDefault();
+		const { value, name } = e.target;
 
-    setEstado({ ...estado, [name]: value });
 
-    if (name === "titulo") {
-      setTituloReceita(value);
-    }
+		if (camposVazios[name])
+			setCamposVazios((valorAnterior) => ({ ...valorAnterior, [name]: false }));
 
-    if (name === "id_usuario") {
-      armazenaInformacoesUsuario(value);
-    }
+		setEstado({ ...estado, [name]: value });
 
-    if (name === "descricao") {
-			setDescricaoReceita(value);
+		if (name === "titulo") {
+			setTituloReceita(value);
 		}
-  }
 
-  async function armazenaInformacoesUsuario(id) {
-    const resposta = await managerService.GetUsuarioPorId(id);
+		if (name === "id_usuario") {
+			armazenaInformacoesUsuario(value);
+		}
 
-    const dataDesformatada = resposta.data_nascimento;
-    const dia = dataDesformatada.slice(8, 10);
-    const mes = dataDesformatada.slice(5, 7);
-    const ano = dataDesformatada.slice(0, 4);
-    const dataFormatada = dia + "/" + mes + "/" + ano;
+		if (name === "nomeArquivo") {
+			estado.nomeArquivo = false;
+		}
 
-    setDataNascimentoPaciente(dataFormatada);
-    setNomePaciente(resposta.nome);
-  }
+	}
 
-  useEffect(() => {
-    async function pegandoPacientes() {
-      setCarregandoCriacao(true);
-      const resposta = await managerService.GetDadosPessoais();
-      const pacientes = resposta.filter(
-        (usuario) => usuario.tipo === "PACIENTE"
-      );
+	async function armazenaInformacoesUsuario(id) {
+		const resposta = await managerService.GetUsuarioPorId(id);
 
-      setUsuarios(pacientes);
-      setCarregandoCriacao(false);
-    }
+		const dataDesformatada = resposta.data_nascimento;
+		const dia = dataDesformatada.slice(8, 10);
+		const mes = dataDesformatada.slice(5, 7);
+		const ano = dataDesformatada.slice(0, 4);
+		const dataFormatada = dia + '/' + mes + '/' + ano;
 
-    pegandoPacientes();
-  }, []);
+		setDataNascimentoPaciente(dataFormatada);
+		setNomePaciente(resposta.nome);
+	}
 
-  function cancelarCriacaoReceita() {
-    history.push("/web/areareceitas");
-  }
+	useEffect(() => {
+		async function pegandoPacientes() {
+			setCarregandoCriacao(true);
+			const resposta = await managerService.GetDadosPessoais();
+			const pacientes = resposta.filter(
+				(usuario) => usuario.tipo === "PACIENTE"
+			);
 
-  async function criarReceita(e) {
-    e.preventDefault();
+			setUsuarios(pacientes);
+			setCarregandoCriacao(false);
+		}
 
     const camposVaziosAtual = {
       id_usuario: !estado.id_usuario,
@@ -149,18 +139,18 @@ function UploadReceita() {
       }
     );
 
-    setCarregandoCriacao(false);
-  }
+	function cancelarCriacaoReceita() {
+		history.push("/web/areareceitas");
+	}
 
-  const antIcon = (
-    <LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
-  );
+	async function criarReceita(e) {
+		e.preventDefault();
 
-  const getBase64 = (file, callback) => {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => callback(reader.result));
-    reader.readAsDataURL(file);
-  };
+		const camposVaziosAtual = {
+			id_usuario: !estado.id_usuario,
+			titulo: !estado.titulo,
+			nomeArquivo: !estado.nomeArquivo,
+		};
 
   async function handleChange(info) {
     // Get this url from response in real world.
