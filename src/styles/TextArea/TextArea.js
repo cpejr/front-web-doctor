@@ -67,3 +67,6 @@ const TextArea = styled.textarea`
 `;
 
 export default TextArea;
+  @media (max-width: 820px) {
+    width: 100%;
+  }
