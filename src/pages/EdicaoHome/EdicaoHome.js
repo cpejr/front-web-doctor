@@ -17,6 +17,7 @@ import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 import Button from "../../styles/Button";
 import TextArea from "../../styles/TextArea";
+import Input from "../../styles/Input";
 import CarrosselEditarHome from "../../components/CarrosselEditarHome.js/CarrosselEditarHome";
 
 function EdicaoHome() {
@@ -49,24 +50,24 @@ function EdicaoHome() {
             <SubtituloCentral>
               Conheça melhor o doutor Guilherme Marques
             </SubtituloCentral>
-            <BoxVideo>
-              <Button
-                backgroundColor="green"
-                borderRadius="3px"
-                borderWidth="1px"
-                borderColor={Cores.preto}
-                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-                color={Cores.preto}
-                fontSize="15px"
-                height="50px"
-                width="60%"
-                marginTop="0%"
-                marginLeft="0%"
-                fontSizeMedia950="0.9em"
-              >
-                Alterar vídeo
-              </Button>
-            </BoxVideo>
+            <BoxVideo />
+            <Input
+              value={homes.video}
+              textAlign="left"
+              backgroundColor={Cores.azulClaro}
+              borderColor={Cores.azul}
+              borderWidth='2px'
+              color={Cores.preto}
+              fontSize="1em"
+              width="70%"
+              height="40px"
+              marginLeft="10%"
+              marginBottom="5%"
+              name="video"
+              onChange={preenchendoDados}
+              paddingLeft="3%"
+            >
+            </Input>
           </BoxBemVindo>
           <BoxTime
           >
