@@ -108,8 +108,8 @@ function ModalAdicionarComentario(props) {
             widthMedia560="70%"
             widthMedia280="58%"
             height='50px'
-            gap='1%'
-            boxShadow='3px 3px 5px 0px rgba(0, 0, 0, 0.2)'
+            marginBottom="2%"
+            gap='1%'            boxShadow='3px 3px 5px 0px rgba(0, 0, 0, 0.2)'
             onClick={criarComentario}
           >
             {carregando ? <Spin indicator={antIcon} /> :

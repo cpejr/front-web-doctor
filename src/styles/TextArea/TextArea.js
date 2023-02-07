@@ -27,7 +27,7 @@ const TextArea = styled.textarea`
   border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
-      if(props.erro || props.camposVazios || props.emailJaExiste){
+      if (props.erro || props.camposVazios || props.emailJaExiste) {
         cor = Cores.vermelho;
       } else {
         cor = Cores.azul;
@@ -64,9 +64,10 @@ const TextArea = styled.textarea`
   @media (max-width: 950px) {
     font-size: ${(props) => props.fontSizeMedia950};
   }
-`;
 
-export default TextArea;
   @media (max-width: 820px) {
     width: 100%;
   }
+`;
+
+export default TextArea;
