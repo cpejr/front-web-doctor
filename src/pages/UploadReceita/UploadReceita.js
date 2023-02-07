@@ -53,9 +53,10 @@ function UploadReceita() {
   const [tituloReceita, setTituloReceita] = useState();
   const [dataNascimentoPaciente, setDataNascimentoPaciente] = useState();
   const [descricaoReceita, setDescricaoReceita] = useState();
-  const [nomeArquivo, setNomeArquivo] = useState();
+  const [nomeArquivo, setNomeArquivo] = useState(false);
   const [file, setFile] = useState();
   const history = useHistory();
+  const [arquivoEscolhido, setarquivoEscolhido] = useState(false);
 
   function preenchendoDados(e) {
     //camposVazios.upload = false;
@@ -123,7 +124,10 @@ function UploadReceita() {
     setCamposVazios(camposVaziosAtual);
     if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia) ) {
       toast.warn("Preencha todos os campos");
-      return;
+      if (nomeArquivo == false){
+		setarquivoEscolhido(true)
+	  }
+	  return;
     }
     /*if(camposVazios.upload !== false){
       toast.warn("Preencha todos os campos");
@@ -166,6 +170,7 @@ function UploadReceita() {
       setFile(url);
       setNomeArquivo(info.file.name);
     });
+	setarquivoEscolhido(false)
   }
 
   return (
@@ -214,7 +219,7 @@ function UploadReceita() {
             </Select>
           </SelectContainer>
           <UploadBox>Upload:</UploadBox>
-          <Area camposVazios = {camposVazios.descricao}>
+          <Area camposVazios = {arquivoEscolhido}>
             {file ? (
               <ArquivoSelecionado>
                 <FilePdfOutlined style={{ fontSize: 20 }} />
