@@ -24,7 +24,13 @@ import {
   InputData,
   ContainerHorario,
   InfoEsquerda,
+  Usuario,
+  Imagem,
+  Nome,
+  CaixaLoader,
+  NomePaciente
 } from "./Styles";
+import logoGuilherme from "../../assets/logoGuilherme.png";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
 import { Cores } from "../../variaveis";
@@ -35,6 +41,7 @@ import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAgendamentoConsulta(props) {
   const [usuario, setUsuario] = useState({});
+  const [idUsuario, setIdUsuario] = useState({});
   const [usuarios, setUsuarios] = useState([]);
   const [consultorios, setConsultorios] = useState([]);
   const [carregando, setCarregando] = useState();
@@ -260,6 +267,54 @@ function ModalAgendamentoConsulta(props) {
     <Container>
       <Caixa>
         <InfoEsquerda>
+        {props.abertoPeloUsuario === true ? (
+            <Usuario>
+              <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
+              {carregando ? (
+                <CaixaLoader>
+                  <Spin indicator={antIcon} style={{ color: Cores.azul }} />
+                </CaixaLoader>
+              ) : (
+                <Nome>{usuario.nome}</Nome>
+              )}
+            </Usuario>
+          ) : (
+            <Usuario>
+              <NomePaciente>
+                <Select
+                  style={{
+                    width: "100%",
+                    color: "black",
+                    borderColor: "black",
+                    borderWidth: "0px",
+                    marginBottom: "0.5em",
+                    paddingLeft: "2.5em",
+                  }}
+                  size="large"
+                  name="id_usuario"
+                  placeholder="Selecione um paciente"
+                  onChange={(e) => {
+                    setIdUsuario(e.target.value);
+                  }}
+                >
+                  <option value="" disabled selected>
+                    Paciente
+                  </option>
+                  {usuarios.map((usuario) => (
+                    <>
+                      {carregando ? (
+                        <Spin indicator={antIcon} />
+                      ) : (
+                        <option key={usuario.id} value={usuario.id} color="red">
+                          {usuario.nome}
+                        </option>
+                      )}
+                    </>
+                  ))}
+                </Select>
+              </NomePaciente>
+            </Usuario>
+          )}
           <TextAreaDescricao
             border={tipoRadio}
             placeholder="Adicione uma descrição"

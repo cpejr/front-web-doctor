@@ -119,6 +119,13 @@ export const TextAreaDescricao = styled(TextArea)`
   }
 `;
 
+export const CaixaLoader = styled.div`
+   width: calc(98% - 50px);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+`;
+
 export const Usuario = styled.div`
   display: flex;
   flex-direction: row;
