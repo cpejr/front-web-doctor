@@ -34,13 +34,13 @@ import {
 const camposVaziosReferencia = {
 	id_usuario: false,
 	titulo: false,
-	descricao: false,
+	nomeArquivo: false,
 };
 
 const estadoIncial = {
 	id_usuario: "",
 	titulo: "",
-	descricao: "",
+	nomeArquivo: "",
 };
 
 function UploadReceita() {
@@ -75,8 +75,8 @@ function UploadReceita() {
 			armazenaInformacoesUsuario(value);
 		}
 
-		if (name === "descricao") {
-			setDescricaoReceita(value);
+		if (name === "nomeArquivo") {
+			estado.nomeArquivo = false;
 		}
 
 	}
@@ -119,7 +119,7 @@ function UploadReceita() {
 		const camposVaziosAtual = {
 			id_usuario: !estado.id_usuario,
 			titulo: !estado.titulo,
-			descricao: !estado.descricao,
+			nomeArquivo: !estado.nomeArquivo,
 		};
 
 		setCamposVazios(camposVaziosAtual);
@@ -157,6 +157,7 @@ function UploadReceita() {
 		getBase64(info.file.originFileObj, (url) => {
 			setFile(url);
 			setNomeArquivo(info.file.name);
+			camposVazios.nomeArquivo = nomeArquivo;
 		});
 	}
 
@@ -206,7 +207,7 @@ function UploadReceita() {
 						</Select>
 					</SelectContainer>
 					<UploadBox>Upload:</UploadBox>
-					<Area>
+					<Area camposVazios={camposVazios.nomeArquivo}>
 					{file ? (
 						<ArquivoSelecionado>
 						<FilePdfOutlined style={{ fontSize: 20 }} />
