@@ -653,24 +653,22 @@ export const CriandoReceita = async (
     });
 };
 
-export const CriandoReceitasemArquivo = async (
+export const CriandoReceitaComArquivo = async (
   id_usuario,
   tituloReceita,
   descricao,
-  pdf_url,
+  base64,
   usarToast = {
     mensagemSucesso: 'Operação bem sucedida',
     tempo: 1500,
     onClose: () => {},
   }
 ) => {
-  return requesterService
-
-    .criarReceitasemArquivo(
+  return requesterService.criarReceitaComArquivo(
       id_usuario,
       tituloReceita,
       descricao,
-      pdf_url,
+      base64,
     )
     .then(() => {
       if (usarToast) {
