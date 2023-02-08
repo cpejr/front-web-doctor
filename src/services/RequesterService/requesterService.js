@@ -43,6 +43,18 @@ export const updateNotificacaoAtivaFormularioPaciente = (
 export const updateCodigo = (id_usuario, codigo) =>
   api.put(`/usuarios/${id_usuario}`, { codigo: codigo });
 
+export const UpdateComentario = (id, comentario) =>
+  api.put(`/comentarios/${id}`, { comentario: comentario });
+
+export const DeleteComentario = (id, comentario) =>
+  api.delete(`/comentarios/${id}`, { comentario: comentario });
+
+export const CriandoComentario = (comentario) =>
+  api.post('/comentarios', comentario);
+
+export const requisicaoComentario = () =>
+  api.get(`/comentarios`);
+
 export const requisicaoDadosUsuario = (emailUrl) =>
   api.get(`/usuarios/${emailUrl}`);
 

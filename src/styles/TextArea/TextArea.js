@@ -27,7 +27,7 @@ const TextArea = styled.textarea`
   border-color: ${(props) => {
     let cor;
     if (!props.borderColor) {
-      if(props.erro || props.camposVazios || props.emailJaExiste){
+      if (props.erro || props.camposVazios || props.emailJaExiste) {
         cor = Cores.vermelho;
       } else {
         cor = Cores.azul;
@@ -37,6 +37,7 @@ const TextArea = styled.textarea`
     }
     return cor;
   }};
+  line-height: ${(props) => props.lineHeight};
   color: ${(props) => props.color};
   border-radius: 3px;
   font-size: ${(props) => props.fontSize};
@@ -48,17 +49,24 @@ const TextArea = styled.textarea`
   min-height: ${(props) => props.minHeight};
   max-height: ${(props) => props.maxHeight};
   padding-left: ${(props) => props.paddingLeft ?? '2%'};
+  padding-top: ${(props) => props.paddingTop ?? '2%'};
   box-shadow: ${(props) => props.boxShadow};
   border-width: ${(props) => props.borderWidth};
   padding-right: ${(props) => props.paddingRight ?? '0px'};
   padding-bottom: ${(props) => props.paddingBottom};
   width: ${(props) => props.width};
-  @media (max-width: 820px) {
-    width: 100%;
-  }
+  outline: ${(props) => props.outline};
 
   @media (max-width: 281px) {
     width: 80%;
+  }
+
+  @media (max-width: 950px) {
+    font-size: ${(props) => props.fontSizeMedia950};
+  }
+
+  @media (max-width: 820px) {
+    width: 100%;
   }
 `;
 
