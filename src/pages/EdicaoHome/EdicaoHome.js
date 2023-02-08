@@ -54,7 +54,7 @@ function EdicaoHome() {
       homes.texto_tres,
       homes.titulo_quatro,
       homes.texto_quatro,
-
+      homes.video
     );
   }
 

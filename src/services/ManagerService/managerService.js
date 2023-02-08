@@ -911,6 +911,7 @@ export const GetHomes = async () => {
 };
 
 export const UpdateDadosHomes = async (
+  id,
   titulo_um, 
   texto_um, 
   titulo_dois, 
@@ -918,10 +919,11 @@ export const UpdateDadosHomes = async (
   titulo_tres, 
   texto_tres, 
   titulo_quatro, 
-  texto_quatro
+  texto_quatro,
+  video
 ) => {
   await requesterService
-    .updateDadosHomes(titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro)
+    .updateDadosHomes(id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video)
     .then(() => {
       toast.success('Dados alterados com sucesso.');
     })
