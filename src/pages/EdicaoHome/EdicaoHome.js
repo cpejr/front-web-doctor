@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import ReactPlayer from 'react-player'
 import {
   Corpo, Container,
   MetadeEsquerda,
@@ -56,7 +57,14 @@ function EdicaoHome() {
             <SubtituloCentral>
               Conheça melhor o doutor Guilherme Marques
             </SubtituloCentral>
-            <BoxVideo />
+            <BoxVideo>
+            <ReactPlayer 
+              url='https://www.youtube.com/watch?v=EOSJ8IVXaDo'
+              width='100%'
+              height='100%'
+              />
+            </BoxVideo>
+            
             <Input
               value={homes.video}
               textAlign="left"
