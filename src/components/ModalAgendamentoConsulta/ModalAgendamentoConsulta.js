@@ -294,7 +294,7 @@ function ModalAgendamentoConsulta(props) {
                     borderColor: "black",
                     borderWidth: "0px",
                     marginBottom: "0.5em",
-                    paddingLeft: "2.5em",
+                    paddingLeft: "1.8em",
                   }}
                   size="large"
                   name="id_usuario"
@@ -462,7 +462,6 @@ function ModalAgendamentoConsulta(props) {
               )}
             </InputConsultorio>
           </DoisSelect>
-
           <DoisSelect>
             <ContainerHorario>
               <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
@@ -509,14 +508,16 @@ function ModalAgendamentoConsulta(props) {
           </Checkbox>
           <Button
             width="80%"
+            widthMedia600="90%"
             height="50px"
             backgroundColor={Cores.lilas[2]}
             borderColor={Cores.azul}
             color={Cores.azulEscuro}
             fontSize="1.1em"
             fontWeight="bold"
-            fontSizeMedia="0.9em"
             fontSizeMedia950="1.1em"
+            fontSizeMedia480="0.9em"
+            fontSizeMedia350="0.8em"
             onClick={() => requisicaoCriarConsulta()}
           >
             {carregandoCadastro ? (
