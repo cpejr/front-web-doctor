@@ -909,3 +909,26 @@ export const GetHomes = async () => {
     });
   return dadosHomes[0];
 };
+
+export const UpdateDadosHomes = async (
+  titulo_um, 
+  texto_um, 
+  titulo_dois, 
+  texto_dois, 
+  titulo_tres, 
+  texto_tres, 
+  titulo_quatro, 
+  texto_quatro
+) => {
+  await requesterService
+    .updateDadosHomes(titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro)
+    .then(() => {
+      toast.success('Dados alterados com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/editarhome'));
+      return false;
+    });
+
+  return false;
+};

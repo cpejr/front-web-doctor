@@ -35,15 +35,32 @@ function EdicaoHome() {
   function preenchendoDados(e) {
     const { value, name } = e.target;
     setHomes({ ...homes, [name]: value });
+
+    console.log(homes)
   }
 
   useEffect(() => {
     pegandoDados();
   }, []);
 
+  async function atualizandoDados() {
+    await managerService.UpdateDadosHomes(
+      homes.id,
+      homes.titulo_um,
+      homes.texto_um,
+      homes.titulo_dois,
+      homes.texto_dois,
+      homes.titulo_tres,
+      homes.texto_tres,
+      homes.titulo_quatro,
+      homes.texto_quatro,
+
+    );
+  }
+
   function cancelarEdicaoHome() {
-		history.push("/web/edicaohome");
-	}
+    history.push("/web/edicaohome");
+  }
 
   return (
     <Corpo>
@@ -58,13 +75,13 @@ function EdicaoHome() {
               Conheça melhor o doutor Guilherme Marques
             </SubtituloCentral>
             <BoxVideo>
-            <ReactPlayer 
-              url='https://www.youtube.com/watch?v=EOSJ8IVXaDo'
-              width='100%'
-              height='100%'
+              <ReactPlayer
+                url={homes.video}
+                width='100%'
+                height='100%'
               />
             </BoxVideo>
-            
+
             <Input
               value={homes.video}
               textAlign="left"
@@ -290,29 +307,30 @@ function EdicaoHome() {
           </BoxSaibaMais>
           <ContainerBotoes>
             <Button
-              backgroundColor="green"
+              backgroundColor="#434B97"
               borderRadius="3px"
-              borderWidth="1px"
+              borderWidth="3px"
               borderColor={Cores.preto}
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-              color={Cores.preto}
-              fontSize="15px"
+              color={Cores.branco}
+              fontSize="1.2em"
               height="50px"
               width="90%"
               marginTop="0%"
               marginLeft="0%"
               fontSizeMedia950="0.9em"
+              onClick={atualizandoDados}
             >
               Salvar Alterações
             </Button>
             <Button
-              backgroundColor="green"
+              backgroundColor={Cores.azulClaro}
               borderRadius="3px"
-              borderWidth="1px"
-              borderColor={Cores.preto}
+              borderWidth="3px"
+              borderColor={Cores.azul}
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
               color={Cores.preto}
-              fontSize="15px"
+              fontSize="1.2em"
               height="50px"
               width="90%"
               marginTop="0%"
