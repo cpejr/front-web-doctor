@@ -221,6 +221,7 @@ export const InputConsultorio = styled.div`
   width: 40%;
   height: 40px;
   margin-top: 5%;
+  margin-botton: 10%;
   @media (max-width: 1717px) {
     margin-bottom: 5%;
   }
@@ -408,7 +409,8 @@ export const TextoDoisSelects = styled.h3`
   display: flex;
   justify-content: start;
   align-items: center;
-
+  margin-right: 0%; 
+  margin-left: 0%;
   @media (max-width: 560px){
     margin-top: 15%;
   }

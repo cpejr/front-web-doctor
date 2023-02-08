@@ -385,6 +385,7 @@ function ModalAgendamentoExame(props) {
                   }}
                   paddingTop="8px"
                   paddingBottom="8px"
+                  marginBottom="12%"
                   size="large"
                   onChange={(e) => {
                     validacaoCampos(e);
