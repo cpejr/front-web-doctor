@@ -99,6 +99,8 @@ export const requisicaoIndicacaoEspecifica = () => api.get(`/indicacoes_especifi
 
 export const requisicaoMedicosIndicados = (id_indicacao_especifica) => api.get(`/medicos_indicados/${id_indicacao_especifica}`);
 
+export const indicarMedico = (id_indicacao_especifica, nome, telefone, local_atendimento) => api.post(`/medicos_indicados` ,
+ {id_indicacao_especifica, nome, telefone, local_atendimento});
 export const requisicaoFormularioEspecifico = (id) =>
   api.get(`/formularios/${id}`);
 

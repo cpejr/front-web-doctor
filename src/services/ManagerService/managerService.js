@@ -560,6 +560,20 @@ export const GetIndicacaoEspecifica = async () => {
     });
   return dadosIndicacaoEspecifica;
 };
+export const GetMedicosIndicadosPorID = async (id_indicacao_especifica) => {
+  let dadosMedicosIndicadosID = {};
+
+  await requesterService
+    .requisicaoIndicacaoEspecifica(id_indicacao_especifica)
+
+    .then((res) => {
+      dadosMedicosIndicadosID = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosMedicosIndicadosID;
+};
 
 
 
