@@ -115,7 +115,8 @@ function UploadReceita() {
 
   async function criarReceita(e) {
     e.preventDefault();
-
+    const string = file.slice(28, );
+    console.log(string);
     const camposVaziosAtual = {
       id_usuario: !estado.id_usuario,
       titulo: !estado.titulo,
@@ -124,7 +125,7 @@ function UploadReceita() {
     setCamposVazios(camposVaziosAtual);
     if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia) ) {
       toast.warn("Preencha todos os campos");
-      if (nomeArquivo == false){
+      if (nomeArquivo === false){
 		setarquivoEscolhido(true)
 	  }
 	  return;
@@ -135,11 +136,12 @@ function UploadReceita() {
     }*/
     setCarregandoCriacao(true);
     const id = estado.id_usuario;
+    console.log(string);
     await managerService.CriandoReceitaComArquivo(
       id,
       tituloReceita,
       "upload",
-      file,
+      string,
       {
         mensagemSucesso: "Receita criada com sucesso",
         tempo: 1500,
