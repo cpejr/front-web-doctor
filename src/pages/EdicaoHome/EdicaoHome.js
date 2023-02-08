@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import {
   Corpo, Container,
   MetadeEsquerda,
@@ -22,6 +23,7 @@ import CarrosselEditarHome from "../../components/CarrosselEditarHome.js/Carross
 
 function EdicaoHome() {
   const [homes, setHomes] = useState([]);
+  const history = useHistory();
 
   async function pegandoDados() {
     const dadosHomes = await managerService.GetHomes();
@@ -37,6 +39,10 @@ function EdicaoHome() {
   useEffect(() => {
     pegandoDados();
   }, []);
+
+  function cancelarEdicaoHome() {
+		history.push("/web/edicaohome");
+	}
 
   return (
     <Corpo>
@@ -304,6 +310,7 @@ function EdicaoHome() {
               marginTop="0%"
               marginLeft="0%"
               fontSizeMedia950="0.9em"
+              onClick={cancelarEdicaoHome}
             >
               Cancelar Alterações
             </Button>
