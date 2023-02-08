@@ -925,7 +925,7 @@ export const UpdateDadosHomes = async (
   await requesterService
     .updateDadosHomes(id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video)
     .then(() => {
-      toast.success('Dados alterados com sucesso.');
+      toast.success('Página Home Editada Com Sucesso!');
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = '/web/editarhome'));

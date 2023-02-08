@@ -21,22 +21,29 @@ import Button from "../../styles/Button";
 import TextArea from "../../styles/TextArea";
 import Input from "../../styles/Input";
 import CarrosselEditarHome from "../../components/CarrosselEditarHome.js/CarrosselEditarHome";
+import { sleep } from "../../utils/sleep";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 
 function EdicaoHome() {
   const [homes, setHomes] = useState([]);
+  const [carregando, setCarregando] = useState(true);
   const history = useHistory();
 
+  const antIcon = (
+    <LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
+  );
+
   async function pegandoDados() {
+    setCarregando(true);
     const dadosHomes = await managerService.GetHomes();
     setHomes(dadosHomes);
-
+    setCarregando(false);
   }
 
   function preenchendoDados(e) {
     const { value, name } = e.target;
     setHomes({ ...homes, [name]: value });
-
-    console.log(homes)
   }
 
   useEffect(() => {
@@ -44,6 +51,7 @@ function EdicaoHome() {
   }, []);
 
   async function atualizandoDados() {
+    setCarregando(true);
     await managerService.UpdateDadosHomes(
       homes.id,
       homes.titulo_um,
@@ -56,10 +64,13 @@ function EdicaoHome() {
       homes.texto_quatro,
       homes.video
     );
+    setCarregando(false);
+    document.location.reload(true);
   }
 
   function cancelarEdicaoHome() {
     history.push("/web/edicaohome");
+    document.location.reload(true);
   }
 
   return (
@@ -321,7 +332,11 @@ function EdicaoHome() {
               fontSizeMedia950="0.9em"
               onClick={atualizandoDados}
             >
-              Salvar Alterações
+              {carregando ? (
+                <Spin indicator={antIcon} />
+              ) : (
+                <div>Salvar Alterações</div>
+              )}
             </Button>
             <Button
               backgroundColor={Cores.azulClaro}
