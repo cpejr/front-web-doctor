@@ -23,12 +23,13 @@ export const InfoEsquerda = styled.div`
   width: 50%;
   height: 100%;
   min-height: 80vh;
-  padding: 5%;
+  padding: 7% 5%;
   justify-content: space-between;
 
   @media (max-width: 900px) {
     width: 100%;
     min-height: 0;
+    padding: 5%;
   }
 `;
 
@@ -46,6 +47,10 @@ export const InfoDireita = styled.div`
     width: 100%;
     min-height: 0;
   }
+
+  @media (max-width: 320px) {
+    height: 600px;
+  }
 `;
 
 export const TextAreaDescricao = styled(TextArea)`
@@ -53,18 +58,18 @@ export const TextAreaDescricao = styled(TextArea)`
   width: 80%;
   height: auto;
   border-color: ${(props) => {
-		let cor;
-		if (!props.borderColor) {
-			if (props.erro || props.camposVazios) {
-				cor = Cores.vermelho;
-			} else {
-				cor = Cores.azulEscuro;
-			}
-		} else {
-			cor = props.borderColor;
-		}
-		return cor;
-	}};
+    let cor;
+    if (!props.borderColor) {
+      if (props.erro || props.camposVazios) {
+        cor = Cores.vermelho;
+      } else {
+        cor = Cores.azulEscuro;
+      }
+    } else {
+      cor = props.borderColor;
+    }
+    return cor;
+  }};
   border-width: 3px;
   color: ${Cores.preto};
   ::placeholder {
@@ -97,6 +102,14 @@ export const Usuario = styled.div`
     flex-direction: column;
     height: 60px;
   }
+`;
+
+export const CaixaCheckbox = styled.div`
+.ant-radio-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
 `;
 
 export const Imagem = styled.img`
@@ -349,6 +362,10 @@ export const InputHora = styled(Input)`
     color:${Cores.preto}
   }
     color: ${Cores.preto};
+
+  @media (max-width: 320px){
+    margin-bottom: 10%;
+  }
 `;
 
 export const InputDuracao = styled(Input)`
@@ -413,7 +430,7 @@ export const TextoDoisSelects = styled.h3`
   align-items: center;
 
   @media (max-width: 560px){
-    margin-top: 15%;
+    margin-top: 5%;
   }
 `;
 

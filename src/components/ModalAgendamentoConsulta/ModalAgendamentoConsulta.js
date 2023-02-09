@@ -32,6 +32,7 @@ import {
   NomePaciente,
   TipoAgendamento,
   TextoCaixaSelect,
+  CaixaCheckbox,
 } from "./Styles";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import Select from "../../styles/Select";
@@ -269,61 +270,62 @@ function ModalAgendamentoConsulta(props) {
   }
 
   return (
-      <Caixa>
-        <InfoEsquerda>
-          {props.abertoPeloUsuario === true ? (
-            <Usuario>
-              <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
-              {carregando ? (
-                <CaixaLoader>
-                  <Spin indicator={antIcon} style={{ color: Cores.azul }} />
-                </CaixaLoader>
-              ) : (
-                <Nome>{props.usuario.nome}</Nome>
-              )}
-            </Usuario>
-          ) : (
-            <Usuario>
-              <NomePaciente>
-                <Select
-                  style={{
-                    width: "100%",
-                    color: "black",
-                    borderColor: "black",
-                    borderWidth: "0px",
-                    marginBottom: "0.5em",
-                    paddingLeft: "1.8em",
-                  }}
-                  size="large"
-                  name="id_usuario"
-                  placeholder="Selecione um paciente"
-                  onChange={(e) => {
-                    setIdUsuario(e.target.value);
-                  }}
-                >
-                  <option value="" disabled selected>
-                    Paciente
-                  </option>
-                  {props.usuarios.map((usuario) => (
-                    <>
-                      {carregando ? (
-                        <Spin indicator={antIcon} />
-                      ) : (
-                        <option key={usuario.id} value={usuario.id} color="red">
-                          {usuario.nome}
-                        </option>
-                      )}
-                    </>
-                  ))}
-                </Select>
-              </NomePaciente>
-            </Usuario>
-          )}
-          <TipoAgendamento>
-            <TextoCaixaSelect>
-              Selecione o Tipo de Agendamento:
-            </TextoCaixaSelect>
-            <Row gutter={60} justify={"space-around"}>
+    <Caixa>
+      <InfoEsquerda>
+        {props.abertoPeloUsuario === true ? (
+          <Usuario>
+            <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
+            {carregando ? (
+              <CaixaLoader>
+                <Spin indicator={antIcon} style={{ color: Cores.azul }} />
+              </CaixaLoader>
+            ) : (
+              <Nome>{props.usuario.nome}</Nome>
+            )}
+          </Usuario>
+        ) : (
+          <Usuario>
+            <NomePaciente>
+              <Select
+                style={{
+                  width: "100%",
+                  color: "black",
+                  borderColor: "black",
+                  borderWidth: "0px",
+                  marginBottom: "0.5em",
+                  paddingLeft: "1.8em",
+                }}
+                size="large"
+                name="id_usuario"
+                placeholder="Selecione um paciente"
+                onChange={(e) => {
+                  setIdUsuario(e.target.value);
+                }}
+              >
+                <option value="" disabled selected>
+                  Paciente
+                </option>
+                {props.usuarios.map((usuario) => (
+                  <>
+                    {carregando ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <option key={usuario.id} value={usuario.id} color="red">
+                        {usuario.nome}
+                      </option>
+                    )}
+                  </>
+                ))}
+              </Select>
+            </NomePaciente>
+          </Usuario>
+        )}
+        <TipoAgendamento>
+          <TextoCaixaSelect>
+            Selecione o Tipo de Agendamento:
+          </TextoCaixaSelect>
+          <CaixaCheckbox>
+            <Row gutter={60} justify={"center"} >
               <Radio.Group
                 defaultValue="consulta"
                 bordered={false}
@@ -334,197 +336,200 @@ function ModalAgendamentoConsulta(props) {
                 <Radio value="consulta">Consulta</Radio>
               </Radio.Group>
             </Row>
-          </TipoAgendamento>
-          <TextAreaDescricao
-            border={tipoRadio}
-            placeholder="Adicione uma descrição"
-            rows={4}
-            name="descricao"
-            value={consulta.descricao}
+          </CaixaCheckbox>
+        </TipoAgendamento>
+        <TextAreaDescricao
+          border={tipoRadio}
+          placeholder="Adicione uma descrição"
+          rows={4}
+          name="descricao"
+          value={consulta.descricao}
+          onChange={(e) => validacaoCampos(e)}
+          style={{
+            borderWidth: "1px",
+            color: "black",
+          }}
+        />
+      </InfoEsquerda>
+      <InfoDireita>
+        <SelecioneUmaData>
+          <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
+          <InputData
+            placeholder="Selecione uma data"
+            size="large"
+            type="date"
+            onKeyDown={(e) => e.preventDefault()}
+            name="data"
             onChange={(e) => validacaoCampos(e)}
-            style={{
-              borderWidth: "1px",
-              color: "black",
-            }}
+            value={dataConsulta}
+            camposVazios={camposVazios.data}
+            id="data"
           />
-        </InfoEsquerda>
-        <InfoDireita>
-          <SelecioneUmaData>
-            <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
-            <InputData
-              placeholder="Selecione uma data"
-              size="large"
-              type="date"
-              onKeyDown={(e) => e.preventDefault()}
-              name="data"
-              onChange={(e) => validacaoCampos(e)}
-              value={dataConsulta}
-              camposVazios={camposVazios.data}
-              id="data"
-            />
-            {camposVazios.data && <Rotulo>Selecione uma data</Rotulo>}
-          </SelecioneUmaData>
-          <DoisSelect>
-            <TamanhoInput>
-              <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
-              <Tooltip
-                placement="topLeft"
-                title={consulta.tipo}
-                color={Cores.azul}
+          {camposVazios.data && <Rotulo>Selecione uma data</Rotulo>}
+        </SelecioneUmaData>
+        <DoisSelect>
+          <TamanhoInput>
+            <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
+            <Tooltip
+              placement="topLeft"
+              title={consulta.tipo}
+              color={Cores.azul}
+            >
+              <Select
+                style={{
+                  width: "100%",
+                  color: "black",
+                  borderWidth: "1px",
+                }}
+                marginBottomMedia320="13%"
+                paddingTop="8px"
+                paddingBottom="8px"
+                size="large"
+                name="tipo"
+                placeholder="Tipo"
+                onChange={(e) => {
+                  validacaoCampos(e);
+                }}
+                value={consulta.tipo}
+                camposVazios={camposVazios.tipo}
               >
-                <Select
-                  style={{
-                    width: "100%",
-                    color: "black",
-                    borderWidth: "1px",
-                  }}
-                  paddingTop="8px"
-                  paddingBottom="8px"
-                  size="large"
-                  name="tipo"
-                  placeholder="Tipo"
-                  onChange={(e) => {
-                    validacaoCampos(e);
-                  }}
-                  value={consulta.tipo}
-                  camposVazios={camposVazios.tipo}
-                >
-                  <option value="" disabled selected>
-                    Tipo
-                  </option>
-                  {TiposDeConsulta.map((tipo) => (
-                    <>
-                      {carregando ? (
-                        <Spin indicator={antIcon} />
-                      ) : (
-                        <option key={tipo} value={tipo} color="red">
-                          {tipo}
-                        </option>
-                      )}
-                    </>
-                  ))}
-                </Select>
-              </Tooltip>
-              {camposVazios.tipo && (
-                <Rotulo>Selecione um tipo de consulta</Rotulo>
-              )}
-            </TamanhoInput>
-            <InputConsultorio>
-              <TextoDoisSelects>Selecione um consultório:</TextoDoisSelects>
-              <Tooltip
-                placement="topLeft"
-                title={nomeConsultorioPorId}
-                color={Cores.azul}
-              >
-                <Select
-                  value={consulta.id_consultorio}
-                  id="id_consultorio"
-                  name="id_consultorio"
-                  style={{
-                    width: "100%",
-                    borderWidth: "1px",
-                    color: "black",
-                  }}
-                  paddingTop="8px"
-                  paddingBottom="8px"
-                  size="large"
-                  onChange={(e) => {
-                    validacaoCampos(e);
-                  }}
-                  camposVazios={camposVazios.id_consultorio}
-                >
-                  <option value="" disabled selected>
-                    {nomeConsultorioPorId}
-                    Consultório
-                  </option>
-                  {consultorios.map((consultorio) => (
-                    <>
-                      {carregandoConsultorios ? (
-                        <Spin indicator={antIcon} />
-                      ) : (
-                        <option
-                          key={consultorio.id}
-                          value={consultorio.id}
-                          color="red"
-                        >
-                          {consultorio.nome}
-                        </option>
-                      )}
-                    </>
-                  ))}
-                </Select>
-              </Tooltip>
-              {camposVazios.id_consultorio && (
-                <Rotulo>Selecione um consultório</Rotulo>
-              )}
-            </InputConsultorio>
-          </DoisSelect>
-          <DoisSelect>
-            <ContainerHorario>
-              <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
-              <InputHora
-                value={hora}
-                type="time"
-                onKeyDown={(e) => e.preventDefault()}
-                placeholder="Horário"
-                name="hora"
-                id="hora"
-                onChange={(e) => validacaoHorario(e.target.value, dataConsulta)}
-                camposVazios={camposVazios.hora}
-                erro={erro.hora}
-              />
-              {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
-              {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
-            </ContainerHorario>
-            <ContainerDuracaoConsulta>
-              <TextoDoisSelects>Selecione uma duração:</TextoDoisSelects>
-              <InputDuracao
-                value={consulta.duracao_em_minutos}
-                placeholder="Duração"
-                name="duracao_em_minutos"
-                onChange={validacaoCampos}
-                suffix="min"
-                camposVazios={camposVazios.duracao_em_minutos}
-                erro={erro.duracao_em_minutos}
-              />
-              {camposVazios.duracao_em_minutos ? (
-                <Rotulo>Digite uma duração</Rotulo>
-              ) : (
-                <>
-                  {erro.duracao_em_minutos ? (
-                    <Rotulo>Digite uma duração</Rotulo>
-                  ) : (
-                    <></>
-                  )}
-                </>
-              )}
-            </ContainerDuracaoConsulta>
-          </DoisSelect>
-          <Checkbox>
-            <TextoCheckbox>Notificar paciente</TextoCheckbox>
-          </Checkbox>
-          <Button
-            width="80%"
-            widthMedia600="90%"
-            height="50px"
-            backgroundColor={Cores.lilas[2]}
-            borderColor={Cores.azul}
-            color={Cores.azulEscuro}
-            fontSize="1.1em"
-            fontWeight="bold"
-            fontSizeMedia950="1.1em"
-            fontSizeMedia480="0.9em"
-            fontSizeMedia350="0.8em"
-            onClick={() => requisicaoCriarConsulta()}
-          >
-            {carregandoCadastro ? (
-              <Spin indicator={antIcon} />
-            ) : (
-              <div>Cadastrar novo agendamento</div>
+                <option value="" disabled selected>
+                  Tipo
+                </option>
+                {TiposDeConsulta.map((tipo) => (
+                  <>
+                    {carregando ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <option key={tipo} value={tipo} color="red">
+                        {tipo}
+                      </option>
+                    )}
+                  </>
+                ))}
+              </Select>
+            </Tooltip>
+            {camposVazios.tipo && (
+              <Rotulo>Selecione um tipo de consulta</Rotulo>
             )}
-          </Button>
-        </InfoDireita>
-      </Caixa>
+          </TamanhoInput>
+          <InputConsultorio>
+            <TextoDoisSelects>Selecione um consultório:</TextoDoisSelects>
+            <Tooltip
+              placement="topLeft"
+              title={nomeConsultorioPorId}
+              color={Cores.azul}
+            >
+              <Select
+                value={consulta.id_consultorio}
+                id="id_consultorio"
+                name="id_consultorio"
+                style={{
+                  width: "100%",
+                  borderWidth: "1px",
+                  color: "black",
+                }}
+                marginBottomMedia320="-17%"
+                paddingTop="8px"
+                paddingBottom="8px"
+                size="large"
+                onChange={(e) => {
+                  validacaoCampos(e);
+                }}
+                camposVazios={camposVazios.id_consultorio}
+              >
+                <option value="" disabled selected>
+                  {nomeConsultorioPorId}
+                  Consultório
+                </option>
+                {consultorios.map((consultorio) => (
+                  <>
+                    {carregandoConsultorios ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <option
+                        key={consultorio.id}
+                        value={consultorio.id}
+                        color="red"
+                      >
+                        {consultorio.nome}
+                      </option>
+                    )}
+                  </>
+                ))}
+              </Select>
+            </Tooltip>
+            {camposVazios.id_consultorio && (
+              <Rotulo>Selecione um consultório</Rotulo>
+            )}
+          </InputConsultorio>
+        </DoisSelect>
+        <DoisSelect>
+          <ContainerHorario>
+            <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
+            <InputHora
+              value={hora}
+              type="time"
+              onKeyDown={(e) => e.preventDefault()}
+              placeholder="Horário"
+              name="hora"
+              id="hora"
+              onChange={(e) => validacaoHorario(e.target.value, dataConsulta)}
+              camposVazios={camposVazios.hora}
+              erro={erro.hora}
+            />
+            {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
+            {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
+          </ContainerHorario>
+          <ContainerDuracaoConsulta>
+            <TextoDoisSelects>Selecione uma duração:</TextoDoisSelects>
+            <InputDuracao
+              value={consulta.duracao_em_minutos}
+              placeholder="Duração"
+              name="duracao_em_minutos"
+              onChange={validacaoCampos}
+              suffix="min"
+              camposVazios={camposVazios.duracao_em_minutos}
+              erro={erro.duracao_em_minutos}
+            />
+            {camposVazios.duracao_em_minutos ? (
+              <Rotulo>Digite uma duração</Rotulo>
+            ) : (
+              <>
+                {erro.duracao_em_minutos ? (
+                  <Rotulo>Digite uma duração</Rotulo>
+                ) : (
+                  <></>
+                )}
+              </>
+            )}
+          </ContainerDuracaoConsulta>
+        </DoisSelect>
+        <Checkbox>
+          <TextoCheckbox>Notificar paciente</TextoCheckbox>
+        </Checkbox>
+        <Button
+          width="80%"
+          widthMedia600="90%"
+          height="50px"
+          backgroundColor={Cores.lilas[2]}
+          borderColor={Cores.azul}
+          color={Cores.azulEscuro}
+          fontSize="1.1em"
+          fontWeight="bold"
+          fontSizeMedia950="1.1em"
+          fontSizeMedia480="0.9em"
+          fontSizeMedia350="0.8em"
+          onClick={() => requisicaoCriarConsulta()}
+        >
+          {carregandoCadastro ? (
+            <Spin indicator={antIcon} />
+          ) : (
+            <div>Cadastrar novo agendamento</div>
+          )}
+        </Button>
+      </InfoDireita>
+    </Caixa>
   );
 }
 
