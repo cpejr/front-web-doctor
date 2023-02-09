@@ -618,6 +618,7 @@ function Agendamentos(props) {
         footer={null}
         width={'70%'}
         centered={true}
+        destroyOnClose
       >
         <ModalAgendamentoEspecifico
           emailUsuario={email}
@@ -635,6 +636,7 @@ function Agendamentos(props) {
         style={{
           backgroundColor: 'black',
         }}
+        destroyOnClose
       >
         <ModalConsultaMarcada
           consulta={consultaEspecifica}
@@ -652,6 +654,7 @@ function Agendamentos(props) {
         style={{
           backgroundColor: 'black',
         }}
+        destroyOnClose
       >
         <ModalExameMarcado
           exame={exameEspecifico}
