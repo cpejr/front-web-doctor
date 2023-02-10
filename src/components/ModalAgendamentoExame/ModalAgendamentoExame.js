@@ -208,6 +208,7 @@ function ModalAgendamentoExame(props) {
     if (!dataExame) errors.data = true;
     if (!hora) errors.hora = true;
     if (!consultorio.nome) errors.nome = true;
+    if(!exame.titulo) errors.titulo = true;
 
     setCamposVazios({ ...camposVazios, ...errors });
     if (dataExame === "" || hora === "") {
@@ -333,12 +334,14 @@ function ModalAgendamentoExame(props) {
                   style={{
                     width: "100%",
                     color: "black",
+                    borderColor: "black",
                     borderWidth: "1px",
                   }}
                   paddingTop="8px"
                   paddingBottom="8px"
                   size="large"
                   name="titulo"
+                  id="titulo"
                   placeholder="Tipo"
                   onChange={(e) => {
                     validacaoCampos(e);
@@ -362,9 +365,9 @@ function ModalAgendamentoExame(props) {
                   ))}
                 </Select>
               </Tooltip>
-              {camposVazios.titulo && (
+              {camposVazios.titulo && 
                 <Rotulo>Selecione um tipo de exame</Rotulo>
-              )}
+              }
             </TamanhoInput>
             <InputConsultorio>
               <TextoDoisSelects>Selecione um consultório:</TextoDoisSelects>
@@ -413,7 +416,7 @@ function ModalAgendamentoExame(props) {
                   ))}
                 </Select>
               </Tooltip>
-              {camposVazios.nome && <Rotulo>Selecione um consultório</Rotulo>}
+              {camposVazios.nome && <Rotulo>Selecione um consultório </Rotulo>}
             </InputConsultorio>
           </DoisSelect>
 
