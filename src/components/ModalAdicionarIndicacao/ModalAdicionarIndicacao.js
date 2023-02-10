@@ -4,21 +4,32 @@ import { Titulo, Container, ContainerInputs, Labels, Rotulo } from "./Styles";
 import Input from "../../styles/Input";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
+import { LoadingOutlined } from '@ant-design/icons';
 import { PlusSquareOutlined } from "@ant-design/icons";
+import { toast } from "react-toastify";
+import * as managerService from "../../services/ManagerService/managerService";
+import _ from "lodash";
+import { useHistory } from "react-router-dom";
+import { Spin } from "antd";
 
-function ModalAdicionarIndicacao() {
+function ModalAdicionarIndicacao(props) {
+  const [carregandoCriacao, setCarregandoCriacao] = useState(false);
+  const [camposVazios, setCamposVazios] = useState({});
+  const [id_indicacao_especifica, setIDindicacaoespecifica] = useState({});
+  const history = useHistory();
+  //setIDindicacaoespecifica(props.id_indicacao_especifica);
+  console.log(props.idmedicoindicado);
   const [estado, setEstado] = useState({
     nome: "",
     telefone: "",
     local: "",
   });
   const [erro, setErro] = useState(false);
-
-  const [camposVazios, setCamposVazios] = useState({
+  const camposVaziosReferencia = {
     nome: false,
     telefone: false,
     local: false,
-  });
+  };
   function preenchendoDados(e) {
     const { value, name } = e.target;
     if (value) setCamposVazios({ ...camposVazios, [name]: false });
@@ -48,6 +59,39 @@ function ModalAdicionarIndicacao() {
       });
     }
   }
+  async function Indicar(e) {
+		e.preventDefault();
+
+		const camposVaziosAtual = {
+			nome: !estado.nome,
+			telefone: !estado.telefone,
+      local: !estado.local
+		};
+
+		setCamposVazios(camposVaziosAtual);
+
+		if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
+			toast.warn("Preencha todos os campos");
+			return;
+		}
+
+		setCarregandoCriacao(true);
+		const id = props.idmedicoindicado;
+    
+		await managerService.IndicandoMedicos(id, estado.nome, estado.telefone, estado.local, {
+			mensagemSucesso: "Receita criada com sucesso",
+			tempo: 1500,
+			onClose: () => {
+				history.push("/web/edicaoindicacoesesugestoes");
+			},
+		});
+
+		setCarregandoCriacao(false);
+	}
+
+	const antIcon = (
+		<LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
+	);
 
   return (
     <Container>
@@ -118,8 +162,15 @@ function ModalAdicionarIndicacao() {
         paddingTop="5px"
         paddingBottom="5px"
         marginTop="10%"
-      >
-        Adicionar Indicação <PlusSquareOutlined />
+        onClick={Indicar}
+      > 
+      {carregandoCriacao ? (
+								<Spin indicator={antIcon} />
+							) : (
+                    <div>Adicionar Indicação</div>
+                )}
+
+         <PlusSquareOutlined />
       </Button>
     </Container>
   );

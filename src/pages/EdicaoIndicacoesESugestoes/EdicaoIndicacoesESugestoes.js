@@ -45,7 +45,7 @@ const examesDisponiveis = [
   "Avaliação Neuropsicológica",
 ];
 
-function EdicaoIndicacoesESugestoes() {
+function EdicaoIndicacoesESugestoes(props) {
   const [exameSelecionado, setExameSelecionado] = useState("");
   const [dadosIndicacao, setDadosIndicacao] = useState({});
   const [carregando, setCarregando] = useState();
@@ -55,12 +55,14 @@ function EdicaoIndicacoesESugestoes() {
   const [modalIndicacao, setModalIndicacao] = useState(false);
   const [Indicados, setIndicados] = useState();
   const [indicacoesEspecificas, setIndicacoesEspecificas] = useState();
+  const [medicosIndicados, setMedicosIndicados] = useState();
+  const [idIndicado, setIdIndicado] = useState();
   const history = useHistory();
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
   );
-
+  let IDindicado = {};
   async function alterarIndicacao(exame) {
     const larguraJanela = window.innerWidth;
     const mobilePontoDeQuebraNumero = +/\d+/.exec(mobilePontoDeQuebra);
@@ -73,37 +75,55 @@ function EdicaoIndicacoesESugestoes() {
     setCarregando(true);
     //await sleep(1500); // Simular requisição ao back
     let Texto = {};
+    let Titulo = {};
+    
     const Indicacoes = await managerService.GetIndicacaoEspecifica();
-    console.log(Indicacoes);
     setIndicacoesEspecificas(Indicacoes);
     const IndicacaoEspecifica = indicacoesEspecificas.map((Indicacao) => {
       if(Indicacao.titulo === exame){
         Texto = Indicacao.texto;
-        
+        Titulo = Indicacao.titulo;
+        IDindicado = Indicacao.id;
         return Texto;
       }
        else {
         Texto = "";
         return Texto;
       }
-  }
-       
-      
+  }   
     )
+    let nomemedico = {};
+    let telefone = {};
+    let local = {};
+    const medicos = await managerService.GetMedicosIndicadosPorID(IDindicado);
+    setMedicosIndicados(medicos);
+    const MedicoIndicado = medicosIndicados.map((medico) => {
+      telefone = medico.telefone;
+      nomemedico = medico.nome;
+      local = medico.local_atendimento;
+      return nomemedico
+    })
+    console.log(medicos);
+    console.log(nomemedico);
     setIndicados(true);
     const dadosDoBackend = {
-      titulo: exame,
+      titulo: Titulo,
       descricao: IndicacaoEspecifica,
-        
+      nomemedico: MedicoIndicado,
+      localmedico: local,
+      telefonemedico: telefone,
     };
     setDadosIndicacao(dadosDoBackend);
+    setIdIndicado(IDindicado);
     setCarregando(false);
   }
 
   async function abrirModalAdicionarIndicacao() {
-    if(Indicados === true){setModalAdicionarIndicacao(true);}
+    //Olhar se isso funciona mesmo
+    if(Indicados === true){setModalAdicionarIndicacao(true);
+      console.log(idIndicado);}
     else
-    toast.warn("Selecione uma especialidade ao lado para alterar!");
+    toast.warn("Selecione uma especialidade ao lado para adicionar!");
     
   }
 
@@ -111,7 +131,7 @@ function EdicaoIndicacoesESugestoes() {
     if(Indicados === true){
     setModalExcluirIndicacao(true);
     }else
-    toast.warn("Selecione uma especialidade ao lado para alterar!");
+    toast.warn("Selecione uma especialidade ao lado para excluir!");
     }
 
   async function abrirModalAlterarIndicacao() {
@@ -209,6 +229,11 @@ function EdicaoIndicacoesESugestoes() {
                 <DescricaoInformacoes>
                   {dadosIndicacao.descricao}
                 </DescricaoInformacoes>
+                <DescricaoInformacoes>
+                {dadosIndicacao.nomemedico}
+                {dadosIndicacao.localmedico}
+                {dadosIndicacao.telefonemedico}
+                </DescricaoInformacoes>
               </>
             )}
           </Informacoes>
@@ -265,6 +290,7 @@ function EdicaoIndicacoesESugestoes() {
         destroyOnClose
       >
         <ModalAdicionarIndicacao
+          idmedicoindicado = {idIndicado}
           fechandoModal={fecharModalAdicionarIndicacao}
         />
       </Modal>

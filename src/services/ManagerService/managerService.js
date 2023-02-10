@@ -564,7 +564,7 @@ export const GetMedicosIndicadosPorID = async (id_indicacao_especifica) => {
   let dadosMedicosIndicadosID = {};
 
   await requesterService
-    .requisicaoIndicacaoEspecifica(id_indicacao_especifica)
+    .requisicaoMedicosIndicados(id_indicacao_especifica)
 
     .then((res) => {
       dadosMedicosIndicadosID = res.data;
@@ -575,7 +575,38 @@ export const GetMedicosIndicadosPorID = async (id_indicacao_especifica) => {
   return dadosMedicosIndicadosID;
 };
 
-
+export const IndicandoMedicos = async (
+  id_indicacao_especifica,
+  nome,
+  telefone,
+  local_atendimento,
+  usarToast = {
+    mensagemSucesso: 'Operação bem sucedida',
+    tempo: 1500,
+    onClose: () => {},
+  }
+) => {
+  return requesterService
+    .indicarMedico(
+      id_indicacao_especifica,
+      nome,
+      telefone,
+      local_atendimento,
+    )
+    .then(() => {
+      if (usarToast) {
+        toast.success(usarToast.mensagemSucesso, {
+          autoClose: usarToast.tempo,
+          onClose: usarToast.onClose,
+        });
+      }
+      return true;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+};
 
 export const GetFormularioPacientesPorFormulario = async (id_formulario) => {
   let dadosResposta = {};

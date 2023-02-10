@@ -149,6 +149,9 @@ export const Informacoes = styled.div`
 
 export const DescricaoInformacoes = styled.p`
   align-self: flex-start;
+  text-align: column;
+  margin-top: 0%;
+  margin-botton: 0%;
   width: 100%;
   flex-grow: 1;
   background-color: ${Cores.cinza[9]};
