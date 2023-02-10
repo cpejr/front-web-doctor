@@ -159,7 +159,7 @@ function Login() {
             <Rotulo>Digite uma senha com no minimo 8 digitos</Rotulo>
           )}
           <Button
-            width = "100%"
+            width="100%"
             height="50px"
             backgroundColor="#434B97"
             borderColor="#151B57"
