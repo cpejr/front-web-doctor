@@ -607,7 +607,36 @@ export const IndicandoMedicos = async (
       return false;
     });
 };
+export const EditarMedicoIndicado = async (id, medico) => {
+  await requesterService
+    .alterarMedicoIndicado(id, medico)
+    .then(() => {
+      toast.success('Indicação atualizada com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
 
+  return;
+};
+export const DeletarIndicao = async (id) => {
+  await requesterService
+    .deletarMedicoIndicado(id)
+    .then(() => {
+      toast.success('Indicação deletada com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(
+        error,
+        () => (window.location.href = '/web/edicaoindicacoesesugestoes')
+      );
+
+      return false;
+    });
+
+  return false;
+};
 export const GetFormularioPacientesPorFormulario = async (id_formulario) => {
   let dadosResposta = {};
 

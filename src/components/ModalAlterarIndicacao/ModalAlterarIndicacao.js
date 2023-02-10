@@ -6,8 +6,16 @@ import Select from "../../styles/Select/Select";
 import { Cores } from "../../variaveis";
 import { telefone, apenasLetras } from "../../utils/masks";
 import { PlusSquareOutlined } from "@ant-design/icons";
+import { toast } from "react-toastify";
+import { LoadingOutlined } from '@ant-design/icons';
+import * as managerService from "../../services/ManagerService/managerService";
+import _ from "lodash";
+import { useHistory } from "react-router-dom";
+import { Spin } from "antd";
 
-function ModalAlterarIndicacao() {
+function ModalAlterarIndicacao(props) {
+  const [camposVazios, setCamposVazios] = useState({});
+  const [carregandoCriacao, setCarregandoCriacao] = useState(false);
   const [estado, setEstado] = useState({
     nome: "",
     telefone: "",
@@ -15,11 +23,12 @@ function ModalAlterarIndicacao() {
   });
   const [erro, setErro] = useState(false);
 
-  const [camposVazios, setCamposVazios] = useState({
+  const [camposVaziosReferencia, setCamposVaziosReferencia] = useState({
     nome: false,
     telefone: false,
     local: false,
   });
+
   function preenchendoDados(e) {
     const { value, name } = e.target;
     if (value) setCamposVazios({ ...camposVazios, [name]: false });
@@ -48,7 +57,27 @@ function ModalAlterarIndicacao() {
       });
     }
   }
+ async function alterar(e) {
+  e.preventDefault();
 
+  const camposVaziosAtual = {
+    nome: !estado.nome,
+    telefone: !estado.telefone,
+    local: !estado.local
+  };
+
+  setCamposVazios(camposVaziosAtual);
+
+  if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
+    toast.warn("Preencha todos os campos");
+    return;
+  }
+
+  
+ }
+ const antIcon = (
+  <LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
+);
   return (
     <Container>
       <Titulo>Alterar Indicação:</Titulo>
@@ -127,8 +156,14 @@ function ModalAlterarIndicacao() {
         paddingTop="5px"
         paddingBottom="5px"
         marginTop="10%"
+        onClick = {alterar}
       >
-        Alterar Indicação <PlusSquareOutlined />
+        {carregandoCriacao ? (
+								<Spin indicator={antIcon} />
+							) : (
+                    <div>Alterar Indicação</div>
+                )}
+         <PlusSquareOutlined />
       </Button>
     </Container>
   );

@@ -101,6 +101,11 @@ export const requisicaoMedicosIndicados = (id_indicacao_especifica) => api.get(`
 
 export const indicarMedico = (id_indicacao_especifica, nome, telefone, local_atendimento) => api.post(`/medicos_indicados` ,
  {id_indicacao_especifica, nome, telefone, local_atendimento});
+
+export const alterarMedicoIndicado = (id,medico) => api.put(`/medicos_indicados/${id}` ,{medico});
+
+export const deletarMedicoIndicado = (id) => api.delete(`/medicos_indicados/${id}`);
+
 export const requisicaoFormularioEspecifico = (id) =>
   api.get(`/formularios/${id}`);
 
