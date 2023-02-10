@@ -465,17 +465,14 @@ function PerfilPaciente(props) {
                               >
                                 {value.titulo}
                               </TituloFormulario>
-
                             ) : (
                               <TituloFormulario
                                 cursor="null"
                                 textDecoration="none"
-
                               >
                                 {value.titulo}
                               </TituloFormulario>
                             )}
-
                             <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
                             <UrgenciaFormulario>
                               <>Urgência: </>
@@ -553,7 +550,6 @@ function PerfilPaciente(props) {
           <></>
         )}
       </ContainerPerfil>
-
       <Modal
         visible={modalAgendamento}
         onCancel={fechandoModalAgendamento}
@@ -567,7 +563,6 @@ function PerfilPaciente(props) {
           id_usuario={usuario.id}
           email={usuario.email}
           tipoAgendamento={tipoAgendamento}
-
         />
       </Modal>
       <Modal
@@ -583,7 +578,6 @@ function PerfilPaciente(props) {
           fecharModal={() => fechandoModalDeletarUsuario()}
         />
       </Modal>
-
       <Modal
         visible={modalFormulario}
         onCancel={() => setModalFormulario(false)}
@@ -598,8 +592,7 @@ function PerfilPaciente(props) {
           titulo={titulo}
         />
       </Modal>
-
-      <AddToast />
+      <AddToast/>
     </div>
   );
 }
