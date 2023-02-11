@@ -474,9 +474,13 @@ export const TituloReceita = styled.div`
   display: flex;
   justify-content: ${(props) => props.justifyContent};
   width: 33%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 
   :hover {
-    cursor: ${(props) => props.cursor};
+    overflow: visible;
+    cursor: pointer;
   }
 
   @media (max-width: 780px) {
