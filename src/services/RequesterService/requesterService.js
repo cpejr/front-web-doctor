@@ -193,3 +193,5 @@ export const dispostivoById = (id) => api.get(`/dispositivos/${id}`);
 
 export const requisicaoHomes = () =>
   api.get(`/homes`);
+
+  export const TokenById = (id_usuario) => api.get(`/token_usuarios/${id_usuario}`);

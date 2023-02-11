@@ -33,6 +33,24 @@ function ModalEnvioFormulario(props) {
         props.idFormulario,
         formularioPaciente
       );
+       if (formularioPaciente) {
+        const Token = managerService.TokenById(formularioPaciente.id_usuario);
+        toast.warn("teste2");
+        const Message = {
+        to: Token.token_dispositivo.replace("expo/", ''),
+        sound: 'default',
+        title: 'teste',
+        body: 'teste',
+        data: {data: 'goes here'},
+      };
+      await fetch('https://exp.host/--/api/v2/push/send',{
+        method: 'POST',
+        body: JSON.stringify(Message),
+        }
+      );
+
+       };
+      
       await sleep(2000);
       setCarregando(false);
       await sleep(1000);
