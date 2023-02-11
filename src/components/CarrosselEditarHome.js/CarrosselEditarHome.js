@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import {
     BotaoGenerico,
     CarrosselContainer,
@@ -11,19 +11,31 @@ import { LeftOutlined, RightOutlined } from "@ant-design/icons";
 import Button from '../../styles/Button';
 import { Cores } from '../../variaveis';
 
+import * as managerService from "../../services/ManagerService/managerService";
+
 import Patinho from "../../assets/patinho.jpg"
 import Patao from "../../assets/patao.jpg"
 import PatoBravo from "../../assets/patobravo.jpg"
 
-const imagens = [
-    { title: "imagemPatinho", img: Patinho },
-    { title: "imagempatao", img: Patao },
-    { title: "imagemPatoBravo", img: PatoBravo },
-];
-
 function CarrosselEditarHome() {
 
     const [imgAtual, setImgAtual] = useState(0);
+    const [imgCarrossel, setimgCarrossel] = useState(0);
+
+    async function pegandoDados() {
+        const resposta = await managerService.GetImagensCarrossel();
+        setimgCarrossel(resposta);
+    }
+
+    useEffect(() => {
+        pegandoDados();
+    }, []);
+
+    const imagens = [
+        { img: Patinho },
+        { img: Patao },
+        { img: PatoBravo },
+    ];
 
     return (
         <CarrosselContainer>

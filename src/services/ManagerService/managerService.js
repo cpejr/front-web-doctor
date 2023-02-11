@@ -895,6 +895,21 @@ export const dispostivoById = async (id) => {
   return dispositivo;
 };
 
+export const GetImagensCarrossel = async () => {
+  let dadosCarrossel = {};
+
+  await requesterService
+    .requisicaoCarrossel()
+
+    .then((res) => {
+      dadosCarrossel = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosCarrossel;
+};
+
 export const GetHomes = async () => {
   let dadosHomes = {};
 

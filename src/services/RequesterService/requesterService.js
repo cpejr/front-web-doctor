@@ -185,3 +185,6 @@ export const requisicaoHomes = () =>
 export const updateDadosHomes = (id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video) =>
   api.put(`/homes/${id}`, { titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video });
 ;
+
+export const requisicaoCarrossel = () =>
+  api.get(`/imagem_carrossels`);
