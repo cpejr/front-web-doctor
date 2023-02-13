@@ -567,28 +567,6 @@ export const GetRespostaFormularioIdUsuario = async (id_usuario) => {
   return dadosResposta;
 };
 
-export const confirmarPagamentoExame = async(id_paciente, id_usuario) => {
-  const formulariosPaciente = await GetRespostaFormularioIdUsuario(id_paciente);
-  let possuiFormulario = false;
-  let posicao = -1;
-
-  for (const [index, value] of formulariosPaciente.entries()){
-    if(value.tipo === "exame_actigrafia"){
-      possuiFormulario = true;
-      posicao = index;
-    }
-  }
-
-  if(!possuiFormulario)
-    toast.error("O paciente não possui um formulário desse exame");
-  else if(possuiFormulario && formulariosPaciente[posicao].respostas === null){
-    toast.error("O paciente não respondeu as perguntas do formulário");
-  }
-  else{
-    await MandandoMensagemConfirmarPagamento(id_usuario);
-  }
-}
-
 export const GetResposta = async (id) => {
   let dadosResposta = {};
 
