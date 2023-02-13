@@ -307,7 +307,9 @@ function EdicaoIndicacoesESugestoes(props) {
         centered={true}
         destroyOnClose
       >
-        <ModalExcluirIndicacao fechandoModal={fecharModalExcluirIndicacao} />
+        <ModalExcluirIndicacao 
+        idmedicoindicado = {idIndicado}
+        fechandoModal={fecharModalExcluirIndicacao} />
       </Modal>
 
       <Modal

@@ -3,18 +3,46 @@ import Select from "../../styles/Select/Select";
 import { Titulo, Container, ContainerInputs } from "./Styles";
 import { Cores } from "../../variaveis";
 import { DeleteOutlined } from "@ant-design/icons";
+import React,{ useEffect,useState } from "react";
+import * as managerService from "../../services/ManagerService/managerService";
+function ModalExcluirIndicacao(props) {
+  const [medicoEspecifico, setMedicoEspecifico] = useState();
+  const [idMedicoEscolhido, setIdMedicoEscolhido] = useState();
+  async function buscarMedicosporId(){
+    const medicosespecificos = await managerService.GetMedicosIndicadosPorID(props.idmedicoindicado);
+    setMedicoEspecifico(medicosespecificos);
+   }
+   useEffect(() => {buscarMedicosporId()}, [medicoEspecifico])
+  async function armazenarMedico(medico) {
+    setIdMedicoEscolhido(medico.id);
+  }
+  async function deletarIndicacao(e) {
+    e.preventDefault();
+    await deletarIndicacao(idMedicoEscolhido);
 
-function ModalExcluirIndicacao() {
+  }
   return (
     <Container>
       <Titulo>Excluir Indicação:</Titulo>
       <ContainerInputs>
-        <Select id="indicacao" backgroundColor={Cores.cinza[7]} width="100%">
-          <option>Escolher indicação para deletar</option>
-          <option>Opção 1</option>
-          <option>Opção 2</option>
-          <option>Opção 3</option>
+      {medicoEspecifico.map((medico) => (  
+        <Select 
+        id="indicacao"
+         backgroundColor={Cores.cinza[7]}
+          width="100%"
+          onClick={armazenarMedico(medico)}
+          >
+         
+          <option 
+          
+          key={medico} 
+          value={medico} 
+          color='red'>
+            {medico.nome}
+          </option>
+          
         </Select>
+        ))} 
       </ContainerInputs>
       <Button
         gap="5px"
@@ -26,6 +54,7 @@ function ModalExcluirIndicacao() {
         paddingTop="5px"
         paddingBottom="5px"
         marginTop="10%"
+        onClick={() => deletarIndicacao()}
       >
         Excluir Indicação <DeleteOutlined />
       </Button>
