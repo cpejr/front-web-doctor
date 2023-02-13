@@ -95,7 +95,6 @@ function CriacaoFormulario() {
         if(visualizar === false){
         setCarregandoCriacao(true);
         estado.visualizacao_secretaria = false;
-        console.log(estado)
         await managerService.CriarFormulario(estado);
         await sleep(1500);
         setCarregandoCriacao(false);
@@ -104,7 +103,6 @@ function CriacaoFormulario() {
         if(visualizar === true){
           setCarregandoCriacao(true);
           estado.visualizacao_secretaria = true;
-          console.log(estado)
           await managerService.CriarFormulario(estado);
           await sleep(1500);
           setCarregandoCriacao(false);

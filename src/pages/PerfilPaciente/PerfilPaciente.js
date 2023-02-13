@@ -245,39 +245,7 @@ function PerfilPaciente(props) {
     }
   }
 
-  /* function filtravisualizacaosecretaria(id, titulo) {
-  pegandoDadosFormularioEspecifico(id);
-  console.log(formularioEspecifico.visualizacao_secretaria);
-  const fitrarVisualizacao = formularioEspecifico.filter((formularioEspecifico) => {
-     if(formularioEspecifico.titulo === titulo && formularioEspecifico.visualizacao_secretaria === true){
-     return true;
-     }else{
-      return false;
-     }
-  });
-  if(fitrarVisualizacao === true){
-    return true;
-  }else
-    return false;
- }
-  async function getFormularios() {
-    const todosFormularios = await managerService.GetFormularios();
-    setFormularioEspecifico(todosFormularios);
-    console.log(formularioEspecifico);
-  }
-  useEffect(() => {
-    getFormularios();
-  }, [formularioEspecifico]);
-
-const formulariosFiltrados = formularioEspecifico.filter((value) => {
-     if (formularioEspecifico.visualizacao_secretaria === true) {
-       if(formularioEspecifico.id === value){
-        return true;
-       }else{
-        return false; 
-       }
-     }
-  });*/
+  
   return (
     <div>
       <ContainerPerfil>
