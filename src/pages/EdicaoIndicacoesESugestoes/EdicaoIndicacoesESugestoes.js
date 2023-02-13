@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Cores } from "../../variaveis";
 import { Modal, Spin } from "antd";
 import { sleep } from "../../utils/sleep";
@@ -230,9 +230,13 @@ function EdicaoIndicacoesESugestoes(props) {
                   {dadosIndicacao.descricao}
                 </DescricaoInformacoes>
                 <DescricaoInformacoes>
-                {dadosIndicacao.nomemedico}
-                {dadosIndicacao.localmedico}
-                {dadosIndicacao.telefonemedico}
+                Nome:{dadosIndicacao.nomemedico}
+                </DescricaoInformacoes>
+                <DescricaoInformacoes>
+                Local de Atendimento:{dadosIndicacao.localmedico}
+                </DescricaoInformacoes>
+                <DescricaoInformacoes>
+                Telefone:{dadosIndicacao.telefonemedico}
                 </DescricaoInformacoes>
               </>
             )}
@@ -314,7 +318,9 @@ function EdicaoIndicacoesESugestoes(props) {
         centered={true}
         destroyOnClose
       >
-        <ModalAlterarIndicacao fechandoModal={fecharModalAlterarIndicacao} />
+        <ModalAlterarIndicacao 
+        idmedicoindicado = {idIndicado}
+        fechandoModal={fecharModalAlterarIndicacao} />
       </Modal>
 
       <Modal

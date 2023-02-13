@@ -148,6 +148,8 @@ export const Informacoes = styled.div`
 `;
 
 export const DescricaoInformacoes = styled.p`
+  display: flex;
+  flex-direction: column;
   align-self: flex-start;
   text-align: column;
   margin-top: 0%;

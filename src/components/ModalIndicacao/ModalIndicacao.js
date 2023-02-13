@@ -70,6 +70,9 @@ function ModalIndicacao({ dadosIndicacao, carregando }) {
             <TituloInfo>{dadosIndicacao.titulo}</TituloInfo>
             <DescricaoInformacoes>
               {dadosIndicacao.descricao}
+              Nome:{dadosIndicacao.nomemedico}
+              Local de Atendimento:{dadosIndicacao.localmedico}
+              Telefone:{dadosIndicacao.telefonemedico}
             </DescricaoInformacoes>
           </>
         )}

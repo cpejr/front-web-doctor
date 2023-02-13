@@ -607,9 +607,9 @@ export const IndicandoMedicos = async (
       return false;
     });
 };
-export const EditarMedicoIndicado = async (id, medico) => {
+export const EditarMedicoIndicado = async (id, estado) => {
   await requesterService
-    .alterarMedicoIndicado(id, medico)
+    .alterarMedicoIndicado(id, estado)
     .then(() => {
       toast.success('Indicação atualizada com sucesso.');
     })

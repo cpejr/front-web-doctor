@@ -79,7 +79,7 @@ function ModalAdicionarIndicacao(props) {
 		const id = props.idmedicoindicado;
     
 		await managerService.IndicandoMedicos(id, estado.nome, estado.telefone, estado.local, {
-			mensagemSucesso: "Receita criada com sucesso",
+			mensagemSucesso: "Indicação realizada",
 			tempo: 1500,
 			onClose: () => {
 				history.push("/web/edicaoindicacoesesugestoes");

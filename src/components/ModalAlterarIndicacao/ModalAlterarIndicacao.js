@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from "../../styles/Button";
+import { sleep } from '../../utils/sleep';
 import { Titulo, Container, ContainerInputs, Labels, Rotulo } from "./Styles";
 import Input from "../../styles/Input";
 import Select from "../../styles/Select/Select";
@@ -12,21 +13,27 @@ import * as managerService from "../../services/ManagerService/managerService";
 import _ from "lodash";
 import { useHistory } from "react-router-dom";
 import { Spin } from "antd";
-
 function ModalAlterarIndicacao(props) {
   const [camposVazios, setCamposVazios] = useState({});
   const [carregandoCriacao, setCarregandoCriacao] = useState(false);
+  const [medicoEspecifico, setMedicoEspecifico] = useState();
   const [estado, setEstado] = useState({
     nome: "",
     telefone: "",
-    local: "",
+    local_atendimento: "",
+    id_indicacao_especifica: props.idmedicoindicado,
   });
   const [erro, setErro] = useState(false);
 
   const [camposVaziosReferencia, setCamposVaziosReferencia] = useState({
     nome: false,
     telefone: false,
-    local: false,
+    local_atendimento: false,
+  });
+  const [selecionarMedico, setSelecionarMedico] = useState({
+    nome: false,
+    telefone: false,
+    local_atendimento: false,
   });
 
   function preenchendoDados(e) {
@@ -50,27 +57,40 @@ function ModalAlterarIndicacao(props) {
     if (name === "telefone") {
       setEstado({ ...estado, [name]: telefone(value) });
     }
-    if (name === "local") {
+    if (name === "local_atendimento") {
       setEstado({
         ...estado,
         [name]: apenasLetras(value),
       });
     }
   }
+  async function buscarMedicosporId(){
+   const medicosespecificos = await managerService.GetMedicosIndicadosPorID(props.idmedicoindicado);
+   setMedicoEspecifico(medicosespecificos);
+  }
+  useEffect(() => {buscarMedicosporId()}, [medicoEspecifico])
+  async function preenchendoPlaceholder(medico) {
+    setSelecionarMedico(medico);
+  }
  async function alterar(e) {
   e.preventDefault();
-
-  const camposVaziosAtual = {
-    nome: !estado.nome,
-    telefone: !estado.telefone,
-    local: !estado.local
-  };
-
-  setCamposVazios(camposVaziosAtual);
-
-  if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
+  
+  if (!estado.nome) erro.nome = true;
+  if (!estado.telefone) erro.telefone = true;
+  if (!estado.local_atendimento) erro.local_atendimento = true;
+  
+  
+  setCamposVazios({...camposVazios, ...erro});
+  console.log(camposVazios);
+  console.log(estado);
+  if (!_.isEqual(camposVazios, camposVaziosReferencia)) {
     toast.warn("Preencha todos os campos");
     return;
+  }else{
+    setCarregandoCriacao(true);
+    await managerService.EditarMedicoIndicado(selecionarMedico.id,estado);
+    await sleep(1500);
+    setCarregandoCriacao(false);
   }
 
   
@@ -80,23 +100,31 @@ function ModalAlterarIndicacao(props) {
 );
   return (
     <Container>
+      
       <Titulo>Alterar Indicação:</Titulo>
+      {medicoEspecifico.map((medico) => ( 
       <ContainerInputs>
         <Labels>Indicação:</Labels>
-
-        <Select id="indicacao" backgroundColor={Cores.cinza[7]} width="100%">
+       
+        <Select 
+        id="indicar"
+        backgroundColor={Cores.cinza[7]} 
+        onClick={() => preenchendoPlaceholder(medico)}
+        width="100%">
           <option>Escolher indicação para alterar</option>
-          <option>Opção 1</option>
-          <option>Opção 2</option>
-          <option>Opção 3</option>
+              <option key={medico} value={medico} color='red'>
+                {medico.nome}
+              </option>
         </Select>
+        
       </ContainerInputs>
+       ))}
       <ContainerInputs>
         <Labels>Nome:</Labels>
         <Input
           backgroundColor="#EAECFF"
           borderColor="black"
-          placeholder="Insira o Nome do(a) Médico(a)"
+          placeholder={selecionarMedico.nome}
           color="black"
           fontSize="1em"
           width="100%"
@@ -113,7 +141,7 @@ function ModalAlterarIndicacao(props) {
         <Input
           backgroundColor="#EAECFF"
           borderColor="black"
-          placeholder="Insira o telefone do(a) Médico(a)"
+          placeholder={selecionarMedico.telefone}
           color="black"
           fontSize="1em"
           width="100%"
@@ -134,7 +162,7 @@ function ModalAlterarIndicacao(props) {
         <Input
           backgroundColor="#EAECFF"
           borderColor="black"
-          placeholder="Insira o local de atendimento do(a) Médico(a)"
+          placeholder={selecionarMedico.local_atendimento}
           color="black"
           fontSize="1em"
           width="100%"
@@ -142,8 +170,8 @@ function ModalAlterarIndicacao(props) {
           onChange={preenchendoDados}
           erro={erro.nome}
           camposVazios={camposVazios.nome}
-          name="local"
-          value={estado.local}
+          name="local_atendimento"
+          value={estado.local_atendimento}
         ></Input>
       </ContainerInputs>
       <Button
