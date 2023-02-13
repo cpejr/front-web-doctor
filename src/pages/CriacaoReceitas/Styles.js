@@ -11,7 +11,8 @@ export const ContainerCriacaoReceitas = styled.div`
 
 export const CardCriacaoReceitas = styled.div`
 	width: 570px;
-	margin-top: 3%;
+	margin-top: 2%;
+	margin-bottom: 2%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -80,6 +81,19 @@ export const Titulo = styled.div`
 `;
 
 export const NomeDoPaciente = styled.div`
+	display: flex;
+	font-size: 17px;
+	font-weight: 500;
+	line-height: 24px;
+	letter-spacing: 0em;
+	margin-top: 4%;
+
+	@media (max-width: 280px) {
+		font-size: 16px;
+	}
+`;
+
+export const Assinatura = styled.div`
 	display: flex;
 	font-size: 17px;
 	font-weight: 500;

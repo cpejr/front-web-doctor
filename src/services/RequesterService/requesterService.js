@@ -3,6 +3,9 @@ import api from "../../services/api";
 export const EnviandoImagem = (base64) =>
   api.post("/arquivo", { file: base64 });
 
+export const EnviandoImagem = (base64) => api.post("/arquivo", { file: base64 });
+
+
 export const logarUsuario = (email, senha) =>
   api.post("/login", {
     email,
@@ -46,6 +49,18 @@ export const updateNotificacaoAtivaFormularioPaciente = (
 
 export const updateCodigo = (id_usuario, codigo) =>
   api.put(`/usuarios/${id_usuario}`, { codigo: codigo });
+
+export const UpdateComentario = (id, comentario) =>
+  api.put(`/comentarios/${id}`, { comentario: comentario });
+
+export const DeleteComentario = (id, comentario) =>
+  api.delete(`/comentarios/${id}`, { comentario: comentario });
+
+export const CriandoComentario = (comentario) =>
+  api.post('/comentarios', comentario);
+
+export const requisicaoComentario = () =>
+  api.get(`/comentarios`);
 
 export const requisicaoDadosUsuario = (emailUrl) =>
   api.get(`/usuarios/${emailUrl}`);
@@ -120,13 +135,7 @@ export const requisicaoFormularioPacientes = (id_formulario) =>
 
 export const requisicaoReceitas = () => api.get(`/receitas/`);
 
-export const criarReceita = (
-  id_usuario,
-  nomePaciente,
-  dataNascimento,
-  tituloReceita,
-  descricao
-) =>
+export const criarReceita = (id_usuario, nomePaciente, dataNascimento, tituloReceita, descricao) => 
   api.post(`/receitas`, {
     id_usuario: id_usuario,
     nome: nomePaciente,
@@ -147,8 +156,8 @@ export const requisicaoTodosFormulariosPaciente = () =>
   api.get("/formularios_pacientes");
 
 export const updateFotoDePerfil = (id, base64) =>
-  api.post(`/usuariosimagem/${id}`, {
-    file: base64,
+  api.post(`/usuariosimagem/${id}`,{
+    file: base64
   });
 
 export const deleteFotoDePerfil = (id, base64) =>
@@ -156,17 +165,9 @@ export const deleteFotoDePerfil = (id, base64) =>
     file: base64,
   });
 
-export const enviarFormularioPaciente = (
-  status,
-  notificacao_ativa,
-  id_formulario,
-  id_usuario
-) =>
-  api.post("/formularios_pacientes", {
-    status,
-    notificacao_ativa,
-    id_formulario,
-    id_usuario,
+  export const deleteFotoDePerfil = (id, base64) =>
+  api.put(`/usuariosdeletarimagem/${id}`,{
+    file: base64
   });
 
 export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);

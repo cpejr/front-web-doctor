@@ -391,6 +391,63 @@ export const UpdateCodigo = async (id_usuario, codigo) => {
   return false;
 };
 
+export const DeleteComentario = async (id) => {
+  await requesterService
+    .DeleteComentario(id)
+    .then(() => {
+      toast.success('Comentário deletado com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/edicaocomentario'));
+      return false;
+    });
+
+  return false;
+};
+
+export const UpdateComentario = async (id, comentario) => {
+  await requesterService
+    .UpdateComentario(id, comentario)
+    .then(() => {
+      toast.success('Comentário atualizado com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/edicaocomentario'));
+      return false;
+    });
+
+  return false;
+};
+
+export const CriandoComentario = async (comentario) => {
+  await requesterService
+    .CriandoComentario(comentario)
+    .then(() => {
+      toast.success('Comentário criado com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/edicaocomentario'));
+      return false;
+    });
+
+  return;
+};
+
+export const GetComentario = async () => {
+  let dadosComentario = [];
+
+  await requesterService
+    .requisicaoComentario()
+
+    .then((res) => {
+      dadosComentario = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosComentario;
+};
+
 export const DeletarEnderecoEUsuario = async (id_endereco) => {
   await requesterService
     .deletarEnderecoEUsuario(id_endereco)
@@ -550,28 +607,6 @@ export const GetRespostaFormularioIdUsuario = async (id_usuario) => {
     });
   return dadosResposta;
 };
-
-export const confirmarPagamentoExame = async(id_paciente, id_usuario) => {
-  const formulariosPaciente = await GetRespostaFormularioIdUsuario(id_paciente);
-  let possuiFormulario = false;
-  let posicao = -1;
-
-  for (const [index, value] of formulariosPaciente.entries()){
-    if(value.tipo === "exame_actigrafia"){
-      possuiFormulario = true;
-      posicao = index;
-    }
-  }
-
-  if(!possuiFormulario)
-    toast.error("O paciente não possui um formulário desse exame");
-  else if(possuiFormulario && formulariosPaciente[posicao].respostas === null){
-    toast.error("O paciente não respondeu as perguntas do formulário");
-  }
-  else{
-    await MandandoMensagemConfirmarPagamento(id_usuario);
-  }
-}
 
 export const GetResposta = async (id) => {
   let dadosResposta = {};
@@ -934,4 +969,19 @@ export const dispostivoById = async (id) => {
       requisicaoErro(error);
     });
   return dispositivo;
+};
+
+export const GetHomes = async () => {
+  let dadosHomes = {};
+
+  await requesterService
+    .requisicaoHomes()
+
+    .then((res) => {
+      dadosHomes = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosHomes[0];
 };

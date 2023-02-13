@@ -79,7 +79,7 @@ export default function ConversaAberta({ socket }) {
           color={Cores.preto}
           fontSize="1rem"
           height="50px"
-          onClick={() => confirmarPagamento()}
+          onClick={() => confirmarPagamento(conversaSelecionada.conversaCom.id, usuarioId)}
         >
           <b>Confirmar Pagamento</b>
         </Button>
@@ -120,7 +120,7 @@ export default function ConversaAberta({ socket }) {
   }, []);
 
 
-  const verificaHorarioPermitidoParaEnvioDeMensagens = () =>{
+  const verificaHorarioPermitidoParaEnvioDeMensagens = () => {
     const verificaHorarioUsuario = !horarioComercial && (tipoUsuario !== "MASTER");
     setHorarioPermitidoParaEnvioMensagem(verificaHorarioUsuario);
   }
@@ -139,8 +139,32 @@ export default function ConversaAberta({ socket }) {
     )
   }
 
-  async function confirmarPagamento() {
-    managerService.confirmarPagamentoExame(conversaSelecionada.conversaCom.id, usuarioId);
+  async function confirmarPagamento(id_paciente, id_usuario) {
+    const formulariosPaciente = await managerService.GetRespostaFormularioIdUsuario(id_paciente);
+    let possuiFormulario = false;
+    let posicao = -1;
+    let texto = inputMensagemConteudo;
+
+    for (const [index, value] of formulariosPaciente.entries()) {
+      if (value.tipo === "exame_actigrafia") {
+        possuiFormulario = true;
+        posicao = index;
+      }
+    }
+
+    if (!possuiFormulario)
+      toast.error("O paciente não possui um formulário desse exame");
+    else if (possuiFormulario && formulariosPaciente[posicao].respostas === null) {
+      toast.error("O paciente não respondeu as perguntas do formulário");
+    }
+    else {
+      await managerService.MandandoMensagemConfirmarPagamento(id_usuario);
+      texto = "Instruções para a realização do exame actigrafia: \n"
+      + "1.- \n"
+      + "2.- \n"
+      + "3.- "
+      enviaMensagem('nenhuma', texto);
+    }
   }
 
   async function finalizarChat() {
@@ -230,7 +254,7 @@ export default function ConversaAberta({ socket }) {
     });
   };
 
-  const enviaMensagem = async ( media_url, conteudo ) => {
+  const enviaMensagem = async (media_url, conteudo) => {
 
     setCarregandoEnvioMensagem(true);
     const dadosParaCriarNovaMensagem = {
