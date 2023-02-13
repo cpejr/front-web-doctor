@@ -159,7 +159,10 @@ export default function ConversaAberta({ socket }) {
     }
     else {
       await managerService.MandandoMensagemConfirmarPagamento(id_usuario);
-      texto = "Instruções para a realização do exame actigrafia: \n 1.- \n 2.- \n 3.- \n"
+      texto = "Instruções para a realização do exame actigrafia: \n"
+      + "1.- \n"
+      + "2.- \n"
+      + "3.- "
       enviaMensagem('nenhuma', texto);
     }
   }
