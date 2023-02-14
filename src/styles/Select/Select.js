@@ -18,7 +18,7 @@ const Select = styled.select`
 	}};
 	color: ${(props) => props.color};
 	border-radius: 3px;
-	font-size: 1em;
+	font-size: ${(props) => props.fontSize ?? "1em"};
 	margin-top: ${(props) => props.marginTop ?? "2%"};
 	margin-bottom: ${(props) => props.marginBottom ?? "0px"};
 	border-style: solid;
@@ -31,6 +31,9 @@ const Select = styled.select`
 	width: ${(props) => props.width};
 	@media (max-width: 820px) {
 		width: ${(props) => props.borderWidth820 ?? "100%"};
+	}
+	@media (max-width: 290px) {
+		font-size: ${(props) => props.fontSize290 ?? "0.9em"};
 	}
 
 	option {
