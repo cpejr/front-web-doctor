@@ -115,8 +115,6 @@ function UploadReceita() {
 
   async function criarReceita(e) {
     e.preventDefault();
-    const string = file.replace("data:application/pdf;base64,", "");
-    console.log(string);
     const camposVaziosAtual = {
       id_usuario: !estado.id_usuario,
       titulo: !estado.titulo,
@@ -136,7 +134,7 @@ function UploadReceita() {
     }*/
     setCarregandoCriacao(true);
     const id = estado.id_usuario;
-    console.log(string);
+    const string = file.replace("data:application/pdf;base64,", "");
     await managerService.CriandoReceitaComArquivo(
       id,
       tituloReceita,
