@@ -3,16 +3,21 @@ import Select from "../../styles/Select/Select";
 import { Titulo, Container, ContainerInputs } from "./Styles";
 import { Cores } from "../../variaveis";
 import { DeleteOutlined } from "@ant-design/icons";
-import React,{ useEffect,useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as managerService from "../../services/ManagerService/managerService";
 function ModalExcluirIndicacao(props) {
   const [medicoEspecifico, setMedicoEspecifico] = useState();
+  const [medicos, setMedicos] = useState([{}]);
   const [idMedicoEscolhido, setIdMedicoEscolhido] = useState();
-  async function buscarMedicosporId(){
-    const medicosespecificos = await managerService.GetMedicosIndicadosPorID(props.idmedicoindicado);
-    setMedicoEspecifico(medicosespecificos);
-   }
-   useEffect(() => {buscarMedicosporId()}, [medicoEspecifico])
+  async function buscarMedicosporId() {
+    const resposta = await managerService.GetMedicosIndicadosPorID(props.idmedicoindicado);
+    setMedicos(resposta);
+  }
+  useEffect(() => {
+    buscarMedicosporId();
+    console.log(medicos[0].id)
+  }, [medicos])
+
   async function armazenarMedico(medico) {
     setIdMedicoEscolhido(medico.id);
   }
@@ -25,24 +30,21 @@ function ModalExcluirIndicacao(props) {
     <Container>
       <Titulo>Excluir Indicação:</Titulo>
       <ContainerInputs>
-      {medicoEspecifico.map((medico) => (  
-        <Select 
-        id="indicacao"
-         backgroundColor={Cores.cinza[7]}
-          width="100%"
-          onClick={armazenarMedico(medico)}
-          >
-         
-          <option 
-          
-          key={medico} 
-          value={medico} 
-          color='red'>
-            {medico.nome}
+        <Select
+        >
+          <option value="" disabled selected>
+            Médico
           </option>
-          
+          {medicos.map((medico) => (
+            <option
+              key={medico}
+              value={medico}
+              color='red'>
+              {medico.nome}
+            </option>
+          ))}
         </Select>
-        ))} 
+
       </ContainerInputs>
       <Button
         gap="5px"
