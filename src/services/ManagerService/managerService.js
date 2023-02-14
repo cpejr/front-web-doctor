@@ -966,3 +966,57 @@ export const GetHomes = async () => {
     });
   return dadosHomes[0];
 };
+export const GetImagensCarrossel = async () => {
+  let dadosCarrossel = {};
+
+  await requesterService
+    .requisicaoCarrossel()
+
+    .then((res) => {
+      dadosCarrossel = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosCarrossel;
+};
+
+export const GetHomes = async () => {
+  let dadosHomes = {};
+
+  await requesterService
+    .requisicaoHomes()
+
+    .then((res) => {
+      dadosHomes = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosHomes[0];
+};
+
+export const UpdateDadosHomes = async (
+  id,
+  titulo_um, 
+  texto_um, 
+  titulo_dois, 
+  texto_dois, 
+  titulo_tres, 
+  texto_tres, 
+  titulo_quatro, 
+  texto_quatro,
+  video
+) => {
+  await requesterService
+    .updateDadosHomes(id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video)
+    .then(() => {
+      toast.success('Página Home Editada Com Sucesso!');
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/editarhome'));
+      return false;
+    });
+
+  return false;
+};

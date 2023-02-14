@@ -160,13 +160,9 @@ padding-bottom: 15px;
 `;
 export const BoxVideo = styled.div`
   background-color: #C4C4C4; 
-  font-size: 20px;
-  height: 90%;
-  width: 40%;
+  height: 150px;
+  width: 70%;
   margin-bottom: 4%;
-  border-radius: 6px;
-  border: solid 3px #bbc0f4;
-  font-family: "Roboto Condensed", sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -174,12 +170,6 @@ export const BoxVideo = styled.div`
 
   @media (max-width: 600px) {
     margin-bottom: 5%;
-  }
-  @media (max-width: 425px) {
-    font-size: 18px;
-  }
-  @media (max-width: 360px) {
-    font-size: 14px;
   }
 `;
 
@@ -296,3 +286,4 @@ export const ContainerBotoes = styled.div`
     font-size: 14px;
   }
 `;
+

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import ReactPlayer from 'react-player'
 import {
   Corpo, Container,
   MetadeEsquerda,
@@ -17,15 +19,26 @@ import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 import Button from "../../styles/Button";
 import TextArea from "../../styles/TextArea";
+import Input from "../../styles/Input";
 import CarrosselEditarHome from "../../components/CarrosselEditarHome.js/CarrosselEditarHome";
+import { sleep } from "../../utils/sleep";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
 
 function EdicaoHome() {
   const [homes, setHomes] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+  const history = useHistory();
+
+  const antIcon = (
+    <LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
+  );
 
   async function pegandoDados() {
+    setCarregando(true);
     const dadosHomes = await managerService.GetHomes();
     setHomes(dadosHomes);
-
+    setCarregando(false);
   }
 
   function preenchendoDados(e) {
@@ -36,6 +49,29 @@ function EdicaoHome() {
   useEffect(() => {
     pegandoDados();
   }, []);
+
+  async function atualizandoDados() {
+    setCarregando(true);
+    await managerService.UpdateDadosHomes(
+      homes.id,
+      homes.titulo_um,
+      homes.texto_um,
+      homes.titulo_dois,
+      homes.texto_dois,
+      homes.titulo_tres,
+      homes.texto_tres,
+      homes.titulo_quatro,
+      homes.texto_quatro,
+      homes.video
+    );
+    setCarregando(false);
+    document.location.reload(true);
+  }
+
+  function cancelarEdicaoHome() {
+    history.push("/web/edicaohome");
+    document.location.reload(true);
+  }
 
   return (
     <Corpo>
@@ -50,23 +86,30 @@ function EdicaoHome() {
               Conheça melhor o doutor Guilherme Marques
             </SubtituloCentral>
             <BoxVideo>
-              <Button
-                backgroundColor="green"
-                borderRadius="3px"
-                borderWidth="1px"
-                borderColor={Cores.preto}
-                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-                color={Cores.preto}
-                fontSize="15px"
-                height="50px"
-                width="60%"
-                marginTop="0%"
-                marginLeft="0%"
-                fontSizeMedia950="0.9em"
-              >
-                Alterar vídeo
-              </Button>
+              <ReactPlayer
+                url={homes.video}
+                width='100%'
+                height='100%'
+              />
             </BoxVideo>
+
+            <Input
+              value={homes.video}
+              textAlign="left"
+              backgroundColor={Cores.azulClaro}
+              borderColor={Cores.azul}
+              borderWidth='2px'
+              color={Cores.preto}
+              fontSize="1em"
+              width="70%"
+              height="40px"
+              marginLeft="10%"
+              marginBottom="5%"
+              name="video"
+              onChange={preenchendoDados}
+              paddingLeft="3%"
+            >
+            </Input>
           </BoxBemVindo>
           <BoxTime
           >
@@ -275,34 +318,40 @@ function EdicaoHome() {
           </BoxSaibaMais>
           <ContainerBotoes>
             <Button
-              backgroundColor="green"
+              backgroundColor="#434B97"
               borderRadius="3px"
-              borderWidth="1px"
+              borderWidth="3px"
               borderColor={Cores.preto}
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-              color={Cores.preto}
-              fontSize="15px"
+              color={Cores.branco}
+              fontSize="1.2em"
               height="50px"
               width="90%"
               marginTop="0%"
               marginLeft="0%"
               fontSizeMedia950="0.9em"
+              onClick={atualizandoDados}
             >
-              Salvar Alterações
+              {carregando ? (
+                <Spin indicator={antIcon} />
+              ) : (
+                <div>Salvar Alterações</div>
+              )}
             </Button>
             <Button
-              backgroundColor="green"
+              backgroundColor={Cores.azulClaro}
               borderRadius="3px"
-              borderWidth="1px"
-              borderColor={Cores.preto}
+              borderWidth="3px"
+              borderColor={Cores.azul}
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
               color={Cores.preto}
-              fontSize="15px"
+              fontSize="1.2em"
               height="50px"
               width="90%"
               marginTop="0%"
               marginLeft="0%"
               fontSizeMedia950="0.9em"
+              onClick={cancelarEdicaoHome}
             >
               Cancelar Alterações
             </Button>
