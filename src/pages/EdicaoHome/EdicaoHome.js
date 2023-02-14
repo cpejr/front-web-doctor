@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import ReactPlayer from 'react-player'
+import ReactPlayer from "react-player";
 import {
-  Corpo, Container,
+  Corpo,
+  Container,
   MetadeEsquerda,
   MetadeDireita,
   BoxBemVindo,
@@ -24,10 +25,12 @@ import CarrosselEditarHome from "../../components/CarrosselEditarHome.js/Carross
 import { sleep } from "../../utils/sleep";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
+import { toast } from "react-toastify";
 
 function EdicaoHome() {
   const [homes, setHomes] = useState([]);
   const [carregando, setCarregando] = useState(true);
+  const [houveAlteracao, setHouveAlteracao] = useState(false);
   const history = useHistory();
 
   const antIcon = (
@@ -44,6 +47,7 @@ function EdicaoHome() {
   function preenchendoDados(e) {
     const { value, name } = e.target;
     setHomes({ ...homes, [name]: value });
+    setHouveAlteracao(true);
   }
 
   useEffect(() => {
@@ -52,20 +56,26 @@ function EdicaoHome() {
 
   async function atualizandoDados() {
     setCarregando(true);
-    await managerService.UpdateDadosHomes(
-      homes.id,
-      homes.titulo_um,
-      homes.texto_um,
-      homes.titulo_dois,
-      homes.texto_dois,
-      homes.titulo_tres,
-      homes.texto_tres,
-      homes.titulo_quatro,
-      homes.texto_quatro,
-      homes.video
-    );
-    setCarregando(false);
-    document.location.reload(true);
+
+    if (houveAlteracao === true) {
+      await managerService.UpdateDadosHomes(
+        homes.id,
+        homes.titulo_um,
+        homes.texto_um,
+        homes.titulo_dois,
+        homes.texto_dois,
+        homes.titulo_tres,
+        homes.texto_tres,
+        homes.titulo_quatro,
+        homes.texto_quatro,
+        homes.video
+      );
+      setCarregando(false);
+      document.location.reload(true);
+    } else {
+      toast.warn("Altere algum campo!");
+      setCarregando(false);
+    }
   }
 
   function cancelarEdicaoHome() {
@@ -77,20 +87,13 @@ function EdicaoHome() {
     <Corpo>
       <Container>
         <MetadeEsquerda>
-          <BoxBemVindo
-          >
-            <TituloCentral>
-              BEM-VINDO AO DOCTOR APP
-            </TituloCentral>
+          <BoxBemVindo>
+            <TituloCentral>BEM-VINDO AO DOCTOR APP</TituloCentral>
             <SubtituloCentral>
               Conheça melhor o doutor Guilherme Marques
             </SubtituloCentral>
             <BoxVideo>
-              <ReactPlayer
-                url={homes.video}
-                width='100%'
-                height='100%'
-              />
+              <ReactPlayer url={homes.video} width="100%" height="100%" />
             </BoxVideo>
 
             <Input
@@ -98,7 +101,7 @@ function EdicaoHome() {
               textAlign="left"
               backgroundColor={Cores.azulClaro}
               borderColor={Cores.azul}
-              borderWidth='2px'
+              borderWidth="2px"
               color={Cores.preto}
               fontSize="1em"
               width="70%"
@@ -108,14 +111,10 @@ function EdicaoHome() {
               name="video"
               onChange={preenchendoDados}
               paddingLeft="3%"
-            >
-            </Input>
+            ></Input>
           </BoxBemVindo>
-          <BoxTime
-          >
-            <TituloCentral>
-              VENHA FAZER PARTE DO TIME
-            </TituloCentral>
+          <BoxTime>
+            <TituloCentral>VENHA FAZER PARTE DO TIME</TituloCentral>
             <SubtituloCentral>
               Para ter acesso a chat com o doutor, marcar exames e muito mais
             </SubtituloCentral>
@@ -137,9 +136,7 @@ function EdicaoHome() {
             >
               INSCREVA-SE
             </Button>
-            <SubtituloCentral>
-              Já possui conta?
-            </SubtituloCentral>
+            <SubtituloCentral>Já possui conta?</SubtituloCentral>
             <Button
               backgroundColor="green"
               borderRadius="3px"
@@ -171,7 +168,7 @@ function EdicaoHome() {
               color={Cores.branco}
               fontSize="140%"
               width="100%"
-              borderWidth='0px'
+              borderWidth="0px"
               marginLeft="10%"
               name="titulo_um"
               onChange={preenchendoDados}
@@ -183,7 +180,7 @@ function EdicaoHome() {
               width="100%"
               height="auto"
               minHeight="190px"
-              borderWidth='0px'
+              borderWidth="0px"
               paddingLeft="10%"
               paddingRight="10%"
               fontSize="100%"
@@ -193,20 +190,14 @@ function EdicaoHome() {
               name="texto_um"
               onChange={preenchendoDados}
             />
-            <TextoSaibaMais color={Cores.branco}>
-              Saiba Mais
-            </TextoSaibaMais>
+            <TextoSaibaMais color={Cores.branco}>Saiba Mais</TextoSaibaMais>
           </BoxSaibaMais>
-          <BoxAlterarImagem
-          >
+          <BoxAlterarImagem>
             <CarrosselEditarHome />
           </BoxAlterarImagem>
         </MetadeEsquerda>
         <MetadeDireita>
-          <BoxSaibaMais
-            backgroundColor="#FBCB4C"
-            borderColor="#FBCB4C"
-          >
+          <BoxSaibaMais backgroundColor="#FBCB4C" borderColor="#FBCB4C">
             <TextArea
               textAlign="left"
               backgroundColor="#FBCB4C"
@@ -214,7 +205,7 @@ function EdicaoHome() {
               fontSize="140%"
               width="100%"
               marginTop="2%"
-              borderWidth='0px'
+              borderWidth="0px"
               value={homes.titulo_dois}
               name="titulo_dois"
               onChange={preenchendoDados}
@@ -227,7 +218,7 @@ function EdicaoHome() {
               height="auto"
               minHeight="190px"
               marginTop="2%"
-              borderWidth='0px'
+              borderWidth="0px"
               paddingLeft="10%"
               paddingRight="10%"
               fontSize="100%"
@@ -237,9 +228,7 @@ function EdicaoHome() {
               name="texto_dois"
               onChange={preenchendoDados}
             />
-            <TextoSaibaMais color={Cores.preto}>
-              Saiba Mais
-            </TextoSaibaMais>
+            <TextoSaibaMais color={Cores.preto}>Saiba Mais</TextoSaibaMais>
           </BoxSaibaMais>
           <BoxSaibaMais
             backgroundColor={Cores.lilas[1]}
@@ -252,7 +241,7 @@ function EdicaoHome() {
               fontSize="140%"
               width="100%"
               marginTop="2%"
-              borderWidth='0px'
+              borderWidth="0px"
               value={homes.titulo_tres}
               name="titulo_tres"
               onChange={preenchendoDados}
@@ -265,7 +254,7 @@ function EdicaoHome() {
               height="auto"
               minHeight="190px"
               marginTop="2%"
-              borderWidth='0px'
+              borderWidth="0px"
               paddingLeft="10%"
               paddingRight="10%"
               fontSize="100%"
@@ -275,13 +264,9 @@ function EdicaoHome() {
               name="texto_tres"
               onChange={preenchendoDados}
             />
-            <TextoSaibaMais color={Cores.branco}>
-              Saiba Mais
-            </TextoSaibaMais>
+            <TextoSaibaMais color={Cores.branco}>Saiba Mais</TextoSaibaMais>
           </BoxSaibaMais>
-          <BoxSaibaMais
-            borderColor="white"
-          >
+          <BoxSaibaMais borderColor="white">
             <TextArea
               textAlign="left"
               backgroundColor={Cores.branco}
@@ -289,7 +274,7 @@ function EdicaoHome() {
               fontSize="140%"
               width="100%"
               marginTop="2%"
-              borderWidth='0px'
+              borderWidth="0px"
               value={homes.titulo_quatro}
               name="titulo_quatro"
               onChange={preenchendoDados}
@@ -302,7 +287,7 @@ function EdicaoHome() {
               minHeight="190px"
               height="auto"
               marginTop="2%"
-              borderWidth='0px'
+              borderWidth="0px"
               paddingLeft="10%"
               paddingRight="10%"
               fontSize="100%"
@@ -312,9 +297,7 @@ function EdicaoHome() {
               name="texto_quatro"
               onChange={preenchendoDados}
             />
-            <TextoSaibaMais color={Cores.preto}>
-              Saiba Mais
-            </TextoSaibaMais>
+            <TextoSaibaMais color={Cores.preto}>Saiba Mais</TextoSaibaMais>
           </BoxSaibaMais>
           <ContainerBotoes>
             <Button
