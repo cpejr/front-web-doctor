@@ -187,4 +187,4 @@ export const updateDadosHomes = (id, titulo_um, texto_um, titulo_dois, texto_doi
 ;
 
 export const requisicaoCarrossel = () =>
-  api.get(`/imagem_carrossels`);
+  api.get(`/imagem_carrossels/`);

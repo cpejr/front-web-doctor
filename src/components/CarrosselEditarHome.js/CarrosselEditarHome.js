@@ -20,22 +20,29 @@ import PatoBravo from "../../assets/patobravo.jpg"
 function CarrosselEditarHome() {
 
     const [imgAtual, setImgAtual] = useState(0);
-    const [imgCarrossel, setimgCarrossel] = useState(0);
+    const [imgCarrossel, setImgCarrossel] = useState('');
 
-    async function pegandoDados() {
-        const resposta = await managerService.GetImagensCarrossel();
-        setimgCarrossel(resposta);
+    async function setandoImagemCarrossel (){
+        const res = await managerService.GetImagensCarrossel();
+        const requests = res.map(({ imagem }) =>
+          managerService.GetArquivoPorChave(imagem)
+        
+        );
+        const responses = await Promise.all(requests);
+        setImgCarrossel(responses);
+        console.log(res.imagem);
     }
-
-    useEffect(() => {
-        pegandoDados();
-    }, []);
+    
+    useEffect(()=>{
+        setandoImagemCarrossel();
+    },[])
 
     const imagens = [
-        { img: Patinho },
-        { img: Patao },
-        { img: PatoBravo },
+        { img: imgCarrossel[0] },
+        { img: imgCarrossel[1] },
+        { img: imgCarrossel[2] },
     ];
+    console.log(imgCarrossel);
 
     return (
         <CarrosselContainer>
