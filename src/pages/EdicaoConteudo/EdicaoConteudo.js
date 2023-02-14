@@ -12,7 +12,7 @@ function EdicaoConteudo() {
         </TituloPaginaEdicao>
         <BotaoGenerico
           onClick={() => {
-            history.push("/web/Home");
+            history.push("/web/edicaohome");
           }}
         >
           Home
@@ -25,9 +25,9 @@ function EdicaoConteudo() {
           Sobre mim
         </BotaoGenerico>
         <BotaoGenerico
-        // onClick={() => {
-        //   history.push("/web/Home");
-        // }}
+        onClick={() => {
+          history.push("/web/edicaocomentario");
+        }}
         >
           Comentários
         </BotaoGenerico>

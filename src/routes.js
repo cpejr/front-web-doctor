@@ -25,6 +25,7 @@ import CriacaoReceitas from './pages/CriacaoReceitas';
 import uploadReceita from './pages/UploadReceita';
 import UploadReceita from './pages/UploadReceita';
 import EdicaoComentarios from './pages/EdicaoComentarios';
+import EdicaoConteudo from './pages/EdicaoConteudo';
 
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
@@ -170,6 +171,12 @@ function UserHeader() {
           exact 
           path='/web/uploadreceita'
           component={UploadReceita}
+
+        />
+        <RotasPrivadasMedico
+          exact 
+          path='/web/edicaoconteudo'
+          component={EdicaoConteudo}
 
         />
         <RotasPrivadas exact path='/web/perfil' component={Perfil} />
