@@ -115,7 +115,7 @@ function UploadReceita() {
 
   async function criarReceita(e) {
     e.preventDefault();
-    const string = file.slice(28, );
+    const string = file.replace("data:application/pdf;base64,", "");
     console.log(string);
     const camposVaziosAtual = {
       id_usuario: !estado.id_usuario,
