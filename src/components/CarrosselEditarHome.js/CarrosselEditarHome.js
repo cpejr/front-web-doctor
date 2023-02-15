@@ -6,6 +6,7 @@ import {
   Esquerda,
   InteriorCarrossel,
   CaixaCarregando,
+  CaixaUpload,
 } from "./Styles";
 import {
   LeftOutlined,
@@ -14,18 +15,55 @@ import {
 } from "@ant-design/icons";
 import Button from "../../styles/Button";
 import { Cores } from "../../variaveis";
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom';
 
 import * as managerService from "../../services/ManagerService/managerService";
-import { Spin } from "antd";
+import { Spin, Upload } from 'antd';
 
-function CarrosselEditarHome() {
+function CarrosselEditarHome(props) {
   const [imgAtual, setImgAtual] = useState(0);
   const [imgCarrossel, setImgCarrossel] = useState("");
   const [carregando, setCarregando] = useState(false);
+  const history = useHistory();
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 50, color: Cores.branco }} spin />
   );
+
+  const getBase64 = (img, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener('load', () => callback(reader.result));
+    reader.readAsDataURL(img);
+  };
+
+  const antesUpload = (file) => {
+    const ehImagem = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/avif';
+
+    if (!ehImagem) {
+      toast.error('Insira uma imagem!');
+      setCarregando(true);
+    }
+
+    const tamanhoPermitido = file.size / 1024 / 1024 < 2;
+
+    if (!tamanhoPermitido) {
+      toast.error('Imagem deve ser menor que 2MB!');
+      setCarregando(true);
+    }
+
+    return ehImagem && tamanhoPermitido;
+  };
+
+  async function preenchendoImagem(info) {
+    setCarregando(true);
+    getBase64(info.file.originFileObj, (url) => {
+      const imagensAtualizadas = [...imgCarrossel];
+      imagensAtualizadas[imgAtual] = url;
+      setCarregando(false);
+      setImgCarrossel(imagensAtualizadas);
+    });
+  }
 
   async function setandoImagemCarrossel() {
     setCarregando(true);
@@ -48,6 +86,7 @@ function CarrosselEditarHome() {
     { img: imgCarrossel[0] },
     { img: imgCarrossel[1] },
     { img: imgCarrossel[2] },
+    { img: imgCarrossel[3] }
   ];
 
   return (
@@ -69,22 +108,15 @@ function CarrosselEditarHome() {
             style={{ backgroundImage: `url(${imagens[imgAtual].img})` }}
           >
             <Centro>
-              <Button
-                backgroundColor="green"
-                borderRadius="3px"
-                borderWidth="1px"
-                borderColor={Cores.preto}
-                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-                color={Cores.preto}
-                fontSize="15px"
-                height="50px"
-                width="60%"
-                marginTop="0%"
-                marginLeft="0%"
-                fontSizeMedia950="0.9em"
-              >
-                Alterar Imagens
-              </Button>
+              <CaixaUpload>
+                <Upload
+                  showUploadList={false}
+                  beforeUpload={antesUpload}
+                  onChange={preenchendoImagem}
+                >
+                  Alterar Imagens
+                </Upload>
+              </CaixaUpload>
             </Centro>
           </InteriorCarrossel>
         </>

@@ -11,6 +11,7 @@ export const CarrosselContainer = styled.div`
 export const InteriorCarrossel = styled.div`
   width: 80%;
   height: 100%;
+  background-color: ${Cores.cinza[1]};
   background-image: ${(props) => props.backgroundImage};
   background-position: center;
   background-repeat: no-repeat;
@@ -71,4 +72,24 @@ export const CaixaCarregando = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
+`;
+
+export const CaixaUpload = styled.div`
+.ant-upload{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100% ;
+  width: 100% ;
+  background-color:${Cores.azulClaro};
+  border-radius: 3px;
+  border-width: 10px ;
+  border-color:${Cores.azul};
+  color:${Cores.preto};
+  font-size: 20px ;
+
+  @media (max-width: 950px) {
+    font-size: 0.9em;
+  }
+}
 `;
