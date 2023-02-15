@@ -859,6 +859,19 @@ export const CriandoMensagem = async (mensagem) => {
   return dadosMensagemCriada;
 };
 
+export const CriandoMensagemComArquivo = async (mensagem) => {
+  let dadosMensagemCriada = {};
+  await requesterService
+    .criarMensagemComArquivo(mensagem)
+    .then((res) => {
+      dadosMensagemCriada = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosMensagemCriada;
+};
+
 export const GetMensagensPorConversaUsuario = async (
   id_usuario,
   id_conversa
@@ -965,4 +978,20 @@ export const GetHomes = async () => {
       requisicaoErro(error);
     });
   return dadosHomes[0];
+}; 
+
+export const enviarArquivoMensagem = async (file) => {
+  let id;
+  await requesterService
+    .enviarArquivoMensagem(file)
+    .then((res) => {
+      toast.success('Arquivo PDF enviado com sucesso');
+      id = res.data;
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return id;
 };

@@ -178,6 +178,8 @@ export const deletarConversasInativas = (id_usuario) =>
 
 export const criarMensagem = (mensagem) => api.post(`/mensagems`, mensagem);
 
+export const criarMensagemComArquivo = (mensagem) => api.post(`/mensagemsfile`, mensagem);
+
 export const requisicaoMensagensPorConversaUsuario = (
   id_usuario,
   id_conversa
@@ -190,6 +192,11 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   api.put(`/mensagems/${id_conversa}/visualizadas/${id_usuario}`);
 
 export const dispostivoById = (id) => api.get(`/dispositivos/${id}`);
+
+export const enviarArquivoMensagem = (base64) =>
+  api.post(`/arquivofile/`,{
+    file: base64
+  });
 
 export const requisicaoHomes = () =>
   api.get(`/homes`);
