@@ -20,6 +20,7 @@ import {
 	DataCriacao,
 	NomePaciente,
 	BotaoDeletar,
+	ContainerBotoes
 } from "./Styles";
 import Button from "../../styles/Button";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -72,6 +73,12 @@ function AreaReceitas() {
 	function criandoReceita() {
 		history.push({
 			pathname: "/web/criacaoreceitas",
+		});
+	}
+
+	function uploadReceita(){
+		history.push({
+			pathname: "/web/uploadreceita",
 		});
 	}
 
@@ -141,20 +148,36 @@ function AreaReceitas() {
 							</Select>
 						</FiltroPaciente>
 						<BotaoAdicionar>
-							<Button
-								backgroundColor={Cores.cinza[7]}
-								color={Cores.azul}
-								width="50%"
-								display="flex"
-								height="32px"
-								borderColor={Cores.preto}
-								fontSize="1em"
-								gap="5%"
-								widthMedia600="100%"
-								onClick={() => criandoReceita()}
-							>
-								Adicionar Receita
-							</Button>
+							<ContainerBotoes>
+								<Button
+									backgroundColor={Cores.cinza[7]}
+									color={Cores.azul}
+									width="50%"
+									display="flex"
+									height="32px"
+									borderColor={Cores.preto}
+									fontSize="1em"
+									gap="5%"
+									widthMedia600="100%"
+									onClick={() => criandoReceita()}
+								>
+									Criar Receita
+								</Button>
+								<Button
+									backgroundColor={Cores.cinza[7]}
+									color={Cores.azul}
+									width="50%"
+									display="flex"
+									height="32px"
+									borderColor={Cores.preto}
+									fontSize="1em"
+									gap="5%"
+									widthMedia600="100%"
+									onClick={() => uploadReceita()}
+								>
+									Upload de Receita
+								</Button>
+							</ContainerBotoes>
 						</BotaoAdicionar>
 					</Botoes>
 				</TopoPagina>
