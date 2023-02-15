@@ -16,7 +16,8 @@ import { Spin } from "antd";
 function ModalAlterarIndicacao(props) {
   const [camposVazios, setCamposVazios] = useState({});
   const [carregandoCriacao, setCarregandoCriacao] = useState(false);
-  const [medicoEspecifico, setMedicoEspecifico] = useState();
+  const [medicoEspecifico, setMedicoEspecifico] = useState([{}]);
+
   const [estado, setEstado] = useState({
     nome: "",
     telefone: "",
@@ -72,6 +73,8 @@ function ModalAlterarIndicacao(props) {
   async function preenchendoPlaceholder(medico) {
     setSelecionarMedico(medico);
   }
+ 
+
  async function alterar(e) {
   e.preventDefault();
   
@@ -102,23 +105,25 @@ function ModalAlterarIndicacao(props) {
     <Container>
       
       <Titulo>Alterar Indicação:</Titulo>
-      {medicoEspecifico.map((medico) => ( 
+      
       <ContainerInputs>
         <Labels>Indicação:</Labels>
-       
+       {medicoEspecifico.map((medico) => ( 
         <Select 
         id="indicar"
         backgroundColor={Cores.cinza[7]} 
         onClick={() => preenchendoPlaceholder(medico)}
         width="100%">
           <option>Escolher indicação para alterar</option>
+          
               <option key={medico} value={medico} color='red'>
                 {medico.nome}
-              </option>
+              </option> 
+         
         </Select>
-        
+       ))}   
       </ContainerInputs>
-       ))}
+     
       <ContainerInputs>
         <Labels>Nome:</Labels>
         <Input
