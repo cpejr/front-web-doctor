@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from "react-toastify";
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import {
@@ -108,8 +109,24 @@ function ModalAgendamento(props) {
     pegandoDados();
   }
 
-  async function excluirConsulta(id) {
+  async function excluirConsulta(id, /*consulta*/) {
     await managerService.DeletarConsulta(id);
+    /*const Token = 
+    await managerService.TokenById(consulta.id_usuario);
+    toast.warn("teste 1");
+    const Message = {
+    to: Token.token_dispositivo.replace("expo/", ''),
+    sound: 'default',
+    title: 'Doctor App', 
+    body: 'Consulta desmarcada',
+    data: {data:''},
+    
+  };
+  await fetch('https://exp.host/--/api/v2/push/send',{
+    method: 'POST',
+    body: JSON.stringify(Message),
+    }
+  );*/
     pegandoDados();
   }
 

@@ -46,6 +46,7 @@ function ModalAgendamentoEspecifico(props) {
   const [hora, setHora] = useState("");
   const [erro, setErro] = useState(false);
   const [hoje, setHoje] = useState("");
+  const [msg, setMsg] = useState("");
 
   const [consulta, setConsulta] = useState({
     data_hora: "",
@@ -146,6 +147,10 @@ function ModalAgendamentoEspecifico(props) {
     setHoje(ano + "-" + mes + "-" + dia);
   }
 
+  function setandoMsg() {
+    setMsg("Você tem uma consulta marcada!\nTipo: " + consulta.tipo + "\nData e Hora: " + consulta.data_hora + "\nDuração da consulta: " + consulta.duracao_em_minutos + " minutos.");
+  }
+
   function setandoDataMinima() {
     document.getElementById("data").setAttribute("min", hoje);
   }
@@ -171,6 +176,7 @@ function ModalAgendamentoEspecifico(props) {
     pegandoPacientes();
     setandoDiaAtual();
     pegandoConsultorios();
+    setandoMsg();
   }, []);
 
   useEffect(() => {
@@ -282,25 +288,22 @@ function ModalAgendamentoEspecifico(props) {
           setCarregandoCadastro(true);
           formatacaoDataHora();
           await managerService.CriandoConsulta(consulta);
-          toast.warn("teste1");
           const Token = 
             await managerService.TokenById(consulta.id_usuario);
-          toast.warn("teste2");
           toast.warn(typeof Token.token_dispositivo);
           const Message = {
             to: Token.token_dispositivo.replace("expo/", ''),
             sound: 'default',
-            title: 'teste',
-            body: 'teste',
-            data: {data: 'goes here'},
+            title: 'Doctor App', 
+            body: msg,
+            data: {data:''},
+            
           };
-          toast.warn("teste3");
           await fetch('https://exp.host/--/api/v2/push/send',{
             method: 'POST',
             body: JSON.stringify(Message),
             }
           );
-          toast.warn("teste4");
           setCarregandoCadastro(false);
           await sleep(1500);
           props.fechandoModal();
