@@ -52,6 +52,13 @@ function CarrosselEditarHome() {
 
   return (
     <CarrosselContainer>
+      <Esquerda
+        onClick={() => {
+          imgAtual > 0 && setImgAtual(imgAtual - 1);
+        }}
+      >
+        <LeftOutlined style={{ fontSize: 30 }} />
+      </Esquerda>
       {carregando ? (
         <CaixaCarregando>
           <Spin size="small" indicator={antIcon} />
@@ -61,13 +68,6 @@ function CarrosselEditarHome() {
           <InteriorCarrossel
             style={{ backgroundImage: `url(${imagens[imgAtual].img})` }}
           >
-            <Esquerda
-              onClick={() => {
-                imgAtual > 0 && setImgAtual(imgAtual - 1);
-              }}
-            >
-              <LeftOutlined style={{ fontSize: 30 }} />
-            </Esquerda>
             <Centro>
               <Button
                 backgroundColor="green"
@@ -86,16 +86,16 @@ function CarrosselEditarHome() {
                 Alterar Imagens
               </Button>
             </Centro>
-            <Direita
-              onClick={() => {
-                imgAtual < imagens.length - 1 && setImgAtual(imgAtual + 1);
-              }}
-            >
-              <RightOutlined style={{ fontSize: 30 }} />
-            </Direita>
           </InteriorCarrossel>
         </>
       )}
+      <Direita
+        onClick={() => {
+          imgAtual < imagens.length - 1 && setImgAtual(imgAtual + 1);
+        }}
+      >
+        <RightOutlined style={{ fontSize: 30 }} />
+      </Direita>
     </CarrosselContainer>
   );
 }

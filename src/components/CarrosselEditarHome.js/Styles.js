@@ -4,11 +4,12 @@ import { Cores } from "../../variaveis";
 export const CarrosselContainer = styled.div`
   width: 100%;
   height: 300px;
-  background-color: black;
+  display: flex;
+  flex-direction: row;
 `;
 
 export const InteriorCarrossel = styled.div`
-  width: 100%;
+  width: 80%;
   height: 100%;
   background-image: ${(props) => props.backgroundImage};
   background-position: center;
@@ -18,7 +19,7 @@ export const InteriorCarrossel = styled.div`
 `;
 
 export const Esquerda = styled.div`
-  flex: 5%;
+  width: 10%;
   height: 100%;
   display: grid;
   place-items: center;
@@ -26,8 +27,8 @@ export const Esquerda = styled.div`
 `;
 
 export const Centro = styled.div`
-  flex: 80%;
   height: 100%;
+  width: 100%;
   display: grid;
   place-items: center;
   text-align: justify;
@@ -57,7 +58,7 @@ export const BotaoGenerico = styled.button`
 `;
 
 export const Direita = styled.div`
-  flex: 5%;
+  width: 10%;
   height: 100%;
   display: grid;
   place-items: center;
