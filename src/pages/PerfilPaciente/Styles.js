@@ -474,12 +474,10 @@ export const TituloReceita = styled.div`
   display: flex;
   justify-content: ${(props) => props.justifyContent};
   width: 33%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  height: fit-content;
+  word-break: break-all;
 
   :hover {
-    overflow: visible;
     cursor: pointer;
   }
 
