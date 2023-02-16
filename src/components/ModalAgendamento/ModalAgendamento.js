@@ -109,24 +109,22 @@ function ModalAgendamento(props) {
     pegandoDados();
   }
 
-  async function excluirConsulta(id, /*consulta*/) {
+  async function excluirConsulta(id, consulta) {
     await managerService.DeletarConsulta(id);
-    /*const Token = 
-    await managerService.TokenById(consulta.id_usuario);
-    toast.warn("teste 1");
+    const Token = 
+    await managerService.TokenById(consulta);
     const Message = {
     to: Token.token_dispositivo.replace("expo/", ''),
     sound: 'default',
     title: 'Doctor App', 
-    body: 'Consulta desmarcada',
-    data: {data:''},
+    body: 'Sua consulta foi desmarcada!',
     
   };
   await fetch('https://exp.host/--/api/v2/push/send',{
     method: 'POST',
     body: JSON.stringify(Message),
     }
-  );*/
+  );
     pegandoDados();
   }
 
@@ -202,7 +200,7 @@ function ModalAgendamento(props) {
                           fontSizeMedia='0.8em'
                           fontSizeMedia950='1em'
                           heightMedia560='30px'
-                          onClick={() => excluirConsulta(value.id)}
+                          onClick={() => excluirConsulta(value.id, value.id_usuario)}
                         >
                           EXCLUIR
                         </Button>

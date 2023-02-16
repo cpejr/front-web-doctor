@@ -147,8 +147,8 @@ function ModalAgendamentoEspecifico(props) {
     setHoje(ano + "-" + mes + "-" + dia);
   }
 
-  function setandoMsg() {
-    setMsg("Você tem uma consulta marcada!\nTipo: " + consulta.tipo + "\nData e Hora: " + consulta.data_hora + "\nDuração da consulta: " + consulta.duracao_em_minutos + " minutos.");
+  function setandoMsg(tipo, data_hora, duracao_em_minutos) {
+    setMsg("Você tem uma consulta marcada!\nTipo: " + tipo + "\nData e Hora: "+ data_hora.slice(8, 10) + "/" + data_hora.slice(5, 7) + "/" + data_hora.slice(0, 4) + " às " + data_hora.slice(11, 16)+ "\nDuração da consulta: " + duracao_em_minutos + " minutos.");
   }
 
   function setandoDataMinima() {
@@ -176,13 +176,16 @@ function ModalAgendamentoEspecifico(props) {
     pegandoPacientes();
     setandoDiaAtual();
     pegandoConsultorios();
-    setandoMsg();
+    
   }, []);
 
   useEffect(() => {
     setandoNomeConsultorioPorId();
   },);
 
+  useEffect(()=>{
+    setandoMsg(consulta.tipo, formatacaoDataHora(consulta.data_hora), consulta.duracao_em_minutos);
+  },[consulta]);
 
   useEffect(() => {
     verificandoIdUsuario();
@@ -266,6 +269,7 @@ function ModalAgendamentoEspecifico(props) {
     try {
       const dataHora = `${dataConsulta} ${hora}:00`;
       consulta.data_hora = dataHora;
+      return dataHora;
     } catch {
       alert("DataHora inválida.");
     }
@@ -273,6 +277,7 @@ function ModalAgendamentoEspecifico(props) {
 
   async function requisicaoCriarConsulta() {
     setandoCamposNulos();   
+  
     if (
       consulta.duracao_em_minutos === "" ||
       dataConsulta === "" ||
@@ -290,15 +295,14 @@ function ModalAgendamentoEspecifico(props) {
           await managerService.CriandoConsulta(consulta);
           const Token = 
             await managerService.TokenById(consulta.id_usuario);
-          toast.warn(typeof Token.token_dispositivo);
           const Message = {
             to: Token.token_dispositivo.replace("expo/", ''),
             sound: 'default',
             title: 'Doctor App', 
             body: msg,
-            data: {data:''},
             
           };
+          toast.success('Notificação encaminhada para o paciente.');
           await fetch('https://exp.host/--/api/v2/push/send',{
             method: 'POST',
             body: JSON.stringify(Message),
@@ -556,7 +560,7 @@ function ModalAgendamentoEspecifico(props) {
               )}
             </CaixaSelect>
           
-          <Checkbox>
+          <Checkbox  >         
             <TextoCheckbox>Notificar paciente</TextoCheckbox>
           </Checkbox>
 
@@ -570,7 +574,8 @@ function ModalAgendamentoEspecifico(props) {
             fontWeight="bold"
             fontSizeMedia="0.9em"
             fontSizeMedia950="1.1em"
-            onClick={() => requisicaoCriarConsulta()}
+            onClick={() => requisicaoCriarConsulta(consulta.tipo, formatacaoDataHora(consulta.data_hora), consulta.duracao_em_minutos)}
+            
           >
             {carregandoCadastro ? (
               <Spin indicator={antIcon} />
