@@ -46,6 +46,8 @@ function ModalExcluirIndicacao(props) {
       {medicos.map((medico) => (  
         <Select
         onClick={() => armazenarMedico(medico)}
+        width="100%"
+        backgroundColor={Cores.cinza[7]} 
         >
           <option value="" disabled selected>
             Médico

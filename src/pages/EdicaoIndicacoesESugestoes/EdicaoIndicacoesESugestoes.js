@@ -47,7 +47,7 @@ const examesDisponiveis = [
 
 function EdicaoIndicacoesESugestoes(props) {
   const [exameSelecionado, setExameSelecionado] = useState("");
-  const [dadosIndicacao, setDadosIndicacao] = useState({});
+  const [dadosIndicacao, setDadosIndicacao] = useState([{}]);
   const [carregando, setCarregando] = useState();
   const [modalAdicionarIndicacao, setModalAdicionarIndicacao] = useState(false);
   const [modalExcluirIndicacao, setModalExcluirIndicacao] = useState(false);
@@ -55,7 +55,7 @@ function EdicaoIndicacoesESugestoes(props) {
   const [modalIndicacao, setModalIndicacao] = useState(false);
   const [Indicados, setIndicados] = useState();
   const [indicacoesEspecificas, setIndicacoesEspecificas] = useState();
-  const [medicosIndicados, setMedicosIndicados] = useState();
+  const [medicosIndicados, setMedicosIndicados] = useState([{}]);
   const [idIndicado, setIdIndicado] = useState();
   const history = useHistory();
 
@@ -74,12 +74,12 @@ function EdicaoIndicacoesESugestoes(props) {
     }
     setCarregando(true);
     //await sleep(1500); // Simular requisição ao back
-    let Texto = {};
-    let Titulo = {};
+    let Texto;
+    let Titulo;
     
     const Indicacoes = await managerService.GetIndicacaoEspecifica();
     setIndicacoesEspecificas(Indicacoes);
-    const IndicacaoEspecifica = indicacoesEspecificas.map((Indicacao) => {
+    const IndicacaoEspecifica = indicacoesEspecificas.forEach((Indicacao) => {
       if(Indicacao.titulo === exame){
         Texto = Indicacao.texto;
         Titulo = Indicacao.titulo;
@@ -92,12 +92,13 @@ function EdicaoIndicacoesESugestoes(props) {
       }
   }   
     )
-    let nomemedico = {};
-    let telefone = {};
-    let local = {};
+    let nomemedico;
+    let telefone;
+    let local;
+    if(IndicacaoEspecifica !== ""){
     const medicos = await managerService.GetMedicosIndicadosPorID(IDindicado);
     setMedicosIndicados(medicos);
-    const MedicoIndicado = medicosIndicados.map((medico) => {
+    const MedicoIndicado = medicosIndicados.forEach((medico) => {
       telefone = medico.telefone;
       nomemedico = medico.nome;
       local = medico.local_atendimento;
@@ -108,13 +109,22 @@ function EdicaoIndicacoesESugestoes(props) {
     setIndicados(true);
     const dadosDoBackend = {
       titulo: Titulo,
-      descricao: IndicacaoEspecifica,
-      nomemedico: MedicoIndicado,
+      nomemedico: nomemedico,
       localmedico: local,
       telefonemedico: telefone,
     };
     setDadosIndicacao(dadosDoBackend);
+    console.log(dadosIndicacao);
     setIdIndicado(IDindicado);
+  }else{
+    const dadosDoBackend = {
+      titulo: Titulo,
+      nomemedico: "",
+      localmedico: "",
+      telefonemedico: "",
+    };
+    setDadosIndicacao(dadosDoBackend);
+  }
     setCarregando(false);
   }
 
@@ -226,18 +236,13 @@ function EdicaoIndicacoesESugestoes(props) {
             ) : (
               <>
                 <TituloInfo>{dadosIndicacao.titulo}</TituloInfo>
+                {medicosIndicados.map((medicos) => (
                 <DescricaoInformacoes>
-                  {dadosIndicacao.descricao}
+                {medicos.nome}
+                {medicos.local_atendimento}
+                {medicos.telefone}
                 </DescricaoInformacoes>
-                <DescricaoInformacoes>
-                Nome:{dadosIndicacao.nomemedico}
-                </DescricaoInformacoes>
-                <DescricaoInformacoes>
-                Local de Atendimento:{dadosIndicacao.localmedico}
-                </DescricaoInformacoes>
-                <DescricaoInformacoes>
-                Telefone:{dadosIndicacao.telefonemedico}
-                </DescricaoInformacoes>
+             ))}
               </>
             )}
           </Informacoes>

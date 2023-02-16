@@ -17,7 +17,7 @@ function ModalAlterarIndicacao(props) {
   const [camposVazios, setCamposVazios] = useState({});
   const [carregandoCriacao, setCarregandoCriacao] = useState(false);
   const [medicoEspecifico, setMedicoEspecifico] = useState([{}]);
-
+  let ID = {};
   const [estado, setEstado] = useState({
     nome: "",
     telefone: "",
@@ -70,10 +70,9 @@ function ModalAlterarIndicacao(props) {
    setMedicoEspecifico(medicosespecificos);
   }
   useEffect(() => {buscarMedicosporId()}, [medicoEspecifico])
-  async function preenchendoPlaceholder(medico) {
-    setSelecionarMedico(medico);
+  async function preenchendoPlaceholder(ID) {
+    setSelecionarMedico(ID);
   }
- 
 
  async function alterar(e) {
   e.preventDefault();
@@ -107,23 +106,27 @@ function ModalAlterarIndicacao(props) {
       <Titulo>Alterar Indicação:</Titulo>
       
       <ContainerInputs>
+        
         <Labels>Indicação:</Labels>
-       {medicoEspecifico.map((medico) => ( 
         <Select 
-        id="indicar"
+        id={ID}
         backgroundColor={Cores.cinza[7]} 
-        onClick={() => preenchendoPlaceholder(medico)}
-        width="100%">
-          <option>Escolher indicação para alterar</option>
-          
-              <option key={medico} value={medico} color='red'>
+        width="100%"
+        onClick={() => preenchendoPlaceholder(ID)}
+        >
+          <option value="" >Escolher indicação para alterar</option>
+          {medicoEspecifico.map((medico) => (
+              <option
+              key={medico}
+              value={medico} 
+              color='red'>
                 {medico.nome}
-              </option> 
-         
+              </option>
+              ))}   
         </Select>
-       ))}   
+       
       </ContainerInputs>
-     
+      
       <ContainerInputs>
         <Labels>Nome:</Labels>
         <Input
