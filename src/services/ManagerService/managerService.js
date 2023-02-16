@@ -949,3 +949,16 @@ export const UpdateDadosHomes = async (
 
   return false;
 };
+
+export const UpdateFotosCarrossel = async (id, file) => {
+  await requesterService
+    .UpdateFotosCarrossel(id, file)
+    .then(() => {
+      toast.success('Imagem atualizada com sucesso');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return;
+};

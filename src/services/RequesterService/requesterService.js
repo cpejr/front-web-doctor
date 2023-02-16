@@ -188,3 +188,8 @@ export const updateDadosHomes = (id, titulo_um, texto_um, titulo_dois, texto_doi
 
 export const requisicaoCarrossel = () =>
   api.get(`/imagem_carrossels/`);
+
+  export const UpdateFotosCarrossel = (id, base64) =>
+  api.post(`/imagem_carrossels/${id}`, {
+    file: base64
+  });

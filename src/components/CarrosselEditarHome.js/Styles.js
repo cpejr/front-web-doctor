@@ -6,6 +6,7 @@ export const CarrosselContainer = styled.div`
   height: 300px;
   display: flex;
   flex-direction: row;
+  
 `;
 
 export const InteriorCarrossel = styled.div`
@@ -17,6 +18,12 @@ export const InteriorCarrossel = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   display: flex;
+  
+  @media (max-width: 460px) {
+    width: 60%;
+  }
+  
+ 
 `;
 
 export const Esquerda = styled.div`
@@ -25,6 +32,10 @@ export const Esquerda = styled.div`
   display: grid;
   place-items: center;
   cursor: pointer;
+  @media (max-width: 460px) {
+    width: 20%;
+  }
+ 
 `;
 
 export const Centro = styled.div`
@@ -32,8 +43,9 @@ export const Centro = styled.div`
   width: 100%;
   display: grid;
   place-items: center;
-  text-align: justify;
+  text-align: center;
   text-align-last: center;
+  
 `;
 
 export const BotaoGenerico = styled.button`
@@ -64,6 +76,9 @@ export const Direita = styled.div`
   display: grid;
   place-items: center;
   cursor: pointer;
+  @media (max-width: 460px) {
+    width: 20%;
+  }
 `;
 
 export const CaixaCarregando = styled.div`
@@ -72,6 +87,7 @@ export const CaixaCarregando = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
+
 `;
 
 export const CaixaUpload = styled.div`
@@ -87,6 +103,7 @@ export const CaixaUpload = styled.div`
   border-color:${Cores.azul};
   color:${Cores.preto};
   font-size: 20px ;
+  
 
   @media (max-width: 950px) {
     font-size: 0.9em;

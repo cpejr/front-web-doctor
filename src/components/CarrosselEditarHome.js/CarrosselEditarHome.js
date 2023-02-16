@@ -26,6 +26,7 @@ function CarrosselEditarHome(props) {
   const [imgCarrossel, setImgCarrossel] = useState("");
   const [carregando, setCarregando] = useState(false);
   const history = useHistory();
+  const [id, setId] = useState("");
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 50, color: Cores.branco }} spin />
@@ -35,8 +36,9 @@ function CarrosselEditarHome(props) {
     const reader = new FileReader();
     reader.addEventListener('load', () => callback(reader.result));
     reader.readAsDataURL(img);
+    
   };
-
+  
   const antesUpload = (file) => {
     const ehImagem = file.type === 'image/jpeg' || file.type === 'image/png' || file.type === 'image/avif';
 
@@ -65,16 +67,23 @@ function CarrosselEditarHome(props) {
     });
   }
 
+  async function atualizandoImg() {
+    console.log('teste');
+      await managerService.UpdateFotosCarrossel(imgCarrossel.id);
+  }
+
   async function setandoImagemCarrossel() {
     setCarregando(true);
-
     const res = await managerService.GetImagensCarrossel();
-    const requests = res.map(({ imagem }) =>
+    setId(res.id);
+    
+    const requests = res.map(({ imagem}) =>
       managerService.GetArquivoPorChave(imagem)
     );
+    
+    
     const responses = await Promise.all(requests);
     setImgCarrossel(responses);
-
     setCarregando(false);
   }
 
@@ -96,7 +105,7 @@ function CarrosselEditarHome(props) {
           imgAtual > 0 && setImgAtual(imgAtual - 1);
         }}
       >
-        <LeftOutlined style={{ fontSize: 30 }} />
+        <LeftOutlined style={{ fontSize: 25 }} />
       </Esquerda>
       {carregando ? (
         <CaixaCarregando>
@@ -116,7 +125,9 @@ function CarrosselEditarHome(props) {
                 >
                   Alterar Imagens
                 </Upload>
+        
               </CaixaUpload>
+              <Button onClick={atualizandoImg}> teste</Button>
             </Centro>
           </InteriorCarrossel>
         </>
@@ -126,7 +137,7 @@ function CarrosselEditarHome(props) {
           imgAtual < imagens.length - 1 && setImgAtual(imgAtual + 1);
         }}
       >
-        <RightOutlined style={{ fontSize: 30 }} />
+        <RightOutlined style={{ fontSize: 25 }} />
       </Direita>
     </CarrosselContainer>
   );
