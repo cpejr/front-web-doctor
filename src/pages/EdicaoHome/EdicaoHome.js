@@ -31,6 +31,8 @@ function EdicaoHome() {
   const [homes, setHomes] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [houveAlteracao, setHouveAlteracao] = useState(false);
+  const [alterouCarrossel, setAlterouCarrossel] = useState(false);
+  const [toggle, setToggle] = useState(false);
   const history = useHistory();
 
   const antIcon = (
@@ -57,7 +59,8 @@ function EdicaoHome() {
   async function atualizandoDados() {
     setCarregando(true);
 
-    if (houveAlteracao === true) {
+    setToggle(!toggle)
+    if (houveAlteracao === true || alterouCarrossel === true) {
       await managerService.UpdateDadosHomes(
         homes.id,
         homes.titulo_um,
@@ -193,7 +196,10 @@ function EdicaoHome() {
             <TextoSaibaMais color={Cores.branco}>Saiba Mais</TextoSaibaMais>
           </BoxSaibaMais>
           <BoxAlterarImagem>
-            <CarrosselEditarHome />
+            <CarrosselEditarHome
+              toggle={toggle}
+              setAlterouCarrossel={setAlterouCarrossel}
+            />
           </BoxAlterarImagem>
         </MetadeEsquerda>
         <MetadeDireita>

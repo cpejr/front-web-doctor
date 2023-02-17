@@ -950,12 +950,9 @@ export const UpdateDadosHomes = async (
   return false;
 };
 
-export const UpdateFotosCarrossel = async (id, file) => {
+export const updateImagemCarrossel = async (id, file) => {
   await requesterService
-    .UpdateFotosCarrossel(id, file)
-    .then(() => {
-      toast.success('Imagem atualizada com sucesso');
-    })
+    .updateImagemCarrossel(id, file)
     .catch((error) => {
       requisicaoErro(error);
       return;

@@ -134,12 +134,10 @@ export const editarCamposFormulario = (id, campos) =>
 export const requisicaoTodosFormulariosPaciente = () =>
   api.get('/formularios_pacientes');
 
-
 export const updateFotoDePerfil = (id, base64) =>
   api.post(`/usuariosimagem/${id}`, {
     file: base64
   });
-
 
 export const deleteFotoDePerfil = (id, base64) =>
   api.put(`/usuariosdeletarimagem/${id}`, {
@@ -189,7 +187,7 @@ export const updateDadosHomes = (id, titulo_um, texto_um, titulo_dois, texto_doi
 export const requisicaoCarrossel = () =>
   api.get(`/imagem_carrossels/`);
 
-  export const UpdateFotosCarrossel = (id, base64) =>
+export const updateImagemCarrossel = (id, base64) =>
   api.post(`/imagem_carrossels/${id}`, {
     file: base64
   });
