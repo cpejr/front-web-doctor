@@ -245,7 +245,7 @@ function UploadReceita() {
             <Button
               height="47px"
               width="100%"
-              backgroundColor={Cores.azulClaro}
+              backgroundColor={Cores.branco}
               borderColor={Cores.cinza[3]}
               color={Cores.cinza[2]}
               fontSize="1em"
@@ -258,7 +258,7 @@ function UploadReceita() {
             <Button
               height="47px"
               width="100%"
-              backgroundColor={Cores.azul}
+              backgroundColor={Cores.lilas[1]}
               borderColor={Cores.azul}
               color={Cores.branco}
               fontSize="1em"
