@@ -15,16 +15,25 @@ import {
   SubtituloCentral,
   TextoSaibaMais,
   ContainerBotoes,
+  CarrosselContainer,
+  Centro,
+  Direita,
+  Esquerda,
+  InteriorCarrossel,
+  CaixaCarregando,
+  CaixaUpload,
 } from "./Styles";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 import Button from "../../styles/Button";
 import TextArea from "../../styles/TextArea";
 import Input from "../../styles/Input";
-import CarrosselEditarHome from "../../components/CarrosselEditarHome.js/CarrosselEditarHome";
-import { sleep } from "../../utils/sleep";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
+import {
+  LeftOutlined,
+  RightOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
+import { Spin, Upload } from "antd";
 import { toast } from "react-toastify";
 
 function EdicaoHome() {
@@ -32,7 +41,12 @@ function EdicaoHome() {
   const [carregando, setCarregando] = useState(true);
   const [houveAlteracao, setHouveAlteracao] = useState(false);
   const [alterouCarrossel, setAlterouCarrossel] = useState(false);
-  const [toggle, setToggle] = useState(false);
+
+  const [imgAtual, setImgAtual] = useState(0);
+  const [img1, setImg1] = useState("");
+  const [img2, setImg2] = useState("");
+  const [img3, setImg3] = useState("");
+  const [carregandoImg, setCarregandoImg] = useState(false);
   const history = useHistory();
 
   const antIcon = (
@@ -58,8 +72,10 @@ function EdicaoHome() {
 
   async function atualizandoDados() {
     setCarregando(true);
+    await managerService.updateImagemCarrossel(100, img1);
+    await managerService.updateImagemCarrossel(101, img2);
+    await managerService.updateImagemCarrossel(102, img3);
 
-    setToggle(!toggle)
     if (houveAlteracao === true || alterouCarrossel === true) {
       await managerService.UpdateDadosHomes(
         homes.id,
@@ -85,6 +101,88 @@ function EdicaoHome() {
     history.push("/web/edicaohome");
     document.location.reload(true);
   }
+
+  const getBase64 = (img, callback) => {
+    const reader = new FileReader();
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(img);
+  };
+
+  const antesUpload = (file) => {
+    const ehImagem =
+      file.type === "image/jpeg" ||
+      file.type === "image/png" ||
+      file.type === "image/avif";
+
+    if (!ehImagem) {
+      toast.error("Insira uma imagem!");
+      setCarregandoImg(true);
+    }
+
+    const tamanhoPermitido = file.size / 1024 / 1024 < 2;
+
+    if (!tamanhoPermitido) {
+      toast.error("Imagem deve ser menor que 2MB!");
+      setCarregandoImg(true);
+    }
+
+    return ehImagem && tamanhoPermitido;
+  };
+
+  async function preenchendoImagem(info) {
+    setCarregandoImg(true);
+    if (imgAtual === 0) {
+      getBase64(info.file.originFileObj, (url) => {
+        setImg1(url);
+        setCarregandoImg(false);
+      });
+    }
+
+    if (imgAtual === 1) {
+      getBase64(info.file.originFileObj, (url) => {
+        setImg2(url);
+        setCarregandoImg(false);
+      });
+    }
+
+    if (imgAtual === 2) {
+      getBase64(info.file.originFileObj, (url) => {
+        setImg3(url);
+        setCarregandoImg(false);
+      });
+    }
+  }
+
+  async function atualizandoImg() {
+    for (let i = 100; i < imagens.length; i++) {
+      const id = i;
+      const url = imagens[i].img;
+      console.log(img1);
+      console.log("oi", imagens[i].img);
+      await managerService.updateImagemCarrossel(id, url);
+    }
+  }
+
+  async function setandoImagemCarrossel() {
+    setCarregandoImg(true);
+    const res = await managerService.GetImagensCarrossel();
+
+    const requests = res.map(({ imagem }) =>
+      managerService.GetArquivoPorChave(imagem)
+    );
+
+    const responses = await Promise.all(requests);
+    setImg1(responses[0]);
+    setImg2(responses[1]);
+    setImg3(responses[2]);
+    setCarregandoImg(false);
+  }
+
+  useEffect(() => {
+    setandoImagemCarrossel();
+  }, []);
+
+  var imagens = [{ img: img1 }, { img: img2 }, { img: img3 }];
 
   return (
     <Corpo>
@@ -196,10 +294,45 @@ function EdicaoHome() {
             <TextoSaibaMais color={Cores.branco}>Saiba Mais</TextoSaibaMais>
           </BoxSaibaMais>
           <BoxAlterarImagem>
-            <CarrosselEditarHome
-              toggle={toggle}
-              setAlterouCarrossel={setAlterouCarrossel}
-            />
+            <CarrosselContainer>
+              <Esquerda
+                onClick={() => {
+                  imgAtual > 0 && setImgAtual(imgAtual - 1);
+                }}
+              >
+                <LeftOutlined style={{ fontSize: 25 }} />
+              </Esquerda>
+              {carregandoImg ? (
+                <CaixaCarregando>
+                  <Spin size="small" indicator={antIcon} />
+                </CaixaCarregando>
+              ) : (
+                <>
+                  <InteriorCarrossel
+                    style={{ backgroundImage: `url(${imagens[imgAtual].img})` }}
+                  >
+                    <Centro>
+                      <CaixaUpload>
+                        <Upload
+                          showUploadList={false}
+                          beforeUpload={antesUpload}
+                          onChange={preenchendoImagem}
+                        >
+                          Alterar Imagens
+                        </Upload>
+                      </CaixaUpload>
+                    </Centro>
+                  </InteriorCarrossel>
+                </>
+              )}
+              <Direita
+                onClick={() => {
+                  imgAtual < imagens.length - 1 && setImgAtual(imgAtual + 1);
+                }}
+              >
+                <RightOutlined style={{ fontSize: 25 }} />
+              </Direita>
+            </CarrosselContainer>
           </BoxAlterarImagem>
         </MetadeEsquerda>
         <MetadeDireita>

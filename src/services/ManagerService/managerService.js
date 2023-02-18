@@ -951,11 +951,12 @@ export const UpdateDadosHomes = async (
 };
 
 export const updateImagemCarrossel = async (id, file) => {
-  await requesterService
-    .updateImagemCarrossel(id, file)
-    .catch((error) => {
+  try{
+  const res = await requesterService
+    .updateImagemCarrossel(id, file);
+    return res;
+  } catch (error) {
       requisicaoErro(error);
       return;
-    });
-  return;
+    };
 };

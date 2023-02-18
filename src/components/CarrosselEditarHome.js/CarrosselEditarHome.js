@@ -23,7 +23,7 @@ import { Spin, Upload } from 'antd';
 function CarrosselEditarHome(props) {
     const [imgAtual, setImgAtual] = useState(0);
     const [imgCarrossel, setImgCarrossel] = useState("");
-    const [carregando, setCarregando] = useState(false);
+    const [carregandoImg, setCarregandoImg] = useState(false);
     const history = useHistory();
 
     const antIcon = (
@@ -42,25 +42,25 @@ function CarrosselEditarHome(props) {
 
         if (!ehImagem) {
             toast.error('Insira uma imagem!');
-            setCarregando(true);
+            setCarregandoImg(true);
         }
 
         const tamanhoPermitido = file.size / 1024 / 1024 < 2;
 
         if (!tamanhoPermitido) {
             toast.error('Imagem deve ser menor que 2MB!');
-            setCarregando(true);
+            setCarregandoImg(true);
         }
 
         return ehImagem && tamanhoPermitido;
     };
 
     async function preenchendoImagem(info) {
-        setCarregando(true);
+        setCarregandoImg(true);
         getBase64(info.file.originFileObj, (url) => {
             const imagensAtualizadas = [...imgCarrossel];
             imagensAtualizadas[imgAtual] = url;
-            setCarregando(false);
+            setCarregandoImg(false);
             setImgCarrossel(imagensAtualizadas);
         });
     }
@@ -76,7 +76,7 @@ function CarrosselEditarHome(props) {
     }
 
     async function setandoImagemCarrossel() {
-        setCarregando(true);
+        setCarregandoImg(true);
         const res = await managerService.GetImagensCarrossel();
 
         const requests = res.map(({ imagem }) =>
@@ -85,7 +85,7 @@ function CarrosselEditarHome(props) {
 
         const responses = await Promise.all(requests);
         setImgCarrossel(responses);
-        setCarregando(false);
+        setCarregandoImg(false);
     }
 
     useEffect(() => {
@@ -113,7 +113,7 @@ function CarrosselEditarHome(props) {
             >
                 <LeftOutlined style={{ fontSize: 25 }} />
             </Esquerda>
-            {carregando ? (
+            {carregandoImg ? (
                 <CaixaCarregando>
                     <Spin size="small" indicator={antIcon} />
                 </CaixaCarregando>
