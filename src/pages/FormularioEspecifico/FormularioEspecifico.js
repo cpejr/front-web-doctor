@@ -41,6 +41,8 @@ import fotoPerfil from "./../../assets/fotoPerfil.png";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 import { sleep } from "../../utils/sleep";
+import { saveAs } from 'file-saver';
+import { Document, Packer, Paragraph } from "docx";
 
 function FormularioEspecifico(props) {
   const { Search } = Input;
@@ -208,6 +210,69 @@ function FormularioEspecifico(props) {
     setStatusSelect(value);
   }
 
+  async function salvaWord() {
+    const formularioPacienteEspecifico = {
+      "id": "4c57cc30-33c1-4b48-9302-735dcb55e127",
+      "respostas": {
+        "newInput1": "não"
+      },
+      "midia_url": null,
+      "word": null,
+      "status": true,
+      "notificacao_ativa": false,
+      "id_usuario": "c40b324c-481a-4ede-93e6-9a011ec12287",
+      "id_formulario": "062956f0-870b-4aa4-a6a4-6b68fcd838a7",
+      "data_criacao": "2022-11-11T12:02:39.219Z",
+      "data_atualizacao": "2022-11-11T12:07:17.015Z",
+      "email": "adrianuspaciente@gmail.com",
+      "nome": "Adrianus Paciente",
+      "avatar_url": null,
+      "titulo": "form que sera respondido",
+      "urgencia": 2,
+      "tipo": "oi",
+      "perguntas": {
+        "type": "object",
+        "properties": {
+          "newInput1": {
+            "title": "devo responder o formulario?",
+            "type": "string"
+          }
+        },
+        "dependencies": {},
+        "required": []
+      }
+    }
+
+    const perguntas = Object.values(formularioPacienteEspecifico.perguntas.properties);
+    const respostas = Object.values(formularioPacienteEspecifico.respostas);
+
+    let arrayParagrafos = [];
+
+    perguntas.forEach((pergunta, index) => {
+      const conteudoPergunta = pergunta.title
+      const conteudoResposta = respostas[index];
+      arrayParagrafos.push(
+        new Paragraph(`Pergunta: ${conteudoPergunta}`)
+      )
+      arrayParagrafos.push(
+        new Paragraph(`Resposta: ${conteudoResposta}`)
+      )
+    });
+
+    const doc = new Document({
+      sections: [
+        {
+          properties: {},
+          children: arrayParagrafos
+        },
+      ],
+    });
+
+    await Packer.toBlob(doc).then(blob => {
+      saveAs(blob, 'formulario.docx')
+    })
+  }
+
   return (
     <div>
       <ContainerFormularioEspecifico>
@@ -305,7 +370,7 @@ function FormularioEspecifico(props) {
                     ) : (
                       <div>
                         {value.avatar_url === null ||
-                        value.avatar_url === "" ? (
+                          value.avatar_url === "" ? (
                           <FotoPerfil>
                             {carregandoFoto ? (
                               <div>
@@ -340,7 +405,7 @@ function FormularioEspecifico(props) {
                     )}
                   </BarraEsquerda>
                   <BarraCentro>
-                    {tipoUsuarioLogado === "MASTER" || (tipoUsuarioLogado === "SECRETARIA(O)" && formularioEspecifico.visualizacao_secretaria === true)? (
+                    {tipoUsuarioLogado === "MASTER" || (tipoUsuarioLogado === "SECRETARIA(O)" && formularioEspecifico.visualizacao_secretaria === true) ? (
                       <NomePacienteMaster
                         onClick={() =>
                           abrindoModalFormulario(
@@ -359,7 +424,24 @@ function FormularioEspecifico(props) {
                     )}
                   </BarraCentro>
                   {value.status !== false ? (
-                    <></>
+                    <BarraDireita>
+                      <Button
+                        backgroundColor={Cores.cinza[7]}
+                        width="70%"
+                        boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+                        borderColor={Cores.azulEscuro}
+                        borderRadius="5px"
+                        height="40%"
+                        color={Cores.preto}
+                        fontSize="0.8em"
+                        fontSizeMedia950="0.75em"
+                        fontWeight="bold"
+                        heightMedia560="28px"
+                        onClick={() => salvaWord()}
+                      >
+                        BAIXAR DOCX
+                      </Button>
+                    </BarraDireita>
                   ) : (
                     <BarraDireita>
                       <TextoBarraPaciente
@@ -393,16 +475,16 @@ function FormularioEspecifico(props) {
             <ColunaDireita>
               {idFormularioEspecifico !== idFormularioUrgencia ? (
                 <BarraRespostas>
-                {" "}
-                {formularioRespostaPendente.length === 1
-                  ? "Aguardando respostas de 1 formulário"
-                  : `Aguardando respostas de ${formularioRespostaPendente.length} formulários`}
-              </BarraRespostas>
+                  {" "}
+                  {formularioRespostaPendente.length === 1
+                    ? "Aguardando respostas de 1 formulário"
+                    : `Aguardando respostas de ${formularioRespostaPendente.length} formulários`}
+                </BarraRespostas>
               ) : (
                 <></>
               )}
 
-              
+
               <BarraRespostas>
                 {" "}
                 {formularioResposta.length < 2 ? (
@@ -447,7 +529,7 @@ function FormularioEspecifico(props) {
                 marginTop="0%"
                 marginLeft="0%"
                 fontSizeMedia950="0.9em"
-                onClick={() => {}}
+                onClick={() => salvaWord()}
               >
                 Gerar documento Word
               </Button>

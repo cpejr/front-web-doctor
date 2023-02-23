@@ -55,6 +55,8 @@ import ModalFormulario from "../../components/ModalFormulario";
 import { redirecionamento, sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 import { cep } from "../../utils/masks";
+import { saveAs } from 'file-saver';
+import { Document, Packer, Paragraph } from "docx";
 
 function PerfilPaciente(props) {
   const [modalAgendamento, setModalAgendamento] = useState(false);
@@ -247,7 +249,69 @@ function PerfilPaciente(props) {
     }
   }
 
-  
+  async function salvaWord() {
+    const formularioPacienteEspecifico = {
+      "id": "4c57cc30-33c1-4b48-9302-735dcb55e127",
+      "respostas": {
+        "newInput1": "não"
+      },
+      "midia_url": null,
+      "word": null,
+      "status": true,
+      "notificacao_ativa": false,
+      "id_usuario": "c40b324c-481a-4ede-93e6-9a011ec12287",
+      "id_formulario": "062956f0-870b-4aa4-a6a4-6b68fcd838a7",
+      "data_criacao": "2022-11-11T12:02:39.219Z",
+      "data_atualizacao": "2022-11-11T12:07:17.015Z",
+      "email": "adrianuspaciente@gmail.com",
+      "nome": "Adrianus Paciente",
+      "avatar_url": null,
+      "titulo": "form que sera respondido",
+      "urgencia": 2,
+      "tipo": "oi",
+      "perguntas": {
+        "type": "object",
+        "properties": {
+          "newInput1": {
+            "title": "devo responder o formulario?",
+            "type": "string"
+          }
+        },
+        "dependencies": {},
+        "required": []
+      }
+    }
+
+    const perguntas = Object.values(formularioPacienteEspecifico.perguntas.properties);
+    const respostas = Object.values(formularioPacienteEspecifico.respostas);
+
+    let arrayParagrafos = [];
+
+    perguntas.forEach((pergunta, index) => {
+      const conteudoPergunta = pergunta.title
+      const conteudoResposta = respostas[index];
+      arrayParagrafos.push(
+        new Paragraph(`Pergunta: ${conteudoPergunta}`)
+      )
+      arrayParagrafos.push(
+        new Paragraph(`Resposta: ${conteudoResposta}`)
+      )
+    });
+
+    const doc = new Document({
+      sections: [
+        {
+          properties: {},
+          children: arrayParagrafos
+        },
+      ],
+    });
+
+    await Packer.toBlob(doc).then(blob => {
+      saveAs(blob, 'formulario.docx')
+    })
+  }
+
   return (
     <div>
       <ContainerPerfil>
@@ -435,69 +499,70 @@ function PerfilPaciente(props) {
                         value.id_formulario,
                         value.status
                       ) && (
-                        <Formulario>
-                          <DadosFormulario>
-                            {tipoUsuarioLogado === "MASTER" ||
-                            value.visualizacao_secretaria === true ? (
-                              <TituloFormulario
-                                cursor="pointer"
-                                textDecoration="underline"
-                                onClick={() =>
-                                  abrindoModalFormulario(
-                                    value.id,
-                                    value.perguntas,
-                                    value.titulo
-                                  )
-                                }
-                              >
-                                {value.titulo}
-                              </TituloFormulario>
-                            ) : (
-                              <TituloFormulario
-                                cursor="null"
-                                textDecoration="none"
-                              >
-                                {value.titulo}
-                              </TituloFormulario>
-                            )}
+                          <Formulario>
+                            <DadosFormulario>
+                              {tipoUsuarioLogado === "MASTER" ||
+                                value.visualizacao_secretaria === true ? (
+                                <TituloFormulario
+                                  cursor="pointer"
+                                  textDecoration="underline"
+                                  onClick={() =>
+                                    abrindoModalFormulario(
+                                      value.id,
+                                      value.perguntas,
+                                      value.titulo
+                                    )
+                                  }
+                                >
+                                  {value.titulo}
+                                </TituloFormulario>
+                              ) : (
+                                <TituloFormulario
+                                  cursor="null"
+                                  textDecoration="none"
+                                >
+                                  {value.titulo}
+                                </TituloFormulario>
+                              )}
 
-                            <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
-                            <UrgenciaFormulario>
-                              <>Urgência: </>
-                              {estrelaPreenchida(value.urgencia)}
-                              {estrelaNaoPreenchida(3 - value.urgencia)}
-                            </UrgenciaFormulario>
-                          </DadosFormulario>
-                          {value.status === true ? (
-                            <CaixaBaixarPdf>
-                            <Button
-                              backgroundColor="green"
-                              color={Cores.azulEscuro}
-                              fontWeight="bold"
-                              borderColor={Cores.azulEscuro}
-                              height="40px"
-                              width="25%"
-                            >
-                              BAIXAR DOCX
-                            </Button>
-                          </CaixaBaixarPdf>
-                          ) : (
-                            <RespostaPendente>
-                              <Resposta>Resposta Pendente</Resposta>
-                              <Button
-                                backgroundColor="green"
-                                color={Cores.azulEscuro}
-                                fontWeight="bold"
-                                borderColor={Cores.azulEscuro}
-                                height="40px"
-                                width="25%"
-                              >
-                                ENVIAR LEMBRETE
-                              </Button>
-                            </RespostaPendente>
-                          )}
-                        </Formulario>
-                      )}
+                              <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
+                              <UrgenciaFormulario>
+                                <>Urgência: </>
+                                {estrelaPreenchida(value.urgencia)}
+                                {estrelaNaoPreenchida(3 - value.urgencia)}
+                              </UrgenciaFormulario>
+                            </DadosFormulario>
+                            {value.status === true ? (
+                              <CaixaBaixarPdf>
+                                <Button
+                                  backgroundColor={Cores.lilas[2]}
+                                  color={Cores.azulEscuro}
+                                  fontWeight="bold"
+                                  borderColor={Cores.azulEscuro}
+                                  height="40px"
+                                  width="25%"
+                                  onClick={() => salvaWord()}
+                                >
+                                  BAIXAR DOCX
+                                </Button>
+                              </CaixaBaixarPdf>
+                            ) : (
+                              <RespostaPendente>
+                                <Resposta>Resposta Pendente</Resposta>
+                                <Button
+                                  backgroundColor="green"
+                                  color={Cores.azulEscuro}
+                                  fontWeight="bold"
+                                  borderColor={Cores.azulEscuro}
+                                  height="40px"
+                                  width="25%"
+                                >
+                                  ENVIAR LEMBRETE
+                                </Button>
+                              </RespostaPendente>
+                            )}
+                          </Formulario>
+                        )}
                     </>
                   ))}
                 </>
