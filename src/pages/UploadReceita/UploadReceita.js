@@ -40,10 +40,8 @@ const estadoIncial = {
   id_usuario: "",
   titulo: "",
   descricao: "",
-};
-/*const upload = {
-  erro: false,
-};*/
+};  
+
 function UploadReceita() {
   const [usuarios, setUsuarios] = useState([]);
   const [estado, setEstado] = useState(estadoIncial);
@@ -56,7 +54,7 @@ function UploadReceita() {
   const [nomeArquivo, setNomeArquivo] = useState(false);
   const [file, setFile] = useState();
   const history = useHistory();
-  const [arquivoEscolhido, setarquivoEscolhido] = useState(false);
+  const [arquivoEscolhido, setArquivoEscolhido] = useState(false);
 
   function preenchendoDados(e) {
     //camposVazios.upload = false;
@@ -128,10 +126,6 @@ function UploadReceita() {
 	  }
 	  return;
     }
-    /*if(camposVazios.upload !== false){
-      toast.warn("Preencha todos os campos");
-      return;
-    }*/
     setCarregandoCriacao(true);
     const id = estado.id_usuario;
     const string = file.replace("data:application/pdf;base64,", "");
@@ -163,8 +157,6 @@ function UploadReceita() {
   };
 
   async function handleChange(info) {
-    // Get this url from response in real world.
-    //camposVazios.upload = false;
     estado.descricao = false;
     getBase64(info.file.originFileObj, (url) => {
       setFile(url);
