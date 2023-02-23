@@ -122,7 +122,7 @@ function UploadReceita() {
     if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia) ) {
       toast.warn("Preencha todos os campos");
       if (nomeArquivo === false){
-		setarquivoEscolhido(true)
+		setArquivoEscolhido(true)
 	  }
 	  return;
     }
@@ -162,7 +162,7 @@ function UploadReceita() {
       setFile(url);
       setNomeArquivo(info.file.name);
     });
-	setarquivoEscolhido(false)
+	setArquivoEscolhido(false)
   }
 
   return (
