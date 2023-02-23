@@ -423,24 +423,27 @@ function FormularioEspecifico(props) {
                       </NomePacienteSecretaria>
                     )}
                   </BarraCentro>
-                  {value.status !== false ? (
+                  {value.status === true ? (
                     <BarraDireita>
-                      <Button
-                        backgroundColor={Cores.cinza[7]}
-                        width="70%"
-                        boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
-                        borderColor={Cores.azulEscuro}
-                        borderRadius="5px"
-                        height="40%"
-                        color={Cores.preto}
-                        fontSize="0.8em"
-                        fontSizeMedia950="0.75em"
-                        fontWeight="bold"
-                        heightMedia560="28px"
-                        onClick={() => salvaWord()}
-                      >
-                        BAIXAR DOCX
-                      </Button>
+                      <></>
+                      {tipoUsuarioLogado === "MASTER" &&
+                        <Button
+                          backgroundColor={Cores.cinza[7]}
+                          width="70%"
+                          boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+                          borderColor={Cores.azulEscuro}
+                          borderRadius="5px"
+                          height="40%"
+                          color={Cores.preto}
+                          fontSize="0.8em"
+                          fontSizeMedia950="0.75em"
+                          fontWeight="bold"
+                          heightMedia560="28px"
+                          onClick={() => salvaWord()}
+                        >
+                          BAIXAR DOCX
+                        </Button>
+                      }
                     </BarraDireita>
                   ) : (
                     <BarraDireita>

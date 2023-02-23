@@ -534,17 +534,20 @@ function PerfilPaciente(props) {
                             </DadosFormulario>
                             {value.status === true ? (
                               <CaixaBaixarPdf>
-                                <Button
-                                  backgroundColor={Cores.lilas[2]}
-                                  color={Cores.azulEscuro}
-                                  fontWeight="bold"
-                                  borderColor={Cores.azulEscuro}
-                                  height="40px"
-                                  width="25%"
-                                  onClick={() => salvaWord()}
-                                >
-                                  BAIXAR DOCX
-                                </Button>
+                                <></>
+                                {tipoUsuarioLogado === "MASTER" &&
+                                  <Button
+                                    backgroundColor={Cores.lilas[2]}
+                                    color={Cores.azulEscuro}
+                                    fontWeight="bold"
+                                    borderColor={Cores.azulEscuro}
+                                    height="40px"
+                                    width="25%"
+                                    onClick={() => salvaWord()}
+                                  >
+                                    BAIXAR DOCX
+                                  </Button>
+                                }
                               </CaixaBaixarPdf>
                             ) : (
                               <RespostaPendente>
