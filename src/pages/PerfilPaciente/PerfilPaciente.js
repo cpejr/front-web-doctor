@@ -41,6 +41,8 @@ import {
   TipoFormulario,
   UrgenciaFormulario,
   TextoUrgencia,
+  CaixaBaixarPdf,
+  BaixarPdf,
 } from "./Styles";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
@@ -467,7 +469,18 @@ function PerfilPaciente(props) {
                             </UrgenciaFormulario>
                           </DadosFormulario>
                           {value.status === true ? (
-                            <></>
+                            <CaixaBaixarPdf>
+                            <Button
+                              backgroundColor="green"
+                              color={Cores.azulEscuro}
+                              fontWeight="bold"
+                              borderColor={Cores.azulEscuro}
+                              height="40px"
+                              width="25%"
+                            >
+                              BAIXAR DOCX
+                            </Button>
+                          </CaixaBaixarPdf>
                           ) : (
                             <RespostaPendente>
                               <Resposta>Resposta Pendente</Resposta>
