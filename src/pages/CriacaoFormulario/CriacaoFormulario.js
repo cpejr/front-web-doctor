@@ -18,10 +18,11 @@ import {
 } from './Styles';
 import Input from '../../styles/Input';
 import { Cores } from '../../variaveis';
-import { Select, SelectContainer } from './SelectTeste';
+import Select from "../../styles/Select/Select";
 import Button from '../../styles/Button';
 import { sleep } from '../../utils/sleep';
 import * as managerService from '../../services/ManagerService/managerService';
+import { Checkbox } from 'antd';
 
 function CriacaoFormulario() {
   const [uiSchema, setUiSchema] = useState('');
@@ -30,7 +31,7 @@ function CriacaoFormulario() {
   const [camposVazios, setCamposVazios] = useState(false);
   const [carregandoCriacao, setCarregandoCriacao] = useState();
   const [campoPerguntas, setCampoPerguntas] = useState(false);
-
+  const [visualizar, setVisualizacao] = useState(false);
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
   );
@@ -70,24 +71,43 @@ function CriacaoFormulario() {
 
     setEstado({ ...estado, [e.target.name]: e.target.value });
   }
+  function mudandoVisualizacao() {
+    if(visualizar === false)
+     setVisualizacao(true)
+    else
+     setVisualizacao(false)
 
+    console.log(visualizar)
+  }
+    
   async function requisicaoFormularios() {
     if (!estado.finalidade) errors.finalidade = true;
     if (!estado.tipo) errors.tipo = true;
     if (!estado.urgencia) errors.urgencia = true;
     if (!estado.titulo) errors.titulo = true;
-
     setCamposVazios({ ...camposVazios, ...errors });
-
+    console.log(referenciaInputNulos)
+    console.log(camposVazios)
     if (_.isEqual(camposVazios, referenciaInputNulos)) {
       if (campoPerguntas === false) {
         toast.warn('Adicione alguma pergunta.');
       } else {
+        if(visualizar === false){
         setCarregandoCriacao(true);
+        estado.visualizacao_secretaria = false;
         await managerService.CriarFormulario(estado);
         await sleep(1500);
         setCarregandoCriacao(false);
         window.location.href = '/web/listaformularios';
+        }
+        if(visualizar === true){
+          setCarregandoCriacao(true);
+          estado.visualizacao_secretaria = true;
+          await managerService.CriarFormulario(estado);
+          await sleep(1500);
+          setCarregandoCriacao(false);
+          window.location.href = '/web/listaformularios'; 
+        }
       }
     } else {
       setCarregandoCriacao(true);
@@ -134,7 +154,7 @@ function CriacaoFormulario() {
           onChange={preenchendoDados}
         ></Input>
         <TitulosInput>Urgência:</TitulosInput>
-        <SelectContainer borderWidth='2px' width='100%'>
+        
           <Select
             id='urgencia'
             marginTop='0px'
@@ -143,6 +163,9 @@ function CriacaoFormulario() {
             name='urgencia'
             camposVazios={camposVazios.urgencia}
             onChange={preenchendoDados}
+            borderWidth='2px'
+            width='100%'
+            marginBottom="2%"
           >
             <option value=''>Urgência</option>
             <option value='1' borderColor={Cores.azul}>
@@ -155,7 +178,11 @@ function CriacaoFormulario() {
               3
             </option>
           </Select>
-        </SelectContainer>
+         
+        <Checkbox
+           onChange={mudandoVisualizacao}
+        >Permitir a visualização da secretária
+        </Checkbox>
         <Button
           height='50px'
           width='100%'
