@@ -4,6 +4,7 @@ import {
   PaperClipOutlined,
   PlusOutlined,
   SendOutlined,
+  QuestionOutlined,
 } from "@ant-design/icons";
 import { Dropdown, Menu, Modal, Spin, Tooltip } from "antd";
 import moment from "moment";
@@ -432,7 +433,7 @@ export default function ConversaAberta({ socket }) {
         )}
       </CorpoConversaAberta>
       <FooterConversaAberta>
-        {conversaSelecionada.tipo === "EXAME" ? (
+        {conversaSelecionada.tipo === "BIOLOGIX" || conversaSelecionada.tipo === "ACTIGRAFIA" ? (
           <MenuConversasTipoExame>
             <Dropdown
               onClick={(e) => e.preventDefault()}
@@ -440,7 +441,7 @@ export default function ConversaAberta({ socket }) {
               placement={"bottom"}
             >
               <PlusOutlined
-                style={{ fontSize: "27px", color: "{Cores.lilas[1]}" }}
+                style={{ fontSize: "27px", color: "{Cores.lilas[1]}"}}
               />
             </Dropdown>
           </MenuConversasTipoExame>
@@ -464,7 +465,50 @@ export default function ConversaAberta({ socket }) {
             </Button>
           </Tooltip>
         )}
-
+       {conversaSelecionada.tipo === "BIOLOGIX" ? (
+         <Tooltip placement="bottom" title="Mensagens Biologix">
+         <Dropdown
+           backgroundColor="transparent"
+           borderColor="transparent"
+           color={Cores.lilas[1]}
+           width="10%"
+           widthres="15%"
+           height="10%"
+           marginTop="0%"
+           onClick={(e) => e.preventDefault()}
+           overlay={menuBotoes}
+           placement={"bottom"}
+         >
+           <QuestionOutlined
+             style={{ fontSize: "27px", color: "{Cores.lilas[1]}" }}
+           />
+         </Dropdown>
+       </Tooltip> 
+       ) : ( 
+       <h></h>
+        )}
+      {conversaSelecionada.tipo === "ACTIGRAFIA" ? (  
+        <Tooltip placement="bottom" title="Mensagens Actigrafia">
+         <Dropdown
+           backgroundColor="transparent"
+           borderColor="transparent"
+           color={Cores.lilas[1]}
+           width="10%"
+           widthres="15%"
+           height="10%"
+           marginTop="0%"
+           onClick={(e) => e.preventDefault()}
+           overlay={menuBotoes}
+           placement={"bottom"}
+         >
+           <QuestionOutlined
+             style={{ fontSize: "27px", color: "{Cores.lilas[1]}" }}
+           />
+         </Dropdown>
+       </Tooltip> 
+       ) : ( 
+        <h></h>
+         )}
         <Input
           placeholder="Mensagem"
           backgroundColor="white"
