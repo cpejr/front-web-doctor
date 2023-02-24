@@ -118,7 +118,294 @@ export default function ConversaAberta({ socket }) {
       </Menu.Item>
     </Menu>
   );
-
+  const TextoB1 = "Olá sou a enfermeira, posso te auxiliar em algo ?"
+  const TextoB2 = "Olá sou a enfermeira, posso te auxiliar em algo2 ?"
+  const TextoB3 = "Olá sou a enfermeira, posso te auxiliar em algo3 ?"
+  const TextoB4 = "Olá sou a enfermeira, posso te auxiliar em algo4 ?"
+  const TextoB5 = "Olá sou a enfermeira, posso te auxiliar em algo5 ?"
+  const TextoB6 = "Olá sou a enfermeira, posso te auxiliar em algo6 ?"
+  const TextoB7 = "Olá sou a enfermeira, posso te auxiliar em algo7 ?"
+  const TextoB8 = "Olá sou a enfermeira, posso te auxiliar em algo8 ?"
+  const TextoB9 = "Olá sou a enfermeira, posso te auxiliar em algo9 ?"
+  const TextoB10 = "Olá sou a enfermeira, posso te auxiliar em algo10 ?"
+  const menuMensagensBiologix = (
+    <Menu>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB1)}
+          value = {TextoB1}
+        >
+            <b >TextoB1</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB2)}
+          value = {TextoB2}
+        >
+            <b >TextoB2</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB3)}
+          value = {TextoB3}
+        >
+            <b >TextoB3</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB4)}
+          value = {TextoB4}
+        >
+            <b >TextoB4</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB5)}
+          value = {TextoB5}
+        >
+            <b >TextoB5</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB6)}
+          value = {TextoB6}
+        >
+            <b >TextoB6</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB7)}
+          value = {TextoB7}
+        >
+            <b >TextoB7</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB8)}
+          value = {TextoB8}
+        >
+            <b >TextoB8</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB9)}
+          value = {TextoB9}
+        >
+            <b >TextoB9</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB10)}
+          value = {TextoB10}
+        >
+            <b >TextoB10</b>
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
+  const TextoC1 = "Olá sou a enfermeira, posso te auxiliar em algo1 ?"
+  const TextoC2 = "Olá sou a enfermeira, posso te auxiliar em algo22 ?"
+  const TextoC3 = "Olá sou a enfermeira, posso te auxiliar em algo33 ?"
+  const TextoC4 = "Olá sou a enfermeira, posso te auxiliar em algo44 ?"
+  const TextoC5 = "Olá sou a enfermeira, posso te auxiliar em algo55 ?"
+  const TextoC6 = "Olá sou a enfermeira, posso te auxiliar em algo66 ?"
+  const TextoC7 = "Olá sou a enfermeira, posso te auxiliar em algo77 ?"
+  const TextoC8 = "Olá sou a enfermeira, posso te auxiliar em algo88 ?"
+  const TextoC9 = "Olá sou a enfermeira, posso te auxiliar em algo99 ?"
+  const TextoC10 = "Olá sou a enfermeira, posso te auxiliar em algo100 ?"
+  const menuMensagensActigrafia = (
+    <Menu>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC1)}
+          value = {TextoC1}
+        >
+            <b >TextoC1</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC2)}
+          value = {TextoC2}
+        >
+            <b >TextoC2</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC3)}
+          value = {TextoC3}
+        >
+            <b >TextoC3</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC4)}
+          value = {TextoC4}
+        >
+            <b >TextoC4</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC5)}
+          value = {TextoC5}
+        >
+            <b >TextoC5</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC6)}
+          value = {TextoC6}
+        >
+            <b >TextoC6</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC7)}
+          value = {TextoC7}
+        >
+            <b >TextoC7</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC8)}
+          value = {TextoC8}
+        >
+            <b >TextoC8</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC9)}
+          value = {TextoC9}
+        >
+            <b >TextoC9</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC10)}
+          value = {TextoC10}
+        >
+            <b >TextoC10</b>
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
   async function fechandoModalEnviarArquivo() {
     setModalEnviarArquivo(false);
   }
@@ -476,7 +763,7 @@ export default function ConversaAberta({ socket }) {
            height="10%"
            marginTop="0%"
            onClick={(e) => e.preventDefault()}
-           overlay={menuBotoes}
+           overlay={menuMensagensBiologix}
            placement={"bottom"}
          >
            <QuestionOutlined
@@ -498,7 +785,7 @@ export default function ConversaAberta({ socket }) {
            height="10%"
            marginTop="0%"
            onClick={(e) => e.preventDefault()}
-           overlay={menuBotoes}
+           overlay={menuMensagensActigrafia}
            placement={"bottom"}
          >
            <QuestionOutlined
