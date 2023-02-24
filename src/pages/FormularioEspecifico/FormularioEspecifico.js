@@ -43,6 +43,7 @@ import * as managerService from "../../services/ManagerService/managerService";
 import { sleep } from "../../utils/sleep";
 import { saveAs } from 'file-saver';
 import { Document, Packer, Paragraph } from "docx";
+import formatarData from "../../utils/formatarData";
 
 function FormularioEspecifico(props) {
   const { Search } = Input;
@@ -210,43 +211,26 @@ function FormularioEspecifico(props) {
     setStatusSelect(value);
   }
 
-  async function salvaWord() {
-    const formularioPacienteEspecifico = {
-      "id": "4c57cc30-33c1-4b48-9302-735dcb55e127",
-      "respostas": {
-        "newInput1": "não"
-      },
-      "midia_url": null,
-      "word": null,
-      "status": true,
-      "notificacao_ativa": false,
-      "id_usuario": "c40b324c-481a-4ede-93e6-9a011ec12287",
-      "id_formulario": "062956f0-870b-4aa4-a6a4-6b68fcd838a7",
-      "data_criacao": "2022-11-11T12:02:39.219Z",
-      "data_atualizacao": "2022-11-11T12:07:17.015Z",
-      "email": "adrianuspaciente@gmail.com",
-      "nome": "Adrianus Paciente",
-      "avatar_url": null,
-      "titulo": "form que sera respondido",
-      "urgencia": 2,
-      "tipo": "oi",
-      "perguntas": {
-        "type": "object",
-        "properties": {
-          "newInput1": {
-            "title": "devo responder o formulario?",
-            "type": "string"
-          }
-        },
-        "dependencies": {},
-        "required": []
-      }
-    }
+  async function salvaWord(docxWord, nome, data_nascimento) {
 
-    const perguntas = Object.values(formularioPacienteEspecifico.perguntas.properties);
-    const respostas = Object.values(formularioPacienteEspecifico.respostas);
+    console.log(data_nascimento)
+
+    const perguntas = Object.values(docxWord.perguntas.properties);
+    const respostas = Object.values(docxWord.respostas);
+
+    const dataFormatada = formatarData({ data: data_nascimento, formatacao: "dd/MM/yyyy" });
 
     let arrayParagrafos = [];
+
+    arrayParagrafos.push(
+      new Paragraph(`Logo`)
+    )
+    arrayParagrafos.push(
+      new Paragraph(`NOME: ${nome}`)
+    )
+    arrayParagrafos.push(
+      new Paragraph(`DATA DE NASCIMENTO: ${dataFormatada}`)
+    )
 
     perguntas.forEach((pergunta, index) => {
       const conteudoPergunta = pergunta.title
@@ -269,7 +253,9 @@ function FormularioEspecifico(props) {
     });
 
     await Packer.toBlob(doc).then(blob => {
-      saveAs(blob, 'formulario.docx')
+      saveAs(blob,
+        "Resposta do Formulário " + docxWord.titulo + " referente ao paciente " + nome
+          .docx)
     })
   }
 
@@ -424,7 +410,7 @@ function FormularioEspecifico(props) {
                     )}
                   </BarraCentro>
                   {value.status === true ? (
-                    <BarraDireita>
+                    <BarraDireita key={value?.id}>
                       <></>
                       {tipoUsuarioLogado === "MASTER" &&
                         <Button
@@ -439,7 +425,7 @@ function FormularioEspecifico(props) {
                           fontSizeMedia950="0.75em"
                           fontWeight="bold"
                           heightMedia560="28px"
-                          onClick={() => salvaWord()}
+                          onClick={() => salvaWord(value, value.nome, value.data_nascimento)}
                         >
                           BAIXAR DOCX
                         </Button>
@@ -532,7 +518,6 @@ function FormularioEspecifico(props) {
                 marginTop="0%"
                 marginLeft="0%"
                 fontSizeMedia950="0.9em"
-                onClick={() => salvaWord()}
               >
                 Gerar documento Word
               </Button>
