@@ -577,7 +577,7 @@ export default function ConversaAberta({ socket }) {
         )}
       </CorpoConversaAberta>
       <FooterConversaAberta>
-        {conversaSelecionada.tipo === "EXAME" ? (
+        {conversaSelecionada.tipo === "ACTIGRAFIA" || conversaSelecionada.tipo === "BIOLOGIX" ? (
           <MenuConversasTipoExame>
             <Dropdown
               onClick={(e) => e.preventDefault()}
