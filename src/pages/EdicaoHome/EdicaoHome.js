@@ -46,6 +46,7 @@ function EdicaoHome() {
   const [img1, setImg1] = useState("");
   const [img2, setImg2] = useState("");
   const [img3, setImg3] = useState("");
+  const [img4, setImg4] = useState("");
   const [carregandoImg, setCarregandoImg] = useState(false);
   const history = useHistory();
 
@@ -75,6 +76,7 @@ function EdicaoHome() {
     await managerService.updateImagemCarrossel(100, img1);
     await managerService.updateImagemCarrossel(101, img2);
     await managerService.updateImagemCarrossel(102, img3);
+    await managerService.updateImagemCarrossel(104, img4);
 
     if (houveAlteracao === true || alterouCarrossel === true) {
       await managerService.UpdateDadosHomes(
@@ -151,14 +153,19 @@ function EdicaoHome() {
         setCarregandoImg(false);
       });
     }
+
+    if (imgAtual === 3) {
+      getBase64(info.file.originFileObj, (url) => {
+        setImg4(url);
+        setCarregandoImg(false);
+      });
+    }
   }
 
   async function atualizandoImg() {
     for (let i = 100; i < imagens.length; i++) {
       const id = i;
       const url = imagens[i].img;
-      console.log(img1);
-      console.log("oi", imagens[i].img);
       await managerService.updateImagemCarrossel(id, url);
     }
   }
@@ -175,6 +182,7 @@ function EdicaoHome() {
     setImg1(responses[0]);
     setImg2(responses[1]);
     setImg3(responses[2]);
+    setImg4(responses[3]);
     setCarregandoImg(false);
   }
 
@@ -182,7 +190,7 @@ function EdicaoHome() {
     setandoImagemCarrossel();
   }, []);
 
-  var imagens = [{ img: img1 }, { img: img2 }, { img: img3 }];
+  var imagens = [{ img: img1 }, { img: img2 }, { img: img3 }, { img: img4 }];
 
   return (
     <Corpo>
