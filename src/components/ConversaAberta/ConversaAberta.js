@@ -590,6 +590,7 @@ export default function ConversaAberta({ socket }) {
             </Dropdown>
           </MenuConversasTipoExame>
         ) : (
+          <>
           <Tooltip placement="bottom" title="Enviar arquivo">
             <Button
               backgroundColor="transparent"
@@ -608,8 +609,6 @@ export default function ConversaAberta({ socket }) {
               />
             </Button>
           </Tooltip>
-        )}
-        <Tooltip placement="bottom" title="Mensagens Automáticas">
             <Dropdown
               backgroundColor="transparent"
               borderColor="transparent"
@@ -622,10 +621,11 @@ export default function ConversaAberta({ socket }) {
               placement={"bottom"}
             >
               <QuestionOutlined 
-                style={{ fontSize: "27px", color: "{Cores.lilas[1]}" }}
+                style={{ fontSize: "27px", color: "#434b97", margin: "0px 1rem",marginLeft: "0%" }}
               />
             </Dropdown>
-          </Tooltip>
+          </>
+        )}
         <Input
           placeholder="Mensagem"
           backgroundColor="white"
