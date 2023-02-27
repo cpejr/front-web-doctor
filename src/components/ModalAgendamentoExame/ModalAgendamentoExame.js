@@ -220,6 +220,7 @@ function ModalAgendamentoExame(props) {
         if (_.isEqual(camposVazios, referenciaInputNulos)) {
           setCarregandoCadastro(true);
           formatacaoDataHora();
+          exame.id_usuario = idUsuario;
           await managerService.CriandoExame(exame);
           setCarregandoCadastro(false);
           await sleep(1500);

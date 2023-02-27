@@ -248,11 +248,12 @@ function ModalAgendamentoConsulta(props) {
       toast.warn("Preencha todos os campos");
     } else {
       if (erro.hora) {
-        toast.warn("Preencha todos os campos corretamente");
+        toast.warn("Preencha todos os campos corretamente2");
       } else {
         if (_.isEqual(camposVazios, referenciaInputNulos)) {
           setCarregandoCadastro(true);
           formatacaoDataHora();
+
           await managerService.CriandoConsulta(consulta);
           setCarregandoCadastro(false);
           await sleep(1500);
@@ -262,7 +263,8 @@ function ModalAgendamentoConsulta(props) {
           setHora("");
         } else {
           setCarregandoCadastro(true);
-          toast.warn("Preencha todos os campos corretamente");
+          console.log(camposVazios);
+          toast.warn("Preencha todos os campos corretamente3");
           setCarregandoCadastro(false);
         }
       }
