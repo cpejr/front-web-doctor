@@ -27,6 +27,7 @@ function ModalAlterarIndicacao(props) {
   const [erro, setErro] = useState(false);
 
   const [camposVaziosReferencia, setCamposVaziosReferencia] = useState({
+    id_indicacao_especifica: false,
     nome: false,
     telefone: false,
     local_atendimento: false,
@@ -76,6 +77,7 @@ function ModalAlterarIndicacao(props) {
 
  async function alterar(e) {
   e.preventDefault();
+
   
   if (!estado.nome) erro.nome = true;
   if (!estado.telefone) erro.telefone = true;
@@ -83,14 +85,12 @@ function ModalAlterarIndicacao(props) {
   
   
   setCamposVazios({...camposVazios, ...erro});
-  console.log(camposVazios);
-  console.log(estado);
   if (!_.isEqual(camposVazios, camposVaziosReferencia)) {
     toast.warn("Preencha todos os campos");
     return;
   }else{
     setCarregandoCriacao(true);
-    await managerService.EditarMedicoIndicado(selecionarMedico.id,estado);
+    await managerService.EditarMedicoIndicado(estado.id_indicacao_especifica, estado);
     await sleep(1500);
     setCarregandoCriacao(false);
   }
@@ -108,17 +108,17 @@ function ModalAlterarIndicacao(props) {
       <ContainerInputs>
         
         <Labels>Indicação:</Labels>
-        <Select 
-        id={ID}
+        <Select
         backgroundColor={Cores.cinza[7]} 
         width="100%"
-        onClick={() => preenchendoPlaceholder(ID)}
+        onChange={preenchendoDados}
+        name="id_indicacao_especifica"
         >
           <option value="" >Escolher indicação para alterar</option>
           {medicoEspecifico.map((medico) => (
               <option
-              key={medico}
-              value={medico} 
+              key={medico.id_indicacao_especifica}
+              value={medico.id_indicacao_especifica} 
               color='red'>
                 {medico.nome}
               </option>
