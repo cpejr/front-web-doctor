@@ -76,7 +76,11 @@ function EdicaoHome() {
     await managerService.updateImagemCarrossel(100, img1);
     await managerService.updateImagemCarrossel(101, img2);
     await managerService.updateImagemCarrossel(102, img3);
-    await managerService.updateImagemCarrossel(104, img4);
+    await managerService.updateImagemHomes(
+      homes.id,
+      homes.imagem_quatro,
+      img4
+      );
 
     if (houveAlteracao === true || alterouCarrossel === true) {
       await managerService.UpdateDadosHomes(
@@ -162,27 +166,21 @@ function EdicaoHome() {
     }
   }
 
-  async function atualizandoImg() {
-    for (let i = 100; i < imagens.length; i++) {
-      const id = i;
-      const url = imagens[i].img;
-      await managerService.updateImagemCarrossel(id, url);
-    }
-  }
-
   async function setandoImagemCarrossel() {
     setCarregandoImg(true);
     const res = await managerService.GetImagensCarrossel();
-
-    const requests = res.map(({ imagem }) =>
-      managerService.GetArquivoPorChave(imagem)
+    
+    const carrossel = res.map(({ imagem }) =>
+    managerService.GetArquivoPorChave(imagem)
     );
+    
+    const arquivo = await managerService.GetArquivoPorChave(homes.imagem_quatro);
+    setImg4(arquivo);
 
-    const responses = await Promise.all(requests);
+    const responses = await Promise.all(carrossel);
     setImg1(responses[0]);
     setImg2(responses[1]);
     setImg3(responses[2]);
-    setImg4(responses[3]);
     setCarregandoImg(false);
   }
 
@@ -306,6 +304,7 @@ function EdicaoHome() {
               <Esquerda
                 onClick={() => {
                   imgAtual > 0 && setImgAtual(imgAtual - 1);
+                  console.log(imgAtual)
                 }}
               >
                 <LeftOutlined style={{ fontSize: 25 }} />
@@ -336,6 +335,7 @@ function EdicaoHome() {
               <Direita
                 onClick={() => {
                   imgAtual < imagens.length - 1 && setImgAtual(imgAtual + 1);
+                  console.log(imgAtual)
                 }}
               >
                 <RightOutlined style={{ fontSize: 25 }} />

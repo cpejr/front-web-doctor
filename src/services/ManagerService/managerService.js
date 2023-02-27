@@ -960,3 +960,16 @@ export const updateImagemCarrossel = async (id, file) => {
       return;
     };
 };
+
+export const updateImagemHomes = async (id, imagem_quatro, file) => {
+  await requesterService
+    .updateImagemHomes(id, imagem_quatro, file)
+    .then(() => {
+      toast.success('Foto Homes atualizada com sucesso');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return;
+};
