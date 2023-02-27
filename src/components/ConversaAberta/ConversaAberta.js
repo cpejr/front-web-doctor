@@ -753,7 +753,6 @@ export default function ConversaAberta({ socket }) {
           </Tooltip>
         )}
        {conversaSelecionada.tipo === "BIOLOGIX" ? (
-         <Tooltip placement="bottom" title="Mensagens Biologix">
          <Dropdown
            backgroundColor="transparent"
            borderColor="transparent"
@@ -767,15 +766,13 @@ export default function ConversaAberta({ socket }) {
            placement={"bottom"}
          >
            <QuestionOutlined
-             style={{ fontSize: "27px", color: "{Cores.lilas[1]}" }}
+             style={{ fontSize: "27px", color: "{Cores.lilas[1]}", margin: "0px 1rem",marginLeft: "0%"  }}
            />
          </Dropdown>
-       </Tooltip> 
        ) : ( 
        <h></h>
         )}
       {conversaSelecionada.tipo === "ACTIGRAFIA" ? (  
-        <Tooltip placement="bottom" title="Mensagens Actigrafia">
          <Dropdown
            backgroundColor="transparent"
            borderColor="transparent"
@@ -789,10 +786,9 @@ export default function ConversaAberta({ socket }) {
            placement={"bottom"}
          >
            <QuestionOutlined
-             style={{ fontSize: "27px", color: "{Cores.lilas[1]}" }}
+             style={{ fontSize: "27px", color: "{Cores.lilas[1]}", margin: "0px 1rem",marginLeft: "0%"  }}
            />
          </Dropdown>
-       </Tooltip> 
        ) : ( 
         <h></h>
          )}
