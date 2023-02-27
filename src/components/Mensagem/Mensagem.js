@@ -3,6 +3,9 @@ import dayjs from "dayjs";
 import { MensagemEnviada, DataHoraMensagem } from "./Styles";
 import { FilePdfOutlined, PictureOutlined } from "@ant-design/icons";
 import { Cores } from "../../variaveis";
+import { toast } from "react-toastify";
+import { Button } from "antd";
+import { TripOriginRounded } from "@mui/icons-material";
 
 export default function Mensagem({
   scrollRef,
@@ -10,16 +13,17 @@ export default function Mensagem({
   conteudo,
   media_url,
   data_criacao,
+  tipo,
 }) {
   return (
     <MensagemEnviada
       pertenceAoUsuarioAtual={pertenceAoUsuarioAtual}
       ref={scrollRef}
     >
-      {media_url ? (
+      {(tipo != "TEXTO") ? (
         <a href={media_url} target="_blank" rel="noopener noreferrer">
           {conteudo === "Imagem" ? <PictureOutlined  style={{ marginRight: 8, fontSize: 20, color: Cores.azul }} />:
-          <FilePdfOutlined
+          <FilePdfOutlined 
             style={{ marginRight: 8, fontSize: 20, color: Cores.azul }}
           />}
         </a>
