@@ -94,17 +94,19 @@ function AlterarSenhaEsquecida() {
           const resposta = await managerService.GetDadosUsuarioPorToken(
             tokenUsuario
           );
-          await managerService.AlterarSenha(
+          const res = await managerService.AlterarSenhaEsquecida(
             novaSenha,
             resposta.dadosUsuario.id
           );
-          await sleep(1500);
-          if (resposta.dadosUsuario.tipo !== "PACIENTE") {
-            redirecionamento("/web/perfil");
-            setCarregando(false);
-          } else {
-            setSenhaAlterada(true);
-            setCarregando(false);
+          if (res === true){
+            if (resposta.dadosUsuario.tipo !== "PACIENTE") {
+              await sleep(3000);
+              redirecionamento("/web/perfil");
+              setCarregando(false);
+            } else {
+              setSenhaAlterada(true);
+              setCarregando(false);
+            }
           }
         } else {
           toast.error("As senhas digitadas são diferentes!");
@@ -126,7 +128,7 @@ function AlterarSenhaEsquecida() {
           <Caixa>
             <Titulo>Alterar Senha:</Titulo>
             <InputVertical>
-            <TituloDoInput>Defina sua nova senha:</TituloDoInput>
+              <TituloDoInput>Defina sua nova senha:</TituloDoInput>
               <Input
                 placeholder="Defina sua nova senha"
                 backgroundColor={Cores.cinza[7]}
@@ -150,7 +152,7 @@ function AlterarSenhaEsquecida() {
                 color={Cores.preto}
                 fontSize="1em"
                 width="100%"
-                marginTop="5%"
+                marginTop="2%"
                 type="password"
                 name="confirmarSenha"
                 camposVazios={camposVazios.confirmarSenha}
@@ -193,6 +195,7 @@ function AlterarSenhaEsquecida() {
               </Button>
             </BotoesMesmaLinha>
           </Caixa>
+          <AddToast />
         </Conteudo>
       ) : (
         <CaixaMensagem>
@@ -202,6 +205,7 @@ function AlterarSenhaEsquecida() {
           <MensagemPaciente>
             Você já pode realizar o login no DoctorApp com sua nova senha
           </MensagemPaciente>
+          <AddToast />
         </CaixaMensagem>
       )}
     </div>
