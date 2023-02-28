@@ -9,8 +9,10 @@ const Button = styled.button`
   justify-content: center;
   /*Medidas*/
   border-radius: 3px;
-  margin-top: ${(props) => props.marginTop ?? "2%"};
+  margin-top: ${(props) => props.marginTop?? "2%"};
+  margin-bottom: ${(props) => props.marginBottom};
   margin-left: ${(props) => props.marginLeft};
+  margin-right: ${(props) => props.marginRight};
   min-width: ${(props) => props.minWidth};
   max-width: ${(props) => props.maxWidth};
   min-height: ${(props) => props.minHeight};
@@ -27,6 +29,7 @@ const Button = styled.button`
   background-color: ${(props) => props.backgroundColor};
   border-color: ${(props) => props.borderColor};
   border-style: solid;
+  border-width: ${(props) => props.borderWidth};
   border-radius: ${(props) => props.borderRadius};
   box-shadow: ${(props) => props.boxShadow};
   cursor: pointer;
@@ -41,14 +44,24 @@ const Button = styled.button`
     width: 100%;
     height: ${(props) => props.heightMedia560};
   }
-  @media (max-width: 920px) and (min-width: 560px) {
+
+  @media (max-width: 560px) {
+    width: ${(props) => props.widthMedia560};
+  }
+
+  @media (max-width: 920px) and (min-width: 560px){
     width: ${(props) => props.widthMedia ?? props.width};
   }
 
   @media (max-width: 600px) {
     width: ${(props) => props.widthMedia600};
   }
-  @media (max-width: 920px) {
+
+  @media (max-width: 560px){ 
+    width: ${(props) => props.widthMedia560};
+  }
+
+  @media (max-width: 920px){ 
     height: ${(props) => props.heightMedia920};
   }
 
@@ -56,7 +69,11 @@ const Button = styled.button`
     width: ${(props) => props.widthMedia670};
   }
 
-  @media (max-width: 640px) {
+  @media (max-width: 280px){ 
+    width: ${(props) => props.widthMedia280};
+  }
+
+  @media (max-width: 640px){ 
     height: ${(props) => props.heightMedia640};
   }
 
@@ -79,6 +96,9 @@ const Button = styled.button`
 
   @media (max-width: 480px) {
     font-size: ${(props) => props.fontSizeMedia480};
+  }
+  @media (max-width: 400px) {
+    font-size: ${(props) => props.fontSizeMedia400};
   }
   @media (max-width: 376px) {
     width: ${(props) => props.widthres};
