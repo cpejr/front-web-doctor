@@ -73,7 +73,6 @@ function EdicaoIndicacoesESugestoes(props) {
       setExameSelecionado(exame);
     }
     setCarregando(true);
-    //await sleep(1500); // Simular requisição ao back
     let Texto;
     let Titulo;
     
@@ -129,7 +128,6 @@ function EdicaoIndicacoesESugestoes(props) {
   }
 
   async function abrirModalAdicionarIndicacao() {
-    //Olhar se isso funciona mesmo
     if(Indicados === true){setModalAdicionarIndicacao(true);
       console.log(idIndicado);}
     else
@@ -236,15 +234,13 @@ function EdicaoIndicacoesESugestoes(props) {
             ) : (
               <>
                 <TituloInfo>{dadosIndicacao.titulo}</TituloInfo>
-                <scroll>
                 {medicosIndicados.map((medicos) => (
                 <DescricaoInformacoes>
                 <div>{medicos.nome}</div>
                 <div>{medicos.local_atendimento}</div>
                 <div>{medicos.telefone}</div>
                 </DescricaoInformacoes>
-             ))}
-             </scroll>
+               ))}
               </>
             )}
           </Informacoes>
@@ -342,6 +338,8 @@ function EdicaoIndicacoesESugestoes(props) {
       >
         <ModalIndicacao
           dadosIndicacao={dadosIndicacao}
+          medicosIndicados={medicosIndicados}
+          idIndicado = {idIndicado}
           carregando={carregando}
           fechandoModal={fecharModalIndicacao}
         />

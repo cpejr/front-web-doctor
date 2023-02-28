@@ -132,7 +132,7 @@ function ModalAlterarIndicacao(props) {
         <Input
           backgroundColor="#EAECFF"
           borderColor="black"
-          placeholder={selecionarMedico.nome}
+          placeholder={camposVazios.nome}
           color="black"
           fontSize="1em"
           width="100%"
@@ -149,7 +149,7 @@ function ModalAlterarIndicacao(props) {
         <Input
           backgroundColor="#EAECFF"
           borderColor="black"
-          placeholder={selecionarMedico.telefone}
+          placeholder={camposVazios.telefone}
           color="black"
           fontSize="1em"
           width="100%"
@@ -170,7 +170,7 @@ function ModalAlterarIndicacao(props) {
         <Input
           backgroundColor="#EAECFF"
           borderColor="black"
-          placeholder={selecionarMedico.local_atendimento}
+          placeholder={camposVazios.local_atendimento}
           color="black"
           fontSize="1em"
           width="100%"

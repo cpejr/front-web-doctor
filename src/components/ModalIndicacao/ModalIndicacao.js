@@ -19,7 +19,7 @@ import {
   BotoesIndicacao,
 } from "./Styles";
 
-function ModalIndicacao({ dadosIndicacao, carregando }) {
+function ModalIndicacao({ dadosIndicacao,medicosIndicados,idIndicado, carregando }) {
   const [modalAdicionarIndicacao, setModalAdicionarIndicacao] = useState(false);
   const [modalExcluirIndicacao, setModalExcluirIndicacao] = useState(false);
   const [modalAlterarIndicacao, setModalAlterarIndicacao] = useState(false);
@@ -68,12 +68,15 @@ function ModalIndicacao({ dadosIndicacao, carregando }) {
         ) : (
           <>
             <TituloInfo>{dadosIndicacao.titulo}</TituloInfo>
-            <DescricaoInformacoes>
-              {dadosIndicacao.descricao}
-              Nome:{dadosIndicacao.nomemedico}
-              Local de Atendimento:{dadosIndicacao.localmedico}
-              Telefone:{dadosIndicacao.telefonemedico}
-            </DescricaoInformacoes>
+            
+                {medicosIndicados.map((medicos) => (
+                <DescricaoInformacoes >
+                <div>{medicos.nome}</div>
+                <div>{medicos.local_atendimento}</div>
+                <div>{medicos.telefone}</div>
+                </DescricaoInformacoes> 
+             ))}
+            
           </>
         )}
       </Informacoes>
@@ -124,6 +127,7 @@ function ModalIndicacao({ dadosIndicacao, carregando }) {
         destroyOnClose
       >
         <ModalAdicionarIndicacao
+          idmedicoindicado = {idIndicado}
           fechandoModal={fecharModalAdicionarIndicacao}
         />
       </Modal>
@@ -136,7 +140,10 @@ function ModalIndicacao({ dadosIndicacao, carregando }) {
         centered={true}
         destroyOnClose
       >
-        <ModalExcluirIndicacao fechandoModal={fecharModalExcluirIndicacao} />
+        
+        <ModalExcluirIndicacao 
+        idmedicoindicado = {idIndicado}
+        fechandoModal={fecharModalExcluirIndicacao} />
       </Modal>
 
       <Modal
@@ -147,7 +154,9 @@ function ModalIndicacao({ dadosIndicacao, carregando }) {
         centered={true}
         destroyOnClose
       >
-        <ModalAlterarIndicacao fechandoModal={fecharModalAlterarIndicacao} />
+        <ModalAlterarIndicacao 
+        idmedicoindicado = {idIndicado}
+        fechandoModal={fecharModalAlterarIndicacao} />
       </Modal>
     </Container>
   );

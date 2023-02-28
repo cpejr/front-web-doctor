@@ -160,6 +160,7 @@ export const DescricaoInformacoes = styled.p`
   border: none;
   font-size: 1em;
   font-family: ${Fontes.barlow};
+  overflow-y: auto;
 `;
 
 export const TituloInfo = styled.h2`
