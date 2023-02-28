@@ -685,7 +685,6 @@ export const DeletarReceita = async (id) => {
 
 export const GetArquivoPorChave = async (chave) => {
   let arquivo = '';
-
   await requesterService
     .requisicaoArquivo(chave)
 
@@ -696,6 +695,7 @@ export const GetArquivoPorChave = async (chave) => {
       requisicaoErro(error);
     });
   return arquivo;
+  
 };
 
 export const CriandoConversa = async (
