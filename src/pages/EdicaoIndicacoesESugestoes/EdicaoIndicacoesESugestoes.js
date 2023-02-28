@@ -236,13 +236,15 @@ function EdicaoIndicacoesESugestoes(props) {
             ) : (
               <>
                 <TituloInfo>{dadosIndicacao.titulo}</TituloInfo>
+                <scroll>
                 {medicosIndicados.map((medicos) => (
                 <DescricaoInformacoes>
-                {medicos.nome}
-                {medicos.local_atendimento}
-                {medicos.telefone}
+                <div>{medicos.nome}</div>
+                <div>{medicos.local_atendimento}</div>
+                <div>{medicos.telefone}</div>
                 </DescricaoInformacoes>
              ))}
+             </scroll>
               </>
             )}
           </Informacoes>

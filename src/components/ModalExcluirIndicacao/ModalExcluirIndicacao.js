@@ -14,6 +14,7 @@ function ModalExcluirIndicacao(props) {
   const [idMedicoEscolhido, setIdMedicoEscolhido] = useState();
   const [preenchido, setPreenchido] = useState(false);
   const history = useHistory();
+  let medicodeletado;
   async function buscarMedicosporId() {
     const resposta = await managerService.GetMedicosIndicadosPorID(props.idmedicoindicado);
     setMedicos(resposta);
@@ -22,14 +23,14 @@ function ModalExcluirIndicacao(props) {
     buscarMedicosporId();
   }, [medicos])
 
-  async function armazenarMedico(medico) {
-    setIdMedicoEscolhido(medico.id);
+  async function armazenarMedico(event) {
+    setIdMedicoEscolhido(event.target.value);
     setPreenchido(true);
   }
   async function deletarIndicacao() {
-    console.log(idMedicoEscolhido);
+    console.log(medicodeletado);
     if(preenchido === false){
-      toast.warn("Preencha todos os campos");
+      toast.warn("Escolha um médico para deletar");
 			return;
     }else{
       await managerService.DeletarIndicao(idMedicoEscolhido);
@@ -43,25 +44,25 @@ function ModalExcluirIndicacao(props) {
     <Container>
       <Titulo>Excluir Indicação:</Titulo>
       <ContainerInputs>
-      {medicos.map((medico) => (  
         <Select
-        onClick={() => armazenarMedico(medico)}
         width="100%"
         backgroundColor={Cores.cinza[7]} 
+        onChange={armazenarMedico}
+        name = 'idMedicoEscolhido'
         >
           <option value="" disabled selected>
             Médico
           </option>
-          
+          {medicos.map((medico) => (
             <option
               key={medico.id}
               value={medico.id}
-              color='red'>
+              color='red'
+              >
               {medico.nome}
             </option>
-          
+            ))}
         </Select>
-       ))}
       </ContainerInputs>
       <Button
         gap="5px"

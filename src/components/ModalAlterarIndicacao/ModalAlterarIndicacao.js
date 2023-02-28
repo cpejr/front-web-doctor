@@ -70,7 +70,7 @@ function ModalAlterarIndicacao(props) {
    const medicosespecificos = await managerService.GetMedicosIndicadosPorID(props.idmedicoindicado);
    setMedicoEspecifico(medicosespecificos);
   }
-  useEffect(() => {buscarMedicosporId()}, [medicoEspecifico])
+  useEffect(() => {buscarMedicosporId()}, [])
   async function preenchendoPlaceholder(ID) {
     setSelecionarMedico(ID);
   }
