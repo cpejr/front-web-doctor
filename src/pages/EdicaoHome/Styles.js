@@ -332,7 +332,6 @@ export const Centro = styled.div`
   place-items: center;
   text-align: center;
   text-align-last: center;
-  
 `;
 
 export const BotaoGenerico = styled.button`
