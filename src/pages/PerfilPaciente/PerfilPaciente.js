@@ -56,8 +56,10 @@ import { redirecionamento, sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 import { cep } from "../../utils/masks";
 import { saveAs } from 'file-saver';
-import { Document, Packer, Paragraph } from "docx";
+import { Document, Packer, Paragraph, Header, Footer, ImageRun } from "docx";
 import formatarData from "../../utils/formatarData";
+import logoPdf from "../../assets/LogoPdf.png";
+import * as fs from 'fs-web';
 
 function PerfilPaciente(props) {
   const [modalAgendamento, setModalAgendamento] = useState(false);
@@ -261,7 +263,17 @@ function PerfilPaciente(props) {
     let arrayParagrafos = [];
 
     arrayParagrafos.push(
-      new Paragraph(`Logo`)
+      new Paragraph({
+        children: [
+          new ImageRun({
+            data: fs.readFileSync("../../assets/LogoPdf.png"),
+            transformation: {
+              width: 100,
+              height: 100,
+            },
+          }),
+        ],
+      })
     )
     arrayParagrafos.push(
       new Paragraph(`NOME: ${usuario.nome}`)
