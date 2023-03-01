@@ -118,16 +118,16 @@ export default function ConversaAberta({ socket }) {
       </Menu.Item>
     </Menu>
   );
-  const TextoB1 = "Olá sou a enfermeira, posso te auxiliar em algo ?"
-  const TextoB2 = "Olá sou a enfermeira, posso te auxiliar em algo2 ?"
-  const TextoB3 = "Olá sou a enfermeira, posso te auxiliar em algo3 ?"
-  const TextoB4 = "Olá sou a enfermeira, posso te auxiliar em algo4 ?"
-  const TextoB5 = "Olá sou a enfermeira, posso te auxiliar em algo5 ?"
-  const TextoB6 = "Olá sou a enfermeira, posso te auxiliar em algo6 ?"
-  const TextoB7 = "Olá sou a enfermeira, posso te auxiliar em algo7 ?"
-  const TextoB8 = "Olá sou a enfermeira, posso te auxiliar em algo8 ?"
-  const TextoB9 = "Olá sou a enfermeira, posso te auxiliar em algo9 ?"
-  const TextoB10 = "Olá sou a enfermeira, posso te auxiliar em algo10 ?"
+  const TextoB1 = "Olá sou a enfermeira, posso te auxiliar em algo0 ?"
+  const TextoB2 = "Olá sou a enfermeira, posso te auxiliar em algo02 ?"
+  const TextoB3 = "Olá sou a enfermeira, posso te auxiliar em algo03 ?"
+  const TextoB4 = "Olá sou a enfermeira, posso te auxiliar em algo04 ?"
+  const TextoB5 = "Olá sou a enfermeira, posso te auxiliar em algo05 ?"
+  const TextoB6 = "Olá sou a enfermeira, posso te auxiliar em algo06 ?"
+  const TextoB7 = "Olá sou a enfermeira, posso te auxiliar em algo07 ?"
+  const TextoB8 = "Olá sou a enfermeira, posso te auxiliar em algo08 ?"
+  const TextoB9 = "Olá sou a enfermeira, posso te auxiliar em algo09 ?"
+  const TextoB10 = "Olá sou a enfermeira, posso te auxiliar em algo010 ?"
   const menuMensagensBiologix = (
     <Menu>
       <Menu.Item>
@@ -728,7 +728,7 @@ export default function ConversaAberta({ socket }) {
               placement={"bottom"}
             >
               <PlusOutlined
-                style={{ fontSize: "27px", color: "{Cores.lilas[1]}"}}
+                style={{ fontSize: "27px", color: "{Cores.lilas[1]}", margin: "0px 0.9rem"}}
               />
             </Dropdown>
           </MenuConversasTipoExame>
@@ -761,7 +761,6 @@ export default function ConversaAberta({ socket }) {
            widthres="15%"
            height="10%"
            marginTop="0%"
-           onClick={(e) => e.preventDefault()}
            overlay={menuMensagensBiologix}
            placement={"bottom"}
          >
@@ -781,7 +780,6 @@ export default function ConversaAberta({ socket }) {
            widthres="15%"
            height="10%"
            marginTop="0%"
-           onClick={(e) => e.preventDefault()}
            overlay={menuMensagensActigrafia}
            placement={"bottom"}
          >
