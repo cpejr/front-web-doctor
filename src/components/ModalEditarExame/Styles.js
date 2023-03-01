@@ -383,10 +383,14 @@ export const TextoDoisSelects = styled.h3`
   display: flex;
   justify-content: start;
   align-items: center;
-  margin-right: -100%;
+  margin-right: -90%;
   @media (max-width: 560px){
     margin-top: 15%;
     margin-right: 0%;
+  }
+  @media (width: 637px){
+    margin-right: -50%;
+    margin-left: -10%;
   }
 `;
 
