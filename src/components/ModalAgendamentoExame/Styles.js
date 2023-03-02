@@ -115,8 +115,11 @@ export const TipoAgendamento = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  margin-top:18%;
+  margin-top:20%;
   margin-bottom:20%;
+  @media(max-width: 637px){
+    margin-bottom:0%;
+  }
   @media (max-width: 620px){
     height: 25%;
     width: 100%;
@@ -200,6 +203,9 @@ export const TamanhoInput = styled.div`
   justify-content: center;
   width: 40%;
   height: 40px;
+  @media (max-width: 637px){
+    margin-bottom: 5%;
+  }
   @media  (max-width: 601px) and (min-width: 560px) {
     margin-bottom: 5%;
   }
@@ -222,6 +228,9 @@ export const InputConsultorio = styled.div`
   height: 40px;
   margin-top: 5%;
   margin-botton: 10%;
+  @media(max-width: 637px) {
+     margin-bottom: 5%;
+  }
   @media (max-width: 1717px) {
     margin-bottom: 5%;
   }
@@ -270,6 +279,10 @@ export const ContainerHorario = styled.div`
   width: 40%;
   height: 40px;
   //margin-bottom: 5%;
+  @media (max-width: 637px) {
+    margin-top: 8%;
+    margin-bottom:8%;
+  }
   @media (max-width: 1470px) {
     margin-bottom: 5%;
   }
@@ -422,7 +435,9 @@ export const SelecioneUmaData = styled.div`
   align-items: start;
   justify-content: center;
   width: 90%;
-
+  @media (max-width: 637px){
+    margin-bottom: 10%;
+  }
   @media (max-width: 560px) {
     width: 100%;
   }
