@@ -295,7 +295,7 @@ function ModalAgendamentoExame(props) {
             <Row gutter={60} justify={"space-around"}>
               <Radio.Group
                 defaultValue="exame"
-                bordered={false}
+                bordered={false}s
                 onChange={(e) => props.trocarTipo(e.target.value)}
               >
                 <Radio value="exame">Exame</Radio>
@@ -440,7 +440,7 @@ function ModalAgendamentoExame(props) {
             </ContainerHorario>
           </DoisSelect>
           <Button
-            width="100%"
+            width="80%"
             height="50px"
             backgroundColor={Cores.lilas[2]}
             borderColor={Cores.azul}
@@ -449,12 +449,13 @@ function ModalAgendamentoExame(props) {
             fontWeight="bold"
             fontSizeMedia="0.9em"
             fontSizeMedia950="1.1em"
+            fontSizeMedia350 = "0.9em"
             onClick={() => requisicaoCriarExame()}
           >
             {carregandoCadastro ? (
               <Spin indicator={antIcon} />
             ) : (
-              <div>Cadastrar novo agendamento</div>
+              <div style={{margin: 'auto', padding: 'auto'}}>Cadastrar novo agendamento</div>
             )}
           </Button>
         </InfoDireita>

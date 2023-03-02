@@ -56,16 +56,23 @@ export const Usuario = styled.div`
   width: 100%;
   height: 60px;
   padding: 0% 1% 0% 1%;
-  border-color: ${Cores.azul};
+  border-color: ${Cores.preto};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
-  margin-bottom: 2%;
+  margin-bottom: 10%;
+  overflow: auto;
+  min-height:60px;
+  
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
 
   @media (max-width: 500px) {
     flex-direction: column;
-    height: 60px;
+    height: 70px;
+    padding-top: 20%;
   }
 `;
 
@@ -176,7 +183,7 @@ export const DoisSelect = styled.h3`
   width: 100%;
   font-family: ${Fontes.barlow};
   font-size: 1em;
-
+ 
   @media (max-width: 560px) {
     flex-direction: column;
     height: 120px;
@@ -203,6 +210,10 @@ export const TamanhoInput = styled.div`
   justify-content: center;
   width: 40%;
   height: 40px;
+   @media(max-width: 295px) {
+    
+    margin-bottom:-15%;
+  }
   @media (max-width: 637px){
     margin-bottom: 5%;
   }
@@ -279,6 +290,9 @@ export const ContainerHorario = styled.div`
   width: 40%;
   height: 40px;
   //margin-bottom: 5%;
+   @media(max-width: 295px) {
+    margin-top: 500%;
+  }
   @media (max-width: 637px) {
     margin-top: 8%;
     margin-bottom:8%;
@@ -349,7 +363,7 @@ export const InputHora = styled(Input)`
     }
     return cor;
   }};
-
+  
   ::placeholder {
     color:${Cores.preto}
   }
@@ -435,6 +449,9 @@ export const SelecioneUmaData = styled.div`
   align-items: start;
   justify-content: center;
   width: 90%;
+  @media(max-width: 295px) {
+    margin-bottom:150%;
+  }
   @media (max-width: 637px){
     margin-bottom: 10%;
   }
