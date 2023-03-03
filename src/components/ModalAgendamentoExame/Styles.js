@@ -124,8 +124,18 @@ export const TipoAgendamento = styled.div`
   width: 100%;
   margin-top:20%;
   margin-bottom:20%;
+    @media(max-width: 295px){
+    margin-left:70%;
+  }
+  @media(max-width: 320px){
+    margin-bottom:10%;
+  }
+
   @media(max-width: 637px){
     margin-bottom:0%;
+  }
+   @media(max-width: 768px){
+    margin-top:10%;
   }
   @media (max-width: 620px){
     height: 25%;
@@ -183,7 +193,37 @@ export const DoisSelect = styled.h3`
   width: 100%;
   font-family: ${Fontes.barlow};
   font-size: 1em;
- 
+   @media(max-width: 768px){
+    margin-bottom:10%;
+  }
+  @media (max-width: 560px) {
+    flex-direction: column;
+    height: 120px;
+  }
+  @media (max-width: 1260px) and (min-width: 800px) {
+    flex-direction: column;
+    height: 160px;
+  }
+  @media (max-width: 400px) {
+    height: 180px;
+  }
+`;
+export const TresSelect = styled.h3`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  font-family: ${Fontes.barlow};
+  font-size: 1em;
+  @media(max-width: 295px){
+    margin-top: -55%;
+    margin-bottom: -20%;
+  }
+  @media(max-width: 320px){
+    margin-top: -50%;
+    margin-bottom: -20%;
+  }
   @media (max-width: 560px) {
     flex-direction: column;
     height: 120px;
@@ -195,6 +235,10 @@ export const DoisSelect = styled.h3`
   }
   @media (max-width: 400px) {
     height: 180px;
+  }
+  @media(max-width: 375px) {
+    margin-top: -35%;
+    margin-bottom: -20%;
   }
 `;
 
@@ -211,7 +255,6 @@ export const TamanhoInput = styled.div`
   width: 40%;
   height: 40px;
    @media(max-width: 295px) {
-    
     margin-bottom:-15%;
   }
   @media (max-width: 637px){
@@ -223,6 +266,9 @@ export const TamanhoInput = styled.div`
   @media (max-width: 560px) {
     width: 100%;
     margin-bottom: 5%;
+  }
+  @media(max-width: 768px){
+    margin-top:10%;
   }
   @media (max-width: 1260px) and (min-width: 800px) {
     width: 90%;
@@ -239,8 +285,12 @@ export const InputConsultorio = styled.div`
   height: 40px;
   margin-top: 5%;
   margin-botton: 10%;
+  
   @media(max-width: 637px) {
      margin-bottom: 5%;
+  }
+  @media(max-width: 768px){
+    margin-top:15%;
   }
   @media (max-width: 1717px) {
     margin-bottom: 5%;
@@ -255,6 +305,9 @@ export const InputConsultorio = styled.div`
   }
   @media (max-width: 807px) and (min-width: 800px) {
     padding-top: 15%;
+  }
+  @media(max-width:425px){
+    margin-top:20%;
   }
 `;
 
@@ -416,6 +469,10 @@ export const TextoCaixaSelect = styled.h3`
   display: flex;
   justify-content: end;
   align-items: center;
+  @media(max-width: 295px){
+    margin-left:15%;
+    margin-right:90%;
+  }
 `;
 
 export const TextoSelecioneUmaData = styled.h3`
@@ -426,6 +483,10 @@ export const TextoSelecioneUmaData = styled.h3`
   display: flex;
   justify-content: end;
   align-items: center;
+ 
+  @media(max-width:425px){
+    margin-top:5%;
+  }
 `;
 
 export const TextoDoisSelects = styled.h3`
@@ -449,8 +510,9 @@ export const SelecioneUmaData = styled.div`
   align-items: start;
   justify-content: center;
   width: 90%;
-  @media(max-width: 295px) {
-    margin-bottom:150%;
+ 
+   @media(max-width: 768px){
+    margin-top:-20%;
   }
   @media (max-width: 637px){
     margin-bottom: 10%;
@@ -458,6 +520,23 @@ export const SelecioneUmaData = styled.div`
   @media (max-width: 560px) {
     width: 100%;
   }
+  @media(max-width: 425px) {
+    margin-top: 1%;
+    margin-bottom:5%;
+  }
+  @media(max-width: 375px) {
+    margin-top: 5%;
+    margin-bottom:3%;
+  }
+  @media(max-width: 320px) {
+    margin-top: 5%;
+    margin-bottom:3%;
+  }
+   @media(max-width: 295px) {
+    margin-top: 5%;
+    margin-bottom:5%;
+  }
+  
 `;
 
 export const Rotulo = styled.div`

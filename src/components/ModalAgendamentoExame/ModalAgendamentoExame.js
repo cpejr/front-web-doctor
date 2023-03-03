@@ -12,6 +12,7 @@ import {
   Caixa,
   InfoDireita,
   DoisSelect,
+  TresSelect,
   TamanhoInput,
   InputHora,
   SelecioneUmaData,
@@ -421,7 +422,7 @@ function ModalAgendamentoExame(props) {
             </InputConsultorio>
           </DoisSelect>
 
-          <DoisSelect>
+          <TresSelect>
             <ContainerHorario>
               <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
               <InputHora
@@ -438,7 +439,7 @@ function ModalAgendamentoExame(props) {
               {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
               {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
             </ContainerHorario>
-          </DoisSelect>
+          </TresSelect>
           <Button
             width="80%"
             height="50px"

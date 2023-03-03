@@ -92,15 +92,23 @@ export const Usuario = styled.div`
   width: 100%;
   height: 60px;
   padding: 0% 1% 0% 1%;
-  border-color: ${Cores.azul};
+  border-color: ${Cores.preto};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10%;
+  overflow: auto;
+  min-height:60px;
+  
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
 
   @media (max-width: 500px) {
     flex-direction: column;
-    height: 60px;
+    height: 70px;
+    padding-top: 20%;
   }
 `;
 
@@ -160,7 +168,12 @@ export const TipoAgendamento = styled.div`
   width: 100%;
   margin-top:20%;
   margin-bottom:20%;
-
+   @media(max-width: 320px){
+    margin-bottom:10%;
+  }
+  @media(max-width: 295px){
+    margin-left:70%;
+  }
   @media (max-width: 900px){
     margin-top: 10%;
     margin-bottom: 10%;
@@ -242,7 +255,6 @@ export const TamanhoInput = styled.div`
   width: 40%;
   height: 40px;
   margin-top: 5%;
-
   @media  (max-width: 601px) and (min-width: 560px) {
     margin-bottom: 5%;
   }
@@ -415,9 +427,12 @@ export const TextoCaixaSelect = styled.h3`
   font-size: 1.1em;
   color: ${Cores.azulEscuro};
   display: flex;
-  justify-content: center;
+  justify-content: end;
   align-items: center;
-  text-align: center;
+  @media(max-width: 295px){
+    margin-left:15%;
+    margin-right:90%;
+  }
 `;
 
 export const TextoDoisSelects = styled.h3`

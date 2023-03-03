@@ -326,8 +326,8 @@ function ModalAgendamentoConsulta(props) {
           <TextoCaixaSelect>
             Selecione o Tipo de Agendamento:
           </TextoCaixaSelect>
-          <CaixaCheckbox>
-            <Row gutter={60} justify={"center"} >
+          
+            <Row gutter={60} justify={"space-around"} >
               <Radio.Group
                 defaultValue="consulta"
                 bordered={false}
@@ -338,7 +338,7 @@ function ModalAgendamentoConsulta(props) {
                 <Radio value="consulta">Consulta</Radio>
               </Radio.Group>
             </Row>
-          </CaixaCheckbox>
+          
         </TipoAgendamento>
         <TextAreaDescricao
           border={tipoRadio}
@@ -511,23 +511,22 @@ function ModalAgendamentoConsulta(props) {
           <TextoCheckbox>Notificar paciente</TextoCheckbox>
         </Checkbox>
         <Button
-          width="80%"
-          widthMedia600="90%"
-          height="50px"
-          backgroundColor={Cores.lilas[2]}
-          borderColor={Cores.azul}
-          color={Cores.azulEscuro}
-          fontSize="1.1em"
-          fontWeight="bold"
-          fontSizeMedia950="1.1em"
-          fontSizeMedia480="0.9em"
-          fontSizeMedia350="0.8em"
+           width="80%"
+           height="50px"
+           backgroundColor={Cores.lilas[2]}
+           borderColor={Cores.azul}
+           color={Cores.azulEscuro}
+           fontSize="1.1em"
+           fontWeight="bold"
+           fontSizeMedia="0.9em"
+           fontSizeMedia950="1.1em"
+           fontSizeMedia350 = "0.9em"
           onClick={() => requisicaoCriarConsulta()}
         >
           {carregandoCadastro ? (
             <Spin indicator={antIcon} />
           ) : (
-            <div>Cadastrar novo agendamento</div>
+            <div style={{margin: 'auto', padding: 'auto'}}>Cadastrar novo agendamento</div>
           )}
         </Button>
       </InfoDireita>
