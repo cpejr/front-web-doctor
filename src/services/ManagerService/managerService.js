@@ -23,6 +23,20 @@ export const EnviandoImagem = async (file) => {
   return;
 };
 
+export const EnviandoArquivo = async (file) => {
+  await requesterService
+    .EnviandoArquivo(file)
+    .then(() => {
+      return;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+
+  return;
+};
+
 export const requisicaoLogin = async (email, senha) => {
   try {
     const resposta = await requesterService.logarUsuario(email, senha);
@@ -350,6 +364,63 @@ export const UpdateCodigo = async (id_usuario, codigo) => {
   return false;
 };
 
+export const DeleteComentario = async (id) => {
+  await requesterService
+    .DeleteComentario(id)
+    .then(() => {
+      toast.success('Comentário deletado com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/edicaocomentario'));
+      return false;
+    });
+
+  return false;
+};
+
+export const UpdateComentario = async (id, comentario) => {
+  await requesterService
+    .UpdateComentario(id, comentario)
+    .then(() => {
+      toast.success('Comentário atualizado com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/edicaocomentario'));
+      return false;
+    });
+
+  return false;
+};
+
+export const CriandoComentario = async (comentario) => {
+  await requesterService
+    .CriandoComentario(comentario)
+    .then(() => {
+      toast.success('Comentário criado com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/edicaocomentario'));
+      return false;
+    });
+
+  return;
+};
+
+export const GetComentario = async () => {
+  let dadosComentario = [];
+
+  await requesterService
+    .requisicaoComentario()
+
+    .then((res) => {
+      dadosComentario = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosComentario;
+};
+
 export const DeletarEnderecoEUsuario = async (id_endereco) => {
   await requesterService
     .deletarEnderecoEUsuario(id_endereco)
@@ -654,6 +725,38 @@ export const CriandoReceita = async (
     });
 };
 
+export const CriandoReceitaComArquivo = async (
+  id_usuario,
+  tituloReceita,
+  descricao,
+  base64,
+  usarToast = {
+    mensagemSucesso: 'Operação bem sucedida',
+    tempo: 1500,
+    onClose: () => {},
+  }
+) => {
+  return requesterService.criarReceitaComArquivo(
+      id_usuario,
+      tituloReceita,
+      descricao,
+      base64,
+    )
+    .then(() => {
+      if (usarToast) {
+        toast.success(usarToast.mensagemSucesso, {
+          autoClose: usarToast.tempo,
+          onClose: usarToast.onClose,
+        });
+      }
+      return true;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+};
+
 export const EditarPerguntasFormulario = async (id, perguntas) => {
   await requesterService
     .editarPerguntasFormulario(id, perguntas)
@@ -817,6 +920,19 @@ export const CriandoMensagem = async (mensagem) => {
   return dadosMensagemCriada;
 };
 
+export const CriandoMensagemComArquivo = async (mensagem) => {
+  let dadosMensagemCriada = {};
+  await requesterService
+    .criarMensagemComArquivo(mensagem)
+    .then((res) => {
+      dadosMensagemCriada = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosMensagemCriada;
+};
+
 export const GetMensagensPorConversaUsuario = async (
   id_usuario,
   id_conversa
@@ -908,4 +1024,35 @@ export const dispostivoById = async (id) => {
       requisicaoErro(error);
     });
   return dispositivo;
+};
+
+export const GetHomes = async () => {
+  let dadosHomes = {};
+
+  await requesterService
+    .requisicaoHomes()
+
+    .then((res) => {
+      dadosHomes = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosHomes[0];
+}; 
+
+export const enviarArquivoMensagem = async (file) => {
+  let id;
+  await requesterService
+    .enviarArquivoMensagem(file)
+    .then((res) => {
+      toast.success('Arquivo PDF enviado com sucesso');
+      id = res.data;
+      
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return;
+    });
+  return id;
 };

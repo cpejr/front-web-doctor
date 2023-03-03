@@ -84,7 +84,9 @@ function PerfilPaciente(props) {
   const [tipoAgendamento, setTipoAgendamento] = useState("");
   const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState("");
   const emailUsuarioLogado = sessionStorage.getItem("@doctorapp-Email");
-
+  const [formularioEspecifico, setFormularioEspecifico] = useState({});
+  const [formularios, setFormularios] = useState();
+  const [booleanoFormulario, setbooleanFormulario] = useState();
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
   );
@@ -125,13 +127,10 @@ function PerfilPaciente(props) {
     setConvenio(resposta.dadosUsuario.convenio);
     setCarregando(false);
 
-
-
     if (resposta.dadosUsuario.tipo === "PACIENTE") {
       setTipoUsuario(true);
     }
   }
-
   useEffect(() => {
     pegandoDados();
     pegandoTipoUsuarioLogado();
@@ -194,7 +193,6 @@ function PerfilPaciente(props) {
   async function setandoTipoExame() {
     setTipoAgendamento("Exame");
     setModalAgendamento(true);
-
   }
 
   async function setandoTipoConsulta() {
@@ -265,6 +263,19 @@ function PerfilPaciente(props) {
     Linkbaixavel.click();
   }
 
+  async function pegandoDadosFormularioEspecifico(id) {
+    const formularioEscolhido = await managerService.GetFormularioEspecifico(
+      id
+    );
+    setFormularioEspecifico(formularioEscolhido);
+    if (formularioEscolhido.visualizacao_secretaria === true) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  
   return (
     <div>
       <ContainerPerfil>
@@ -391,7 +402,7 @@ function PerfilPaciente(props) {
                           height="40px"
                           width="100%"
                           fontSize="1.3em"
-                          fontSizeMedia480="1em"
+                          fontSizeMedia="1em"
                           onClick={() => setandoTipoConsulta()}
                         >
                           Consultas Agendadas
@@ -406,7 +417,7 @@ function PerfilPaciente(props) {
                           height="40px"
                           width="100%"
                           fontSize="1.3em"
-                          fontSizeMedia480="1em"
+                          fontSizeMedia="1em"
                           onClick={() => setandoTipoExame()}
                         >
                           Exames Agendados
@@ -448,10 +459,14 @@ function PerfilPaciente(props) {
                   <Titulo>FORMULÁRIOS</Titulo>
                   {respostas?.map((value) => (
                     <>
-                      {deveMostrarFormularios(value.id_formulario, value.status) && (
+                      {deveMostrarFormularios(
+                        value.id_formulario,
+                        value.status
+                      ) && (
                         <Formulario>
                           <DadosFormulario>
-                            {tipoUsuarioLogado === "MASTER" ? (
+                            {tipoUsuarioLogado === "MASTER" ||
+                            value.visualizacao_secretaria === true ? (
                               <TituloFormulario
                                 cursor="pointer"
                                 textDecoration="underline"
