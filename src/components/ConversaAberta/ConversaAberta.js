@@ -4,8 +4,9 @@ import {
   PaperClipOutlined,
   PlusOutlined,
   SendOutlined,
+  QuestionOutlined,
 } from "@ant-design/icons";
-import { Dropdown, Menu, Modal, Spin, Tooltip } from "antd";
+import { Dropdown, Menu, Modal, Spin, Tooltip} from "antd";
 import moment from "moment";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { ChatContext } from "../../contexts/ChatContext";
@@ -28,7 +29,6 @@ import {
   MenuConversasTipoExame,
   NomePessoa,
 } from "./Styles";
-
 export default function ConversaAberta({ socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState("");
@@ -117,6 +117,150 @@ export default function ConversaAberta({ socket }) {
       </Menu.Item>
     </Menu>
   );
+  const TextoA1 = "Olá sou a enfermeira, posso te auxiliar em algo ?"
+  const TextoA2 = "Olá sou a enfermeira, posso te auxiliar em algo2 ?"
+  const TextoA3 = "Olá sou a enfermeira, posso te auxiliar em algo3 ?"
+  const TextoA4 = "Olá sou a enfermeira, posso te auxiliar em algo4 ?"
+  const TextoA5 = "Olá sou a enfermeira, posso te auxiliar em algo5 ?"
+  const TextoA6 = "Olá sou a enfermeira, posso te auxiliar em algo6 ?"
+  const TextoA7 = "Olá sou a enfermeira, posso te auxiliar em algo7 ?"
+  const TextoA8 = "Olá sou a enfermeira, posso te auxiliar em algo8 ?"
+  const TextoA9 = "Olá sou a enfermeira, posso te auxiliar em algo9 ?"
+  const TextoA10 = "Olá sou a enfermeira, posso te auxiliar em algo10 ?"
+  const menuMensagens = (
+    <Menu>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA1)}
+          value = {TextoA1}
+        >
+            <b >TextoA1</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA2)}
+          value = {TextoA2}
+        >
+            <b >TextoA2</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA3)}
+          value = {TextoA3}
+        >
+            <b >TextoA3</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA4)}
+          value = {TextoA4}
+        >
+            <b >TextoA4</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA5)}
+          value = {TextoA5}
+        >
+            <b >TextoA5</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA6)}
+          value = {TextoA6}
+        >
+            <b >TextoA6</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA7)}
+          value = {TextoA7}
+        >
+            <b >TextoA7</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA8)}
+          value = {TextoA8}
+        >
+            <b >TextoA8</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA9)}
+          value = {TextoA9}
+        >
+            <b >TextoA9</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA10)}
+          value = {TextoA10}
+        >
+            <b >TextoA10</b>
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
 
   async function fechandoModalEnviarArquivo() {
     setModalEnviarArquivo(false);
@@ -151,6 +295,7 @@ export default function ConversaAberta({ socket }) {
   useEffect(() => {
     verificaHorarioPermitidoParaEnvioDeMensagens();
   });
+
 
   async function enviarFormularioPaciente() {
     await managerService.EnviandoFormularioPaciente(
@@ -432,7 +577,7 @@ export default function ConversaAberta({ socket }) {
         )}
       </CorpoConversaAberta>
       <FooterConversaAberta>
-        {conversaSelecionada.tipo === "EXAME" ? (
+        {conversaSelecionada.tipo === "ACTIGRAFIA" || conversaSelecionada.tipo === "BIOLOGIX" ? (
           <MenuConversasTipoExame>
             <Dropdown
               onClick={(e) => e.preventDefault()}
@@ -445,6 +590,7 @@ export default function ConversaAberta({ socket }) {
             </Dropdown>
           </MenuConversasTipoExame>
         ) : (
+          <>
           <Tooltip placement="bottom" title="Enviar arquivo">
             <Button
               backgroundColor="transparent"
@@ -463,8 +609,23 @@ export default function ConversaAberta({ socket }) {
               />
             </Button>
           </Tooltip>
+            <Dropdown
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color={Cores.lilas[1]}
+              width="10%"
+              widthres="15%"
+              height="10%"
+              marginTop="0%"
+              overlay={menuMensagens}
+              placement={"bottom"}
+            >
+              <QuestionOutlined 
+                style={{ fontSize: "27px", color: "#434b97", margin: "0px 1rem",marginLeft: "0%" }}
+              />
+            </Dropdown>
+          </>
         )}
-
         <Input
           placeholder="Mensagem"
           backgroundColor="white"

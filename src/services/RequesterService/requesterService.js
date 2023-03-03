@@ -3,6 +3,8 @@ import api from '../../services/api';
 
 export const EnviandoImagem = (base64) => api.post("/arquivo", { file: base64 });
 
+export const EnviandoArquivo = (base64) => api.post("/arquivofile", {file: base64});
+
 
 export const logarUsuario = (email, senha) =>
   api.post('/login', {
@@ -115,6 +117,9 @@ export const deletarFormulario = (id) => api.delete(`/formularios/${id}`);
 export const requisicaoRespostaFormularioIdUsuario = (id_usuario) =>
   api.get(`/formularios_pacientes_usuario/${id_usuario}`);
 
+export const requisicaoRespostaReceitaIdUsuario = (id_usuario) =>
+  api.get(`/receitas_usuario/${id_usuario}`);
+
 export const criarFormulario = (estado) => api.post('/formularios', estado);
 
 export const requisicaoRespostaFormulario = (id) =>
@@ -133,7 +138,18 @@ export const criarReceita = (id_usuario, nomePaciente, dataNascimento, tituloRec
     titulo: tituloReceita,
     descricao: descricao,
   });
-
+export const criarReceitaComArquivo = (
+  id_usuario,
+  tituloReceita,
+  descricao,
+  base64
+) =>
+  api.post(`/receitasarquivo`, {
+    id_usuario: id_usuario,
+    titulo: tituloReceita,
+    descricao: descricao,
+    file:base64,
+  });
 
 export const deletarReceita = (id) => api.delete(`/receitas/${id}`);
 

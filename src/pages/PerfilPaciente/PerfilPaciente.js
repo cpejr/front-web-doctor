@@ -53,6 +53,8 @@ import ModalFormulario from "../../components/ModalFormulario";
 import { redirecionamento, sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 import { cep } from "../../utils/masks";
+import { compararDataRecente } from "../../utils/tratamentoErros";
+import formatarData from "../../utils/formatarData";
 
 function PerfilPaciente(props) {
   const [modalAgendamento, setModalAgendamento] = useState(false);
@@ -67,6 +69,7 @@ function PerfilPaciente(props) {
   const [dataNascimento, setDataNascimento] = useState("");
   const [carregando, setCarregando] = useState(true);
   const [respostas, setRespostas] = useState([]);
+  const [receitas, setReceitas] = useState([]);
   const [perguntas, setPerguntas] = useState();
   const [titulo, setTitulo] = useState();
   const [cpf, setCpf] = useState();
@@ -154,8 +157,22 @@ function PerfilPaciente(props) {
     setRespostas(resposta);
   }
 
+  async function pegandoListaReceitas() {
+    const resposta = await managerService.GetRespostaReceitasIdUsuario(
+      usuario.id
+    );
+    const receitasFormatadas = resposta
+      .sort(compararDataRecente)
+      .map(({ data_criacao, ...resto }) => ({
+        data_criacao: formatarData({ data: data_criacao, formatacao: "dd/MM/yyyy" }),
+        ...resto,
+      }));
+    setReceitas(receitasFormatadas);
+  }
+
   useEffect(() => {
     pegandoListaFormularios();
+    pegandoListaReceitas();
   }, [usuario]);
 
   async function deletarEnderecoEUsuario() {
@@ -231,6 +248,19 @@ function PerfilPaciente(props) {
     const FORMULARIO_RESPONDIDO = true;
 
     return statusForm === FORMULARIO_RESPONDIDO;
+  }
+
+  async function baixarPdf(receitaPdf) {
+    const chave = receitaPdf.pdf_url;
+    const resposta = await managerService.GetArquivoPorChave(chave);
+
+    const fonteLink = `data:application/pdf;base64,${resposta}`;
+    const Linkbaixavel = document.createElement('a');
+    const nome = receitaPdf.titulo + ".pdf";
+
+    Linkbaixavel.href = fonteLink;
+    Linkbaixavel.download = nome;
+    Linkbaixavel.click();
   }
 
   async function pegandoDadosFormularioEspecifico(id) {
@@ -356,7 +386,7 @@ function PerfilPaciente(props) {
                       height="40px"
                       width="100%"
                       fontSize="1.3em"
-                      fontSizeMedia="1em"
+                      fontSizeMedia480="1em"
                     >
                       Iniciar Conversa
                     </Button>
@@ -407,7 +437,7 @@ function PerfilPaciente(props) {
                         height="40px"
                         width="100%"
                         fontSize="1.3em"
-                        fontSizeMedia="1em"
+                        fontSizeMedia480="1em"
                         onClick={() => setModalDeletarUsuario(true)}
                       >
                         Excluir Usuário
@@ -458,7 +488,6 @@ function PerfilPaciente(props) {
                                 {value.titulo}
                               </TituloFormulario>
                             )}
-
                             <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
                             <UrgenciaFormulario>
                               <>Urgência: </>
@@ -496,32 +525,38 @@ function PerfilPaciente(props) {
               ) : (
                 <>
                   <Titulo>RECEITAS</Titulo>
-                  <Receita>
-                    <DadosReceita>
-                      <TituloReceita
-                        textDecoration="underline"
-                        color={Cores.preto}
-                        fontSize="1.5em"
-                      >
-                        Título
-                      </TituloReceita>
-                      <TituloReceita color={Cores.lilas[1]} fontSize="1.2em">
-                        xx/xx/2022
-                      </TituloReceita>
-                    </DadosReceita>
-                    <BotaoReceita>
-                      <Button
-                        backgroundColor="green"
-                        color={Cores.azulEscuro}
-                        fontWeight="bold"
-                        borderColor={Cores.azulEscuro}
-                        height="40px"
-                        width="25%"
-                      >
-                        DOWNLOAD
-                      </Button>
-                    </BotaoReceita>
-                  </Receita>
+                  {receitas?.map((value) =>
+                    <>
+                      <Receita>
+                        <DadosReceita key={value?.id}>
+                          <TituloReceita
+                            color={Cores.preto}
+                            justifyContent="flex-start"
+                          >
+                            {value.titulo}
+                          </TituloReceita>
+                          <TituloReceita
+                            color={Cores.lilas[1]}
+                            justifyContent="flex-end"
+                          >
+                            Data: {value.data_criacao}
+                          </TituloReceita>
+                        </DadosReceita>
+                        <BotaoReceita>
+                          <Button
+                            backgroundColor={Cores.lilas[2]}
+                            color={Cores.azulEscuro}
+                            fontWeight="bold"
+                            borderColor={Cores.azulEscuro}
+                            height="40px"
+                            width="25%"
+                            onClick={() => baixarPdf(value)}
+                          >
+                            DOWNLOAD
+                          </Button>
+                        </BotaoReceita>
+                      </Receita>
+                    </>)}
                 </>
               )}
             </Receitas>
@@ -530,7 +565,6 @@ function PerfilPaciente(props) {
           <></>
         )}
       </ContainerPerfil>
-
       <Modal
         visible={modalAgendamento}
         onCancel={fechandoModalAgendamento}
@@ -559,7 +593,6 @@ function PerfilPaciente(props) {
           fecharModal={() => fechandoModalDeletarUsuario()}
         />
       </Modal>
-
       <Modal
         visible={modalFormulario}
         onCancel={() => setModalFormulario(false)}
@@ -574,8 +607,7 @@ function PerfilPaciente(props) {
           titulo={titulo}
         />
       </Modal>
-
-      <AddToast />
+      <AddToast/>
     </div>
   );
 }
