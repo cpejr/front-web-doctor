@@ -581,6 +581,21 @@ export const GetRespostaFormularioIdUsuario = async (id_usuario) => {
   return dadosResposta;
 };
 
+export const GetRespostaReceitasIdUsuario = async (id_usuario) => {
+  let dadosResposta = {};
+
+  await requesterService
+    .requisicaoRespostaReceitaIdUsuario(id_usuario)
+
+    .then((res) => {
+      dadosResposta = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosResposta;
+};
+
 export const confirmarPagamentoExame = async(id_paciente, id_usuario) => {
   const formulariosPaciente = await GetRespostaFormularioIdUsuario(id_paciente);
   let possuiFormulario = false;
