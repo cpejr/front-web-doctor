@@ -56,10 +56,15 @@ import { redirecionamento, sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 import { cep } from "../../utils/masks";
 import { saveAs } from 'file-saver';
-import { Document, Packer, Paragraph, Header, Footer, ImageRun } from "docx";
+import {
+  Document,
+  Packer,
+  Paragraph,
+  TextRun,
+  SectionType
+} from "docx";
 import formatarData from "../../utils/formatarData";
 import logoPdf from "../../assets/LogoPdf.png";
-import * as fs from 'fs-web';
 
 function PerfilPaciente(props) {
   const [modalAgendamento, setModalAgendamento] = useState(false);
@@ -262,44 +267,57 @@ function PerfilPaciente(props) {
 
     let arrayParagrafos = [];
 
-    arrayParagrafos.push(
-      new Paragraph({
-        children: [
-          new ImageRun({
-            data: fs.readFileSync("../../assets/LogoPdf.png"),
-            transformation: {
-              width: 100,
-              height: 100,
-            },
-          }),
-        ],
-      })
-    )
-    arrayParagrafos.push(
-      new Paragraph(`NOME: ${usuario.nome}`)
-    )
-    arrayParagrafos.push(
-      new Paragraph(`DATA DE NASCIMENTO: ${dataFormatada}`)
-    )
-
     perguntas.forEach((pergunta, index) => {
       const conteudoPergunta = pergunta.title
       const conteudoResposta = respostas[index];
       arrayParagrafos.push(
-        new Paragraph(`Pergunta: ${conteudoPergunta}`)
+        new TextRun({
+          text: `Pergunta: ${conteudoPergunta}`,
+          break: 1,
+          bold: true
+        })
       )
       arrayParagrafos.push(
-        new Paragraph(`Resposta: ${conteudoResposta}`)
+        new TextRun({
+          text: `Resposta: ${conteudoResposta}`,
+          break: 1,
+        })
       )
     });
 
     const doc = new Document({
-      sections: [
-        {
-          properties: {},
-          children: arrayParagrafos
+      sections: [{
+        properties: {
+          type: SectionType.CONTINUOUS,
         },
-      ],
+        children: [
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: `NOME: `,
+                bold: true,
+              }),
+              new TextRun({
+                text: `${usuario.nome}`,
+              }),
+            ],
+          }),
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: `DATA DE NASCIMENTO: `,
+                bold: true,
+              }),
+              new TextRun({
+                text: `${dataFormatada}`,
+              }),
+            ],
+          }),
+          new Paragraph({
+            children: arrayParagrafos
+          }),
+        ],
+      }],
     });
 
     await Packer.toBlob(doc).then(blob => {

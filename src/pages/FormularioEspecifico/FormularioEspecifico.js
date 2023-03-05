@@ -42,7 +42,13 @@ import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 import { sleep } from "../../utils/sleep";
 import { saveAs } from 'file-saver';
-import { Document, Packer, Paragraph } from "docx";
+import {
+  Document,
+  Packer,
+  Paragraph,
+  TextRun,
+  SectionType
+} from "docx";
 import formatarData from "../../utils/formatarData";
 
 function FormularioEspecifico(props) {
@@ -71,6 +77,8 @@ function FormularioEspecifico(props) {
   const [formularios, setFormularios] = useState();
   const [perguntas, setPerguntas] = useState();
   const [perguntasAlterar, setPerguntasAlterar] = useState();
+  const [usuario, setUsuario] = useState({});
+  const [dataNascimento, setDataNascimento] = useState("");
 
   const lowerBusca = busca
     .toLowerCase()
@@ -93,6 +101,10 @@ function FormularioEspecifico(props) {
   useEffect(() => {
     pegandoDadosFormularioEspecifico();
   }, [props]);
+
+  useEffect(() => {
+    pegandoDados();
+  }, []);
 
   async function pegandoFormularioPacientes() {
     const respostaFormularios =
@@ -211,52 +223,82 @@ function FormularioEspecifico(props) {
     setStatusSelect(value);
   }
 
-  async function salvaWord(docxWord, nome, data_nascimento) {
-
-    console.log(data_nascimento)
+  async function salvaWord(docxWord) {
 
     const perguntas = Object.values(docxWord.perguntas.properties);
     const respostas = Object.values(docxWord.respostas);
 
-    const dataFormatada = formatarData({ data: data_nascimento, formatacao: "dd/MM/yyyy" });
+    //const dataFormatada = formatarData({ data: usuario.data_nascimento, formatacao: "dd/MM/yyyy" });
 
     let arrayParagrafos = [];
-
-    arrayParagrafos.push(
-      new Paragraph(`Logo`)
-    )
-    arrayParagrafos.push(
-      new Paragraph(`NOME: ${nome}`)
-    )
-    arrayParagrafos.push(
-      new Paragraph(`DATA DE NASCIMENTO: ${dataFormatada}`)
-    )
 
     perguntas.forEach((pergunta, index) => {
       const conteudoPergunta = pergunta.title
       const conteudoResposta = respostas[index];
       arrayParagrafos.push(
-        new Paragraph(`Pergunta: ${conteudoPergunta}`)
+        new TextRun({
+          text: `Pergunta: ${conteudoPergunta}`,
+          break: 1,
+          bold: true
+        })
       )
       arrayParagrafos.push(
-        new Paragraph(`Resposta: ${conteudoResposta}`)
+        new TextRun({
+          text: `Resposta: ${conteudoResposta}`,
+          break: 1,
+        })
       )
     });
 
     const doc = new Document({
-      sections: [
-        {
-          properties: {},
-          children: arrayParagrafos
+      sections: [{
+        properties: {
+          type: SectionType.CONTINUOUS,
         },
-      ],
+        children: [
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: `NOME: `,
+                bold: true,
+              }),
+              new TextRun({
+                text: `${docxWord.nome}`,
+              }),
+            ],
+          }),
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: `DATA DE NASCIMENTO: `,
+                bold: true,
+              }),
+              /* new TextRun({
+                text: `${dataFormatada}`,
+              }), */
+            ],
+          }),
+          new Paragraph({
+            children: arrayParagrafos
+          }),
+        ],
+      }],
     });
 
     await Packer.toBlob(doc).then(blob => {
       saveAs(blob,
-        "Resposta do Formulário " + docxWord.titulo + " referente ao paciente " + nome
+        "Resposta do Formulário " + docxWord.titulo + " referente ao paciente " + docxWord.nome
           .docx)
     })
+  }
+
+  async function pegandoDados() {
+    const resposta = await managerService.GetDadosUsuario(
+      props.location.state.email
+    );
+    const data = new Date(resposta.dadosUsuario.data_nascimento);
+    setUsuario(resposta.dadosUsuario);
+    setDataNascimento(data.toLocaleDateString());
   }
 
   return (
