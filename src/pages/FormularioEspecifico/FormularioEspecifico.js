@@ -47,7 +47,14 @@ import {
   Packer,
   Paragraph,
   TextRun,
-  SectionType
+  SectionType,
+  HorizontalPositionRelativeFrom,
+  HorizontalPositionAlign,
+  VerticalPositionRelativeFrom,
+  VerticalPositionAlign,
+  TextWrappingType,
+  TextWrappingSide,
+  ImageRun
 } from "docx";
 import formatarData from "../../utils/formatarData";
 
@@ -250,12 +257,49 @@ function FormularioEspecifico(props) {
       )
     });
 
+    const logo = await fetch(
+      "../../assets/LogoPdf.png"
+    ).then(r => r.blob());
+
+    const footer = await fetch(
+      "../../assets/footerPDF.png"
+    ).then(r => r.blob());
+
     const doc = new Document({
       sections: [{
         properties: {
           type: SectionType.CONTINUOUS,
         },
         children: [
+          new Paragraph({
+            children: [
+              new ImageRun({
+                data: logo,
+                transformation: {
+                  width: 350,
+                  height: 130
+                },
+                floating: {
+                  horizontalPosition: {
+                    relative: HorizontalPositionRelativeFrom.TOP_MARGIN,
+                    align: HorizontalPositionAlign.CENTER,
+                  },
+                  verticalPosition: {
+                    relative: VerticalPositionRelativeFrom.TOP_MARGIN,
+                    align: VerticalPositionAlign.TOP,
+                  },
+                  wrap: {
+                    type: TextWrappingType.TOP_AND_BOTTOM,
+                    side: TextWrappingSide.LARGEST,
+                  },
+                  margins: {
+                    top: 201440,
+                    bottom: 201440,
+                  },
+                }
+              })
+            ]
+          }),
           new Paragraph({
             children: [
               new TextRun({
@@ -281,6 +325,35 @@ function FormularioEspecifico(props) {
           new Paragraph({
             children: arrayParagrafos
           }),
+          new Paragraph({
+            children: [
+              new ImageRun({
+                data: footer,
+                transformation: {
+                  width: 800,
+                  height: 100
+                },
+                floating: {
+                  horizontalPosition: {
+                    relative: HorizontalPositionRelativeFrom.TOP_AND_BOTTOM,
+                    align: HorizontalPositionAlign.CENTER,
+                  },
+                  verticalPosition: {
+                    relative: VerticalPositionRelativeFrom.BOTTOM_MARGIN,
+                    align: VerticalPositionAlign.BOTTOM,
+                  },
+                  wrap: {
+                    type: TextWrappingType.TOP_AND_BOTTOM,
+                    side: TextWrappingSide.LARGEST,
+                  },
+                  margins: {
+                    top: 201440,
+                    bottom: 201440,
+                  },
+                }
+              })
+            ]
+          }),
         ],
       }],
     });
@@ -291,6 +364,7 @@ function FormularioEspecifico(props) {
           .docx)
     })
   }
+
 
   async function pegandoDados() {
     const resposta = await managerService.GetDadosUsuario(

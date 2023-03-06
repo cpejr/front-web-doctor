@@ -44,7 +44,6 @@ import {
   CaixaBaixarPdf,
   BaixarPdf,
 } from "./Styles";
-import logoGuilherme from "../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
 import ModalAgendamento from "../../components/ModalAgendamento/ModalAgendamento";
 import { Cores } from "../../variaveis";
@@ -61,10 +60,17 @@ import {
   Packer,
   Paragraph,
   TextRun,
-  SectionType
+  SectionType,
+  ImageRun,
+  AlignmentType,
+  HorizontalPositionAlign,
+  HorizontalPositionRelativeFrom,
+  VerticalPositionRelativeFrom,
+  VerticalPositionAlign,
+  TextWrappingType,
+  TextWrappingSide
 } from "docx";
 import formatarData from "../../utils/formatarData";
-import logoPdf from "../../assets/LogoPdf.png";
 
 function PerfilPaciente(props) {
   const [modalAgendamento, setModalAgendamento] = useState(false);
@@ -263,7 +269,7 @@ function PerfilPaciente(props) {
     const perguntas = Object.values(docxWord.perguntas.properties);
     const respostas = Object.values(docxWord.respostas);
 
-    const dataFormatada = formatarData({ data: usuario.data_nascimento, formatacao: "dd/MM/yyyy" });
+    //const dataFormatada = formatarData({ data: usuario.data_nascimento, formatacao: "dd/MM/yyyy" });
 
     let arrayParagrafos = [];
 
@@ -285,6 +291,14 @@ function PerfilPaciente(props) {
       )
     });
 
+    const logo = await fetch(
+      "../../assets/LogoPdf.png"
+    ).then(r => r.blob());
+
+    const footer = await fetch(
+      "../../assets/footerPDF.png"
+    ).then(r => r.blob());
+
     const doc = new Document({
       sections: [{
         properties: {
@@ -293,12 +307,41 @@ function PerfilPaciente(props) {
         children: [
           new Paragraph({
             children: [
+              new ImageRun({
+                data: logo,
+                transformation: {
+                  width: 350,
+                  height: 130
+                },
+                floating: {
+                  horizontalPosition: {
+                    relative: HorizontalPositionRelativeFrom.TOP_MARGIN,
+                    align: HorizontalPositionAlign.CENTER,
+                  },
+                  verticalPosition: {
+                    relative: VerticalPositionRelativeFrom.TOP_MARGIN,
+                    align: VerticalPositionAlign.TOP,
+                  },
+                  wrap: {
+                    type: TextWrappingType.TOP_AND_BOTTOM,
+                    side: TextWrappingSide.LARGEST,
+                  },
+                  margins: {
+                    top: 201440,
+                    bottom: 201440,
+                  },
+                }
+              })
+            ]
+          }),
+          new Paragraph({
+            children: [
               new TextRun({
                 text: `NOME: `,
                 bold: true,
               }),
               new TextRun({
-                text: `${usuario.nome}`,
+                text: `${docxWord.nome}`,
               }),
             ],
           }),
@@ -308,13 +351,42 @@ function PerfilPaciente(props) {
                 text: `DATA DE NASCIMENTO: `,
                 bold: true,
               }),
-              new TextRun({
+              /* new TextRun({
                 text: `${dataFormatada}`,
-              }),
+              }), */
             ],
           }),
           new Paragraph({
             children: arrayParagrafos
+          }),
+          new Paragraph({
+            children: [
+              new ImageRun({
+                data: footer,
+                transformation: {
+                  width: 800,
+                  height: 100
+                },
+                floating: {
+                  horizontalPosition: {
+                    relative: HorizontalPositionRelativeFrom.TOP_AND_BOTTOM,
+                    align: HorizontalPositionAlign.CENTER,
+                  },
+                  verticalPosition: {
+                    relative: VerticalPositionRelativeFrom.BOTTOM_MARGIN,
+                    align: VerticalPositionAlign.BOTTOM,
+                  },
+                  wrap: {
+                    type: TextWrappingType.TOP_AND_BOTTOM,
+                    side: TextWrappingSide.LARGEST,
+                  },
+                  margins: {
+                    top: 201440,
+                    bottom: 201440,
+                  },
+                }
+              })
+            ]
           }),
         ],
       }],
@@ -322,7 +394,7 @@ function PerfilPaciente(props) {
 
     await Packer.toBlob(doc).then(blob => {
       saveAs(blob,
-        "Resposta do Formulário " + docxWord.titulo + " referente ao paciente " + usuario.nome
+        "Resposta do Formulário " + docxWord.titulo + " referente ao paciente " + docxWord.nome
           .docx)
     })
   }
@@ -558,7 +630,7 @@ function PerfilPaciente(props) {
                                     borderColor={Cores.azulEscuro}
                                     height="40px"
                                     width="25%"
-                                    onClick={() => salvaWord(value, usuario)}
+                                    onClick={() => salvaWord(value)}
                                   >
                                     BAIXAR DOCX
                                   </Button>
