@@ -6,6 +6,8 @@ import { DeleteOutlined } from "@ant-design/icons";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { sleep } from '../../utils/sleep';
+import { Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 import { useHistory } from "react-router-dom";
 import * as managerService from "../../services/ManagerService/managerService";
 function ModalExcluirIndicacao(props) {
@@ -13,7 +15,9 @@ function ModalExcluirIndicacao(props) {
   const [medicos, setMedicos] = useState([{}]);
   const [idMedicoEscolhido, setIdMedicoEscolhido] = useState();
   const [preenchido, setPreenchido] = useState(false);
+  const [carregando, setCarregando] = useState(false);
   const history = useHistory();
+  const antIcon = <LoadingOutlined style={{ fontSize: 25}} spin />;
   let medicodeletado;
   async function buscarMedicosporId() {
     const resposta = await managerService.GetMedicosIndicadosPorID(props.idmedicoindicado);
@@ -29,12 +33,15 @@ function ModalExcluirIndicacao(props) {
   }
   async function deletarIndicacao() {
     console.log(medicodeletado);
+    setCarregando(true)
     if(preenchido === false){
       toast.warn("Escolha um médico para deletar");
+      setCarregando(false);
 			return;
     }else{
       await managerService.DeletarIndicao(idMedicoEscolhido);
       await sleep(1500);
+      setCarregando(false);
       history.push("/web/edicaoindicacoesesugestoes");
     }
     
@@ -76,7 +83,8 @@ function ModalExcluirIndicacao(props) {
         marginTop="10%"
         onClick={deletarIndicacao}
       >
-        Excluir Indicação <DeleteOutlined />
+       {carregando ? <Spin indicator={antIcon} /> : "Excluir Indicação"}
+        <DeleteOutlined />
       </Button>
     </Container>
   );

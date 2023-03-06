@@ -58,6 +58,14 @@ function EdicaoIndicacoesESugestoes(props) {
   const [medicosIndicados, setMedicosIndicados] = useState([{}]);
   const [idIndicado, setIdIndicado] = useState();
   const history = useHistory();
+ 
+  async function pegarIndicacoesEspecificas() {
+    const Indicacoes = await managerService.GetIndicacaoEspecifica();
+    setIndicacoesEspecificas(Indicacoes);
+  }
+  useEffect(() => {
+    pegarIndicacoesEspecificas();
+  }, [])
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
@@ -75,9 +83,10 @@ function EdicaoIndicacoesESugestoes(props) {
     setCarregando(true);
     let Texto;
     let Titulo;
-    
-    const Indicacoes = await managerService.GetIndicacaoEspecifica();
+
+    /*const Indicacoes = await managerService.GetIndicacaoEspecifica();
     setIndicacoesEspecificas(Indicacoes);
+    console.log(indicacoesEspecificas);*/
     const IndicacaoEspecifica = indicacoesEspecificas.forEach((Indicacao) => {
       if(Indicacao.titulo === exame){
         Texto = Indicacao.texto;

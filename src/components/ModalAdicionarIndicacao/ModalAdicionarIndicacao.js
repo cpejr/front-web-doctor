@@ -69,12 +69,14 @@ function ModalAdicionarIndicacao(props) {
 		};
 
 		setCamposVazios(camposVaziosAtual);
-
+    console.log(estado.telefone.length);
 		if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
 			toast.warn("Preencha todos os campos");
 			return;
-		}
-
+		}else if(estado.telefone.length < 15){
+      toast.warn("Preencha todos os campos corretamente");
+			return;
+    }
 		setCarregandoCriacao(true);
 		const id = props.idmedicoindicado;
     
@@ -90,7 +92,7 @@ function ModalAdicionarIndicacao(props) {
 	}
 
 	const antIcon = (
-		<LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
+		<LoadingOutlined style={{ fontSize: 25 }} spin />
 	);
 
   return (
@@ -125,8 +127,8 @@ function ModalAdicionarIndicacao(props) {
           paddingRight="2%"
           type="tel"
           onChange={preenchendoDados}
-          erro={erro.nome}
-          camposVazios={camposVazios.nome}
+          erro={erro.telefone}
+          camposVazios={camposVazios.telefone}
           name="telefone"
           value={estado.telefone}
         ></Input>
@@ -145,8 +147,8 @@ function ModalAdicionarIndicacao(props) {
           width="100%"
           paddingRight="2%"
           onChange={preenchendoDados}
-          erro={erro.nome}
-          camposVazios={camposVazios.nome}
+          erro={erro.local}
+          camposVazios={camposVazios.local}
           name="local"
           value={estado.local}
         ></Input>

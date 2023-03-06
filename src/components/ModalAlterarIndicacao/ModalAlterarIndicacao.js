@@ -71,8 +71,8 @@ function ModalAlterarIndicacao(props) {
    setMedicoEspecifico(medicosespecificos);
   }
   useEffect(() => {buscarMedicosporId()}, [])
-  async function preenchendoPlaceholder(ID) {
-    setSelecionarMedico(ID);
+  async function preenchendoPlaceholder(event) {
+    setSelecionarMedico(event.target.value);
   }
 
  async function alterar(e) {
@@ -98,7 +98,7 @@ function ModalAlterarIndicacao(props) {
   
  }
  const antIcon = (
-  <LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
+  <LoadingOutlined style={{ fontSize: 25}} spin />
 );
   return (
     <Container>
