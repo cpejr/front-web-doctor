@@ -44,7 +44,7 @@ export const requisicaoLogin = async (email, senha) => {
       toast.error('Paciente deve fazer login exclusivamente pelo App');
     } else {
       login(resposta.data.token, resposta.data.email, resposta.data.tipo);
-
+      sessionStorage.setItem('@doctorapp-Token', resposta.data.token);
       const ehMedico = resposta.data.tipo === 'MASTER';
       toast.success('Login realizado com sucesso!');
       await sleep(1500);
