@@ -208,6 +208,22 @@ function FormularioEspecifico(props) {
     setStatusSelect(value);
   }
 
+  async function enviarLembrete(usuario) {
+    const Token = managerService.TokenById(usuario.nome);
+    const Message = {
+      to: Token.token_dispositivo.replace("expo/", ''),
+      sound: 'default',
+      title: 'teste',
+      body: 'teste',
+      data: { data: 'goes here' },
+    };
+    await fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      body: JSON.stringify(Message),
+    }
+    );
+  }
+
   return (
     <div>
       <ContainerFormularioEspecifico>
@@ -305,7 +321,7 @@ function FormularioEspecifico(props) {
                     ) : (
                       <div>
                         {value.avatar_url === null ||
-                        value.avatar_url === "" ? (
+                          value.avatar_url === "" ? (
                           <FotoPerfil>
                             {carregandoFoto ? (
                               <div>
@@ -372,7 +388,7 @@ function FormularioEspecifico(props) {
 
                       <Button
                         width="70%"
-                        backgroundColor="green"
+                        backgroundColor={Cores.cinza[7]}
                         boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
                         borderColor={Cores.azulEscuro}
                         borderRadius="5px"
@@ -382,6 +398,7 @@ function FormularioEspecifico(props) {
                         fontSizeMedia950="0.75em"
                         fontWeight="bold"
                         heightMedia560="28px"
+                        onChange={enviarLembrete(value)}
                       >
                         ENVIAR LEMBRETE
                       </Button>
@@ -393,16 +410,16 @@ function FormularioEspecifico(props) {
             <ColunaDireita>
               {idFormularioEspecifico !== idFormularioUrgencia ? (
                 <BarraRespostas>
-                {" "}
-                {formularioRespostaPendente.length === 1
-                  ? "Aguardando respostas de 1 formulário"
-                  : `Aguardando respostas de ${formularioRespostaPendente.length} formulários`}
-              </BarraRespostas>
+                  {" "}
+                  {formularioRespostaPendente.length === 1
+                    ? "Aguardando respostas de 1 formulário"
+                    : `Aguardando respostas de ${formularioRespostaPendente.length} formulários`}
+                </BarraRespostas>
               ) : (
                 <></>
               )}
 
-              
+
               <BarraRespostas>
                 {" "}
                 {formularioResposta.length < 2 ? (
@@ -447,7 +464,7 @@ function FormularioEspecifico(props) {
                 marginTop="0%"
                 marginLeft="0%"
                 fontSizeMedia950="0.9em"
-                onClick={() => {}}
+                onClick={() => { }}
               >
                 Gerar documento Word
               </Button>

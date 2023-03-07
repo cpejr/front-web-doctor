@@ -122,7 +122,7 @@ function PerfilPaciente(props) {
     setConvenio(resposta.dadosUsuario.convenio);
     setCarregando(false);
 
-    
+
 
     if (resposta.dadosUsuario.tipo === "PACIENTE") {
       setTipoUsuario(true);
@@ -174,12 +174,12 @@ function PerfilPaciente(props) {
     }
   }
 
- 
+
 
   async function setandoTipoExame() {
     setTipoAgendamento("Exame");
     setModalAgendamento(true);
-    
+
   }
 
   async function setandoTipoConsulta() {
@@ -235,6 +235,23 @@ function PerfilPaciente(props) {
     const FORMULARIO_RESPONDIDO = true;
 
     return statusForm === FORMULARIO_RESPONDIDO;
+  }
+
+  async function enviarLembrete(formulario) {
+    console.log(formulario.id_usuario)
+    const Token = managerService.TokenById(formulario.id_usuario);
+    const Message = {
+      to: Token.token_dispositivo.replace("expo/", ''),
+      sound: 'default',
+      title: 'teste',
+      body: 'teste',
+      data: { data: 'goes here' },
+    };
+    await fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      body: JSON.stringify(Message),
+    }
+    );
   }
 
   return (
@@ -354,37 +371,37 @@ function PerfilPaciente(props) {
                   </Botao>
                   {tipoUsuario ? (
                     <>
-                    <Botao>
-                      <Button
-                        backgroundColor={Cores.lilas[2]}
-                        color={Cores.azulEscuro}
-                        fontWeight="bold"
-                        borderColor={Cores.azulEscuro}
-                        height="40px"
-                        width="100%"
-                        fontSize="1.3em"
-                        fontSizeMedia="1em"
-                        onClick={() => setandoTipoConsulta()}
-                      >
-                        Consultas Agendadas
-                      </Button>
-                    </Botao>
-                     <Botao>
-                     <Button
-                       backgroundColor={Cores.lilas[2]}
-                       color={Cores.azulEscuro}
-                       fontWeight="bold"
-                       borderColor={Cores.azulEscuro}
-                       height="40px"
-                       width="100%"
-                       fontSize="1.3em"
-                       fontSizeMedia="1em"
-                       onClick={() =>setandoTipoExame()}
-                     >
-                       Exames Agendados
-                     </Button>
-                   </Botao>
-                   </>
+                      <Botao>
+                        <Button
+                          backgroundColor={Cores.lilas[2]}
+                          color={Cores.azulEscuro}
+                          fontWeight="bold"
+                          borderColor={Cores.azulEscuro}
+                          height="40px"
+                          width="100%"
+                          fontSize="1.3em"
+                          fontSizeMedia="1em"
+                          onClick={() => setandoTipoConsulta()}
+                        >
+                          Consultas Agendadas
+                        </Button>
+                      </Botao>
+                      <Botao>
+                        <Button
+                          backgroundColor={Cores.lilas[2]}
+                          color={Cores.azulEscuro}
+                          fontWeight="bold"
+                          borderColor={Cores.azulEscuro}
+                          height="40px"
+                          width="100%"
+                          fontSize="1.3em"
+                          fontSizeMedia="1em"
+                          onClick={() => setandoTipoExame()}
+                        >
+                          Exames Agendados
+                        </Button>
+                      </Botao>
+                    </>
                   ) : (
                     <></>
                   )}
@@ -420,34 +437,34 @@ function PerfilPaciente(props) {
                   <Titulo>FORMULÁRIOS</Titulo>
                   {respostas?.map((value) => (
                     <>
-                      { deveMostrarFormularios(value.id_formulario, value.status) && (
+                      {deveMostrarFormularios(value.id_formulario, value.status) && (
                         <Formulario>
                           <DadosFormulario>
-                            {tipoUsuarioLogado === "MASTER"? (
-                               <TituloFormulario
-                               cursor="pointer"
-                               textDecoration="underline"
-                               onClick={() =>
-                                 abrindoModalFormulario(
-                                   value.id,
-                                   value.perguntas,
-                                   value.titulo
-                                 )
-                               }
-                             >
-                               {value.titulo}
-                             </TituloFormulario>
+                            {tipoUsuarioLogado === "MASTER" ? (
+                              <TituloFormulario
+                                cursor="pointer"
+                                textDecoration="underline"
+                                onClick={() =>
+                                  abrindoModalFormulario(
+                                    value.id,
+                                    value.perguntas,
+                                    value.titulo
+                                  )
+                                }
+                              >
+                                {value.titulo}
+                              </TituloFormulario>
 
                             ) : (
                               <TituloFormulario
-                              cursor="null"
-                              textDecoration="none"
-                              
-                            >
-                              {value.titulo}
-                            </TituloFormulario>
-                            )} 
-                           
+                                cursor="null"
+                                textDecoration="none"
+
+                              >
+                                {value.titulo}
+                              </TituloFormulario>
+                            )}
+
                             <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
                             <UrgenciaFormulario>
                               <>Urgência: </>
@@ -461,12 +478,13 @@ function PerfilPaciente(props) {
                             <RespostaPendente>
                               <Resposta>Resposta Pendente</Resposta>
                               <Button
-                                backgroundColor="green"
+                                backgroundColor={Cores.cinza[7]}
                                 color={Cores.azulEscuro}
                                 fontWeight="bold"
                                 borderColor={Cores.azulEscuro}
                                 height="40px"
                                 width="25%"
+                                onChange={enviarLembrete(value)}
                               >
                                 ENVIAR LEMBRETE
                               </Button>
@@ -533,7 +551,7 @@ function PerfilPaciente(props) {
           id_usuario={usuario.id}
           email={usuario.email}
           tipoAgendamento={tipoAgendamento}
-          
+
         />
       </Modal>
       <Modal
