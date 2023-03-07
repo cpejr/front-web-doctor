@@ -294,26 +294,30 @@ function ModalAgendamentoEspecifico(props) {
           formatacaoDataHora();
           await managerService.CriandoConsulta(consulta);
           const Token = 
-            await managerService.TokenById(consulta.id_usuario);
-          const Message = {
-            to: Token.token_dispositivo.replace("expo/", ''),
+          await managerService.TokenById(consulta.id_usuario);
+          console.log(JSON.stringify(Token))
+          for(var i = 0; i <= Token.length - 1; i++){
+            const Message = {
+            to: Token[i].token_dispositivo.replace("expo/", ''),
             sound: 'default',
             title: 'Doctor App', 
             body: msg,
             
           };
-          toast.success('Notificação encaminhada para o paciente.');
-          await fetch('https://exp.host/--/api/v2/push/send',{
+          fetch('https://exp.host/--/api/v2/push/send',{
             method: 'POST',
             body: JSON.stringify(Message),
             }
           );
+          }
+          toast.success('Notificação encaminhada para o paciente.');
           setCarregandoCadastro(false);
           await sleep(1500);
           props.fechandoModal();
           setConsulta(valoresIniciaisConsulta);
           setDataConsulta("");
           setHora("");
+          props.fechandoModal();
         } else {
           setCarregandoCadastro(true);
           toast.warn("Preencha todos os campos corretamente");
