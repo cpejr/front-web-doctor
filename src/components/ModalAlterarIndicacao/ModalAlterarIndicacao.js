@@ -27,16 +27,11 @@ function ModalAlterarIndicacao(props) {
   const [erro, setErro] = useState(false);
 
   const [camposVaziosReferencia, setCamposVaziosReferencia] = useState({
-    id_indicacao_especifica: false,
     nome: false,
     telefone: false,
     local_atendimento: false,
   });
-  const [selecionarMedico, setSelecionarMedico] = useState({
-    nome: false,
-    telefone: false,
-    local_atendimento: false,
-  });
+  const [selecionarMedico, setSelecionarMedico] = useState({});
 
   function preenchendoDados(e) {
     const { value, name } = e.target;
@@ -72,7 +67,15 @@ function ModalAlterarIndicacao(props) {
   }
   useEffect(() => {buscarMedicosporId()}, [])
   async function preenchendoPlaceholder(event) {
-    setSelecionarMedico(event.target.value);
+    const obj = event.target.value;
+    const medicoPlaceholder = medicoEspecifico.forEach((medicos) => {
+       if (medicos.nome === obj) {
+        setSelecionarMedico(medicos);
+        return;
+       }else{
+        return "";
+       }
+    })
   }
 
  async function alterar(e) {
@@ -111,14 +114,14 @@ function ModalAlterarIndicacao(props) {
         <Select
         backgroundColor={Cores.cinza[7]} 
         width="100%"
-        onChange={preenchendoDados}
+        onChange={preenchendoPlaceholder}
         name="id_indicacao_especifica"
         >
           <option value="" >Escolher indicação para alterar</option>
           {medicoEspecifico.map((medico) => (
               <option
-              key={medico.id_indicacao_especifica}
-              value={medico.id_indicacao_especifica} 
+              key={medico.id}
+              value={medico.nome} 
               color='red'>
                 {medico.nome}
               </option>
@@ -132,7 +135,7 @@ function ModalAlterarIndicacao(props) {
         <Input
           backgroundColor="#EAECFF"
           borderColor="black"
-          placeholder={camposVazios.nome}
+          placeholder={selecionarMedico.nome}
           color="black"
           fontSize="1em"
           width="100%"
@@ -149,7 +152,7 @@ function ModalAlterarIndicacao(props) {
         <Input
           backgroundColor="#EAECFF"
           borderColor="black"
-          placeholder={camposVazios.telefone}
+          placeholder={selecionarMedico.telefone}
           color="black"
           fontSize="1em"
           width="100%"
@@ -170,7 +173,7 @@ function ModalAlterarIndicacao(props) {
         <Input
           backgroundColor="#EAECFF"
           borderColor="black"
-          placeholder={camposVazios.local_atendimento}
+          placeholder={selecionarMedico.local_atendimento}
           color="black"
           fontSize="1em"
           width="100%"
