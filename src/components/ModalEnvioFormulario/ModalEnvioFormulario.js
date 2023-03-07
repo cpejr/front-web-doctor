@@ -47,19 +47,26 @@ function ModalEnvioFormulario(props) {
           props.idFormulario,
           formularioPaciente
         );
-        const Token = managerService.TokenById(formularioPaciente.id_usuario);
-        const Message = {
-          to: Token.token_dispositivo.replace("expo/", ''),
-          sound: 'default',
-          title: 'teste',
-          body: 'teste',
-          data: { data: 'goes here' },
-        };
-        await fetch('https://exp.host/--/api/v2/push/send', {
-          method: 'POST',
-          body: JSON.stringify(Message),
+        const Token =
+          await managerService.TokenById(formularioPaciente.id_usuario);
+        for (var i = 0; i <= Token.length - 1; i++) {
+          const Message = {
+            to: Token[i].token_dispositivo.replace("expo/", ''),
+            sound: 'default',
+            title: 'Doctor App',
+            body: "teste",
+
+          };
+          fetch('https://exp.host/--/api/v2/push/send', {
+            method: 'POST',
+            body: JSON.stringify(Message),
+          }
+          );
         }
-        );
+        setCarregando(false);
+        toast.success('Notificação encaminhada para o paciente.');
+        await sleep(1000);
+        props.fechandoModal()
       };
     } else {
       toast.error("Escolha um paciente para enviar o formulario");

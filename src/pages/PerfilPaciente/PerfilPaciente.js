@@ -238,20 +238,23 @@ function PerfilPaciente(props) {
   }
 
   async function enviarLembrete(formulario) {
-    console.log(formulario.id_usuario)
-    const Token = managerService.TokenById(formulario.id_usuario);
-    const Message = {
-      to: Token.token_dispositivo.replace("expo/", ''),
-      sound: 'default',
-      title: 'teste',
-      body: 'teste',
-      data: { data: 'goes here' },
-    };
-    await fetch('https://exp.host/--/api/v2/push/send', {
-      method: 'POST',
-      body: JSON.stringify(Message),
+    const Token =
+      await managerService.TokenById(formulario.id_usuario);
+    for (var i = 0; i <= Token.length - 1; i++) {
+      const Message = {
+        to: Token[i].token_dispositivo.replace("expo/", ''),
+        sound: 'default',
+        title: 'Doctor App',
+        body: "teste",
+
+      };
+      fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        body: JSON.stringify(Message),
+      }
+      );
     }
-    );
+    toast.success('Notificação encaminhada para o paciente.');
   }
 
   return (
