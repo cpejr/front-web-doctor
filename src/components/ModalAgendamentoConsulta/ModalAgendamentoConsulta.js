@@ -227,48 +227,17 @@ function ModalAgendamentoConsulta(props) {
   }
 
   async function requisicaoCriarConsulta() {
-    if (props.usuario) {
-      consulta.id_usuario = props.usuario.id_usuario;
-    } else {
-      consulta.id_usuario = idUsuario;
-    }
-    if (!dataConsulta) errors.data = true;
-    if (!hora) errors.hora = true;
-    if (!consulta.duracao_em_minutos) errors.duracao_em_minutos = true;
-    if (!consulta.id_consultorio) errors.id_consultorio = true;
-    if (!consulta.tipo) errors.tipo = true;
-
-    setCamposVazios({ ...camposVazios, ...errors });
-
-    if (
-      consulta.duracao_em_minutos === "" ||
-      dataConsulta === "" ||
-      hora === ""
-    ) {
-      toast.warn("Preencha todos os campos");
-    } else {
-      if (erro.hora) {
-        toast.warn("Preencha todos os campos corretamente2");
-      } else {
-        if (_.isEqual(camposVazios, referenciaInputNulos)) {
-          setCarregandoCadastro(true);
-          formatacaoDataHora();
-
-          await managerService.CriandoConsulta(consulta);
-          setCarregandoCadastro(false);
-          await sleep(1500);
-          props.fechandoModal();
-          setConsulta(valoresIniciaisConsulta);
-          setDataConsulta("");
-          setHora("");
-        } else {
-          setCarregandoCadastro(true);
-          console.log(camposVazios);
-          toast.warn("Preencha todos os campos corretamente3");
-          setCarregandoCadastro(false);
-        }
-      }
-    }
+    consulta.id_usuario = idUsuario;
+    setCarregandoCadastro(true);
+    formatacaoDataHora();
+    await managerService.CriandoConsulta(consulta);
+    console.log(consulta)
+    setCarregandoCadastro(false);
+    await sleep(1500);
+    props.fechandoModal();
+    setConsulta(valoresIniciaisConsulta);
+    setDataConsulta("");
+    setHora("");
   }
 
   return (
@@ -326,19 +295,19 @@ function ModalAgendamentoConsulta(props) {
           <TextoCaixaSelect>
             Selecione o Tipo de Agendamento:
           </TextoCaixaSelect>
-          
-            <Row gutter={60} justify={"space-around"} >
-              <Radio.Group
-                defaultValue="consulta"
-                bordered={false}
-                FiltrarInputs={tipoRadio}
-                onChange={(e) => props.trocarTipo(e.target.value)}
-              >
-                <Radio value="exame">Exame</Radio>
-                <Radio value="consulta">Consulta</Radio>
-              </Radio.Group>
-            </Row>
-          
+
+          <Row gutter={60} justify={"space-around"} >
+            <Radio.Group
+              defaultValue="consulta"
+              bordered={false}
+              FiltrarInputs={tipoRadio}
+              onChange={(e) => props.trocarTipo(e.target.value)}
+            >
+              <Radio value="exame">Exame</Radio>
+              <Radio value="consulta">Consulta</Radio>
+            </Radio.Group>
+          </Row>
+
         </TipoAgendamento>
         <TextAreaDescricao
           border={tipoRadio}
@@ -511,22 +480,22 @@ function ModalAgendamentoConsulta(props) {
           <TextoCheckbox>Notificar paciente</TextoCheckbox>
         </Checkbox>
         <Button
-           width="80%"
-           height="50px"
-           backgroundColor={Cores.lilas[2]}
-           borderColor={Cores.azul}
-           color={Cores.azulEscuro}
-           fontSize="1.1em"
-           fontWeight="bold"
-           fontSizeMedia="0.9em"
-           fontSizeMedia950="1.1em"
-           fontSizeMedia350 = "0.9em"
+          width="80%"
+          height="50px"
+          backgroundColor={Cores.lilas[2]}
+          borderColor={Cores.azul}
+          color={Cores.azulEscuro}
+          fontSize="1.1em"
+          fontWeight="bold"
+          fontSizeMedia="0.9em"
+          fontSizeMedia950="1.1em"
+          fontSizeMedia350="0.9em"
           onClick={() => requisicaoCriarConsulta()}
         >
           {carregandoCadastro ? (
             <Spin indicator={antIcon} />
           ) : (
-            <div style={{margin: 'auto', padding: 'auto'}}>Cadastrar novo agendamento</div>
+            <div style={{ margin: 'auto', padding: 'auto' }}>Cadastrar novo agendamento</div>
           )}
         </Button>
       </InfoDireita>

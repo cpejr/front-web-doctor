@@ -45,7 +45,7 @@ function ModalAgendamentoExame(props) {
   const [carregandoCadastro, setCarregandoCadastro] = useState();
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
   const [carregandoExames, setCarregandoExames] = useState();
-   const [idUsuario, setIdUsuario] = useState({});
+  const [idUsuario, setIdUsuario] = useState({});
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
   const [exame, setExame] = useState({});
   const valoresIniciaisExame = {
@@ -206,261 +206,243 @@ function ModalAgendamentoExame(props) {
     } else {
       exame.id_usuario = idUsuario;
     }
-    if (!dataExame) errors.data = true;
-    if (!hora) errors.hora = true;
-    if (!consultorio.nome) errors.nome = true;
-    if(!exame.titulo) errors.titulo = true;
 
-    setCamposVazios({ ...camposVazios, ...errors });
-    if (dataExame === "" || hora === "") {
-      toast.warn("Preencha todos os campos");
-    } else {
-      if (erro.hora) {
-        toast.warn("Preencha todos os campos corretamente");
-      } else {
-        if (_.isEqual(camposVazios, referenciaInputNulos)) {
-          setCarregandoCadastro(true);
-          formatacaoDataHora();
-          exame.id_usuario = idUsuario;
-          await managerService.CriandoExame(exame);
-          setCarregandoCadastro(false);
-          await sleep(1500);
-          props.fechandoModal();
-          setExame(valoresIniciaisExame);
-          setDataExame("");
-          setHora("");
-        } else {
-          setCarregandoCadastro(true);
-          toast.warn("Preencha todos os campos corretamente");
-          setCarregandoCadastro(false);
-        }
-      }
-    }
+    setCarregandoCadastro(true);
+    formatacaoDataHora();
+    exame.id_usuario = idUsuario;
+    await managerService.CriandoExame(exame);
+    setCarregandoCadastro(false);
+    await sleep(1500);
+    props.fechandoModal();
+    setExame(valoresIniciaisExame);
+    setDataExame("");
+    setHora("");
+
   }
 
   return (
-      <Caixa>
-        <InfoEsquerda>
-          {props.abertoPeloUsuario === true ? (
-            <Usuario>
-              <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
-              {carregando ? (
-                <CaixaLoader>
-                  <Spin indicator={antIcon} style={{ color: Cores.azul }} />
-                </CaixaLoader>
-              ) : (
-                <Nome>{props.usuario.nome}</Nome>
-              )}
-            </Usuario>
-          ) : (
-            <Usuario>
-              <NomePaciente>
-                <Select
-                  style={{
-                    width: "100%",
-                    color: "black",
-                    borderColor: "black",
-                    borderWidth: "0px",
-                    marginBottom: "0.5em",
-                    paddingLeft: "2.5em",
-                  }}
-                  size="large"
-                  name="id_usuario"
-                  placeholder="Selecione um paciente"
-                  onChange={(e) => {
-                    setIdUsuario(e.target.value);
-                  }}
-                >
-                  <option value="" disabled selected>
-                    Paciente
-                  </option>
-                  {props.usuarios.map((usuario) => (
-                    <>
-                      {carregando ? (
-                        <Spin indicator={antIcon} />
-                      ) : (
-                        <option key={usuario.id} value={usuario.id} color="red">
-                          {usuario.nome}
-                        </option>
-                      )}
-                    </>
-                  ))}
-                </Select>
-              </NomePaciente>
-            </Usuario>
-          )}
-          <TipoAgendamento>
-            <TextoCaixaSelect>
-              Selecione o Tipo de Agendamento:
-            </TextoCaixaSelect>
-            <Row gutter={60} justify={"space-around"}>
-              <Radio.Group
-                defaultValue="exame"
-                bordered={false}s
-                onChange={(e) => props.trocarTipo(e.target.value)}
-              >
-                <Radio value="exame">Exame</Radio>
-                <Radio value="consulta">Consulta</Radio>
-              </Radio.Group>
-            </Row>
-          </TipoAgendamento>
-        </InfoEsquerda>
-        <InfoDireita>
-          <SelecioneUmaData>
-            <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
-            <InputData
-              placeholder="Selecione uma data"
-              size="large"
-              type="date"
-              paddingTop="8px"
-              paddingBottom="8px"
-              onKeyDown={(e) => e.preventDefault()}
-              name="data"
-              onChange={(e) => validacaoCampos(e)}
-              value={dataExame}
-              camposVazios={camposVazios.data}
-              id="data"
-            />
-            {camposVazios.data && <Rotulo>Selecione uma data</Rotulo>}
-          </SelecioneUmaData>
-          <DoisSelect>
-            <TamanhoInput>
-              <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
-              <Tooltip
-                placement="topLeft"
-                title={exame?.titulo}
-                color={Cores.azul}
-              >
-                <Select
-                  value={exame?.id}
-                  style={{
-                    width: "100%",
-                    color: "black",
-                    borderColor: "black",
-                    borderWidth: "1px",
-                  }}
-                  paddingTop="8px"
-                  paddingBottom="8px"
-                  size="large"
-                  name="titulo"
-                  id="titulo"
-                  placeholder="Tipo"
-                  onChange={(e) => {
-                    validacaoCampos(e);
-                  }}
-                  camposVazios={camposVazios.titulo}
-                >
-                  <option value="" disabled selected>
-                    {exame?.titulo}
-                    Tipo
-                  </option>
-                  {exames?.map((exame) => (
-                    <>
-                      {carregandoExames ? (
-                        <Spin indicator={antIcon} />
-                      ) : (
-                        <option key={exame.id} value={exame.id} color="red">
-                          {exame.titulo}
-                        </option>
-                      )}
-                    </>
-                  ))}
-                </Select>
-              </Tooltip>
-              {camposVazios.titulo && 
-                <Rotulo>Selecione um tipo de exame</Rotulo>
-              }
-            </TamanhoInput>
-            <InputConsultorio>
-              <TextoDoisSelects>Selecione um consultório:</TextoDoisSelects>
-              <Tooltip
-                placement="topLeft"
-                title={consultorio?.nome}
-                color={Cores.azul}
-              >
-                <Select
-                  value={consultorio?.id}
-                  id="nome"
-                  name="nome"
-                  style={{
-                    width: "100%",
-                    borderWidth: "1px",
-                    borderColor: "black",
-                    color: "black",
-                  }}
-                  paddingTop="8px"
-                  paddingBottom="8px"
-                  marginBottom="12%"
-                  size="large"
-                  onChange={(e) => {
-                    validacaoCampos(e);
-                  }}
-                  camposVazios={camposVazios.nome}
-                >
-                  <option value="" disabled selected>
-                    {consultorio.nome}
-                    Consultório
-                  </option>
-                  {consultorios?.map((consultorio) => (
-                    <>
-                      {carregandoConsultorios ? (
-                        <Spin indicator={antIcon} />
-                      ) : (
-                        <option
-                          key={consultorio.id}
-                          value={consultorio.id}
-                          color="red"
-                        >
-                          {consultorio.nome}
-                        </option>
-                      )}
-                    </>
-                  ))}
-                </Select>
-              </Tooltip>
-              {camposVazios.nome && <Rotulo>Selecione um consultório </Rotulo>}
-            </InputConsultorio>
-          </DoisSelect>
-
-          <TresSelect>
-            <ContainerHorario>
-              <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
-              <InputHora
-                value={hora}
-                type="time"
-                onKeyDown={(e) => e.preventDefault()}
-                placeholder="Horário"
-                name="hora"
-                id="hora"
-                onChange={(e) => validacaoHorario(e.target.value, dataExame)}
-                camposVazios={camposVazios.hora}
-                erro={erro.hora}
-              />
-              {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
-              {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
-            </ContainerHorario>
-          </TresSelect>
-          <Button
-            width="80%"
-            height="50px"
-            backgroundColor={Cores.lilas[2]}
-            borderColor={Cores.azul}
-            color={Cores.azulEscuro}
-            fontSize="1.1em"
-            fontWeight="bold"
-            fontSizeMedia="0.9em"
-            fontSizeMedia950="1.1em"
-            fontSizeMedia350 = "0.9em"
-            onClick={() => requisicaoCriarExame()}
-          >
-            {carregandoCadastro ? (
-              <Spin indicator={antIcon} />
+    <Caixa>
+      <InfoEsquerda>
+        {props.abertoPeloUsuario === true ? (
+          <Usuario>
+            <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
+            {carregando ? (
+              <CaixaLoader>
+                <Spin indicator={antIcon} style={{ color: Cores.azul }} />
+              </CaixaLoader>
             ) : (
-              <div style={{margin: 'auto', padding: 'auto'}}>Cadastrar novo agendamento</div>
+              <Nome>{props.usuario.nome}</Nome>
             )}
-          </Button>
-        </InfoDireita>
-      </Caixa>
+          </Usuario>
+        ) : (
+          <Usuario>
+            <NomePaciente>
+              <Select
+                style={{
+                  width: "100%",
+                  color: "black",
+                  borderColor: "black",
+                  borderWidth: "0px",
+                  marginBottom: "0.5em",
+                  paddingLeft: "2.5em",
+                }}
+                size="large"
+                name="id_usuario"
+                placeholder="Selecione um paciente"
+                onChange={(e) => {
+                  setIdUsuario(e.target.value);
+                }}
+              >
+                <option value="" disabled selected>
+                  Paciente
+                </option>
+                {props.usuarios.map((usuario) => (
+                  <>
+                    {carregando ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <option key={usuario.id} value={usuario.id} color="red">
+                        {usuario.nome}
+                      </option>
+                    )}
+                  </>
+                ))}
+              </Select>
+            </NomePaciente>
+          </Usuario>
+        )}
+        <TipoAgendamento>
+          <TextoCaixaSelect>
+            Selecione o Tipo de Agendamento:
+          </TextoCaixaSelect>
+          <Row gutter={60} justify={"space-around"}>
+            <Radio.Group
+              defaultValue="exame"
+              bordered={false} s
+              onChange={(e) => props.trocarTipo(e.target.value)}
+            >
+              <Radio value="exame">Exame</Radio>
+              <Radio value="consulta">Consulta</Radio>
+            </Radio.Group>
+          </Row>
+        </TipoAgendamento>
+      </InfoEsquerda>
+      <InfoDireita>
+        <SelecioneUmaData>
+          <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
+          <InputData
+            placeholder="Selecione uma data"
+            size="large"
+            type="date"
+            paddingTop="8px"
+            paddingBottom="8px"
+            onKeyDown={(e) => e.preventDefault()}
+            name="data"
+            onChange={(e) => validacaoCampos(e)}
+            value={dataExame}
+            camposVazios={camposVazios.data}
+            id="data"
+          />
+          {camposVazios.data && <Rotulo>Selecione uma data</Rotulo>}
+        </SelecioneUmaData>
+        <DoisSelect>
+          <TamanhoInput>
+            <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
+            <Tooltip
+              placement="topLeft"
+              title={exame?.titulo}
+              color={Cores.azul}
+            >
+              <Select
+                value={exame?.id}
+                style={{
+                  width: "100%",
+                  color: "black",
+                  borderColor: "black",
+                  borderWidth: "1px",
+                }}
+                paddingTop="8px"
+                paddingBottom="8px"
+                size="large"
+                name="titulo"
+                id="titulo"
+                placeholder="Tipo"
+                onChange={(e) => {
+                  validacaoCampos(e);
+                }}
+                camposVazios={camposVazios.titulo}
+              >
+                <option value="" disabled selected>
+                  {exame?.titulo}
+                  Tipo
+                </option>
+                {exames?.map((exame) => (
+                  <>
+                    {carregandoExames ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <option key={exame.id} value={exame.id} color="red">
+                        {exame.titulo}
+                      </option>
+                    )}
+                  </>
+                ))}
+              </Select>
+            </Tooltip>
+            {camposVazios.titulo &&
+              <Rotulo>Selecione um tipo de exame</Rotulo>
+            }
+          </TamanhoInput>
+          <InputConsultorio>
+            <TextoDoisSelects>Selecione um consultório:</TextoDoisSelects>
+            <Tooltip
+              placement="topLeft"
+              title={consultorio?.nome}
+              color={Cores.azul}
+            >
+              <Select
+                value={consultorio?.id}
+                id="nome"
+                name="nome"
+                style={{
+                  width: "100%",
+                  borderWidth: "1px",
+                  borderColor: "black",
+                  color: "black",
+                }}
+                paddingTop="8px"
+                paddingBottom="8px"
+                marginBottom="12%"
+                size="large"
+                onChange={(e) => {
+                  validacaoCampos(e);
+                }}
+                camposVazios={camposVazios.nome}
+              >
+                <option value="" disabled selected>
+                  {consultorio.nome}
+                  Consultório
+                </option>
+                {consultorios?.map((consultorio) => (
+                  <>
+                    {carregandoConsultorios ? (
+                      <Spin indicator={antIcon} />
+                    ) : (
+                      <option
+                        key={consultorio.id}
+                        value={consultorio.id}
+                        color="red"
+                      >
+                        {consultorio.nome}
+                      </option>
+                    )}
+                  </>
+                ))}
+              </Select>
+            </Tooltip>
+            {camposVazios.nome && <Rotulo>Selecione um consultório </Rotulo>}
+          </InputConsultorio>
+        </DoisSelect>
+
+        <TresSelect>
+          <ContainerHorario>
+            <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
+            <InputHora
+              value={hora}
+              type="time"
+              onKeyDown={(e) => e.preventDefault()}
+              placeholder="Horário"
+              name="hora"
+              id="hora"
+              onChange={(e) => validacaoHorario(e.target.value, dataExame)}
+              camposVazios={camposVazios.hora}
+              erro={erro.hora}
+            />
+            {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
+            {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
+          </ContainerHorario>
+        </TresSelect>
+        <Button
+          width="80%"
+          height="50px"
+          backgroundColor={Cores.lilas[2]}
+          borderColor={Cores.azul}
+          color={Cores.azulEscuro}
+          fontSize="1.1em"
+          fontWeight="bold"
+          fontSizeMedia="0.9em"
+          fontSizeMedia950="1.1em"
+          fontSizeMedia350="0.9em"
+          onClick={() => requisicaoCriarExame()}
+        >
+          {carregandoCadastro ? (
+            <Spin indicator={antIcon} />
+          ) : (
+            <div style={{ margin: 'auto', padding: 'auto' }}>Cadastrar novo agendamento</div>
+          )}
+        </Button>
+      </InfoDireita>
+    </Caixa>
   );
 }
 
