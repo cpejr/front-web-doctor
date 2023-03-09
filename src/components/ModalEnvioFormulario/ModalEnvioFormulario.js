@@ -55,7 +55,6 @@ function ModalEnvioFormulario(props) {
             sound: 'default',
             title: 'Doctor App',
             body: "teste",
-
           };
           fetch('https://exp.host/--/api/v2/push/send', {
             method: 'POST',
@@ -65,6 +64,7 @@ function ModalEnvioFormulario(props) {
         }
         setCarregando(false);
         toast.success('Notificação encaminhada para o paciente.');
+        setEnviarNotificacao(false)
         await sleep(1000);
         props.fechandoModal()
       };

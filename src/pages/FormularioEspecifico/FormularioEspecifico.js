@@ -211,22 +211,18 @@ function FormularioEspecifico(props) {
 
   async function enviarLembrete(usuario) {
     const Token =
-      await managerService.TokenById(usuario.id);
-    for (var i = 0; i <= Token.length - 1; i++) {
-      const Message = {
-        to: Token[i].token_dispositivo.replace("expo/", ''),
-        sound: 'default',
-        title: 'Doctor App',
-        body: "teste",
-
-      };
-      fetch('https://exp.host/--/api/v2/push/send', {
-        method: 'POST',
-        body: JSON.stringify(Message),
-      }
-      );
-    }
-    toast.success('Notificação encaminhada para o paciente.');
+      await managerService.TokenById(usuario.id)
+    const Message = {
+      to: Token.token_dispositivo.replace("expo/", ''),
+      sound: 'default',
+      title: 'Doctor App',
+      body: "teste",
+    };
+    fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      body: JSON.stringify(Message),
+    });
+    toast.warn('Notificação encaminhada para o paciente.');
   };
 
   return (
@@ -403,7 +399,7 @@ function FormularioEspecifico(props) {
                         fontSizeMedia950="0.75em"
                         fontWeight="bold"
                         heightMedia560="28px"
-                        onChange={enviarLembrete(value)}
+                        onClick={enviarLembrete(value)}
                       >
                         ENVIAR LEMBRETE
                       </Button>

@@ -238,23 +238,21 @@ function PerfilPaciente(props) {
   }
 
   async function enviarLembrete(formulario) {
+    setCarregando(true)
     const Token =
       await managerService.TokenById(formulario.id_usuario);
-    for (var i = 0; i <= Token.length - 1; i++) {
-      const Message = {
-        to: Token[i].token_dispositivo.replace("expo/", ''),
-        sound: 'default',
-        title: 'Doctor App',
-        body: "teste",
-
-      };
-      fetch('https://exp.host/--/api/v2/push/send', {
-        method: 'POST',
-        body: JSON.stringify(Message),
-      }
-      );
-    }
+    const Message = {
+      to: Token.token_dispositivo.replace("expo/", ''),
+      sound: 'default',
+      title: 'Doctor App',
+      body: "teste",
+    };
+    fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      body: JSON.stringify(Message),
+    });
     toast.success('Notificação encaminhada para o paciente.');
+    setCarregando(false)
   }
 
   return (
@@ -487,7 +485,7 @@ function PerfilPaciente(props) {
                                 borderColor={Cores.azulEscuro}
                                 height="40px"
                                 width="25%"
-                                onChange={enviarLembrete(value)}
+                                onClick={enviarLembrete(value)}
                               >
                                 ENVIAR LEMBRETE
                               </Button>
