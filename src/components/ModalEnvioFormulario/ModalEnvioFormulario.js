@@ -19,11 +19,20 @@ import * as managerService from "../../services/ManagerService/managerService";
 function ModalEnvioFormulario(props) {
   const [formularioPaciente, setFormularioPaciente] = useState();
   const [enviarNotificacao, setEnviarNotificacao] = useState(false);
+  const [mensagem, setMensagem] = useState("");
   const [carregando, setCarregando] = useState(false);
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 22, color: Cores.azul }} spin />
   );
+
+  function setandoMensagem(tipo) {
+    setMensagem("Você tem uma formulário enviado!\nTipo: " + tipo);
+  }
+
+  useEffect(() => {
+    setandoMensagem(formularioPaciente.tipo);
+  }, [formularioPaciente]);
 
   async function enviandoFormularioPaciente() {
     setCarregando(true);

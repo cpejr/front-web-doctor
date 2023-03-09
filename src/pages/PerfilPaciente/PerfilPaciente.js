@@ -245,7 +245,7 @@ function PerfilPaciente(props) {
       to: Token.token_dispositivo.replace("expo/", ''),
       sound: 'default',
       title: 'Doctor App',
-      body: "teste",
+      body: "Você tem uma formulário enviado!",
     };
     fetch('https://exp.host/--/api/v2/push/send', {
       method: 'POST',

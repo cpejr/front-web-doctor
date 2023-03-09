@@ -69,6 +69,7 @@ function FormularioEspecifico(props) {
   const [formularios, setFormularios] = useState();
   const [perguntas, setPerguntas] = useState();
   const [perguntasAlterar, setPerguntasAlterar] = useState();
+  const [mensagem, setMensagem] = useState("");
 
   const lowerBusca = busca
     .toLowerCase()
@@ -79,6 +80,14 @@ function FormularioEspecifico(props) {
   );
 
   const idFormularioEspecifico = props.location.state.id;
+
+  function setandoMensagem(tipo) {
+    setMensagem("Você tem uma formulário enviado!\nTipo: " + tipo);
+  }
+
+  useEffect(() => {
+    setandoMensagem(formularioEspecifico.tipo);
+  }, [formularioEspecifico]);
 
   async function pegandoDadosFormularioEspecifico() {
     const resposta = await managerService.GetFormularioEspecifico(
