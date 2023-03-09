@@ -57,6 +57,8 @@ import {
   ImageRun
 } from "docx";
 import formatarData from "../../utils/formatarData";
+import logoWord from "./logo.json";
+import footerWord from "./footer.json";
 
 function FormularioEspecifico(props) {
   const { Search } = Input;
@@ -257,14 +259,6 @@ function FormularioEspecifico(props) {
       )
     });
 
-    const logo = await fetch(
-      "../../assets/LogoPdf.png"
-    ).then(r => r.blob());
-
-    const footer = await fetch(
-      "../../assets/footerPDF.png"
-    ).then(r => r.blob());
-
     const doc = new Document({
       sections: [{
         properties: {
@@ -274,7 +268,7 @@ function FormularioEspecifico(props) {
           new Paragraph({
             children: [
               new ImageRun({
-                data: logo,
+                data: logoWord,
                 transformation: {
                   width: 350,
                   height: 130
@@ -328,7 +322,7 @@ function FormularioEspecifico(props) {
           new Paragraph({
             children: [
               new ImageRun({
-                data: footer,
+                data: footerWord,
                 transformation: {
                   width: 800,
                   height: 100

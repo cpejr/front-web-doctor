@@ -71,6 +71,8 @@ import {
   TextWrappingSide
 } from "docx";
 import formatarData from "../../utils/formatarData";
+import logoWord from "./logo.json";
+import footerWord from "./footer.json";
 
 function PerfilPaciente(props) {
   const [modalAgendamento, setModalAgendamento] = useState(false);
@@ -263,7 +265,7 @@ function PerfilPaciente(props) {
       return false;
     }
   }
-
+  
   async function salvaWord(docxWord) {
 
     const perguntas = Object.values(docxWord.perguntas.properties);
@@ -291,14 +293,6 @@ function PerfilPaciente(props) {
       )
     });
 
-    const logo = await fetch(
-      "../../assets/LogoPdf.png"
-    ).then(r => r.blob());
-
-    const footer = await fetch(
-      "../../assets/footerPDF.png"
-    ).then(r => r.blob());
-
     const doc = new Document({
       sections: [{
         properties: {
@@ -308,7 +302,7 @@ function PerfilPaciente(props) {
           new Paragraph({
             children: [
               new ImageRun({
-                data: logo,
+                data: logoWord,
                 transformation: {
                   width: 350,
                   height: 130
@@ -362,7 +356,7 @@ function PerfilPaciente(props) {
           new Paragraph({
             children: [
               new ImageRun({
-                data: footer,
+                data: footerWord,
                 transformation: {
                   width: 800,
                   height: 100
