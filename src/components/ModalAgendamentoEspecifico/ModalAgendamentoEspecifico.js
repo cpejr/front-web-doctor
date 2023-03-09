@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, Row, Col, Tooltip } from "antd";
+import { Row, Col, Tooltip,Checkbox } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { toast } from "react-toastify";
@@ -47,6 +47,7 @@ function ModalAgendamentoEspecifico(props) {
   const [erro, setErro] = useState(false);
   const [hoje, setHoje] = useState("");
   const [msg, setMsg] = useState("");
+  const [clicadoCheckbox, setclicadoCheckbox] = useState(false);
 
   const [consulta, setConsulta] = useState({
     data_hora: "",
@@ -170,7 +171,9 @@ function ModalAgendamentoEspecifico(props) {
     const horarioAtual = horaAtual + ":" + minutos;
     return horarioAtual;
   }
-
+  const handleChange = () =>{
+    setclicadoCheckbox(!clicadoCheckbox)
+  }
 
   useEffect(() => {
     pegandoPacientes();
@@ -293,24 +296,26 @@ function ModalAgendamentoEspecifico(props) {
           setCarregandoCadastro(true);
           formatacaoDataHora();
           await managerService.CriandoConsulta(consulta);
-          const Token = 
+          console.log(String(clicadoCheckbox))
+          if(clicadoCheckbox === true){
+            const Token = 
           await managerService.TokenById(consulta.id_usuario);
-          console.log(JSON.stringify(Token))
           for(var i = 0; i <= Token.length - 1; i++){
             const Message = {
-            to: Token[i].token_dispositivo.replace("expo/", ''),
-            sound: 'default',
-            title: 'Doctor App', 
-            body: msg,
+              to: Token[i].token_dispositivo.replace("expo/", ''),
+              sound: 'default',
+              title: 'Doctor App', 
+              body: msg,
             
-          };
-          fetch('https://exp.host/--/api/v2/push/send',{
-            method: 'POST',
-            body: JSON.stringify(Message),
+            };
+            fetch('https://exp.host/--/api/v2/push/send',{
+              method: 'POST',
+              body: JSON.stringify(Message),
+              }
+            );
             }
-          );
+            toast.success('Notificação encaminhada para o paciente.');
           }
-          toast.success('Notificação encaminhada para o paciente.');
           setCarregandoCadastro(false);
           await sleep(1500);
           props.fechandoModal();
@@ -564,7 +569,8 @@ function ModalAgendamentoEspecifico(props) {
               )}
             </CaixaSelect>
           
-          <Checkbox  >         
+          <Checkbox 
+            value={clicadoCheckbox} onChange={handleChange}  >         
             <TextoCheckbox>Notificar paciente</TextoCheckbox>
           </Checkbox>
 

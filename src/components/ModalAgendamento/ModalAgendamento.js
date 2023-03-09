@@ -120,7 +120,7 @@ function ModalAgendamento(props) {
     body: 'Sua consulta foi desmarcada!',
     
   };
-  await fetch('https://exp.host/--/api/v2/push/send',{
+   fetch('https://exp.host/--/api/v2/push/send',{
     method: 'POST',
     body: JSON.stringify(Message),
     }
