@@ -237,7 +237,7 @@ function FormularioEspecifico(props) {
     const perguntas = Object.values(docxWord.perguntas.properties);
     const respostas = Object.values(docxWord.respostas);
 
-    //const dataFormatada = formatarData({ data: usuario.data_nascimento, formatacao: "dd/MM/yyyy" });
+    const dataFormatada = formatarData({ data: docxWord.data_nascimento, formatacao: "dd/MM/yyyy" });
 
     let arrayParagrafos = [];
 
@@ -311,9 +311,9 @@ function FormularioEspecifico(props) {
                 text: `DATA DE NASCIMENTO: `,
                 bold: true,
               }),
-              /* new TextRun({
+              new TextRun({
                 text: `${dataFormatada}`,
-              }), */
+              }),
             ],
           }),
           new Paragraph({
