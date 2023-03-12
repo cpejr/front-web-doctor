@@ -39,16 +39,6 @@ export const InfoEsquerda = styled.div`
   padding-top:3%;
   margin-top: 5%;
 
-  @media (max-width: 800px) {
-    width: 100%;
-    height: 35vh;
-  }
-
-  @media (max-width: 800px) {
-    width: 100%;
-    height: 27vh;
-  }
-
 `;
 
 export const InfoDireita = styled.div`
@@ -86,7 +76,7 @@ export const ContainerHorario = styled.div`
     width: 100%;
     margin-bottom: 13%;
   }
-  @media (max-width: 1260px) and (min-width: 800px) {
+  @media (max-width: 1260px) and (min-width: 560px) {
     width: 90%;
     margin-bottom: 5%;
   }
@@ -113,12 +103,6 @@ export const Usuario = styled.div`
   
   ::-webkit-scrollbar {
     width: 0px;
-  }
-
-  @media (max-width: 500px) {
-    flex-direction: column;
-    height: 70px;
-    padding-top: 20%;
   }
 `;
 
@@ -220,7 +204,7 @@ export const DoisSelect = styled.h3`
   font-family: ${Fontes.barlow};
   font-size: 1em;
 
-  @media (max-width: 560px) {
+  @media (max-width: 800px) {
     flex-direction: column;
     height: 120px;
   }
@@ -247,14 +231,11 @@ export const TamanhoInput = styled.div`
   width: 40%;
   height: 40px;
 
-  @media  (max-width: 601px) and (min-width: 560px) {
-    margin-bottom: 5%;
-  }
   @media (max-width: 560px) {
     width: 100%;
     margin-bottom: 5%;
   }
-  @media (max-width: 1260px) and (min-width: 800px) {
+  @media (max-width: 1260px) and (min-width: 560px) {
     width: 90%;
     margin-bottom: 5%;
   }
@@ -368,6 +349,9 @@ export const SelecioneUmaData = styled.div`
   justify-content: center;
   width: 90%;
  
+  @media (max-width: 800px) {
+    margin-bottom: 5%;
+  }
 
   @media (max-width: 560px) {
     width: 100%;
@@ -409,7 +393,7 @@ export const ContainerConsultorio = styled.div`
     width: 100%;
     margin-bottom: 5%;
   }
-  @media (max-width: 1260px) and (min-width: 800px) {
+  @media (max-width: 1260px) and (min-width: 560px) {
     width: 90%;
     margin-bottom: 5%;
   }
