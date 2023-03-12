@@ -79,6 +79,11 @@ const Button = styled.button`
     margin-top: ${(props) => props.marginTopMedia ?? ((props) => props.marginTop?? "2%")};
   }
 
+  @media (max-width: 400px)
+  {
+    margin-top: ${(props) => props.marginTopMedia400 ?? ((props) => props.marginTop?? "2%")};
+  }
+
   @media (max-width: 1080px) {
     font-size: ${(props) => props.fontSizeMedia1080};
   }

@@ -108,7 +108,6 @@ export const Usuario = styled.div`
   @media (max-width: 500px) {
     flex-direction: column;
     height: 70px;
-    padding-top: 20%;
   }
 `;
 

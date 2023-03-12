@@ -30,6 +30,7 @@ import {
   Nome,
   NomePaciente,
   CaixaLoader,
+  OpcoesAgendamento,
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
@@ -244,7 +245,6 @@ function ModalAgendamentoExame(props) {
                   borderColor: "black",
                   borderWidth: "0px",
                   marginBottom: "0.5em",
-                  paddingLeft: "2.5em",
                 }}
                 size="large"
                 name="id_usuario"
@@ -275,16 +275,18 @@ function ModalAgendamentoExame(props) {
           <TextoCaixaSelect>
             Selecione o Tipo de Agendamento:
           </TextoCaixaSelect>
-          <Row gutter={60} justify={"space-around"}>
-            <Radio.Group
-              defaultValue="exame"
-              bordered={false} s
-              onChange={(e) => props.trocarTipo(e.target.value)}
-            >
-              <Radio value="exame">Exame</Radio>
-              <Radio value="consulta">Consulta</Radio>
-            </Radio.Group>
-          </Row>
+          <OpcoesAgendamento>
+            <Row gutter={60} justify={"space-around"}>
+              <Radio.Group
+                defaultValue="exame"
+                bordered={false} s
+                onChange={(e) => props.trocarTipo(e.target.value)}
+              >
+                <Radio value="exame">Exame</Radio>
+                <Radio value="consulta">Consulta</Radio>
+              </Radio.Group>
+            </Row>
+          </OpcoesAgendamento>
         </TipoAgendamento>
       </InfoEsquerda>
       <InfoDireita>
@@ -322,7 +324,6 @@ function ModalAgendamentoExame(props) {
                   borderWidth: "1px",
                 }}
                 paddingTop="8px"
-                paddingBottom="8px"
                 size="large"
                 name="titulo"
                 id="titulo"
@@ -353,8 +354,8 @@ function ModalAgendamentoExame(props) {
               <Rotulo>Selecione um tipo de exame</Rotulo>
             }
           </TamanhoInput>
-          <InputConsultorio>
-            <TextoDoisSelects>Selecione um consultório:</TextoDoisSelects>
+          <TamanhoInput>
+            <TextoSelecioneUmaData>Selecione um consultório:</TextoSelecioneUmaData>
             <Tooltip
               placement="topLeft"
               title={consultorio?.nome}
@@ -371,8 +372,6 @@ function ModalAgendamentoExame(props) {
                   color: "black",
                 }}
                 paddingTop="8px"
-                paddingBottom="8px"
-                marginBottom="12%"
                 size="large"
                 onChange={(e) => {
                   validacaoCampos(e);
@@ -401,30 +400,29 @@ function ModalAgendamentoExame(props) {
               </Select>
             </Tooltip>
             {camposVazios.nome && <Rotulo>Selecione um consultório </Rotulo>}
-          </InputConsultorio>
+          </TamanhoInput>
         </DoisSelect>
-
-        <TresSelect>
-          <ContainerHorario>
-            <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
-            <InputHora
-              value={hora}
-              type="time"
-              onKeyDown={(e) => e.preventDefault()}
-              placeholder="Horário"
-              name="hora"
-              id="hora"
-              onChange={(e) => validacaoHorario(e.target.value, dataExame)}
-              camposVazios={camposVazios.hora}
-              erro={erro.hora}
-            />
-            {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
-            {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
-          </ContainerHorario>
-        </TresSelect>
+        <ContainerHorario>
+          <TextoDoisSelects>Selecione um horário:</TextoDoisSelects>
+          <InputHora
+            value={hora}
+            type="time"
+            onKeyDown={(e) => e.preventDefault()}
+            placeholder="Horário"
+            name="hora"
+            id="hora"
+            onChange={(e) => validacaoHorario(e.target.value, dataExame)}
+            camposVazios={camposVazios.hora}
+            erro={erro.hora}
+          />
+          {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
+          {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
+        </ContainerHorario>
         <Button
           width="80%"
           height="50px"
+          marginTop="15%"
+          marginTopMedia400="20%"
           backgroundColor={Cores.lilas[2]}
           borderColor={Cores.azul}
           color={Cores.azulEscuro}

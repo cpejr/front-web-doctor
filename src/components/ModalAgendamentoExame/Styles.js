@@ -19,12 +19,12 @@ export const Caixa = styled.div`
 export const InfoEsquerda = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
   width: 50%;
   height: 100%;
   min-height: 80vh;
-  padding: 5%;
-  justify-content: space-around;
+  padding: 10%;
 
   @media (max-width: 900px) {
     width: 100%;
@@ -72,7 +72,6 @@ export const Usuario = styled.div`
   @media (max-width: 500px) {
     flex-direction: column;
     height: 70px;
-    padding-top: 20%;
   }
 `;
 
@@ -122,27 +121,16 @@ export const TipoAgendamento = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  margin-top:20%;
-  margin-bottom:20%;
-    @media(max-width: 295px){
-    margin-left:70%;
-  }
+
   @media(max-width: 320px){
     margin-bottom:10%;
   }
 
-  @media(max-width: 637px){
-    margin-bottom:0%;
-  }
-   @media(max-width: 768px){
-    margin-top:10%;
-  }
   @media (max-width: 620px){
     height: 25%;
     width: 100%;
   }
   @media (max-width: 560px){
-    height: 30%;
     flex-wrap: nowrap;
   }
 `;
@@ -193,16 +181,14 @@ export const DoisSelect = styled.h3`
   width: 100%;
   font-family: ${Fontes.barlow};
   font-size: 1em;
-   @media(max-width: 768px){
-    margin-bottom:10%;
-  }
+  margin-bottom: 0;
+
   @media (max-width: 560px) {
     flex-direction: column;
-    height: 120px;
   }
-  @media (max-width: 1260px) and (min-width: 800px) {
+  @media (max-width: 1260px) and (min-width: 400px) {
     flex-direction: column;
-    height: 160px;
+    height: 200px;
   }
   @media (max-width: 400px) {
     height: 180px;
@@ -216,20 +202,12 @@ export const TresSelect = styled.h3`
   width: 100%;
   font-family: ${Fontes.barlow};
   font-size: 1em;
-  @media(max-width: 295px){
-    margin-top: -55%;
-    margin-bottom: -20%;
-  }
   @media(max-width: 320px){
     margin-top: -50%;
     margin-bottom: -20%;
   }
-  @media (max-width: 560px) {
-    flex-direction: column;
-    height: 120px;
-  }
 
-  @media (max-width: 1260px) and (min-width: 800px) {
+  @media (max-width: 1260px) and (min-width: 400px) {
     flex-direction: column;
     height: 160px;
   }
@@ -254,25 +232,15 @@ export const TamanhoInput = styled.div`
   justify-content: center;
   width: 40%;
   height: 40px;
-   @media(max-width: 295px) {
-    margin-bottom:-15%;
-  }
-  @media (max-width: 637px){
-    margin-bottom: 5%;
-  }
-  @media  (max-width: 601px) and (min-width: 560px) {
+
+  @media  (max-width: 601px) {
     margin-bottom: 5%;
   }
   @media (max-width: 560px) {
     width: 100%;
-    margin-bottom: 5%;
   }
-  @media(max-width: 768px){
-    margin-top:10%;
-  }
-  @media (max-width: 1260px) and (min-width: 800px) {
+  @media (max-width: 1260px) and (min-width: 561px) {
     width: 90%;
-    margin-bottom: 5%;
   }
 `;
 
@@ -284,30 +252,16 @@ export const InputConsultorio = styled.div`
   width: 40%;
   height: 40px;
   margin-top: 5%;
-  margin-botton: 10%;
   
-  @media(max-width: 637px) {
-     margin-bottom: 5%;
-  }
-  @media(max-width: 768px){
-    margin-top:15%;
-  }
   @media (max-width: 1717px) {
     margin-bottom: 5%;
   }
   @media (max-width: 560px) {
     width: 100%;
-    margin-bottom: 5%;
   }
-  @media (max-width: 1260px) and (min-width: 800px) {
+  @media (max-width: 1260px) and (min-width: 400px) {
     width: 90%;
     margin-bottom: 5%;
-  }
-  @media (max-width: 807px) and (min-width: 800px) {
-    padding-top: 15%;
-  }
-  @media(max-width:425px){
-    margin-top:20%;
   }
 `;
 
@@ -318,7 +272,6 @@ export const ContainerDuracaoConsulta = styled.div`
   justify-content: center;
   width: 40%;
   height: 40px;
-  //margin-bottom: 5%;
   @media (max-width: 1622px) {
     margin-bottom: 5%;
   }
@@ -327,9 +280,8 @@ export const ContainerDuracaoConsulta = styled.div`
   }
   @media (max-width: 560px) {
     width: 100%;
-    margin-bottom: 5%;
   }
-  @media (max-width: 1260px) and (min-width: 800px) {
+  @media (max-width: 1260px) and (min-width: 400px) {
     width: 90%;
     margin-bottom: 5%;
   }
@@ -341,23 +293,15 @@ export const ContainerHorario = styled.div`
   align-items: start;
   justify-content: center;
   width: 40%;
-  height: 40px;
-  //margin-bottom: 5%;
-   @media(max-width: 295px) {
-    margin-top: 500%;
-  }
-  @media (max-width: 637px) {
-    margin-top: 8%;
-    margin-bottom:8%;
-  }
+  height: 100px;
+
   @media (max-width: 1470px) {
     margin-bottom: 5%;
   }
   @media (max-width: 560px) {
     width: 100%;
-    margin-bottom: 13%;
   }
-  @media (max-width: 1260px) and (min-width: 800px) {
+  @media (max-width: 1260px) and (min-width: 561px) {
     width: 90%;
     margin-bottom: 5%;
   }
@@ -431,12 +375,8 @@ export const TextoCaixaSelect = styled.h3`
   font-size: 1.1em;
   color: ${Cores.azulEscuro};
   display: flex;
-  justify-content: end;
-  align-items: center;
-  @media(max-width: 295px){
-    margin-left:15%;
-    margin-right:90%;
-  }
+  justify-content: center;
+  text-align: center;
 `;
 
 export const TextoSelecioneUmaData = styled.h3`
@@ -447,10 +387,6 @@ export const TextoSelecioneUmaData = styled.h3`
   display: flex;
   justify-content: end;
   align-items: center;
- 
-  @media(max-width:425px){
-    margin-top:5%;
-  }
 `;
 
 export const TextoDoisSelects = styled.h3`
@@ -463,9 +399,6 @@ export const TextoDoisSelects = styled.h3`
   align-items: center;
   margin-right: 0%; 
   margin-left: 0%;
-  @media (max-width: 560px){
-    margin-top: 15%;
-  }
 `;
 
 export const SelecioneUmaData = styled.div`
@@ -475,18 +408,8 @@ export const SelecioneUmaData = styled.div`
   justify-content: center;
   width: 90%;
  
-   @media(max-width: 768px){
-    margin-top:-20%;
-  }
-  @media (max-width: 637px){
-    margin-bottom: 10%;
-  }
   @media (max-width: 560px) {
     width: 100%;
-  }
-  @media(max-width: 425px) {
-    margin-top: 1%;
-    margin-bottom:5%;
   }
   @media(max-width: 375px) {
     margin-top: 5%;
@@ -495,10 +418,6 @@ export const SelecioneUmaData = styled.div`
   @media(max-width: 320px) {
     margin-top: 5%;
     margin-bottom:3%;
-  }
-   @media(max-width: 295px) {
-    margin-top: 5%;
-    margin-bottom:5%;
   }
   
 `;
@@ -511,4 +430,12 @@ export const Rotulo = styled.div`
   font-weight: 400;
   font-size: 1em;
   color: ${Cores.vermelho};
+`;
+
+export const OpcoesAgendamento = styled.div`
+  width: 100%;
+ 
+  @media (max-width: 450px) {
+    width: 20%;
+  }
 `;

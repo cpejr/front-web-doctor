@@ -263,8 +263,6 @@ function ModalAgendamentoConsulta(props) {
                   color: "black",
                   borderColor: "black",
                   borderWidth: "0px",
-                  marginBottom: "0.5em",
-                  paddingLeft: "1.8em",
                 }}
                 size="large"
                 name="id_usuario"
