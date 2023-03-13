@@ -113,8 +113,9 @@ function ModalAgendamento(props) {
     await managerService.DeletarConsulta(id);
     const Token = 
     await managerService.TokenById(consulta);
+    for(var i = 0; i <= Token.length - 1; i++){
     const Message = {
-    to: Token.token_dispositivo.replace("expo/", ''),
+    to: Token[i].token_dispositivo.replace("expo/", ''),
     sound: 'default',
     title: 'Doctor App', 
     body: 'Sua consulta foi desmarcada!',
@@ -124,7 +125,7 @@ function ModalAgendamento(props) {
     method: 'POST',
     body: JSON.stringify(Message),
     }
-  );
+  );}
     pegandoDados();
   }
 
