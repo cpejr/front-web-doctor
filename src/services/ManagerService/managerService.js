@@ -1026,6 +1026,34 @@ export const dispostivoById = async (id) => {
   return dispositivo;
 };
 
+export const TokenById = async (id_usuario) => {
+  let dispositivo = {};
+
+  await requesterService
+    .TokenById(id_usuario)
+    .then((res) => {
+      dispositivo = res.data
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dispositivo;
+};
+
+export const getTokenDispositivo = async (token_dispositivo) => {
+  let token = {};
+
+  await requesterService
+    .getTokenDispositivo(token_dispositivo)
+    .then((res) => {
+      token = res.data
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return token;
+};
+
 export const GetHomes = async () => {
   let dadosHomes = {};
 

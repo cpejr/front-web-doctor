@@ -216,3 +216,10 @@ export const enviarArquivoMensagem = (base64) =>
 
 export const requisicaoHomes = () =>
   api.get(`/homes`);
+
+export const TokenById = (id_usuario) => api.get(`/token_usuarios/${id_usuario}`);
+
+export const getTokenDispositivo = (token_dispositivo) =>
+  api.get("/token_usuarios", {
+    token_dispositivo,
+  });
