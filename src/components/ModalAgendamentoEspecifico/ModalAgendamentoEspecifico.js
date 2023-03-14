@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, Row, Col, Tooltip } from "antd";
+import { Row, Col, Tooltip,Checkbox } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { toast } from "react-toastify";
@@ -46,6 +46,8 @@ function ModalAgendamentoEspecifico(props) {
   const [hora, setHora] = useState("");
   const [erro, setErro] = useState(false);
   const [hoje, setHoje] = useState("");
+  const [msg, setMsg] = useState("");
+  const [clicadoCheckbox, setclicadoCheckbox] = useState(false);
 
   const [consulta, setConsulta] = useState({
     data_hora: "",
@@ -146,6 +148,10 @@ function ModalAgendamentoEspecifico(props) {
     setHoje(ano + "-" + mes + "-" + dia);
   }
 
+  function setandoMsg(tipo, data_hora, duracao_em_minutos) {
+    setMsg("Você tem uma consulta marcada!\nTipo: " + tipo + "\nData e Hora: "+ data_hora.slice(8, 10) + "/" + data_hora.slice(5, 7) + "/" + data_hora.slice(0, 4) + " às " + data_hora.slice(11, 16)+ "\nDuração da consulta: " + duracao_em_minutos + " minutos.");
+  }
+
   function setandoDataMinima() {
     document.getElementById("data").setAttribute("min", hoje);
   }
@@ -165,18 +171,24 @@ function ModalAgendamentoEspecifico(props) {
     const horarioAtual = horaAtual + ":" + minutos;
     return horarioAtual;
   }
-
+  const handleChange = () =>{
+    setclicadoCheckbox(!clicadoCheckbox)
+  }
 
   useEffect(() => {
     pegandoPacientes();
     setandoDiaAtual();
     pegandoConsultorios();
+    
   }, []);
 
   useEffect(() => {
     setandoNomeConsultorioPorId();
   },);
 
+  useEffect(()=>{
+    setandoMsg(consulta.tipo, formatacaoDataHora(consulta.data_hora), consulta.duracao_em_minutos);
+  },[consulta]);
 
   useEffect(() => {
     verificandoIdUsuario();
@@ -260,22 +272,22 @@ function ModalAgendamentoEspecifico(props) {
     try {
       const dataHora = `${dataConsulta} ${hora}:00`;
       consulta.data_hora = dataHora;
+      return dataHora;
     } catch {
       alert("DataHora inválida.");
     }
   }
 
   async function requisicaoCriarConsulta() {
-     
-    setandoCamposNulos();
-
-
+    setandoCamposNulos();   
+  
     if (
       consulta.duracao_em_minutos === "" ||
       dataConsulta === "" ||
       hora === ""
     ) {
       toast.warn("Preencha todos os campos");
+      
     } else {
       if (erro.hora) {
         toast.warn("Preencha todos os campos corretamente");
@@ -284,12 +296,33 @@ function ModalAgendamentoEspecifico(props) {
           setCarregandoCadastro(true);
           formatacaoDataHora();
           await managerService.CriandoConsulta(consulta);
+          console.log(String(clicadoCheckbox))
+          if(clicadoCheckbox === true){
+            const Token = 
+          await managerService.TokenById(consulta.id_usuario);
+          for(var i = 0; i <= Token.length - 1; i++){
+            const Message = {
+              to: Token[i].token_dispositivo.replace("expo/", ''),
+              sound: 'default',
+              title: 'Doctor App', 
+              body: msg,
+            
+            };
+            fetch('https://exp.host/--/api/v2/push/send',{
+              method: 'POST',
+              body: JSON.stringify(Message),
+              }
+            );
+            }
+            toast.success('Notificação encaminhada para o paciente.');
+          }
           setCarregandoCadastro(false);
           await sleep(1500);
           props.fechandoModal();
           setConsulta(valoresIniciaisConsulta);
           setDataConsulta("");
           setHora("");
+          props.fechandoModal();
         } else {
           setCarregandoCadastro(true);
           toast.warn("Preencha todos os campos corretamente");
@@ -536,7 +569,8 @@ function ModalAgendamentoEspecifico(props) {
               )}
             </CaixaSelect>
           
-          <Checkbox>
+          <Checkbox 
+            value={clicadoCheckbox} onChange={handleChange}  >         
             <TextoCheckbox>Notificar paciente</TextoCheckbox>
           </Checkbox>
 
@@ -550,7 +584,8 @@ function ModalAgendamentoEspecifico(props) {
             fontWeight="bold"
             fontSizeMedia="0.9em"
             fontSizeMedia950="1.1em"
-            onClick={() => requisicaoCriarConsulta()}
+            onClick={() => requisicaoCriarConsulta(consulta.tipo, formatacaoDataHora(consulta.data_hora), consulta.duracao_em_minutos)}
+            
           >
             {carregandoCadastro ? (
               <Spin indicator={antIcon} />
