@@ -360,6 +360,18 @@ function PerfilPaciente(props) {
           new Paragraph({
             children: [
               new TextRun({
+                text: `TÍTULO: `,
+                bold: true,
+              }),
+              new TextRun({
+                text: `${docxWord.titulo}`,
+                bold: true,
+              }),
+            ],
+          }),
+          new Paragraph({
+            children: [
+              new TextRun({
                 text: `NOME: `,
                 bold: true,
               }),
@@ -380,7 +392,8 @@ function PerfilPaciente(props) {
             ],
           }),
           new Paragraph({
-            children: arrayParagrafos
+            children: arrayParagrafos,
+            break: 1
           }),
           new Paragraph({
             children: [
@@ -769,7 +782,7 @@ function PerfilPaciente(props) {
           titulo={titulo}
         />
       </Modal>
-      <AddToast/>
+      <AddToast />
     </div>
   );
 }
