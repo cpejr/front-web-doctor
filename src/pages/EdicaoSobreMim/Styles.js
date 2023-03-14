@@ -24,7 +24,7 @@ export const EdicaoContainer = styled.div`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 3px;
 
-  width: 100%;
+  width: 99%;
   max-width: 1200px;
 
   @media (max-width: 910px) {
@@ -51,13 +51,11 @@ export const Titulo = styled.h1`
 `;
 export const Inputs = styled.form`
   position: relative;
-
+  gap: 0;
   display: flex;
   align-items: flex-start;
   
   height: 100%;
-
-  gap: 95px;
 
   @media (max-width: 910px) {
     flex-direction: column;
@@ -242,7 +240,7 @@ export const Botao = styled.button`
   font-family: 'Barlow';
   font-style: normal;
   font-weight: 600;
-  font-size: 30px;
+  font-size: 27px;
   line-height: 36px;
 
   ${(props) => props.salvar && salvarBotaoStyle}
@@ -254,12 +252,12 @@ export const Botao = styled.button`
 `;
 
 const salvarBotaoStyle = css`
-  background: #8F95D2;
+  background: #0A0E3C;
   color: #FFFFFF;
 `
 
 const cancelarBotaoStyle = css`
   /* background: rgba(248, 207, 207, 0.5); */
-  background: green;
+  background: red;
   color: rgba(10, 14, 60, 0.6);
 `

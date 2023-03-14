@@ -1,6 +1,6 @@
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState} from "react";
 import { toast } from 'react-toastify';
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from '../../variaveis';
@@ -8,8 +8,10 @@ import {
   Botao, BotaoContainer, Container, Divisor, EdicaoContainer, InputAreaTexto, InputContainer, InputImagem, InputImagemContainer, Inputs, InputTextoContainer,
   InputTitulo, Titulo
 } from "./Styles";
+import { useHistory } from "react-router-dom";
 
 function EdicaoSobreMim() {
+  const history = useHistory();
   const [sobreMimDados, setSobreMimDados] = useState({});
   const [carregando, setCarregando] = useState(false);
   const tituloUmRef = useRef(null);
@@ -91,12 +93,14 @@ function EdicaoSobreMim() {
     await managerService.atualizarSobreMim(id, dados);
     setSobreMimDados((prev) => ({ ...prev, ...formDados }));
     setCarregando(false);
+    history.push("/web/editarconteudo")
   };
   const handleCancelar = () => {
     getSobreMimDados();
 
     imagemUmRef.current.value = null;
     imagemDoisRef.current.value = null;
+    history.push("/web/editarconteudo")
   };
 
   const antLoadingIcon = (
@@ -171,7 +175,7 @@ function EdicaoSobreMim() {
                 />
               </InputTextoContainer>
               <BotaoContainer>
-                <Botao type="submit" salvar>Salvar Alterações</Botao>
+                <Botao type="submit" salvar >Salvar Alterações</Botao>
                 <Botao onClick={handleCancelar} type="button" cancelar>Cancelar Alterações</Botao>
               </BotaoContainer>
             </InputContainer>
