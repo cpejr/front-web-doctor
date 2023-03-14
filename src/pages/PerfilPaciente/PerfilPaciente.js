@@ -310,7 +310,7 @@ function PerfilPaciente(props) {
       arrayParagrafos.push(
         new TextRun({
           text: `Pergunta: ${conteudoPergunta}`,
-          break: 1,
+          break: 2,
           bold: true
         })
       )
@@ -374,6 +374,7 @@ function PerfilPaciente(props) {
               new TextRun({
                 text: `NOME: `,
                 bold: true,
+                break: 1
               }),
               new TextRun({
                 text: `${docxWord.nome}`,
@@ -393,7 +394,6 @@ function PerfilPaciente(props) {
           }),
           new Paragraph({
             children: arrayParagrafos,
-            break: 1
           }),
           new Paragraph({
             children: [
