@@ -30,9 +30,9 @@ function ModalEnvioFormulario(props) {
     setMensagem("Você tem uma formulário enviado!\nTipo: " + tipo);
   }
 
-  useEffect(() => {
-    setandoMensagem(formularioPaciente.tipo);
-  }, [formularioPaciente]);
+  // useEffect(() => {
+  //   setandoMensagem(formularioPaciente.tipo);
+  // }, [formularioPaciente]);
 
   async function enviandoFormularioPaciente() {
     setCarregando(true);
@@ -84,6 +84,7 @@ function ModalEnvioFormulario(props) {
 
   async function preenchendoDados(e) {
     setFormularioPaciente(e.target.value);
+     setandoMensagem(formularioPaciente.tipo);
   }
 
   return (
