@@ -27,10 +27,11 @@ import {
   FooterConversaAberta,
   HeaderConversaAberta,
   MenuConversasTipoExame,
-  NomePessoa,
+  NomePessoa,ACTI
 } from "./Styles";
 export default function ConversaAberta({ socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
+  const [dadosPaciente, setDadosPaciente] = useState({});
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState("");
   const [carregandoConversa, setCarregandoConversa] = useState(true);
   const [carregandoEnvioMensagem, setCarregandoEnvioMensagem] = useState(false);
@@ -40,8 +41,18 @@ export default function ConversaAberta({ socket }) {
     setHorarioPermitidoParaEnvioMensagem,
   ] = useState(null);
   const mensagemFinalizada =
-    "CHAT FINALIZADO.\n" +
-    "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n";
+    "Os seus exames estão disponíveis no PDF acima, clique para abrir.\n" +
+    "Essa conversa foi encerrada Finalizado!\n";
+
+  const mensagemActigrafia = "A actigrafia é um exame não invasivo, realizado por meio de um dispositivo utilizado no pulso durante um período de uma a quatro semanas. Ele tem como objetivo detectar o padrão de vigília e sono. O exame é utilizado principalmente para auxiliar no diagnóstico de insônia e distúrbios de ritmo circadiano. O preço desse exame é: ";
+  const mensagemBiologix = "O Exame do Sono Biologix é uma poligrafia noturna utilizada para diagnóstico e acompanhamento do tratamento de ronco e apneia do sono, e permite que profissionais de saúde ofereçam a seus pacientes uma solução simplificada, utilizando apenas um celular e um sensor compacto e sem fios. O preço desse exame é: "
+  const mensagemDispositivoIndisponível = "O dispositivo para a realização desse exame está indisponível! Deseja ser comunicado quando houver disponibilidade?";
+  const mensagemDispositivoDisponível = "O dispositivo para a realização desse exame está disponível! Deseja realizá-lo?";
+  const mensagemResponderFormulárioBiologix = "Por gentileza, responda o formulário BIOLOGIX";
+  const mensagemResponderFormulárioActigrafia = "Por gentileza, responda o formulário ACTIGRAFIA";
+  const mensagemSolicitarPagamento = "Realize o pagamento pela seguinte chave pix: ";
+ const mensagemConfirmacaoDeDados = 
+  `Esses dados serão usados na entrega ${usuarioAtual}`;
 
   const {
     usuarioId,
@@ -62,7 +73,7 @@ export default function ConversaAberta({ socket }) {
   const [modalEnviarArquivo, setModalEnviarArquivo] = useState(false);
   const [pdfFromModal, setPdfFromModal] = useState("");
   const [urlFromModal, setUrlFromModal] = useState("");
-
+  
   const menuBotoes = (
     <Menu>
       <Menu.Item>
@@ -113,6 +124,78 @@ export default function ConversaAberta({ socket }) {
           }}
         >
           <b>Enviar Arquivo</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => InformaçãoGeral()}
+        >
+          <b>Informação Geral</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => DispositivoIndisponível()}
+        >
+          <b>Dispositivo Indisponível</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => DispositivoDisponível()}
+        >
+          <b>Dispositivo Disponível</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => ResponderFormulário()}  
+        >
+          <b>Responder Formulário</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => SolicitarPagamento()}
+        >
+          <b>Solicitar Pagamento</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => ConfirmacaoDeDados()}
+        >
+          <b>Confirmação de dados</b>
         </Button>
       </Menu.Item>
     </Menu>
@@ -286,6 +369,17 @@ export default function ConversaAberta({ socket }) {
     return () => (componenteEstaMontadoRef.current = false);
   }, []);
 
+ /* async function getDadosPessoais() {
+    const { dadosPaciente} = await managerService.GetDadosPessoais();
+    setDadosPaciente(dadosPaciente);
+  }
+
+  useEffect(() => {
+    getDadosPessoais();
+  }, []);
+
+  console.log (dadosPaciente)
+*/
   const verificaHorarioPermitidoParaEnvioDeMensagens = () => {
     const verificaHorarioUsuario =
       horarioComercial === false && tipoUsuario !== "MASTER" ? false : true;
@@ -303,6 +397,7 @@ export default function ConversaAberta({ socket }) {
       true,
       "d98bf5e0-73e0-4d59-9c00-a7d79a1174b0",
       conversaSelecionada.conversaCom.id
+      
     );
   }
 
@@ -319,6 +414,54 @@ export default function ConversaAberta({ socket }) {
     atualizaConversaFinalizada();
   }
 
+  async function InformaçãoGeral() {
+    if (conversaSelecionada.tipo === "ACTIGRAFIA"){
+      await enviaMensagem("nenhuma", mensagemActigrafia);
+    }else if (conversaSelecionada.tipo === "BIOLOGIX"){
+      await enviaMensagem("nenhuma", mensagemBiologix);
+    }
+  }
+  async function DispositivoIndisponível() {
+    await enviaMensagem("nenhuma", mensagemDispositivoIndisponível);
+  }
+
+  async function DispositivoDisponível() {
+    
+     await enviaMensagem("nenhuma", mensagemDispositivoDisponível); /*
+    const Token = managerService.TokenById(formulario.id_usuario); 
+    const Message = { 
+      to: Token.token_dispositivo.replace("expo/", ''), 
+      sound: 'default', 
+      title: 'Chat:', 
+      body: 'O exame' +
+      conversaSelecionada.tipo +
+       'está disponível', 
+    }; 
+    await fetch('https://exp.host/--/api/v2/push/send', { 
+      method: 'POST', 
+      body: JSON.stringify(Message), 
+    } 
+    ); */
+  } 
+  
+  async function ConfirmacaoDeDados() {
+    await enviaMensagem("nenhuma", mensagemConfirmacaoDeDados);
+  }
+
+  async function SolicitarPagamento() {
+    await enviaMensagem("nenhuma", mensagemSolicitarPagamento);
+  }
+
+  async function ResponderFormulário() {
+    if (conversaSelecionada.tipo === "ACTIGRAFIA"){
+      await enviaMensagem("nenhuma", mensagemResponderFormulárioActigrafia);
+    }else if (conversaSelecionada.tipo === "BIOLOGIX"){
+      await enviaMensagem("nenhuma", mensagemResponderFormulárioBiologix);
+    }
+  }
+
+ 
+
   function atualizaConversaFinalizada() {
     const auxConversa = conversaSelecionada;
     auxConversa.finalizada = true;
@@ -330,8 +473,9 @@ export default function ConversaAberta({ socket }) {
 
     const resposta = await managerService.GetMensagensPorConversaUsuario(
       usuarioId,
-      conversaSelecionada.id
+      conversaSelecionada.id,
     );
+    
     if (componenteEstaMontadoRef.current) setMensagens(resposta);
   }
   useEffect(() => {
@@ -444,7 +588,7 @@ export default function ConversaAberta({ socket }) {
 
     let id_remetente = usuarioId;
     let texto = inputMensagemConteudo;
-
+    
     if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
       texto =
