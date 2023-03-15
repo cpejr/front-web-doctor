@@ -4,6 +4,8 @@ export const EnviandoImagem = (base64) =>
   api.post("/arquivo", { file: base64 });
 
 
+export const EnviandoArquivo = (base64) => api.post("/arquivofile", {file: base64});
+
 
 export const logarUsuario = (email, senha) =>
   api.post("/login", {
@@ -124,7 +126,10 @@ export const deletarFormulario = (id) => api.delete(`/formularios/${id}`);
 export const requisicaoRespostaFormularioIdUsuario = (id_usuario) =>
   api.get(`/formularios_pacientes_usuario/${id_usuario}`);
 
-export const criarFormulario = (estado) => api.post("/formularios", estado);
+export const requisicaoRespostaReceitaIdUsuario = (id_usuario) =>
+  api.get(`/receitas_usuario/${id_usuario}`);
+
+export const criarFormulario = (estado) => api.post('/formularios', estado);
 
 export const requisicaoRespostaFormulario = (id) =>
   api.get(`/formularios_pacientes/${id}`);
@@ -141,6 +146,18 @@ export const criarReceita = (id_usuario, nomePaciente, dataNascimento, tituloRec
     data: dataNascimento,
     titulo: tituloReceita,
     descricao: descricao,
+  });
+export const criarReceitaComArquivo = (
+  id_usuario,
+  tituloReceita,
+  descricao,
+  base64
+) =>
+  api.post(`/receitasarquivo`, {
+    id_usuario: id_usuario,
+    titulo: tituloReceita,
+    descricao: descricao,
+    file:base64,
   });
 
 export const deletarReceita = (id) => api.delete(`/receitas/${id}`);
@@ -197,6 +214,8 @@ export const deletarConversasInativas = (id_usuario) =>
 
 export const criarMensagem = (mensagem) => api.post(`/mensagems`, mensagem);
 
+export const criarMensagemComArquivo = (mensagem) => api.post(`/mensagemsfile`, mensagem);
+
 export const requisicaoMensagensPorConversaUsuario = (
   id_usuario,
   id_conversa
@@ -209,3 +228,18 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   api.put(`/mensagems/${id_conversa}/visualizadas/${id_usuario}`);
 
 export const dispostivoById = (id) => api.get(`/dispositivos/${id}`);
+
+export const enviarArquivoMensagem = (base64) =>
+  api.post(`/arquivofile/`,{
+    file: base64
+  });
+
+export const requisicaoHomes = () =>
+  api.get(`/homes`);
+
+export const TokenById = (id_usuario) => api.get(`/token_usuarios/${id_usuario}`);
+
+export const getTokenDispositivo = (token_dispositivo) =>
+  api.get("/token_usuarios", {
+    token_dispositivo,
+  });

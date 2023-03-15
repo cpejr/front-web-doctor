@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
+import React, { useEffect, useState } from 'react';
+import { toast } from "react-toastify";
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 import {
   Container,
   Caixa,
@@ -119,8 +120,23 @@ function ModalAgendamento(props) {
     pegandoDados();
   }
 
-  async function excluirConsulta(id) {
+  async function excluirConsulta(id, consulta) {
     await managerService.DeletarConsulta(id);
+    const Token = 
+    await managerService.TokenById(consulta);
+    for(var i = 0; i <= Token.length - 1; i++){
+    const Message = {
+    to: Token[i].token_dispositivo.replace("expo/", ''),
+    sound: 'default',
+    title: 'Doctor App', 
+    body: 'Sua consulta foi desmarcada!',
+    
+  };
+   fetch('https://exp.host/--/api/v2/push/send',{
+    method: 'POST',
+    body: JSON.stringify(Message),
+    }
+  );}
     pegandoDados();
   }
 
@@ -197,12 +213,12 @@ function ModalAgendamento(props) {
                           backgroundColor={Cores.branco}
                           borderColor="rgba(255, 0, 0, 0.25)"
                           color={Cores.cinza[1]}
-                          fontSize="0.9em"
-                          fontWeight="bold"
-                          fontSizeMedia="0.8em"
-                          fontSizeMedia950="1em"
-                          heightMedia560="30px"
-                          onClick={() => excluirConsulta(value.id)}
+                          fontSize='0.9em'
+                          fontWeight='bold'
+                          fontSizeMedia='0.8em'
+                          fontSizeMedia950='1em'
+                          heightMedia560='30px'
+                          onClick={() => excluirConsulta(value.id, value.id_usuario)}
                         >
                           EXCLUIR
                         </Button>
