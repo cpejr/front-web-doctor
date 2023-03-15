@@ -227,11 +227,14 @@ function ModalAgendamentoConsulta(props) {
   }
 
   async function requisicaoCriarConsulta() {
-    consulta.id_usuario = idUsuario;
+    if (props.abertoPeloUsuario) {
+      consulta.id_usuario = props.usuario.id;
+    } else {
+      consulta.id_usuario = idUsuario;
+    }
     setCarregandoCadastro(true);
     formatacaoDataHora();
     await managerService.CriandoConsulta(consulta);
-    console.log(consulta)
     setCarregandoCadastro(false);
     await sleep(1500);
     props.fechandoModal();
@@ -290,11 +293,9 @@ function ModalAgendamentoConsulta(props) {
           </Usuario>
         )}
         <TipoAgendamento>
-          <TextoCaixaSelect>
-            Selecione o Tipo de Agendamento:
-          </TextoCaixaSelect>
+          <TextoCaixaSelect>Selecione o Tipo de Agendamento:</TextoCaixaSelect>
 
-          <Row gutter={60} justify={"space-around"} >
+          <Row gutter={60} justify={"space-around"}>
             <Radio.Group
               defaultValue="consulta"
               bordered={false}
@@ -305,7 +306,6 @@ function ModalAgendamentoConsulta(props) {
               <Radio value="consulta">Consulta</Radio>
             </Radio.Group>
           </Row>
-
         </TipoAgendamento>
         <TextAreaDescricao
           border={tipoRadio}
@@ -493,7 +493,9 @@ function ModalAgendamentoConsulta(props) {
           {carregandoCadastro ? (
             <Spin indicator={antIcon} />
           ) : (
-            <div style={{ margin: 'auto', padding: 'auto' }}>Cadastrar novo agendamento</div>
+            <div style={{ margin: "auto", padding: "auto" }}>
+              Cadastrar novo agendamento
+            </div>
           )}
         </Button>
       </InfoDireita>

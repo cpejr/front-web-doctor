@@ -149,7 +149,6 @@ function ModalAgendamentoExame(props) {
     setandoDiaAtual();
   }, []);
 
-
   useEffect(() => {
     setandoDataMinima();
   }, [hoje]);
@@ -202,15 +201,13 @@ function ModalAgendamentoExame(props) {
   }
 
   async function requisicaoCriarExame() {
-    if (props.usuario) {
-      exame.id_usuario = props.usuario.id_usuario;
+    if (props.abertoPeloUsuario) {
+      exame.id_usuario = props.usuario.id;
     } else {
       exame.id_usuario = idUsuario;
     }
-
     setCarregandoCadastro(true);
     formatacaoDataHora();
-    exame.id_usuario = idUsuario;
     await managerService.CriandoExame(exame);
     setCarregandoCadastro(false);
     await sleep(1500);
@@ -218,7 +215,6 @@ function ModalAgendamentoExame(props) {
     setExame(valoresIniciaisExame);
     setDataExame("");
     setHora("");
-
   }
 
   return (
@@ -272,14 +268,13 @@ function ModalAgendamentoExame(props) {
           </Usuario>
         )}
         <TipoAgendamento>
-          <TextoCaixaSelect>
-            Selecione o Tipo de Agendamento:
-          </TextoCaixaSelect>
+          <TextoCaixaSelect>Selecione o Tipo de Agendamento:</TextoCaixaSelect>
           <OpcoesAgendamento>
             <Row gutter={60} justify={"space-around"}>
               <Radio.Group
                 defaultValue="exame"
-                bordered={false} s
+                bordered={false}
+                s
                 onChange={(e) => props.trocarTipo(e.target.value)}
               >
                 <Radio value="exame">Exame</Radio>
@@ -350,12 +345,12 @@ function ModalAgendamentoExame(props) {
                 ))}
               </Select>
             </Tooltip>
-            {camposVazios.titulo &&
-              <Rotulo>Selecione um tipo de exame</Rotulo>
-            }
+            {camposVazios.titulo && <Rotulo>Selecione um tipo de exame</Rotulo>}
           </TamanhoInput>
           <TamanhoInput>
-            <TextoSelecioneUmaData>Selecione um consultório:</TextoSelecioneUmaData>
+            <TextoSelecioneUmaData>
+              Selecione um consultório:
+            </TextoSelecioneUmaData>
             <Tooltip
               placement="topLeft"
               title={consultorio?.nome}
@@ -436,7 +431,9 @@ function ModalAgendamentoExame(props) {
           {carregandoCadastro ? (
             <Spin indicator={antIcon} />
           ) : (
-            <div style={{ margin: 'auto', padding: 'auto' }}>Cadastrar novo agendamento</div>
+            <div style={{ margin: "auto", padding: "auto" }}>
+              Cadastrar novo agendamento
+            </div>
           )}
         </Button>
       </InfoDireita>
