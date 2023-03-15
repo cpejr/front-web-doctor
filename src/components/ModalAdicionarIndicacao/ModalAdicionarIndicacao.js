@@ -87,7 +87,7 @@ function ModalAdicionarIndicacao(props) {
 				history.push("/web/edicaoindicacoesesugestoes");
 			},
 		});
-
+    window.location.reload();
 		setCarregandoCriacao(false);
 	}
 
@@ -125,16 +125,12 @@ function ModalAdicionarIndicacao(props) {
           fontSize="1em"
           width="100%"
           paddingRight="2%"
-          type="tel"
           onChange={preenchendoDados}
           erro={erro.telefone}
           camposVazios={camposVazios.telefone}
           name="telefone"
           value={estado.telefone}
         ></Input>
-        {erro.telefone && (
-          <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
-        )}
       </ContainerInputs>
       <ContainerInputs>
         <Labels>Local de Atendimento:</Labels>

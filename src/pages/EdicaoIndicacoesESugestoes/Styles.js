@@ -145,6 +145,7 @@ export const Informacoes = styled.div`
   ::-webkit-scrollbar {
     width: 0px;
   }
+  overflow-y: 100%;
 `;
 
 export const DescricaoInformacoes = styled.p`
@@ -160,7 +161,7 @@ export const DescricaoInformacoes = styled.p`
   border: none;
   font-size: 1em;
   font-family: ${Fontes.barlow};
-  overflow-y: auto;
+  overflow-y: 100%;
 `;
 
 export const TituloInfo = styled.h2`

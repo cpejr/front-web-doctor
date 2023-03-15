@@ -17,6 +17,7 @@ function ModalAlterarIndicacao(props) {
   const [camposVazios, setCamposVazios] = useState({});
   const [carregandoCriacao, setCarregandoCriacao] = useState(false);
   const [medicoEspecifico, setMedicoEspecifico] = useState([{}]);
+  const history = useHistory();
   let ID = {};
   const [estado, setEstado] = useState({
     nome: "",
@@ -81,22 +82,64 @@ function ModalAlterarIndicacao(props) {
  async function alterar(e) {
   e.preventDefault();
 
+  if(!estado.nome && !estado.telefone && estado.local_atendimento){
+    estado.nome = selecionarMedico.nome;
+    estado.telefone = selecionarMedico.telefone;
+    erro.nome = false;
+    erro.telefone = false;
+    erro.local_atendimento = false;
+  } else if(estado.nome && !estado.telefone && !estado.local_atendimento){
+    estado.telefone = selecionarMedico.telefone;
+    estado.local_atendimento = selecionarMedico.local_atendimento;
+    erro.nome = false;
+    erro.telefone = false;
+    erro.local_atendimento = false;
+  } else if(!estado.nome && estado.telefone && !estado.local_atendimento){
+    estado.nome = selecionarMedico.nome;
+    estado.local_atendimento = selecionarMedico.local_atendimento;
+    erro.nome = false;
+    erro.telefone = false;
+    erro.local_atendimento = false;
+  } else  if(estado.nome && !estado.telefone && estado.local_atendimento){
+    estado.telefone = selecionarMedico.telefone;
+    erro.nome = false;
+    erro.telefone = false;
+    erro.local_atendimento = false;
+  } else  if(!estado.nome && estado.telefone && estado.local_atendimento){
+    estado.nome = selecionarMedico.nome;
+    erro.nome = false;
+    erro.telefone = false;
+    erro.local_atendimento = false;
+  } else  if(estado.nome && estado.telefone && !estado.local_atendimento){
+    estado.local_atendimento = selecionarMedico.local_atendimento;
+    erro.nome = false;
+    erro.telefone = false;
+    erro.local_atendimento = false;
+  } else if (!estado.nome && !estado.telefone && !estado.local_atendimento) {
+   erro.nome = true;
+   erro.telefone = true;
+   erro.local_atendimento = true;
+  }
   
-  if (!estado.nome) erro.nome = true;
-  if (!estado.telefone) erro.telefone = true;
-  if (!estado.local_atendimento) erro.local_atendimento = true;
-  
-  
+  console.log(erro);
   setCamposVazios({...camposVazios, ...erro});
   if (!_.isEqual(camposVazios, camposVaziosReferencia)) {
-    toast.warn("Preencha todos os campos");
+    toast.warn("Preencha algum campo");
     return;
-  }else{
-    setCarregandoCriacao(true);
-    await managerService.EditarMedicoIndicado(estado.id_indicacao_especifica, estado);
-    await sleep(1500);
-    setCarregandoCriacao(false);
+  }else if(estado.telefone.length < 15){
+    toast.warn("Preencha o campo corretamente");
+    return;
   }
+    setCarregandoCriacao(true);
+    await managerService.EditarMedicoIndicado(estado.id_indicacao_especifica, estado,{
+      onClose: () => {
+        history.push("/web/edicaoindicacoesesugestoes");
+      },
+    });
+    await sleep(1500);
+    window.location.reload();
+    setCarregandoCriacao(false);
+  
 
   
  }
@@ -157,16 +200,12 @@ function ModalAlterarIndicacao(props) {
           fontSize="1em"
           width="100%"
           paddingRight="2%"
-          type="tel"
           onChange={preenchendoDados}
           erro={erro.nome}
           camposVazios={camposVazios.nome}
           name="telefone"
           value={estado.telefone}
         ></Input>
-        {erro.telefone && (
-          <Rotulo>Digite um telefone no formato (xx)xxxxx-xxxx</Rotulo>
-        )}
       </ContainerInputs>
       <ContainerInputs>
         <Labels>Local de Atendimento:</Labels>
