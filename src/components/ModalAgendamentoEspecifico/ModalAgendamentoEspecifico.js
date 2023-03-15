@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Row, Col, Tooltip,Checkbox } from "antd";
-import { Row, Radio } from "antd";
+import { Row, Col, Tooltip, Checkbox, Radio } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { toast } from "react-toastify";
@@ -36,7 +35,6 @@ import * as managerService from "../../services/ManagerService/managerService";
 import ModalAgendamentoConsulta from "../ModalAgendamentoConsulta";
 import ModalAgendamentoExame from "../ModalAgendamentoExame";
 import Button from "../../styles/Button";
-import { Checkbox, Tooltip } from "antd";
 
 function ModalAgendamentoEspecifico(props) {
   const [usuario, setUsuario] = useState({});

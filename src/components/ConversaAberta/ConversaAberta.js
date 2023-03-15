@@ -29,6 +29,7 @@ import {
   MenuConversasTipoExame,
   NomePessoa,
 } from "./Styles";
+import { toast } from "react-toastify";
 export default function ConversaAberta({ socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState("");
