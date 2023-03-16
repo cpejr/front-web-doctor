@@ -56,8 +56,9 @@ function ModalEnvioFormulario(props) {
           props.idFormulario,
           formularioPaciente
         );
+
         const Token =
-          await managerService.TokenById(formularioPaciente.id_usuario);
+          await managerService.TokenById(formularioPaciente);
         for (var i = 0; i <= Token.length - 1; i++) {
           const Message = {
             to: Token[i].token_dispositivo.replace("expo/", ''),
@@ -65,6 +66,9 @@ function ModalEnvioFormulario(props) {
             title: 'Doctor App',
             body: "teste",
           };
+
+          console.log(Message);
+
           fetch('https://exp.host/--/api/v2/push/send', {
             method: 'POST',
             body: JSON.stringify(Message),
@@ -84,7 +88,7 @@ function ModalEnvioFormulario(props) {
 
   async function preenchendoDados(e) {
     setFormularioPaciente(e.target.value);
-     setandoMensagem(formularioPaciente.tipo);
+    setandoMensagem(formularioPaciente.tipo);
   }
 
   return (
