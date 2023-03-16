@@ -296,7 +296,6 @@ function ModalAgendamentoEspecifico(props) {
           setCarregandoCadastro(true);
           formatacaoDataHora();
           await managerService.CriandoConsulta(consulta);
-          console.log(String(clicadoCheckbox))
           if(clicadoCheckbox === true){
             const Token = 
           await managerService.TokenById(consulta.id_usuario);
