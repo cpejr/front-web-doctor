@@ -52,12 +52,9 @@ const Input = styled.input`
   padding-right: ${(props) => props.paddingRight ?? '0px'};
   padding-bottom: ${(props) => props.paddingBottom};
   width: ${(props) => props.width};
+  outline: ${(props) => props.outline};
   @media (max-width: 820px) {
     width: 100%;
-  }
-
-  @media (max-width: 281px) {
-    width: 80%;
   }
 `;
 
