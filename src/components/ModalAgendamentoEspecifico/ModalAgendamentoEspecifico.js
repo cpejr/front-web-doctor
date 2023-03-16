@@ -66,25 +66,25 @@ function ModalAgendamentoEspecifico(props) {
 
   return (
     <Container>
-        <InfoEsquerdaEDireita>
-          {tipoRadio === "exame" ? (
-            <ModalAgendamentoExame
-              abertoPeloUsuario={props.abertoPeloUsuario}
-              usuario={usuario}
-              usuarios={usuarios}
-              fechandoModal={() => props.fechandoModal()}
-              trocarTipo={(e) => setTipoRadio(e)}
-            />
-          ) : (
-            <ModalAgendamentoConsulta
-              abertoPeloUsuario={props.abertoPeloUsuario}
-              usuario={usuario}
-              usuarios={usuarios}
-              fechandoModal={() => props.fechandoModal()}
-              trocarTipo={(e) => setTipoRadio(e)}
-            />
-          )}
-        </InfoEsquerdaEDireita>
+      <InfoEsquerdaEDireita>
+        {tipoRadio === "exame" ? (
+          <ModalAgendamentoExame
+            abertoPeloUsuario={props.abertoPeloUsuario}
+            usuario={usuario}
+            usuarios={usuarios}
+            fechandoModal={() => props.fechandoModal()}
+            trocarTipo={(e) => setTipoRadio(e)}
+          />
+        ) : (
+          <ModalAgendamentoConsulta
+            abertoPeloUsuario={props.abertoPeloUsuario}
+            usuario={usuario}
+            usuarios={usuarios}
+            fechandoModal={() => props.fechandoModal()}
+            trocarTipo={(e) => setTipoRadio(e)}
+          />
+        )}
+      </InfoEsquerdaEDireita>
     </Container>
   );
 }

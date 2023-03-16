@@ -122,21 +122,22 @@ function ModalAgendamento(props) {
 
   async function excluirConsulta(id, consulta) {
     await managerService.DeletarConsulta(id);
-    const Token = 
-    await managerService.TokenById(consulta);
-    for(var i = 0; i <= Token.length - 1; i++){
-    const Message = {
-    to: Token[i].token_dispositivo.replace("expo/", ''),
-    sound: 'default',
-    title: 'Doctor App', 
-    body: 'Sua consulta foi desmarcada!',
-    
-  };
-   fetch('https://exp.host/--/api/v2/push/send',{
-    method: 'POST',
-    body: JSON.stringify(Message),
+    const Token =
+      await managerService.TokenById(consulta);
+    for (var i = 0; i <= Token.length - 1; i++) {
+      const Message = {
+        to: Token[i].token_dispositivo.replace("expo/", ''),
+        sound: 'default',
+        title: 'Doctor App',
+        body: 'Sua consulta foi desmarcada!',
+
+      };
+      fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        body: JSON.stringify(Message),
+      }
+      );
     }
-  );}
     pegandoDados();
   }
 

@@ -192,7 +192,7 @@ function ModalEditarExame(props) {
         aux = exame.id;
       }
     });
-    exame.id_exame=aux
+    exame.id_exame = aux
   }
 
   async function requisicaoAtualizarExame() {
@@ -216,7 +216,6 @@ function ModalEditarExame(props) {
       formatacaoDataHora();
       delete exame.titulo;
       await managerService.UpdateExame(exame.id, exame);
-      console.log("🚀 ~ file: ModalEditarExame.js:219 ~ requisicaoAtualizarExame ~ exame", exame)
       sleep(3000);
       setCarregandoUpdate(false);
       props.fechandoModal();
@@ -252,7 +251,7 @@ function ModalEditarExame(props) {
     <Container>
       <Caixa>
         <InfoDireita>
-        <Usuario>
+          <Usuario>
             <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
             {carregando ? (
               <Spin indicator={antIcon} />

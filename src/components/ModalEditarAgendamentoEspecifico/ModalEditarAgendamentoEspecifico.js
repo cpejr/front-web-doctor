@@ -176,7 +176,6 @@ function ModalEditarAgendamentoEspecifico(props) {
       consulta.id_usuario = usuario.id;
       formatacaoDataHora();
       await managerService.UpdateConsulta(consulta.id, consulta);
-      sleep(3000);
       setCarregandoUpdate(false);
       props.fechandoModal();
       return;
