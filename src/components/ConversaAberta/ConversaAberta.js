@@ -51,9 +51,6 @@ export default function ConversaAberta({ socket }) {
   const mensagemResponderFormulárioBiologix = "Por gentileza, responda o formulário BIOLOGIX";
   const mensagemResponderFormulárioActigrafia = "Por gentileza, responda o formulário ACTIGRAFIA";
   const mensagemSolicitarPagamento = "Realize o pagamento pela seguinte chave pix: ";
- const mensagemConfirmacaoDeDados = 
-  `Esses dados serão usados na entrega ${usuarioAtual}`;
-
   const {
     usuarioId,
     conversaSelecionada,
@@ -73,6 +70,14 @@ export default function ConversaAberta({ socket }) {
   const [modalEnviarArquivo, setModalEnviarArquivo] = useState(false);
   const [pdfFromModal, setPdfFromModal] = useState("");
   const [urlFromModal, setUrlFromModal] = useState("");
+  const mensagemConfirmacaoDeDados = 
+  `Esses dados serão usados na entrega e no pagamento. Por favor, confirme se estão todos corretos, caso haja alguma inconsistência ou erro, altere os dados do seu perfil.\n` +
+  `Nome completo: ${conversaSelecionada.conversaCom.nome}\n` +
+  `CPF: ${conversaSelecionada.conversaCom.cpf}\n` +
+  `Telefone: ${conversaSelecionada.conversaCom.telefone}\n` +
+  `Endereço: ${conversaSelecionada.conversaCom.id_endereco}\n`
+  ;
+  console.log(conversaSelecionada.conversaCom)
   
   const menuBotoes = (
     <Menu>
@@ -369,17 +374,6 @@ export default function ConversaAberta({ socket }) {
     return () => (componenteEstaMontadoRef.current = false);
   }, []);
 
- /* async function getDadosPessoais() {
-    const { dadosPaciente} = await managerService.GetDadosPessoais();
-    setDadosPaciente(dadosPaciente);
-  }
-
-  useEffect(() => {
-    getDadosPessoais();
-  }, []);
-
-  console.log (dadosPaciente)
-*/
   const verificaHorarioPermitidoParaEnvioDeMensagens = () => {
     const verificaHorarioUsuario =
       horarioComercial === false && tipoUsuario !== "MASTER" ? false : true;
@@ -427,21 +421,19 @@ export default function ConversaAberta({ socket }) {
 
   async function DispositivoDisponível() {
     
-     await enviaMensagem("nenhuma", mensagemDispositivoDisponível); /*
-    const Token = managerService.TokenById(formulario.id_usuario); 
+    await enviaMensagem("nenhuma", mensagemDispositivoDisponível); 
+    const Token = managerService.GetDadosUsuarioPorToken(); 
     const Message = { 
       to: Token.token_dispositivo.replace("expo/", ''), 
       sound: 'default', 
       title: 'Chat:', 
-      body: 'O exame' +
-      conversaSelecionada.tipo +
-       'está disponível', 
+      body: `O exame ${conversaSelecionada.tipo} está disponível`, 
     }; 
     await fetch('https://exp.host/--/api/v2/push/send', { 
       method: 'POST', 
       body: JSON.stringify(Message), 
     } 
-    ); */
+    ); 
   } 
   
   async function ConfirmacaoDeDados() {
@@ -658,6 +650,7 @@ export default function ConversaAberta({ socket }) {
       enviarMensagemComInput(e);
     }
   };
+
 
   return (
     <Conversa>
