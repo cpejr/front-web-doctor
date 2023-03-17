@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Cores, Fontes } from "../../variaveis";
+import { Cores } from "../../variaveis";
 
 export const Body = styled.div`
   display: flex;
@@ -43,40 +43,7 @@ export const Botoes = styled.div`
     width: 70%;
   }
 `;
-export const BotoesAlternativos = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  width: 40%;
-  @media (max-width: 1100px) {
-    width: 70%;
-  }
-  @media (max-width: 360px) {
-    font-size: 0.8em;
-  }
-`;
-export const Estetica = styled.div`
-  margin-top: 1%;
-  display: flex;
-  flex-direction: row;
-  color: ${Cores.azul};
-  align-items: center;
-  justify-content: space-between;
-  gap: 5%;
-  font-family: ${Fontes.roboto};
-  font-size: 1em;
-  width: 40%;
-  @media (max-width: 1100px) {
-    width: 70%;
-  }
-`;
-export const BarraEstetica = styled.div`
-  color: ${Cores.azul};
-  background-color: ${Cores.azul};
-  height: 1px;
-  width: 40%;
-`;
+
 export const Logo = styled.div`
   display: flex;
   align-items: center;

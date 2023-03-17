@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import logoGuilherme from "./../../assets/logoGuilherme.png";
 import Input from "../../styles/Input";
 import Button from "../../styles/Button";
-import { FcGoogle } from "react-icons/fc";
-import { ImFacebook } from "react-icons/im";
 import { Spin } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import AddToast from "../../components/AddToast/AddToast";
@@ -13,9 +10,6 @@ import {
   Body,
   DadosLogin,
   Botoes,
-  BotoesAlternativos,
-  Estetica,
-  BarraEstetica,
   Logo,
   Rotulo,
   TituloInput
@@ -24,7 +18,6 @@ import _ from "lodash";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function Login() {
-  const history = useHistory();
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [erro, setErro] = useState(false);
@@ -83,7 +76,7 @@ function Login() {
   }
 
   async function entrar() {
-    if (!email) errors.email = true;
+    if (!email.trim()) errors.email = true;
     if (!senha) errors.senha = true;
     setCamposVazios({ ...camposVazios, ...errors });
 
@@ -95,17 +88,17 @@ function Login() {
       let quantidadeUsuarios = resposta.length;
       resposta.forEach((usuario) => {
         contandoForEach++;
-        if (usuario.email === email) {
+        if (usuario.email === email.trim()) {
           procurandoEmail++;
         }
         if (quantidadeUsuarios === contandoForEach) {
           if (procurandoEmail === 0)
             toast.error("Esse email não está cadastrado.");
-          else managerService.ConferirSenha(email, senha);
+          else managerService.ConferirSenha(email.trim(), senha);
         }
       });
 
-      await managerService.requisicaoLogin(email, senha);
+      await managerService.requisicaoLogin(email.trim(), senha);
       setCarregando(false);
     } else {
       setCarregando(true);
@@ -194,43 +187,6 @@ function Login() {
             Esqueceu sua senha? Clique aqui para recuperá-la.
           </Button>
         </Botoes>
-        <Estetica>
-          <BarraEstetica />
-          ou
-          <BarraEstetica />
-        </Estetica>
-        <BotoesAlternativos>
-          <Button
-            width="100%"
-            height="50px"
-            backgroundColor="green"
-            borderColor="#151b57"
-            color="#151b57"
-            fontSize="1em"
-            gap="1%"
-            onClick={() => {
-              history.push("/");
-            }}
-          >
-            <FcGoogle />
-            Continuar com o Google
-          </Button>
-          <Button
-            width="100%"
-            height="50px"
-            backgroundColor="green"
-            borderColor="#151b57"
-            color="#151b57"
-            fontSize="1em"
-            gap="1%"
-            onClick={() => {
-              history.push("/");
-            }}
-          >
-            <ImFacebook />
-            Continuar com o Facebook
-          </Button>
-        </BotoesAlternativos>
       </Body>
       <AddToast />
     </div>

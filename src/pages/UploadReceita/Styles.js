@@ -134,19 +134,8 @@ export const Area = styled.div`
 	border-radius: 3px;
 	border-style: solid;
 	border-width: 2px;
-	border-color: ${(props) => {
-		let cor;
-		if (!props.borderColor) {
-			if (props.erro || props.camposVazios) {
-				cor = Cores.vermelho;
-			} else {
-				cor = Cores.azulEscuro;
-			}
-		} else {
-			cor = props.borderColor;
-		}
-		return cor;
-	}};
+	border-color: ${(props) =>
+		props.camposVazios ? Cores.vermelho : Cores.azulEscuro};
 	
 	overflow: hidden;
 	font-size: 1em;
