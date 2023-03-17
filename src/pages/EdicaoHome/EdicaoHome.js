@@ -35,6 +35,7 @@ import {
 } from "@ant-design/icons";
 import { Spin, Upload } from "antd";
 import { toast } from "react-toastify";
+import { updateImagemCarrossel } from "../../services/RequesterService/requesterService";
 
 function EdicaoHome() {
   const [homes, setHomes] = useState([]);
@@ -49,6 +50,9 @@ function EdicaoHome() {
   const [img4, setImg4] = useState("");
   const [carregandoImg, setCarregandoImg] = useState(false);
   const history = useHistory();
+  const [indexImagens, setIndexImagens] = useState([]);
+  const [contador, setContador] = useState(0);
+
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
@@ -71,17 +75,44 @@ function EdicaoHome() {
     pegandoDados();
   }, []);
 
+  useEffect(() => {
+    console.log(imgAtual);
+  }, [imgAtual]);
+
+  function avancaCarrosselEsquerda(posicao) {
+    if (posicao === 0) {
+      posicao = 2
+    }
+    else {
+      posicao -= 1;
+    }
+    setImgAtual(posicao);
+  }
+
+  function avancaCarrosselDireita(posicao) {
+    if (posicao === 2) {
+      posicao = 0
+    }
+    else {
+      posicao += 1;
+    }
+    setImgAtual(posicao);
+  }
+
   async function atualizandoDados() {
     setCarregando(true);
-    await managerService.updateImagemCarrossel(100, img1);
-    await managerService.updateImagemCarrossel(101, img2);
-    await managerService.updateImagemCarrossel(102, img3);
-    await managerService.updateImagemHomes(
-      homes.id,
-      homes.imagem_quatro,
-      img4
+    for (const index of indexImagens) {
+      if (index === 0) {
+        await managerService.updateImagemCarrossel(0, img1);
+      }
+      else if (index === 1) {
+        await managerService.updateImagemCarrossel(1, img2);
+      }
+      else if (index === 2) {
+        await managerService.updateImagemCarrossel(2, img3);
+      }
+    }
 
-    );
 
     if (houveAlteracao === true || alterouCarrossel === true) {
       await managerService.UpdateDadosHomes(
@@ -137,6 +168,9 @@ function EdicaoHome() {
   };
 
   async function preenchendoImagem(info) {
+
+    const novoIndexImagem = [...indexImagens, imgAtual];
+    setIndexImagens(novoIndexImagem);
     setCarregandoImg(true);
     if (imgAtual === 0) {
       getBase64(info.file.originFileObj, (url) => {
@@ -159,13 +193,15 @@ function EdicaoHome() {
       });
     }
 
-    if (imgAtual === 3) {
+    console.log(indexImagens);
 
-      getBase64(info.file.originFileObj, (url) => {
-        setImg4(url);
-        setCarregandoImg(false);
-      });
-    }
+    /*     if (imgAtual === 3) {
+    
+          getBase64(info.file.originFileObj, (url) => {
+            setImg4(url);
+            setCarregandoImg(false);
+          });
+        } */
   }
 
   async function setandoImagemCarrossel() {
@@ -190,7 +226,7 @@ function EdicaoHome() {
     setandoImagemCarrossel();
   }, [homes]);
 
-  var imagens = [ img1, img2, img3, img4 ];
+  var imagens = [img1, img2, img3, img4];
 
   return (
     <Corpo>
@@ -305,7 +341,7 @@ function EdicaoHome() {
             <CarrosselContainer>
               <Esquerda
                 onClick={() => {
-                  imgAtual > 0 && setImgAtual(imgAtual - 1);
+                  avancaCarrosselEsquerda(imgAtual);
                 }}
               >
                 <LeftOutlined style={{ fontSize: 25 }} />
@@ -334,8 +370,7 @@ function EdicaoHome() {
               )}
               <Direita
                 onClick={() => {
-                  imgAtual < imagens.length - 1 && setImgAtual(imgAtual + 1);
-
+                  avancaCarrosselDireita(imgAtual);
                 }}
               >
                 <RightOutlined style={{ fontSize: 25 }} />
@@ -460,7 +495,7 @@ function EdicaoHome() {
               marginTop="0%"
               marginLeft="0%"
               fontSizeMedia950="0.9em"
-              onClick={atualizandoDados}
+              onClick={() => atualizandoDados()}
             >
               {carregando ? (
                 <Spin indicator={antIcon} />
