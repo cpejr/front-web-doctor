@@ -21,7 +21,6 @@ import {
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
 import ModalAgendamentoEspecifico from "../ModalAgendamentoEspecifico";
-import ModalEditarAgendamentoEspecifico from "../ModalEditarAgendamentoEspecifico";
 import ModalConsultaMarcada from "../ModalConsultaMarcada";
 import ModalExameMarcado from "../ModalExameMarcado";
 import { compararDataAntiga } from "../../utils/tratamentoErros";
