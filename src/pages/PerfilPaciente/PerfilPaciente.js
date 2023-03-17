@@ -317,7 +317,7 @@ function PerfilPaciente(props) {
       arrayParagrafos.push(
         new TextRun({
           text: `Resposta: ${conteudoResposta}`,
-          break: 1,
+          break: 1
         })
       )
     });
@@ -333,8 +333,8 @@ function PerfilPaciente(props) {
               new ImageRun({
                 data: logoWord,
                 transformation: {
-                  width: 350,
-                  height: 130
+                  width: 600,
+                  height: 150
                 },
                 floating: {
                   horizontalPosition: {
@@ -360,21 +360,8 @@ function PerfilPaciente(props) {
           new Paragraph({
             children: [
               new TextRun({
-                text: `TÍTULO: `,
-                bold: true,
-              }),
-              new TextRun({
-                text: `${docxWord.titulo}`,
-                bold: true,
-              }),
-            ],
-          }),
-          new Paragraph({
-            children: [
-              new TextRun({
                 text: `NOME: `,
                 bold: true,
-                break: 1
               }),
               new TextRun({
                 text: `${docxWord.nome}`,
@@ -393,6 +380,17 @@ function PerfilPaciente(props) {
             ],
           }),
           new Paragraph({
+            alignment: AlignmentType.CENTER, 
+            children: [
+              new TextRun({
+                text: `${docxWord.titulo}`,
+                bold: true,
+                size: 28,
+                break: 1
+              }),
+            ],
+          }),
+          new Paragraph({
             children: arrayParagrafos,
           }),
           new Paragraph({
@@ -401,7 +399,7 @@ function PerfilPaciente(props) {
                 data: footerWord,
                 transformation: {
                   width: 800,
-                  height: 100
+                  height: 120
                 },
                 floating: {
                   horizontalPosition: {
