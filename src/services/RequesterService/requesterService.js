@@ -216,3 +216,7 @@ export const enviarArquivoMensagem = (base64) =>
 
 export const requisicaoHomes = () =>
   api.get(`/homes`);
+
+  export const getEnderecoById = (id) => api.get(`/enderecos/${id}`);
+
+  export const TokenById = (id_usuario) => api.get(`/token_usuarios/${id_usuario}`);

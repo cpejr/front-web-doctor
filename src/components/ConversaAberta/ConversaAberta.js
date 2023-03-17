@@ -70,15 +70,16 @@ export default function ConversaAberta({ socket }) {
   const [modalEnviarArquivo, setModalEnviarArquivo] = useState(false);
   const [pdfFromModal, setPdfFromModal] = useState("");
   const [urlFromModal, setUrlFromModal] = useState("");
+  const [endereco, setEndereco] = useState({});
+  const enderecoCompleto = `${endereco.rua}, ${endereco.numero}, ${endereco.complemento}, ${endereco.bairro}, ${endereco.cidade}, ${endereco.estado}, ${endereco.pais}, ${endereco.cep}`;
   const mensagemConfirmacaoDeDados = 
   `Esses dados serão usados na entrega e no pagamento. Por favor, confirme se estão todos corretos, caso haja alguma inconsistência ou erro, altere os dados do seu perfil.\n` +
   `Nome completo: ${conversaSelecionada.conversaCom.nome}\n` +
   `CPF: ${conversaSelecionada.conversaCom.cpf}\n` +
   `Telefone: ${conversaSelecionada.conversaCom.telefone}\n` +
-  `Endereço: ${conversaSelecionada.conversaCom.id_endereco}\n`
+  `Endereço: ${enderecoCompleto}\n`
   ;
-  console.log(conversaSelecionada.conversaCom)
-  
+
   const menuBotoes = (
     <Menu>
       <Menu.Item>
@@ -358,13 +359,14 @@ export default function ConversaAberta({ socket }) {
     componenteEstaMontadoRef.current = true;
 
     async function getDadosUsuarioAtual() {
-      const { dadosUsuario } = await managerService.GetDadosUsuario(
+      const resposta = await managerService.GetDadosUsuario(
         recebeEmail()
       );
 
       if (componenteEstaMontadoRef.current) {
-        setUsuarioAtual(dadosUsuario);
-        setTipoUsuario(dadosUsuario.tipo);
+        setUsuarioAtual(resposta.dadosUsuario);
+        setTipoUsuario(resposta.dadosUsuario.tipo);
+        setEndereco(resposta.dadosEndereco);
         setCarregandoConversa(false);
       }
     }
@@ -420,9 +422,8 @@ export default function ConversaAberta({ socket }) {
   }
 
   async function DispositivoDisponível() {
-    
     await enviaMensagem("nenhuma", mensagemDispositivoDisponível); 
-    const Token = managerService.GetDadosUsuarioPorToken(); 
+    const Token = managerService.TokenById(conversaSelecionada.conversaCom.id); 
     const Message = { 
       to: Token.token_dispositivo.replace("expo/", ''), 
       sound: 'default', 
@@ -435,6 +436,7 @@ export default function ConversaAberta({ socket }) {
     } 
     ); 
   } 
+
   
   async function ConfirmacaoDeDados() {
     await enviaMensagem("nenhuma", mensagemConfirmacaoDeDados);
