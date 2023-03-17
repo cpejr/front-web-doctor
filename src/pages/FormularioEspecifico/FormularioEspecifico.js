@@ -227,8 +227,6 @@ function FormularioEspecifico(props) {
   }
 
   async function salvaWord(docxWord) {
-    console.log(docxWord)
-
     const perguntas = Object.values(docxWord.perguntas.properties);
 
     let arrayParagrafos = [];
@@ -238,7 +236,8 @@ function FormularioEspecifico(props) {
       arrayParagrafos.push(
         new TextRun({
           text: `Pergunta: ${conteudoPergunta}`,
-          bold: true
+          bold: true,
+          break: 6
         })
       )
     });
@@ -285,13 +284,11 @@ function FormularioEspecifico(props) {
                 text: `${docxWord.titulo}`,
                 bold: true,
                 size: 28,
-                break: 1
               }),
             ],
           }),
           new Paragraph({
             children: arrayParagrafos,
-            break: 5
           }),
           new Paragraph({
             children: [
@@ -328,7 +325,7 @@ function FormularioEspecifico(props) {
 
     await Packer.toBlob(doc).then(blob => {
       saveAs(blob,
-        "Resposta do Formulário " + docxWord.titulo + " referente ao paciente " + docxWord.nome
+        "Resposta do Formulário " + docxWord.titulo
           .docx)
     })
   }
@@ -560,7 +557,7 @@ function FormularioEspecifico(props) {
                 Visualizar Perguntas
               </Button>
               <Button
-                backgroundColor="green"
+                backgroundColor={Cores.lilas[2]}
                 borderRadius="3px"
                 borderWidth="1px"
                 borderColor={Cores.preto}
