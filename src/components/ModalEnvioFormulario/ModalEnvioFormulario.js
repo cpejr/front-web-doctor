@@ -35,7 +35,6 @@ function ModalEnvioFormulario(props) {
   // }, [formularioPaciente]);
 
   async function enviandoFormularioPaciente() {
-    console.log(idUsuario)
     setCarregando(true);
     if (idUsuario) {
       if (enviarNotificacao === false) {
@@ -67,8 +66,6 @@ function ModalEnvioFormulario(props) {
             title: 'Doctor App',
             body: mensagem,
           };
-
-          console.log(Message);
 
           fetch('https://exp.host/--/api/v2/push/send', {
             method: 'POST',
