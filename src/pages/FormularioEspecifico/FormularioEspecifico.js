@@ -218,9 +218,9 @@ function FormularioEspecifico(props) {
     setStatusSelect(value);
   }
 
-  async function enviarLembrete(usuario) {
+  async function enviarLembrete(usuarioSelecionado) {
     const Token =
-      await managerService.TokenById(usuario.id)
+      await managerService.TokenById(usuarioSelecionado.id_usuario)
     const Message = {
       to: Token.token_dispositivo.replace("expo/", ''),
       sound: 'default',
@@ -408,7 +408,7 @@ function FormularioEspecifico(props) {
                         fontSizeMedia950="0.75em"
                         fontWeight="bold"
                         heightMedia560="28px"
-                        onClick={enviarLembrete(value)}
+                        onClick={() => enviarLembrete(value)}
                       >
                         ENVIAR LEMBRETE
                       </Button>

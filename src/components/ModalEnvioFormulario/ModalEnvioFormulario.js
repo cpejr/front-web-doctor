@@ -17,7 +17,7 @@ import Button from "../../styles/Button";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalEnvioFormulario(props) {
-  const [formularioPaciente, setFormularioPaciente] = useState();
+  const [idUsuario, setIdUsuario] = useState();
   const [enviarNotificacao, setEnviarNotificacao] = useState(false);
   const [mensagem, setMensagem] = useState("");
   const [carregando, setCarregando] = useState(false);
@@ -35,14 +35,15 @@ function ModalEnvioFormulario(props) {
   // }, [formularioPaciente]);
 
   async function enviandoFormularioPaciente() {
+    console.log(idUsuario)
     setCarregando(true);
-    if (formularioPaciente) {
+    if (idUsuario) {
       if (enviarNotificacao === false) {
         await managerService.EnviandoFormularioPaciente(
           false,
           false,
           props.idFormulario,
-          formularioPaciente
+          idUsuario
         );
         await sleep(2000);
         setCarregando(false);
@@ -54,11 +55,11 @@ function ModalEnvioFormulario(props) {
           false,
           true,
           props.idFormulario,
-          formularioPaciente
+          idUsuario
         );
 
         const Token =
-          await managerService.TokenById(formularioPaciente);
+          await managerService.TokenById(idUsuario);
         for (var i = 0; i <= Token.length - 1; i++) {
           const Message = {
             to: Token[i].token_dispositivo.replace("expo/", ''),
@@ -87,8 +88,8 @@ function ModalEnvioFormulario(props) {
   }
 
   async function preenchendoDados(e) {
-    setFormularioPaciente(e.target.value);
-    setandoMensagem(formularioPaciente.tipo);
+    setIdUsuario(e.target.value);
+    setandoMensagem(idUsuario.tipo);
   }
 
   return (

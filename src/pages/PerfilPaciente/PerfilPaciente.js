@@ -237,10 +237,10 @@ function PerfilPaciente(props) {
     return statusForm === FORMULARIO_RESPONDIDO;
   }
 
-  async function enviarLembrete(formulario) {
+  async function enviarLembrete(respostaSelecionada) {
     setCarregando(true)
     const Token =
-      await managerService.TokenById(formulario.id_usuario);
+      await managerService.TokenById(respostaSelecionada.id_usuario);
     const Message = {
       to: Token.token_dispositivo.replace("expo/", ''),
       sound: 'default',
@@ -485,7 +485,7 @@ function PerfilPaciente(props) {
                                 borderColor={Cores.azulEscuro}
                                 height="40px"
                                 width="25%"
-                                onClick={enviarLembrete(value)}
+                                onClick={() => enviarLembrete(value)}
                               >
                                 ENVIAR LEMBRETE
                               </Button>
