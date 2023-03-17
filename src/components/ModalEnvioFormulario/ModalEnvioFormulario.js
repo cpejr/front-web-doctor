@@ -64,7 +64,7 @@ function ModalEnvioFormulario(props) {
             to: Token[i].token_dispositivo.replace("expo/", ''),
             sound: 'default',
             title: 'Doctor App',
-            body: "teste",
+            body: mensagem,
           };
 
           console.log(Message);
