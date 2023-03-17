@@ -10,7 +10,7 @@ export const Corpo = styled.div`
 export const Container = styled.div`
   border: solid 1px black;
   box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.25);
-  width: 65%;
+  width: 50%;
   height: 100%;
   justify-content: space-around;
   display: flex;
@@ -27,10 +27,11 @@ export const Container = styled.div`
     margin-bottom: 10%;
     flex-direction: column;
     align-items: center;
+    width: 70%;
   }
 
-  @media (max-width: 780px) {
-    width: 85%;
+  @media (max-width: 570px) {
+
   }
 `;
 
@@ -42,6 +43,10 @@ export const TituloPaginaEdicao = styled.div`
   font-family: "Roboto Condensed", sans-serif;
   font-weight: 500;
   color: #000000;
+
+  @media (max-width: 570px) {
+    width: 100%;
+}
 
   @media (max-width: 425px) {
     font-size: 20px;

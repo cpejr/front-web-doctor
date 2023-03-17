@@ -26,6 +26,7 @@ function EdicaoConteudo() {
                     marginLeft="0%"
                     marginBottom="5%"
                     fontSizeMedia950="0.9em"
+                    widthMedia600="75%"
                     onClick={() => {
                         history.push("/web/edicaohome");
                     }}
@@ -46,6 +47,7 @@ function EdicaoConteudo() {
                     marginLeft="0%"
                     fontSizeMedia950="0.9em"
                     marginBottom="5%"
+                    widthMedia600="75%"
                 // onClick={() => {
                 //   history.push("/web/Home");
                 // }}
@@ -66,6 +68,7 @@ function EdicaoConteudo() {
                     marginLeft="0%"
                     fontSizeMedia950="0.9em"
                     marginBottom="5%"
+                    widthMedia600="75%"
                     onClick={() => {
                         history.push("/web/edicaocomentario");
                     }}
@@ -86,6 +89,7 @@ function EdicaoConteudo() {
                     marginLeft="0%"
                     fontSizeMedia950="0.9em"
                     marginBottom="5%"
+                    widthMedia600="75%"
                 // onClick={() => {
                 //   history.push("/web/Home");
                 // }}
@@ -106,6 +110,7 @@ function EdicaoConteudo() {
                     marginLeft="0%"
                     fontSizeMedia950="0.9em"
                     marginBottom="5%"
+                    widthMedia600="75%"
                 // onClick={() => {
                 //   history.push("/web/Home");
                 // }}
