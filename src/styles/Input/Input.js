@@ -56,10 +56,6 @@ const Input = styled.input`
   @media (max-width: 820px) {
     width: 100%;
   }
-
-  @media (max-width: 281px) {
-    width: 80%;
-  }
 `;
 
 export default Input;

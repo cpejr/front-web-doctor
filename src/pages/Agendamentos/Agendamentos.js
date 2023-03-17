@@ -345,6 +345,27 @@ function Agendamentos(props) {
     setCarregandoFoto(false);
   }
 
+  /*
+  async function registrandoNotificacoes(id){
+    if (!Device.isDevice){
+      return null;
+    }
+    const {status} = await Notifications.requestPermissionsAsync();
+    if(status !== "granted"){
+      return null;
+    }
+    if (Platform.OS == "android"){
+      Notifications.setNotificationChannelAsync("default", {
+        
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+      });
+    }
+    const tokenNotificacoes = await Notifications.getDevicePushTokenAsync();
+    await managerService.requisicaoToken(id,(tokenNotificacoes.type +'/'+ tokenNotificacoes.data))
+  }
+
+  */
   return (
     <div>
       <ContainerListadeUsuarios>
