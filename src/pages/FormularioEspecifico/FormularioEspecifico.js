@@ -41,6 +41,24 @@ import fotoPerfil from "./../../assets/fotoPerfil.png";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 import { sleep } from "../../utils/sleep";
+import logoWord from "./logo.json";
+import footerWord from "./footer.json";
+import {
+  Document,
+  Packer,
+  Paragraph,
+  TextRun,
+  SectionType,
+  ImageRun,
+  AlignmentType,
+  HorizontalPositionAlign,
+  HorizontalPositionRelativeFrom,
+  VerticalPositionRelativeFrom,
+  VerticalPositionAlign,
+  TextWrappingType,
+  TextWrappingSide
+} from "docx";
+import { saveAs } from 'file-saver';
 
 function FormularioEspecifico(props) {
   const { Search } = Input;
@@ -208,6 +226,113 @@ function FormularioEspecifico(props) {
     setStatusSelect(value);
   }
 
+  async function salvaWord(docxWord) {
+    console.log(docxWord)
+
+    const perguntas = Object.values(docxWord.perguntas.properties);
+
+    let arrayParagrafos = [];
+
+    perguntas.forEach((pergunta, index) => {
+      const conteudoPergunta = pergunta.title
+      arrayParagrafos.push(
+        new TextRun({
+          text: `Pergunta: ${conteudoPergunta}`,
+          bold: true
+        })
+      )
+    });
+
+    const doc = new Document({
+      sections: [{
+        properties: {
+          type: SectionType.CONTINUOUS,
+        },
+        children: [
+          new Paragraph({
+            children: [
+              new ImageRun({
+                data: logoWord,
+                transformation: {
+                  width: 600,
+                  height: 150
+                },
+                floating: {
+                  horizontalPosition: {
+                    relative: HorizontalPositionRelativeFrom.TOP_MARGIN,
+                    align: HorizontalPositionAlign.CENTER,
+                  },
+                  verticalPosition: {
+                    relative: VerticalPositionRelativeFrom.TOP_MARGIN,
+                    align: VerticalPositionAlign.TOP,
+                  },
+                  wrap: {
+                    type: TextWrappingType.TOP_AND_BOTTOM,
+                    side: TextWrappingSide.LARGEST,
+                  },
+                  margins: {
+                    top: 201440,
+                    bottom: 201440,
+                  },
+                }
+              })
+            ]
+          }),
+          new Paragraph({
+            alignment: AlignmentType.CENTER,
+            children: [
+              new TextRun({
+                text: `${docxWord.titulo}`,
+                bold: true,
+                size: 28,
+                break: 1
+              }),
+            ],
+          }),
+          new Paragraph({
+            children: arrayParagrafos,
+            break: 5
+          }),
+          new Paragraph({
+            children: [
+              new ImageRun({
+                data: footerWord,
+                transformation: {
+                  width: 800,
+                  height: 120
+                },
+                floating: {
+                  horizontalPosition: {
+                    relative: HorizontalPositionRelativeFrom.TOP_AND_BOTTOM,
+                    align: HorizontalPositionAlign.CENTER,
+                  },
+                  verticalPosition: {
+                    relative: VerticalPositionRelativeFrom.BOTTOM_MARGIN,
+                    align: VerticalPositionAlign.BOTTOM,
+                  },
+                  wrap: {
+                    type: TextWrappingType.TOP_AND_BOTTOM,
+                    side: TextWrappingSide.LARGEST,
+                  },
+                  margins: {
+                    top: 201440,
+                    bottom: 201440,
+                  },
+                }
+              })
+            ]
+          }),
+        ],
+      }],
+    });
+
+    await Packer.toBlob(doc).then(blob => {
+      saveAs(blob,
+        "Resposta do Formulário " + docxWord.titulo + " referente ao paciente " + docxWord.nome
+          .docx)
+    })
+  }
+
   return (
     <div>
       <ContainerFormularioEspecifico>
@@ -305,7 +430,7 @@ function FormularioEspecifico(props) {
                     ) : (
                       <div>
                         {value.avatar_url === null ||
-                        value.avatar_url === "" ? (
+                          value.avatar_url === "" ? (
                           <FotoPerfil>
                             {carregandoFoto ? (
                               <div>
@@ -340,7 +465,7 @@ function FormularioEspecifico(props) {
                     )}
                   </BarraEsquerda>
                   <BarraCentro>
-                    {tipoUsuarioLogado === "MASTER" || (tipoUsuarioLogado === "SECRETARIA(O)" && formularioEspecifico.visualizacao_secretaria === true)? (
+                    {tipoUsuarioLogado === "MASTER" || (tipoUsuarioLogado === "SECRETARIA(O)" && formularioEspecifico.visualizacao_secretaria === true) ? (
                       <NomePacienteMaster
                         onClick={() =>
                           abrindoModalFormulario(
@@ -393,16 +518,16 @@ function FormularioEspecifico(props) {
             <ColunaDireita>
               {idFormularioEspecifico !== idFormularioUrgencia ? (
                 <BarraRespostas>
-                {" "}
-                {formularioRespostaPendente.length === 1
-                  ? "Aguardando respostas de 1 formulário"
-                  : `Aguardando respostas de ${formularioRespostaPendente.length} formulários`}
-              </BarraRespostas>
+                  {" "}
+                  {formularioRespostaPendente.length === 1
+                    ? "Aguardando respostas de 1 formulário"
+                    : `Aguardando respostas de ${formularioRespostaPendente.length} formulários`}
+                </BarraRespostas>
               ) : (
                 <></>
               )}
 
-              
+
               <BarraRespostas>
                 {" "}
                 {formularioResposta.length < 2 ? (
@@ -447,7 +572,7 @@ function FormularioEspecifico(props) {
                 marginTop="0%"
                 marginLeft="0%"
                 fontSizeMedia950="0.9em"
-                onClick={() => {}}
+                onClick={() => salvaWord(formularioEspecifico)}
               >
                 Gerar documento Word
               </Button>
