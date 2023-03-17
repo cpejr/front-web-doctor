@@ -19,16 +19,11 @@ import * as managerService from "../../services/ManagerService/managerService";
 function ModalEnvioFormulario(props) {
   const [idUsuario, setIdUsuario] = useState();
   const [enviarNotificacao, setEnviarNotificacao] = useState(false);
-  const [mensagem, setMensagem] = useState("");
   const [carregando, setCarregando] = useState(false);
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 22, color: Cores.azul }} spin />
   );
-
-  function setandoMensagem(tipo) {
-    setMensagem("Você tem uma formulário enviado!\nTipo: " + tipo);
-  }
 
   // useEffect(() => {
   //   setandoMensagem(formularioPaciente.tipo);
@@ -64,7 +59,7 @@ function ModalEnvioFormulario(props) {
             to: Token[i].token_dispositivo.replace("expo/", ''),
             sound: 'default',
             title: 'Doctor App',
-            body: mensagem,
+            body: "Você tem um novo formulário enviado!",
           };
 
           fetch('https://exp.host/--/api/v2/push/send', {
@@ -86,7 +81,6 @@ function ModalEnvioFormulario(props) {
 
   async function preenchendoDados(e) {
     setIdUsuario(e.target.value);
-    setandoMensagem(idUsuario.tipo);
   }
 
   return (
