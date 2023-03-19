@@ -58,7 +58,7 @@ function EdicaoIndicacoesESugestoes(props) {
   const [medicosIndicados, setMedicosIndicados] = useState([{}]);
   const [idIndicado, setIdIndicado] = useState();
   const history = useHistory();
- 
+
   async function pegarIndicacoesEspecificas() {
     const Indicacoes = await managerService.GetIndicacaoEspecifica();
     setIndicacoesEspecificas(Indicacoes);
@@ -88,74 +88,76 @@ function EdicaoIndicacoesESugestoes(props) {
     setIndicacoesEspecificas(Indicacoes);
     console.log(indicacoesEspecificas);*/
     const IndicacaoEspecifica = indicacoesEspecificas.forEach((Indicacao) => {
-      if(Indicacao.titulo === exame){
+      if (Indicacao.titulo === exame) {
         Texto = Indicacao.texto;
         Titulo = Indicacao.titulo;
         IDindicado = Indicacao.id;
         return Texto;
       }
-       else {
+      else {
         Texto = "";
         return Texto;
       }
-  }   
+    }
     )
     let nomemedico;
     let telefone;
     let local;
-    if(IndicacaoEspecifica !== ""){
-    const medicos = await managerService.GetMedicosIndicadosPorID(IDindicado);
-    setMedicosIndicados(medicos);
-    const MedicoIndicado = medicosIndicados.forEach((medico) => {
-      telefone = medico.telefone;
-      nomemedico = medico.nome;
-      local = medico.local_atendimento;
-      return nomemedico
-    })
-    console.log(medicos);
-    console.log(nomemedico);
-    setIndicados(true);
-    const dadosDoBackend = {
-      titulo: Titulo,
-      nomemedico: nomemedico,
-      localmedico: local,
-      telefonemedico: telefone,
-    };
-    setDadosIndicacao(dadosDoBackend);
-    console.log(dadosIndicacao);
-    setIdIndicado(IDindicado);
-  }else{
-    const dadosDoBackend = {
-      titulo: Titulo,
-      nomemedico: "",
-      localmedico: "",
-      telefonemedico: "",
-    };
-    setDadosIndicacao(dadosDoBackend);
-  }
+    if (IndicacaoEspecifica !== "") {
+      const medicos = await managerService.GetMedicosIndicadosPorID(IDindicado);
+      setMedicosIndicados(medicos);
+      const MedicoIndicado = medicosIndicados.forEach((medico) => {
+        telefone = medico.telefone;
+        nomemedico = medico.nome;
+        local = medico.local_atendimento;
+        return nomemedico
+      })
+      console.log(medicos);
+      console.log(nomemedico);
+      setIndicados(true);
+      const dadosDoBackend = {
+        titulo: Titulo,
+        nomemedico: nomemedico,
+        localmedico: local,
+        telefonemedico: telefone,
+      };
+      setDadosIndicacao(dadosDoBackend);
+      console.log(dadosIndicacao);
+      setIdIndicado(IDindicado);
+    } else {
+      const dadosDoBackend = {
+        titulo: Titulo,
+        nomemedico: "",
+        localmedico: "",
+        telefonemedico: "",
+      };
+      setDadosIndicacao(dadosDoBackend);
+    }
     setCarregando(false);
   }
 
   async function abrirModalAdicionarIndicacao() {
-    if(Indicados === true){setModalAdicionarIndicacao(true);
-      console.log(idIndicado);}
+    if (Indicados === true) {
+      setModalAdicionarIndicacao(true);
+      console.log(idIndicado);
+    }
     else
-    toast.warn("Selecione uma especialidade ao lado para adicionar!");
-    
+      toast.warn("Selecione uma especialidade ao lado para adicionar!");
+
   }
 
   async function abrirModalExcluirIndicacao() {
-    if(Indicados === true){
-    setModalExcluirIndicacao(true);
-    }else
-    toast.warn("Selecione uma especialidade ao lado para excluir!");
-    }
+    if (Indicados === true) {
+      setModalExcluirIndicacao(true);
+    } else
+      toast.warn("Selecione uma especialidade ao lado para excluir!");
+  }
 
   async function abrirModalAlterarIndicacao() {
-    if(Indicados === true){setModalAlterarIndicacao(true);}
+    if (Indicados === true) { setModalAlterarIndicacao(true); }
     else
-    toast.warn("Selecione uma especialidade ao lado para alterar!");
-    
+      toast.warn("Selecione uma especialidade ao lado para alterar!");
+
   }
 
   async function abrirModalIndicacao() {
@@ -244,12 +246,12 @@ function EdicaoIndicacoesESugestoes(props) {
               <>
                 <TituloInfo>{dadosIndicacao.titulo}</TituloInfo>
                 {medicosIndicados.map((medicos) => (
-                <DescricaoInformacoes>
-                <div>{medicos.nome}</div>
-                <div>{medicos.local_atendimento}</div>
-                <div>{medicos.telefone}</div>
-                </DescricaoInformacoes>
-               ))}
+                  <DescricaoInformacoes>
+                    <div>{medicos.nome}</div>
+                    <div>{medicos.local_atendimento}</div>
+                    <div>{medicos.telefone}</div>
+                  </DescricaoInformacoes>
+                ))}
               </>
             )}
           </Informacoes>
@@ -306,7 +308,7 @@ function EdicaoIndicacoesESugestoes(props) {
         destroyOnClose
       >
         <ModalAdicionarIndicacao
-          idmedicoindicado = {idIndicado}
+          idmedicoindicado={idIndicado}
           fechandoModal={fecharModalAdicionarIndicacao}
         />
       </Modal>
@@ -319,9 +321,9 @@ function EdicaoIndicacoesESugestoes(props) {
         centered={true}
         destroyOnClose
       >
-        <ModalExcluirIndicacao 
-        idmedicoindicado = {idIndicado}
-        fechandoModal={fecharModalExcluirIndicacao} />
+        <ModalExcluirIndicacao
+          idmedicoindicado={idIndicado}
+          fechandoModal={fecharModalExcluirIndicacao} />
       </Modal>
 
       <Modal
@@ -332,9 +334,9 @@ function EdicaoIndicacoesESugestoes(props) {
         centered={true}
         destroyOnClose
       >
-        <ModalAlterarIndicacao 
-        idmedicoindicado = {idIndicado}
-        fechandoModal={fecharModalAlterarIndicacao} />
+        <ModalAlterarIndicacao
+          idmedicoindicado={idIndicado}
+          fechandoModal={fecharModalAlterarIndicacao} />
       </Modal>
 
       <Modal
@@ -348,7 +350,7 @@ function EdicaoIndicacoesESugestoes(props) {
         <ModalIndicacao
           dadosIndicacao={dadosIndicacao}
           medicosIndicados={medicosIndicados}
-          idIndicado = {idIndicado}
+          idIndicado={idIndicado}
           carregando={carregando}
           fechandoModal={fecharModalIndicacao}
         />

@@ -62,76 +62,76 @@ function ModalAlterarIndicacao(props) {
       });
     }
   }
-  async function buscarMedicosporId(){
-   const medicosespecificos = await managerService.GetMedicosIndicadosPorID(props.idmedicoindicado);
-   setMedicoEspecifico(medicosespecificos);
+  async function buscarMedicosporId() {
+    const medicosespecificos = await managerService.GetMedicosIndicadosPorID(props.idmedicoindicado);
+    setMedicoEspecifico(medicosespecificos);
   }
-  useEffect(() => {buscarMedicosporId()}, [])
+  useEffect(() => { buscarMedicosporId() }, [])
   async function preenchendoPlaceholder(event) {
     const obj = event.target.value;
     const medicoPlaceholder = medicoEspecifico.forEach((medicos) => {
-       if (medicos.nome === obj) {
+      if (medicos.nome === obj) {
         setSelecionarMedico(medicos);
         return;
-       }else{
+      } else {
         return "";
-       }
+      }
     })
   }
 
- async function alterar(e) {
-  e.preventDefault();
+  async function alterar(e) {
+    e.preventDefault();
 
-  if(!estado.nome && !estado.telefone && estado.local_atendimento){
-    estado.nome = selecionarMedico.nome;
-    estado.telefone = selecionarMedico.telefone;
-    erro.nome = false;
-    erro.telefone = false;
-    erro.local_atendimento = false;
-  } else if(estado.nome && !estado.telefone && !estado.local_atendimento){
-    estado.telefone = selecionarMedico.telefone;
-    estado.local_atendimento = selecionarMedico.local_atendimento;
-    erro.nome = false;
-    erro.telefone = false;
-    erro.local_atendimento = false;
-  } else if(!estado.nome && estado.telefone && !estado.local_atendimento){
-    estado.nome = selecionarMedico.nome;
-    estado.local_atendimento = selecionarMedico.local_atendimento;
-    erro.nome = false;
-    erro.telefone = false;
-    erro.local_atendimento = false;
-  } else  if(estado.nome && !estado.telefone && estado.local_atendimento){
-    estado.telefone = selecionarMedico.telefone;
-    erro.nome = false;
-    erro.telefone = false;
-    erro.local_atendimento = false;
-  } else  if(!estado.nome && estado.telefone && estado.local_atendimento){
-    estado.nome = selecionarMedico.nome;
-    erro.nome = false;
-    erro.telefone = false;
-    erro.local_atendimento = false;
-  } else  if(estado.nome && estado.telefone && !estado.local_atendimento){
-    estado.local_atendimento = selecionarMedico.local_atendimento;
-    erro.nome = false;
-    erro.telefone = false;
-    erro.local_atendimento = false;
-  } else if (!estado.nome && !estado.telefone && !estado.local_atendimento) {
-   erro.nome = true;
-   erro.telefone = true;
-   erro.local_atendimento = true;
-  }
-  
-  console.log(erro);
-  setCamposVazios({...camposVazios, ...erro});
-  if (!_.isEqual(camposVazios, camposVaziosReferencia)) {
-    toast.warn("Preencha algum campo");
-    return;
-  }else if(estado.telefone.length < 15){
-    toast.warn("Preencha o campo corretamente");
-    return;
-  }
+    if (!estado.nome && !estado.telefone && estado.local_atendimento) {
+      estado.nome = selecionarMedico.nome;
+      estado.telefone = selecionarMedico.telefone;
+      erro.nome = false;
+      erro.telefone = false;
+      erro.local_atendimento = false;
+    } else if (estado.nome && !estado.telefone && !estado.local_atendimento) {
+      estado.telefone = selecionarMedico.telefone;
+      estado.local_atendimento = selecionarMedico.local_atendimento;
+      erro.nome = false;
+      erro.telefone = false;
+      erro.local_atendimento = false;
+    } else if (!estado.nome && estado.telefone && !estado.local_atendimento) {
+      estado.nome = selecionarMedico.nome;
+      estado.local_atendimento = selecionarMedico.local_atendimento;
+      erro.nome = false;
+      erro.telefone = false;
+      erro.local_atendimento = false;
+    } else if (estado.nome && !estado.telefone && estado.local_atendimento) {
+      estado.telefone = selecionarMedico.telefone;
+      erro.nome = false;
+      erro.telefone = false;
+      erro.local_atendimento = false;
+    } else if (!estado.nome && estado.telefone && estado.local_atendimento) {
+      estado.nome = selecionarMedico.nome;
+      erro.nome = false;
+      erro.telefone = false;
+      erro.local_atendimento = false;
+    } else if (estado.nome && estado.telefone && !estado.local_atendimento) {
+      estado.local_atendimento = selecionarMedico.local_atendimento;
+      erro.nome = false;
+      erro.telefone = false;
+      erro.local_atendimento = false;
+    } else if (!estado.nome && !estado.telefone && !estado.local_atendimento) {
+      erro.nome = true;
+      erro.telefone = true;
+      erro.local_atendimento = true;
+    }
+
+    console.log(erro);
+    setCamposVazios({ ...camposVazios, ...erro });
+    if (!_.isEqual(camposVazios, camposVaziosReferencia)) {
+      toast.warn("Preencha algum campo");
+      return;
+    } else if (estado.telefone.length < 15) {
+      toast.warn("Preencha o campo corretamente");
+      return;
+    }
     setCarregandoCriacao(true);
-    await managerService.EditarMedicoIndicado(estado.id_indicacao_especifica, estado,{
+    await managerService.EditarMedicoIndicado(estado.id_indicacao_especifica, estado, {
       onClose: () => {
         history.push("/web/edicaoindicacoesesugestoes");
       },
@@ -139,40 +139,40 @@ function ModalAlterarIndicacao(props) {
     await sleep(1500);
     window.location.reload();
     setCarregandoCriacao(false);
-  
 
-  
- }
- const antIcon = (
-  <LoadingOutlined style={{ fontSize: 25}} spin />
-);
+
+
+  }
+  const antIcon = (
+    <LoadingOutlined style={{ fontSize: 25 }} spin />
+  );
   return (
     <Container>
-      
+
       <Titulo>Alterar Indicação:</Titulo>
-      
+
       <ContainerInputs>
-        
+
         <Labels>Indicação:</Labels>
         <Select
-        backgroundColor={Cores.cinza[7]} 
-        width="100%"
-        onChange={preenchendoPlaceholder}
-        name="id_indicacao_especifica"
+          backgroundColor={Cores.cinza[7]}
+          width="100%"
+          onChange={preenchendoPlaceholder}
+          name="id_indicacao_especifica"
         >
           <option value="" >Escolher indicação para alterar</option>
           {medicoEspecifico.map((medico) => (
-              <option
+            <option
               key={medico.id}
-              value={medico.nome} 
+              value={medico.nome}
               color='red'>
-                {medico.nome}
-              </option>
-              ))}   
+              {medico.nome}
+            </option>
+          ))}
         </Select>
-       
+
       </ContainerInputs>
-      
+
       <ContainerInputs>
         <Labels>Nome:</Labels>
         <Input
@@ -234,14 +234,14 @@ function ModalAlterarIndicacao(props) {
         paddingTop="5px"
         paddingBottom="5px"
         marginTop="10%"
-        onClick = {alterar}
+        onClick={alterar}
       >
         {carregandoCriacao ? (
-								<Spin indicator={antIcon} />
-							) : (
-                    <div>Alterar Indicação</div>
-                )}
-         <PlusSquareOutlined />
+          <Spin indicator={antIcon} />
+        ) : (
+          <div>Alterar Indicação</div>
+        )}
+        <PlusSquareOutlined />
       </Button>
     </Container>
   );

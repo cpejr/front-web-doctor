@@ -60,40 +60,40 @@ function ModalAdicionarIndicacao(props) {
     }
   }
   async function Indicar(e) {
-		e.preventDefault();
+    e.preventDefault();
 
-		const camposVaziosAtual = {
-			nome: !estado.nome,
-			telefone: !estado.telefone,
+    const camposVaziosAtual = {
+      nome: !estado.nome,
+      telefone: !estado.telefone,
       local: !estado.local
-		};
+    };
 
-		setCamposVazios(camposVaziosAtual);
+    setCamposVazios(camposVaziosAtual);
     console.log(estado.telefone.length);
-		if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
-			toast.warn("Preencha todos os campos");
-			return;
-		}else if(estado.telefone.length < 15){
+    if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
+      toast.warn("Preencha todos os campos");
+      return;
+    } else if (estado.telefone.length < 15) {
       toast.warn("Preencha todos os campos corretamente");
-			return;
+      return;
     }
-		setCarregandoCriacao(true);
-		const id = props.idmedicoindicado;
-    
-		await managerService.IndicandoMedicos(id, estado.nome, estado.telefone, estado.local, {
-			mensagemSucesso: "Indicação realizada",
-			tempo: 1500,
-			onClose: () => {
-				history.push("/web/edicaoindicacoesesugestoes");
-			},
-		});
-    window.location.reload();
-		setCarregandoCriacao(false);
-	}
+    setCarregandoCriacao(true);
+    const id = props.idmedicoindicado;
 
-	const antIcon = (
-		<LoadingOutlined style={{ fontSize: 25 }} spin />
-	);
+    await managerService.IndicandoMedicos(id, estado.nome, estado.telefone, estado.local, {
+      mensagemSucesso: "Indicação realizada",
+      tempo: 1500,
+      onClose: () => {
+        history.push("/web/edicaoindicacoesesugestoes");
+      },
+    });
+    window.location.reload();
+    setCarregandoCriacao(false);
+  }
+
+  const antIcon = (
+    <LoadingOutlined style={{ fontSize: 25 }} spin />
+  );
 
   return (
     <Container>
@@ -161,14 +161,14 @@ function ModalAdicionarIndicacao(props) {
         paddingBottom="5px"
         marginTop="10%"
         onClick={Indicar}
-      > 
-      {carregandoCriacao ? (
-								<Spin indicator={antIcon} />
-							) : (
-                    <div>Adicionar Indicação</div>
-                )}
+      >
+        {carregandoCriacao ? (
+          <Spin indicator={antIcon} />
+        ) : (
+          <div>Adicionar Indicação</div>
+        )}
 
-         <PlusSquareOutlined />
+        <PlusSquareOutlined />
       </Button>
     </Container>
   );

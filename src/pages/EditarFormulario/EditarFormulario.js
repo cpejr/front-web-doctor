@@ -51,7 +51,7 @@ function EditarFormulario(props) {
     tipo: true,
     finalidade: true,
     urgencia: true,
-    visualizacao_secretaria:true,
+    visualizacao_secretaria: true,
   });
 
   const antIcon = (
@@ -129,10 +129,10 @@ function EditarFormulario(props) {
   function alterandoVisualizacao() {
     if (formularios.visualizacao_secretaria === false) {
       formularios.visualizacao_secretaria = true
-    }else{
-    formularios.visualizacao_secretaria = false
+    } else {
+      formularios.visualizacao_secretaria = false
     }
-    
+
     camposVazios.visualizacao_secretaria = false
   }
   async function abrindoModal() {
@@ -233,9 +233,9 @@ function EditarFormulario(props) {
               </option>
             </Select>
             <Checkbox
-            defaultChecked={formularios.visualizacao_secretaria}
-            camposVazios={camposVazios.visualizacao_secretaria}
-            onChange={alterandoVisualizacao}>Permitir a visualização da secretária</Checkbox>
+              defaultChecked={formularios.visualizacao_secretaria}
+              camposVazios={camposVazios.visualizacao_secretaria}
+              onChange={alterandoVisualizacao}>Permitir a visualização da secretária</Checkbox>
             <Button
               height="50px"
               width="100%"
