@@ -3,23 +3,19 @@ import { Tooltip } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
-import { toast } from "react-toastify";
 import logoGuilherme from "../../assets/logoGuilherme.png";
 import { Row, Radio } from "antd";
-import _, { set } from "lodash";
+import _ from "lodash";
 import {
-  Container,
   Caixa,
   InfoDireita,
   DoisSelect,
-  TresSelect,
   TamanhoInput,
   InputHora,
   SelecioneUmaData,
   TextoSelecioneUmaData,
   TextoDoisSelects,
   Rotulo,
-  InputConsultorio,
   InputData,
   ContainerHorario,
   InfoEsquerda,
