@@ -88,7 +88,7 @@ function PerfilPaciente(props) {
   const [formularios, setFormularios] = useState();
   const [booleanoFormulario, setbooleanFormulario] = useState();
   const antIcon = (
-    <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
+    <LoadingOutlined style={{ fontSize: 25, color: Cores.azulEscuro }} spin />
   );
   const antIconModal = (
     <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin />
@@ -126,6 +126,8 @@ function PerfilPaciente(props) {
     setTelefoneCuidador(resposta.dadosUsuario.telefone_cuidador);
     setConvenio(resposta.dadosUsuario.convenio);
     setCarregando(false);
+
+
 
     if (resposta.dadosUsuario.tipo === "PACIENTE") {
       setTipoUsuario(true);
@@ -190,9 +192,12 @@ function PerfilPaciente(props) {
     }
   }
 
+
+
   async function setandoTipoExame() {
     setTipoAgendamento("Exame");
     setModalAgendamento(true);
+
   }
 
   async function setandoTipoConsulta() {
@@ -248,6 +253,29 @@ function PerfilPaciente(props) {
     const FORMULARIO_RESPONDIDO = true;
 
     return statusForm === FORMULARIO_RESPONDIDO;
+  }
+
+  async function enviarLembrete(respostaSelecionada) {
+    setCarregando(true)
+    const Token =
+      await managerService.TokenById(respostaSelecionada.id_usuario);
+    for (var i = 0; i <= Token.length - 1; i++) {
+      const Message = {
+        to: Token[i].token_dispositivo.replace("expo/", ''),
+        sound: 'default',
+        title: 'Doctor App',
+        body: "Você tem um novo formulário enviado!",
+      };
+
+      fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        body: JSON.stringify(Message),
+      }
+      );
+    }
+    toast.success('Notificação encaminhada para o paciente.');
+    await sleep(1000);
+    setCarregando(false);
   }
 
   async function baixarPdf(receitaPdf) {
@@ -459,14 +487,10 @@ function PerfilPaciente(props) {
                   <Titulo>FORMULÁRIOS</Titulo>
                   {respostas?.map((value) => (
                     <>
-                      {deveMostrarFormularios(
-                        value.id_formulario,
-                        value.status
-                      ) && (
+                      {deveMostrarFormularios(value.id_formulario, value.status) && (
                         <Formulario>
                           <DadosFormulario>
-                            {tipoUsuarioLogado === "MASTER" ||
-                            value.visualizacao_secretaria === true ? (
+                            {tipoUsuarioLogado === "MASTER" ? (
                               <TituloFormulario
                                 cursor="pointer"
                                 textDecoration="underline"
@@ -480,14 +504,17 @@ function PerfilPaciente(props) {
                               >
                                 {value.titulo}
                               </TituloFormulario>
+
                             ) : (
                               <TituloFormulario
                                 cursor="null"
                                 textDecoration="none"
+
                               >
                                 {value.titulo}
                               </TituloFormulario>
                             )}
+
                             <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
                             <UrgenciaFormulario>
                               <>Urgência: </>
@@ -501,12 +528,13 @@ function PerfilPaciente(props) {
                             <RespostaPendente>
                               <Resposta>Resposta Pendente</Resposta>
                               <Button
-                                backgroundColor="green"
+                                backgroundColor={Cores.cinza[7]}
                                 color={Cores.azulEscuro}
                                 fontWeight="bold"
                                 borderColor={Cores.azulEscuro}
                                 height="40px"
                                 width="25%"
+                                onClick={() => enviarLembrete(value)}
                               >
                                 ENVIAR LEMBRETE
                               </Button>
@@ -578,6 +606,7 @@ function PerfilPaciente(props) {
           id_usuario={usuario.id}
           email={usuario.email}
           tipoAgendamento={tipoAgendamento}
+
         />
       </Modal>
       <Modal
