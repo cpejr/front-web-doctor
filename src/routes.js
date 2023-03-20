@@ -25,7 +25,7 @@ import CriacaoReceitas from './pages/CriacaoReceitas';
 import uploadReceita from './pages/UploadReceita';
 import UploadReceita from './pages/UploadReceita';
 import EdicaoComentarios from './pages/EdicaoComentarios';
-
+import EdicaoSobreMim from  './pages/EdicaoSobreMim';
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
   <Route
@@ -150,6 +150,10 @@ function UserHeader() {
           exact
           path='/web/edicaohome'
           component={EdicaoHome}
+        />
+        <RotasPrivadasMedico
+          path="/web/edicaosobremim"
+          component={EdicaoSobreMim}
         />
         <RotasPrivadas
           exact
