@@ -54,7 +54,8 @@ import {
   VerticalPositionAlign,
   TextWrappingType,
   TextWrappingSide,
-  ImageRun
+  ImageRun,
+  AlignmentType
 } from "docx";
 import formatarData from "../../utils/formatarData";
 import logoWord from "./logo.json";
@@ -247,7 +248,7 @@ function FormularioEspecifico(props) {
       arrayParagrafos.push(
         new TextRun({
           text: `Pergunta: ${conteudoPergunta}`,
-          break: 1,
+          break: 2,
           bold: true
         })
       )
@@ -313,6 +314,17 @@ function FormularioEspecifico(props) {
               }),
               new TextRun({
                 text: `${dataFormatada}`,
+              }),
+            ],
+          }),
+          new Paragraph({
+            alignment: AlignmentType.CENTER, 
+            children: [
+              new TextRun({
+                text: `${docxWord.titulo}`,
+                bold: true,
+                size: 28,
+                break: 1
               }),
             ],
           }),

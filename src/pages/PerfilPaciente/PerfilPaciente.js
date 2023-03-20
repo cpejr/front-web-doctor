@@ -40,9 +40,7 @@ import {
   TituloReceita,
   TipoFormulario,
   UrgenciaFormulario,
-  TextoUrgencia,
   CaixaBaixarPdf,
-  BaixarPdf,
 } from "./Styles";
 import Button from "../../styles/Button";
 import ModalAgendamento from "../../components/ModalAgendamento/ModalAgendamento";
@@ -105,14 +103,10 @@ function PerfilPaciente(props) {
   const emailUsuarioLogado = sessionStorage.getItem("@doctorapp-Email");
   const [formularioEspecifico, setFormularioEspecifico] = useState({});
   const [formularios, setFormularios] = useState();
-  const [booleanoFormulario, setbooleanFormulario] = useState();
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
   );
-  const antIconModal = (
-    <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin />
-  );
-
+  
   const margemBotoes = tipoUsuario ? "0px" : "8%";
   const margemPerfil = tipoUsuario ? "2%" : "20%";
 
