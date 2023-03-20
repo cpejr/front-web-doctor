@@ -21,9 +21,7 @@ import EditarFormulario from './pages/EditarFormulario/EditarFormulario';
 import FormularioEspecifico from './pages/FormularioEspecifico';
 import Home from './pages/Home/Home';
 import CriacaoReceitas from './pages/CriacaoReceitas';
-import uploadReceita from './pages/UploadReceita';
 import UploadReceita from './pages/UploadReceita';
-import EdicaoComentarios from './pages/EdicaoComentarios';
 import EdicaoSobreMim from  './pages/EdicaoSobreMim';
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
@@ -144,11 +142,6 @@ function UserHeader() {
           exact
           path='/web/editarformulario'
           component={EditarFormulario}
-        />
-        <RotasPrivadasMedico
-          exact
-          path='/web/edicaohome'
-          component={EdicaoHome}
         />
         <RotasPrivadasMedico
           path="/web/edicaosobremim"

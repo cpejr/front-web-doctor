@@ -122,7 +122,7 @@ export const CriandoExame = async (exame) => {
   await requesterService
     .criarExame(exame)
     .then(() => {
-      toast.success('Exame criada com sucesso.');
+      toast.success('Exame criado com sucesso.');
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -1126,19 +1126,6 @@ export const enviarArquivoMensagem = async (file) => {
   return id;
 };
 
-export const TokenById = async (id_usuario) => {
-  let dispositivo = {};
-
-  await requesterService
-    .TokenById(id_usuario)
-    .then((res) => {
-      dispositivo = res.data
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-  return dispositivo;
-};
 
 export const requisicaoSobreMimDados = async () => {
   let sobreMimDados = {};
