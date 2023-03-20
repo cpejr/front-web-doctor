@@ -34,7 +34,7 @@ function EdicaoConteudo() {
                     Home
                 </Button>
                 <Button
-                    backgroundColor="green"
+                    backgroundColor={Cores.azulClaro}
                     borderRadius="3px"
                     borderWidth="1px"
                     borderColor={Cores.preto}
@@ -48,9 +48,9 @@ function EdicaoConteudo() {
                     fontSizeMedia950="0.9em"
                     marginBottom="5%"
                     widthMedia600="75%"
-                // onClick={() => {
-                //   history.push("/web/Home");
-                // }}
+                    onClick={() => {
+                        history.push("/web/edicaosobremim");
+                    }}
                 >
                     Sobre mim
                 </Button>
