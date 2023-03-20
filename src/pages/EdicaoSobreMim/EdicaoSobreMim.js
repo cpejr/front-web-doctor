@@ -176,7 +176,7 @@ function EdicaoSobreMim() {
               </InputTextoContainer>
               <BotaoContainer>
                 <Botao type="submit" salvar >Salvar Alterações</Botao>
-                <Botao onClick={handleCancelar} type="button" cancelar>Cancelar Alterações</Botao>
+                <Botao onClick={handleCancelar} type="button" cancelar>Descartar Alterações</Botao>
               </BotaoContainer>
             </InputContainer>
           </Inputs>

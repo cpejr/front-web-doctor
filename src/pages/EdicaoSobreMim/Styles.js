@@ -1,4 +1,5 @@
 import styled, { css } from "styled-components";
+import { Cores, Fontes } from "../../variaveis";
 
 export const Container = styled.div`
   display: flex;
@@ -252,12 +253,11 @@ export const Botao = styled.button`
 `;
 
 const salvarBotaoStyle = css`
-  background: #0A0E3C;
+  background: ${Cores.azulEscuro};
   color: #FFFFFF;
 `
 
 const cancelarBotaoStyle = css`
-  /* background: rgba(248, 207, 207, 0.5); */
-  background: red;
+  background: ${Cores.vermelho};
   color: rgba(10, 14, 60, 0.6);
 `

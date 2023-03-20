@@ -180,17 +180,17 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
 export const dispostivoById = (id) => api.get(`/dispositivos/${id}`);
 
 export const requisicaoSobreMimDados = () =>
-  api.get('/sobre_mims');
+  api.get('/sobremims');
 
 export const criarSobreMim = (dados) => 
-  api.post(`/sobre_mims`, dados, {
+  api.post(`/sobremims`, dados, {
     headers: {
       "Content-Type": "multipart/form-data",
     }
   });
 
 export const atualizarSobreMim = (id, dados) => 
-  api.put(`/sobre_mims/${id}`, dados, {
+  api.put(`/sobremims/${id}`, dados, {
     headers: {
       "Content-Type": "multipart/form-data",
     }
