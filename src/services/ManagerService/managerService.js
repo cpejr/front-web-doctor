@@ -406,6 +406,37 @@ export const CriandoComentario = async (comentario) => {
   return;
 };
 
+export const InicializandoPDF = async (data) => {
+  await requesterService
+    .inicializarPDF(data)
+    .then(() => {
+      toast.success('Comentário criado com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
+      return false;
+    });
+
+  return;
+};
+export const FinalizandoPDF = async (extensiondata) => {
+  await requesterService
+    .finalizarPDF(extensiondata)
+    .then(() => {
+      toast.success('Comentário criado com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
+      return false;
+    });
+
+  return;
+};
+
+
+
+
+
 export const GetComentario = async () => {
   let dadosComentario = [];
 
