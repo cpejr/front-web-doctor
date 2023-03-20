@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Checkbox, Input, Tooltip } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
-import moment from "moment";
 import { toast } from "react-toastify";
 import {
   Container,
@@ -32,14 +31,12 @@ import * as managerService from "../../services/ManagerService/managerService";
 import { TiposDeConsulta } from "../listaTiposDeConsultas";
 
 function ModalEditarAgendamentoEspecifico(props) {
-  const { Option } = Select;
   const [usuario, setUsuario] = useState({});
   const [consultorios, setConsultorios] = useState([]);
   const [carregando, setCarregando] = useState();
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
   const [carregandoUpdate, setCarregandoUpdate] = useState();
   const [consulta, setConsulta] = useState({});
-  const [novaConsulta, setNovaConsulta] = useState({});
   const [consultorioPorId, setConsultorioPorId] = useState();
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
@@ -52,8 +49,6 @@ function ModalEditarAgendamentoEspecifico(props) {
   const [editado, setEditado] = useState(false);
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
-  moment.locale("pt-br");
 
   useEffect(() => {
     pegandoConsultorios();

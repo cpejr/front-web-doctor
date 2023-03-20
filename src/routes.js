@@ -7,7 +7,7 @@ import AreaReceitas from './pages/AreaReceitas';
 import Cadastro from './pages/Cadastro';
 import Chat from './pages/Chat';
 import CriacaoFormulario from './pages/CriacaoFormulario';
-import EdicaoConteudo from './pages/EdicaoConteudo';
+import EdicaoHome from './pages/EdicaoHome';
 import Header from './components/Header/Header';
 import ListaFormularios from './pages/ListaFormularios';
 import ListaUsuarios from './pages/ListaUsuarios';
@@ -22,6 +22,9 @@ import EditarFormulario from './pages/EditarFormulario/EditarFormulario';
 import FormularioEspecifico from './pages/FormularioEspecifico';
 import Home from './pages/Home/Home';
 import CriacaoReceitas from './pages/CriacaoReceitas';
+import uploadReceita from './pages/UploadReceita';
+import UploadReceita from './pages/UploadReceita';
+import EdicaoComentarios from './pages/EdicaoComentarios';
 import EdicaoSobreMim from  './pages/EdicaoSobreMim';
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
@@ -145,8 +148,8 @@ function UserHeader() {
         />
         <RotasPrivadasMedico
           exact
-          path='/web/editarconteudo'
-          component={EdicaoConteudo}
+          path='/web/edicaohome'
+          component={EdicaoHome}
         />
         <RotasPrivadasMedico
           path="/web/edicaosobremim"
@@ -167,6 +170,12 @@ function UserHeader() {
           path='/web/criacaoreceitas'
           component={CriacaoReceitas}
         />
+        <RotasPrivadasMedico
+          exact 
+          path='/web/uploadreceita'
+          component={UploadReceita}
+
+        />
         <RotasPrivadas exact path='/web/perfil' component={Perfil} />
         <RotasPrivadas
           exact
@@ -182,6 +191,11 @@ function UserHeader() {
           exact
           path='/web/formularioespecifico'
           component={FormularioEspecifico}
+        />
+        <RotasPrivadas
+          exact
+          path='/web/edicaocomentario'
+          component={EdicaoComentarios}
         />
         <RotasPrivadas exact path='/web/home' component={Home} />
         <RotasPrivadas

@@ -1,7 +1,9 @@
 import api from '../../services/api';
 
 
-export const EnviandoImagem = (base64) => api.post("/arquivo", {file: base64});
+export const EnviandoImagem = (base64) => api.post("/arquivo", { file: base64 });
+
+export const EnviandoArquivo = (base64) => api.post("/arquivofile", {file: base64});
 
 
 export const logarUsuario = (email, senha) =>
@@ -43,6 +45,18 @@ export const updateNotificacaoAtivaFormularioPaciente = (
 export const updateCodigo = (id_usuario, codigo) =>
   api.put(`/usuarios/${id_usuario}`, { codigo: codigo });
 
+export const UpdateComentario = (id, comentario) =>
+  api.put(`/comentarios/${id}`, { comentario: comentario });
+
+export const DeleteComentario = (id, comentario) =>
+  api.delete(`/comentarios/${id}`, { comentario: comentario });
+
+export const CriandoComentario = (comentario) =>
+  api.post('/comentarios', comentario);
+
+export const requisicaoComentario = () =>
+  api.get(`/comentarios`);
+
 export const requisicaoDadosUsuario = (emailUrl) =>
   api.get(`/usuarios/${emailUrl}`);
 
@@ -51,7 +65,7 @@ export const requisicaoUsuarioPorId = (id_usuario) =>
 
 export const requisicaoReceitasPorUsuarioId = (id_usuario) =>
   api.get(`/usuarios_receitas/${id_usuario}`);
-  
+
 export const requisicaoDadosUsuarioPorToken = (token_usuario) =>
   api.get(`/usuarios_token/${token_usuario}`);
 
@@ -103,6 +117,9 @@ export const deletarFormulario = (id) => api.delete(`/formularios/${id}`);
 export const requisicaoRespostaFormularioIdUsuario = (id_usuario) =>
   api.get(`/formularios_pacientes_usuario/${id_usuario}`);
 
+export const requisicaoRespostaReceitaIdUsuario = (id_usuario) =>
+  api.get(`/receitas_usuario/${id_usuario}`);
+
 export const criarFormulario = (estado) => api.post('/formularios', estado);
 
 export const requisicaoRespostaFormulario = (id) =>
@@ -113,7 +130,7 @@ export const requisicaoFormularioPacientes = (id_formulario) =>
 
 export const requisicaoReceitas = () => api.get(`/receitas/`);
 
-export const criarReceita = (id_usuario, nomePaciente, dataNascimento, tituloReceita, descricao) => 
+export const criarReceita = (id_usuario, nomePaciente, dataNascimento, tituloReceita, descricao) =>
   api.post(`/receitas`, {
     id_usuario: id_usuario,
     nome: nomePaciente,
@@ -121,7 +138,18 @@ export const criarReceita = (id_usuario, nomePaciente, dataNascimento, tituloRec
     titulo: tituloReceita,
     descricao: descricao,
   });
-
+export const criarReceitaComArquivo = (
+  id_usuario,
+  tituloReceita,
+  descricao,
+  base64
+) =>
+  api.post(`/receitasarquivo`, {
+    id_usuario: id_usuario,
+    titulo: tituloReceita,
+    descricao: descricao,
+    file:base64,
+  });
 
 export const deletarReceita = (id) => api.delete(`/receitas/${id}`);
 
@@ -136,13 +164,13 @@ export const editarCamposFormulario = (id, campos) =>
 
 
 export const updateFotoDePerfil = (id, base64) =>
-  api.post(`/usuariosimagem/${id}`,{
+  api.post(`/usuariosimagem/${id}`, {
     file: base64
   });
 
 
-  export const deleteFotoDePerfil = (id, base64) =>
-  api.put(`/usuariosdeletarimagem/${id}`,{
+export const deleteFotoDePerfil = (id, base64) =>
+  api.put(`/usuariosdeletarimagem/${id}`, {
     file: base64
   });
 
@@ -166,6 +194,8 @@ export const deletarConversasInativas = (id_usuario) =>
 
 export const criarMensagem = (mensagem) => api.post(`/mensagems`, mensagem);
 
+export const criarMensagemComArquivo = (mensagem) => api.post(`/mensagemsfile`, mensagem);
+
 export const requisicaoMensagensPorConversaUsuario = (
   id_usuario,
   id_conversa
@@ -178,6 +208,21 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
   api.put(`/mensagems/${id_conversa}/visualizadas/${id_usuario}`);
 
 export const dispostivoById = (id) => api.get(`/dispositivos/${id}`);
+
+export const enviarArquivoMensagem = (base64) =>
+  api.post(`/arquivofile/`,{
+    file: base64
+  });
+
+export const requisicaoHomes = () =>
+  api.get(`/homes`);
+
+export const TokenById = (id_usuario) => api.get(`/token_usuarios/${id_usuario}`);
+
+export const getTokenDispositivo = (token_dispositivo) =>
+  api.get("/token_usuarios", {
+    token_dispositivo,
+  });
 
 export const requisicaoSobreMimDados = () =>
   api.get('/sobremims');

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { toast } from "react-toastify";
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import {
@@ -26,6 +27,7 @@ import ModalExameMarcado from '../ModalExameMarcado';
 import { compararDataAntiga } from '../../utils/tratamentoErros';
 import * as managerService from '../../services/ManagerService/managerService';
 import { sleep } from '../../utils/sleep';
+import formatarData from '../../utils/formatarData';
 
 function ModalAgendamento(props) {
   const [consultas, setConsultas] = useState([]);
@@ -107,8 +109,23 @@ function ModalAgendamento(props) {
     pegandoDados();
   }
 
-  async function excluirConsulta(id) {
+  async function excluirConsulta(id, consulta) {
     await managerService.DeletarConsulta(id);
+    const Token = 
+    await managerService.TokenById(consulta);
+    for(var i = 0; i <= Token.length - 1; i++){
+    const Message = {
+    to: Token[i].token_dispositivo.replace("expo/", ''),
+    sound: 'default',
+    title: 'Doctor App', 
+    body: 'Sua consulta foi desmarcada!',
+    
+  };
+   fetch('https://exp.host/--/api/v2/push/send',{
+    method: 'POST',
+    body: JSON.stringify(Message),
+    }
+  );}
     pegandoDados();
   }
 
@@ -139,9 +156,7 @@ function ModalAgendamento(props) {
                         <DiaHorarioAgendamento
                           onClick={() => abreModalConsultaMarcada(value)}
                         >
-                          {value.data_hora.slice(8, -14)}/
-                          {value.data_hora.slice(5, -17)}/
-                          {value.data_hora.slice(0, -20)}
+                          {formatarData({ data: value.data_hora, formatacao: "dd/MM/yyyy" })}
                         </DiaHorarioAgendamento>
                         <BarraEstetica></BarraEstetica>
                         <TextoAgendamentoEspecifico
@@ -153,8 +168,7 @@ function ModalAgendamento(props) {
                         <DiaHorarioAgendamento
                           onClick={() => abreModalConsultaMarcada(value)}
                         >
-                          {value.data_hora.slice(11, -11)}
-                          {value.data_hora.slice(13, -8)}
+                          {formatarData({ data: value.data_hora, formatacao: "HH:mm" })}
                           {` - `}
                           {value.duracao_em_minutos} min
                         </DiaHorarioAgendamento>
@@ -187,7 +201,7 @@ function ModalAgendamento(props) {
                           fontSizeMedia='0.8em'
                           fontSizeMedia950='1em'
                           heightMedia560='30px'
-                          onClick={() => excluirConsulta(value.id)}
+                          onClick={() => excluirConsulta(value.id, value.id_usuario)}
                         >
                           EXCLUIR
                         </Button>
@@ -204,9 +218,7 @@ function ModalAgendamento(props) {
                         <DiaHorarioAgendamento
                           onClick={() => abreModalExameMarcado(value)}
                         >
-                          {value.data_hora.slice(8, -14)}/
-                          {value.data_hora.slice(5, -17)}/
-                          {value.data_hora.slice(0, -20)}
+                          {formatarData({ data: value.data_hora, formatacao: "dd/MM/yyyy" })}
                         </DiaHorarioAgendamento>
                         <BarraEstetica></BarraEstetica>
                         <TextoAgendamentoEspecifico
@@ -218,8 +230,7 @@ function ModalAgendamento(props) {
                         <DiaHorarioAgendamento
                           onClick={() => abreModalExameMarcado(value)}
                         >
-                          {value.data_hora.slice(11, -11)}
-                          {value.data_hora.slice(13, -8)}
+                          {formatarData({ data: value.data_hora, formatacao: "HH:mm" })}
                         </DiaHorarioAgendamento>
                       </CaixaAgendamento>
 

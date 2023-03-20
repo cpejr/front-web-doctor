@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { Input, Select } from "antd";
-import moment from "moment";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin, Modal } from "antd";
+import formatarData from "../../utils/formatarData";
 import { compararDataRecente } from "../../utils/tratamentoErros";
 import {
 	TopoPagina,
@@ -20,6 +20,7 @@ import {
 	DataCriacao,
 	NomePaciente,
 	BotaoDeletar,
+	ContainerBotoes
 } from "./Styles";
 import Button from "../../styles/Button";
 import * as managerService from "../../services/ManagerService/managerService";
@@ -75,13 +76,19 @@ function AreaReceitas() {
 		});
 	}
 
+	function uploadReceita(){
+		history.push({
+			pathname: "/web/uploadreceita",
+		});
+	}
+
 	async function pegandoDadosReceitas() {
 		setCarregandoPagina(true);
 		const resposta = await managerService.GetReceitas();
 		const receitasFormatadas = resposta
 			.sort(compararDataRecente)
 			.map(({ data_criacao, ...resto }) => ({
-				data_criacao: moment(data_criacao).format("DD/MM/YYYY"),
+				data_criacao: formatarData({ data: data_criacao, formatacao: "dd/MM/yyyy" }),
 				...resto,
 			}));
 		setReceitas(receitasFormatadas);
@@ -141,20 +148,36 @@ function AreaReceitas() {
 							</Select>
 						</FiltroPaciente>
 						<BotaoAdicionar>
-							<Button
-								backgroundColor={Cores.cinza[7]}
-								color={Cores.azul}
-								width="50%"
-								display="flex"
-								height="32px"
-								borderColor={Cores.preto}
-								fontSize="1em"
-								gap="5%"
-								widthMedia600="100%"
-								onClick={() => criandoReceita()}
-							>
-								Adicionar Receita
-							</Button>
+							<ContainerBotoes>
+								<Button
+									backgroundColor={Cores.cinza[7]}
+									color={Cores.azul}
+									width="50%"
+									display="flex"
+									height="32px"
+									borderColor={Cores.preto}
+									fontSize="1em"
+									gap="5%"
+									widthMedia600="100%"
+									onClick={() => criandoReceita()}
+								>
+									Criar Receita
+								</Button>
+								<Button
+									backgroundColor={Cores.cinza[7]}
+									color={Cores.azul}
+									width="50%"
+									display="flex"
+									height="32px"
+									borderColor={Cores.preto}
+									fontSize="1em"
+									gap="5%"
+									widthMedia600="100%"
+									onClick={() => uploadReceita()}
+								>
+									Upload de Receita
+								</Button>
+							</ContainerBotoes>
 						</BotaoAdicionar>
 					</Botoes>
 				</TopoPagina>

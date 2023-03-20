@@ -41,6 +41,7 @@ import { Cores } from '../../variaveis';
 import { compararDataAntiga } from '../../utils/tratamentoErros';
 import * as managerService from '../../services/ManagerService/managerService';
 import { sleep } from '../../utils/sleep';
+import formatarData from '../../utils/formatarData';
 
 function Agendamentos(props) {
   const history = useHistory();
@@ -54,7 +55,6 @@ function Agendamentos(props) {
   const [carregando, setCarregando] = useState(true);
   const [consultas, setConsultas] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
-  const tipoUsuarioLogado = sessionStorage.getItem('@doctorapp-Tipo');
   const [busca, setBusca] = useState('');
   const [dataInput, setDataInput] = useState('');
   const [tipoSelect, setTipoSelect] = useState('');
@@ -345,6 +345,27 @@ function Agendamentos(props) {
     setCarregandoFoto(false);
   }
 
+  /*
+  async function registrandoNotificacoes(id){
+    if (!Device.isDevice){
+      return null;
+    }
+    const {status} = await Notifications.requestPermissionsAsync();
+    if(status !== "granted"){
+      return null;
+    }
+    if (Platform.OS == "android"){
+      Notifications.setNotificationChannelAsync("default", {
+        
+        name: "default",
+        importance: Notifications.AndroidImportance.MAX,
+      });
+    }
+    const tokenNotificacoes = await Notifications.getDevicePushTokenAsync();
+    await managerService.requisicaoToken(id,(tokenNotificacoes.type +'/'+ tokenNotificacoes.data))
+  }
+
+  */
   return (
     <div>
       <ContainerListadeUsuarios>
@@ -518,27 +539,10 @@ function Agendamentos(props) {
                   )}
                 </Telefone>
                 <Data>
-                  {parseInt(value.data_hora.slice(11, 13)) < 12
-                    ? value.data_hora.slice(8, 10) +
-                      '/' +
-                      value.data_hora.slice(5, 7) +
-                      '/' +
-                      value.data_hora.slice(0, 4) +
-                      ' - ' +
-                      parseInt(value.data_hora.slice(11, 13)) +
-                      ':' +
-                      value.data_hora.slice(14, 16) +
-                      ' am'
-                    : value.data_hora.slice(8, 10) +
-                      '/' +
-                      value.data_hora.slice(5, 7) +
-                      '/' +
-                      value.data_hora.slice(0, 4) +
-                      ' - ' +
-                      parseInt(value.data_hora.slice(11, 13) - 12) +
-                      ':' +
-                      value.data_hora.slice(14, 16) +
-                      ' pm'}
+                  {formatarData({ 
+                    data: value.data_hora, 
+                    formatacao: "dd/MM/yyyy - h:mm aaa" 
+                  })}
                 </Data>
 
                 <Agendamento onClick={() => abreModalConsultaMarcada(value)}>
@@ -606,10 +610,10 @@ function Agendamentos(props) {
                   )}
                 </Telefone>
                 <Data>
-                  {value.data_hora.slice(8, 10)}/{value.data_hora.slice(5, 7)}/
-                  {value.data_hora.slice(0, 4)} -{' '}
-                  {value.data_hora.slice(11, 16)}:
-                  {value.data_hora.slice(17, 19)}
+                  {formatarData({ 
+                    data: value.data_hora, 
+                    formatacao: "dd/MM/yyyy - HH:mm" 
+                  })}
                 </Data>
 
                 <Agendamento onClick={() => abreModalExameMarcado(value)}>
