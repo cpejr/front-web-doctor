@@ -1084,3 +1084,67 @@ export const enviarArquivoMensagem = async (file) => {
     });
   return id;
 };
+
+export const TokenById = async (id_usuario) => {
+  let dispositivo = {};
+
+  await requesterService
+    .TokenById(id_usuario)
+    .then((res) => {
+      dispositivo = res.data
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dispositivo;
+};
+
+export const requisicaoSobreMimDados = async () => {
+  let sobreMimDados = {};
+  await requesterService
+    .requisicaoSobreMimDados()
+    .then((res) => {
+      sobreMimDados = res.data[0];
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return sobreMimDados;
+};
+
+export const criarSobreMim = async (dados) => {
+  let sobreMimDados = {}
+  await requesterService
+    .criarSobreMim(dados)
+    .then((res) => {
+      toast.success('Dados da página "Sobre mim" criados com sucesso!');
+      sobreMimDados = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return sobreMimDados;
+};
+
+export const atualizarSobreMim = async (id, dados) => {
+  await requesterService
+    .atualizarSobreMim(id, dados)
+    .then(() => {
+      toast.success('Dados da página "Sobre mim" atualizados com sucesso!');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+};
+
+export const deletarSobreMim = async (id) => {
+  await requesterService
+    .deletarSobreMim(id)
+    .then(() => {
+      toast.success('Dados da página "Sobre mim" deletados com sucesso!');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+};
