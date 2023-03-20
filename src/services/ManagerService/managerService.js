@@ -1128,7 +1128,7 @@ export const UpdateDadosHomes = async (
 export const updateImagemCarrossel = async (id, file) => {
   try{
   const res = await requesterService
-    .updateImagemCarrossel(id, file);
+    .updateImagemCarrossel(id, file)
     return res;
   } catch (error) {
       requisicaoErro(error);
@@ -1136,15 +1136,13 @@ export const updateImagemCarrossel = async (id, file) => {
     };
 };
 
-export const updateImagemHomes = async (id, imagem_quatro, file) => {
-  await requesterService
-    .updateImagemHomes(id, imagem_quatro, file)
-    .then(() => {
-      toast.success('Foto Homes atualizada com sucesso');
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-      return;
-    });
-  return;
+export const updateImagemHomes = async (id, imagem_quatro) => {
+  try{
+    const resp = await requesterService
+    .updateImagemHomes(id, imagem_quatro)
+      return resp;
+    } catch (error) {
+        requisicaoErro(error);
+        return;
+      };
 };

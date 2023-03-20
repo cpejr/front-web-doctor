@@ -81,7 +81,7 @@ function EdicaoHome() {
 
   function avancaCarrosselEsquerda(posicao) {
     if (posicao === 0) {
-      posicao = 2
+      posicao = 3
     }
     else {
       posicao -= 1;
@@ -90,7 +90,7 @@ function EdicaoHome() {
   }
 
   function avancaCarrosselDireita(posicao) {
-    if (posicao === 2) {
+    if (posicao === 3) {
       posicao = 0
     }
     else {
@@ -98,9 +98,10 @@ function EdicaoHome() {
     }
     setImgAtual(posicao);
   }
-
+  console.log(img4)
   async function atualizandoDados() {
     setCarregando(true);
+
     for (const index of indexImagens) {
       if (index === 0) {
         await managerService.updateImagemCarrossel(0, img1);
@@ -111,10 +112,15 @@ function EdicaoHome() {
       else if (index === 2) {
         await managerService.updateImagemCarrossel(2, img3);
       }
+      else if (index === 3) {
+        await managerService.updateImagemHomes(3, img4);
+      }
     }
 
+    
+   
 
-    if (houveAlteracao === true || alterouCarrossel === true) {
+    if (houveAlteracao === true) {
       await managerService.UpdateDadosHomes(
         homes.id,
         homes.titulo_um,
@@ -129,10 +135,12 @@ function EdicaoHome() {
       );
       setCarregando(false);
       document.location.reload(true);
-    } else {
-      toast.warn("Altere algum campo!");
-      setCarregando(false);
-    }
+    } 
+
+    if( houveAlteracao === true || alterouCarrossel === true) {
+      toast.success("Alterações feitas com sucesso!")
+    }else
+      toast.error("Altere algum dado!");
   }
 
   function cancelarEdicaoHome() {
@@ -168,10 +176,11 @@ function EdicaoHome() {
   };
 
   async function preenchendoImagem(info) {
-
     const novoIndexImagem = [...indexImagens, imgAtual];
     setIndexImagens(novoIndexImagem);
     setCarregandoImg(true);
+    setAlterouCarrossel(true);
+
     if (imgAtual === 0) {
       getBase64(info.file.originFileObj, (url) => {
         setImg1(url);
@@ -193,15 +202,14 @@ function EdicaoHome() {
       });
     }
 
-    console.log(indexImagens);
+    if (imgAtual === 3) {
+      getBase64(info.file.originFileObj, (url) => {
+        setImg4(url);
+        setCarregandoImg(false);
+      });
+    } 
 
-    /*     if (imgAtual === 3) {
-    
-          getBase64(info.file.originFileObj, (url) => {
-            setImg4(url);
-            setCarregandoImg(false);
-          });
-        } */
+    console.log(indexImagens);
   }
 
   async function setandoImagemCarrossel() {
@@ -214,7 +222,7 @@ function EdicaoHome() {
 
     const arquivo = await managerService.GetArquivoPorChave(homes.imagem_quatro);
     setImg4(arquivo);
-
+    console.log(arquivo)
     const responses = await Promise.all(carrossel);
     setImg1(responses[0]);
     setImg2(responses[1]);
@@ -227,7 +235,7 @@ function EdicaoHome() {
   }, [homes]);
 
   var imagens = [img1, img2, img3, img4];
-
+console.log(img1)
   return (
     <Corpo>
       <Container>
