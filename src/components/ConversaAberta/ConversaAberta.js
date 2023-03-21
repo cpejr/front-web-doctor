@@ -31,7 +31,6 @@ import {
 } from "./Styles";
 export default function ConversaAberta({ socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
-  const [dadosPaciente, setDadosPaciente] = useState({});
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState("");
   const [carregandoConversa, setCarregandoConversa] = useState(true);
   const [carregandoEnvioMensagem, setCarregandoEnvioMensagem] = useState(false);
@@ -40,17 +39,24 @@ export default function ConversaAberta({ socket }) {
     horarioPermitidoParaEnvioMensagem,
     setHorarioPermitidoParaEnvioMensagem,
   ] = useState(null);
-  const mensagemFinalizada =
-    "Os seus exames estão disponíveis no PDF acima, clique para abrir.\n" +
-    "Essa conversa foi encerrada Finalizado!\n";
 
-  const mensagemActigrafia = "A actigrafia é um exame não invasivo, realizado por meio de um dispositivo utilizado no pulso durante um período de uma a quatro semanas. Ele tem como objetivo detectar o padrão de vigília e sono. O exame é utilizado principalmente para auxiliar no diagnóstico de insônia e distúrbios de ritmo circadiano. O preço desse exame é: ";
-  const mensagemBiologix = "O Exame do Sono Biologix é uma poligrafia noturna utilizada para diagnóstico e acompanhamento do tratamento de ronco e apneia do sono, e permite que profissionais de saúde ofereçam a seus pacientes uma solução simplificada, utilizando apenas um celular e um sensor compacto e sem fios. O preço desse exame é: "
-  const mensagemDispositivoIndisponível = "O dispositivo para a realização desse exame está indisponível! Deseja ser comunicado quando houver disponibilidade?";
-  const mensagemDispositivoDisponível = "O dispositivo para a realização desse exame está disponível! Deseja realizá-lo?";
-  const mensagemResponderFormulárioBiologix = "Por gentileza, responda o formulário BIOLOGIX";
-  const mensagemResponderFormulárioActigrafia = "Por gentileza, responda o formulário ACTIGRAFIA";
-  const mensagemSolicitarPagamento = "Realize o pagamento pela seguinte chave pix: ";
+  const mensagemFinalizada =
+    "Os seus exames estão disponíveis no PDF acima, clique para abrir.\nEssa conversa foi encerrada Finalizado!\n";
+  const mensagemActigrafia = 
+    "A actigrafia é um exame não invasivo, realizado por meio de um dispositivo utilizado no pulso durante um período de uma a quatro semanas. Ele tem como objetivo detectar o padrão de vigília e sono. O exame é utilizado principalmente para auxiliar no diagnóstico de insônia e distúrbios de ritmo circadiano. O preço desse exame é: ";
+  const mensagemBiologix = 
+    "O Exame do Sono Biologix é uma poligrafia noturna utilizada para diagnóstico e acompanhamento do tratamento de ronco e apneia do sono, e permite que profissionais de saúde ofereçam a seus pacientes uma solução simplificada, utilizando apenas um celular e um sensor compacto e sem fios. O preço desse exame é: "
+  const mensagemDispositivoIndisponível = 
+    "O dispositivo para a realização desse exame está indisponível! Deseja ser comunicado quando houver disponibilidade?";
+  const mensagemDispositivoDisponível = 
+    "O dispositivo para a realização desse exame está disponível! Deseja realizá-lo?";
+  const mensagemResponderFormulárioBiologix = 
+    "Por gentileza, responda o formulário BIOLOGIX";
+  const mensagemResponderFormulárioActigrafia = 
+    "Por gentileza, responda o formulário ACTIGRAFIA";
+  const mensagemSolicitarPagamento = 
+    "Realize o pagamento pela seguinte chave pix: ";
+  
   const {
     usuarioId,
     conversaSelecionada,
@@ -69,7 +75,6 @@ export default function ConversaAberta({ socket }) {
   const horarioComercial = horaAtual >= 7 && horaAtual < 21 ? true : false;
   const [modalEnviarArquivo, setModalEnviarArquivo] = useState(false);
   const [pdfFromModal, setPdfFromModal] = useState("");
-  const [urlFromModal, setUrlFromModal] = useState("");
   const [endereco, setEndereco] = useState({});
   const enderecoCompleto = `${endereco.rua}, ${endereco.numero}, ${endereco.complemento}, ${endereco.bairro}, ${endereco.cidade}, ${endereco.estado}, ${endereco.pais}, ${endereco.cep}`;
   const mensagemConfirmacaoDeDados = 
@@ -79,7 +84,8 @@ export default function ConversaAberta({ socket }) {
   `Telefone: ${conversaSelecionada.conversaCom.telefone}\n` +
   `Endereço: ${enderecoCompleto}\n`
   ;
-
+  const mensagemNotificacao = `O exame ${conversaSelecionada.tipo} está disponível`;
+  
   const menuBotoes = (
     <Menu>
       <Menu.Item>
@@ -386,7 +392,6 @@ export default function ConversaAberta({ socket }) {
     verificaHorarioPermitidoParaEnvioDeMensagens();
   });
 
-
   async function enviarFormularioPaciente() {
     await managerService.EnviandoFormularioPaciente(
       false,
@@ -423,20 +428,23 @@ export default function ConversaAberta({ socket }) {
 
   async function DispositivoDisponível() {
     await enviaMensagem("nenhuma", mensagemDispositivoDisponível); 
-    const Token = managerService.TokenById(conversaSelecionada.conversaCom.id); 
-    const Message = { 
-      to: Token.token_dispositivo.replace("expo/", ''), 
-      sound: 'default', 
-      title: 'Chat:', 
-      body: `O exame ${conversaSelecionada.tipo} está disponível`, 
-    }; 
-    await fetch('https://exp.host/--/api/v2/push/send', { 
-      method: 'POST', 
-      body: JSON.stringify(Message), 
-    } 
-    ); 
-  } 
-
+        const Token = 
+          await managerService.TokenById(conversaSelecionada.conversaCom.id);
+          for(var i = 0; i <= Token.length - 1; i++){
+            const Message = {
+              to: Token[i].token_dispositivo.replace("expo/", ''),
+              sound: 'default',
+              title: 'Doctor App', 
+              body: mensagemNotificacao,
+            
+            };
+            fetch('https://exp.host/--/api/v2/push/send',{
+              method: 'POST',
+              body: JSON.stringify(Message),
+              }
+            );
+            }
+          }
   
   async function ConfirmacaoDeDados() {
     await enviaMensagem("nenhuma", mensagemConfirmacaoDeDados);
@@ -453,8 +461,6 @@ export default function ConversaAberta({ socket }) {
       await enviaMensagem("nenhuma", mensagemResponderFormulárioBiologix);
     }
   }
-
- 
 
   function atualizaConversaFinalizada() {
     const auxConversa = conversaSelecionada;
@@ -593,9 +599,7 @@ export default function ConversaAberta({ socket }) {
 
     if (conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
-      texto =
-        "CHAT FINALIZADO.\n" +
-        "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n";
+      texto = mensagemFinalizada;
       setInputMensagemConteudo("");
     }
 
@@ -630,9 +634,7 @@ export default function ConversaAberta({ socket }) {
 
     if (conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
-      texto =
-        "CHAT FINALIZADO.\n" +
-        "Seus resultados podem ser visualizados no arquivo enviado no Chat”.\n";
+      texto = mensagemFinalizada;
       url = null;
     }
 
