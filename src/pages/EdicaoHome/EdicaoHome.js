@@ -35,7 +35,7 @@ import {
 } from "@ant-design/icons";
 import { Spin, Upload } from "antd";
 import { toast } from "react-toastify";
-import { updateImagemCarrossel } from "../../services/RequesterService/requesterService";
+import { updateImagemHomes } from "../../services/RequesterService/requesterService";
 
 function EdicaoHome() {
   const [homes, setHomes] = useState([]);
@@ -44,14 +44,13 @@ function EdicaoHome() {
   const [alterouCarrossel, setAlterouCarrossel] = useState(false);
 
   const [imgAtual, setImgAtual] = useState(0);
+  const [img0, setImg0] = useState("");
   const [img1, setImg1] = useState("");
   const [img2, setImg2] = useState("");
   const [img3, setImg3] = useState("");
-  const [img4, setImg4] = useState("");
   const [carregandoImg, setCarregandoImg] = useState(false);
   const history = useHistory();
   const [indexImagens, setIndexImagens] = useState([]);
-  const [contador, setContador] = useState(0);
 
 
   const antIcon = (
@@ -75,10 +74,6 @@ function EdicaoHome() {
     pegandoDados();
   }, []);
 
-  useEffect(() => {
-    console.log(imgAtual);
-  }, [imgAtual]);
-
   function avancaCarrosselEsquerda(posicao) {
     if (posicao === 0) {
       posicao = 3
@@ -98,28 +93,27 @@ function EdicaoHome() {
     }
     setImgAtual(posicao);
   }
-  console.log(img4)
+  
+  
   async function atualizandoDados() {
     setCarregando(true);
 
     for (const index of indexImagens) {
       if (index === 0) {
-        await managerService.updateImagemCarrossel(0, img1);
+        await managerService.updateImagemCarrossel(0, img0);
       }
       else if (index === 1) {
-        await managerService.updateImagemCarrossel(1, img2);
+        await managerService.updateImagemCarrossel(1, img1);
       }
       else if (index === 2) {
-        await managerService.updateImagemCarrossel(2, img3);
+        await managerService.updateImagemCarrossel(2, img2);
       }
       else if (index === 3) {
-        await managerService.updateImagemHomes(3, img4);
+        await managerService.updateImagemHomes(homes.id, homes.imagem_quatro, img3);
       }
     }
-
     
-   
-
+    
     if (houveAlteracao === true) {
       await managerService.UpdateDadosHomes(
         homes.id,
@@ -138,11 +132,12 @@ function EdicaoHome() {
     } 
 
     if( houveAlteracao === true || alterouCarrossel === true) {
-      toast.success("Alterações feitas com sucesso!")
+      toast.success("Página Home Editada Com Sucesso!");
+      history.push("/web/edicaohome");
+      document.location.reload(true);
     }else
       toast.error("Altere algum dado!");
   }
-
   function cancelarEdicaoHome() {
     history.push("/web/edicaohome");
     document.location.reload(true);
@@ -183,33 +178,31 @@ function EdicaoHome() {
 
     if (imgAtual === 0) {
       getBase64(info.file.originFileObj, (url) => {
-        setImg1(url);
+        setImg0(url);
         setCarregandoImg(false);
       });
     }
 
     if (imgAtual === 1) {
       getBase64(info.file.originFileObj, (url) => {
-        setImg2(url);
+        setImg1(url);
         setCarregandoImg(false);
       });
     }
 
     if (imgAtual === 2) {
       getBase64(info.file.originFileObj, (url) => {
-        setImg3(url);
+        setImg2(url);
         setCarregandoImg(false);
       });
     }
 
     if (imgAtual === 3) {
       getBase64(info.file.originFileObj, (url) => {
-        setImg4(url);
+        setImg3(url);
         setCarregandoImg(false);
       });
     } 
-
-    console.log(indexImagens);
   }
 
   async function setandoImagemCarrossel() {
@@ -221,12 +214,11 @@ function EdicaoHome() {
     );
 
     const arquivo = await managerService.GetArquivoPorChave(homes.imagem_quatro);
-    setImg4(arquivo);
-    console.log(arquivo)
+    setImg3(arquivo);
     const responses = await Promise.all(carrossel);
-    setImg1(responses[0]);
-    setImg2(responses[1]);
-    setImg3(responses[2]);
+    setImg0(responses[0]);
+    setImg1(responses[1]);
+    setImg2(responses[2]);
     setCarregandoImg(false);
   }
 
@@ -234,8 +226,8 @@ function EdicaoHome() {
     setandoImagemCarrossel();
   }, [homes]);
 
-  var imagens = [img1, img2, img3, img4];
-console.log(img1)
+  var imagens = [img0, img1, img2, img3];
+
   return (
     <Corpo>
       <Container>

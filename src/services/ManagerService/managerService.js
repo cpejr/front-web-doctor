@@ -1114,9 +1114,6 @@ export const UpdateDadosHomes = async (
 ) => {
   await requesterService
     .updateDadosHomes(id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video)
-    .then(() => {
-      toast.success('Página Home Editada Com Sucesso!');
-    })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = '/web/editarhome'));
       return false;
@@ -1136,13 +1133,14 @@ export const updateImagemCarrossel = async (id, file) => {
     };
 };
 
-export const updateImagemHomes = async (id, imagem_quatro) => {
-  try{
-    const resp = await requesterService
-    .updateImagemHomes(id, imagem_quatro)
-      return resp;
-    } catch (error) {
-        requisicaoErro(error);
-        return;
-      };
+export const updateImagemHomes = async (id, imagem_quatro, file) => {
+    try{
+    const res = await requesterService
+    .updateImagemHomes(id, imagem_quatro, file)
+    return res;
+    }catch (error) {
+      requisicaoErro(error);
+      return;
+    }; 
+    
 };

@@ -235,6 +235,6 @@ export const updateImagemCarrossel = (id, base64) =>
   });
 
   export const updateImagemHomes = (id, imagem_quatro, base64) =>
-  api.post(`/homes/${id}`, {imagem_quatro}, {
+  api.put(`/homes/${id}`, {imagem_quatro}, {
     file: base64
-  });
+  } );
