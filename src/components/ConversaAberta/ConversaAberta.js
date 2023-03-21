@@ -6,7 +6,7 @@ import {
   SendOutlined,
   QuestionOutlined,
 } from "@ant-design/icons";
-import { Dropdown, Menu, Modal, Spin, Tooltip} from "antd";
+import { Dropdown, Menu, message, Modal, Spin, Tooltip} from "antd";
 import moment from "moment";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { ChatContext } from "../../contexts/ChatContext";
@@ -78,11 +78,11 @@ export default function ConversaAberta({ socket }) {
   const [endereco, setEndereco] = useState({});
   const enderecoCompleto = `${endereco.rua}, ${endereco.numero}, ${endereco.complemento}, ${endereco.bairro}, ${endereco.cidade}, ${endereco.estado}, ${endereco.pais}, ${endereco.cep}`;
   const mensagemConfirmacaoDeDados = 
-  `Esses dados serão usados na entrega e no pagamento. Por favor, confirme se estão todos corretos, caso haja alguma inconsistência ou erro, altere os dados do seu perfil.\n` +
-  `Nome completo: ${conversaSelecionada.conversaCom.nome}\n` +
-  `CPF: ${conversaSelecionada.conversaCom.cpf}\n` +
-  `Telefone: ${conversaSelecionada.conversaCom.telefone}\n` +
-  `Endereço: ${enderecoCompleto}\n`
+  `Esses dados serão usados na entrega e no pagamento. Por favor, confirme se estão todos corretos, caso haja alguma inconsistência ou erro, altere os dados do seu perfil.` +
+  `\nNome completo: ${conversaSelecionada.conversaCom.nome}` +
+  `\nCPF: ${conversaSelecionada.conversaCom.cpf}` +
+  `\nTelefone: ${conversaSelecionada.conversaCom.telefone}` +
+  `\nEndereço: ${enderecoCompleto}`
   ;
   const mensagemNotificacao = `O exame ${conversaSelecionada.tipo} está disponível`;
   
@@ -428,7 +428,7 @@ export default function ConversaAberta({ socket }) {
 
   async function DispositivoDisponível() {
     await enviaMensagem("nenhuma", mensagemDispositivoDisponível); 
-        const Token = 
+        const Token =        
           await managerService.TokenById(conversaSelecionada.conversaCom.id);
           for(var i = 0; i <= Token.length - 1; i++){
             const Message = {
@@ -436,13 +436,13 @@ export default function ConversaAberta({ socket }) {
               sound: 'default',
               title: 'Doctor App', 
               body: mensagemNotificacao,
-            
+              
             };
             fetch('https://exp.host/--/api/v2/push/send',{
               method: 'POST',
               body: JSON.stringify(Message),
               }
-            );
+            );console.log(fetch);
             }
           }
   
