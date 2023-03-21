@@ -4,6 +4,7 @@ import { Titulo, Container, ContainerInputs, Labels, Rotulo } from "./Styles";
 import Input from "../../styles/Input";
 import { Cores } from "../../variaveis";
 import Button from "../../styles/Button";
+import { sleep } from '../../utils/sleep';
 import { LoadingOutlined } from '@ant-design/icons';
 import { PlusSquareOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
@@ -18,7 +19,6 @@ function ModalAdicionarIndicacao(props) {
   const [id_indicacao_especifica, setIDindicacaoespecifica] = useState({});
   const history = useHistory();
   //setIDindicacaoespecifica(props.id_indicacao_especifica);
-  console.log(props.idmedicoindicado);
   const [estado, setEstado] = useState({
     nome: "",
     telefone: "",
@@ -69,7 +69,6 @@ function ModalAdicionarIndicacao(props) {
     };
 
     setCamposVazios(camposVaziosAtual);
-    console.log(estado.telefone.length);
     if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
       toast.warn("Preencha todos os campos");
       return;
@@ -81,12 +80,13 @@ function ModalAdicionarIndicacao(props) {
     const id = props.idmedicoindicado;
 
     await managerService.IndicandoMedicos(id, estado.nome, estado.telefone, estado.local, {
-      mensagemSucesso: "Indicação realizada",
       tempo: 1500,
       onClose: () => {
         history.push("/web/edicaoindicacoesesugestoes");
       },
     });
+    toast.success("Indicação realizada");
+    await sleep(1500);
     window.location.reload();
     setCarregandoCriacao(false);
   }
@@ -165,10 +165,10 @@ function ModalAdicionarIndicacao(props) {
         {carregandoCriacao ? (
           <Spin indicator={antIcon} />
         ) : (
-          <div>Adicionar Indicação</div>
+          <>Adicionar Indicação <PlusSquareOutlined /></>
         )}
 
-        <PlusSquareOutlined />
+        
       </Button>
     </Container>
   );

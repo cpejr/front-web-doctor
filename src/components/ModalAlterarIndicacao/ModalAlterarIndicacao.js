@@ -17,6 +17,7 @@ function ModalAlterarIndicacao(props) {
   const [camposVazios, setCamposVazios] = useState({});
   const [carregandoCriacao, setCarregandoCriacao] = useState(false);
   const [medicoEspecifico, setMedicoEspecifico] = useState([{}]);
+  const [nenhumMedicoSelecionado, setnenhumMedicoSelecionado] = useState(false);
   const history = useHistory();
   let ID = {};
   const [estado, setEstado] = useState({
@@ -69,6 +70,7 @@ function ModalAlterarIndicacao(props) {
   useEffect(() => { buscarMedicosporId() }, [])
   async function preenchendoPlaceholder(event) {
     const obj = event.target.value;
+    setnenhumMedicoSelecionado(true); 
     const medicoPlaceholder = medicoEspecifico.forEach((medicos) => {
       if (medicos.nome === obj) {
         setSelecionarMedico(medicos);
@@ -81,7 +83,10 @@ function ModalAlterarIndicacao(props) {
 
   async function alterar(e) {
     e.preventDefault();
-
+    if(nenhumMedicoSelecionado === false){
+      toast.warn("Selecione um médico para alterar seus dados");
+      return;
+    }
     if (!estado.nome && !estado.telefone && estado.local_atendimento) {
       estado.nome = selecionarMedico.nome;
       estado.telefone = selecionarMedico.telefone;
@@ -120,8 +125,6 @@ function ModalAlterarIndicacao(props) {
       erro.telefone = true;
       erro.local_atendimento = true;
     }
-
-    console.log(erro);
     setCamposVazios({ ...camposVazios, ...erro });
     if (!_.isEqual(camposVazios, camposVaziosReferencia)) {
       toast.warn("Preencha algum campo");
@@ -184,10 +187,8 @@ function ModalAlterarIndicacao(props) {
           width="100%"
           paddingRight="2%"
           onChange={preenchendoDados}
-          erro={erro.nome}
-          camposVazios={camposVazios.nome}
+          erro={estado.nome}
           name="nome"
-          value={estado.nome}
         ></Input>
       </ContainerInputs>
       <ContainerInputs>
@@ -201,10 +202,8 @@ function ModalAlterarIndicacao(props) {
           width="100%"
           paddingRight="2%"
           onChange={preenchendoDados}
-          erro={erro.nome}
-          camposVazios={camposVazios.nome}
+          erro={erro.telefone}
           name="telefone"
-          value={estado.telefone}
         ></Input>
       </ContainerInputs>
       <ContainerInputs>
@@ -218,10 +217,8 @@ function ModalAlterarIndicacao(props) {
           width="100%"
           paddingRight="2%"
           onChange={preenchendoDados}
-          erro={erro.nome}
-          camposVazios={camposVazios.nome}
+          erro={estado.local_atendimento}
           name="local_atendimento"
-          value={estado.local_atendimento}
         ></Input>
       </ContainerInputs>
       <Button
@@ -239,9 +236,9 @@ function ModalAlterarIndicacao(props) {
         {carregandoCriacao ? (
           <Spin indicator={antIcon} />
         ) : (
-          <div>Alterar Indicação</div>
+          <>Alterar Indicação <PlusSquareOutlined /></>
         )}
-        <PlusSquareOutlined />
+        
       </Button>
     </Container>
   );

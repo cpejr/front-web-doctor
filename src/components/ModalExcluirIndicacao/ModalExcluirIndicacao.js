@@ -32,7 +32,6 @@ function ModalExcluirIndicacao(props) {
     setPreenchido(true);
   }
   async function deletarIndicacao() {
-    console.log(medicodeletado);
     setCarregando(true)
     if(preenchido === false){
       toast.warn("Escolha um médico para deletar");
@@ -84,8 +83,8 @@ function ModalExcluirIndicacao(props) {
         marginTop="10%"
         onClick={deletarIndicacao}
       >
-       {carregando ? <Spin indicator={antIcon} /> : "Excluir Indicação"}
-        <DeleteOutlined />
+       {carregando ? <Spin indicator={antIcon} /> :
+         <> Excluir Indicação <DeleteOutlined/> </>}
       </Button>
     </Container>
   );

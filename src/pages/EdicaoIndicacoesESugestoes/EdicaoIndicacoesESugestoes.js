@@ -84,9 +84,7 @@ function EdicaoIndicacoesESugestoes(props) {
     let Texto;
     let Titulo;
 
-    /*const Indicacoes = await managerService.GetIndicacaoEspecifica();
-    setIndicacoesEspecificas(Indicacoes);
-    console.log(indicacoesEspecificas);*/
+    
     const IndicacaoEspecifica = indicacoesEspecificas.forEach((Indicacao) => {
       if (Indicacao.titulo === exame) {
         Texto = Indicacao.texto;
@@ -112,8 +110,7 @@ function EdicaoIndicacoesESugestoes(props) {
         local = medico.local_atendimento;
         return nomemedico
       })
-      console.log(medicos);
-      console.log(nomemedico);
+      
       setIndicados(true);
       const dadosDoBackend = {
         titulo: Titulo,
@@ -122,7 +119,6 @@ function EdicaoIndicacoesESugestoes(props) {
         telefonemedico: telefone,
       };
       setDadosIndicacao(dadosDoBackend);
-      console.log(dadosIndicacao);
       setIdIndicado(IDindicado);
     } else {
       const dadosDoBackend = {
@@ -139,7 +135,6 @@ function EdicaoIndicacoesESugestoes(props) {
   async function abrirModalAdicionarIndicacao() {
     if (Indicados === true) {
       setModalAdicionarIndicacao(true);
-      console.log(idIndicado);
     }
     else
       toast.warn("Selecione uma especialidade ao lado para adicionar!");
@@ -306,6 +301,7 @@ function EdicaoIndicacoesESugestoes(props) {
         width={"50%"}
         centered={true}
         destroyOnClose
+        carregando={carregando}
       >
         <ModalAdicionarIndicacao
           idmedicoindicado={idIndicado}
@@ -320,6 +316,7 @@ function EdicaoIndicacoesESugestoes(props) {
         width={"50%"}
         centered={true}
         destroyOnClose
+        carregando={carregando}
       >
         <ModalExcluirIndicacao
           idmedicoindicado={idIndicado}
@@ -333,6 +330,7 @@ function EdicaoIndicacoesESugestoes(props) {
         width={"50%"}
         centered={true}
         destroyOnClose
+        carregando={carregando}
       >
         <ModalAlterarIndicacao
           idmedicoindicado={idIndicado}
@@ -345,6 +343,7 @@ function EdicaoIndicacoesESugestoes(props) {
         footer={null}
         width={"100%"}
         centered={true}
+        carregando={carregando}
         destroyOnClose
       >
         <ModalIndicacao
