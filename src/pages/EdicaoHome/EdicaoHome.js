@@ -35,7 +35,7 @@ import {
 } from "@ant-design/icons";
 import { Spin, Upload } from "antd";
 import { toast } from "react-toastify";
-import { updateImagemHomes } from "../../services/RequesterService/requesterService";
+
 
 function EdicaoHome() {
   const [homes, setHomes] = useState([]);
@@ -94,7 +94,6 @@ function EdicaoHome() {
     setImgAtual(posicao);
   }
   
-  
   async function atualizandoDados() {
     setCarregando(true);
 
@@ -109,11 +108,10 @@ function EdicaoHome() {
         await managerService.updateImagemCarrossel(2, img2);
       }
       else if (index === 3) {
-        await managerService.updateImagemHomes(homes.id, homes.imagem_quatro, img3);
+        await managerService.updateImagemHomes(homes.id, img3);
       }
     }
-    
-    
+
     if (houveAlteracao === true) {
       await managerService.UpdateDadosHomes(
         homes.id,

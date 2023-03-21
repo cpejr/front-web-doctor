@@ -230,11 +230,11 @@ export const requisicaoCarrossel = () =>
   api.get(`/imagem_carrossels/`);
 
 export const updateImagemCarrossel = (id, base64) =>
-  api.post(`/imagem_carrossels/${id}`, {
+  api.put(`/imagem_carrossels_img/${id}`, {
     file: base64
   });
 
-  export const updateImagemHomes = (id, imagem_quatro, base64) =>
-  api.put(`/homes/${id}`, {imagem_quatro}, {
+  export const updateImagemHomes = (id, base64) =>
+  api.put(`/homesImagem/${id}`, {
     file: base64
   } );

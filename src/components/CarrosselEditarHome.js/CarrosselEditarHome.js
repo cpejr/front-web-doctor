@@ -94,7 +94,6 @@ function CarrosselEditarHome(props) {
 
     useEffect(() => {
         atualizandoImg();
-        console.log("teste")
     }, [props.toggle]);
 
     const imagens = [

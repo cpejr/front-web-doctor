@@ -1133,11 +1133,12 @@ export const updateImagemCarrossel = async (id, file) => {
     };
 };
 
-export const updateImagemHomes = async (id, imagem_quatro, file) => {
+export const updateImagemHomes = async (id, file) => {
     try{
     const res = await requesterService
-    .updateImagemHomes(id, imagem_quatro, file)
+    .updateImagemHomes(id, file)
     return res;
+    
     }catch (error) {
       requisicaoErro(error);
       return;
