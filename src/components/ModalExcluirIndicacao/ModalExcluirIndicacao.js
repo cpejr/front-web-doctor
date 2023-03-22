@@ -73,10 +73,10 @@ function ModalExcluirIndicacao(props) {
       </ContainerInputs>
       <Button
         gap="5px"
-        backgroundColor={Cores.azul}
+        backgroundColor={Cores.vermelho}
         fontSize="1.5em"
         width="100%"
-        borderColor={Cores.azulEscuro}
+        borderColor={Cores.preto}
         color={Cores.branco}
         paddingTop="5px"
         paddingBottom="5px"

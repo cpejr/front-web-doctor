@@ -279,11 +279,11 @@ function EdicaoIndicacoesESugestoes(props) {
             </Button>
             <Button
               gap="5px"
-              backgroundColor={Cores.azul}
+              backgroundColor={Cores.vermelho}
               fontSize="1.7em"
               fontSizeMedia1080="18px"
               width="100%"
-              borderColor={Cores.azulEscuro}
+              borderColor={Cores.preto}
               color={Cores.branco}
               height="100%"
               onClick={abrirModalExcluirIndicacao}
