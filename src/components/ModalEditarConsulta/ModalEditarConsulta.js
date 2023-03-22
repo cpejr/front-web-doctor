@@ -70,8 +70,11 @@ function ModalEditarConsulta(props) {
 
   useEffect(() => {
     setandoNomeConsultorioPorId();
-    setandoDataEHora();
   }, [consulta]);
+
+  useEffect(() => {
+    setandoDataEHora();
+  }, [consulta.dataHora]);
 
   useEffect(() => {
     setEditado(false);

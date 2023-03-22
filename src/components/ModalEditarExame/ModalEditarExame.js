@@ -71,8 +71,12 @@ function ModalEditarExame(props) {
 
   useEffect(() => {
     setandoNomeConsultorioPorId();
-    setandoDataEHora();
   }, [exame]);
+
+  useEffect(() => {
+    setandoDataEHora();
+  }, [exame.dataHora]);
+  
 
   useEffect(() => {
     setEditado(false);
