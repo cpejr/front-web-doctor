@@ -93,7 +93,7 @@ function EdicaoHome() {
     }
     setImgAtual(posicao);
   }
-  
+
   async function atualizandoDados() {
     setCarregando(true);
 
@@ -127,13 +127,13 @@ function EdicaoHome() {
       );
       setCarregando(false);
       document.location.reload(true);
-    } 
+    }
 
-    if( houveAlteracao === true || alterouCarrossel === true) {
+    if (houveAlteracao === true || alterouCarrossel === true) {
       toast.success("Página Home Editada Com Sucesso!");
       history.push("/web/edicaohome");
       document.location.reload(true);
-    }else
+    } else
       toast.error("Altere algum dado!");
   }
   function cancelarEdicaoHome() {
@@ -200,7 +200,7 @@ function EdicaoHome() {
         setImg3(url);
         setCarregandoImg(false);
       });
-    } 
+    }
   }
 
   async function setandoImagemCarrossel() {
