@@ -3,38 +3,17 @@ import { Input } from "antd";
 import { Cores, Fontes } from "../../variaveis";
 const { TextArea } = Input;
 
-export const Container = styled.div`
+export const Caixa = styled.div`
   display: flex;
+  flex-direction: row;
+  justify-content: center;
   width: 100%;
   height: 100%;
-`;
 
-export const InfoEsquerdaEDireita = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  gap: 8px;
-
-  @media (max-width: 910px) {
-    width: 100%;
-    padding: 0%;
+  @media (max-width: 900px) {
+    flex-direction: column;
+    padding: 5% 10% 5% 10%;
   }
-
-  @media (max-width: 560px) {
-    width: 100%;
-    padding: 5%;
-  }
-
-`;
-
-export const CaixaLoader = styled.div`
-   width: calc(98% - 50px);
-   display: flex;
-   justify-content: center;
-   align-items: center;
 `;
 
 export const InfoEsquerda = styled.div`
@@ -42,63 +21,79 @@ export const InfoEsquerda = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
-  width: 100%;
+  width: 50%;
   height: 100%;
-  padding: 5%;
-  gap: 10px;
-  margin-top: 4%;
+  min-height: 80vh;
+  padding: 10%;
 
-  @media (max-width: 910px) {
+  @media (max-width: 900px) {
     width: 100%;
+    min-height: 0;
+  }
+`;
+
+export const InfoDireita = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50%;
+  height: 100%;
+  min-height: 80vh;
+  padding: 5%;
+  justify-content: space-between;
+
+  @media (max-width: 900px) {
+    width: 100%;
+    min-height: 0;
   }
 `;
 
 export const Usuario = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   width: 100%;
-  height: auto;
-  padding: 2%;
-  border-color: ${Cores.azul};
+  height: 60px;
+  padding: 0% 1% 0% 1%;
+  border-color: ${Cores.preto};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10%;
+  overflow: auto;
+  min-height:60px;
   
+  ::-webkit-scrollbar {
+    width: 0px;
+  }
 
   @media (max-width: 500px) {
     flex-direction: column;
-    height: auto;
+    height: 70px;
   }
 `;
-
 
 export const Imagem = styled.img`
   justify-content: center;
   object-fit: fill;
-  width: 50px;
+  width: 20%;
+  width: 40px;
   display: flex;
-
-  @media (max-width: 500px) {
-    display: none;
-  }
 `;
 
 export const Nome = styled.div`
-  width: calc(98% - 50px);
+  width: 40%;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   font-family: ${Fontes.barlow};
   font-weight: 400;
-  font-size: 1.2em;
+  font-size: 1.4em;
   color: ${Cores.azulEscuro};
-  text-align: center;
-  
 
   @media (max-width: 500px) {
-    width: 100%;
+    width: 50%;
     font-size: 1.1em;
     justify-content: center;
     text-align: center;
@@ -122,22 +117,20 @@ export const NomePaciente = styled.div`
 
 export const TipoAgendamento = styled.div`
   display: flex;
-  padding: 2%;
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  margin-top:18%;
-  margin-bottom:20%;
-  @media (max-width: 910px){
-    margin-top: 2%;
+
+  @media(max-width: 320px){
+    margin-bottom:10%;
   }
+
   @media (max-width: 620px){
-    height: auto;
+    height: 25%;
     width: 100%;
   }
   @media (max-width: 560px){
-    height: auto;
     flex-wrap: nowrap;
   }
 `;
@@ -173,12 +166,59 @@ export const TextAreaDescricao = styled(TextArea)`
   border-color: ${Cores.preto};
   border-width: 1px;
   color: ${Cores.preto};
+  margin-top: 100%;
+  margin-right:35%;
   ::placeholder {
     color: ${Cores.preto};
   }
 `;
 
+export const DoisSelect = styled.h3`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  font-family: ${Fontes.barlow};
+  font-size: 1em;
+  margin-bottom: 0;
 
+  @media (max-width: 560px) {
+    flex-direction: column;
+  }
+  @media (max-width: 1260px) and (min-width: 400px) {
+    flex-direction: column;
+    height: 200px;
+  }
+  @media (max-width: 400px) {
+    height: 180px;
+  }
+`;
+export const TresSelect = styled.h3`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  font-family: ${Fontes.barlow};
+  font-size: 1em;
+  @media(max-width: 320px){
+    margin-top: -50%;
+    margin-bottom: -20%;
+  }
+
+  @media (max-width: 1260px) and (min-width: 400px) {
+    flex-direction: column;
+    height: 160px;
+  }
+  @media (max-width: 400px) {
+    height: 180px;
+  }
+  @media(max-width: 375px) {
+    margin-top: -35%;
+    margin-bottom: -20%;
+  }
+`;
 
 export const Select = styled.select`
   border-color: ${Cores.preto};
@@ -192,14 +232,76 @@ export const TamanhoInput = styled.div`
   justify-content: center;
   width: 40%;
   height: 40px;
-  @media  (max-width: 601px) and (min-width: 560px) {
+
+  @media  (max-width: 601px) {
     margin-bottom: 5%;
   }
   @media (max-width: 560px) {
     width: 100%;
+  }
+  @media (max-width: 1260px) and (min-width: 561px) {
+    width: 90%;
+  }
+`;
+
+export const InputConsultorio = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 40%;
+  height: 40px;
+  margin-top: 5%;
+  
+  @media (max-width: 1717px) {
     margin-bottom: 5%;
   }
-  @media (max-width: 1260px) and (min-width: 800px) {
+  @media (max-width: 560px) {
+    width: 100%;
+  }
+  @media (max-width: 1260px) and (min-width: 400px) {
+    width: 90%;
+    margin-bottom: 5%;
+  }
+`;
+
+export const ContainerDuracaoConsulta = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 40%;
+  height: 40px;
+  @media (max-width: 1622px) {
+    margin-bottom: 5%;
+  }
+  @media  (max-width: 763px) and (min-width: 697px) {
+    margin-bottom: 9%;
+  }
+  @media (max-width: 560px) {
+    width: 100%;
+  }
+  @media (max-width: 1260px) and (min-width: 400px) {
+    width: 90%;
+    margin-bottom: 5%;
+  }
+`;
+
+export const ContainerHorario = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  justify-content: center;
+  width: 40%;
+  height: 100px;
+
+  @media (max-width: 1470px) {
+    margin-bottom: 5%;
+  }
+  @media (max-width: 560px) {
+    width: 100%;
+  }
+  @media (max-width: 1260px) and (min-width: 561px) {
     width: 90%;
     margin-bottom: 5%;
   }
@@ -207,7 +309,7 @@ export const TamanhoInput = styled.div`
 
 export const InputData = styled.input`
   width: 100%;
-  height: 35px;
+  height: 36px;
   color: ${Cores.preto};
   font-family: ${Fontes.barlow};
   font-weight: 500;
@@ -217,19 +319,7 @@ export const InputData = styled.input`
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
-  border-color: ${(props) => {
-    let cor;
-    if (!props.borderColor) {
-      if(props.camposVazios){
-        cor = Cores.vermelho;
-      } else {
-        cor = Cores.azul;
-      }
-    } else {
-      cor = props.borderColor;
-    }
-    return cor;
-  }};
+  border-color: ${Cores.azul};
 `;
 
 export const InputHora = styled(Input)`
@@ -245,20 +335,8 @@ export const InputHora = styled(Input)`
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
-  border-color: ${(props) => {
-    let cor;
-    if (!props.borderColor) {
-      if(props.erro || props.camposVazios){
-        cor = Cores.vermelho;
-      } else {
-        cor = Cores.azul;
-      }
-    } else {
-      cor = props.borderColor;
-    }
-    return cor;
-  }};
-
+  border-color: ${Cores.azul};
+  
   ::placeholder {
     color:${Cores.preto}
   }
@@ -276,19 +354,7 @@ export const InputDuracao = styled(Input)`
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
-  border-color: ${(props) => {
-    let cor;
-    if (!props.borderColor) {
-      if(props.camposVazios){
-        cor = Cores.vermelho;
-      } else {
-        cor = Cores.azul;
-      }
-    } else {
-      cor = props.borderColor;
-    }
-    return cor;
-  }};
+  border-color: ${Cores.azul};
 
   .ant-input {
     ::placeholder {
@@ -296,8 +362,24 @@ export const InputDuracao = styled(Input)`
     }
   }
 `;
+export const CaixaLoader = styled.div`
+  width: calc(98% - 50px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
 export const TextoCaixaSelect = styled.h3`
+  font-family: ${Fontes.barlow};
+  font-weight: 500;
+  font-size: 1.1em;
+  color: ${Cores.azulEscuro};
+  display: flex;
+  justify-content: center;
+  text-align: center;
+`;
+
+export const TextoSelecioneUmaData = styled.h3`
   font-family: ${Fontes.barlow};
   font-weight: 500;
   font-size: 1.1em;
@@ -307,17 +389,37 @@ export const TextoCaixaSelect = styled.h3`
   align-items: center;
 `;
 
+export const TextoDoisSelects = styled.h3`
+  font-family: ${Fontes.barlow};
+  font-weight: 500;
+  font-size: 1.1em;
+  color: ${Cores.azulEscuro};
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  margin-right: 0%; 
+  margin-left: 0%;
+`;
 
-export const CaixaSelect = styled.div`
+export const SelecioneUmaData = styled.div`
   display: flex;
   flex-direction: column;
   align-items: start;
   justify-content: center;
   width: 90%;
-
+ 
   @media (max-width: 560px) {
     width: 100%;
   }
+  @media(max-width: 375px) {
+    margin-top: 5%;
+    margin-bottom:3%;
+  }
+  @media(max-width: 320px) {
+    margin-top: 5%;
+    margin-bottom:3%;
+  }
+  
 `;
 
 export const Rotulo = styled.div`
@@ -328,8 +430,12 @@ export const Rotulo = styled.div`
   font-weight: 400;
   font-size: 1em;
   color: ${Cores.vermelho};
+`;
 
-  @media (max-width: 400px){
-    margin-bottom: 35px;
+export const OpcoesAgendamento = styled.div`
+  width: 100%;
+ 
+  @media (max-width: 450px) {
+    width: 20%;
   }
 `;
