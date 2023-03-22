@@ -93,10 +93,10 @@ function EdicaoHome() {
     }
     setImgAtual(posicao);
   }
-
+  console.log(imgAtual)
   async function atualizandoDados() {
     setCarregando(true);
-
+    
     for (const index of indexImagens) {
       if (index === 0) {
         await managerService.updateImagemCarrossel(0, img0);
@@ -178,6 +178,7 @@ function EdicaoHome() {
       getBase64(info.file.originFileObj, (url) => {
         setImg0(url);
         setCarregandoImg(false);
+        
       });
     }
 
