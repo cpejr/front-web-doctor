@@ -22,9 +22,8 @@ import FormularioEspecifico from './pages/FormularioEspecifico';
 import Home from './pages/Home/Home';
 import CriacaoReceitas from './pages/CriacaoReceitas';
 import UploadReceita from './pages/UploadReceita';
-import EdicaoComentarios from './pages/EdicaoComentarios';
 import EdicaoIndicacoesESugestoes from './pages/EdicaoIndicacoesESugestoes/EdicaoIndicacoesESugestoes';
-import EdicaoSobreMim from  './pages/EdicaoSobreMim';
+import EdicaoSobreMim from './pages/EdicaoSobreMim';
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
   <Route
@@ -160,12 +159,12 @@ function UserHeader() {
           component={ListaUsuarios}
         />
         <RotasPrivadasMedico
-          exact 
+          exact
           path='/web/criacaoreceitas'
           component={CriacaoReceitas}
         />
         <RotasPrivadasMedico
-          exact 
+          exact
           path='/web/uploadreceita'
           component={UploadReceita}
 
@@ -186,7 +185,13 @@ function UserHeader() {
           path='/web/formularioespecifico'
           component={FormularioEspecifico}
         />
-        
+
+        <RotasPrivadas
+          exact
+          path='/web/edicaoindicacoesesugestoes'
+          component={EdicaoIndicacoesESugestoes}
+        />
+
         <RotasPrivadas exact path='/web/home' component={Home} />
         <RotasPrivadas
           component={() => <Redirect to='/web/listadeusuarios' />}
