@@ -44,7 +44,7 @@ export const requisicaoLogin = async (email, senha) => {
       toast.error('Paciente deve fazer login exclusivamente pelo App');
     } else {
       login(resposta.data.token, resposta.data.email, resposta.data.tipo);
-
+      sessionStorage.setItem('@doctorapp-Token', resposta.data.token);
       const ehMedico = resposta.data.tipo === 'MASTER';
       toast.success('Login realizado com sucesso!');
       await sleep(1500);
@@ -118,11 +118,36 @@ export const CriandoConsulta = async (consulta) => {
   return;
 };
 
+export const CriandoExame = async (exame) => {
+  await requesterService
+    .criarExame(exame)
+    .then(() => {
+      toast.success('Exame criado com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return;
+};
+
 export const UpdateConsulta = async (id_consulta, consulta) => {
   await requesterService
     .updateConsulta(id_consulta, consulta)
     .then(() => {
       toast.success('Consulta atualizada com sucesso!');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return;
+};
+export const UpdateExame = async (id_exame, exame) => {
+  await requesterService
+    .updateExameMarcado(id_exame, exame)
+    .then(() => {
+      toast.success("Exame atualizado com sucesso!");
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -261,12 +286,12 @@ export const GetDadosUsuarioPorToken = async (token_usuario) => {
   return { dadosUsuario };
 };
 
-export const GetDadosConsultorios = async () => {
+export const GetDadosConsultorios = async (filtro) => {
   let dadosConsultorios = {};
   let dadosEndereco = {};
 
   await requesterService
-    .requisicaoDadosConsultorios()
+    .requisicaoDadosConsultorios(filtro)
     .then((res) => {
       dadosConsultorios = res.data;
     })
@@ -284,6 +309,22 @@ export const GetDadosConsultorios = async () => {
     });
   return { dadosEndereco, dadosConsultorios };
 };
+
+export const GetDadosExames = async () => {
+  let dadosExames = {};
+
+  await requesterService
+    .requisicaoDadosExames()
+    .then((res) => {
+      dadosExames = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return dadosExames;
+};
+
 
 export const GetConsultorioPorId = async (id) => {
   let dadosConsultorio = {};
@@ -571,6 +612,21 @@ export const GetRespostaFormularioIdUsuario = async (id_usuario) => {
 
   await requesterService
     .requisicaoRespostaFormularioIdUsuario(id_usuario)
+
+    .then((res) => {
+      dadosResposta = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosResposta;
+};
+
+export const GetRespostaReceitasIdUsuario = async (id_usuario) => {
+  let dadosResposta = {};
+
+  await requesterService
+    .requisicaoRespostaReceitaIdUsuario(id_usuario)
 
     .then((res) => {
       dadosResposta = res.data;
@@ -1101,6 +1157,34 @@ export const dispostivoById = async (id) => {
   return dispositivo;
 };
 
+export const TokenById = async (id_usuario) => {
+  let dispositivo = {};
+
+  await requesterService
+    .TokenById(id_usuario)
+    .then((res) => {
+      dispositivo = res.data
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dispositivo;
+};
+
+export const getTokenDispositivo = async (token_dispositivo) => {
+  let token = {};
+
+  await requesterService
+    .getTokenDispositivo(token_dispositivo)
+    .then((res) => {
+      token = res.data
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return token;
+};
+
 export const GetHomes = async () => {
   let dadosHomes = {};
 
@@ -1130,4 +1214,55 @@ export const enviarArquivoMensagem = async (file) => {
       return;
     });
   return id;
+};
+
+
+export const requisicaoSobreMimDados = async () => {
+  let sobreMimDados = {};
+  await requesterService
+    .requisicaoSobreMimDados()
+    .then((res) => {
+      sobreMimDados = res.data[0];
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return sobreMimDados;
+};
+
+export const criarSobreMim = async (dados) => {
+  let sobreMimDados = {}
+  await requesterService
+    .criarSobreMim(dados)
+    .then((res) => {
+      toast.success('Dados da página "Sobre mim" criados com sucesso!');
+      sobreMimDados = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return sobreMimDados;
+};
+
+export const atualizarSobreMim = async (id, dados) => {
+  await requesterService
+    .atualizarSobreMim(id, dados)
+    .then(() => {
+      toast.success('Dados da página "Sobre mim" atualizados com sucesso!');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+};
+
+export const deletarSobreMim = async (id) => {
+  await requesterService
+    .deletarSobreMim(id)
+    .then(() => {
+      toast.success('Dados da página "Sobre mim" deletados com sucesso!');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
 };

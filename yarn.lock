@@ -1637,6 +1637,11 @@
   version "2.11.5"
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.11.5.tgz#db5a11bf66bdab39569719555b0f76e138d7bd64"
 
+"@react-native-community/checkbox@^0.5.14":
+  version "0.5.14"
+  resolved "https://registry.yarnpkg.com/@react-native-community/checkbox/-/checkbox-0.5.14.tgz#54269f23ba966dbc6593ac121ad475c4c562d6c0"
+  integrity sha512-UmGf3wBpoCXLmVRKIDZyzOG+QR1fOhm0FOw4KzxHTCXpsBvZgIn5wbJ+MWk4io5RohQdY8GSX2MYFmkPJeJpeA==
+
 "@react-pdf/fns@2.0.0":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@react-pdf/fns/-/fns-2.0.0.tgz#fb7fc9373fdb74428b6af6949b3c67fb4b4e23e4"
@@ -7831,6 +7836,11 @@ react-beautiful-dnd@^13.0.0:
     react-redux "^7.2.0"
     redux "^4.0.4"
     use-memo-one "^1.1.1"
+
+react-checkbox-group@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/react-checkbox-group/-/react-checkbox-group-5.0.2.tgz#ccf6d5bd36d549727f8bc2c44b011224e4599450"
+  integrity sha512-iNnKCwVNNlsj6DXIzPO9qx5BcwPf3lXV0u8UW6YcsVDwlS2AC+bJXq76z2uwbtWZbCIZHzm2mxMMj4Bzm3B+lw==
 
 react-dev-utils@^12.0.0:
   version "12.0.0"
