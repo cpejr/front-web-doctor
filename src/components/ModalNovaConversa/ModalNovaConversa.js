@@ -18,11 +18,11 @@ import Button from '../../styles/Button';
 import { ChatContext } from '../../contexts/ChatContext';
 
 const camposVaziosReferencia = {
-	id_usuario: false,
+  id_usuario: false,
 };
 
 const estadoIncial = {
-	id_usuario: "",
+  id_usuario: "",
 };
 
 function ModalNovaConversa({ setModalAdicionar }) {
@@ -40,11 +40,11 @@ function ModalNovaConversa({ setModalAdicionar }) {
   function preenchendoDados(value) {
     setSelecionaUsuarioId(value)
 
-		if (camposVazios.id_usuario)
-			setCamposVazios({ id_usuario: false });
+    if (camposVazios.id_usuario)
+      setCamposVazios({ id_usuario: false });
 
-		setEstado({ id_usuario: value });
-	}
+    setEstado({ id_usuario: value });
+  }
 
   useEffect(() => {
     if (!usuarioId) return;
@@ -80,17 +80,17 @@ function ModalNovaConversa({ setModalAdicionar }) {
     e.preventDefault();
 
     const camposVaziosAtual = {
-			id_usuario: !estado.id_usuario,
-		};
+      id_usuario: !estado.id_usuario,
+    };
 
-		setCamposVazios(camposVaziosAtual);
-  
-		if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
-			toast.warn("Preencha todos os campos");
-			return;
-		}
+    setCamposVazios(camposVaziosAtual);
 
-		setCarregando(true);
+    if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
+      toast.warn("Preencha todos os campos");
+      return;
+    }
+
+    setCarregando(true);
 
     const usuarioSelecionadoDados = usuarios.find(
       (usuario) => usuario.id === selecionaUsuarioId
@@ -132,6 +132,17 @@ function ModalNovaConversa({ setModalAdicionar }) {
 
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
+  const ordenarUsuarios = (a, b) => {
+    var nome1 = a.nome.toUpperCase();
+    var nome2 = b.nome.toUpperCase();
+
+    if (nome1 > nome2) {
+      return 1;
+    } else {
+      return -1;
+    };
+  }
+
   return (
     <>
       <ContainerModalNovaConversa>
@@ -149,8 +160,11 @@ function ModalNovaConversa({ setModalAdicionar }) {
             <Select.Option value='' disabled selected>
               Nome do usuário
             </Select.Option>
-            {usuarios.map((usuario, idx) => (
-              <Select.Option key={idx} value={usuario.id} color='red'>
+            {usuarios?.sort(ordenarUsuarios).map((usuario, idx) => (
+              <Select.Option
+                key={idx}
+                value={usuario.id}
+                color='red'>
                 {usuario.nome}
               </Select.Option>
             ))}
