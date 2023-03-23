@@ -42,7 +42,7 @@ function EdicaoHome() {
   const [carregando, setCarregando] = useState(true);
   const [houveAlteracao, setHouveAlteracao] = useState(false);
   const [alterouCarrossel, setAlterouCarrossel] = useState(false);
-
+  const [reacarregaPagina, setRecarregaPagina] = useState(false);
   const [imgAtual, setImgAtual] = useState(0);
   const [img0, setImg0] = useState("");
   const [img1, setImg1] = useState("");
@@ -93,10 +93,10 @@ function EdicaoHome() {
     }
     setImgAtual(posicao);
   }
-  console.log(imgAtual)
   async function atualizandoDados() {
     setCarregando(true);
     
+
     for (const index of indexImagens) {
       if (index === 0) {
         await managerService.updateImagemCarrossel(0, img0);
@@ -130,12 +130,19 @@ function EdicaoHome() {
     }
 
     if (houveAlteracao === true || alterouCarrossel === true) {
-      toast.success("Página Home Editada Com Sucesso!");
-      history.push("/web/edicaohome");
-      document.location.reload(true);
-    } else
+        toast.success("Página Home Editada Com Sucesso!");
+        setRecarregaPagina(true);
+    } else {
       toast.error("Altere algum dado!");
+    }
+
+    setTimeout(() => {
+      document.location.reload(true);
+      setRecarregaPagina(false);
+    }, 4500);
+
   }
+  
   function cancelarEdicaoHome() {
     history.push("/web/edicaohome");
     document.location.reload(true);
@@ -178,7 +185,7 @@ function EdicaoHome() {
       getBase64(info.file.originFileObj, (url) => {
         setImg0(url);
         setCarregandoImg(false);
-        
+
       });
     }
 
@@ -503,10 +510,10 @@ function EdicaoHome() {
               )}
             </Button>
             <Button
-              backgroundColor={Cores.azulClaro}
+              backgroundColor={Cores.vermelhoClaro}
               borderRadius="3px"
               borderWidth="3px"
-              borderColor={Cores.azul}
+              borderColor={Cores.vermelho}
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
               color={Cores.preto}
               fontSize="1.2em"
@@ -515,6 +522,7 @@ function EdicaoHome() {
               marginTop="0%"
               marginLeft="0%"
               fontSizeMedia950="0.9em"
+              fontSizeMedia361="0.9em"
               onClick={cancelarEdicaoHome}
             >
               Cancelar Alterações
