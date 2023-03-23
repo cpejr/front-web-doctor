@@ -154,21 +154,37 @@ function EdicaoIndicacoesESugestoes(props) {
       toast.warn("Selecione uma especialidade ao lado para alterar!");
 
   }
+  async function pegandoDados() {
+    setCarregando(true);
+    await sleep(1500);
+    console.log(idIndicado);
+    const resposta = await managerService.GetMedicosIndicadosPorID(idIndicado);
+    await sleep(1500);
+    console.log(resposta.nome);
+    setMedicosIndicados(resposta);
+    setCarregando(false);
+  }
 
+  useEffect(() => {
+    pegandoDados();
+  }, []);
   async function abrirModalIndicacao() {
     setModalIndicacao(true);
   }
 
   async function fecharModalAdicionarIndicacao() {
     setModalAdicionarIndicacao(false);
+    pegandoDados();
   }
 
   async function fecharModalExcluirIndicacao() {
     setModalExcluirIndicacao(false);
+    pegandoDados();
   }
 
   async function fecharModalAlterarIndicacao() {
     setModalAlterarIndicacao(false);
+    pegandoDados();
   }
 
   async function fecharModalIndicacao() {

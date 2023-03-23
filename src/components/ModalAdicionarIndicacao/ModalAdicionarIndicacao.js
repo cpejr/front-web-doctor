@@ -81,13 +81,9 @@ function ModalAdicionarIndicacao(props) {
 
     await managerService.IndicandoMedicos(id, estado.nome, estado.telefone, estado.local, {
       tempo: 1500,
-      onClose: () => {
-        history.push("/web/edicaoindicacoesesugestoes");
-      },
     });
     toast.success("Indicação realizada");
     await sleep(1500);
-    window.location.reload();
     setCarregandoCriacao(false);
   }
 

@@ -40,9 +40,7 @@ function ModalExcluirIndicacao(props) {
     }else{
       await managerService.DeletarIndicao(idMedicoEscolhido);
       await sleep(1500);
-      window.location.reload();
       setCarregando(false);
-      history.push("/web/edicaoindicacoesesugestoes");
     }
     
 

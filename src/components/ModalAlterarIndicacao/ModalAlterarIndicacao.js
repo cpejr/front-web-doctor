@@ -18,6 +18,11 @@ function ModalAlterarIndicacao(props) {
   const [carregandoCriacao, setCarregandoCriacao] = useState(false);
   const [medicoEspecifico, setMedicoEspecifico] = useState([{}]);
   const [nenhumMedicoSelecionado, setnenhumMedicoSelecionado] = useState(false);
+  const [nenhumDadoEscolhido, setNenhumDadoEscolhido] = useState(true);
+  const [nome, setNome] = useState();
+  const [telefone, setTelefone] = useState();
+  const [local_atendimento, setLocalAtendimento] = useState();
+
   const history = useHistory();
   let ID = {};
   const [estado, setEstado] = useState({
@@ -43,6 +48,7 @@ function ModalAlterarIndicacao(props) {
       setErro({ ...erro, [name]: true });
     } else {
       setErro({ ...erro, [name]: false });
+      setNenhumDadoEscolhido(false);
     }
     setEstado({ ...estado, [name]: value });
 
@@ -51,16 +57,23 @@ function ModalAlterarIndicacao(props) {
         ...estado,
         [name]: apenasLetras(value),
       });
+      setNenhumDadoEscolhido(false);
+      setNome(value);
     }
 
     if (name === "telefone") {
       setEstado({ ...estado, [name]: telefone(value) });
+      setNenhumDadoEscolhido(false);
+      setTelefone(value);
     }
     if (name === "local_atendimento") {
       setEstado({
         ...estado,
         [name]: apenasLetras(value),
       });
+      setNenhumDadoEscolhido(false);
+      setLocalAtendimento(value);
+
     }
   }
   async function buscarMedicosporId() {
@@ -83,8 +96,14 @@ function ModalAlterarIndicacao(props) {
 
   async function alterar(e) {
     e.preventDefault();
+    
+    console.log(nenhumDadoEscolhido);
     if(nenhumMedicoSelecionado === false){
-      toast.warn("Selecione um médico para alterar seus dados");
+      toast.warn("Selecione algum um médico para alterar seus dados");
+      return;
+    }
+    if (nenhumDadoEscolhido === true) {
+      toast.warn("Edite algum campo");
       return;
     }
     if (!estado.nome && !estado.telefone && estado.local_atendimento) {
@@ -124,10 +143,12 @@ function ModalAlterarIndicacao(props) {
       erro.nome = true;
       erro.telefone = true;
       erro.local_atendimento = true;
+      
     }
+    
     setCamposVazios({ ...camposVazios, ...erro });
     if (!_.isEqual(camposVazios, camposVaziosReferencia)) {
-      toast.warn("Preencha algum campo");
+      toast.warn("Edite algum campo");
       return;
     } else if (estado.telefone.length < 15) {
       toast.warn("Preencha o campo corretamente");
@@ -140,7 +161,6 @@ function ModalAlterarIndicacao(props) {
       },
     });
     await sleep(1500);
-    window.location.reload();
     setCarregandoCriacao(false);
 
 
@@ -187,7 +207,7 @@ function ModalAlterarIndicacao(props) {
           width="100%"
           paddingRight="2%"
           onChange={preenchendoDados}
-          erro={estado.nome}
+          value ={nome}
           name="nome"
         ></Input>
       </ContainerInputs>
@@ -202,8 +222,8 @@ function ModalAlterarIndicacao(props) {
           width="100%"
           paddingRight="2%"
           onChange={preenchendoDados}
-          erro={erro.telefone}
           name="telefone"
+          value={telefone}
         ></Input>
       </ContainerInputs>
       <ContainerInputs>
@@ -217,7 +237,7 @@ function ModalAlterarIndicacao(props) {
           width="100%"
           paddingRight="2%"
           onChange={preenchendoDados}
-          erro={estado.local_atendimento}
+          value={local_atendimento}
           name="local_atendimento"
         ></Input>
       </ContainerInputs>
