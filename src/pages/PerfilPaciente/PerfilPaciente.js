@@ -104,7 +104,7 @@ function PerfilPaciente(props) {
   const [formularioEspecifico, setFormularioEspecifico] = useState({});
   const [formularios, setFormularios] = useState();
   const antIcon = (
-    <LoadingOutlined style={{ fontSize: 42, color: Cores.azul }} spin />
+    <LoadingOutlined style={{ fontSize: 25, color: Cores.azulEscuro }} spin />
   );
   
   const margemBotoes = tipoUsuario ? "0px" : "8%";
@@ -139,6 +139,8 @@ function PerfilPaciente(props) {
     setTelefoneCuidador(resposta.dadosUsuario.telefone_cuidador);
     setConvenio(resposta.dadosUsuario.convenio);
     setCarregando(false);
+
+
 
     if (resposta.dadosUsuario.tipo === "PACIENTE") {
       setTipoUsuario(true);
@@ -204,9 +206,12 @@ function PerfilPaciente(props) {
     }
   }
 
+
+
   async function setandoTipoExame() {
     setTipoAgendamento("Exame");
     setModalAgendamento(true);
+
   }
 
   async function setandoTipoConsulta() {
@@ -262,6 +267,29 @@ function PerfilPaciente(props) {
     const FORMULARIO_RESPONDIDO = true;
 
     return statusForm === FORMULARIO_RESPONDIDO;
+  }
+
+  async function enviarLembrete(respostaSelecionada) {
+    setCarregando(true)
+    const Token =
+      await managerService.TokenById(respostaSelecionada.id_usuario);
+    for (var i = 0; i <= Token.length - 1; i++) {
+      const Message = {
+        to: Token[i].token_dispositivo.replace("expo/", ''),
+        sound: 'default',
+        title: 'Doctor App',
+        body: "Você tem um novo formulário enviado!",
+      };
+
+      fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        body: JSON.stringify(Message),
+      }
+      );
+    }
+    toast.success('Notificação encaminhada para o paciente.');
+    await sleep(1000);
+    setCarregando(false);
   }
 
   async function baixarPdf(receitaPdf) {
@@ -610,77 +638,61 @@ function PerfilPaciente(props) {
                   <Titulo>FORMULÁRIOS</Titulo>
                   {respostas?.map((value) => (
                     <>
-                      {deveMostrarFormularios(
-                        value.id_formulario,
-                        value.status
-                      ) && (
-                          <Formulario>
-                            <DadosFormulario>
-                              {tipoUsuarioLogado === "MASTER" ||
-                                value.visualizacao_secretaria === true ? (
-                                <TituloFormulario
-                                  cursor="pointer"
-                                  textDecoration="underline"
-                                  onClick={() =>
-                                    abrindoModalFormulario(
-                                      value.id,
-                                      value.perguntas,
-                                      value.titulo
-                                    )
-                                  }
-                                >
-                                  {value.titulo}
-                                </TituloFormulario>
-                              ) : (
-                                <TituloFormulario
-                                  cursor="null"
-                                  textDecoration="none"
-                                >
-                                  {value.titulo}
-                                </TituloFormulario>
-                              )}
-
-                              <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
-                              <UrgenciaFormulario>
-                                <>Urgência: </>
-                                {estrelaPreenchida(value.urgencia)}
-                                {estrelaNaoPreenchida(3 - value.urgencia)}
-                              </UrgenciaFormulario>
-                            </DadosFormulario>
-                            {value.status === true ? (
-                              <CaixaBaixarPdf key={value?.id}>
-                                <></>
-                                {tipoUsuarioLogado === "MASTER" &&
-                                  <Button
-                                    backgroundColor={Cores.lilas[2]}
-                                    color={Cores.azulEscuro}
-                                    fontWeight="bold"
-                                    borderColor={Cores.azulEscuro}
-                                    height="40px"
-                                    width="25%"
-                                    onClick={() => salvaWord(value)}
-                                  >
-                                    BAIXAR DOCX
-                                  </Button>
+                      {deveMostrarFormularios(value.id_formulario, value.status) && (
+                        <Formulario>
+                          <DadosFormulario>
+                            {tipoUsuarioLogado === "MASTER" ? (
+                              <TituloFormulario
+                                cursor="pointer"
+                                textDecoration="underline"
+                                onClick={() =>
+                                  abrindoModalFormulario(
+                                    value.id,
+                                    value.perguntas,
+                                    value.titulo
+                                  )
                                 }
-                              </CaixaBaixarPdf>
+                              >
+                                {value.titulo}
+                              </TituloFormulario>
+
                             ) : (
-                              <RespostaPendente>
-                                <Resposta>Resposta Pendente</Resposta>
-                                <Button
-                                  backgroundColor="green"
-                                  color={Cores.azulEscuro}
-                                  fontWeight="bold"
-                                  borderColor={Cores.azulEscuro}
-                                  height="40px"
-                                  width="25%"
-                                >
-                                  ENVIAR LEMBRETE
-                                </Button>
-                              </RespostaPendente>
+                              <TituloFormulario
+                                cursor="null"
+                                textDecoration="none"
+
+                              >
+                                {value.titulo}
+                              </TituloFormulario>
                             )}
-                          </Formulario>
-                        )}
+
+                            <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
+                            <UrgenciaFormulario>
+                              <>Urgência: </>
+                              {estrelaPreenchida(value.urgencia)}
+                              {estrelaNaoPreenchida(3 - value.urgencia)}
+                            </UrgenciaFormulario>
+                          </DadosFormulario>
+                          {value.status === true ? (
+                            <></>
+                          ) : (
+                            <RespostaPendente>
+                              <Resposta>Resposta Pendente</Resposta>
+                              <Button
+                                backgroundColor={Cores.cinza[7]}
+                                color={Cores.azulEscuro}
+                                fontWeight="bold"
+                                borderColor={Cores.azulEscuro}
+                                height="40px"
+                                width="25%"
+                                onClick={() => enviarLembrete(value)}
+                              >
+                                ENVIAR LEMBRETE
+                              </Button>
+                            </RespostaPendente>
+                          )}
+                        </Formulario>
+                      )}
                     </>
                   ))}
                 </>
@@ -745,6 +757,7 @@ function PerfilPaciente(props) {
           id_usuario={usuario.id}
           email={usuario.email}
           tipoAgendamento={tipoAgendamento}
+
         />
       </Modal>
       <Modal
