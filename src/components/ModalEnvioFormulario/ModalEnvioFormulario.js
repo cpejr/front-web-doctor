@@ -83,6 +83,17 @@ function ModalEnvioFormulario(props) {
     setIdUsuario(e.target.value);
   }
 
+  const ordenarusuarios = (a, b) => {
+		var nome1 = a.nome.toUpperCase();
+		var nome2 = b.nome.toUpperCase();
+	
+		  if (nome1 > nome2) {
+			return 1;
+		  } else {
+			return -1;
+		  };
+    }
+    
   return (
     <>
       <ContainerModalCodigo>
@@ -96,7 +107,7 @@ function ModalEnvioFormulario(props) {
             color={Cores.preto}
             onChange={preenchendoDados}
           >
-            {props.usuarios?.map((valor) => (
+            {props.usuarios?.sort(ordenarusuarios).map((valor) => (
               <>
                 <option value="" disabled selected>
                   Escolha o Paciente:

@@ -220,6 +220,17 @@ function CriacaoReceitas() {
 		},
 	});
 
+	const ordenarusuarios = (a, b) => {
+		var nome1 = a.nome.toUpperCase();
+		var nome2 = b.nome.toUpperCase();
+	
+		  if (nome1 > nome2) {
+			return 1;
+		  } else {
+			return -1;
+		  };
+	}
+
 	return (
 		<ContainerCriacaoReceitas>
 			<CardCriacaoReceitas>
@@ -258,7 +269,7 @@ function CriacaoReceitas() {
 							<option value="" disabled selected>
 								Nome do paciente
 							</option>
-							{usuarios.map((usuario) => (
+							{usuarios.sort(ordenarusuarios).map((usuario) => (
 								<option key={usuario.id} value={usuario.id} color="red">
 									{usuario.nome}
 								</option>
@@ -284,11 +295,11 @@ function CriacaoReceitas() {
 							<option value="">
 								Tipo da Assinatura
 							</option>
-							<option value="sem">
-								Sem Assinatura
-							</option>
 							<option value="auto">
 								Assinatura Automática
+							</option>
+							<option value="sem">
+								Sem Assinatura
 							</option>
 
 						</Select>
