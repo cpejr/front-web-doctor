@@ -143,6 +143,20 @@ function ModalNovaConversa({ setModalAdicionar }) {
     };
   }
 
+  function maiusculaMinuscula (match, input) {
+    return match
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .includes(
+        input
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .trim()
+      );
+  }
+
   return (
     <>
       <ContainerModalNovaConversa>
@@ -156,6 +170,10 @@ function ModalNovaConversa({ setModalAdicionar }) {
             size='large'
             name='id_usuario'
             placeholder='Nome do usuário'
+            showSearch
+            filterOption={(inputValue, option) =>
+              maiusculaMinuscula(option.children, inputValue)
+            }
           >
             <Select.Option value='' disabled selected>
               Nome do usuário
