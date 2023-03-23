@@ -205,6 +205,14 @@ export const GetDadosPessoais = async () => {
     .catch((error) => {
       requisicaoErro(error);
     });
+    dadosUsuario.sort(function(a, b){
+      var nomeA = a.nome.toLowerCase(), nomeB = b.nome.toLowerCase();
+      if (nomeA < nomeB) 
+       return -1;
+      if (nomeA > nomeB)
+       return 1;
+      return 0;
+     });
   return dadosUsuario;
 };
 export const GetDadosConsultasExamesMarcados = async (id_usuario) => {

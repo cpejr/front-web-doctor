@@ -141,8 +141,24 @@ function ModalAgendamento(props) {
     pegandoDados();
   }
 
-  async function excluirExameMarcado(id) {
-    await managerService.DeletarExameMarcado(id);
+  async function excluirExameMarcado(exame) {
+    await managerService.DeletarExameMarcado(exame.id);
+    const Token =
+    await managerService.TokenById(exame.id_usuario);
+    for (var i = 0; i <= Token.length - 1; i++) {
+      const Message = {
+        to: Token[i].token_dispositivo.replace("expo/", ''),
+        sound: 'default',
+        title: 'Doctor App',
+        body: 'Seu exame foi desmarcado!',
+
+      };
+      fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        body: JSON.stringify(Message),
+      }
+      );
+    }
     pegandoDados();
   }
 
@@ -285,7 +301,7 @@ function ModalAgendamento(props) {
                           fontSizeMedia="0.8em"
                           fontSizeMedia950="1em"
                           heightMedia560="30px"
-                          onClick={() => excluirExameMarcado(value.id)}
+                          onClick={() => excluirExameMarcado(value)}
                         >
                           EXCLUIR
                         </Button>

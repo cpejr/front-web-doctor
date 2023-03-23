@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Checkbox, Tooltip } from "antd";
+import { Checkbox, message, Tooltip } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import { Row, Radio } from "antd";
@@ -45,6 +45,7 @@ import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalAgendamentoConsulta(props) {
   const [usuario, setUsuario] = useState({});
+  const [clicadoCheckbox, setclicadoCheckbox] = useState(false);
   const [idUsuario, setIdUsuario] = useState({});
   const [usuarios, setUsuarios] = useState([]);
   const [consultorios, setConsultorios] = useState([]);
@@ -151,6 +152,10 @@ function ModalAgendamentoConsulta(props) {
     }
   }
 
+  function setandoMsg(tipo, data_hora, duracao_em_minutos) {
+    return("Você tem uma consulta marcada!\nTipo: " + tipo + "\nData e Hora: "+ data_hora.slice(8, 10) + "/" + data_hora.slice(5, 7) + "/" + data_hora.slice(0, 4) + " às " + data_hora.slice(11, 16)+ "\nDuração da consulta: " + duracao_em_minutos + " minutos.");
+  }
+
   function setandoDiaAtual() {
     let data = new Date();
     let dia = data.getDate();
@@ -178,6 +183,10 @@ function ModalAgendamentoConsulta(props) {
   useEffect(() => {
     setandoDataMinima();
   }, [hoje]);
+  
+  const handleChange = () =>{
+    setclicadoCheckbox(!clicadoCheckbox)
+  }
 
   function setandoHoraAtual() {
     let horario = new Date();
@@ -234,7 +243,32 @@ function ModalAgendamentoConsulta(props) {
     }
     setCarregandoCadastro(true);
     formatacaoDataHora();
+    let msg = setandoMsg(consulta.tipo, consulta.data_hora, consulta.duracao_em_minutos);
     await managerService.CriandoConsulta(consulta);
+    if(clicadoCheckbox === true){
+      
+      const Token = 
+        await managerService.TokenById(consulta.id_usuario);
+        if(Token.length === 0){
+          toast.error('Nenhum celular cadastrado a esse paciente');
+        }
+        for(var i = 0; i <= Token.length - 1; i++){
+          const Message = {
+            to: Token[i].token_dispositivo.replace("expo/", ''),
+            sound: 'default',
+            title: 'Doctor App', 
+            body: msg,
+            
+          };
+          fetch('https://exp.host/--/api/v2/push/send',{
+              method: 'POST',
+              body: JSON.stringify(Message),
+           }
+          );
+          toast.success('Notificação encaminhada para o paciente.');
+        }
+      
+    }
     setCarregandoCadastro(false);
     await sleep(1500);
     props.fechandoModal();
@@ -474,7 +508,7 @@ function ModalAgendamentoConsulta(props) {
             )}
           </ContainerDuracaoConsulta>
         </DoisSelect>
-        <Checkbox>
+        <Checkbox onChange={handleChange}>
           <TextoCheckbox>Notificar paciente</TextoCheckbox>
         </Checkbox>
         <Button

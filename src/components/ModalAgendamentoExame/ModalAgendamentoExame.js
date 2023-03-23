@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Tooltip } from "antd";
+import { Tooltip,Checkbox } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
 import logoGuilherme from "../../assets/logoGuilherme.png";
+import { toast } from "react-toastify";
 import { Row, Radio } from "antd";
 import _ from "lodash";
 import {
@@ -27,6 +28,7 @@ import {
   NomePaciente,
   CaixaLoader,
   OpcoesAgendamento,
+  TextoCheckbox,
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
@@ -55,6 +57,7 @@ function ModalAgendamentoExame(props) {
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [hoje, setHoje] = useState("");
+  const [clicadoCheckbox, setclicadoCheckbox] = useState(false);
 
   moment.locale("pt-br");
   const errors = {};
@@ -141,6 +144,10 @@ function ModalAgendamentoExame(props) {
     document.getElementById("data").setAttribute("min", hoje);
   }
 
+  const handleChange = () =>{
+    setclicadoCheckbox(!clicadoCheckbox)
+  }
+
   useEffect(() => {
     setandoDiaAtual();
   }, []);
@@ -195,6 +202,11 @@ function ModalAgendamentoExame(props) {
       alert("DataHora inválida.");
     }
   }
+  
+  async function setandoMsg(tipo, data_hora) {
+    const examemarcado = await managerService.GetDadosExame(tipo)
+    return("Você tem um exame marcado!\nTipo: " + examemarcado[0].titulo + "\nData e Hora: "+ data_hora.slice(8, 10) + "/" + data_hora.slice(5, 7) + "/" + data_hora.slice(0, 4) + " às " + data_hora.slice(11, 16));
+  }
 
   async function requisicaoCriarExame() {
     if (props.abertoPeloUsuario) {
@@ -205,6 +217,31 @@ function ModalAgendamentoExame(props) {
     setCarregandoCadastro(true);
     formatacaoDataHora();
     await managerService.CriandoExame(exame);
+    console.log(JSON.stringify(exame))
+    let msg = await setandoMsg(exame.id_exame, exame.data_hora);
+    if(clicadoCheckbox === true){
+      
+      const Token = 
+        await managerService.TokenById(exame.id_usuario);
+        if(Token.length === 0){
+          toast.error('Nenhum celular cadastrado a esse paciente');
+        }
+        for(var i = 0; i <= Token.length - 1; i++){
+          const Message = {
+            to: Token[i].token_dispositivo.replace("expo/", ''),
+            sound: 'default',
+            title: 'Doctor App', 
+            body: msg,
+            
+          };
+          fetch('https://exp.host/--/api/v2/push/send',{
+              method: 'POST',
+              body: JSON.stringify(Message),
+           }
+          );
+          toast.success('Notificação encaminhada para o paciente.');
+        }
+    }
     setCarregandoCadastro(false);
     await sleep(1500);
     props.fechandoModal();
@@ -409,6 +446,9 @@ function ModalAgendamentoExame(props) {
           {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
           {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
         </ContainerHorario>
+        <Checkbox onChange={handleChange}>
+          <TextoCheckbox>Notificar paciente</TextoCheckbox>
+        </Checkbox>
         <Button
           width="80%"
           height="50px"
