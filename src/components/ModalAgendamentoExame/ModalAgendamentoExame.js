@@ -58,6 +58,11 @@ function ModalAgendamentoExame(props) {
   const [camposVazios, setCamposVazios] = useState(false);
   const [hoje, setHoje] = useState("");
   const [clicadoCheckbox, setclicadoCheckbox] = useState(false);
+  const [TipoValido, setTipoValido] = useState("black");
+  const [UsuarioValido, setUsuarioValido] = useState("black");
+  const [ConsultorioValido, setConsultorioValido] = useState("black");
+  const [DataValido, setDataValido] = useState("black");
+  const [HoraValido, setHoraValido] = useState("black");
 
   moment.locale("pt-br");
   const errors = {};
@@ -208,16 +213,27 @@ function ModalAgendamentoExame(props) {
     return("Você tem um exame marcado!\nTipo: " + examemarcado[0].titulo + "\nData e Hora: "+ data_hora.slice(8, 10) + "/" + data_hora.slice(5, 7) + "/" + data_hora.slice(0, 4) + " às " + data_hora.slice(11, 16));
   }
 
+  function ChecarseValido(){
+    let Valido = true;
+    if(String(exame.id_exame).length <= 10){setTipoValido("red"); Valido = false;}else{setTipoValido("black")}
+    if(String(exame.id_consultorio).length <= 10){setConsultorioValido("red"); Valido = false;}else{setConsultorioValido("black")}
+    if(String(exame.id_usuario).length <= 15){setUsuarioValido("red"); Valido = false;}else{setUsuarioValido("black")}
+    if(dataExame.length <= 2){setDataValido("red"); Valido = false;}else{setDataValido("black")}
+    if(hora.length <= 2){setHoraValido("red"); Valido = false;}else{setHoraValido("black")}
+    return Valido;
+  }
+
   async function requisicaoCriarExame() {
     if (props.abertoPeloUsuario) {
       exame.id_usuario = props.usuario.id;
     } else {
       exame.id_usuario = idUsuario;
     }
-    setCarregandoCadastro(true);
     formatacaoDataHora();
-    await managerService.CriandoExame(exame);
     console.log(JSON.stringify(exame))
+    if(ChecarseValido() === false){toast.error('Complete todos os campos'); return;}
+    setCarregandoCadastro(true);
+    await managerService.CriandoExame(exame);
     let msg = await setandoMsg(exame.id_exame, exame.data_hora);
     if(clicadoCheckbox === true){
       
@@ -265,7 +281,7 @@ function ModalAgendamentoExame(props) {
             )}
           </Usuario>
         ) : (
-          <Usuario>
+          <Usuario Valido={UsuarioValido}>
             <NomePaciente>
               <Select
                 style={{
@@ -303,7 +319,7 @@ function ModalAgendamentoExame(props) {
         <TipoAgendamento>
           <TextoCaixaSelect>Selecione o Tipo de Agendamento:</TextoCaixaSelect>
           <OpcoesAgendamento>
-            <Row gutter={60} justify={"space-around"}>
+            <Row gutter={60} justify={"space-around"} >
               <Radio.Group
                 defaultValue="exame"
                 bordered={false}
@@ -332,6 +348,7 @@ function ModalAgendamentoExame(props) {
             value={dataExame}
             camposVazios={camposVazios.data}
             id="data"
+            Valido={DataValido}
           />
           {camposVazios.data && <Rotulo>Selecione uma data</Rotulo>}
         </SelecioneUmaData>
@@ -348,7 +365,7 @@ function ModalAgendamentoExame(props) {
                 style={{
                   width: "100%",
                   color: "black",
-                  borderColor: "black",
+                  borderColor: TipoValido,
                   borderWidth: "1px",
                 }}
                 paddingTop="8px"
@@ -396,7 +413,7 @@ function ModalAgendamentoExame(props) {
                 style={{
                   width: "100%",
                   borderWidth: "1px",
-                  borderColor: "black",
+                  borderColor: ConsultorioValido,
                   color: "black",
                 }}
                 paddingTop="8px"
@@ -442,6 +459,7 @@ function ModalAgendamentoExame(props) {
             onChange={(e) => validacaoHorario(e.target.value, dataExame)}
             camposVazios={camposVazios.hora}
             erro={erro.hora}
+            Valido={HoraValido}
           />
           {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
           {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}

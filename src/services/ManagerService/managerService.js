@@ -205,6 +205,19 @@ export const GetDadosPessoais = async () => {
     .catch((error) => {
       requisicaoErro(error);
     });
+  return dadosUsuario;
+};
+
+export const GetDadosPessoaisAlfabetico = async () => {
+  let dadosUsuario = {};
+  await requesterService
+    .requisicaoDadosPessoais()
+    .then((res) => {
+      dadosUsuario = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
     dadosUsuario.sort(function(a, b){
       var nomeA = a.nome.toLowerCase(), nomeB = b.nome.toLowerCase();
       if (nomeA < nomeB) 
@@ -215,6 +228,7 @@ export const GetDadosPessoais = async () => {
      });
   return dadosUsuario;
 };
+
 export const GetDadosConsultasExamesMarcados = async (id_usuario) => {
   let dadosConsultas = {};
   let dadosExamesMarcados = {};

@@ -92,7 +92,7 @@ export const Usuario = styled.div`
   width: 100%;
   height: 60px;
   padding: 0% 1% 0% 1%;
-  border-color: ${Cores.preto};
+  border-color:  ${(props) => {return props.Valido}};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
@@ -327,19 +327,7 @@ export const InputData = styled.input`
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
-  border-color: ${(props) => {
-    let cor;
-    if (!props.borderColor) {
-      if (props.camposVazios) {
-        cor = Cores.vermelho;
-      } else {
-        cor = Cores.azul;
-      }
-    } else {
-      cor = props.borderColor;
-    }
-    return cor;
-  }};
+  border-color:  ${(props) => {return props.Valido}};
 `;
 
 export const InputHora = styled(Input)`
@@ -355,19 +343,7 @@ export const InputHora = styled(Input)`
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
-  border-color: ${(props) => {
-    let cor;
-    if (!props.borderColor) {
-      if (props.erro || props.camposVazios) {
-        cor = Cores.vermelho;
-      } else {
-        cor = Cores.azul;
-      }
-    } else {
-      cor = props.borderColor;
-    }
-    return cor;
-  }};
+  border-color:  ${(props) => {return props.Valido}};
 
   ::placeholder {
     color:${Cores.preto}
@@ -390,19 +366,7 @@ export const InputDuracao = styled(Input)`
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
-  border-color: ${(props) => {
-    let cor;
-    if (!props.borderColor) {
-      if (props.camposVazios) {
-        cor = Cores.vermelho;
-      } else {
-        cor = Cores.azul;
-      }
-    } else {
-      cor = props.borderColor;
-    }
-    return cor;
-  }};
+  border-color:  ${(props) => {return props.Valido}};
 
   .ant-input {
     ::placeholder {

@@ -18,7 +18,7 @@ function ModalAgendamentoEspecifico(props) {
       const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
       setUsuario(resposta.dadosUsuario);
     } else {
-      const resposta = await managerService.GetDadosPessoais();
+      const resposta = await managerService.GetDadosPessoaisAlfabetico();
       resposta.forEach((usuario) => {
         if (usuario.tipo === "PACIENTE") {
           setUsuarios((usuarios) => [...usuarios, usuario]);

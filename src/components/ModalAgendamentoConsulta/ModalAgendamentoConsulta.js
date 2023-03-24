@@ -78,6 +78,12 @@ function ModalAgendamentoConsulta(props) {
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [hoje, setHoje] = useState("");
+  const [TipoValido, setTipoValido] = useState("black");
+  const [UsuarioValido, setUsuarioValido] = useState("black");
+  const [ConsultorioValido, setConsultorioValido] = useState("black");
+  const [DataValido, setDataValido] = useState("black");
+  const [HoraValido, setHoraValido] = useState("black");
+  const [DuracaoValido, setDuracaoValido] = useState("black");
 
   moment.locale("pt-br");
 
@@ -235,12 +241,24 @@ function ModalAgendamentoConsulta(props) {
     }
   }
 
+  function ChecarseValido(){
+    let Valido = true;
+    if(String(consulta.tipo).length <= 5){setTipoValido("red"); Valido = false;}else{setTipoValido("black")}
+    if(String(consulta.id_consultorio).length <= 15){setConsultorioValido("red"); Valido = false;}else{setConsultorioValido("black")}
+    if(String(consulta.id_usuario).length <= 15){setUsuarioValido("red"); Valido = false;}else{setUsuarioValido("black")}
+    if(dataConsulta.length <= 2){setDataValido("red"); Valido = false;}else{setDataValido("black")}
+    if(hora.length <= 2){setHoraValido("red"); Valido = false;}else{setHoraValido("black")}
+    if(consulta.duracao_em_minutos === ""){setDuracaoValido("red"); Valido = false;}else{setDuracaoValido("black")}
+    return Valido;
+  }
+
   async function requisicaoCriarConsulta() {
     if (props.abertoPeloUsuario) {
       consulta.id_usuario = props.usuario.id;
     } else {
       consulta.id_usuario = idUsuario;
     }
+    if(ChecarseValido() === false){toast.error('Complete todos os campos'); return;}
     setCarregandoCadastro(true);
     formatacaoDataHora();
     let msg = setandoMsg(consulta.tipo, consulta.data_hora, consulta.duracao_em_minutos);
@@ -292,7 +310,7 @@ function ModalAgendamentoConsulta(props) {
             )}
           </Usuario>
         ) : (
-          <Usuario>
+          <Usuario Valido={UsuarioValido}>
             <NomePaciente>
               <Select
                 style={{
@@ -367,6 +385,7 @@ function ModalAgendamentoConsulta(props) {
             value={dataConsulta}
             camposVazios={camposVazios.data}
             id="data"
+            Valido={DataValido}
           />
           {camposVazios.data && <Rotulo>Selecione uma data</Rotulo>}
         </SelecioneUmaData>
@@ -383,6 +402,7 @@ function ModalAgendamentoConsulta(props) {
                   width: "100%",
                   color: "black",
                   borderWidth: "1px",
+                  borderColor: TipoValido,
                 }}
                 marginBottomMedia320="13%"
                 paddingTop="8px"
@@ -431,6 +451,7 @@ function ModalAgendamentoConsulta(props) {
                   width: "100%",
                   borderWidth: "1px",
                   color: "black",
+                  borderColor: ConsultorioValido
                 }}
                 marginBottomMedia320="-17%"
                 paddingTop="8px"
@@ -480,6 +501,7 @@ function ModalAgendamentoConsulta(props) {
               onChange={(e) => validacaoHorario(e.target.value, dataConsulta)}
               camposVazios={camposVazios.hora}
               erro={erro.hora}
+              Valido={HoraValido}
             />
             {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
             {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
@@ -494,6 +516,7 @@ function ModalAgendamentoConsulta(props) {
               suffix="min"
               camposVazios={camposVazios.duracao_em_minutos}
               erro={erro.duracao_em_minutos}
+              Valido={DuracaoValido}
             />
             {camposVazios.duracao_em_minutos ? (
               <Rotulo>Digite uma duração</Rotulo>
