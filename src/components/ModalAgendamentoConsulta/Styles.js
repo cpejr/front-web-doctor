@@ -97,7 +97,7 @@ export const Usuario = styled.div`
   border-radius: 3px;
   border-width: 1px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
-  margin-bottom: 10%;
+  margin-bottom: 0%;
   overflow: auto;
   min-height:60px;
   
@@ -253,7 +253,7 @@ export const TamanhoInput = styled.div`
   justify-content: center;
   width: 40%;
   height: 40px;
-  margin-top: 5%;
+  margin-top: 0%;
   @media  (max-width: 601px) and (min-width: 560px) {
     margin-bottom: 5%;
   }
@@ -276,6 +276,7 @@ export const InputConsultorio = styled.div`
   justify-content: center;
   width: 40%;
   height: 40px;
+  margin-top: 0%;
 
   @media (max-width: 1260px) and (min-width: 280px) {
     width: 90%;
@@ -292,6 +293,7 @@ export const ContainerDuracaoConsulta = styled.div`
   justify-content: center;
   width: 40%;
   height: 40px;
+  margin-top: 5%;
  
   @media (max-width: 1260px) and (min-width: 280px) {
     width: 90%;

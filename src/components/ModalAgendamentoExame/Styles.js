@@ -61,7 +61,6 @@ export const Usuario = styled.div`
   border-radius: 3px;
   border-width: 1px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
-  margin-bottom: 10%;
   overflow: auto;
   min-height:60px;
   

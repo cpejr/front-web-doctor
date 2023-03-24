@@ -281,6 +281,7 @@ function ModalAgendamentoExame(props) {
             )}
           </Usuario>
         ) : (
+          <div>
           <Usuario Valido={UsuarioValido}>
             <NomePaciente>
               <Select
@@ -315,6 +316,7 @@ function ModalAgendamentoExame(props) {
               </Select>
             </NomePaciente>
           </Usuario>
+          {UsuarioValido === "red" && <Rotulo>Selecione um paciente</Rotulo>}</div>
         )}
         <TipoAgendamento>
           <TextoCaixaSelect>Selecione o Tipo de Agendamento:</TextoCaixaSelect>
@@ -350,7 +352,7 @@ function ModalAgendamentoExame(props) {
             id="data"
             Valido={DataValido}
           />
-          {camposVazios.data && <Rotulo>Selecione uma data</Rotulo>}
+          {DataValido === "red" && <Rotulo>Selecione uma data</Rotulo>}
         </SelecioneUmaData>
         <DoisSelect>
           <TamanhoInput>
@@ -395,7 +397,7 @@ function ModalAgendamentoExame(props) {
                 ))}
               </Select>
             </Tooltip>
-            {camposVazios.titulo && <Rotulo>Selecione um tipo de exame</Rotulo>}
+            {TipoValido === "red" && <Rotulo>Selecione um tipo de exame</Rotulo>}
           </TamanhoInput>
           <TamanhoInput>
             <TextoSelecioneUmaData>
@@ -444,7 +446,7 @@ function ModalAgendamentoExame(props) {
                 ))}
               </Select>
             </Tooltip>
-            {camposVazios.nome && <Rotulo>Selecione um consultório </Rotulo>}
+            {ConsultorioValido === "red"  && <Rotulo>Selecione um consultório </Rotulo>}
           </TamanhoInput>
         </DoisSelect>
         <ContainerHorario>
@@ -462,7 +464,7 @@ function ModalAgendamentoExame(props) {
             Valido={HoraValido}
           />
           {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
-          {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
+          {HoraValido === "red" && <Rotulo>Digite um horário</Rotulo>}
         </ContainerHorario>
         <Checkbox onChange={handleChange}>
           <TextoCheckbox>Notificar paciente</TextoCheckbox>

@@ -310,6 +310,7 @@ function ModalAgendamentoConsulta(props) {
             )}
           </Usuario>
         ) : (
+          <div>
           <Usuario Valido={UsuarioValido}>
             <NomePaciente>
               <Select
@@ -342,7 +343,9 @@ function ModalAgendamentoConsulta(props) {
                 ))}
               </Select>
             </NomePaciente>
+            
           </Usuario>
+          {UsuarioValido === "red" && <Rotulo>Selecione um paciente</Rotulo>}</div>
         )}
         <TipoAgendamento>
           <TextoCaixaSelect>Selecione o Tipo de Agendamento:</TextoCaixaSelect>
@@ -387,7 +390,7 @@ function ModalAgendamentoConsulta(props) {
             id="data"
             Valido={DataValido}
           />
-          {camposVazios.data && <Rotulo>Selecione uma data</Rotulo>}
+          {DataValido === "red" && <Rotulo>Selecione uma data</Rotulo>}
         </SelecioneUmaData>
         <DoisSelect>
           <TamanhoInput>
@@ -432,7 +435,7 @@ function ModalAgendamentoConsulta(props) {
                 ))}
               </Select>
             </Tooltip>
-            {camposVazios.tipo && (
+            {TipoValido === "red" && (
               <Rotulo>Selecione um tipo de consulta</Rotulo>
             )}
           </TamanhoInput>
@@ -483,7 +486,7 @@ function ModalAgendamentoConsulta(props) {
                 ))}
               </Select>
             </Tooltip>
-            {camposVazios.id_consultorio && (
+            {ConsultorioValido === "red" && (
               <Rotulo>Selecione um consultório</Rotulo>
             )}
           </InputConsultorio>
@@ -504,7 +507,7 @@ function ModalAgendamentoConsulta(props) {
               Valido={HoraValido}
             />
             {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
-            {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
+            {HoraValido === "red" && <Rotulo>Digite um horário</Rotulo>}
           </ContainerHorario>
           <ContainerDuracaoConsulta>
             <TextoDoisSelects>Selecione uma duração:</TextoDoisSelects>
@@ -518,7 +521,7 @@ function ModalAgendamentoConsulta(props) {
               erro={erro.duracao_em_minutos}
               Valido={DuracaoValido}
             />
-            {camposVazios.duracao_em_minutos ? (
+            {DuracaoValido === "red" ? (
               <Rotulo>Digite uma duração</Rotulo>
             ) : (
               <>
