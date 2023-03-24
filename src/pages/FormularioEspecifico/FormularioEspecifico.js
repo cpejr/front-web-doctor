@@ -8,6 +8,7 @@ import {
 import { Spin, Modal, Input, Form } from "antd";
 import ModalFormulario from "../../components/ModalFormulario";
 import ModalPerguntaFormulario from "../../components/ModalPerguntaFormulario";
+import { toast } from "react-toastify";
 import {
   ColunaDireita,
   ColunaEsquerda,
@@ -95,7 +96,7 @@ function FormularioEspecifico(props) {
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
   const antIcon = (
-    <LoadingOutlined style={{ fontSize: 40, color: Cores.azul }} spin />
+    <LoadingOutlined style={{ fontSize: 25, color: Cores.azulEscuro }} spin />
   );
 
   const idFormularioEspecifico = props.location.state.id;
@@ -232,6 +233,29 @@ function FormularioEspecifico(props) {
   function usuariosFiltro(value) {
     setStatusSelect(value);
   }
+
+  async function enviarLembrete(usuarioSelecionado) {
+    setCarregando(true)
+    const Token =
+      await managerService.TokenById(usuarioSelecionado.id_usuario);
+    for (var i = 0; i <= Token.length - 1; i++) {
+      const Message = {
+        to: Token[i].token_dispositivo.replace("expo/", ''),
+        sound: 'default',
+        title: 'Doctor App',
+        body: "Você tem um novo formulário enviado!",
+      };
+
+      fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        body: JSON.stringify(Message),
+      }
+      );
+    }
+    toast.success('Notificação encaminhada para o paciente.');
+    await sleep(1000);
+    setCarregando(false);
+  };
 
   async function salvaWord(docxWord) {
 
@@ -562,10 +586,9 @@ function FormularioEspecifico(props) {
                       >
                         Resposta Pendente{" "}
                       </TextoBarraPaciente>
-
                       <Button
                         width="70%"
-                        backgroundColor="green"
+                        backgroundColor={Cores.cinza[7]}
                         boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
                         borderColor={Cores.azulEscuro}
                         borderRadius="5px"
@@ -575,8 +598,9 @@ function FormularioEspecifico(props) {
                         fontSizeMedia950="0.75em"
                         fontWeight="bold"
                         heightMedia560="28px"
+                        onClick={() => enviarLembrete(value)}
                       >
-                        ENVIAR LEMBRETE
+                        {carregando ? <Spin fontSize="2px" indicator={antIcon} /> : "ENVIAR LEMBRETE"}
                       </Button>
                     </BarraDireita>
                   )}
