@@ -70,6 +70,7 @@ function Agendamentos(props) {
   const [consultorioSelect, setConsultorioSelect] = useState('');
   const [tipoAgendamento, setTipoAgendamento] = useState('');
   const [carregandoFoto, setCarregandoFoto] = useState(true);
+  
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
@@ -638,6 +639,7 @@ function Agendamentos(props) {
         footer={null}
         width={'70%'}
         centered={true}
+        destroyOnClose
       >
         <ModalAgendamentoEspecifico
           emailUsuario={email}
@@ -655,6 +657,7 @@ function Agendamentos(props) {
         style={{
           backgroundColor: 'black',
         }}
+        destroyOnClose
       >
         <ModalConsultaMarcada
           consulta={consultaEspecifica}
@@ -672,6 +675,7 @@ function Agendamentos(props) {
         style={{
           backgroundColor: 'black',
         }}
+        destroyOnClose
       >
         <ModalExameMarcado
           exame={exameEspecifico}
