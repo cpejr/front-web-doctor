@@ -58,11 +58,13 @@ function ModalAgendamentoExame(props) {
   const [camposVazios, setCamposVazios] = useState(false);
   const [hoje, setHoje] = useState("");
   const [clicadoCheckbox, setclicadoCheckbox] = useState(false);
-  const [TipoValido, setTipoValido] = useState("black");
-  const [UsuarioValido, setUsuarioValido] = useState("black");
-  const [ConsultorioValido, setConsultorioValido] = useState("black");
-  const [DataValido, setDataValido] = useState("black");
-  const [HoraValido, setHoraValido] = useState("black");
+  const [TipoValido, setTipoValido] = useState(true);
+  const [UsuarioValido, setUsuarioValido] = useState(true);
+  const [ConsultorioValido, setConsultorioValido] = useState(true);
+  const [DataValido, setDataValido] = useState(true);
+  const [HoraValido, setHoraValido] = useState(true);
+  const [TipoValidoCor, setTipoValidocor] = useState("black");
+  const [ConsultorioValidoCor, setConsultorioValidocor] = useState("black");
 
   moment.locale("pt-br");
   const errors = {};
@@ -89,6 +91,7 @@ function ModalAgendamentoExame(props) {
   useEffect(() => {
     pegandoConsultorios();
   }, []);
+
 
   async function pegandoExames() {
     setCarregandoExames(true);
@@ -213,13 +216,42 @@ function ModalAgendamentoExame(props) {
     return("Você tem um exame marcado!\nTipo: " + examemarcado[0].titulo + "\nData e Hora: "+ data_hora.slice(8, 10) + "/" + data_hora.slice(5, 7) + "/" + data_hora.slice(0, 4) + " às " + data_hora.slice(11, 16));
   }
 
-  function ChecarseValido(){
+  function checarSeValido(){
     let Valido = true;
-    if(String(exame.id_exame).length <= 10){setTipoValido("red"); Valido = false;}else{setTipoValido("black")}
-    if(String(exame.id_consultorio).length <= 10){setConsultorioValido("red"); Valido = false;}else{setConsultorioValido("black")}
-    if(String(exame.id_usuario).length <= 15){setUsuarioValido("red"); Valido = false;}else{setUsuarioValido("black")}
-    if(dataExame.length <= 2){setDataValido("red"); Valido = false;}else{setDataValido("black")}
-    if(hora.length <= 2){setHoraValido("red"); Valido = false;}else{setHoraValido("black")}
+    if(String(exame.id_exame).length <= 10){
+      setTipoValido(false); 
+      setTipoValidocor("red") 
+      Valido = false;
+    }else{
+      setTipoValido(true)
+      setTipoValidocor("black")
+    }
+    if(String(exame.id_consultorio).length <= 10){
+      setConsultorioValido(false); 
+      setConsultorioValidocor("red")
+      Valido = false;
+    }else{
+      setConsultorioValido(true)
+      setConsultorioValidocor("black")
+    }
+    if(String(exame.id_usuario).length <= 15){
+      setUsuarioValido(false); 
+      Valido = false;
+    }else{
+      setUsuarioValido(true)
+    }
+    if(dataExame.length <= 2){
+      setDataValido(false); 
+      Valido = false;
+    }else{
+      setDataValido(true)
+    }
+    if(hora.length <= 2){
+      setHoraValido(false); 
+      Valido = false;
+    }else{
+      setHoraValido(true)
+    }
     return Valido;
   }
 
@@ -230,8 +262,7 @@ function ModalAgendamentoExame(props) {
       exame.id_usuario = idUsuario;
     }
     formatacaoDataHora();
-    console.log(JSON.stringify(exame))
-    if(ChecarseValido() === false){toast.error('Preencha todos os campos'); return;}
+    if(checarSeValido() === false){toast.error('Preencha todos os campos'); return;}
     setCarregandoCadastro(true);
     await managerService.CriandoExame(exame);
     let msg = await setandoMsg(exame.id_exame, exame.data_hora);
@@ -241,6 +272,8 @@ function ModalAgendamentoExame(props) {
         await managerService.TokenById(exame.id_usuario);
         if(Token.length === 0){
           toast.error('Nenhum celular cadastrado a esse paciente');
+        }else{
+          toast.success('Notificação encaminhada para o paciente.');
         }
         for(var i = 0; i <= Token.length - 1; i++){
           const Message = {
@@ -255,8 +288,9 @@ function ModalAgendamentoExame(props) {
               body: JSON.stringify(Message),
            }
           );
-          toast.success('Notificação encaminhada para o paciente.');
+          
         }
+        
     }
     setCarregandoCadastro(false);
     await sleep(1500);
@@ -270,7 +304,7 @@ function ModalAgendamentoExame(props) {
     <Caixa>
       <InfoEsquerda>
         {props.abertoPeloUsuario === true ? (
-          <Usuario>
+          <Usuario Valido={true}>
             <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
             {carregando ? (
               <CaixaLoader>
@@ -297,6 +331,7 @@ function ModalAgendamentoExame(props) {
                 placeholder="Selecione um paciente"
                 onChange={(e) => {
                   setIdUsuario(e.target.value);
+                  setUsuarioValido(true)
                 }}
               >
                 <option value="" disabled selected>
@@ -316,7 +351,7 @@ function ModalAgendamentoExame(props) {
               </Select>
             </NomePaciente>
           </Usuario>
-          {UsuarioValido === "red" && <Rotulo>Selecione um paciente</Rotulo>}</div>
+          {UsuarioValido === false && <Rotulo>Selecione um paciente</Rotulo>}</div>
         )}
         <TipoAgendamento>
           <TextoCaixaSelect>Selecione o Tipo de Agendamento:</TextoCaixaSelect>
@@ -326,7 +361,9 @@ function ModalAgendamentoExame(props) {
                 defaultValue="exame"
                 bordered={false}
                 s
-                onChange={(e) => props.trocarTipo(e.target.value)}
+                onChange={(e) => {
+                  props.trocarTipo(e.target.value);
+                }}
               >
                 <Radio value="exame">Exame</Radio>
                 <Radio value="consulta">Consulta</Radio>
@@ -346,13 +383,15 @@ function ModalAgendamentoExame(props) {
             paddingBottom="8px"
             onKeyDown={(e) => e.preventDefault()}
             name="data"
-            onChange={(e) => validacaoCampos(e)}
+            onChange={(e) => {
+              validacaoCampos(e)
+              setDataValido(true)}}
             value={dataExame}
             camposVazios={camposVazios.data}
             id="data"
             Valido={DataValido}
           />
-          {DataValido === "red" && <Rotulo>Selecione uma data</Rotulo>}
+          {DataValido === false && <Rotulo>Selecione uma data</Rotulo>}
         </SelecioneUmaData>
         <DoisSelect>
           <TamanhoInput>
@@ -367,7 +406,7 @@ function ModalAgendamentoExame(props) {
                 style={{
                   width: "100%",
                   color: "black",
-                  borderColor: TipoValido,
+                  borderColor: TipoValidoCor,
                   borderWidth: "1px",
                 }}
                 paddingTop="8px"
@@ -377,6 +416,8 @@ function ModalAgendamentoExame(props) {
                 placeholder="Tipo"
                 onChange={(e) => {
                   validacaoCampos(e);
+                  setTipoValido(true)
+                  setTipoValidocor("black")
                 }}
                 camposVazios={camposVazios.titulo}
               >
@@ -397,7 +438,7 @@ function ModalAgendamentoExame(props) {
                 ))}
               </Select>
             </Tooltip>
-            {TipoValido === "red" && <Rotulo>Selecione um tipo de exame</Rotulo>}
+            {TipoValido === false && <Rotulo>Selecione um tipo de exame</Rotulo>}
           </TamanhoInput>
           <TamanhoInput>
             <TextoSelecioneUmaData>
@@ -415,13 +456,15 @@ function ModalAgendamentoExame(props) {
                 style={{
                   width: "100%",
                   borderWidth: "1px",
-                  borderColor: ConsultorioValido,
+                  borderColor: ConsultorioValidoCor,
                   color: "black",
                 }}
                 paddingTop="8px"
                 size="large"
                 onChange={(e) => {
                   validacaoCampos(e);
+                  setConsultorioValido(true)
+                  setConsultorioValidocor("black")
                 }}
                 camposVazios={camposVazios.nome}
               >
@@ -446,7 +489,7 @@ function ModalAgendamentoExame(props) {
                 ))}
               </Select>
             </Tooltip>
-            {ConsultorioValido === "red"  && <Rotulo>Selecione um consultório </Rotulo>}
+            {ConsultorioValido === false  && <Rotulo>Selecione um consultório </Rotulo>}
           </TamanhoInput>
         </DoisSelect>
         <ContainerHorario>
@@ -458,13 +501,15 @@ function ModalAgendamentoExame(props) {
             placeholder="Horário"
             name="hora"
             id="hora"
-            onChange={(e) => validacaoHorario(e.target.value, dataExame)}
+            onChange={(e) => {
+              validacaoHorario(e.target.value, dataExame)
+              setHoraValido(true)}}
             camposVazios={camposVazios.hora}
             erro={erro.hora}
             Valido={HoraValido}
           />
           {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
-          {HoraValido === "red" && <Rotulo>Digite um horário</Rotulo>}
+          {HoraValido === false && <Rotulo>Digite um horário</Rotulo>}
         </ContainerHorario>
         <Checkbox onChange={handleChange}>
           <TextoCheckbox>Notificar paciente</TextoCheckbox>

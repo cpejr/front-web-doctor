@@ -92,7 +92,16 @@ export const Usuario = styled.div`
   width: 100%;
   height: 60px;
   padding: 0% 1% 0% 1%;
-  border-color:  ${(props) => {return props.Valido}};
+  border-color: ${(props) => {
+      let valido;
+      if (props.Valido === true) {
+        valido = "black";
+      } else {
+        valido = "red";
+      }
+
+      return valido;
+    }};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
@@ -244,6 +253,7 @@ export const DoisSelect = styled.h3`
 export const Select = styled.select`
   border-color: ${Cores.preto};
   border-width: 1px;
+  
 `;
 
 export const TamanhoInput = styled.div`
@@ -329,7 +339,16 @@ export const InputData = styled.input`
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
-  border-color:  ${(props) => {return props.Valido}};
+  border-color: ${(props) => {
+      let valido;
+      if (props.Valido === true) {
+        valido = "black";
+      } else {
+        valido = "red";
+      }
+
+      return valido;
+    }};
 `;
 
 export const InputHora = styled(Input)`
@@ -345,7 +364,16 @@ export const InputHora = styled(Input)`
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
-  border-color:  ${(props) => {return props.Valido}};
+  border-color: ${(props) => {
+      let valido;
+      if (props.Valido === true) {
+        valido = "black";
+      } else {
+        valido = "red";
+      }
+
+      return valido;
+    }};
 
   ::placeholder {
     color:${Cores.preto}
@@ -368,7 +396,16 @@ export const InputDuracao = styled(Input)`
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
-  border-color:  ${(props) => {return props.Valido}};
+  border-color: ${(props) => {
+      let valido;
+      if (props.Valido === true) {
+        valido = "black";
+      } else {
+        valido = "red";
+      }
+
+      return valido;
+    }};
 
   .ant-input {
     ::placeholder {

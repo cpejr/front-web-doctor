@@ -78,12 +78,14 @@ function ModalAgendamentoConsulta(props) {
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [hoje, setHoje] = useState("");
-  const [TipoValido, setTipoValido] = useState("black");
-  const [UsuarioValido, setUsuarioValido] = useState("black");
-  const [ConsultorioValido, setConsultorioValido] = useState("black");
-  const [DataValido, setDataValido] = useState("black");
-  const [HoraValido, setHoraValido] = useState("black");
-  const [DuracaoValido, setDuracaoValido] = useState("black");
+  const [TipoValido, setTipoValido] = useState(true);
+  const [UsuarioValido, setUsuarioValido] = useState(true);
+  const [ConsultorioValido, setConsultorioValido] = useState(true);
+  const [DataValido, setDataValido] = useState(true);
+  const [HoraValido, setHoraValido] = useState(true);
+  const [DuracaoValido, setDuracaoValido] = useState(true);
+  const [TipoValidoCor, setTipoValidocor] = useState("black");
+  const [ConsultorioValidoCor, setConsultorioValidocor] = useState("black");
 
   moment.locale("pt-br");
 
@@ -243,12 +245,46 @@ function ModalAgendamentoConsulta(props) {
 
   function ChecarseValido(){
     let Valido = true;
-    if(String(consulta.tipo).length <= 5){setTipoValido("red"); Valido = false;}else{setTipoValido("black")}
-    if(String(consulta.id_consultorio).length <= 15){setConsultorioValido("red"); Valido = false;}else{setConsultorioValido("black")}
-    if(String(consulta.id_usuario).length <= 15){setUsuarioValido("red"); Valido = false;}else{setUsuarioValido("black")}
-    if(dataConsulta.length <= 2){setDataValido("red"); Valido = false;}else{setDataValido("black")}
-    if(hora.length <= 2){setHoraValido("red"); Valido = false;}else{setHoraValido("black")}
-    if(consulta.duracao_em_minutos === ""){setDuracaoValido("red"); Valido = false;}else{setDuracaoValido("black")}
+    if(String(consulta.tipo).length <= 5){
+      setTipoValido(false);
+      setTipoValidocor("red") 
+      Valido = false;
+    }else{
+      setTipoValido(true)
+      setTipoValidocor("black")
+    }
+    if(String(consulta.id_consultorio).length <= 15){
+      setConsultorioValido(false);
+      setConsultorioValidocor("red")
+      Valido = false;
+    }else{
+      setConsultorioValido(true)
+      setConsultorioValidocor("black")
+    }
+    if(String(consulta.id_usuario).length <= 15){
+      setUsuarioValido(false); 
+      Valido = false;
+    }else{
+      setUsuarioValido(true)
+    }
+    if(dataConsulta.length <= 2){
+      setDataValido(false); 
+      Valido = false;
+    }else{
+      setDataValido(true)
+    }
+    if(hora.length <= 2){
+      setHoraValido(false); 
+      Valido = false;
+    }else{
+      setHoraValido(true)
+    }
+    if(consulta.duracao_em_minutos === ""){
+      setDuracaoValido(false); 
+      Valido = false;
+    }else{
+      setDuracaoValido(true)
+    }
     return Valido;
   }
 
@@ -269,6 +305,8 @@ function ModalAgendamentoConsulta(props) {
         await managerService.TokenById(consulta.id_usuario);
         if(Token.length === 0){
           toast.error('Nenhum celular cadastrado a esse paciente');
+        }else{
+          toast.success('Notificação encaminhada para o paciente.');
         }
         for(var i = 0; i <= Token.length - 1; i++){
           const Message = {
@@ -283,7 +321,7 @@ function ModalAgendamentoConsulta(props) {
               body: JSON.stringify(Message),
            }
           );
-          toast.success('Notificação encaminhada para o paciente.');
+          
         }
       
     }
@@ -299,7 +337,7 @@ function ModalAgendamentoConsulta(props) {
     <Caixa>
       <InfoEsquerda>
         {props.abertoPeloUsuario === true ? (
-          <Usuario>
+          <Usuario Valido={true}>
             <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
             {carregando ? (
               <CaixaLoader>
@@ -325,6 +363,7 @@ function ModalAgendamentoConsulta(props) {
                 placeholder="Selecione um paciente"
                 onChange={(e) => {
                   setIdUsuario(e.target.value);
+                  setUsuarioValido(true)
                 }}
               >
                 <option value="" disabled selected>
@@ -345,7 +384,7 @@ function ModalAgendamentoConsulta(props) {
             </NomePaciente>
             
           </Usuario>
-          {UsuarioValido === "red" && <Rotulo>Selecione um paciente</Rotulo>}</div>
+          {UsuarioValido === false && <Rotulo>Selecione um paciente</Rotulo>}</div>
         )}
         <TipoAgendamento>
           <TextoCaixaSelect>Selecione o Tipo de Agendamento:</TextoCaixaSelect>
@@ -384,13 +423,15 @@ function ModalAgendamentoConsulta(props) {
             type="date"
             onKeyDown={(e) => e.preventDefault()}
             name="data"
-            onChange={(e) => validacaoCampos(e)}
+            onChange={(e) => {
+              validacaoCampos(e)
+              setDataValido(true)}}
             value={dataConsulta}
             camposVazios={camposVazios.data}
             id="data"
             Valido={DataValido}
           />
-          {DataValido === "red" && <Rotulo>Selecione uma data</Rotulo>}
+          {DataValido === false && <Rotulo>Selecione uma data</Rotulo>}
         </SelecioneUmaData>
         <DoisSelect>
           <TamanhoInput>
@@ -405,7 +446,7 @@ function ModalAgendamentoConsulta(props) {
                   width: "100%",
                   color: "black",
                   borderWidth: "1px",
-                  borderColor: TipoValido,
+                  borderColor: TipoValidoCor,
                 }}
                 marginBottomMedia320="13%"
                 paddingTop="8px"
@@ -415,6 +456,8 @@ function ModalAgendamentoConsulta(props) {
                 placeholder="Tipo"
                 onChange={(e) => {
                   validacaoCampos(e);
+                  setTipoValido(true)
+                  setTipoValidocor("black")
                 }}
                 value={consulta.tipo}
                 camposVazios={camposVazios.tipo}
@@ -435,7 +478,7 @@ function ModalAgendamentoConsulta(props) {
                 ))}
               </Select>
             </Tooltip>
-            {TipoValido === "red" && (
+            {TipoValido === false && (
               <Rotulo>Selecione um tipo de consulta</Rotulo>
             )}
           </TamanhoInput>
@@ -454,7 +497,7 @@ function ModalAgendamentoConsulta(props) {
                   width: "100%",
                   borderWidth: "1px",
                   color: "black",
-                  borderColor: ConsultorioValido
+                  borderColor: ConsultorioValidoCor
                 }}
                 marginBottomMedia320="-17%"
                 paddingTop="8px"
@@ -462,6 +505,8 @@ function ModalAgendamentoConsulta(props) {
                 size="large"
                 onChange={(e) => {
                   validacaoCampos(e);
+                  setConsultorioValido(true)
+                  setConsultorioValidocor("black")
                 }}
                 camposVazios={camposVazios.id_consultorio}
               >
@@ -486,7 +531,7 @@ function ModalAgendamentoConsulta(props) {
                 ))}
               </Select>
             </Tooltip>
-            {ConsultorioValido === "red" && (
+            {ConsultorioValido === false && (
               <Rotulo>Selecione um consultório</Rotulo>
             )}
           </InputConsultorio>
@@ -501,13 +546,15 @@ function ModalAgendamentoConsulta(props) {
               placeholder="Horário"
               name="hora"
               id="hora"
-              onChange={(e) => validacaoHorario(e.target.value, dataConsulta)}
+              onChange={(e) => {
+                validacaoHorario(e.target.value, dataConsulta)
+                setHoraValido(true)}}
               camposVazios={camposVazios.hora}
               erro={erro.hora}
               Valido={HoraValido}
             />
             {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
-            {HoraValido === "red" && <Rotulo>Digite um horário</Rotulo>}
+            {HoraValido === false && <Rotulo>Digite um horário</Rotulo>}
           </ContainerHorario>
           <ContainerDuracaoConsulta>
             <TextoDoisSelects>Selecione uma duração:</TextoDoisSelects>
@@ -515,13 +562,15 @@ function ModalAgendamentoConsulta(props) {
               value={consulta.duracao_em_minutos}
               placeholder="Duração"
               name="duracao_em_minutos"
-              onChange={validacaoCampos}
+              onChange={(e) => {
+                validacaoCampos(e)
+                setDuracaoValido(true)}}
               suffix="min"
               camposVazios={camposVazios.duracao_em_minutos}
               erro={erro.duracao_em_minutos}
               Valido={DuracaoValido}
             />
-            {DuracaoValido === "red" ? (
+            {DuracaoValido === false ? (
               <Rotulo>Digite uma duração</Rotulo>
             ) : (
               <>

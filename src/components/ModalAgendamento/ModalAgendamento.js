@@ -363,6 +363,7 @@ function ModalAgendamento(props) {
         <ModalAgendamentoEspecifico
           emailUsuario={props.email}
           abertoPeloUsuario={abertoPeloUsuario}
+          tipoRadio={tipoAgendamento}
           fechandoModal={() => fechandoModalAgendamentoEspecifico()}
         />
       </Modal>

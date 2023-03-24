@@ -11,7 +11,7 @@ import ModalAgendamentoExame from "../ModalAgendamentoExame";
 function ModalAgendamentoEspecifico(props) {
   const [usuario, setUsuario] = useState({});
   const [usuarios, setUsuarios] = useState([]);
-  const [tipoRadio, setTipoRadio] = useState("");
+  const [tipoRadio, setTipoRadio] = useState(String(props.tipoRadio).toLowerCase());
 
   async function pegandoPacientes() {
     if (props.abertoPeloUsuario) {
@@ -29,6 +29,9 @@ function ModalAgendamentoEspecifico(props) {
 
   useEffect(() => {
     pegandoPacientes();
+    return () => {
+      setUsuarios([]);
+    }
   }, [props]);
 
   return (
