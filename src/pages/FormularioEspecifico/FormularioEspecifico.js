@@ -325,8 +325,7 @@ function FormularioEspecifico(props) {
 
     await Packer.toBlob(doc).then(blob => {
       saveAs(blob,
-        "Perguntas do Formulário " + docxWord.titulo
-          .docx)
+        "Perguntas do Formulário " + docxWord.titulo)
     })
   }
 
