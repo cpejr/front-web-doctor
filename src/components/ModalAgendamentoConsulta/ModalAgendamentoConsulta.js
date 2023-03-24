@@ -258,7 +258,7 @@ function ModalAgendamentoConsulta(props) {
     } else {
       consulta.id_usuario = idUsuario;
     }
-    if(ChecarseValido() === false){toast.error('Complete todos os campos'); return;}
+    if(ChecarseValido() === false){toast.error('Preencha todos os campos'); return;}
     setCarregandoCadastro(true);
     formatacaoDataHora();
     let msg = setandoMsg(consulta.tipo, consulta.data_hora, consulta.duracao_em_minutos);

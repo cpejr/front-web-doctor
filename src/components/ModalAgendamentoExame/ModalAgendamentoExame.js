@@ -231,7 +231,7 @@ function ModalAgendamentoExame(props) {
     }
     formatacaoDataHora();
     console.log(JSON.stringify(exame))
-    if(ChecarseValido() === false){toast.error('Complete todos os campos'); return;}
+    if(ChecarseValido() === false){toast.error('Preencha todos os campos'); return;}
     setCarregandoCadastro(true);
     await managerService.CriandoExame(exame);
     let msg = await setandoMsg(exame.id_exame, exame.data_hora);
