@@ -145,12 +145,12 @@ function ModalAlterarIndicacao(props) {
       erro.local_atendimento = true;
       
     }
-    setCamposVazios({ ...camposVazios, ...erro });
-    console.log(camposVazios)
+    /*setCamposVazios({ ...camposVazios, ...erro });
+    console.log(estado);
     if (!_.isEqual(camposVazios, camposVaziosReferencia)) {
       toast.warn("Edite algum campo");
       return;
-    } else if (estado.telefone.length < 15) {
+    }*/ else if (estado.telefone.length < 15) {
       toast.warn("Preencha o campo corretamente");
       return;
     }
