@@ -53,6 +53,7 @@ function ModalEditarConsulta(props) {
   const [tipoRadio, setTipoRadio] = useState("");
   const [hora, setHora] = useState("");
   const [hoje, setHoje] = useState("");
+  const [clicadoCheckbox, setclicadoCheckbox] = useState(false);
   const [camposVazios, setCamposVazios] = useState({
     duracao_em_minutos: false,
     hora: false,
@@ -89,6 +90,10 @@ function ModalEditarConsulta(props) {
   useEffect(() => {
     setandoDataMinima();
   }, [hoje]);
+
+  const handleChange = () =>{
+    setclicadoCheckbox(!clicadoCheckbox)
+  }
 
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true);
@@ -200,6 +205,31 @@ function ModalEditarConsulta(props) {
     } else {
       setCarregandoUpdate(true);
       consulta.id_usuario = usuario.id;
+      if(clicadoCheckbox === true){
+        
+        let msg = "Sua consulta teve seus dados alterados";
+        const Token =
+          await managerService.TokenById(consulta.id_usuario);
+          if(Token.length === 0){
+            toast.error('Nenhum celular cadastrado a esse paciente');
+          }else{
+            toast.success('Notificação encaminhada para o paciente.');
+          }
+          for(var i = 0; i <= Token.length - 1; i++){
+            const Message = {
+              to: Token[i].token_dispositivo.replace("expo/", ''),
+              sound: 'default',
+              title: 'Doctor App', 
+              body: msg,
+              
+            };
+            fetch('https://exp.host/--/api/v2/push/send',{
+                method: 'POST',
+                body: JSON.stringify(Message),
+             }
+            );
+            
+      }}
       formatacaoDataHora();
       await managerService.UpdateConsulta(consulta.id, consulta);
       setCarregandoUpdate(false);
@@ -406,9 +436,9 @@ function ModalEditarConsulta(props) {
 
           <ContainerBotaoCheckbox>
             <ContainerNotificar>
-              <Checkbox>
-                <TextoCheckbox>Notificar paciente</TextoCheckbox>
-              </Checkbox>
+            <Checkbox onChange={handleChange}>
+            <TextoCheckbox>Notificar paciente</TextoCheckbox>
+            </Checkbox>
             </ContainerNotificar>
 
             <Button
