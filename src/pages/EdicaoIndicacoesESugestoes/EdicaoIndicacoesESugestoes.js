@@ -156,10 +156,8 @@ function EdicaoIndicacoesESugestoes(props) {
   }
   async function pegandoDados() {
     setCarregando(true);
-    await sleep(1500);
     console.log(idIndicado);
     const resposta = await managerService.GetMedicosIndicadosPorID(idIndicado);
-    await sleep(1500);
     console.log(resposta.nome);
     setMedicosIndicados(resposta);
     setCarregando(false);

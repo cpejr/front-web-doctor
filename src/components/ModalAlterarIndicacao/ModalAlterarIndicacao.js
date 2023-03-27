@@ -145,8 +145,8 @@ function ModalAlterarIndicacao(props) {
       erro.local_atendimento = true;
       
     }
-    
     setCamposVazios({ ...camposVazios, ...erro });
+    console.log(camposVazios)
     if (!_.isEqual(camposVazios, camposVaziosReferencia)) {
       toast.warn("Edite algum campo");
       return;
@@ -155,7 +155,7 @@ function ModalAlterarIndicacao(props) {
       return;
     }
     setCarregandoCriacao(true);
-    await managerService.EditarMedicoIndicado(estado.id_indicacao_especifica, estado, {
+    await managerService.EditarMedicoIndicado(selecionarMedico.id, estado, {
       onClose: () => {
         history.push("/web/edicaoindicacoesesugestoes");
       },

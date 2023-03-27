@@ -16,6 +16,7 @@ function ModalExcluirIndicacao(props) {
   const [idMedicoEscolhido, setIdMedicoEscolhido] = useState();
   const [preenchido, setPreenchido] = useState(false);
   const [carregando, setCarregando] = useState(false);
+  const [fechar, setFechar] = useState();
   const history = useHistory();
   const antIcon = <LoadingOutlined style={{ fontSize: 25}} spin />;
   let medicodeletado;
@@ -25,7 +26,7 @@ function ModalExcluirIndicacao(props) {
   }
   useEffect(() => {
     buscarMedicosporId();
-  }, [medicos])
+  }, [medicos], [fechar])
 
   async function armazenarMedico(event) {
     setIdMedicoEscolhido(event.target.value);
@@ -39,7 +40,6 @@ function ModalExcluirIndicacao(props) {
 			return;
     }else{
       await managerService.DeletarIndicao(idMedicoEscolhido);
-      await sleep(1500);
       setCarregando(false);
     }
     
