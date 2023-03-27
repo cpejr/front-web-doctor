@@ -20,7 +20,7 @@ function ModalAlterarIndicacao(props) {
   const [nenhumMedicoSelecionado, setnenhumMedicoSelecionado] = useState(false);
   const [nenhumDadoEscolhido, setNenhumDadoEscolhido] = useState(true);
   const [nome, setNome] = useState();
-  const [telefone, setTelefone] = useState();
+  const [telefone1, setTelefone] = useState();
   const [local_atendimento, setLocalAtendimento] = useState();
 
   const history = useHistory();
@@ -64,7 +64,7 @@ function ModalAlterarIndicacao(props) {
     if (name === "telefone") {
       setEstado({ ...estado, [name]: telefone(value) });
       setNenhumDadoEscolhido(false);
-      setTelefone(value);
+      setTelefone( telefone(value));
     }
     if (name === "local_atendimento") {
       setEstado({
@@ -150,7 +150,7 @@ function ModalAlterarIndicacao(props) {
     if (!_.isEqual(camposVazios, camposVaziosReferencia)) {
       toast.warn("Edite algum campo");
       return;
-    }*/ else if (estado.telefone.length < 15) {
+    }*/ if (estado.telefone.length < 15) {
       toast.warn("Preencha o campo corretamente");
       return;
     }
@@ -221,9 +221,10 @@ function ModalAlterarIndicacao(props) {
           fontSize="1em"
           width="100%"
           paddingRight="2%"
+          type='tel'
           onChange={preenchendoDados}
-          name="telefone"
-          value={telefone}
+          name="telefone" 
+          value={telefone1} 
         ></Input>
       </ContainerInputs>
       <ContainerInputs>
