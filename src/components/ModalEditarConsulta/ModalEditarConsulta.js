@@ -75,7 +75,7 @@ function ModalEditarConsulta(props) {
 
   useEffect(() => {
     setandoDataEHora();
-  }, [consulta.dataHora]);
+  }, [consulta.data_hora]);
 
   useEffect(() => {
     setEditado(false);
@@ -130,9 +130,6 @@ function ModalEditarConsulta(props) {
   }
 
   function setandoDataEHora() {
-    let dataString = String(consulta.data_hora);
-    let dataFormatada = dataString.slice(0, 10);
-    setData(dataFormatada);
     const aux = new Date(consulta.data_hora);
     let horas = aux.getHours();
     if (horas < 10) {
@@ -144,6 +141,10 @@ function ModalEditarConsulta(props) {
     }
     const tempo_formatado = `${horas}:${minutos}`;
     setHora(tempo_formatado);
+    let dia = ("0" + aux.getDate()).slice(-2)
+    let mes = ("0" + (aux.getMonth() + 1)).slice(-2)
+    let ano = aux.getFullYear()
+    setData(ano+"-"+mes+"-"+dia);
   }
 
   function setandoDiaAtual() {
@@ -301,7 +302,7 @@ function ModalEditarConsulta(props) {
           <SelecioneUmaData>
             <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
             <InputData
-              placeholder="Selecione uma data"
+              placeholder={data}
               value={data}
               id="data"
               type="date"

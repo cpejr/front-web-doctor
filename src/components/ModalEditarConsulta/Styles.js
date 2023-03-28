@@ -274,6 +274,7 @@ export const TamanhoInput = styled.div`
   justify-content: center;
   width: 40%;
   height: 40px;
+  margin-top: 5%;
 
   @media (max-width: 601px) and (min-width: 560px) {
     margin-bottom: 5%;

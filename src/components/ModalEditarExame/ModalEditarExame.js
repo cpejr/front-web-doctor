@@ -76,7 +76,7 @@ function ModalEditarExame(props) {
 
   useEffect(() => {
     setandoDataEHora();
-  }, [exame.dataHora]);
+  }, [exame.data_hora]);
   
 
   useEffect(() => {
@@ -128,6 +128,9 @@ function ModalEditarExame(props) {
       id_usuario: props.exame.id_usuario,
       data_hora: props.exame.data_hora,
     };
+    let placeholders = {
+      placeholderHora: new Date()
+    }
     setTitulo(props.exame.titulo);
     setExame(aux);
     setCarregando(false);
@@ -141,9 +144,6 @@ function ModalEditarExame(props) {
   }
 
   function setandoDataEHora() {
-    let dataString = String(exame.data_hora);
-    let dataFormatada = dataString.slice(0, 10);
-    setData(dataFormatada);
     const aux = new Date(exame.data_hora);
     let horas = aux.getHours();
     if (horas < 10) {
@@ -155,6 +155,10 @@ function ModalEditarExame(props) {
     }
     const tempo_formatado = `${horas}:${minutos}`;
     setHora(tempo_formatado);
+    let dia = ("0" + aux.getDate()).slice(-2)
+    let mes = ("0" + (aux.getMonth() + 1)).slice(-2)
+    let ano = aux.getFullYear()
+    setData(ano+"-"+mes+"-"+dia);
   }
 
   function setandoDiaAtual() {
@@ -297,7 +301,7 @@ function ModalEditarExame(props) {
           <SelecioneUmaData>
             <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
             <InputData
-              placeholder="Selecione uma data"
+              placeholder={data}
               value={data}
               id="data"
               type="date"
@@ -404,7 +408,6 @@ function ModalEditarExame(props) {
                 onKeyDown={(e) => e.preventDefault()}
                 onFocus={(e) => (e.target.type = "time")}
                 onBlur={(e) => (e.target.type = "text")}
-                placeholder="Horário"
                 name="hora"
                 onChange={preenchendoDadosExame}
                 style={{ color: "black" }}
