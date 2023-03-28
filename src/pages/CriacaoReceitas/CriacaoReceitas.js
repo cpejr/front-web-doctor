@@ -23,6 +23,7 @@ import {
 	CriacaoReceitaBotoes,
 	BotaoEnviar,
 	BotaoCancelar,
+	SelectUsuario,
 } from "./Styles";
 
 import {
@@ -231,6 +232,21 @@ function CriacaoReceitas() {
 		  };
 	}
 
+
+	function maiusculaMinuscula (match, input) {
+		return match
+		  .toLowerCase()
+		  .normalize("NFD")
+		  .replace(/[\u0300-\u036f]/g, "")
+		  .includes(
+			input
+			  .toLowerCase()
+			  .normalize("NFD")
+			  .replace(/[\u0300-\u036f]/g, "")
+			  .trim()
+		  );
+	  }
+
 	return (
 		<ContainerCriacaoReceitas>
 			<CardCriacaoReceitas>
@@ -250,32 +266,28 @@ function CriacaoReceitas() {
 						onChange={preenchendoDados}
 					/>
 					<NomeDoPaciente>Nome do paciente:</NomeDoPaciente>
-					<SelectContainer camposVazios={camposVazios.id_usuario}>
-						<Select
-							backgroundColor={Cores.cinza[7]}
-							color={Cores.preto}
-							borderColor="transparent"
+						<SelectUsuario
 							fontSize="1em"
-							width="97%"
-							marginTop="0px"
+							height= "50px"
+							width= "100%"
 							size="large"
 							name="id_usuario"
-							placeholder="Nome do usuário"
-							height="45px"
+							placeholder="Nome do paciente"
+							backgroundColor={Cores.cinza[7]}
 							borderWidth820="97%"
 							nome="id_usuario"
 							onChange={preenchendoDados}
+							showSearch
+           					filterOption={(inputValue, option) =>
+              				maiusculaMinuscula(option.children, inputValue)
+            				}
 						>
-							<option value="" disabled selected>
-								Nome do paciente
-							</option>
 							{usuarios.sort(ordenarusuarios).map((usuario) => (
 								<option key={usuario.id} value={usuario.id} color="red">
 									{usuario.nome}
 								</option>
 							))}
-						</Select>
-					</SelectContainer>
+						</SelectUsuario>	
 					<Assinatura>Assinatura:</Assinatura>
 					<SelectContainer camposVazios={camposVazios.assinatura}>
 						<Select
