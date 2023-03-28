@@ -26,7 +26,7 @@ function ModalExcluirIndicacao(props) {
   }
   useEffect(() => {
     buscarMedicosporId();
-  }, [medicos], [fechar])
+  }, [idMedicoEscolhido])
 
   async function armazenarMedico(event) {
     setIdMedicoEscolhido(event.target.value);
