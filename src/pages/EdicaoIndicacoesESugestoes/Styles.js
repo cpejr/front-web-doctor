@@ -55,7 +55,7 @@ export const ContainerInterno = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-grow: 1;
+  flex-grow: 0.5;
   gap: 20px;
   width: 50%;
   padding: 20px 10%;
@@ -68,7 +68,7 @@ export const ContainerDireita = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex-grow: 1;
+  flex-grow: 0.5;
   gap: 20px;
   width: 50%;
   padding: 20px 10%;
@@ -132,7 +132,7 @@ export const Informacoes = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  flex-grow: 1;
+  flex-grow: 0.5;
   height: 60%;
   width: 100%;
   background-color: ${Cores.cinza[9]};
@@ -156,7 +156,7 @@ export const DescricaoInformacoes = styled.p`
   margin-top: 0%;
   margin-botton: 0%;
   width: 100%;
-  flex-grow: 1;
+  flex-grow: 0.5;
   background-color: ${Cores.cinza[9]};
   border: none;
   font-size: 1em;

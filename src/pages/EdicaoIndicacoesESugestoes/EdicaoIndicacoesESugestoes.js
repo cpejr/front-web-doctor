@@ -293,12 +293,12 @@ function EdicaoIndicacoesESugestoes(props) {
             </Button>
             <Button
               gap="5px"
-              backgroundColor={Cores.vermelho}
+              backgroundColor="#f8d6cf"
               fontSize="1.7em"
               fontSizeMedia1080="18px"
               width="100%"
-              borderColor={Cores.preto}
-              color={Cores.branco}
+              borderColor={Cores.vermelho}
+              color={Cores.preto}
               height="100%"
               onClick={abrirModalExcluirIndicacao}
             >
