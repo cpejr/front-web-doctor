@@ -295,8 +295,8 @@ function FormularioEspecifico(props) {
               new ImageRun({
                 data: logoWord,
                 transformation: {
-                  width: 350,
-                  height: 130
+                  width: 600,
+                  height: 150
                 },
                 floating: {
                   horizontalPosition: {
