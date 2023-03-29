@@ -106,7 +106,7 @@ function PerfilPaciente(props) {
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 25, color: Cores.azulEscuro }} spin />
   );
-  
+
   const margemBotoes = tipoUsuario ? "0px" : "8%";
   const margemPerfil = tipoUsuario ? "2%" : "20%";
 
@@ -402,7 +402,7 @@ function PerfilPaciente(props) {
             ],
           }),
           new Paragraph({
-            alignment: AlignmentType.CENTER, 
+            alignment: AlignmentType.CENTER,
             children: [
               new TextRun({
                 text: `${docxWord.titulo}`,
@@ -450,8 +450,7 @@ function PerfilPaciente(props) {
 
     await Packer.toBlob(doc).then(blob => {
       saveAs(blob,
-        "Resposta do Formulário " + docxWord.titulo + " referente ao paciente " + docxWord.nome
-          .docx)
+        "Resposta do Formulário " + docxWord.titulo + " referente ao paciente " + docxWord.nome+ ".docx")
     })
   }
 
@@ -638,61 +637,77 @@ function PerfilPaciente(props) {
                   <Titulo>FORMULÁRIOS</Titulo>
                   {respostas?.map((value) => (
                     <>
-                      {deveMostrarFormularios(value.id_formulario, value.status) && (
-                        <Formulario>
-                          <DadosFormulario>
-                            {tipoUsuarioLogado === "MASTER" ? (
-                              <TituloFormulario
-                                cursor="pointer"
-                                textDecoration="underline"
-                                onClick={() =>
-                                  abrindoModalFormulario(
-                                    value.id,
-                                    value.perguntas,
-                                    value.titulo
-                                  )
+                      {deveMostrarFormularios(
+                        value.id_formulario,
+                        value.status
+                      ) && (
+                          <Formulario>
+                            <DadosFormulario>
+                              {tipoUsuarioLogado === "MASTER" ||
+                                value.visualizacao_secretaria === true ? (
+                                <TituloFormulario
+                                  cursor="pointer"
+                                  textDecoration="underline"
+                                  onClick={() =>
+                                    abrindoModalFormulario(
+                                      value.id,
+                                      value.perguntas,
+                                      value.titulo
+                                    )
+                                  }
+                                >
+                                  {value.titulo}
+                                </TituloFormulario>
+                              ) : (
+                                <TituloFormulario
+                                  cursor="null"
+                                  textDecoration="none"
+                                >
+                                  {value.titulo}
+                                </TituloFormulario>
+                              )}
+
+                              <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
+                              <UrgenciaFormulario>
+                                <>Urgência: </>
+                                {estrelaPreenchida(value.urgencia)}
+                                {estrelaNaoPreenchida(3 - value.urgencia)}
+                              </UrgenciaFormulario>
+                            </DadosFormulario>
+                            {value.status === true ? (
+                              <CaixaBaixarPdf key={value?.id}>
+                                <></>
+                                {tipoUsuarioLogado === "MASTER" &&
+                                  <Button
+                                    backgroundColor={Cores.lilas[2]}
+                                    color={Cores.azulEscuro}
+                                    fontWeight="bold"
+                                    borderColor={Cores.azulEscuro}
+                                    height="40px"
+                                    width="25%"
+                                    onClick={() => salvaWord(value)}
+                                  >
+                                    BAIXAR DOCX
+                                  </Button>
                                 }
-                              >
-                                {value.titulo}
-                              </TituloFormulario>
-
+                              </CaixaBaixarPdf>
                             ) : (
-                              <TituloFormulario
-                                cursor="null"
-                                textDecoration="none"
-
-                              >
-                                {value.titulo}
-                              </TituloFormulario>
+                              <RespostaPendente>
+                                <Resposta>Resposta Pendente</Resposta>
+                                <Button
+                                  backgroundColor="green"
+                                  color={Cores.azulEscuro}
+                                  fontWeight="bold"
+                                  borderColor={Cores.azulEscuro}
+                                  height="40px"
+                                  width="25%"
+                                >
+                                  ENVIAR LEMBRETE
+                                </Button>
+                              </RespostaPendente>
                             )}
-
-                            <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
-                            <UrgenciaFormulario>
-                              <>Urgência: </>
-                              {estrelaPreenchida(value.urgencia)}
-                              {estrelaNaoPreenchida(3 - value.urgencia)}
-                            </UrgenciaFormulario>
-                          </DadosFormulario>
-                          {value.status === true ? (
-                            <></>
-                          ) : (
-                            <RespostaPendente>
-                              <Resposta>Resposta Pendente</Resposta>
-                              <Button
-                                backgroundColor={Cores.cinza[7]}
-                                color={Cores.azulEscuro}
-                                fontWeight="bold"
-                                borderColor={Cores.azulEscuro}
-                                height="40px"
-                                width="25%"
-                                onClick={() => enviarLembrete(value)}
-                              >
-                                ENVIAR LEMBRETE
-                              </Button>
-                            </RespostaPendente>
-                          )}
-                        </Formulario>
-                      )}
+                          </Formulario>
+                        )}
                     </>
                   ))}
                 </>

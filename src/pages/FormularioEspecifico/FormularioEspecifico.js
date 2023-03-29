@@ -342,7 +342,7 @@ function FormularioEspecifico(props) {
             ],
           }),
           new Paragraph({
-            alignment: AlignmentType.CENTER, 
+            alignment: AlignmentType.CENTER,
             children: [
               new TextRun({
                 text: `${docxWord.titulo}`,
@@ -390,8 +390,7 @@ function FormularioEspecifico(props) {
 
     await Packer.toBlob(doc).then(blob => {
       saveAs(blob,
-        "Resposta do Formulário " + docxWord.titulo + " referente ao paciente " + docxWord.nome
-          .docx)
+        "Resposta do Formulário " + docxWord.titulo + " referente ao paciente " + docxWord.nome + ".docx")
     })
   }
 
