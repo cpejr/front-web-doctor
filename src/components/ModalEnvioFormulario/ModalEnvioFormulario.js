@@ -80,7 +80,7 @@ function ModalEnvioFormulario(props) {
   }
 
   async function preenchendoDados(e) {
-    setIdUsuario(e.target.value);
+    setIdUsuario(e);
   }
 
   const ordenarusuarios = (a, b) => {
