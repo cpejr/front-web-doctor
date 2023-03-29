@@ -28,6 +28,9 @@ import {
   TextoTipoAgendamento,
   TipoAgendamento,
   ContainerHorario,
+  ContainerDuracaoConsulta,
+  ContainerNotificar,
+  ContainerBotaoCheckbox,
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
@@ -36,22 +39,18 @@ import { Cores } from "../../variaveis";
 import { sleep } from "../../utils/sleep";
 import { apenasNumeros } from "../../utils/masks";
 import * as managerService from "../../services/ManagerService/managerService";
-import { ContainerDuracaoConsulta } from "../ModalAgendamentoEspecifico/Styles";
-import { TiposDeExame } from "../listaTiposDeExames";
+import { TiposDeConsulta } from "../listaTiposDeConsultas";
 
-function ModalEditarExame(props) {
-  const { Option } = Select;
+function ModalEditarConsulta(props) {
   const [usuario, setUsuario] = useState({});
   const [consultorios, setConsultorios] = useState([]);
   const [carregando, setCarregando] = useState();
   const [carregandoConsultorios, setCarregandoConsultorios] = useState();
   const [carregandoUpdate, setCarregandoUpdate] = useState();
-  const [exame, setExame] = useState({});
-  const [novoExame, setNovoExame] = useState({});
+  const [consulta, setConsulta] = useState({});
   const [consultorioPorId, setConsultorioPorId] = useState();
   const [data, setData] = useState("");
-  const [dataHora, setDataHora] = useState("");
-  const [titulo, setTitulo] = useState("");
+  const [tipoRadio, setTipoRadio] = useState("");
   const [hora, setHora] = useState("");
   const [hoje, setHoje] = useState("");
   const [camposVazios, setCamposVazios] = useState({
@@ -72,12 +71,12 @@ function ModalEditarExame(props) {
   useEffect(() => {
     setandoNomeConsultorioPorId();
     setandoDataEHora();
-  }, [exame]);
+  }, [consulta]);
 
   useEffect(() => {
     setEditado(false);
     pegandoDadosUsuario();
-    setandoValoresExame();
+    setandoValoresConsulta();
   }, [props]);
 
   useEffect(() => {
@@ -93,7 +92,7 @@ function ModalEditarExame(props) {
     const res = await managerService.GetDadosConsultorios();
     let aux = [];
     res.dadosConsultorios.forEach((consultorio) => {
-      if (consultorio.tipo === "EXAME") {
+      if (consultorio.tipo === "CONSULTA") {
         aux.push(consultorio);
       }
     });
@@ -109,33 +108,24 @@ function ModalEditarExame(props) {
     setCarregando(false);
   }
 
-  async function setandoValoresExame() {
+  async function setandoValoresConsulta() {
     setCarregando(true);
-    let aux = {
-      id: props.exame.id,
-      titulo: props.exame.titulo,
-      id_consultorio: props.exame.id_consultorio,
-      id_exame: props.exame.id_exame,
-      id_usuario: props.exame.id_usuario,
-      data_hora: props.exame.data_hora,
-    };
-    setTitulo(props.exame.titulo);
-    setExame(aux);
+    setConsulta(props.consulta);
     setCarregando(false);
   }
 
   async function setandoNomeConsultorioPorId() {
     const resposta = await managerService.GetConsultorioPorId(
-      exame.id_consultorio
+      consulta.id_consultorio
     );
     setConsultorioPorId(resposta.nome);
   }
 
   function setandoDataEHora() {
-    let dataString = String(exame.data_hora);
+    let dataString = String(consulta.data_hora);
     let dataFormatada = dataString.slice(0, 10);
     setData(dataFormatada);
-    const aux = new Date(exame.data_hora);
+    const aux = new Date(consulta.data_hora);
     let horas = aux.getHours();
     if (horas < 10) {
       horas = `0${horas}`;
@@ -176,27 +166,20 @@ function ModalEditarExame(props) {
     });
   }
 
+  function inputsFiltrados(value) {
+    setTipoRadio(value);
+  }
+
   function formatacaoDataHora() {
     try {
       const dataHora = `${data} ${hora}:00`;
-      exame.data_hora = dataHora;
+      consulta.data_hora = dataHora;
     } catch {
       alert("DataHora inválida.");
     }
   }
-  async function requisicaoExames() {
-    let aux;
-    const exames = await managerService.GetDadosExames();
-    exames.forEach((exame) => {
-      if (exame.titulo === titulo) {
-        aux = exame.id;
-      }
-    });
-    exame.id_exame = aux
-  }
 
-  async function requisicaoAtualizarExame() {
-    await requisicaoExames();
+  async function requisicaoAtualizarConsulta() {
     if (
       camposVazios.duracao_em_minutos === true ||
       camposVazios.hora === true ||
@@ -213,23 +196,24 @@ function ModalEditarExame(props) {
       return;
     } else {
       setCarregandoUpdate(true);
+      consulta.id_usuario = usuario.id;
       formatacaoDataHora();
-      delete exame.titulo;
-      await managerService.UpdateExame(exame.id, exame);
-      sleep(3000);
+      await managerService.UpdateConsulta(consulta.id, consulta);
       setCarregandoUpdate(false);
       props.fechandoModal();
       return;
     }
   }
 
-  function preenchendoDadosExame(e) {
+  function preenchendoDadosConsulta(e) {
     const { value, name } = e.target;
 
-    if (value) {
-      setCamposVazios({ ...camposVazios, [name]: false });
-    } else {
-      setCamposVazios({ ...camposVazios, [name]: true });
+    if (value !== consulta.descricao) {
+      if (value) {
+        setCamposVazios({ ...camposVazios, [name]: false });
+      } else {
+        setCamposVazios({ ...camposVazios, [name]: true });
+      }
     }
 
     if (e.target.name === "hora") {
@@ -240,17 +224,24 @@ function ModalEditarExame(props) {
       setData(e.target.value);
       setEditado(true);
       return data;
-    } else {
-      setExame({ ...exame, [name]: value });
+    } else if (e.target.name === "duracao_em_minutos") {
+      setConsulta({
+        ...consulta,
+        [e.target.name]: apenasNumeros(e.target.value),
+      });
       setEditado(true);
-      return exame;
+      return consulta;
+    } else {
+      setConsulta({ ...consulta, [name]: value });
+      setEditado(true);
+      return consulta;
     }
   }
 
   return (
     <Container>
       <Caixa>
-        <InfoDireita>
+        <InfoEsquerda>
           <Usuario>
             <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
             {carregando ? (
@@ -259,6 +250,21 @@ function ModalEditarExame(props) {
               <Nome>{usuario.nome}</Nome>
             )}
           </Usuario>
+          <TextAreaDescricao
+            border={tipoRadio}
+            placeholder="Adicione uma descrição"
+            rows={4}
+            name="descricao"
+            value={consulta.descricao}
+            onChange={preenchendoDadosConsulta}
+            style={{
+              borderWidth: "1px",
+              borderColor: Cores.azul,
+              color: "black",
+            }}
+          />
+        </InfoEsquerda>
+        <InfoDireita>
           <SelecioneUmaData>
             <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
             <InputData
@@ -271,7 +277,7 @@ function ModalEditarExame(props) {
               name="data"
               camposVazios={camposVazios.data}
               onChange={(e) => {
-                preenchendoDadosExame(e);
+                preenchendoDadosConsulta(e);
               }}
             ></InputData>
             {camposVazios.data ? <Rotulo>Escolha uma data</Rotulo> : <></>}
@@ -281,7 +287,7 @@ function ModalEditarExame(props) {
               <TextoSelecioneUmaData>Selecione um tipo:</TextoSelecioneUmaData>
               <Tooltip
                 placement="topLeft"
-                title={exame.titulo}
+                title={consulta.tipo}
                 color={Cores.azul}
               >
                 <Select
@@ -294,15 +300,14 @@ function ModalEditarExame(props) {
                   paddingTop="8px"
                   paddingBottom="8px"
                   size="large"
-                  value={exame.titulo}
-                  name="titulo"
+                  value={consulta.tipo}
+                  name="tipo"
                   placeholder="Tipo"
                   onChange={(e) => {
-                    setTitulo(e.target.value);
-                    preenchendoDadosExame(e);
+                    preenchendoDadosConsulta(e);
                   }}
                 >
-                  {TiposDeExame.map((tipo) => (
+                  {TiposDeConsulta.map((tipo) => (
                     <>
                       {carregando ? (
                         <Spin indicator={antIcon} />
@@ -334,10 +339,10 @@ function ModalEditarExame(props) {
                   }}
                   paddingTop="8px"
                   paddingBottom="8px"
-                  value={exame.id_consultorio}
+                  value={consulta.id_consultorio}
                   size="large"
                   onChange={(e) => {
-                    preenchendoDadosExame(e);
+                    preenchendoDadosConsulta(e);
                   }}
                 >
                   {consultorios.map((consultorio) => (
@@ -371,36 +376,61 @@ function ModalEditarExame(props) {
                 onBlur={(e) => (e.target.type = "text")}
                 placeholder="Horário"
                 name="hora"
-                onChange={preenchendoDadosExame}
+                onChange={preenchendoDadosConsulta}
                 style={{ color: "black" }}
                 camposVazios={camposVazios.hora}
               />
               {camposVazios.hora ? <Rotulo>Digite um horário</Rotulo> : <></>}
             </ContainerHorario>
+
+            <ContainerDuracaoConsulta>
+              <TextoDoisSelects>Selecione uma duração:</TextoDoisSelects>
+              <InputDuracao
+                value={consulta.duracao_em_minutos}
+                placeholder="Duração"
+                name="duracao_em_minutos"
+                onChange={preenchendoDadosConsulta}
+                suffix="min"
+                camposVazios={camposVazios.duracao_em_minutos}
+              />
+              {camposVazios.duracao_em_minutos ? (
+                <Rotulo>Digite uma duração</Rotulo>
+              ) : (
+                <></>
+              )}
+            </ContainerDuracaoConsulta>
           </DoisSelect>
 
-          <Button
-            width="80%"
-            height="50px"
-            backgroundColor={Cores.lilas[2]}
-            borderColor={Cores.azul}
-            color={Cores.azulEscuro}
-            fontSize="1.1em"
-            fontWeight="bold"
-            fontSizeMedia="0.9em"
-            fontSizeMedia950="1.1em"
-            onClick={() => requisicaoAtualizarExame()}
-          >
-            {carregandoUpdate ? (
-              <Spin indicator={antIcon} />
-            ) : (
-              <div>Editar Agendamento</div>
-            )}
-          </Button>
+          <ContainerBotaoCheckbox>
+            <ContainerNotificar>
+              <Checkbox>
+                <TextoCheckbox>Notificar paciente</TextoCheckbox>
+              </Checkbox>
+            </ContainerNotificar>
+
+            <Button
+              width="100%"
+              height="50px"
+              backgroundColor={Cores.lilas[2]}
+              borderColor={Cores.azul}
+              color={Cores.azulEscuro}
+              fontSize="0.7em"
+              fontSizeMedia950="0.65em"
+              fontSizeMedia480="0.60em"
+              fontWeight="bold"
+              onClick={() => requisicaoAtualizarConsulta()}
+            >
+              {carregandoUpdate ? (
+                <Spin indicator={antIcon} />
+              ) : (
+                <div>Editar Agendamento</div>
+              )}
+            </Button>
+          </ContainerBotaoCheckbox>
         </InfoDireita>
       </Caixa>
     </Container>
   );
 }
 
-export default ModalEditarExame;
+export default ModalEditarConsulta;

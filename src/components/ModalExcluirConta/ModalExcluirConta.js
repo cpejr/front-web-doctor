@@ -23,7 +23,6 @@ function ModalExcluirUsuario(props) {
   async function deletarEnderecoEUsuario() {
       setCarregandoDeletar(true);
       await managerService.DeletarEnderecoEUsuario(props.usuario.id_endereco);
-      await sleep(3000);
       redirecionamento("/login");
       setCarregandoDeletar(false);
   }

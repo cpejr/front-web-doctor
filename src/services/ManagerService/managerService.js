@@ -118,11 +118,36 @@ export const CriandoConsulta = async (consulta) => {
   return;
 };
 
+export const CriandoExame = async (exame) => {
+  await requesterService
+    .criarExame(exame)
+    .then(() => {
+      toast.success('Exame criado com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return;
+};
+
 export const UpdateConsulta = async (id_consulta, consulta) => {
   await requesterService
     .updateConsulta(id_consulta, consulta)
     .then(() => {
       toast.success('Consulta atualizada com sucesso!');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+  return;
+};
+export const UpdateExame = async (id_exame, exame) => {
+  await requesterService
+    .updateExameMarcado(id_exame, exame)
+    .then(() => {
+      toast.success("Exame atualizado com sucesso!");
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -261,12 +286,12 @@ export const GetDadosUsuarioPorToken = async (token_usuario) => {
   return { dadosUsuario };
 };
 
-export const GetDadosConsultorios = async () => {
+export const GetDadosConsultorios = async (filtro) => {
   let dadosConsultorios = {};
   let dadosEndereco = {};
 
   await requesterService
-    .requisicaoDadosConsultorios()
+    .requisicaoDadosConsultorios(filtro)
     .then((res) => {
       dadosConsultorios = res.data;
     })
@@ -284,6 +309,22 @@ export const GetDadosConsultorios = async () => {
     });
   return { dadosEndereco, dadosConsultorios };
 };
+
+export const GetDadosExames = async () => {
+  let dadosExames = {};
+
+  await requesterService
+    .requisicaoDadosExames()
+    .then((res) => {
+      dadosExames = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+
+  return dadosExames;
+};
+
 
 export const GetConsultorioPorId = async (id) => {
   let dadosConsultorio = {};
