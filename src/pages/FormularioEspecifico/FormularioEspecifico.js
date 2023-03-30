@@ -234,7 +234,7 @@ function FormularioEspecifico(props) {
     setStatusSelect(value);
   }
 
-  async function salvaWord(docxWord) {
+  async function salvaWordSomentePerguntas(docxWord) {
     const perguntas = Object.values(docxWord.perguntas.properties);
 
     let arrayParagrafos = [];
@@ -766,7 +766,7 @@ function FormularioEspecifico(props) {
                 marginTop="0%"
                 marginLeft="0%"
                 fontSizeMedia950="0.9em"
-                onClick={() => salvaWord(formularioEspecifico)}
+                onClick={() => salvaWordSomentePerguntas(formularioEspecifico)}
               >
                 Gerar documento Word
               </Button>
