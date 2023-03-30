@@ -234,6 +234,109 @@ function FormularioEspecifico(props) {
     setStatusSelect(value);
   }
 
+  async function salvaWordSomentePerguntas(docxWord) {
+    const perguntas = Object.values(docxWord.perguntas.properties);
+
+    let arrayParagrafos = [];
+
+    perguntas.forEach((pergunta, index) => {
+      const conteudoPergunta = pergunta.title
+      arrayParagrafos.push(
+        new TextRun({
+          text: `Pergunta: ${conteudoPergunta}`,
+          bold: true,
+          break: 6
+        })
+      )
+    });
+
+    const doc = new Document({
+      sections: [{
+        properties: {
+          type: SectionType.CONTINUOUS,
+        },
+        children: [
+          new Paragraph({
+            children: [
+              new ImageRun({
+                data: logoWord,
+                transformation: {
+                  width: 600,
+                  height: 150
+                },
+                floating: {
+                  horizontalPosition: {
+                    relative: HorizontalPositionRelativeFrom.TOP_MARGIN,
+                    align: HorizontalPositionAlign.CENTER,
+                  },
+                  verticalPosition: {
+                    relative: VerticalPositionRelativeFrom.TOP_MARGIN,
+                    align: VerticalPositionAlign.TOP,
+                  },
+                  wrap: {
+                    type: TextWrappingType.TOP_AND_BOTTOM,
+                    side: TextWrappingSide.LARGEST,
+                  },
+                  margins: {
+                    top: 201440,
+                    bottom: 201440,
+                  },
+                }
+              })
+            ]
+          }),
+          new Paragraph({
+            alignment: AlignmentType.CENTER,
+            children: [
+              new TextRun({
+                text: `${docxWord.titulo}`,
+                bold: true,
+                size: 28,
+              }),
+            ],
+          }),
+          new Paragraph({
+            children: arrayParagrafos,
+          }),
+          new Paragraph({
+            children: [
+              new ImageRun({
+                data: footerWord,
+                transformation: {
+                  width: 800,
+                  height: 120
+                },
+                floating: {
+                  horizontalPosition: {
+                    relative: HorizontalPositionRelativeFrom.TOP_AND_BOTTOM,
+                    align: HorizontalPositionAlign.CENTER,
+                  },
+                  verticalPosition: {
+                    relative: VerticalPositionRelativeFrom.BOTTOM_MARGIN,
+                    align: VerticalPositionAlign.BOTTOM,
+                  },
+                  wrap: {
+                    type: TextWrappingType.TOP_AND_BOTTOM,
+                    side: TextWrappingSide.LARGEST,
+                  },
+                  margins: {
+                    top: 201440,
+                    bottom: 201440,
+                  },
+                }
+              })
+            ]
+          }),
+        ],
+      }],
+    });
+
+    await Packer.toBlob(doc).then(blob => {
+      saveAs(blob,
+        "Perguntas do Formulário " + docxWord.titulo)
+    })
+  }
+
   async function enviarLembrete(usuarioSelecionado) {
     setCarregando(true)
     const Token =
@@ -651,7 +754,7 @@ function FormularioEspecifico(props) {
                 Visualizar Perguntas
               </Button>
               <Button
-                backgroundColor="green"
+                backgroundColor={Cores.lilas[2]}
                 borderRadius="3px"
                 borderWidth="1px"
                 borderColor={Cores.preto}
@@ -663,6 +766,7 @@ function FormularioEspecifico(props) {
                 marginTop="0%"
                 marginLeft="0%"
                 fontSizeMedia950="0.9em"
+                onClick={() => salvaWordSomentePerguntas(formularioEspecifico)}
               >
                 Gerar documento Word
               </Button>
