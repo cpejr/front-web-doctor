@@ -14,9 +14,13 @@ const Button = styled.button`
   margin-left: ${(props) => props.marginLeft};
   margin-right: ${(props) => props.marginRight};
   min-width: ${(props) => props.minWidth};
+  max-width: ${(props) => props.maxWidth};
+  min-height: ${(props) => props.minHeight};
+  max-height: ${(props) => props.maxHeight};
   padding-top: ${(props) => props.paddingTop};
   padding-left: ${(props) => props.paddingLeft};
   padding-right: ${(props) => props.paddingRight};
+  padding-bottom: ${(props) => props.paddingBottom};
   height: ${(props) => props.height};
   gap: ${(props) => props.gap};
   width: ${(props) => props.width};
@@ -49,7 +53,7 @@ const Button = styled.button`
     width: ${(props) => props.widthMedia ?? props.width};
   }
 
-  @media (max-width: 600px){ 
+  @media (max-width: 600px) {
     width: ${(props) => props.widthMedia600};
   }
 
@@ -61,7 +65,7 @@ const Button = styled.button`
     height: ${(props) => props.heightMedia920};
   }
 
-  @media (max-width: 670px){ 
+  @media (max-width: 670px) {
     width: ${(props) => props.widthMedia670};
   }
 
@@ -73,9 +77,9 @@ const Button = styled.button`
     height: ${(props) => props.heightMedia640};
   }
 
-  @media (max-width: 800px)
-  {
-    margin-top: ${(props) => props.marginTopMedia ?? ((props) => props.marginTop?? "2%")};
+  @media (max-width: 800px) {
+    margin-top: ${(props) =>
+      props.marginTopMedia ?? ((props) => props.marginTop ?? "2%")};
   }
 
   @media (max-width: 400px)

@@ -673,7 +673,97 @@ export const GetResposta = async (id) => {
     });
   return dadosResposta;
 };
+export const GetIndicacaoEspecifica = async () => {
+  let dadosIndicacaoEspecifica = {};
 
+  await requesterService
+    .requisicaoIndicacaoEspecifica()
+
+    .then((res) => {
+      dadosIndicacaoEspecifica = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosIndicacaoEspecifica;
+};
+export const GetMedicosIndicadosPorID = async (id_indicacao_especifica) => {
+  let dadosMedicosIndicadosID = {};
+
+  await requesterService
+    .requisicaoMedicosIndicados(id_indicacao_especifica)
+
+    .then((res) => {
+      dadosMedicosIndicadosID = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosMedicosIndicadosID;
+};
+
+export const IndicandoMedicos = async (
+  id_indicacao_especifica,
+  nome,
+  telefone,
+  local_atendimento,
+  usarToast = {
+    mensagemSucesso: 'Operação bem sucedida',
+    tempo: 1500,
+    onClose: () => {},
+  }
+) => {
+  return requesterService
+    .indicarMedico(
+      id_indicacao_especifica,
+      nome,
+      telefone,
+      local_atendimento,
+    )
+    .then(() => {
+      if (usarToast) {
+        toast.success(usarToast.mensagemSucesso, {
+          autoClose: usarToast.tempo,
+          onClose: usarToast.onClose,
+        });
+      }
+      return true;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+};
+export const EditarMedicoIndicado = async (id, estado) => {
+  await requesterService
+    .alterarMedicoIndicado(id, estado)
+    .then(() => {
+      toast.success('Indicação atualizada com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+
+  return;
+};
+export const DeletarIndicao = async (id) => {
+  await requesterService
+    .deletarMedicoIndicado(id)
+    .then(() => {
+      toast.success('Indicação deletada com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(
+        error,
+        () => (window.location.href = '/web/edicaoindicacoesesugestoes')
+      );
+
+      return false;
+    });
+
+  return false;
+};
 export const GetFormularioPacientesPorFormulario = async (id_formulario) => {
   let dadosResposta = {};
 

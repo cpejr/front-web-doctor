@@ -24,6 +24,8 @@ import FormularioEspecifico from './pages/FormularioEspecifico';
 import Home from './pages/Home/Home';
 import CriacaoReceitas from './pages/CriacaoReceitas';
 import UploadReceita from './pages/UploadReceita';
+import EdicaoIndicacoesESugestoes from './pages/EdicaoIndicacoesESugestoes/EdicaoIndicacoesESugestoes';
+import EdicaoSobreMim from './pages/EdicaoSobreMim';
 
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
@@ -190,6 +192,12 @@ function UserHeader() {
           exact
           path='/web/formularioespecifico'
           component={FormularioEspecifico}
+        />
+
+        <RotasPrivadas
+          exact
+          path='/web/edicaoindicacoesesugestoes'
+          component={EdicaoIndicacoesESugestoes}
         />
 
         <RotasPrivadas exact path='/web/home' component={Home} />
