@@ -91,7 +91,7 @@ function EdicaoConteudo() {
                     marginBottom="5%"
                     widthMedia600="75%"
                 // onClick={() => {
-                //   history.push("/web/Home");
+                //   history.push("/web/edicaoindicacoesesugestoes");
                 // }}
                 >
                     Indicações e Sugestões
