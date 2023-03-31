@@ -107,11 +107,11 @@ function ModalIndicacao({ dadosIndicacao,medicosIndicados,idIndicado, carregando
         </Button>
         <Button
           gap="5px"
-          backgroundColor={Cores.azul}
+          backgroundColor="#f8d6cf"
           fontSize="1.1em"
           width="100%"
-          borderColor={Cores.azulEscuro}
-          color={Cores.branco}
+          borderColor={Cores.vermelho}
+          color={Cores.preto}
           height="30px"
           onClick={abrirModalExcluirIndicacao}
         >
