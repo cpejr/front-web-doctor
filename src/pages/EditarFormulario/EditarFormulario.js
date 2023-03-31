@@ -117,13 +117,11 @@ function EditarFormulario(props) {
   }
 
   function preenchendoDados(e) {
-    console.log(camposVazios)
     if (e.target.value !== "") {
       setCamposVazios({ ...camposVazios, [e.target.name]: false });
     } else {
       setCamposVazios({ ...camposVazios, [e.target.name]: true });
     }
-    console.log(camposVazios)
     setCampos({ ...campos, [e.target.name]: e.target.value });
   }
   function alterandoVisualizacao() {

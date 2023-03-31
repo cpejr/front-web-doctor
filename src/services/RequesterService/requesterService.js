@@ -200,7 +200,6 @@ export const enviarFormularioPaciente = (
    });
 
 
-
 export const deleteFotoDePerfil = (id, base64) =>
   api.put(`/usuariosdeletarimagem/${id}`, {
     file: base64,
@@ -273,3 +272,21 @@ export const atualizarSobreMim = (id, dados) =>
   });
 
 export const deletarSobreMim = (id) => api.delete(`/sobre_mims/${id}`);
+
+
+export const updateDadosHomes = (id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video) =>
+  api.put(`/homes/${id}`, { titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video });
+;
+
+export const requisicaoCarrossel = () =>
+  api.get(`/imagem_carrossels/`);
+
+export const updateImagemCarrossel = (id, base64) =>
+  api.put(`/imagem_carrossels_img/${id}`, {
+    file: base64
+  });
+
+  export const updateImagemHomes = (id, base64) =>
+  api.put(`/homesImagem/${id}`, {
+    file: base64
+  } );

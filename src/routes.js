@@ -7,6 +7,8 @@ import AreaReceitas from './pages/AreaReceitas';
 import Cadastro from './pages/Cadastro';
 import Chat from './pages/Chat';
 import CriacaoFormulario from './pages/CriacaoFormulario';
+import EdicaoHome from './pages/EdicaoHome';
+import EdicaoSobreMim from './pages/EdicaoSobreMim';
 import Header from './components/Header/Header';
 import ListaFormularios from './pages/ListaFormularios';
 import ListaUsuarios from './pages/ListaUsuarios';
@@ -24,6 +26,7 @@ import CriacaoReceitas from './pages/CriacaoReceitas';
 import UploadReceita from './pages/UploadReceita';
 import EdicaoIndicacoesESugestoes from './pages/EdicaoIndicacoesESugestoes/EdicaoIndicacoesESugestoes';
 import EdicaoSobreMim from './pages/EdicaoSobreMim';
+
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
   <Route
@@ -143,6 +146,11 @@ function UserHeader() {
           exact
           path='/web/editarformulario'
           component={EditarFormulario}
+        />
+        <RotasPrivadasMedico
+          exact
+          path='/web/edicaohome'
+          component={EdicaoHome}
         />
         <RotasPrivadasMedico
           path="/web/edicaosobremim"

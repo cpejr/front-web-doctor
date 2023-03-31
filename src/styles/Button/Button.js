@@ -111,5 +111,8 @@ const Button = styled.button`
   @media (max-width: 571px) {
     width: ${(props) => props.widthres};
   }
+   @media (min-width: 361px) {
+    font-size: ${(props) => props.fontSizeMedia361};
+  }
 `;
 export default Button;
