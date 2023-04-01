@@ -142,7 +142,6 @@ export const Receitas = styled.div`
   border-width: 2px;
   border-radius: 3px;
   padding: 2%;
-  background-color: green;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
   height: 30%;
 
@@ -359,18 +358,28 @@ export const Formulario = styled.div`
 `;
 export const Receita = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
   border-style: solid;
   border-color: ${Cores.azul};
   border-width: 2px;
   border-radius: 3px;
-  padding: 0 2% 2% 2%;
+  justify-content: center;
+  padding: 0% 2% 2% 2%;
+  margin: 2% 0% 2% 0%;
+  background-color: ${Cores.azulClaro};
 `;
 export const DadosReceita = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-end;
-  padding: 0% 10% 0% 10%;
+  justify-content: space-around;
+  align-items: flex-start;
+
+  @media (max-width: 560px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 export const BotaoReceita = styled.div`
   display: flex;
@@ -459,11 +468,40 @@ export const RespostaPendente = styled.div`
   width: 100%;
 `;
 export const TituloReceita = styled.div`
+  font-size: 1.3em;
   text-decoration: ${(props) => props.textDecoration};
-  color: ${(props) => props.color};
-  font-size: ${(props) => props.fontSize};
+  color: ${Cores.preto};
+  display: flex;
+  justify-content: ${(props) => props.justifyContent};
+  width: 33%;
+  height: fit-content;
+  word-break: break-all;
+
+  :hover {
+    cursor: pointer;
+  }
+
+  @media (max-width: 780px) {
+    font-size: 1.2em;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  @media (max-width: 560px) {
+    font-size: 1.1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 `;
 
 export const TextoUrgencia = styled.div`
   margin-right: 2%;
+`;
+
+export const CaixaBaixarPdf = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
 `;

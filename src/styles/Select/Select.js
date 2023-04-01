@@ -35,6 +35,9 @@ const Select = styled.select`
 	@media (max-width: 290px) {
 		font-size: ${(props) => props.fontSize290 ?? "0.9em"};
 	}
+	@media (max-width: 320px) {
+		margin-bottom: ${(props) => props.marginBottomMedia320};
+	}
 
 	option {
 		border-color: ${(props) => props.borderColor};

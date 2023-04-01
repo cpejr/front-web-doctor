@@ -21,7 +21,7 @@ import { toast } from "react-toastify";
 import { sleep } from "../../utils/sleep";
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as managerService from "../../services/ManagerService/managerService";
-
+import { Checkbox } from 'antd';
 function EditarFormulario(props) {
   const [formularios, setFormularios] = useState();
   const [carregando, setCarregando] = useState(true);
@@ -43,6 +43,7 @@ function EditarFormulario(props) {
     tipo: true,
     finalidade: true,
     urgencia: true,
+    visualizacao_secretaria: true,
   });
 
   const [teste, setTeste] = useState({
@@ -50,6 +51,7 @@ function EditarFormulario(props) {
     tipo: true,
     finalidade: true,
     urgencia: true,
+    visualizacao_secretaria: true,
   });
 
   const antIcon = (
@@ -106,6 +108,7 @@ function EditarFormulario(props) {
       toast.error("Preencha algum campo para atualizar.");
       setCarregandoBotaoAtualizar(false);
     } else {
+      campos.visualizacao_secretaria = formularios.visualizacao_secretaria
       await managerService.EditarFormularios(formularios.id, campos);
       await sleep(1000);
       document.location.reload(true);
@@ -119,10 +122,17 @@ function EditarFormulario(props) {
     } else {
       setCamposVazios({ ...camposVazios, [e.target.name]: true });
     }
-
     setCampos({ ...campos, [e.target.name]: e.target.value });
   }
+  function alterandoVisualizacao() {
+    if (formularios.visualizacao_secretaria === false) {
+      formularios.visualizacao_secretaria = true
+    } else {
+      formularios.visualizacao_secretaria = false
+    }
 
+    camposVazios.visualizacao_secretaria = false
+  }
   async function abrindoModal() {
     setModalAlterar(true);
   }
@@ -220,6 +230,10 @@ function EditarFormulario(props) {
                 3
               </option>
             </Select>
+            <Checkbox
+              defaultChecked={formularios.visualizacao_secretaria}
+              camposVazios={camposVazios.visualizacao_secretaria}
+              onChange={alterandoVisualizacao}>Permitir a visualização da secretária</Checkbox>
             <Button
               height="50px"
               width="100%"

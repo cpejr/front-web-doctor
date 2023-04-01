@@ -8,7 +8,7 @@ import {
   ContainerModalCodigo,
   Titulo,
   TextoCheckbox,
-  Select,
+  SelectPaciente,
   SelectContainer,
   CheckboxContainer,
 } from "./Styles";
@@ -17,61 +17,128 @@ import Button from "../../styles/Button";
 import * as managerService from "../../services/ManagerService/managerService";
 
 function ModalEnvioFormulario(props) {
-  const [formularioPaciente, setFormularioPaciente] = useState();
+  const [idUsuario, setIdUsuario] = useState();
+  const [enviarNotificacao, setEnviarNotificacao] = useState(false);
   const [carregando, setCarregando] = useState(false);
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 22, color: Cores.azul }} spin />
   );
 
+  // useEffect(() => {
+  //   setandoMensagem(formularioPaciente.tipo);
+  // }, [formularioPaciente]);
+
   async function enviandoFormularioPaciente() {
     setCarregando(true);
-    if (formularioPaciente) {
-      await managerService.EnviandoFormularioPaciente(
-        false,
-        false,
-        props.idFormulario,
-        formularioPaciente
-      );
-      await sleep(2000);
-      setCarregando(false);
-      await sleep(1000);
-      props.fechandoModal()
+    if (idUsuario) {
+      if (enviarNotificacao === false) {
+        await managerService.EnviandoFormularioPaciente(
+          false,
+          false,
+          props.idFormulario,
+          idUsuario
+        );
+        await sleep(2000);
+        setCarregando(false);
+        await sleep(1000);
+        props.fechandoModal()
+
+      } else if (enviarNotificacao === true) {
+        await managerService.EnviandoFormularioPaciente(
+          false,
+          true,
+          props.idFormulario,
+          idUsuario
+        );
+
+        const Token =
+          await managerService.TokenById(idUsuario);
+        for (var i = 0; i <= Token.length - 1; i++) {
+          const Message = {
+            to: Token[i].token_dispositivo.replace("expo/", ''),
+            sound: 'default',
+            title: 'Doctor App',
+            body: "Você tem um novo formulário enviado!",
+          };
+
+          fetch('https://exp.host/--/api/v2/push/send', {
+            method: 'POST',
+            body: JSON.stringify(Message),
+          }
+          );
+        }
+        setCarregando(false);
+        toast.success('Notificação encaminhada para o paciente.');
+        setEnviarNotificacao(false)
+        await sleep(1000);
+        props.fechandoModal()
+      };
     } else {
       toast.error("Escolha um paciente para enviar o formulario");
     }
-    setCarregando(false);
   }
 
   async function preenchendoDados(e) {
-    setFormularioPaciente(e.target.value);
+    setIdUsuario(e);
   }
+
+  const ordenarusuarios = (a, b) => {
+		var nome1 = a.nome.toUpperCase();
+		var nome2 = b.nome.toUpperCase();
+	
+		  if (nome1 > nome2) {
+			return 1;
+		  } else {
+			return -1;
+		  };
+    }
+    
+  	function maiusculaMinuscula (match, input) {
+      return match
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .includes(
+        input
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .trim()
+        );
+      }
 
   return (
     <>
       <ContainerModalCodigo>
         <Titulo>Enviar formulário para:</Titulo>
         <SelectContainer borderWidth="2px" width="100%">
-          <Select
-            id="id_usuario"
+          <SelectPaciente
             name="id_usuario"
             marginTop="0px"
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
             onChange={preenchendoDados}
+            placeholder="Escolha o Paciente"
+            showSearch
+           					filterOption={(inputValue, option) =>
+              				maiusculaMinuscula(option.children, inputValue)
+            				}
           >
-            {props.usuarios?.map((valor) => (
+            {props.usuarios?.sort(ordenarusuarios).map((valor) => (
               <>
-                <option value="" disabled selected>
-                  Escolha o Paciente:
-                </option>
                 <option value={valor.id}>{valor.nome}</option>
               </>
             ))}
-          </Select>
+          </SelectPaciente>
         </SelectContainer>
         <CheckboxContainer>
-          <Checkbox>
+          <Checkbox
+            status={enviarNotificacao ? "checked" : "unchecked"}
+            onChange={() => {
+              setEnviarNotificacao(!enviarNotificacao)
+            }}
+          >
             <TextoCheckbox>Notificar paciente</TextoCheckbox>
           </Checkbox>
         </CheckboxContainer>
