@@ -70,7 +70,7 @@ function EdicaoConteudo() {
           marginBottom="5%"
           widthMedia600="75%"
           onClick={() => {
-            history.push("/web/edicaocomentario");
+            history.push("/web/edicaocomentarios");
           }}
         >
           Comentários

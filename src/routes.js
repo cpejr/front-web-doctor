@@ -184,6 +184,12 @@ function UserHeader() {
           component={EdicaoConteudo} 
  
         /> 
+        <RotasPrivadasMedico 
+          exact  
+          path='/web/edicaocomentarios' 
+          component={EdicaoComentarios} 
+ 
+        /> 
         <RotasPrivadas exact path='/web/perfil' component={Perfil} />
         <RotasPrivadas
           exact
