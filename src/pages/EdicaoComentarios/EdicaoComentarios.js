@@ -118,8 +118,8 @@ function EdicaoComentarios() {
               <ContainerBotoes>
                 <TextoIcone>
                   <Button
-                    backgroundColor={Cores.lilas[1]}
-                    borderColor={Cores.azul}
+                    backgroundColor={Cores.azulEscuro}
+                    borderColor="transparent"
                     color={Cores.branco}
                     fontWeight='medium'
                     fontSize='1.6em'
