@@ -8,6 +8,7 @@ import Cadastro from './pages/Cadastro';
 import Chat from './pages/Chat';
 import CriacaoFormulario from './pages/CriacaoFormulario';
 import EdicaoHome from './pages/EdicaoHome';
+import EdicaoIndicacoesESugestoes from './pages/EdicaoIndicacoesESugestoes/EdicaoIndicacoesESugestoes';
 import EdicaoSobreMim from './pages/EdicaoSobreMim';
 import Header from './components/Header/Header';
 import ListaFormularios from './pages/ListaFormularios';
@@ -24,8 +25,7 @@ import FormularioEspecifico from './pages/FormularioEspecifico';
 import Home from './pages/Home/Home';
 import CriacaoReceitas from './pages/CriacaoReceitas';
 import UploadReceita from './pages/UploadReceita';
-import EdicaoIndicacoesESugestoes from './pages/EdicaoIndicacoesESugestoes/EdicaoIndicacoesESugestoes';
-import EdicaoSobreMim from './pages/EdicaoSobreMim';
+
 
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
