@@ -72,14 +72,14 @@ function CriacaoFormulario() {
     setEstado({ ...estado, [e.target.name]: e.target.value });
   }
   function mudandoVisualizacao() {
-    if(visualizar === false)
-     setVisualizacao(true)
+    if (visualizar === false)
+      setVisualizacao(true)
     else
-     setVisualizacao(false)
+      setVisualizacao(false)
 
     console.log(visualizar)
   }
-    
+
   async function requisicaoFormularios() {
     if (!estado.finalidade) errors.finalidade = true;
     if (!estado.tipo) errors.tipo = true;
@@ -92,21 +92,21 @@ function CriacaoFormulario() {
       if (campoPerguntas === false) {
         toast.warn('Adicione alguma pergunta.');
       } else {
-        if(visualizar === false){
-        setCarregandoCriacao(true);
-        estado.visualizacao_secretaria = false;
-        await managerService.CriarFormulario(estado);
-        await sleep(1500);
-        setCarregandoCriacao(false);
-        window.location.href = '/web/listaformularios';
+        if (visualizar === false) {
+          setCarregandoCriacao(true);
+          estado.visualizacao_secretaria = false;
+          await managerService.CriarFormulario(estado);
+          await sleep(1500);
+          setCarregandoCriacao(false);
+          window.location.href = '/web/listaformularios';
         }
-        if(visualizar === true){
+        if (visualizar === true) {
           setCarregandoCriacao(true);
           estado.visualizacao_secretaria = true;
           await managerService.CriarFormulario(estado);
           await sleep(1500);
           setCarregandoCriacao(false);
-          window.location.href = '/web/listaformularios'; 
+          window.location.href = '/web/listaformularios';
         }
       }
     } else {
@@ -154,33 +154,33 @@ function CriacaoFormulario() {
           onChange={preenchendoDados}
         ></Input>
         <TitulosInput>Urgência:</TitulosInput>
-        
-          <Select
-            id='urgencia'
-            marginTop='0px'
-            backgroundColor={Cores.cinza[7]}
-            color={Cores.preto}
-            name='urgencia'
-            camposVazios={camposVazios.urgencia}
-            onChange={preenchendoDados}
-            borderWidth='2px'
-            width='100%'
-            marginBottom="2%"
-          >
-            <option value=''>Urgência</option>
-            <option value='1' borderColor={Cores.azul}>
-              1
-            </option>
-            <option value='2' borderColor={Cores.azul}>
-              2
-            </option>
-            <option value='3' borderColor={Cores.azul}>
-              3
-            </option>
-          </Select>
-         
+
+        <Select
+          id='urgencia'
+          marginTop='0px'
+          backgroundColor={Cores.cinza[7]}
+          color={Cores.preto}
+          name='urgencia'
+          camposVazios={camposVazios.urgencia}
+          onChange={preenchendoDados}
+          borderWidth='2px'
+          width='100%'
+          marginBottom="2%"
+        >
+          <option value=''>Urgência</option>
+          <option value='1' borderColor={Cores.azul}>
+            1
+          </option>
+          <option value='2' borderColor={Cores.azul}>
+            2
+          </option>
+          <option value='3' borderColor={Cores.azul}>
+            3
+          </option>
+        </Select>
+
         <Checkbox
-           onChange={mudandoVisualizacao}
+          onChange={mudandoVisualizacao}
         >Permitir a visualização da secretária
         </Checkbox>
         <Button
