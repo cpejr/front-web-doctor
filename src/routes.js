@@ -7,6 +7,7 @@ import AreaReceitas from './pages/AreaReceitas';
 import Cadastro from './pages/Cadastro';
 import Chat from './pages/Chat';
 import CriacaoFormulario from './pages/CriacaoFormulario';
+import EdicaoComentarios from './pages/EdicaoComentarios';
 import EdicaoHome from './pages/EdicaoHome';
 import EdicaoIndicacoesESugestoes from './pages/EdicaoIndicacoesESugestoes/EdicaoIndicacoesESugestoes';
 import EdicaoSobreMim from './pages/EdicaoSobreMim';
@@ -175,6 +176,12 @@ function UserHeader() {
           exact
           path='/web/uploadreceita'
           component={UploadReceita}
+
+        />
+        <RotasPrivadasMedico
+          exact
+          path='/web/edicaocomentarios'
+          component={EdicaoComentarios}
 
         />
         <RotasPrivadas exact path='/web/perfil' component={Perfil} />
