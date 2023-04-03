@@ -92,12 +92,21 @@ export const Usuario = styled.div`
   width: 100%;
   height: 60px;
   padding: 0% 1% 0% 1%;
-  border-color: ${Cores.preto};
+  border-color: ${(props) => {
+      let valido;
+      if (props.Valido === true) {
+        valido = "black";
+      } else {
+        valido = "red";
+      }
+
+      return valido;
+    }};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
-  margin-bottom: 10%;
+  margin-bottom: 0%;
   overflow: auto;
   min-height:60px;
   
@@ -244,6 +253,7 @@ export const DoisSelect = styled.h3`
 export const Select = styled.select`
   border-color: ${Cores.preto};
   border-width: 1px;
+  
 `;
 
 export const TamanhoInput = styled.div`
@@ -253,7 +263,7 @@ export const TamanhoInput = styled.div`
   justify-content: center;
   width: 40%;
   height: 40px;
-  margin-top: 5%;
+  margin-top: 0%;
   @media  (max-width: 601px) and (min-width: 560px) {
     margin-bottom: 5%;
   }
@@ -276,6 +286,7 @@ export const InputConsultorio = styled.div`
   justify-content: center;
   width: 40%;
   height: 40px;
+  margin-top: 0%;
 
   @media (max-width: 1260px) and (min-width: 280px) {
     width: 90%;
@@ -292,6 +303,7 @@ export const ContainerDuracaoConsulta = styled.div`
   justify-content: center;
   width: 40%;
   height: 40px;
+  margin-top: 5%;
  
   @media (max-width: 1260px) and (min-width: 280px) {
     width: 90%;
@@ -328,18 +340,15 @@ export const InputData = styled.input`
   border-radius: 3px;
   border-width: 1px;
   border-color: ${(props) => {
-    let cor;
-    if (!props.borderColor) {
-      if (props.camposVazios) {
-        cor = Cores.vermelho;
+      let valido;
+      if (props.Valido === true) {
+        valido = "black";
       } else {
-        cor = Cores.azul;
+        valido = "red";
       }
-    } else {
-      cor = props.borderColor;
-    }
-    return cor;
-  }};
+
+      return valido;
+    }};
 `;
 
 export const InputHora = styled(Input)`
@@ -356,18 +365,15 @@ export const InputHora = styled(Input)`
   border-radius: 3px;
   border-width: 1px;
   border-color: ${(props) => {
-    let cor;
-    if (!props.borderColor) {
-      if (props.erro || props.camposVazios) {
-        cor = Cores.vermelho;
+      let valido;
+      if (props.Valido === true) {
+        valido = "black";
       } else {
-        cor = Cores.azul;
+        valido = "red";
       }
-    } else {
-      cor = props.borderColor;
-    }
-    return cor;
-  }};
+
+      return valido;
+    }};
 
   ::placeholder {
     color:${Cores.preto}
@@ -391,18 +397,15 @@ export const InputDuracao = styled(Input)`
   border-radius: 3px;
   border-width: 1px;
   border-color: ${(props) => {
-    let cor;
-    if (!props.borderColor) {
-      if (props.camposVazios) {
-        cor = Cores.vermelho;
+      let valido;
+      if (props.Valido === true) {
+        valido = "black";
       } else {
-        cor = Cores.azul;
+        valido = "red";
       }
-    } else {
-      cor = props.borderColor;
-    }
-    return cor;
-  }};
+
+      return valido;
+    }};
 
   .ant-input {
     ::placeholder {

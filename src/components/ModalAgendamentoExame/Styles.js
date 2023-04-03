@@ -56,12 +56,20 @@ export const Usuario = styled.div`
   width: 100%;
   height: 60px;
   padding: 0% 1% 0% 1%;
-  border-color: ${Cores.preto};
+  border-color: ${(props) => {
+      let valido;
+      if (props.Valido === true) {
+        valido = "black";
+      } else {
+        valido = "red";
+      }
+
+      return valido;
+    }};
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
   box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.2);
-  margin-bottom: 10%;
   overflow: auto;
   min-height:60px;
   
@@ -319,7 +327,16 @@ export const InputData = styled.input`
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
-  border-color: ${Cores.azul};
+  border-color: ${(props) => {
+      let valido;
+      if (props.Valido === true) {
+        valido = "black";
+      } else {
+        valido = "red";
+      }
+
+      return valido;
+    }};
 `;
 
 export const InputHora = styled(Input)`
@@ -335,7 +352,16 @@ export const InputHora = styled(Input)`
   border-style: solid;
   border-radius: 3px;
   border-width: 1px;
-  border-color: ${Cores.azul};
+  border-color: ${(props) => {
+      let valido;
+      if (props.Valido === true) {
+        valido = "black";
+      } else {
+        valido = "red";
+      }
+
+      return valido;
+    }};
   
   ::placeholder {
     color:${Cores.preto}
