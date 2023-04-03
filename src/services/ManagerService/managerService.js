@@ -695,7 +695,97 @@ export const GetResposta = async (id) => {
     });
   return dadosResposta;
 };
+export const GetIndicacaoEspecifica = async () => {
+  let dadosIndicacaoEspecifica = {};
 
+  await requesterService
+    .requisicaoIndicacaoEspecifica()
+
+    .then((res) => {
+      dadosIndicacaoEspecifica = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosIndicacaoEspecifica;
+};
+export const GetMedicosIndicadosPorID = async (id_indicacao_especifica) => {
+  let dadosMedicosIndicadosID = {};
+
+  await requesterService
+    .requisicaoMedicosIndicados(id_indicacao_especifica)
+
+    .then((res) => {
+      dadosMedicosIndicadosID = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosMedicosIndicadosID;
+};
+
+export const IndicandoMedicos = async (
+  id_indicacao_especifica,
+  nome,
+  telefone,
+  local_atendimento,
+  usarToast = {
+    mensagemSucesso: 'Operação bem sucedida',
+    tempo: 1500,
+    onClose: () => {},
+  }
+) => {
+  return requesterService
+    .indicarMedico(
+      id_indicacao_especifica,
+      nome,
+      telefone,
+      local_atendimento,
+    )
+    .then(() => {
+      if (usarToast) {
+        toast.success(usarToast.mensagemSucesso, {
+          autoClose: usarToast.tempo,
+          onClose: usarToast.onClose,
+        });
+      }
+      return true;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+};
+export const EditarMedicoIndicado = async (id, estado) => {
+  await requesterService
+    .alterarMedicoIndicado(id, estado)
+    .then(() => {
+      toast.success('Indicação atualizada com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+
+  return;
+};
+export const DeletarIndicao = async (id) => {
+  await requesterService
+    .deletarMedicoIndicado(id)
+    .then(() => {
+      toast.success('Indicação deletada com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(
+        error,
+        () => (window.location.href = '/web/edicaoindicacoesesugestoes')
+      );
+
+      return false;
+    });
+
+  return false;
+};
 export const GetFormularioPacientesPorFormulario = async (id_formulario) => {
   let dadosResposta = {};
 
@@ -866,7 +956,6 @@ export const DeletarReceita = async (id) => {
 
 export const GetArquivoPorChave = async (chave) => {
   let arquivo = '';
-
   await requesterService
     .requisicaoArquivo(chave)
 
@@ -877,6 +966,7 @@ export const GetArquivoPorChave = async (chave) => {
       requisicaoErro(error);
     });
   return arquivo;
+  
 };
 
 export const CriandoConversa = async (
@@ -1117,6 +1207,21 @@ export const getTokenDispositivo = async (token_dispositivo) => {
   return token;
 };
 
+export const GetImagensCarrossel = async () => {
+  let dadosCarrossel = {};
+
+  await requesterService
+    .requisicaoCarrossel()
+
+    .then((res) => {
+      dadosCarrossel = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosCarrossel;
+};
+
 export const GetHomes = async () => {
   let dadosHomes = {};
 
@@ -1147,7 +1252,6 @@ export const enviarArquivoMensagem = async (file) => {
     });
   return id;
 };
-
 
 export const requisicaoSobreMimDados = async () => {
   let sobreMimDados = {};
@@ -1197,4 +1301,51 @@ export const deletarSobreMim = async (id) => {
     .catch((error) => {
       requisicaoErro(error);
     });
+};
+
+
+export const UpdateDadosHomes = async (
+  id,
+  titulo_um, 
+  texto_um, 
+  titulo_dois, 
+  texto_dois, 
+  titulo_tres, 
+  texto_tres, 
+  titulo_quatro, 
+  texto_quatro,
+  video
+) => {
+  await requesterService
+    .updateDadosHomes(id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video)
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/editarhome'));
+      return false;
+    });
+
+  return false;
+};
+
+export const updateImagemCarrossel = async (id, file) => {
+  try{
+  const res = await requesterService
+    .updateImagemCarrossel(id, file)
+    return res;
+  } catch (error) {
+      requisicaoErro(error);
+      return;
+    };
+};
+
+export const updateImagemHomes = async (id, file) => {
+    try{
+    const res = await requesterService
+    .updateImagemHomes(id, file)
+    return res;
+    
+    }catch (error) {
+      requisicaoErro(error);
+      return;
+    }; 
+    
 };
