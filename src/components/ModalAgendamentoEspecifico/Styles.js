@@ -5,17 +5,38 @@ const { TextArea } = Input;
 
 export const Container = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
   height: 100%;
+  padding: 3% 2% 2% 2%;
+`;
+
+export const Caixa = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100%;
+  min-height: 80vh;
+  background-color: ${Cores.branco};
+  border-color: rgba(0, 0, 0, 0.1);
+  border-style: solid;
+  border-radius: 3px;
+
+  @media (max-width: 910px) {
+    flex-direction: column;
+    
+  }
 `;
 
 export const InfoEsquerdaEDireita = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
-  width: 100%;
+  width: 50%;
   height: 100%;
+  min-height: 80vh;
+  padding: 5%;
   gap: 8px;
 
   @media (max-width: 910px) {
@@ -40,16 +61,18 @@ export const CaixaLoader = styled.div`
 export const InfoEsquerda = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 50%;
   height: 100%;
+  height: 80vh;
   padding: 5%;
   gap: 10px;
-  margin-top: 4%;
 
   @media (max-width: 910px) {
     width: 100%;
+    height: 50vh;
+    
   }
 `;
 
@@ -127,11 +150,8 @@ export const TipoAgendamento = styled.div`
   justify-content: space-around;
   align-items: center;
   width: 100%;
-  margin-top:18%;
-  margin-bottom:20%;
-  @media (max-width: 910px){
-    margin-top: 2%;
-  }
+  background-color: green;
+  border-radius: 3px;
   @media (max-width: 620px){
     height: auto;
     width: 100%;

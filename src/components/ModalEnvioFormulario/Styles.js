@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Fontes, Cores } from "../../variaveis";
-import { Select } from "antd";
 
 export const ContainerModalCodigo = styled.div`
   display: flex;
@@ -43,6 +42,7 @@ export const TextoCheckbox = styled.h3`
   font-weight: 600;
   font-size: 1.2em;
   margin-top: 20%;
+  background-color: green;
   color: ${Cores.azulEscuro};
 
   @media (max-width: 560px) {
@@ -76,9 +76,10 @@ export const SelectContainer = styled.div`
   height: 50px;
   display:flex;
   align-items: center;
+  padding-right: 12px;
   background-color: ${Cores.cinza[7]};
 `;
-/*export const Select = styled.select`
+export const Select = styled.select`
   background-color: ${(props) => props.backgroundColor};
   text-align: left;
   height: 46px;
@@ -107,36 +108,6 @@ export const SelectContainer = styled.div`
 
   option[value=""][disabled] {
     display:none;
-  }*/
-
-  export const SelectPaciente = styled(Select)`
-  background-color: ${(props) => props.backgroundColor};
-  text-align: left;
-  height: 46px;
-  color: ${(props) => props.color};
-  border-color: ${Cores.cinza[7]};
-  font-size: 1em;
-  width: 100%;
-  @media (max-width: 820px) {
-    width: 100%;
   }
 
-  & .ant-select-selection-placeholder{
-    color: ${Cores.preto};
-  };
-
-  &.ant-select:not(.ant-select-customize-input) .ant-select-selector {
-	background-color: ${Cores.cinza[7]};
-	border: none;
-  padding-top: 9px;
-  height: 46px;
-  }
-  & .ant-select-arrow {
-    color: ${Cores.preto};
-    height: 15px;
-    width: 15px;
-	font-size: 11px;
-	padding: none;
-	transform: rotateX(45deg);
-  }
 `;

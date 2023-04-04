@@ -7,7 +7,7 @@ export const Cores = {
     5: "#eaebf8",
     7: "#E4E6F4",
     8: "#e5e5e5",
-    9: "#f5f3f4",
+    9: "#f5f3f4"
   },
   lilas: {
     1: "#434b97",
@@ -23,7 +23,6 @@ export const Cores = {
   branco: "white",
   verde: "green",
   vermelho: "red",
-  vermelhoClaro: '#F9DBDB',
   amarelo: "#fdf1d1",
 };
 

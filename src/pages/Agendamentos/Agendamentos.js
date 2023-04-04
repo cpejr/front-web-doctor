@@ -70,7 +70,6 @@ function Agendamentos(props) {
   const [consultorioSelect, setConsultorioSelect] = useState('');
   const [tipoAgendamento, setTipoAgendamento] = useState('');
   const [carregandoFoto, setCarregandoFoto] = useState(true);
-  
   const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
 
   const antIconPagina = <LoadingOutlined style={{ fontSize: 40 }} spin />;
@@ -346,27 +345,6 @@ function Agendamentos(props) {
     setCarregandoFoto(false);
   }
 
-  /*
-  async function registrandoNotificacoes(id){
-    if (!Device.isDevice){
-      return null;
-    }
-    const {status} = await Notifications.requestPermissionsAsync();
-    if(status !== "granted"){
-      return null;
-    }
-    if (Platform.OS == "android"){
-      Notifications.setNotificationChannelAsync("default", {
-        
-        name: "default",
-        importance: Notifications.AndroidImportance.MAX,
-      });
-    }
-    const tokenNotificacoes = await Notifications.getDevicePushTokenAsync();
-    await managerService.requisicaoToken(id,(tokenNotificacoes.type +'/'+ tokenNotificacoes.data))
-  }
-
-  */
   return (
     <div>
       <ContainerListadeUsuarios>
@@ -639,7 +617,6 @@ function Agendamentos(props) {
         footer={null}
         width={'70%'}
         centered={true}
-        destroyOnClose
       >
         <ModalAgendamentoEspecifico
           emailUsuario={email}
@@ -657,7 +634,6 @@ function Agendamentos(props) {
         style={{
           backgroundColor: 'black',
         }}
-        destroyOnClose
       >
         <ModalConsultaMarcada
           consulta={consultaEspecifica}
@@ -675,7 +651,6 @@ function Agendamentos(props) {
         style={{
           backgroundColor: 'black',
         }}
-        destroyOnClose
       >
         <ModalExameMarcado
           exame={exameEspecifico}

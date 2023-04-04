@@ -118,8 +118,8 @@ function EdicaoComentarios() {
               <ContainerBotoes>
                 <TextoIcone>
                   <Button
-                    backgroundColor={Cores.azulEscuro}
-                    borderColor="transparent"
+                    backgroundColor={Cores.lilas[1]}
+                    borderColor={Cores.azul}
                     color={Cores.branco}
                     fontWeight='medium'
                     fontSize='1.6em'
@@ -143,9 +143,9 @@ function EdicaoComentarios() {
                 </TextoIcone>
                 <TextoIcone>
                   <Button
-                    backgroundColor= '#f8d6cf'
-                    borderColor= 'red'
-                    color={Cores.preto}
+                    backgroundColor={Cores.lilas[1]}
+                    borderColor={Cores.azul}
+                    color={Cores.branco}
                     fontWeight='medium'
                     fontSize='1.6em'
                     fontSizeMedia1080='1.5em'

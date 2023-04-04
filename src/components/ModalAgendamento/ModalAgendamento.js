@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { toast } from "react-toastify";
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
 import {
@@ -17,26 +16,24 @@ import {
   BarraEstetica,
   BotoesEditarExcluir,
   Modal,
-} from "./Styles";
-import { Cores } from "../../variaveis";
-import Button from "../../styles/Button";
-import ModalAgendamentoEspecifico from "../ModalAgendamentoEspecifico";
-import ModalConsultaMarcada from "../ModalConsultaMarcada";
-import ModalExameMarcado from "../ModalExameMarcado";
-import { compararDataAntiga } from "../../utils/tratamentoErros";
-import * as managerService from "../../services/ManagerService/managerService";
-import { sleep } from "../../utils/sleep";
-import formatarData from "../../utils/formatarData";
-import ModalEditarConsulta from "../ModalEditarConsulta";
-import ModalEditarExame from "../ModalEditarExame";
+} from './Styles';
+import { Cores } from '../../variaveis';
+import Button from '../../styles/Button';
+import ModalAgendamentoEspecifico from '../ModalAgendamentoEspecifico';
+import ModalEditarAgendamentoEspecifico from '../ModalEditarAgendamentoEspecifico';
+import ModalConsultaMarcada from '../ModalConsultaMarcada';
+import ModalExameMarcado from '../ModalExameMarcado';
+import { compararDataAntiga } from '../../utils/tratamentoErros';
+import * as managerService from '../../services/ManagerService/managerService';
+import { sleep } from '../../utils/sleep';
+import formatarData from '../../utils/formatarData';
 
 function ModalAgendamento(props) {
   const [consultas, setConsultas] = useState([]);
   const [consultaEspecifica, setConsultaEspecifica] = useState([]);
   const [examesMarcados, setExamesMarcados] = useState([]);
   const [exameEspecifico, setExameEspecifico] = useState([]);
-  const [modalEditarConsulta, setModalEditarConsulta] = useState(false);
-  const [modalEditarExame, setModalEditarExame] = useState(false);
+  const [modalEditarAgendamento, setModalEditarAgendamento] = useState(false);
   const [modalConsultaMarcada, setModalConsultaMarcada] = useState(false);
   const [modalExameVisivel, setModalExameVisivel] = useState(false);
   const [modalAgendamentoEspecifico, setModalAgendamentoEspecifico] =
@@ -52,7 +49,6 @@ function ModalAgendamento(props) {
   async function pegandoDados() {
     setCarregando(true);
     setConsultas([]);
-    setExamesMarcados([])
     await sleep(400);
     setExamesMarcados([]);
     const respostaConsultas =
@@ -79,17 +75,12 @@ function ModalAgendamento(props) {
 
   async function fechandoModalAgendamentoEspecifico() {
     setModalAgendamentoEspecifico(false);
-    pegandoDados()
+    
   }
 
-  async function editandoAgendamento(agendamento, tipo) {
-    if (tipo === "consulta") {
-      setModalEditarConsulta(true);
-      setConsultaEspecifica(agendamento);
-    } else if (tipo === "exame") {
-      setModalEditarExame(true);
-      setExameEspecifico(agendamento);
-    }
+  async function editandoAgendamento(consulta) {
+    setModalEditarAgendamento(true);
+    setConsultaEspecifica(consulta);
   }
 
   async function abreModalConsultaMarcada(consulta) {
@@ -102,17 +93,14 @@ function ModalAgendamento(props) {
     setExameEspecifico(exame);
   }
 
-  async function fechandoModalEditarAgendamento(tipo) {
-    if (tipo === "consulta") {
-      setModalEditarConsulta(false);
-    } else if (tipo === "exame") {
-      setModalEditarExame(false);
-    }
-    pegandoDados()
+  async function fechandoModalEditarAgendamento() {
+    setModalEditarAgendamento(false);
+   
   }
 
   async function fechandoModalConsultaMarcada() {
     setModalConsultaMarcada(false);
+    
   }
 
   async function fechandoModalExameMarcado() {
@@ -120,52 +108,20 @@ function ModalAgendamento(props) {
     pegandoDados();
   }
 
-  async function excluirConsulta(id, consulta) {
+  async function excluirConsulta(id) {
     await managerService.DeletarConsulta(id);
-    const Token =
-      await managerService.TokenById(consulta);
-    for (var i = 0; i <= Token.length - 1; i++) {
-      const Message = {
-        to: Token[i].token_dispositivo.replace("expo/", ''),
-        sound: 'default',
-        title: 'Doctor App',
-        body: 'Sua consulta foi desmarcada!',
-
-      };
-      fetch('https://exp.host/--/api/v2/push/send', {
-        method: 'POST',
-        body: JSON.stringify(Message),
-      }
-      );
-    }
     pegandoDados();
   }
 
-  async function excluirExameMarcado(exame) {
-    await managerService.DeletarExameMarcado(exame.id);
-    const Token =
-    await managerService.TokenById(exame.id_usuario);
-    for (var i = 0; i <= Token.length - 1; i++) {
-      const Message = {
-        to: Token[i].token_dispositivo.replace("expo/", ''),
-        sound: 'default',
-        title: 'Doctor App',
-        body: 'Seu exame foi desmarcado!',
-
-      };
-      fetch('https://exp.host/--/api/v2/push/send', {
-        method: 'POST',
-        body: JSON.stringify(Message),
-      }
-      );
-    }
+  async function excluirExameMarcado(id) {
+    await managerService.DeletarExameMarcado(id);
     pegandoDados();
   }
 
   return (
     <Container>
       <Caixa>
-        {tipoAgendamento === "Consulta" ? (
+        {tipoAgendamento === 'Consulta' ? (
           <Titulo>Consultas Marcadas:</Titulo>
         ) : (
           <Titulo>Exames Marcados:</Titulo>
@@ -176,7 +132,7 @@ function ModalAgendamento(props) {
         ) : (
           <CorpoCaixa>
             <InfoEsquerda>
-              {tipoAgendamento === "Consulta" && (
+              {tipoAgendamento === 'Consulta' && (
                 <>
                   {consultas.sort(compararDataAntiga).map((value) => (
                     <Agendamento>
@@ -184,10 +140,7 @@ function ModalAgendamento(props) {
                         <DiaHorarioAgendamento
                           onClick={() => abreModalConsultaMarcada(value)}
                         >
-                          {formatarData({
-                            data: value.data_hora,
-                            formatacao: "dd/MM/yyyy",
-                          })}
+                          {formatarData({ data: value.data_hora, formatacao: "dd/MM/yyyy" })}
                         </DiaHorarioAgendamento>
                         <BarraEstetica></BarraEstetica>
                         <TextoAgendamentoEspecifico
@@ -199,10 +152,7 @@ function ModalAgendamento(props) {
                         <DiaHorarioAgendamento
                           onClick={() => abreModalConsultaMarcada(value)}
                         >
-                          {formatarData({
-                            data: value.data_hora,
-                            formatacao: "HH:mm",
-                          })}
+                          {formatarData({ data: value.data_hora, formatacao: "HH:mm" })}
                           {` - `}
                           {value.duracao_em_minutos} min
                         </DiaHorarioAgendamento>
@@ -210,32 +160,32 @@ function ModalAgendamento(props) {
 
                       <BotoesEditarExcluir>
                         <Button
-                          width="48%"
-                          height="40px"
+                          width='48%'
+                          height='40px'
                           backgroundColor={Cores.cinza[6]}
                           borderColor={Cores.lilas[3]}
                           color={Cores.cinza[2]}
-                          fontSize="0.9em"
-                          fontWeight="bold"
-                          fontSizeMedia="0.8em"
-                          fontSizeMedia950="1em"
-                          heightMedia560="30px"
-                          onClick={() => editandoAgendamento(value, "consulta")}
+                          fontSize='0.9em'
+                          fontWeight='bold'
+                          fontSizeMedia='0.8em'
+                          fontSizeMedia950='1em'
+                          heightMedia560='30px'
+                          onClick={() => editandoAgendamento(value)}
                         >
                           EDITAR
                         </Button>
                         <Button
-                          width="48%"
-                          height="40px"
+                          width='48%'
+                          height='40px'
                           backgroundColor={Cores.branco}
-                          borderColor="rgba(255, 0, 0, 0.25)"
+                          borderColor='rgba(255, 0, 0, 0.25)'
                           color={Cores.cinza[1]}
                           fontSize='0.9em'
                           fontWeight='bold'
                           fontSizeMedia='0.8em'
                           fontSizeMedia950='1em'
                           heightMedia560='30px'
-                          onClick={() => excluirConsulta(value.id, value.id_usuario)}
+                          onClick={() => excluirConsulta(value.id)}
                         >
                           EXCLUIR
                         </Button>
@@ -244,7 +194,7 @@ function ModalAgendamento(props) {
                   ))}
                 </>
               )}
-              {tipoAgendamento === "Exame" && (
+              {tipoAgendamento === 'Exame' && (
                 <>
                   {examesMarcados.sort(compararDataAntiga).map((value) => (
                     <Agendamento>
@@ -252,10 +202,7 @@ function ModalAgendamento(props) {
                         <DiaHorarioAgendamento
                           onClick={() => abreModalExameMarcado(value)}
                         >
-                          {formatarData({
-                            data: value.data_hora,
-                            formatacao: "dd/MM/yyyy",
-                          })}
+                          {formatarData({ data: value.data_hora, formatacao: "dd/MM/yyyy" })}
                         </DiaHorarioAgendamento>
                         <BarraEstetica></BarraEstetica>
                         <TextoAgendamentoEspecifico
@@ -267,41 +214,37 @@ function ModalAgendamento(props) {
                         <DiaHorarioAgendamento
                           onClick={() => abreModalExameMarcado(value)}
                         >
-                          {formatarData({
-                            data: value.data_hora,
-                            formatacao: "HH:mm",
-                          })}
+                          {formatarData({ data: value.data_hora, formatacao: "HH:mm" })}
                         </DiaHorarioAgendamento>
                       </CaixaAgendamento>
 
                       <BotoesEditarExcluir>
                         <Button
-                          width="45%"
-                          height="40px"
-                          backgroundColor={Cores.cinza[6]}
+                          width='45%'
+                          height='40px'
+                          backgroundColor='green'
                           borderColor={Cores.lilas[3]}
-                          color={Cores.cinza[2]}
-                          fontSize="0.9em"
-                          fontWeight="bold"
-                          fontSizeMedia="0.8em"
-                          fontSizeMedia950="1em"
-                          heightMedia560="30px"
-                          onClick={() => editandoAgendamento(value, "exame")}
+                          color={Cores.cinza[1]}
+                          fontSize='0.9em'
+                          fontWeight='bold'
+                          fontSizeMedia='0.8em'
+                          fontSizeMedia950='1em'
+                          heightMedia560='30px'
                         >
                           EDITAR
                         </Button>
                         <Button
-                          width="45%"
-                          height="40px"
+                          width='45%'
+                          height='40px'
                           backgroundColor={Cores.branco}
-                          borderColor="rgba(255, 0, 0, 0.25)"
+                          borderColor='rgba(255, 0, 0, 0.25)'
                           color={Cores.cinza[1]}
-                          fontSize="0.9em"
-                          fontWeight="bold"
-                          fontSizeMedia="0.8em"
-                          fontSizeMedia950="1em"
-                          heightMedia560="30px"
-                          onClick={() => excluirExameMarcado(value)}
+                          fontSize='0.9em'
+                          fontWeight='bold'
+                          fontSizeMedia='0.8em'
+                          fontSizeMedia950='1em'
+                          heightMedia560='30px'
+                          onClick={() => excluirExameMarcado(value.id)}
                         >
                           EXCLUIR
                         </Button>
@@ -314,7 +257,7 @@ function ModalAgendamento(props) {
 
             <InfoDireita>
               <NumeroAgendamentos>
-                {tipoAgendamento === "Consulta" ? (
+                {tipoAgendamento === 'Consulta' ? (
                   <>
                     {consultas.length === 1 ? (
                       <>O paciente agendou {consultas.length} consulta</>
@@ -333,18 +276,18 @@ function ModalAgendamento(props) {
                 )}
               </NumeroAgendamentos>
               <Button
-                width="100%"
-                height="50px"
+                width='100%'
+                height='50px'
                 backgroundColor={Cores.lilas[2]}
                 borderColor={Cores.azul}
                 color={Cores.azulEscuro}
-                fontSize="1.1em"
-                fontWeight="bold"
-                fontSizeMedia="0.9em"
-                fontSizeMedia950="1.1em"
+                fontSize='1.1em'
+                fontWeight='bold'
+                fontSizeMedia='0.9em'
+                fontSizeMedia950='1.1em'
                 heightMedia560="73px"
-                marginTop="18%"
-                marginTopMedia="4%"
+                marginTop='18%'
+                marginTopMedia='4%'
                 onClick={() => marcandoAgendamento()}
               >
                 Cadastrar novo agendamento
@@ -357,48 +300,34 @@ function ModalAgendamento(props) {
         destroyOnClose
         visible={modalAgendamentoEspecifico}
         onCancel={() => setModalAgendamentoEspecifico(false)}
-        width={"70%"}
+        width={'70%'}
         centered={true}
       >
         <ModalAgendamentoEspecifico
           emailUsuario={props.email}
           abertoPeloUsuario={abertoPeloUsuario}
-          tipoRadio={tipoAgendamento}
           fechandoModal={() => fechandoModalAgendamentoEspecifico()}
         />
       </Modal>
 
       <Modal
         destroyOnClose
-        visible={modalEditarConsulta}
-        onCancel={() => fechandoModalEditarAgendamento("consulta")}
-        width={"70%"}
+        visible={modalEditarAgendamento}
+        onCancel={fechandoModalEditarAgendamento}
+        width={'70%'}
         centered={true}
       >
-        <ModalEditarConsulta
+        <ModalEditarAgendamentoEspecifico
           emailUsuario={props.email}
           consulta={consultaEspecifica}
-          fechandoModal={() => fechandoModalEditarAgendamento("consulta")}
-        />
-      </Modal>
-      <Modal
-        destroyOnClose
-        visible={modalEditarExame}
-        onCancel={() => fechandoModalEditarAgendamento("exame")}
-        width={"70%"}
-        centered={true}
-      >
-        <ModalEditarExame
-          emailUsuario={props.email}
-          exame={exameEspecifico}
-          fechandoModal={() => fechandoModalEditarAgendamento("exame")}
+          fechandoModal={() => fechandoModalEditarAgendamento()}
         />
       </Modal>
 
       <Modal
         visible={modalConsultaMarcada}
         onCancel={fechandoModalConsultaMarcada}
-        width={"auto"}
+        width={'auto'}
         centered={true}
       >
         <ModalConsultaMarcada
@@ -411,7 +340,7 @@ function ModalAgendamento(props) {
       <Modal
         visible={modalExameVisivel}
         onCancel={fechandoModalExameMarcado}
-        width={"auto"}
+        width={'auto'}
         centered={true}
       >
         <ModalExameMarcado
