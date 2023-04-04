@@ -9,6 +9,7 @@ import { Spin } from "antd";
 import _ from "lodash";
 import { toast } from "react-toastify";
 import * as managerService from "../../services/ManagerService/managerService";
+import * as utils from "../../utils/checarExtensao";
 import {
 	ContainerCriacaoReceitas,
 	CardCriacaoReceitas,
@@ -62,7 +63,23 @@ function CriacaoReceitas() {
 	const [descricaoReceita, setDescricaoReceita] = useState();
 	const [tipoAssinatura, setTipoAssinatura] = useState();
 	const [preenchido, setPreenchido] = useState(false);
+	const extensaoInstalada = utils.isExtensionInstalled();
+    const [certificados, setCertificados] = useState();
 	const history = useHistory();
+
+    useEffect(() => {
+		// SE A EXTENSAO TIVER INSTALADA, PEGA OS CERTIFICADOS INSTALADOS DO CLIENTE
+		if (extensaoInstalada) {
+		  window.BryExtension.listCertificates().then((certificados) => {
+			certificados.forEach(certificado => {
+			  certificado.label = certificado.name;
+			});
+			setCertificados(certificados);
+		  })
+		}
+	  }, [extensaoInstalada])
+	
+	
 
 	function preenchendoDados(e) {
 		e.preventDefault();
