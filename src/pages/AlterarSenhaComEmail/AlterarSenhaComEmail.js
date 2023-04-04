@@ -55,7 +55,7 @@ function AlterarSenhaComEmail() {
   }
 
   async function alterarSenha() {
-    if (!email) errors.email = true;
+    if (!email.trim()) errors.email = true;
 
     setCamposVazios({ ...camposVazios, ...errors });
 
@@ -64,7 +64,7 @@ function AlterarSenhaComEmail() {
       const resposta = await managerService.GetDadosPessoais();
       let achei = 0;
       resposta.forEach((usuario) => {
-        if (usuario.email === email) {
+        if (usuario.email === email.trim()) {
           achei++;
         }
       });
@@ -72,7 +72,7 @@ function AlterarSenhaComEmail() {
       if (achei) {
         toast.warn("Aguarde um pouco.");
         await sleep(3000);
-        await managerService.EnviandoEmail(email);
+        await managerService.EnviandoEmail(email.trim());
         setCarregando(false);
       } else {
         toast.error("Esse e-mail não está cadastrado.");

@@ -1,2 +1,1 @@
-import EdicaoComentarios from "./EdicaoComentarios";
-export default EdicaoComentarios;
+export { default } from "./EdicaoComentarios";
