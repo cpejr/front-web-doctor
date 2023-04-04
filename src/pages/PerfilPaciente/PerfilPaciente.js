@@ -9,6 +9,7 @@ import { Spin } from "antd";
 import { Modal } from "antd";
 import { toast } from "react-toastify";
 import { ChatContext } from '../../contexts/ChatContext';
+import { useHistory } from "react-router-dom";
 import {
   ContainerPerfil,
   Perfil,
@@ -77,6 +78,7 @@ import objCopiaProfunda from '../../utils/objCopiaProfunda';
 
 
 function PerfilPaciente(props) {
+  const history = useHistory();
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [modalFormulario, setModalFormulario] = useState(false);
   const [modalDeletarUsuario, setModalDeletarUsuario] = useState(false);
@@ -134,15 +136,21 @@ function PerfilPaciente(props) {
     const resposta = await managerService.GetDadosUsuario(emailUsuarioLogado);
     setTipoUsuarioLogado(resposta.dadosUsuario.tipo);
   }
+  
 
   async function criarConversa() {
+    const quemLogado = await managerService.GetDadosUsuario(emailUsuarioLogado);
     
+    const conversaCriada = {
+      id_criador: quemLogado.dadosUsuario.id,
+      id_receptor: usuario.id,
+    }
 
-    const index = conversas.findIndex(({ id }) => id === conversa.id);
+    const conversa = await managerService.CriandoConversa(conversaCriada)
+    await managerService.UpdateConversaAtiva(conversa.id)
+    
       const copiaConversas = objCopiaProfunda(conversas);
-
-      const conversaNaLista = copiaConversas[index];
-
+      const conversaNaLista = copiaConversas[0];
       if (conversaNaLista.mensagensNaoVistas) {
         conversaNaLista.mensagensNaoVistas = 0;
         await managerService.UpdateMensagensVisualizadas(
@@ -155,7 +163,6 @@ function PerfilPaciente(props) {
       setConversas(copiaConversas);
       history.push("/web/chat")
     }
-  }
 
   async function pegandoDados() {
     const resposta = await managerService.GetDadosUsuario(

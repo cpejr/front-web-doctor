@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   BarraPesquisaChat,
   ImagemPessoa,
@@ -62,6 +62,9 @@ export default function BarraLateralChat({ carregandoConversas }) {
     <LoadingOutlined style={{ fontSize: 90, color: Cores.azul }} spin />
   );
 
+  useEffect(() => {
+    console.log(JSON.stringify(conversas))
+  }, []);
 
   return (
     <>
