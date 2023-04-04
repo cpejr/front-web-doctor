@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   LoadingOutlined,
   StarOutlined,
@@ -8,6 +8,7 @@ import {
 import { Spin } from "antd";
 import { Modal } from "antd";
 import { toast } from "react-toastify";
+import { ChatContext } from '../../contexts/ChatContext';
 import {
   ContainerPerfil,
   Perfil,
@@ -72,6 +73,8 @@ import formatarData from "../../utils/formatarData";
 import logoWord from "./logo.json";
 import footerWord from "./footer.json";
 import { compararDataRecente } from "../../utils/tratamentoErros";
+import objCopiaProfunda from '../../utils/objCopiaProfunda';
+
 
 function PerfilPaciente(props) {
   const [modalAgendamento, setModalAgendamento] = useState(false);
@@ -102,7 +105,15 @@ function PerfilPaciente(props) {
   const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState("");
   const emailUsuarioLogado = sessionStorage.getItem("@doctorapp-Email");
   const [formularioEspecifico, setFormularioEspecifico] = useState({});
+  
   const [formularios, setFormularios] = useState();
+  const {
+    usuarioId,
+    conversas,
+    setConversas,
+    setConversaSelecionada,
+    imagemPerfilPadrão,
+  } = useContext(ChatContext);
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 25, color: Cores.azulEscuro }} spin />
   );
@@ -122,6 +133,28 @@ function PerfilPaciente(props) {
   async function pegandoTipoUsuarioLogado() {
     const resposta = await managerService.GetDadosUsuario(emailUsuarioLogado);
     setTipoUsuarioLogado(resposta.dadosUsuario.tipo);
+  }
+
+  async function criarConversa() {
+    
+
+    const index = conversas.findIndex(({ id }) => id === conversa.id);
+      const copiaConversas = objCopiaProfunda(conversas);
+
+      const conversaNaLista = copiaConversas[index];
+
+      if (conversaNaLista.mensagensNaoVistas) {
+        conversaNaLista.mensagensNaoVistas = 0;
+        await managerService.UpdateMensagensVisualizadas(
+          usuarioId,
+          conversa.id
+        );
+      }
+
+      setConversaSelecionada(conversaNaLista);
+      setConversas(copiaConversas);
+      history.push("/web/chat")
+    }
   }
 
   async function pegandoDados() {
@@ -565,6 +598,7 @@ function PerfilPaciente(props) {
                       width="100%"
                       fontSize="1.3em"
                       fontSizeMedia480="1em"
+                      onClick={() => criarConversa()}
                     >
                       Iniciar Conversa
                     </Button>
