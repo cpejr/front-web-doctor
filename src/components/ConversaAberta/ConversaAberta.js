@@ -464,7 +464,7 @@ export default function ConversaAberta({ socket }) {
               method: 'POST',
               body: JSON.stringify(Message),
               }
-            );console.log(fetch);
+            );
             }
           }
   
