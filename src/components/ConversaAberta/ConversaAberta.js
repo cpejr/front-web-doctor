@@ -536,6 +536,7 @@ export default function ConversaAberta({ socket }) {
       enviarMensagemComInput(e);
     }
   };
+  
 
   return (
     <Conversa>

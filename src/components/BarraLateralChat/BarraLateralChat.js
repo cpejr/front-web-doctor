@@ -24,6 +24,7 @@ import {
 import * as managerService from '../../services/ManagerService/managerService';
 import { ChatContext } from '../../contexts/ChatContext';
 import objCopiaProfunda from '../../utils/objCopiaProfunda';
+import { redirecionamento, sleep } from "../../utils/sleep";
 
 export default function BarraLateralChat({ carregandoConversas }) {
   const [modalAdicionar, setModalAdicionar] = useState(false);
@@ -62,9 +63,6 @@ export default function BarraLateralChat({ carregandoConversas }) {
     <LoadingOutlined style={{ fontSize: 90, color: Cores.azul }} spin />
   );
 
-  useEffect(() => {
-    console.log(JSON.stringify(conversas))
-  }, []);
 
   return (
     <>

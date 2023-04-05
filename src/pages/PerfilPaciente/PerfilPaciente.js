@@ -158,8 +158,17 @@ function PerfilPaciente(props) {
           conversa.id
         );
       }
+      const conversaRedirecionada = {
+        id: conversa.id,
+        tipo: null,
+        conversaCom: {
+        id: usuario.id, 
+        nome: usuario.nome, 
+        avatar_url:usuario.avatar_url}
+      }
 
-      setConversaSelecionada(conversaNaLista);
+
+      setConversaSelecionada(conversaRedirecionada);
       setConversas(copiaConversas);
       history.push("/web/chat")
     }
