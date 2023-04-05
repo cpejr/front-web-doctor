@@ -735,6 +735,7 @@ export default function ConversaAberta({ socket }) {
               media_url={m.media_url}
               scrollRef={mensagens?.length - 1 === idx ? scrollRef : null}
               data_criacao={m.data_criacao}
+              tipo={m.tipo}
             />
           ))
         )}
