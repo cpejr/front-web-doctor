@@ -161,7 +161,7 @@ function ModalAgendamentoConsulta(props) {
   }
 
   function setandoMsg(tipo, data_hora, duracao_em_minutos) {
-    return("Você tem uma consulta marcada!\nTipo: " + tipo + "\nData e Hora: "+ data_hora.slice(8, 10) + "/" + data_hora.slice(5, 7) + "/" + data_hora.slice(0, 4) + " às " + data_hora.slice(11, 16)+ "\nDuração da consulta: " + duracao_em_minutos + " minutos.");
+    return("Você tem uma consulta marcada!\nTipo: " + tipo + "\nData e Hora: "+ data_hora.slice(8, 10) + "/" + data_hora.slice(5, 7) + "/" + data_hora.slice(0, 4) + " às " + data_hora.slice(11, 16));
   }
 
   function setandoDiaAtual() {
