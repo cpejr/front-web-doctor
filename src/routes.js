@@ -8,6 +8,7 @@ import Cadastro from './pages/Cadastro';
 import Chat from './pages/Chat';
 import CriacaoFormulario from './pages/CriacaoFormulario';
 import EdicaoComentarios from './pages/EdicaoComentarios';
+import EdicaoConteudo from './pages/EdicaoConteudo'; 
 import EdicaoHome from './pages/EdicaoHome';
 import EdicaoIndicacoesESugestoes from './pages/EdicaoIndicacoesESugestoes/EdicaoIndicacoesESugestoes';
 import EdicaoSobreMim from './pages/EdicaoSobreMim';
@@ -26,9 +27,6 @@ import FormularioEspecifico from './pages/FormularioEspecifico';
 import Home from './pages/Home/Home';
 import CriacaoReceitas from './pages/CriacaoReceitas';
 import UploadReceita from './pages/UploadReceita';
-import EdicaoComentarios from './pages/EdicaoComentarios';
-import EdicaoConteudo from './pages/EdicaoConteudo'; 
-import EdicaoIndicacoesESugestoes from './pages/EdicaoIndicacoesESugestoes/EdicaoIndicacoesESugestoes';
 
 
 
