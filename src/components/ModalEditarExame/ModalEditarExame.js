@@ -54,6 +54,7 @@ function ModalEditarExame(props) {
   const [titulo, setTitulo] = useState("");
   const [hora, setHora] = useState("");
   const [hoje, setHoje] = useState("");
+  const [clicadoCheckbox, setclicadoCheckbox] = useState(false);
   const [camposVazios, setCamposVazios] = useState({
     duracao_em_minutos: false,
     hora: false,
@@ -71,8 +72,12 @@ function ModalEditarExame(props) {
 
   useEffect(() => {
     setandoNomeConsultorioPorId();
-    setandoDataEHora();
   }, [exame]);
+
+  useEffect(() => {
+    setandoDataEHora();
+  }, [exame.data_hora]);
+  
 
   useEffect(() => {
     setEditado(false);
@@ -87,6 +92,10 @@ function ModalEditarExame(props) {
   useEffect(() => {
     setandoDataMinima();
   }, [hoje]);
+
+  const handleChange = () =>{
+    setclicadoCheckbox(!clicadoCheckbox)
+  }
 
   async function pegandoConsultorios() {
     setCarregandoConsultorios(true);
@@ -119,6 +128,9 @@ function ModalEditarExame(props) {
       id_usuario: props.exame.id_usuario,
       data_hora: props.exame.data_hora,
     };
+    let placeholders = {
+      placeholderHora: new Date()
+    }
     setTitulo(props.exame.titulo);
     setExame(aux);
     setCarregando(false);
@@ -132,9 +144,6 @@ function ModalEditarExame(props) {
   }
 
   function setandoDataEHora() {
-    let dataString = String(exame.data_hora);
-    let dataFormatada = dataString.slice(0, 10);
-    setData(dataFormatada);
     const aux = new Date(exame.data_hora);
     let horas = aux.getHours();
     if (horas < 10) {
@@ -146,6 +155,10 @@ function ModalEditarExame(props) {
     }
     const tempo_formatado = `${horas}:${minutos}`;
     setHora(tempo_formatado);
+    let dia = ("0" + aux.getDate()).slice(-2)
+    let mes = ("0" + (aux.getMonth() + 1)).slice(-2)
+    let ano = aux.getFullYear()
+    setData(ano+"-"+mes+"-"+dia);
   }
 
   function setandoDiaAtual() {
@@ -212,6 +225,32 @@ function ModalEditarExame(props) {
       setCarregandoUpdate(false);
       return;
     } else {
+
+      if(clicadoCheckbox === true){
+        
+        let msg = "Seu exame teve seus dados alterados";
+        const Token =
+          await managerService.TokenById(exame.id_usuario);
+          if(Token.length === 0){
+            toast.error('Nenhum celular cadastrado a esse paciente');
+          }else{
+            toast.success('Notificação encaminhada para o paciente.');
+          }
+          for(var i = 0; i <= Token.length - 1; i++){
+            const Message = {
+              to: Token[i].token_dispositivo.replace("expo/", ''),
+              sound: 'default',
+              title: 'Doctor App', 
+              body: msg,
+              
+            };
+            fetch('https://exp.host/--/api/v2/push/send',{
+                method: 'POST',
+                body: JSON.stringify(Message),
+             }
+            );
+            
+      }}
       setCarregandoUpdate(true);
       formatacaoDataHora();
       delete exame.titulo;
@@ -262,7 +301,7 @@ function ModalEditarExame(props) {
           <SelecioneUmaData>
             <TextoSelecioneUmaData>Selecione uma data:</TextoSelecioneUmaData>
             <InputData
-              placeholder="Selecione uma data"
+              placeholder={data}
               value={data}
               id="data"
               type="date"
@@ -369,7 +408,6 @@ function ModalEditarExame(props) {
                 onKeyDown={(e) => e.preventDefault()}
                 onFocus={(e) => (e.target.type = "time")}
                 onBlur={(e) => (e.target.type = "text")}
-                placeholder="Horário"
                 name="hora"
                 onChange={preenchendoDadosExame}
                 style={{ color: "black" }}
@@ -378,7 +416,9 @@ function ModalEditarExame(props) {
               {camposVazios.hora ? <Rotulo>Digite um horário</Rotulo> : <></>}
             </ContainerHorario>
           </DoisSelect>
-
+          <Checkbox onChange={handleChange}>
+          <TextoCheckbox>Notificar paciente</TextoCheckbox>
+          </Checkbox>
           <Button
             width="80%"
             height="50px"

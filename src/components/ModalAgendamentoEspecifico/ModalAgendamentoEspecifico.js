@@ -11,14 +11,14 @@ import ModalAgendamentoExame from "../ModalAgendamentoExame";
 function ModalAgendamentoEspecifico(props) {
   const [usuario, setUsuario] = useState({});
   const [usuarios, setUsuarios] = useState([]);
-  const [tipoRadio, setTipoRadio] = useState("");
+  const [tipoRadio, setTipoRadio] = useState(String(props.tipoRadio).toLowerCase());
 
   async function pegandoPacientes() {
     if (props.abertoPeloUsuario) {
       const resposta = await managerService.GetDadosUsuario(props.emailUsuario);
       setUsuario(resposta.dadosUsuario);
     } else {
-      const resposta = await managerService.GetDadosPessoais();
+      const resposta = await managerService.GetDadosPessoaisAlfabetico();
       resposta.forEach((usuario) => {
         if (usuario.tipo === "PACIENTE") {
           setUsuarios((usuarios) => [...usuarios, usuario]);
@@ -29,6 +29,9 @@ function ModalAgendamentoEspecifico(props) {
 
   useEffect(() => {
     pegandoPacientes();
+    return () => {
+      setUsuarios([]);
+    }
   }, [props]);
 
   return (

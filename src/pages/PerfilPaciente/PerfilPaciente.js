@@ -637,10 +637,7 @@ function PerfilPaciente(props) {
                   <Titulo>FORMULÁRIOS</Titulo>
                   {respostas?.map((value) => (
                     <>
-                      {deveMostrarFormularios(
-                        value.id_formulario,
-                        value.status
-                      ) && (
+                      {deveMostrarFormularios(value.id_formulario,value.status) && (
                           <Formulario>
                             <DadosFormulario>
                               {tipoUsuarioLogado === "MASTER" ||
@@ -695,12 +692,13 @@ function PerfilPaciente(props) {
                               <RespostaPendente>
                                 <Resposta>Resposta Pendente</Resposta>
                                 <Button
-                                  backgroundColor="green"
+                                  backgroundColor={Cores.cinza[7]}
                                   color={Cores.azulEscuro}
                                   fontWeight="bold"
                                   borderColor={Cores.azulEscuro}
                                   height="40px"
                                   width="25%"
+                                  onClick={() => enviarLembrete(value)}
                                 >
                                   ENVIAR LEMBRETE
                                 </Button>
