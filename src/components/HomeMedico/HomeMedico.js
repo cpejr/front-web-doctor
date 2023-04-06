@@ -163,7 +163,7 @@ function HomeMedico() {
             fontSize='1em'
             gap='1%'
             boxShadow='3px 3px 5px 0px rgba(0, 0, 0, 0.2)'
-            onClick={() => history.push('/web/editarconteudo')}
+            onClick={() => history.push('/web/edicaoconteudo')}
           >
             Editar Conteúdo do Aplicativo
           </Button>

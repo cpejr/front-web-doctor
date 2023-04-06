@@ -207,6 +207,28 @@ export const GetDadosPessoais = async () => {
     });
   return dadosUsuario;
 };
+
+export const GetDadosPessoaisAlfabetico = async () => {
+  let dadosUsuario = {};
+  await requesterService
+    .requisicaoDadosPessoais()
+    .then((res) => {
+      dadosUsuario = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+    dadosUsuario.sort(function(a, b){
+      var nomeA = a.nome.toLowerCase(), nomeB = b.nome.toLowerCase();
+      if (nomeA < nomeB) 
+       return -1;
+      if (nomeA > nomeB)
+       return 1;
+      return 0;
+     });
+  return dadosUsuario;
+};
+
 export const GetDadosConsultasExamesMarcados = async (id_usuario) => {
   let dadosConsultas = {};
   let dadosExamesMarcados = {};
@@ -1163,7 +1185,7 @@ export const TokenById = async (id_usuario) => {
   await requesterService
     .TokenById(id_usuario)
     .then((res) => {
-      dispositivo = res.data
+      dispositivo = res.data;
     })
     .catch((error) => {
       requisicaoErro(error);
