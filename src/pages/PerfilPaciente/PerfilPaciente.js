@@ -145,6 +145,12 @@ function PerfilPaciente(props) {
       id_criador: quemLogado.dadosUsuario.id,
       id_receptor: usuario.id,
     }
+    
+    const checarconversas= objCopiaProfunda(conversas);
+    
+    const Datafiltrada = checarconversas.filter(item => item.tipo === null && item.conversaCom.id === usuario.id);
+  
+    if(Datafiltrada.length === 0){
 
     const conversa = await managerService.CriandoConversa(conversaCriada)
     await managerService.UpdateConversaAtiva(conversa.id)
@@ -170,7 +176,22 @@ function PerfilPaciente(props) {
 
       setConversaSelecionada(conversaRedirecionada);
       setConversas(copiaConversas);
+
       history.push("/web/chat")
+    }else{
+      const conversaRedirecionadaExistente = {
+        id: Datafiltrada[0].id,
+        tipo: null,
+        conversaCom: {
+        id: usuario.id, 
+        nome: usuario.nome, 
+        avatar_url:usuario.avatar_url}
+      }
+      setConversaSelecionada(conversaRedirecionadaExistente);
+      setConversas(checarconversas);
+
+      history.push("/web/chat")
+    }
     }
 
   async function pegandoDados() {
