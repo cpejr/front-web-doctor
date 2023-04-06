@@ -489,10 +489,10 @@ function EdicaoHome() {
           </BoxSaibaMais>
           <ContainerBotoes>
             <Button
-              backgroundColor="#434B97"
+              backgroundColor={Cores.azulEscuro}
               borderRadius="3px"
               borderWidth="3px"
-              borderColor={Cores.preto}
+              borderColor="transparent"
               boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
               color={Cores.branco}
               fontSize="1.2em"

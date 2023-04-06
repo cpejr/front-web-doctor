@@ -1185,7 +1185,7 @@ export const TokenById = async (id_usuario) => {
   await requesterService
     .TokenById(id_usuario)
     .then((res) => {
-      dispositivo = res.data
+      dispositivo = res.data;
     })
     .catch((error) => {
       requisicaoErro(error);

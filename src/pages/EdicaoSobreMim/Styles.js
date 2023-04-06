@@ -237,6 +237,7 @@ export const Botao = styled.button`
   border: 3px solid #0A0E3C;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 3px;
+  background-color: #f8d6cf;
 
   font-family: 'Barlow';
   font-style: normal;
@@ -258,6 +259,7 @@ const salvarBotaoStyle = css`
 `
 
 const cancelarBotaoStyle = css`
-  background: ${Cores.vermelho};
-  color: rgba(10, 14, 60, 0.6);
+  border-color: red;
+  color: black;
+
 `

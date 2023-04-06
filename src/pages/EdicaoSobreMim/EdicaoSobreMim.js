@@ -93,14 +93,14 @@ function EdicaoSobreMim() {
     await managerService.atualizarSobreMim(id, dados);
     setSobreMimDados((prev) => ({ ...prev, ...formDados }));
     setCarregando(false);
-    history.push("/web/editarconteudo")
+    history.push("/web/home")
   };
   const handleCancelar = () => {
     getSobreMimDados();
 
     imagemUmRef.current.value = null;
     imagemDoisRef.current.value = null;
-    history.push("/web/editarconteudo")
+    history.push("/web/home")
   };
 
   const antLoadingIcon = (

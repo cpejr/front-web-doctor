@@ -8,6 +8,7 @@ import Cadastro from './pages/Cadastro';
 import Chat from './pages/Chat';
 import CriacaoFormulario from './pages/CriacaoFormulario';
 import EdicaoComentarios from './pages/EdicaoComentarios';
+import EdicaoConteudo from './pages/EdicaoConteudo'; 
 import EdicaoHome from './pages/EdicaoHome';
 import EdicaoIndicacoesESugestoes from './pages/EdicaoIndicacoesESugestoes/EdicaoIndicacoesESugestoes';
 import EdicaoSobreMim from './pages/EdicaoSobreMim';
@@ -178,12 +179,18 @@ function UserHeader() {
           component={UploadReceita}
 
         />
-        <RotasPrivadasMedico
-          exact
-          path='/web/edicaocomentarios'
-          component={EdicaoComentarios}
-
-        />
+        <RotasPrivadasMedico 
+          exact  
+          path='/web/edicaoconteudo' 
+          component={EdicaoConteudo} 
+ 
+        /> 
+        <RotasPrivadasMedico 
+          exact  
+          path='/web/edicaocomentarios' 
+          component={EdicaoComentarios} 
+ 
+        /> 
         <RotasPrivadas exact path='/web/perfil' component={Perfil} />
         <RotasPrivadas
           exact
