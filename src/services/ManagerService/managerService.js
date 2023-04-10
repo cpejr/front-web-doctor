@@ -971,22 +971,11 @@ export const GetArquivoPorChave = async (chave) => {
 
 export const CriandoConversa = async (
   conversa,
-  usarToast = {
-    mensagemSucesso: 'Operação bem sucedida',
-    tempo: 1500,
-    onClose: () => {},
-  }
 ) => {
   let dadosConversaCriada = {};
   await requesterService
     .criarConversa(conversa)
     .then((res) => {
-      if (usarToast) {
-        toast.success(usarToast.mensagemSucesso, {
-          autoClose: usarToast.tempo,
-          onClose: usarToast.onClose,
-        });
-      }
       return (dadosConversaCriada = res.data);
     })
     .catch((error) => {
