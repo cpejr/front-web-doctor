@@ -627,7 +627,7 @@ function PerfilPaciente(props) {
                 <Botoes marginTop={margemBotoes}>
                   <Botao>
                     <Button
-                      backgroundColor="green"
+                      backgroundColor={Cores.lilas[2]}
                       color={Cores.azulEscuro}
                       fontWeight="bold"
                       borderColor={Cores.azulEscuro}
@@ -679,8 +679,8 @@ function PerfilPaciente(props) {
                   {recebeTipo() === "MASTER" && (
                     <Botao>
                       <Button
-                        backgroundColor={Cores.lilas[2]}
-                        color={Cores.azulEscuro}
+                        backgroundColor="red"
+                        color="black"
                         fontWeight="bold"
                         borderColor={Cores.azulEscuro}
                         height="40px"
