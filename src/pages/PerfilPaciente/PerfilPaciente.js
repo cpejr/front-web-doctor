@@ -679,10 +679,10 @@ function PerfilPaciente(props) {
                   {recebeTipo() === "MASTER" && (
                     <Botao>
                       <Button
-                        backgroundColor="red"
+                        backgroundColor="#f8d6cf"
                         color="black"
                         fontWeight="bold"
-                        borderColor={Cores.azulEscuro}
+                        borderColor="red"
                         height="40px"
                         width="100%"
                         fontSize="1.3em"
