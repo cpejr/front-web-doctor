@@ -498,3 +498,10 @@ export const TituloReceita = styled.div`
 export const TextoUrgencia = styled.div`
   margin-right: 2%;
 `;
+
+export const CaixaBaixarPdf = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  width: 100%;
+`;

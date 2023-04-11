@@ -7,6 +7,11 @@ import AreaReceitas from './pages/AreaReceitas';
 import Cadastro from './pages/Cadastro';
 import Chat from './pages/Chat';
 import CriacaoFormulario from './pages/CriacaoFormulario';
+import EdicaoComentarios from './pages/EdicaoComentarios';
+import EdicaoConteudo from './pages/EdicaoConteudo'; 
+import EdicaoHome from './pages/EdicaoHome';
+import EdicaoIndicacoesESugestoes from './pages/EdicaoIndicacoesESugestoes/EdicaoIndicacoesESugestoes';
+import EdicaoSobreMim from './pages/EdicaoSobreMim';
 import Header from './components/Header/Header';
 import ListaFormularios from './pages/ListaFormularios';
 import ListaUsuarios from './pages/ListaUsuarios';
@@ -22,7 +27,8 @@ import FormularioEspecifico from './pages/FormularioEspecifico';
 import Home from './pages/Home/Home';
 import CriacaoReceitas from './pages/CriacaoReceitas';
 import UploadReceita from './pages/UploadReceita';
-import EdicaoSobreMim from  './pages/EdicaoSobreMim';
+
+
 
 const RotasPrivadas = ({ component: Component, ...rest }) => (
   <Route
@@ -144,6 +150,11 @@ function UserHeader() {
           component={EditarFormulario}
         />
         <RotasPrivadasMedico
+          exact
+          path='/web/edicaohome'
+          component={EdicaoHome}
+        />
+        <RotasPrivadasMedico
           path="/web/edicaosobremim"
           component={EdicaoSobreMim}
         />
@@ -158,16 +169,28 @@ function UserHeader() {
           component={ListaUsuarios}
         />
         <RotasPrivadasMedico
-          exact 
+          exact
           path='/web/criacaoreceitas'
           component={CriacaoReceitas}
         />
         <RotasPrivadasMedico
-          exact 
+          exact
           path='/web/uploadreceita'
           component={UploadReceita}
 
         />
+        <RotasPrivadasMedico 
+          exact  
+          path='/web/edicaoconteudo' 
+          component={EdicaoConteudo} 
+ 
+        /> 
+        <RotasPrivadasMedico 
+          exact  
+          path='/web/edicaocomentarios' 
+          component={EdicaoComentarios} 
+ 
+        /> 
         <RotasPrivadas exact path='/web/perfil' component={Perfil} />
         <RotasPrivadas
           exact
@@ -184,7 +207,13 @@ function UserHeader() {
           path='/web/formularioespecifico'
           component={FormularioEspecifico}
         />
-        
+
+        <RotasPrivadas
+          exact
+          path='/web/edicaoindicacoesesugestoes'
+          component={EdicaoIndicacoesESugestoes}
+        />
+
         <RotasPrivadas exact path='/web/home' component={Home} />
         <RotasPrivadas
           component={() => <Redirect to='/web/listadeusuarios' />}
