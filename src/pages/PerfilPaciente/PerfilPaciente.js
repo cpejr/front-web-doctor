@@ -107,6 +107,7 @@ function PerfilPaciente(props) {
   const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState("");
   const emailUsuarioLogado = sessionStorage.getItem("@doctorapp-Email");
   const [formularioEspecifico, setFormularioEspecifico] = useState({});
+  const [Clicado, setClicado] = useState(true);
   
   const [formularios, setFormularios] = useState();
   const {
@@ -139,6 +140,8 @@ function PerfilPaciente(props) {
   
 
   async function criarConversa() {
+    if(Clicado === false){return}
+    setClicado(false)
     const quemLogado = await managerService.GetDadosUsuario(emailUsuarioLogado);
     
     const conversaCriada = {
@@ -152,18 +155,11 @@ function PerfilPaciente(props) {
   
     if(Datafiltrada.length === 0){
 
-    const conversa = await managerService.CriandoConversa(conversaCriada)
-    await managerService.UpdateConversaAtiva(conversa.id)
+      const conversa = await managerService.CriandoConversa(conversaCriada)
+      await managerService.UpdateConversaAtiva(conversa.id)
     
       const copiaConversas = objCopiaProfunda(conversas);
-      const conversaNaLista = copiaConversas[0];
-      if (conversaNaLista.mensagensNaoVistas) {
-        conversaNaLista.mensagensNaoVistas = 0;
-        await managerService.UpdateMensagensVisualizadas(
-          usuarioId,
-          conversa.id
-        );
-      }
+
       const conversaRedirecionada = {
         id: conversa.id,
         tipo: null,
