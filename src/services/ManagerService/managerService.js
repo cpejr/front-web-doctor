@@ -410,7 +410,7 @@ export const InicializandoPDF = async (data) => {
   await requesterService
     .inicializarPDF(data)
     .then(() => {
-      toast.success('Comentário criado com sucesso.');
+      toast.success('Assinatura iniciada  com sucesso.');
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
@@ -423,7 +423,7 @@ export const FinalizandoPDF = async (extensiondata) => {
   await requesterService
     .finalizarPDF(extensiondata)
     .then(() => {
-      toast.success('Comentário criado com sucesso.');
+      toast.success('Assinatura finalizada com sucesso.');
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
@@ -1116,19 +1116,7 @@ export const enviarArquivoMensagem = async (file) => {
   return id;
 };
 
-export const TokenById = async (id_usuario) => {
-  let dispositivo = {};
 
-  await requesterService
-    .TokenById(id_usuario)
-    .then((res) => {
-      dispositivo = res.data
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-    });
-  return dispositivo;
-};
 
 export const requisicaoSobreMimDados = async () => {
   let sobreMimDados = {};

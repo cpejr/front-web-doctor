@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import Button from "../../styles/Button";
 import Input from "../../styles/Input";
 import Select from "../../styles/Select";
+import blobToBase64 from 'blob-to-base64';
 import { Cores } from "../../variaveis";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
@@ -63,8 +64,41 @@ function CriacaoReceitas() {
 	const [descricaoReceita, setDescricaoReceita] = useState();
 	const [tipoAssinatura, setTipoAssinatura] = useState();
 	const [preenchido, setPreenchido] = useState(false);
-	const extensaoInstalada = utils.isExtensionInstalled();
-    const [certificados, setCertificados] = useState();
+	const [documento, setDocumento] = useState("");
+    const [certificados, setCertificados] = useState("");
+    const [certificadoSelecionado, setCertificadoSelecionado] = useState("");
+    const [algoritmoHash, setAlgoritmoHash] = useState("SHA256");
+    const [tipoDocumento, setTipoDocumento] = useState("PDF");
+    const [tipoProfissional, setTipoProfissional] = useState("MEDICO");
+    const [numero, setNumero] = useState("");
+    var   [numeroOID] = useState("");
+    const [UF, setUF] = useState("MG");
+    var   [UFOID] = useState("2.16.76.1.4.2.2.2");
+    const [especialidade, setEspecialidade] = useState("");
+    var   [especialidadeOID] = useState("2.16.76.1.4.2.2.3");
+    const [perfil, setPerfil] = useState("BASICA");
+    const [assinaturaVisivel, setAssinaturaVisivel] = useState("true");
+    const [incluirIMG, setIncluirIMG] = useState("false");
+    const [imagem, setImagem] = useState("");
+    const nonces = "aslkdnjalskdnjakld";
+    const [altura, setAltura] = useState("");
+    const [largura, setLargura] = useState("");
+    const [coordenadaX, setCoordenadaX] = useState("");
+    const [coordenadaY, setCoordenadaY] = useState("");
+    const [posicao, setPosicao] = useState("INFERIOR_ESQUERDO");
+    const [pagina, setPagina] = useState("PRIMEIRA");
+    const [texto, setTexto] = useState("");
+    const [incluirCN, setIncluirCN] = useState("false");
+    const [incluirCPF, setIncluirCPF] = useState("false");
+    const [incluirEmail, setIncluirEmail] = useState("false");
+    const [incluirTXT, setIncluirTXT] = useState("false");
+    const [loading, setLoading] = useState(false);
+    const extensaoInstalada = utils.isExtensionInstalled();
+    const browser = utils.detectBrowser();
+    const data = new FormData();
+	const [nomeArquivo, setNomeArquivo] = useState(false);
+	const [file, setFile] = useState();
+	const [arquivoEscolhido, setArquivoEscolhido] = useState(false);
 	const history = useHistory();
 
     useEffect(() => {
@@ -154,6 +188,22 @@ function CriacaoReceitas() {
 		history.push("/web/areareceitas");
 	}
 
+	const getBase64 = (file, callback) => {
+		const reader = new FileReader();
+		reader.addEventListener("load", () => callback(reader.result));
+		reader.readAsDataURL(file);
+	  };
+	
+	  async function handleChange(info) {
+		estado.descricao = false;
+		getBase64(info.file.originFileObj, (url) => {
+		  setFile(url);
+		  setNomeArquivo(info.file.name);
+		});
+		setArquivoEscolhido(false)
+	  }
+
+
 	async function criarReceita(e) {
 		e.preventDefault();
 
@@ -178,7 +228,30 @@ function CriacaoReceitas() {
 			setCarregandoCriacao(false);
 			return;
 		}
+         
+         
 
+		data.append("certificado", certificadoSelecionado.certificateData);
+        // PERFIL DE ASSINATURA (BASICA OU CARIMBO)
+        data.append("perfil", perfil);
+        // ALGORITMO HASH QUE SERÁ USADO NA CODIFICAÇÃO DO DOCUMENTO
+        data.append("algoritmoHash", algoritmoHash);
+        // DOCUMENTO NO FORMATO PDF QUE SERÁ ASSINADO
+        data.append("documento", PdfTeste);
+        // SE A ASSINATURA SERÁ VISIVEL NO DOCUMENTO
+        data.append("assinaturaVisivel", assinaturaVisivel)
+		data.append("tipoDocumento", tipoDocumento);
+        data.append("tipoProfissional", tipoProfissional);
+        data.append("numero", numero);
+        data.append("numeroOID", numeroOID);
+        data.append("UF", UF);
+        data.append("UFOID", UFOID);
+        data.append("especialidade", especialidade);
+        data.append("especialidadeOID", especialidadeOID);
+
+       const resposta = await managerService.InicializandoPDF(data)
+       
+	   //await managerService.FinalizandoPDF(resposta);
 
 		await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
 			mensagemSucesso: "Receita criada com sucesso",
