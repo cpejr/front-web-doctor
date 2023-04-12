@@ -1176,3 +1176,25 @@ export const deletarSobreMim = async (id) => {
       requisicaoErro(error);
     });
 };
+
+export const MandandoMensagemComunicadoUrgencia = async (id_usuario) => {
+  await requesterService
+    .enviarMensagemComunicadoUrgencia(id_usuario)
+    .then(() => {
+      toast.success("Exame finalizado com sucesso!")
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    })
+}
+
+export const MandandoMensagemExameMarcado = async (id_usuario) => {
+  await requesterService
+    .enviarMensagemExameMarcado(id_usuario)
+    .then(() => {
+      toast.success("Exame finalizado com sucesso!")
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    })
+  }
