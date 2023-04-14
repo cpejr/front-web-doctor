@@ -230,6 +230,7 @@ export const TamanhoInput = styled.div`
   justify-content: center;
   width: 40%;
   height: 40px;
+  margin-top: 10%;
 
   @media (max-width: 560px) {
     width: 100%;
