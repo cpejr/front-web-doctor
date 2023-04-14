@@ -753,23 +753,27 @@ function FormularioEspecifico(props) {
               >
                 Visualizar Perguntas
               </Button>
+              {tipoUsuarioLogado === "MASTER" || (tipoUsuarioLogado === "SECRETARIA(O)" && formularioEspecifico.visualizacao_secretaria === true)? (
               <Button
-                backgroundColor={Cores.lilas[2]}
-                borderRadius="3px"
-                borderWidth="1px"
-                borderColor={Cores.preto}
-                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-                color={Cores.preto}
-                fontSize="15px"
-                height="50px"
-                width="60%"
-                marginTop="0%"
-                marginLeft="0%"
-                fontSizeMedia950="0.9em"
-                onClick={() => salvaWordSomentePerguntas(formularioEspecifico)}
-              >
+              backgroundColor={Cores.lilas[2]}
+              borderRadius="3px"
+              borderWidth="1px"
+              borderColor={Cores.preto}
+              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+              color={Cores.preto}
+              fontSize="15px"
+              height="50px"
+              width="60%"
+              marginTop="0%"
+              marginLeft="0%"
+              fontSizeMedia950="0.9em"
+              onClick={() => salvaWordSomentePerguntas(formularioEspecifico)}
+              >   
                 Gerar documento Word
               </Button>
+              ):(
+                null
+              )}
             </ColunaDireita>
           </>
         )}
