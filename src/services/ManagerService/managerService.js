@@ -1231,7 +1231,7 @@ export const enviarArquivoMensagem = async (file) => {
   await requesterService
     .enviarArquivoMensagem(file)
     .then((res) => {
-      toast.success('Arquivo PDF enviado com sucesso');
+      toast.success('Arquivo enviado com sucesso');
       id = res.data;
       
     })

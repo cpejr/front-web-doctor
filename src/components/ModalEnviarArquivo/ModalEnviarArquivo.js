@@ -52,14 +52,23 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
 
   const TestantoTipoArquivo = (file) => {
     const isPdf = file.type === "application/pdf";
-
-    if (!isPdf) {
-      toast.error("Transforme para pdf antes de enviar");
+    const isImage = file.type === "image/png";
+  
+    if (!isImage && !isPdf) {
+      toast.error("O arquivo deve ser do tipo PDF ou PNG");
       setCarregando(true);
+      return false;
     }
-
-    return isPdf;
-  };
+  
+    if (!isImage && isPdf) {
+      return isPdf;
+    }
+  
+    if (!isPdf && isImage) {
+      return isImage;
+    }
+  
+  }
 
   async function enviarArquivo() {
     if (file) {
