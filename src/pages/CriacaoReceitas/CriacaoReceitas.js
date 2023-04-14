@@ -109,6 +109,7 @@ function CriacaoReceitas() {
 			  certificado.label = certificado.name;
 			});
 			setCertificados(certificados);
+			console.log(certificados);
 		  })
 		}
 	  }, [extensaoInstalada])
@@ -206,7 +207,7 @@ function CriacaoReceitas() {
 
 	async function criarReceita(e) {
 		e.preventDefault();
-
+        console.log(certificados);
 		const camposVaziosAtual = {
 			id_usuario: !estado.id_usuario,
 			titulo: !estado.titulo,
@@ -231,7 +232,7 @@ function CriacaoReceitas() {
          
          
 
-		data.append("certificado", certificadoSelecionado.certificateData);
+		/*data.append("certificado", certificados);
         // PERFIL DE ASSINATURA (BASICA OU CARIMBO)
         data.append("perfil", perfil);
         // ALGORITMO HASH QUE SERÁ USADO NA CODIFICAÇÃO DO DOCUMENTO
@@ -247,11 +248,29 @@ function CriacaoReceitas() {
         data.append("UF", UF);
         data.append("UFOID", UFOID);
         data.append("especialidade", especialidade);
-        data.append("especialidadeOID", especialidadeOID);
+        data.append("especialidadeOID", especialidadeOID);*/
 
-       const resposta = await managerService.InicializandoPDF(data)
+		//formData_FwInicializar["metadados"] = form_Metadados;
+		let formData_FwInicializar = {  "certificado": certificados
+	};
+	let UFOID = "2.16.76.1.4.2.2.2";
+	let numeroOID = "2.16.76.1.4.2.2.1";
+	let especialidadeOID = "2.16.76.1.4.2.2.3";
+	let tipoDoc = "2.16.76.1.12.1.1";
+	let form_Metadados = {
+	}
+	form_Metadados[tipoDoc] = "";
+	form_Metadados[UFOID] = UFOID;
+	form_Metadados[numeroOID] = numeroOID;
+	form_Metadados[especialidadeOID] = especialidadeOID;
+	formData_FwInicializar["metadados"] = form_Metadados;
+
+
+
+
+       const resposta = await managerService.InicializandoPDF(formData_FwInicializar);
        
-	   //await managerService.FinalizandoPDF(resposta);
+	   await managerService.FinalizandoPDF(resposta);
 
 		await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
 			mensagemSucesso: "Receita criada com sucesso",
