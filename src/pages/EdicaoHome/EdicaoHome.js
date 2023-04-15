@@ -343,6 +343,8 @@ function EdicaoHome() {
             />
             <TextoSaibaMais color={Cores.branco}>Saiba Mais</TextoSaibaMais>
           </BoxSaibaMais>
+        </MetadeEsquerda>
+        <MetadeDireita>
           <BoxAlterarImagem>
             <CarrosselContainer>
               <Esquerda
@@ -383,8 +385,6 @@ function EdicaoHome() {
               </Direita>
             </CarrosselContainer>
           </BoxAlterarImagem>
-        </MetadeEsquerda>
-        <MetadeDireita>
           <BoxSaibaMais backgroundColor="#FBCB4C" borderColor="#FBCB4C">
             <TextArea
               textAlign="left"
@@ -453,39 +453,6 @@ function EdicaoHome() {
               onChange={preenchendoDados}
             />
             <TextoSaibaMais color={Cores.branco}>Saiba Mais</TextoSaibaMais>
-          </BoxSaibaMais>
-          <BoxSaibaMais borderColor="white">
-            <TextArea
-              textAlign="left"
-              backgroundColor={Cores.branco}
-              color={Cores.preto}
-              fontSize="140%"
-              width="100%"
-              marginTop="2%"
-              borderWidth="0px"
-              value={homes.titulo_quatro}
-              name="titulo_quatro"
-              onChange={preenchendoDados}
-              paddingLeft="10%"
-            />
-            <TextArea
-              backgroundColor={Cores.branco}
-              color={Cores.preto}
-              width="100%"
-              minHeight="190px"
-              height="auto"
-              marginTop="2%"
-              borderWidth="0px"
-              paddingLeft="10%"
-              paddingRight="10%"
-              fontSize="100%"
-              textAlign="left"
-              lineBreak="auto"
-              value={homes.texto_quatro}
-              name="texto_quatro"
-              onChange={preenchendoDados}
-            />
-            <TextoSaibaMais color={Cores.preto}>Saiba Mais</TextoSaibaMais>
           </BoxSaibaMais>
           <ContainerBotoes>
             <Button
