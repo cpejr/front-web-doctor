@@ -1301,12 +1301,10 @@ export const UpdateDadosHomes = async (
   texto_dois, 
   titulo_tres, 
   texto_tres, 
-  titulo_quatro, 
-  texto_quatro,
   video
 ) => {
   await requesterService
-    .updateDadosHomes(id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video)
+    .updateDadosHomes(id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, video)
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = '/web/editarhome'));
       return false;
