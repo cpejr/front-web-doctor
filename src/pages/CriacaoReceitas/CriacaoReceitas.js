@@ -263,14 +263,18 @@ function CriacaoReceitas() {
 	form_Metadados[UFOID] = UFOID;
 	form_Metadados[numeroOID] = numeroOID;
 	form_Metadados[especialidadeOID] = especialidadeOID;
+	//form_Metadados[documento] = PdfTeste;
 	formData_FwInicializar["metadados"] = form_Metadados;
 
-
+    console.log(form_Metadados);
 
 
        const resposta = await managerService.InicializandoPDF(formData_FwInicializar);
        
-	   await managerService.FinalizandoPDF(resposta);
+	   console.log(resposta);
+      
+
+	   const respFinicializar = await managerService.FinalizandoPDF(resposta);
 
 		await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
 			mensagemSucesso: "Receita criada com sucesso",
