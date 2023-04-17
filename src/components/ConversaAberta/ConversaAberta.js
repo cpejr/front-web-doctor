@@ -5,6 +5,7 @@ import {
   PlusOutlined,
   SendOutlined,
   QuestionOutlined,
+  DeleteOutlined
 } from "@ant-design/icons";
 import { Dropdown, Menu, Modal, Spin, Tooltip} from "antd";
 import moment from "moment";
@@ -20,6 +21,7 @@ import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import { Cores } from "../../variaveis";
 import Mensagem from "../Mensagem/Mensagem";
 import ModalEnviarArquivo from "../ModalEnviarArquivo";
+import ModalExcluirConversa from "../ModalExcluirConversa";
 import {
   BotaoVoltar,
   Conversa,
@@ -61,6 +63,7 @@ export default function ConversaAberta({ socket }) {
   const horaAtual = moment().hours();
   const horarioComercial = horaAtual >= 7 && horaAtual < 21 ? true : false;
   const [modalEnviarArquivo, setModalEnviarArquivo] = useState(false);
+  const [modalExcluirConversa, setModalExcluirConversa] = useState(false);
   const [pdfFromModal, setPdfFromModal] = useState("");
   const [urlFromModal, setUrlFromModal] = useState("");
 
@@ -265,6 +268,10 @@ export default function ConversaAberta({ socket }) {
 
   async function fechandoModalEnviarArquivo() {
     setModalEnviarArquivo(false);
+  }
+
+  async function fechandoModalExcluirConversa() {
+    setModalExcluirConversa(false);
   }
 
   useEffect(() => {
@@ -574,6 +581,17 @@ export default function ConversaAberta({ socket }) {
         ) : (
           <NomePessoa>{conversaSelecionada?.conversaCom?.nome}</NomePessoa>
         )}
+        <DeleteOutlined 
+        style={{
+          position: "absolute",
+          left: "82%",
+          fontSize: "40px",
+          color: Cores.lilas[1]
+        }}
+        onClick={() => {
+          setModalExcluirConversa(true);
+        }}
+        />
       </HeaderConversaAberta>
       <CorpoConversaAberta>
         {carregandoConversa ? (
@@ -706,6 +724,23 @@ export default function ConversaAberta({ socket }) {
           ref={modalRef}
         />
       </Modal>
+      
+      <Modal
+        visible={modalExcluirConversa}
+        onCancel={fechandoModalExcluirConversa}
+        footer={null}
+        width={"50%"}
+        centered={true}
+        destroyOnClose={true}
+        style={{ maxWidth: "450px", minWidth: "250px" }}
+      >
+        <ModalExcluirConversa
+          fecharModal={() => fechandoModalExcluirConversa()}
+          id={conversaSelecionada.id}
+          ref={modalRef}
+        />
+      </Modal>
+      
     </Conversa>
   );
 }
