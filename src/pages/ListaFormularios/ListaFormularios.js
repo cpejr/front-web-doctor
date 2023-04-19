@@ -276,20 +276,6 @@ function ListaFormularios() {
                     <BotoesVerticalMaster>
                       <BotaoVertical>
                         <Button
-                          backgroundColor={Cores.lilas[1]}
-                          color={Cores.branco}
-                          fontWeight='bold'
-                          borderColor={Cores.azulEscuro}
-                          height='37px'
-                          width='90%'
-                          onClick={() => abrindoModal(value.id)}
-                        >
-                          ENVIAR
-                        </Button>
-                      </BotaoVertical>
-
-                      <BotaoVertical>
-                        <Button
                           backgroundColor={Cores.cinza[7]}
                           color={Cores.azulEscuro}
                           fontWeight='bold'
