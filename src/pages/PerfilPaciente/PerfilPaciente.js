@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   LoadingOutlined,
   StarOutlined,
@@ -8,6 +8,8 @@ import {
 import { Spin } from "antd";
 import { Modal } from "antd";
 import { toast } from "react-toastify";
+import { ChatContext } from '../../contexts/ChatContext';
+import { useHistory } from "react-router-dom";
 import {
   ContainerPerfil,
   Perfil,
@@ -40,9 +42,8 @@ import {
   TituloReceita,
   TipoFormulario,
   UrgenciaFormulario,
-  TextoUrgencia,
+  CaixaBaixarPdf,
 } from "./Styles";
-import logoGuilherme from "../../assets/logoGuilherme.png";
 import Button from "../../styles/Button";
 import ModalAgendamento from "../../components/ModalAgendamento/ModalAgendamento";
 import { Cores } from "../../variaveis";
@@ -53,10 +54,31 @@ import ModalFormulario from "../../components/ModalFormulario";
 import { redirecionamento, sleep } from "../../utils/sleep";
 import * as managerService from "../../services/ManagerService/managerService";
 import { cep } from "../../utils/masks";
-import { compararDataRecente } from "../../utils/tratamentoErros";
+import { saveAs } from 'file-saver';
+import {
+  Document,
+  Packer,
+  Paragraph,
+  TextRun,
+  SectionType,
+  ImageRun,
+  AlignmentType,
+  HorizontalPositionAlign,
+  HorizontalPositionRelativeFrom,
+  VerticalPositionRelativeFrom,
+  VerticalPositionAlign,
+  TextWrappingType,
+  TextWrappingSide
+} from "docx";
 import formatarData from "../../utils/formatarData";
+import logoWord from "./logo.json";
+import footerWord from "./footer.json";
+import { compararDataRecente } from "../../utils/tratamentoErros";
+import objCopiaProfunda from '../../utils/objCopiaProfunda';
+
 
 function PerfilPaciente(props) {
+  const history = useHistory();
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [modalFormulario, setModalFormulario] = useState(false);
   const [modalDeletarUsuario, setModalDeletarUsuario] = useState(false);
@@ -85,13 +107,18 @@ function PerfilPaciente(props) {
   const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState("");
   const emailUsuarioLogado = sessionStorage.getItem("@doctorapp-Email");
   const [formularioEspecifico, setFormularioEspecifico] = useState({});
+  const [Clicado, setClicado] = useState(true);
+  
   const [formularios, setFormularios] = useState();
-  const [booleanoFormulario, setbooleanFormulario] = useState();
+  const {
+    usuarioId,
+    conversas,
+    setConversas,
+    setConversaSelecionada,
+    imagemPerfilPadrão,
+  } = useContext(ChatContext);
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 25, color: Cores.azulEscuro }} spin />
-  );
-  const antIconModal = (
-    <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin />
   );
 
   const margemBotoes = tipoUsuario ? "0px" : "8%";
@@ -110,6 +137,58 @@ function PerfilPaciente(props) {
     const resposta = await managerService.GetDadosUsuario(emailUsuarioLogado);
     setTipoUsuarioLogado(resposta.dadosUsuario.tipo);
   }
+  
+
+  async function criarConversa() {
+    if(Clicado === false){return}
+    setClicado(false)
+    const quemLogado = await managerService.GetDadosUsuario(emailUsuarioLogado);
+    
+    const conversaCriada = {
+      id_criador: quemLogado.dadosUsuario.id,
+      id_receptor: usuario.id,
+    }
+    
+    const checarconversas= objCopiaProfunda(conversas);
+    
+    const Datafiltrada = checarconversas.filter(item => item.tipo === null && item.conversaCom.id === usuario.id);
+  
+    if(Datafiltrada.length === 0){
+
+      const conversa = await managerService.CriandoConversa(conversaCriada)
+      await managerService.UpdateConversaAtiva(conversa.id)
+    
+      const copiaConversas = objCopiaProfunda(conversas);
+
+      const conversaRedirecionada = {
+        id: conversa.id,
+        tipo: null,
+        conversaCom: {
+        id: usuario.id, 
+        nome: usuario.nome, 
+        avatar_url:usuario.avatar_url}
+      }
+
+
+      setConversaSelecionada(conversaRedirecionada);
+      setConversas(copiaConversas);
+
+      history.push("/web/chat")
+    }else{
+      const conversaRedirecionadaExistente = {
+        id: Datafiltrada[0].id,
+        tipo: null,
+        conversaCom: {
+        id: usuario.id, 
+        nome: usuario.nome, 
+        avatar_url:usuario.avatar_url}
+      }
+      setConversaSelecionada(conversaRedirecionadaExistente);
+      setConversas(checarconversas);
+
+      history.push("/web/chat")
+    }
+    }
 
   async function pegandoDados() {
     const resposta = await managerService.GetDadosUsuario(
@@ -157,6 +236,7 @@ function PerfilPaciente(props) {
       usuario.id
     );
     setRespostas(resposta);
+    setFormularios(resposta);
   }
 
   async function pegandoListaReceitas() {
@@ -303,7 +383,143 @@ function PerfilPaciente(props) {
     }
   }
 
-  
+  async function salvaWord(docxWord) {
+
+    const perguntas = Object.values(docxWord.perguntas.properties);
+    const respostas = Object.values(docxWord.respostas);
+
+    const dataFormatada = formatarData({ data: usuario.data_nascimento, formatacao: "dd/MM/yyyy" });
+
+    let arrayParagrafos = [];
+
+    perguntas.forEach((pergunta, index) => {
+      const conteudoPergunta = pergunta.title
+      const conteudoResposta = respostas[index];
+      arrayParagrafos.push(
+        new TextRun({
+          text: `Pergunta: ${conteudoPergunta}`,
+          break: 2,
+          bold: true
+        })
+      )
+      arrayParagrafos.push(
+        new TextRun({
+          text: `Resposta: ${conteudoResposta}`,
+          break: 1
+        })
+      )
+    });
+
+    const doc = new Document({
+      sections: [{
+        properties: {
+          type: SectionType.CONTINUOUS,
+        },
+        children: [
+          new Paragraph({
+            children: [
+              new ImageRun({
+                data: logoWord,
+                transformation: {
+                  width: 600,
+                  height: 150
+                },
+                floating: {
+                  horizontalPosition: {
+                    relative: HorizontalPositionRelativeFrom.TOP_MARGIN,
+                    align: HorizontalPositionAlign.CENTER,
+                  },
+                  verticalPosition: {
+                    relative: VerticalPositionRelativeFrom.TOP_MARGIN,
+                    align: VerticalPositionAlign.TOP,
+                  },
+                  wrap: {
+                    type: TextWrappingType.TOP_AND_BOTTOM,
+                    side: TextWrappingSide.LARGEST,
+                  },
+                  margins: {
+                    top: 201440,
+                    bottom: 201440,
+                  },
+                }
+              })
+            ]
+          }),
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: `NOME: `,
+                bold: true,
+              }),
+              new TextRun({
+                text: `${docxWord.nome}`,
+              }),
+            ],
+          }),
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: `DATA DE NASCIMENTO: `,
+                bold: true,
+              }),
+              new TextRun({
+                text: `${dataFormatada}`,
+              }),
+            ],
+          }),
+          new Paragraph({
+            alignment: AlignmentType.CENTER,
+            children: [
+              new TextRun({
+                text: `${docxWord.titulo}`,
+                bold: true,
+                size: 28,
+                break: 1
+              }),
+            ],
+          }),
+          new Paragraph({
+            children: arrayParagrafos,
+          }),
+          new Paragraph({
+            children: [
+              new ImageRun({
+                data: footerWord,
+                transformation: {
+                  width: 800,
+                  height: 120
+                },
+                floating: {
+                  horizontalPosition: {
+                    relative: HorizontalPositionRelativeFrom.TOP_AND_BOTTOM,
+                    align: HorizontalPositionAlign.CENTER,
+                  },
+                  verticalPosition: {
+                    relative: VerticalPositionRelativeFrom.BOTTOM_MARGIN,
+                    align: VerticalPositionAlign.BOTTOM,
+                  },
+                  wrap: {
+                    type: TextWrappingType.TOP_AND_BOTTOM,
+                    side: TextWrappingSide.LARGEST,
+                  },
+                  margins: {
+                    top: 201440,
+                    bottom: 201440,
+                  },
+                }
+              })
+            ]
+          }),
+        ],
+      }],
+    });
+
+    await Packer.toBlob(doc).then(blob => {
+      saveAs(blob,
+        "Resposta do Formulário " + docxWord.titulo + " referente ao paciente " + docxWord.nome+ ".docx")
+    })
+  }
+
   return (
     <div>
       <ContainerPerfil>
@@ -407,7 +623,7 @@ function PerfilPaciente(props) {
                 <Botoes marginTop={margemBotoes}>
                   <Botao>
                     <Button
-                      backgroundColor="green"
+                      backgroundColor={Cores.lilas[2]}
                       color={Cores.azulEscuro}
                       fontWeight="bold"
                       borderColor={Cores.azulEscuro}
@@ -415,6 +631,7 @@ function PerfilPaciente(props) {
                       width="100%"
                       fontSize="1.3em"
                       fontSizeMedia480="1em"
+                      onClick={() => criarConversa()}
                     >
                       Iniciar Conversa
                     </Button>
@@ -458,10 +675,10 @@ function PerfilPaciente(props) {
                   {recebeTipo() === "MASTER" && (
                     <Botao>
                       <Button
-                        backgroundColor={Cores.lilas[2]}
-                        color={Cores.azulEscuro}
+                        backgroundColor="#f8d6cf"
+                        color="black"
                         fontWeight="bold"
-                        borderColor={Cores.azulEscuro}
+                        borderColor="red"
                         height="40px"
                         width="100%"
                         fontSize="1.3em"
@@ -487,61 +704,75 @@ function PerfilPaciente(props) {
                   <Titulo>FORMULÁRIOS</Titulo>
                   {respostas?.map((value) => (
                     <>
-                      {deveMostrarFormularios(value.id_formulario, value.status) && (
-                        <Formulario>
-                          <DadosFormulario>
-                            {tipoUsuarioLogado === "MASTER" ? (
-                              <TituloFormulario
-                                cursor="pointer"
-                                textDecoration="underline"
-                                onClick={() =>
-                                  abrindoModalFormulario(
-                                    value.id,
-                                    value.perguntas,
-                                    value.titulo
-                                  )
+                      {deveMostrarFormularios(value.id_formulario,value.status) && (
+                          <Formulario>
+                            <DadosFormulario>
+                              {tipoUsuarioLogado === "MASTER" ||
+                                value.visualizacao_secretaria === true ? (
+                                <TituloFormulario
+                                  cursor="pointer"
+                                  textDecoration="underline"
+                                  onClick={() =>
+                                    abrindoModalFormulario(
+                                      value.id,
+                                      value.perguntas,
+                                      value.titulo
+                                    )
+                                  }
+                                >
+                                  {value.titulo}
+                                </TituloFormulario>
+                              ) : (
+                                <TituloFormulario
+                                  cursor="null"
+                                  textDecoration="none"
+                                >
+                                  {value.titulo}
+                                </TituloFormulario>
+                              )}
+
+                              <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
+                              <UrgenciaFormulario>
+                                <>Urgência: </>
+                                {estrelaPreenchida(value.urgencia)}
+                                {estrelaNaoPreenchida(3 - value.urgencia)}
+                              </UrgenciaFormulario>
+                            </DadosFormulario>
+                            {value.status === true ? (
+                              <CaixaBaixarPdf key={value?.id}>
+                                <></>
+                                {tipoUsuarioLogado === "MASTER" &&
+                                  <Button
+                                    backgroundColor={Cores.lilas[2]}
+                                    color={Cores.azulEscuro}
+                                    fontWeight="bold"
+                                    borderColor={Cores.azulEscuro}
+                                    height="40px"
+                                    width="25%"
+                                    onClick={() => salvaWord(value)}
+                                  >
+                                    BAIXAR DOCX
+                                  </Button>
                                 }
-                              >
-                                {value.titulo}
-                              </TituloFormulario>
-
+                              </CaixaBaixarPdf>
                             ) : (
-                              <TituloFormulario
-                                cursor="null"
-                                textDecoration="none"
-
-                              >
-                                {value.titulo}
-                              </TituloFormulario>
+                              <RespostaPendente>
+                                <Resposta>Resposta Pendente</Resposta>
+                                <Button
+                                  backgroundColor={Cores.cinza[7]}
+                                  color={Cores.azulEscuro}
+                                  fontWeight="bold"
+                                  borderColor={Cores.azulEscuro}
+                                  height="40px"
+                                  width="25%"
+                                  onClick={() => enviarLembrete(value)}
+                                >
+                                  ENVIAR LEMBRETE
+                                </Button>
+                              </RespostaPendente>
                             )}
-
-                            <TipoFormulario>Tipo: {value.tipo}</TipoFormulario>
-                            <UrgenciaFormulario>
-                              <>Urgência: </>
-                              {estrelaPreenchida(value.urgencia)}
-                              {estrelaNaoPreenchida(3 - value.urgencia)}
-                            </UrgenciaFormulario>
-                          </DadosFormulario>
-                          {value.status === true ? (
-                            <></>
-                          ) : (
-                            <RespostaPendente>
-                              <Resposta>Resposta Pendente</Resposta>
-                              <Button
-                                backgroundColor={Cores.cinza[7]}
-                                color={Cores.azulEscuro}
-                                fontWeight="bold"
-                                borderColor={Cores.azulEscuro}
-                                height="40px"
-                                width="25%"
-                                onClick={() => enviarLembrete(value)}
-                              >
-                                ENVIAR LEMBRETE
-                              </Button>
-                            </RespostaPendente>
-                          )}
-                        </Formulario>
-                      )}
+                          </Formulario>
+                        )}
                     </>
                   ))}
                 </>
@@ -636,7 +867,7 @@ function PerfilPaciente(props) {
           titulo={titulo}
         />
       </Modal>
-      <AddToast/>
+      <AddToast />
     </div>
   );
 }

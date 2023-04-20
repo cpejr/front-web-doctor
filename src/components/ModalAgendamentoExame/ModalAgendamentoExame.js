@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Tooltip } from "antd";
+import { Tooltip,Checkbox } from "antd";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Spin } from "antd";
 import moment from "moment";
 import logoGuilherme from "../../assets/logoGuilherme.png";
+import { toast } from "react-toastify";
 import { Row, Radio } from "antd";
 import _ from "lodash";
 import {
@@ -27,6 +28,7 @@ import {
   NomePaciente,
   CaixaLoader,
   OpcoesAgendamento,
+  TextoCheckbox,
 } from "./Styles";
 import Select from "../../styles/Select";
 import Button from "../../styles/Button";
@@ -55,6 +57,14 @@ function ModalAgendamentoExame(props) {
   const [erro, setErro] = useState(false);
   const [camposVazios, setCamposVazios] = useState(false);
   const [hoje, setHoje] = useState("");
+  const [clicadoCheckbox, setclicadoCheckbox] = useState(false);
+  const [TipoValido, setTipoValido] = useState(true);
+  const [UsuarioValido, setUsuarioValido] = useState(true);
+  const [ConsultorioValido, setConsultorioValido] = useState(true);
+  const [DataValido, setDataValido] = useState(true);
+  const [HoraValido, setHoraValido] = useState(true);
+  const [TipoValidoCor, setTipoValidocor] = useState("black");
+  const [ConsultorioValidoCor, setConsultorioValidocor] = useState("black");
 
   moment.locale("pt-br");
   const errors = {};
@@ -81,6 +91,7 @@ function ModalAgendamentoExame(props) {
   useEffect(() => {
     pegandoConsultorios();
   }, []);
+
 
   async function pegandoExames() {
     setCarregandoExames(true);
@@ -141,6 +152,10 @@ function ModalAgendamentoExame(props) {
     document.getElementById("data").setAttribute("min", hoje);
   }
 
+  const handleChange = () =>{
+    setclicadoCheckbox(!clicadoCheckbox)
+  }
+
   useEffect(() => {
     setandoDiaAtual();
   }, []);
@@ -195,6 +210,50 @@ function ModalAgendamentoExame(props) {
       alert("DataHora inválida.");
     }
   }
+  
+  async function setandoMsg(tipo, data_hora) {
+    const examemarcado = await managerService.GetDadosExame(tipo)
+    return("Você tem um exame marcado!\nTipo: " + examemarcado[0].titulo + "\nData e Hora: "+ data_hora.slice(8, 10) + "/" + data_hora.slice(5, 7) + "/" + data_hora.slice(0, 4) + " às " + data_hora.slice(11, 16));
+  }
+
+  function checarSeValido(){
+    let Valido = true;
+    if(String(exame.id_exame).length <= 10){
+      setTipoValido(false); 
+      setTipoValidocor("red") 
+      Valido = false;
+    }else{
+      setTipoValido(true)
+      setTipoValidocor("black")
+    }
+    if(String(exame.id_consultorio).length <= 10){
+      setConsultorioValido(false); 
+      setConsultorioValidocor("red")
+      Valido = false;
+    }else{
+      setConsultorioValido(true)
+      setConsultorioValidocor("black")
+    }
+    if(String(exame.id_usuario).length <= 15){
+      setUsuarioValido(false); 
+      Valido = false;
+    }else{
+      setUsuarioValido(true)
+    }
+    if(dataExame.length <= 2){
+      setDataValido(false); 
+      Valido = false;
+    }else{
+      setDataValido(true)
+    }
+    if(hora.length <= 2){
+      setHoraValido(false); 
+      Valido = false;
+    }else{
+      setHoraValido(true)
+    }
+    return Valido;
+  }
 
   async function requisicaoCriarExame() {
     if (props.abertoPeloUsuario) {
@@ -202,9 +261,37 @@ function ModalAgendamentoExame(props) {
     } else {
       exame.id_usuario = idUsuario;
     }
-    setCarregandoCadastro(true);
     formatacaoDataHora();
+    if(checarSeValido() === false){toast.error('Preencha todos os campos'); return;}
+    setCarregandoCadastro(true);
     await managerService.CriandoExame(exame);
+    let msg = await setandoMsg(exame.id_exame, exame.data_hora);
+    if(clicadoCheckbox === true){
+      
+      const Token = 
+        await managerService.TokenById(exame.id_usuario);
+        if(Token.length === 0){
+          toast.error('Nenhum celular cadastrado a esse paciente');
+        }else{
+          toast.success('Notificação encaminhada para o paciente.');
+        }
+        for(var i = 0; i <= Token.length - 1; i++){
+          const Message = {
+            to: Token[i].token_dispositivo.replace("expo/", ''),
+            sound: 'default',
+            title: 'Doctor App', 
+            body: msg,
+            
+          };
+          fetch('https://exp.host/--/api/v2/push/send',{
+              method: 'POST',
+              body: JSON.stringify(Message),
+           }
+          );
+          
+        }
+        
+    }
     setCarregandoCadastro(false);
     await sleep(1500);
     props.fechandoModal();
@@ -217,7 +304,7 @@ function ModalAgendamentoExame(props) {
     <Caixa>
       <InfoEsquerda>
         {props.abertoPeloUsuario === true ? (
-          <Usuario>
+          <Usuario Valido={true}>
             <Imagem src={logoGuilherme} alt="logoGuilherme"></Imagem>
             {carregando ? (
               <CaixaLoader>
@@ -228,7 +315,8 @@ function ModalAgendamentoExame(props) {
             )}
           </Usuario>
         ) : (
-          <Usuario>
+          <div>
+          <Usuario Valido={UsuarioValido}>
             <NomePaciente>
               <Select
                 style={{
@@ -243,6 +331,7 @@ function ModalAgendamentoExame(props) {
                 placeholder="Selecione um paciente"
                 onChange={(e) => {
                   setIdUsuario(e.target.value);
+                  setUsuarioValido(true)
                 }}
               >
                 <option value="" disabled selected>
@@ -262,16 +351,19 @@ function ModalAgendamentoExame(props) {
               </Select>
             </NomePaciente>
           </Usuario>
+          {UsuarioValido === false && <Rotulo>Selecione um paciente</Rotulo>}</div>
         )}
         <TipoAgendamento>
           <TextoCaixaSelect>Selecione o Tipo de Agendamento:</TextoCaixaSelect>
           <OpcoesAgendamento>
-            <Row gutter={60} justify={"space-around"}>
+            <Row gutter={60} justify={"space-around"} >
               <Radio.Group
                 defaultValue="exame"
                 bordered={false}
                 s
-                onChange={(e) => props.trocarTipo(e.target.value)}
+                onChange={(e) => {
+                  props.trocarTipo(e.target.value);
+                }}
               >
                 <Radio value="exame">Exame</Radio>
                 <Radio value="consulta">Consulta</Radio>
@@ -291,12 +383,15 @@ function ModalAgendamentoExame(props) {
             paddingBottom="8px"
             onKeyDown={(e) => e.preventDefault()}
             name="data"
-            onChange={(e) => validacaoCampos(e)}
+            onChange={(e) => {
+              validacaoCampos(e)
+              setDataValido(true)}}
             value={dataExame}
             camposVazios={camposVazios.data}
             id="data"
+            Valido={DataValido}
           />
-          {camposVazios.data && <Rotulo>Selecione uma data</Rotulo>}
+          {DataValido === false && <Rotulo>Selecione uma data</Rotulo>}
         </SelecioneUmaData>
         <DoisSelect>
           <TamanhoInput>
@@ -311,7 +406,7 @@ function ModalAgendamentoExame(props) {
                 style={{
                   width: "100%",
                   color: "black",
-                  borderColor: "black",
+                  borderColor: TipoValidoCor,
                   borderWidth: "1px",
                 }}
                 paddingTop="8px"
@@ -321,6 +416,8 @@ function ModalAgendamentoExame(props) {
                 placeholder="Tipo"
                 onChange={(e) => {
                   validacaoCampos(e);
+                  setTipoValido(true)
+                  setTipoValidocor("black")
                 }}
                 camposVazios={camposVazios.titulo}
               >
@@ -341,7 +438,7 @@ function ModalAgendamentoExame(props) {
                 ))}
               </Select>
             </Tooltip>
-            {camposVazios.titulo && <Rotulo>Selecione um tipo de exame</Rotulo>}
+            {TipoValido === false && <Rotulo>Selecione um tipo de exame</Rotulo>}
           </TamanhoInput>
           <TamanhoInput>
             <TextoSelecioneUmaData>
@@ -359,13 +456,15 @@ function ModalAgendamentoExame(props) {
                 style={{
                   width: "100%",
                   borderWidth: "1px",
-                  borderColor: "black",
+                  borderColor: ConsultorioValidoCor,
                   color: "black",
                 }}
                 paddingTop="8px"
                 size="large"
                 onChange={(e) => {
                   validacaoCampos(e);
+                  setConsultorioValido(true)
+                  setConsultorioValidocor("black")
                 }}
                 camposVazios={camposVazios.nome}
               >
@@ -390,7 +489,7 @@ function ModalAgendamentoExame(props) {
                 ))}
               </Select>
             </Tooltip>
-            {camposVazios.nome && <Rotulo>Selecione um consultório </Rotulo>}
+            {ConsultorioValido === false  && <Rotulo>Selecione um consultório </Rotulo>}
           </TamanhoInput>
         </DoisSelect>
         <ContainerHorario>
@@ -402,13 +501,19 @@ function ModalAgendamentoExame(props) {
             placeholder="Horário"
             name="hora"
             id="hora"
-            onChange={(e) => validacaoHorario(e.target.value, dataExame)}
+            onChange={(e) => {
+              validacaoHorario(e.target.value, dataExame)
+              setHoraValido(true)}}
             camposVazios={camposVazios.hora}
             erro={erro.hora}
+            Valido={HoraValido}
           />
           {erro.hora && <Rotulo>Digite um horário válido</Rotulo>}
-          {camposVazios.hora && <Rotulo>Digite um horário</Rotulo>}
+          {HoraValido === false && <Rotulo>Digite um horário</Rotulo>}
         </ContainerHorario>
+        <Checkbox onChange={handleChange}>
+          <TextoCheckbox>Notificar paciente</TextoCheckbox>
+        </Checkbox>
         <Button
           width="80%"
           height="50px"

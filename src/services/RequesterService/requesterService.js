@@ -117,6 +117,17 @@ export const deletarConsulta = (id) => api.delete(`/consultas/${id}`);
 export const deletarExameMarcado = (id) => api.delete(`/exame_marcados/${id}`);
 
 export const requisicaoFormularios = () => api.get(`/formularios/`);
+ 
+export const requisicaoIndicacaoEspecifica = () => api.get(`/indicacoes_especificas/`);
+
+export const requisicaoMedicosIndicados = (id_indicacao_especifica) => api.get(`/medicos_indicados/${id_indicacao_especifica}`);
+
+export const indicarMedico = (id_indicacao_especifica, nome, telefone, local_atendimento) => api.post(`/medicos_indicados` ,
+ {id_indicacao_especifica, nome, telefone, local_atendimento});
+
+export const alterarMedicoIndicado = (id,estado) => api.put(`/medicos_indicados/${id}` ,estado);
+
+export const deletarMedicoIndicado = (id) => api.delete(`/medicos_indicados/${id}`);
 
 export const requisicaoFormularioEspecifico = (id) =>
   api.get(`/formularios/${id}`);
@@ -187,7 +198,6 @@ export const enviarFormularioPaciente = (
   id_formulario,
   id_usuario,
    });
-
 
 
 export const deleteFotoDePerfil = (id, base64) =>
@@ -277,3 +287,20 @@ export const enviarMensagemConfirmarPagamento = (id_usuario) =>
   api.post(`/conversas_whatsapp/confirmar_pagamento`, {
     id_usuario
   });
+
+export const updateDadosHomes = (id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video) =>
+  api.put(`/homes/${id}`, { titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video });
+;
+
+export const requisicaoCarrossel = () =>
+  api.get(`/imagem_carrossels/`);
+
+export const updateImagemCarrossel = (id, base64) =>
+  api.put(`/imagem_carrossels_img/${id}`, {
+    file: base64
+  });
+
+  export const updateImagemHomes = (id, base64) =>
+  api.put(`/homesImagem/${id}`, {
+    file: base64
+  } );

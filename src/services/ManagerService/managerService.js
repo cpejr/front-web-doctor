@@ -207,6 +207,28 @@ export const GetDadosPessoais = async () => {
     });
   return dadosUsuario;
 };
+
+export const GetDadosPessoaisAlfabetico = async () => {
+  let dadosUsuario = {};
+  await requesterService
+    .requisicaoDadosPessoais()
+    .then((res) => {
+      dadosUsuario = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+    dadosUsuario.sort(function(a, b){
+      var nomeA = a.nome.toLowerCase(), nomeB = b.nome.toLowerCase();
+      if (nomeA < nomeB) 
+       return -1;
+      if (nomeA > nomeB)
+       return 1;
+      return 0;
+     });
+  return dadosUsuario;
+};
+
 export const GetDadosConsultasExamesMarcados = async (id_usuario) => {
   let dadosConsultas = {};
   let dadosExamesMarcados = {};
@@ -673,7 +695,97 @@ export const GetResposta = async (id) => {
     });
   return dadosResposta;
 };
+export const GetIndicacaoEspecifica = async () => {
+  let dadosIndicacaoEspecifica = {};
 
+  await requesterService
+    .requisicaoIndicacaoEspecifica()
+
+    .then((res) => {
+      dadosIndicacaoEspecifica = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosIndicacaoEspecifica;
+};
+export const GetMedicosIndicadosPorID = async (id_indicacao_especifica) => {
+  let dadosMedicosIndicadosID = {};
+
+  await requesterService
+    .requisicaoMedicosIndicados(id_indicacao_especifica)
+
+    .then((res) => {
+      dadosMedicosIndicadosID = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosMedicosIndicadosID;
+};
+
+export const IndicandoMedicos = async (
+  id_indicacao_especifica,
+  nome,
+  telefone,
+  local_atendimento,
+  usarToast = {
+    mensagemSucesso: 'Operação bem sucedida',
+    tempo: 1500,
+    onClose: () => {},
+  }
+) => {
+  return requesterService
+    .indicarMedico(
+      id_indicacao_especifica,
+      nome,
+      telefone,
+      local_atendimento,
+    )
+    .then(() => {
+      if (usarToast) {
+        toast.success(usarToast.mensagemSucesso, {
+          autoClose: usarToast.tempo,
+          onClose: usarToast.onClose,
+        });
+      }
+      return true;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+};
+export const EditarMedicoIndicado = async (id, estado) => {
+  await requesterService
+    .alterarMedicoIndicado(id, estado)
+    .then(() => {
+      toast.success('Indicação atualizada com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+
+  return;
+};
+export const DeletarIndicao = async (id) => {
+  await requesterService
+    .deletarMedicoIndicado(id)
+    .then(() => {
+      toast.success('Indicação deletada com sucesso.');
+    })
+    .catch((error) => {
+      requisicaoErro(
+        error,
+        () => (window.location.href = '/web/edicaoindicacoesesugestoes')
+      );
+
+      return false;
+    });
+
+  return false;
+};
 export const GetFormularioPacientesPorFormulario = async (id_formulario) => {
   let dadosResposta = {};
 
@@ -844,7 +956,6 @@ export const DeletarReceita = async (id) => {
 
 export const GetArquivoPorChave = async (chave) => {
   let arquivo = '';
-
   await requesterService
     .requisicaoArquivo(chave)
 
@@ -855,26 +966,16 @@ export const GetArquivoPorChave = async (chave) => {
       requisicaoErro(error);
     });
   return arquivo;
+  
 };
 
 export const CriandoConversa = async (
   conversa,
-  usarToast = {
-    mensagemSucesso: 'Operação bem sucedida',
-    tempo: 1500,
-    onClose: () => {},
-  }
 ) => {
   let dadosConversaCriada = {};
   await requesterService
     .criarConversa(conversa)
     .then((res) => {
-      if (usarToast) {
-        toast.success(usarToast.mensagemSucesso, {
-          autoClose: usarToast.tempo,
-          onClose: usarToast.onClose,
-        });
-      }
       return (dadosConversaCriada = res.data);
     })
     .catch((error) => {
@@ -1073,7 +1174,7 @@ export const TokenById = async (id_usuario) => {
   await requesterService
     .TokenById(id_usuario)
     .then((res) => {
-      dispositivo = res.data
+      dispositivo = res.data;
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -1093,6 +1194,21 @@ export const getTokenDispositivo = async (token_dispositivo) => {
       requisicaoErro(error);
     });
   return token;
+};
+
+export const GetImagensCarrossel = async () => {
+  let dadosCarrossel = {};
+
+  await requesterService
+    .requisicaoCarrossel()
+
+    .then((res) => {
+      dadosCarrossel = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return dadosCarrossel;
 };
 
 export const GetHomes = async () => {
@@ -1125,7 +1241,6 @@ export const enviarArquivoMensagem = async (file) => {
     });
   return id;
 };
-
 
 export const requisicaoSobreMimDados = async () => {
   let sobreMimDados = {};
@@ -1177,6 +1292,52 @@ export const deletarSobreMim = async (id) => {
     });
 };
 
+
+export const UpdateDadosHomes = async (
+  id,
+  titulo_um, 
+  texto_um, 
+  titulo_dois, 
+  texto_dois, 
+  titulo_tres, 
+  texto_tres, 
+  titulo_quatro, 
+  texto_quatro,
+  video
+) => {
+  await requesterService
+    .updateDadosHomes(id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video)
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/editarhome'));
+      return false;
+    });
+
+  return false;
+};
+
+export const updateImagemCarrossel = async (id, file) => {
+  try{
+  const res = await requesterService
+    .updateImagemCarrossel(id, file)
+    return res;
+  } catch (error) {
+      requisicaoErro(error);
+      return;
+    };
+};
+
+export const updateImagemHomes = async (id, file) => {
+    try{
+    const res = await requesterService
+    .updateImagemHomes(id, file)
+    return res;
+    
+    }catch (error) {
+      requisicaoErro(error);
+      return;
+    }; 
+    
+};
 export const MandandoMensagemComunicadoUrgencia = async (id_usuario) => {
   await requesterService
     .enviarMensagemComunicadoUrgencia(id_usuario)

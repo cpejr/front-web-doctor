@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Cores } from "../../variaveis";
+import { Select } from "antd";
 
 export const ContainerCriacaoReceitas = styled.div`
 	display: flex;
@@ -117,6 +118,48 @@ export const SelectContainer = styled.div`
 	border-radius: 3px;
 	margin-top: 2%;
 	box-shadow: 0px 4px 4px 0px #00000040;
+`;
+
+export const SelectUsuario = styled(Select)`
+	
+	height: 50px;
+	width: 100%;
+	background-color: ${Cores.cinza[7]};
+	border-color: ${(props) =>
+		props.camposVazios ? Cores.vermelho : Cores.azulEscuro};
+	border-style: solid;
+	border-width: 2px;
+	border-radius: 3px;
+	box-shadow: 0px 4px 4px 0px #00000040;
+	font-size: 1em;
+
+  & .ant-select-selection-placeholder{
+    color: ${Cores.preto};
+  };
+		
+  &.ant-select:not(.ant-select-customize-input) .ant-select-selector {
+	background-color: ${Cores.cinza[7]};
+	border: none;
+	padding-top: 4px;
+	padding-right: 0px;
+	padding-left: 11px;
+  }
+  & .ant-select-arrow {
+    color: ${Cores.preto};
+    height: 15px;
+    width: 15px;
+	font-size: 11px;
+	padding: none;
+	transform: rotateX(45deg);
+
+	@media (max-width: 500px) {
+	padding-left: 3px;
+	}
+
+	@media (max-width: 400px) {
+	padding-left: 4px;
+	}
+  }
 `;
 
 export const Descricao = styled.div`

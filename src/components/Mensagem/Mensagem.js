@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import dayjs from "dayjs";
 import { MensagemEnviada, DataHoraMensagem } from "./Styles";
 import { FilePdfOutlined, PictureOutlined } from "@ant-design/icons";
@@ -10,18 +10,24 @@ export default function Mensagem({
   conteudo,
   media_url,
   data_criacao,
+  tipo,
 }) {
+
+  useEffect(() => {
+    console.log(tipo);
+  }, []);
+
   return (
     <MensagemEnviada
       pertenceAoUsuarioAtual={pertenceAoUsuarioAtual}
       ref={scrollRef}
     >
-      {media_url ? (
+      {(tipo != "TEXTO") ? (
         <a href={media_url} target="_blank" rel="noopener noreferrer">
-          {conteudo === "Imagem" ? <PictureOutlined  style={{ marginRight: 8, fontSize: 20, color: Cores.azul }} />:
-          <FilePdfOutlined
-            style={{ marginRight: 8, fontSize: 20, color: Cores.azul }}
-          />}
+          {conteudo === "Imagem" ? <PictureOutlined style={{ marginRight: 8, fontSize: 20, color: Cores.azul }} /> :
+            <FilePdfOutlined
+              style={{ marginRight: 8, fontSize: 20, color: Cores.azul }}
+            />}
         </a>
       ) : (
         <></>

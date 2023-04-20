@@ -8,7 +8,7 @@ import {
   ContainerModalCodigo,
   Titulo,
   TextoCheckbox,
-  Select,
+  SelectPaciente,
   SelectContainer,
   CheckboxContainer,
 } from "./Styles";
@@ -80,31 +80,57 @@ function ModalEnvioFormulario(props) {
   }
 
   async function preenchendoDados(e) {
-    setIdUsuario(e.target.value);
+    setIdUsuario(e);
   }
+
+  const ordenarusuarios = (a, b) => {
+		var nome1 = a.nome.toUpperCase();
+		var nome2 = b.nome.toUpperCase();
+	
+		  if (nome1 > nome2) {
+			return 1;
+		  } else {
+			return -1;
+		  };
+    }
+    
+  	function maiusculaMinuscula (match, input) {
+      return match
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .includes(
+        input
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .trim()
+        );
+      }
 
   return (
     <>
       <ContainerModalCodigo>
         <Titulo>Enviar formulário para:</Titulo>
         <SelectContainer borderWidth="2px" width="100%">
-          <Select
-            id="id_usuario"
+          <SelectPaciente
             name="id_usuario"
             marginTop="0px"
             backgroundColor={Cores.cinza[7]}
             color={Cores.preto}
             onChange={preenchendoDados}
+            placeholder="Escolha o Paciente"
+            showSearch
+           					filterOption={(inputValue, option) =>
+              				maiusculaMinuscula(option.children, inputValue)
+            				}
           >
-            {props.usuarios?.map((valor) => (
+            {props.usuarios?.sort(ordenarusuarios).map((valor) => (
               <>
-                <option value="" disabled selected>
-                  Escolha o Paciente:
-                </option>
                 <option value={valor.id}>{valor.nome}</option>
               </>
             ))}
-          </Select>
+          </SelectPaciente>
         </SelectContainer>
         <CheckboxContainer>
           <Checkbox
