@@ -153,6 +153,7 @@ export const NomePessoa = styled.div`
   letter-spacing: 0em;
   text-align: left;
   color: ${Cores.lilas[1]};
+  padding-right: 80px;
 `;
 
 export const CorpoConversaAberta = styled.div`
