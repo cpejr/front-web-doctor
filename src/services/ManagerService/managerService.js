@@ -50,7 +50,7 @@ export const requisicaoLogin = async (email, senha) => {
       await sleep(1500);
       window.location.href = ehMedico ? '/web/home' : '/web/listadeusuarios';
     }
-  } catch (error) {}
+  } catch (error) { }
 
   return;
 };
@@ -58,7 +58,7 @@ export const requisicaoLogin = async (email, senha) => {
 export const Cadastrando = async (
   usuario,
   endereco,
-  callbackError = () => {}
+  callbackError = () => { }
 ) => {
   const resposta = await requesterService.requisicaoDadosUsuario(usuario.email);
 
@@ -413,7 +413,7 @@ export const InicializandoPDF = async (data) => {
       toast.success('Assinatura iniciada  com sucesso.');
     })
     .catch((error) => {
-      requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
+      requisicaoErro(error, () => console.log(error));
       return false;
     });
 
@@ -426,7 +426,7 @@ export const FinalizandoPDF = async (extensiondata) => {
       toast.success('Assinatura finalizada com sucesso.');
     })
     .catch((error) => {
-      requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
+      requisicaoErro(error, () => console.log(error));
       return false;
     });
 
@@ -627,24 +627,24 @@ export const GetRespostaReceitasIdUsuario = async (id_usuario) => {
   return dadosResposta;
 };
 
-export const confirmarPagamentoExame = async(id_paciente, id_usuario) => {
+export const confirmarPagamentoExame = async (id_paciente, id_usuario) => {
   const formulariosPaciente = await GetRespostaFormularioIdUsuario(id_paciente);
   let possuiFormulario = false;
   let posicao = -1;
 
-  for (const [index, value] of formulariosPaciente.entries()){
-    if(value.tipo === "exame_actigrafia"){
+  for (const [index, value] of formulariosPaciente.entries()) {
+    if (value.tipo === "exame_actigrafia") {
       possuiFormulario = true;
       posicao = index;
     }
   }
 
-  if(!possuiFormulario)
+  if (!possuiFormulario)
     toast.error("O paciente não possui um formulário desse exame");
-  else if(possuiFormulario && formulariosPaciente[posicao].respostas === null){
+  else if (possuiFormulario && formulariosPaciente[posicao].respostas === null) {
     toast.error("O paciente não respondeu as perguntas do formulário");
   }
-  else{
+  else {
     await MandandoMensagemConfirmarPagamento(id_usuario);
   }
 }
@@ -729,7 +729,7 @@ export const CriandoReceita = async (
   usarToast = {
     mensagemSucesso: 'Operação bem sucedida',
     tempo: 1500,
-    onClose: () => {},
+    onClose: () => { },
   }
 ) => {
   return requesterService
@@ -764,15 +764,15 @@ export const CriandoReceitaComArquivo = async (
   usarToast = {
     mensagemSucesso: 'Operação bem sucedida',
     tempo: 1500,
-    onClose: () => {},
+    onClose: () => { },
   }
 ) => {
   return requesterService.criarReceitaComArquivo(
-      id_usuario,
-      tituloReceita,
-      descricao,
-      base64,
-    )
+    id_usuario,
+    tituloReceita,
+    descricao,
+    base64,
+  )
     .then(() => {
       if (usarToast) {
         toast.success(usarToast.mensagemSucesso, {
@@ -852,7 +852,7 @@ export const CriandoConversa = async (
   usarToast = {
     mensagemSucesso: 'Operação bem sucedida',
     tempo: 1500,
-    onClose: () => {},
+    onClose: () => { },
   }
 ) => {
   let dadosConversaCriada = {};
@@ -1098,24 +1098,31 @@ export const GetHomes = async () => {
       requisicaoErro(error);
     });
   return dadosHomes[0];
-}; 
-
-export const enviarArquivoMensagem = async (file) => {
-  let id;
-  await requesterService
-    .enviarArquivoMensagem(file)
-    .then((res) => {
-      toast.success('Arquivo PDF enviado com sucesso');
-      id = res.data;
-      
-    })
-    .catch((error) => {
-      requisicaoErro(error);
-      return;
-    });
-  return id;
 };
 
+export const enviarArquivoMensagem = async (file) => {
+
+  console.log(file);
+  let formData = new FormData();
+  console.log(file.file.originFileObj);
+  formData.append('file', file.file.originFileObj);
+
+  console.log(formData.get('file'));
+  
+    let id;
+    await requesterService
+      .enviarArquivoMensagem(formData)
+      .then((res) => {
+        toast.success('Arquivo PDF enviado com sucesso');
+        id = res.data;
+  
+      })
+      .catch((error) => {
+        requisicaoErro(error);
+        return;
+      });
+    return id; 
+};
 
 
 export const requisicaoSobreMimDados = async () => {

@@ -259,7 +259,7 @@ function CriacaoReceitas() {
 	let tipoDoc = "2.16.76.1.12.1.1";
 	let form_Metadados = {
 	}
-	form_Metadados[tipoDoc] = "";
+	form_Metadado[tipoDoc] = "";
 	form_Metadados[UFOID] = UFOID;
 	form_Metadados[numeroOID] = numeroOID;
 	form_Metadados[especialidadeOID] = especialidadeOID;
@@ -276,13 +276,13 @@ function CriacaoReceitas() {
 
 	   const respFinicializar = await managerService.FinalizandoPDF(resposta);
 
-		await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
+/* 		await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
 			mensagemSucesso: "Receita criada com sucesso",
 			tempo: 1500,
 			onClose: () => {
 				history.push("/web/areareceitas");
 			},
-		});
+		}); */
 
 		setCarregandoCriacao(false);
 	}

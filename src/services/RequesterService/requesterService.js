@@ -3,7 +3,7 @@ import api from '../../services/api';
 
 export const EnviandoImagem = (base64) => api.post("/arquivo", { file: base64 });
 
-export const EnviandoArquivo = (base64) => api.post("/arquivofile", {file: base64});
+export const EnviandoArquivo = (base64) => api.post("/arquivofile", { file: base64 });
 
 
 export const logarUsuario = (email, senha) =>
@@ -152,7 +152,7 @@ export const criarReceitaComArquivo = (
     id_usuario: id_usuario,
     titulo: tituloReceita,
     descricao: descricao,
-    file:base64,
+    file: base64,
   });
 
 export const deletarReceita = (id) => api.delete(`/receitas/${id}`);
@@ -163,7 +163,7 @@ export const editarPerguntasFormulario = (id, perguntas) =>
 export const editarCamposFormulario = (id, campos) =>
   api.put(`/formularios/${id}`, campos);
 
-  export const requisicaoTodosFormulariosPaciente = () =>
+export const requisicaoTodosFormulariosPaciente = () =>
   api.get('/formularios_pacientes');
 
 
@@ -213,9 +213,11 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
 
 export const dispostivoById = (id) => api.get(`/dispositivos/${id}`);
 
-export const enviarArquivoMensagem = (base64) =>
-  api.post(`/arquivofile/`,{
-    file: base64
+export const enviarArquivoMensagem = (formData) =>
+  api.post(`/arquivofile/`, formData, {
+    headers: {
+      'content-type': 'multipart/form-data'
+    }
   });
 
 export const requisicaoHomes = () =>
@@ -231,14 +233,14 @@ export const getTokenDispositivo = (token_dispositivo) =>
 export const requisicaoSobreMimDados = () =>
   api.get('/sobremims');
 
-export const criarSobreMim = (dados) => 
+export const criarSobreMim = (dados) =>
   api.post(`/sobremims`, dados, {
     headers: {
       "Content-Type": "multipart/form-data",
     }
   });
 
-export const atualizarSobreMim = (id, dados) => 
+export const atualizarSobreMim = (id, dados) =>
   api.put(`/sobremims/${id}`, dados, {
     headers: {
       "Content-Type": "multipart/form-data",
