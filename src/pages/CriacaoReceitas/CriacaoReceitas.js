@@ -251,7 +251,7 @@ function CriacaoReceitas() {
         data.append("especialidadeOID", especialidadeOID);*/
 
 		//formData_FwInicializar["metadados"] = form_Metadados;
-		let formData_FwInicializar = {  "certificado": certificados
+		let formData_FwInicializar = {  "certificado": certificados[0].certificateData
 	};
 	let UFOID = "2.16.76.1.4.2.2.2";
 	let numeroOID = "2.16.76.1.4.2.2.1";
@@ -259,12 +259,12 @@ function CriacaoReceitas() {
 	let tipoDoc = "2.16.76.1.12.1.1";
 	let form_Metadados = {
 	}
-	form_Metadados[tipoDoc] = "";
-	form_Metadados[UFOID] = UFOID;
-	form_Metadados[numeroOID] = numeroOID;
-	form_Metadados[especialidadeOID] = especialidadeOID;
+	form_Metadados.tipoDoc = tipoDoc;
+	form_Metadados.UFOID = UFOID;
+	form_Metadados.numeroOID = numeroOID;
+	form_Metadados.especialidadeOID = especialidadeOID;
 	//form_Metadados[documento] = PdfTeste;
-	formData_FwInicializar["metadados"] = form_Metadados;
+	formData_FwInicializar.metadados = form_Metadados;
 
     console.log(form_Metadados);
 
