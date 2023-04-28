@@ -272,7 +272,7 @@ function CriacaoReceitas() {
        const resposta = await managerService.InicializandoPDF(formData_FwInicializar);
        
 	   console.log(resposta);
-      
+       await window.BryExtension.sign(certificadoSelecionado.certId, resposta.data);
 
 	   const respFinicializar = await managerService.FinalizandoPDF(resposta);
 

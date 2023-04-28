@@ -413,7 +413,7 @@ export const InicializandoPDF = async (data) => {
     .inicializarPDF(data)
     .then((res) => {
       toast.success('Assinatura iniciada  com sucesso.');
-      pdfIncializado = res;
+      pdfIncializado = res.data;
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
@@ -428,13 +428,14 @@ export const FinalizandoPDF = async (extensiondata) => {
     .finalizarPDF(extensiondata)
     .then((res) => {
       toast.success('Assinatura finalizada com sucesso.');
+      pdfFinalizado = res;
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
       return false;
     });
 
-  return;
+  return pdfFinalizado;
 };
 
 
