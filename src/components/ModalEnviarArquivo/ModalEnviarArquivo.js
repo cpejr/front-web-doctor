@@ -44,8 +44,8 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
     // Get this url from response in real world.
     setCarregando(true);
     setFile(info);
+    setNomeArquivo(info.file.name);
     setCarregando(false);
-
   }
 
   const TestantoTipoArquivo = (file) => {
@@ -62,11 +62,9 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
   async function enviarArquivo() {
     if (file) {
       setCarregandoDeletar(true);
-      console.log(file);
       const res = await managerService.enviarArquivoMensagem(file);
       /* setUrlArquivo(res); */
 
-      console.log(file);
       props.pegandoDados();
 
       setFile(null);
@@ -88,7 +86,6 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
       let res = {};
 
       if (file && urlArquivo) {
-        console.log(file);
         res = {
           file: file,
           url: urlArquivo,

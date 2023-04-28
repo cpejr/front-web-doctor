@@ -413,7 +413,6 @@ export const InicializandoPDF = async (data) => {
       toast.success('Assinatura iniciada  com sucesso.');
     })
     .catch((error) => {
-      requisicaoErro(error, () => console.log(error));
       return false;
     });
 
@@ -426,7 +425,6 @@ export const FinalizandoPDF = async (extensiondata) => {
       toast.success('Assinatura finalizada com sucesso.');
     })
     .catch((error) => {
-      requisicaoErro(error, () => console.log(error));
       return false;
     });
 
@@ -1102,12 +1100,9 @@ export const GetHomes = async () => {
 
 export const enviarArquivoMensagem = async (file) => {
 
-  console.log(file);
   let formData = new FormData();
-  console.log(file.file.originFileObj);
   formData.append('file', file.file.originFileObj);
 
-  console.log(formData.get('file'));
   
     let id;
     await requesterService

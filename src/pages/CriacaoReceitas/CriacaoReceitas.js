@@ -109,7 +109,6 @@ function CriacaoReceitas() {
 			  certificado.label = certificado.name;
 			});
 			setCertificados(certificados);
-			console.log(certificados);
 		  })
 		}
 	  }, [extensaoInstalada])
@@ -207,7 +206,6 @@ function CriacaoReceitas() {
 
 	async function criarReceita(e) {
 		e.preventDefault();
-        console.log(certificados);
 		const camposVaziosAtual = {
 			id_usuario: !estado.id_usuario,
 			titulo: !estado.titulo,
@@ -259,19 +257,17 @@ function CriacaoReceitas() {
 	let tipoDoc = "2.16.76.1.12.1.1";
 	let form_Metadados = {
 	}
-	form_Metadado[tipoDoc] = "";
+	form_Metadados[tipoDoc] = "";
 	form_Metadados[UFOID] = UFOID;
 	form_Metadados[numeroOID] = numeroOID;
 	form_Metadados[especialidadeOID] = especialidadeOID;
 	//form_Metadados[documento] = PdfTeste;
 	formData_FwInicializar["metadados"] = form_Metadados;
 
-    console.log(form_Metadados);
 
 
        const resposta = await managerService.InicializandoPDF(formData_FwInicializar);
        
-	   console.log(resposta);
       
 
 	   const respFinicializar = await managerService.FinalizandoPDF(resposta);
