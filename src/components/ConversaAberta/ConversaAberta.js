@@ -6,7 +6,7 @@ import {
   SendOutlined,
   QuestionOutlined,
 } from "@ant-design/icons";
-import { Dropdown, Menu, Modal, Spin, Tooltip} from "antd";
+import { Dropdown, Menu, Modal, Spin, Tooltip } from "antd";
 import moment from "moment";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { ChatContext } from "../../contexts/ChatContext";
@@ -117,16 +117,16 @@ export default function ConversaAberta({ socket }) {
       </Menu.Item>
     </Menu>
   );
-  const TextoA1 = "Olá sou a enfermeira, posso te auxiliar em algo ?"
-  const TextoA2 = "Olá sou a enfermeira, posso te auxiliar em algo2 ?"
-  const TextoA3 = "Olá sou a enfermeira, posso te auxiliar em algo3 ?"
-  const TextoA4 = "Olá sou a enfermeira, posso te auxiliar em algo4 ?"
-  const TextoA5 = "Olá sou a enfermeira, posso te auxiliar em algo5 ?"
-  const TextoA6 = "Olá sou a enfermeira, posso te auxiliar em algo6 ?"
-  const TextoA7 = "Olá sou a enfermeira, posso te auxiliar em algo7 ?"
-  const TextoA8 = "Olá sou a enfermeira, posso te auxiliar em algo8 ?"
-  const TextoA9 = "Olá sou a enfermeira, posso te auxiliar em algo9 ?"
-  const TextoA10 = "Olá sou a enfermeira, posso te auxiliar em algo10 ?"
+  const TextoA1 = "Olá sou a enfermeira, posso te auxiliar em algo ?";
+  const TextoA2 = "Olá sou a enfermeira, posso te auxiliar em algo2 ?";
+  const TextoA3 = "Olá sou a enfermeira, posso te auxiliar em algo3 ?";
+  const TextoA4 = "Olá sou a enfermeira, posso te auxiliar em algo4 ?";
+  const TextoA5 = "Olá sou a enfermeira, posso te auxiliar em algo5 ?";
+  const TextoA6 = "Olá sou a enfermeira, posso te auxiliar em algo6 ?";
+  const TextoA7 = "Olá sou a enfermeira, posso te auxiliar em algo7 ?";
+  const TextoA8 = "Olá sou a enfermeira, posso te auxiliar em algo8 ?";
+  const TextoA9 = "Olá sou a enfermeira, posso te auxiliar em algo9 ?";
+  const TextoA10 = "Olá sou a enfermeira, posso te auxiliar em algo10 ?";
   const menuMensagens = (
     <Menu>
       <Menu.Item>
@@ -137,9 +137,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA1)}
-          value = {TextoA1}
+          value={TextoA1}
         >
-            <b >TextoA1</b>
+          <b>TextoA1</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -150,9 +150,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA2)}
-          value = {TextoA2}
+          value={TextoA2}
         >
-            <b >TextoA2</b>
+          <b>TextoA2</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -163,9 +163,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA3)}
-          value = {TextoA3}
+          value={TextoA3}
         >
-            <b >TextoA3</b>
+          <b>TextoA3</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -176,9 +176,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA4)}
-          value = {TextoA4}
+          value={TextoA4}
         >
-            <b >TextoA4</b>
+          <b>TextoA4</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -189,9 +189,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA5)}
-          value = {TextoA5}
+          value={TextoA5}
         >
-            <b >TextoA5</b>
+          <b>TextoA5</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -202,9 +202,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA6)}
-          value = {TextoA6}
+          value={TextoA6}
         >
-            <b >TextoA6</b>
+          <b>TextoA6</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -215,9 +215,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA7)}
-          value = {TextoA7}
+          value={TextoA7}
         >
-            <b >TextoA7</b>
+          <b>TextoA7</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -228,9 +228,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA8)}
-          value = {TextoA8}
+          value={TextoA8}
         >
-            <b >TextoA8</b>
+          <b>TextoA8</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -241,9 +241,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA9)}
-          value = {TextoA9}
+          value={TextoA9}
         >
-            <b >TextoA9</b>
+          <b>TextoA9</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -254,9 +254,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA10)}
-          value = {TextoA10}
+          value={TextoA10}
         >
-            <b >TextoA10</b>
+          <b>TextoA10</b>
         </Button>
       </Menu.Item>
     </Menu>
@@ -295,7 +295,6 @@ export default function ConversaAberta({ socket }) {
   useEffect(() => {
     verificaHorarioPermitidoParaEnvioDeMensagens();
   });
-
 
   async function enviarFormularioPaciente() {
     await managerService.EnviandoFormularioPaciente(
@@ -472,7 +471,6 @@ export default function ConversaAberta({ socket }) {
   async function EnviandoMensagemComArquivo() {
     setPdfFromModal(modalRef.current?.getPDF().file);
     let url = modalRef.current?.getPDF().url;
-
     const remetente =
       conversas[conversas.findIndex(({ id }) => id === conversaSelecionada.id)]
         .conversaCom;
@@ -577,7 +575,8 @@ export default function ConversaAberta({ socket }) {
         )}
       </CorpoConversaAberta>
       <FooterConversaAberta>
-        {conversaSelecionada.tipo === "ACTIGRAFIA" || conversaSelecionada.tipo === "BIOLOGIX" ? (
+        {conversaSelecionada.tipo === "ACTIGRAFIA" ||
+        conversaSelecionada.tipo === "BIOLOGIX" ? (
           <MenuConversasTipoExame>
             <Dropdown
               onClick={(e) => e.preventDefault()}
@@ -591,24 +590,24 @@ export default function ConversaAberta({ socket }) {
           </MenuConversasTipoExame>
         ) : (
           <>
-          <Tooltip placement="bottom" title="Enviar arquivo">
-            <Button
-              backgroundColor="transparent"
-              borderColor="transparent"
-              color={Cores.lilas[1]}
-              width="10%"
-              widthres="15%"
-              height="10%"
-              marginTop="0%"
-              onClick={() => {
-                setModalEnviarArquivo(true);
-              }}
-            >
-              <PaperClipOutlined
-                style={{ fontSize: "27px", color: "{Cores.lilas[1]}" }}
-              />
-            </Button>
-          </Tooltip>
+            <Tooltip placement="bottom" title="Enviar arquivo">
+              <Button
+                backgroundColor="transparent"
+                borderColor="transparent"
+                color={Cores.lilas[1]}
+                width="10%"
+                widthres="15%"
+                height="10%"
+                marginTop="0%"
+                onClick={() => {
+                  setModalEnviarArquivo(true);
+                }}
+              >
+                <PaperClipOutlined
+                  style={{ fontSize: "27px", color: "{Cores.lilas[1]}" }}
+                />
+              </Button>
+            </Tooltip>
             <Dropdown
               backgroundColor="transparent"
               borderColor="transparent"
@@ -620,8 +619,13 @@ export default function ConversaAberta({ socket }) {
               overlay={menuMensagens}
               placement={"bottom"}
             >
-              <QuestionOutlined 
-                style={{ fontSize: "27px", color: "#434b97", margin: "0px 1rem",marginLeft: "0%" }}
+              <QuestionOutlined
+                style={{
+                  fontSize: "27px",
+                  color: "#434b97",
+                  margin: "0px 1rem",
+                  marginLeft: "0%",
+                }}
               />
             </Dropdown>
           </>
@@ -678,7 +682,7 @@ export default function ConversaAberta({ socket }) {
       >
         <ModalEnviarArquivo
           fecharModal={() => fechandoModalEnviarArquivo()}
-          pegandoDados={() => EnviandoMensagemComArquivo()}
+          enviandoMensagemComArquivo={() => EnviandoMensagemComArquivo()}
           ref={modalRef}
         />
       </Modal>

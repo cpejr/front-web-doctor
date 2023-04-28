@@ -1099,7 +1099,6 @@ export const GetHomes = async () => {
 };
 
 export const enviarArquivoMensagem = async (file) => {
-
   let formData = new FormData();
   formData.append('file', file.file.originFileObj);
 

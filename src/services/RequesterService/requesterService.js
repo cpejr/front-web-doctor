@@ -216,8 +216,8 @@ export const dispostivoById = (id) => api.get(`/dispositivos/${id}`);
 export const enviarArquivoMensagem = (formData) =>
   api.post(`/arquivofile/`, formData, {
     headers: {
-      'content-type': 'multipart/form-data'
-    }
+      "content-type": "multipart/form-data",
+    },
   });
 
 export const requisicaoHomes = () =>

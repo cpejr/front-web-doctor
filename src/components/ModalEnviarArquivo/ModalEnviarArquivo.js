@@ -63,17 +63,13 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
     if (file) {
       setCarregandoDeletar(true);
       const res = await managerService.enviarArquivoMensagem(file);
-      /* setUrlArquivo(res); */
-
-      props.pegandoDados();
-
+      setUrlArquivo(res);
+      console.log(file);
+      props.enviandoMensagemComArquivo();
       setFile(null);
       setNomeArquivo(null);
-
       // Toda vez que confirmar o envio, vai pegar os dados lá em conversa aberta em EnviandoMensagemComArquivo()
-
       props.fecharModal();
-
       //document.location.reload(true);
       setCarregandoDeletar(false);
     } else {
