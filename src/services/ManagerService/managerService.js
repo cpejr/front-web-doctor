@@ -413,7 +413,7 @@ export const InicializandoPDF = async (data) => {
     .inicializarPDF(data)
     .then((res) => {
       toast.success('Assinatura iniciada  com sucesso.');
-      pdfIncializado = res.data;
+      pdfIncializado = res.config.data;
     })
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
