@@ -272,9 +272,13 @@ function CriacaoReceitas() {
        const resposta = await managerService.InicializandoPDF(formData_FwInicializar);
        
 	   console.log(resposta);
-       await window.BryExtension.sign(certificadoSelecionado.certId, resposta.data);
+       const respostafinalizar =  await window.BryExtension.sign(certificados[0].certId, JSON.stringify(resposta));
+       
+       console.log(respostafinalizar);
 
-	   const respFinicializar = await managerService.FinalizandoPDF(resposta);
+	   const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
+
+	   console.log(respFinicializar)
 
 		await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
 			mensagemSucesso: "Receita criada com sucesso",
