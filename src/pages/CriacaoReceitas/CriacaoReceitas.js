@@ -224,24 +224,47 @@ function CriacaoReceitas() {
       setCarregandoCriacao(false);
       return;
     }
+	//formData_FwInicializar["metadados"] = form_Metadados;
+	let formData_FwInicializar = {  "certificado": certificados[0].certificateData
+};
+let UFOID = "2.16.76.1.4.2.2.2";
+let numeroOID = "2.16.76.1.4.2.2.1";
+let especialidadeOID = "2.16.76.1.4.2.2.3";
+let tipoDoc = "2.16.76.1.12.1.1";
+let form_Metadados = {
+}
+form_Metadados.tipoDoc = tipoDoc;
+form_Metadados.UFOID = UFOID;
+form_Metadados.numeroOID = numeroOID;
+form_Metadados.especialidadeOID = especialidadeOID;
+//form_Metadados[documento] = PdfTeste;
+formData_FwInicializar.metadados = form_Metadados;
 
-    await managerService.CriandoReceita(
-      id,
-      NomePaciente,
-      dataNascimentoPaciente,
-      tituloReceita,
-      descricaoReceita,
-      {
-        mensagemSucesso: "Receita criada com sucesso",
-        tempo: 1500,
-        onClose: () => {
-          history.push("/web/areareceitas");
-        },
-      }
-    );
+console.log(form_Metadados);
 
-    setCarregandoCriacao(false);
-  }
+
+   const resposta = await managerService.InicializandoPDF(formData_FwInicializar);
+   
+   console.log(resposta);
+   const respostafinalizar =  await window.BryExtension.sign(certificados[0].certId, JSON.stringify(resposta));
+   
+   console.log(respostafinalizar);
+
+   const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
+
+   console.log(respFinicializar)
+
+	await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
+		mensagemSucesso: "Receita criada com sucesso",
+		tempo: 1500,
+		onClose: () => {
+			history.push("/web/areareceitas");
+		},
+	});
+
+	setCarregandoCriacao(false);
+}
+  
 
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
@@ -316,92 +339,9 @@ function CriacaoReceitas() {
       );
   }
 
-		//formData_FwInicializar["metadados"] = form_Metadados;
-		let formData_FwInicializar = {  "certificado": certificados[0].certificateData
-	};
-	let UFOID = "2.16.76.1.4.2.2.2";
-	let numeroOID = "2.16.76.1.4.2.2.1";
-	let especialidadeOID = "2.16.76.1.4.2.2.3";
-	let tipoDoc = "2.16.76.1.12.1.1";
-	let form_Metadados = {
-	}
-	form_Metadados.tipoDoc = tipoDoc;
-	form_Metadados.UFOID = UFOID;
-	form_Metadados.numeroOID = numeroOID;
-	form_Metadados.especialidadeOID = especialidadeOID;
-	//form_Metadados[documento] = PdfTeste;
-	formData_FwInicializar.metadados = form_Metadados;
+	
 
-    console.log(form_Metadados);
-
-
-       const resposta = await managerService.InicializandoPDF(formData_FwInicializar);
-       
-	   console.log(resposta);
-       const respostafinalizar =  await window.BryExtension.sign(certificados[0].certId, JSON.stringify(resposta));
-       
-       console.log(respostafinalizar);
-
-	   const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
-
-	   console.log(respFinicializar)
-
-		await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
-			mensagemSucesso: "Receita criada com sucesso",
-			tempo: 1500,
-			onClose: () => {
-				history.push("/web/areareceitas");
-			},
-		});
-
-		setCarregandoCriacao(false);
-	}
-
-	const antIcon = (
-		<LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
-	);
-
-	const PdfTeste = () => {
-		return (
-			<Document>
-				<Page style={styles.corpo} size="A4">
-					<Image style={styles.logo} src={LogoPdf} />
-					<Text style={styles.texto}>Nome do paciente: {NomePaciente}</Text>
-					<Text style={styles.texto}>Data de nascimento: {dataNascimentoPaciente}</Text>
-					<Text style={styles.titulo}>{tituloReceita}</Text>
-					<Text style={styles.texto}>{descricaoReceita}</Text>
-					<Image style={styles.footer} src={footerPDF} />
-				</Page>
-			</Document>
-		)
-	}
-
-	const styles = StyleSheet.create({
-		corpo: {
-			paddingBottom: 5,
-			paddingHorizontal: 30,
-		},
-		logo: {
-			marginHorizontal: 150,
-			size: 8,
-			marginBottom: 20,
-		},
-		texto: {
-			margin: 12,
-			fontSize: 14,
-			textAlign: "justify",
-			fontFamily: "Times-Roman",
-		},
-		titulo: {
-			fontSize: 18,
-			marginBottom: 20,
-			textAlign: "center",
-		},
-		footer: {
-			width: '100%',
-			marginTop: '83.5%',
-		},
-	});
+	
 
 	return (
 		<ContainerCriacaoReceitas>
@@ -535,5 +475,6 @@ function CriacaoReceitas() {
 		</ContainerCriacaoReceitas>
 	);
 }
+
 
 export default CriacaoReceitas;
