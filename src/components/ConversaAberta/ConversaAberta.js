@@ -29,6 +29,12 @@ import {
   MenuConversasTipoExame,
   NomePessoa,ACTI
 } from "./Styles";
+import {
+  apenasNumerosCep,
+  cpf,
+  telefone,
+  endereco,
+} from '../../utils/masks';
 import { toast } from "react-toastify";
 export default function ConversaAberta({ socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
@@ -77,30 +83,19 @@ export default function ConversaAberta({ socket }) {
   const [modalEnviarArquivo, setModalEnviarArquivo] = useState(false);
   const [pdfFromModal, setPdfFromModal] = useState("");
   const [endereco, setEndereco] = useState({});
-  const enderecoCompleto = `${endereco.rua}, ${endereco.numero}, ${endereco.complemento}, ${endereco.bairro}, ${endereco.cidade}, ${endereco.estado}, ${endereco.pais}, ${endereco.cep}`;
+  const enderecoCompleto = `${endereco.rua}, ${endereco.numero}, ${endereco.complemento}, ${endereco.bairro}, ${endereco.cidade}, ${endereco.estado}, ${endereco.pais}`;
   const mensagemConfirmacaoDeDados = 
   `Esses dados serão usados na entrega e no pagamento. Por favor, confirme se estão todos corretos, caso haja alguma inconsistência ou erro, altere os dados do seu perfil.` +
   `\nNome completo: ${conversaSelecionada.conversaCom.nome}` +
-  `\nCPF: ${conversaSelecionada.conversaCom.cpf}` +
-  `\nTelefone: ${conversaSelecionada.conversaCom.telefone}` +
-  `\nEndereço: ${enderecoCompleto}`
+  `\nCPF: ${cpf(conversaSelecionada.conversaCom.cpf)}` +
+  `\nTelefone: ${telefone(conversaSelecionada.conversaCom.telefone)}` +
+  `\nEndereço: ${(enderecoCompleto)}` +
+  ` ${apenasNumerosCep(endereco.cep)}`
   ;
   const mensagemNotificacao = `O exame ${conversaSelecionada.tipo} está disponível`;
   
   const menuBotoes = (
     <Menu>
-      <Menu.Item>
-        <Button
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color={Cores.preto}
-          fontSize="1rem"
-          height="50px"
-          onClick={() => enviarFormularioPaciente()}
-        >
-          <b>Enviar Formulário Actigrafia</b>
-        </Button>
-      </Menu.Item>
       <Menu.Item>
         <Button
           backgroundColor="transparent"
@@ -173,18 +168,6 @@ export default function ConversaAberta({ socket }) {
           onClick={() => DispositivoDisponível()}
         >
           <b>Dispositivo Disponível</b>
-        </Button>
-      </Menu.Item>
-      <Menu.Item>
-        <Button
-          backgroundColor="transparent"
-          borderColor="transparent"
-          color={Cores.preto}
-          fontSize="1rem"
-          height="50px"
-          onClick={() => ResponderFormulário()}  
-        >
-          <b>Responder Formulário</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -393,15 +376,6 @@ export default function ConversaAberta({ socket }) {
     verificaHorarioPermitidoParaEnvioDeMensagens();
   });
 
-  async function enviarFormularioPaciente() {
-    await managerService.EnviandoFormularioPaciente(
-      false,
-      true,
-      "d98bf5e0-73e0-4d59-9c00-a7d79a1174b0",
-      conversaSelecionada.conversaCom.id
-      
-    );
-  }
 
   async function confirmarPagamento(id_paciente, id_usuario) {
     const formulariosPaciente = await managerService.GetRespostaFormularioIdUsuario(id_paciente);
@@ -474,14 +448,6 @@ export default function ConversaAberta({ socket }) {
 
   async function SolicitarPagamento() {
     await enviaMensagem("nenhuma", mensagemSolicitarPagamento);
-  }
-
-  async function ResponderFormulário() {
-    if (conversaSelecionada.tipo === "ACTIGRAFIA"){
-      await enviaMensagem("nenhuma", mensagemResponderFormulárioActigrafia);
-    }else if (conversaSelecionada.tipo === "BIOLOGIX"){
-      await enviaMensagem("nenhuma", mensagemResponderFormulárioBiologix);
-    }
   }
 
   function atualizaConversaFinalizada() {

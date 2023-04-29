@@ -28,7 +28,7 @@ export default function Mensagem({
       ) : (
         <></>
       )}
-      {conteudo}
+      <pre style={{whiteSpace: "pre-wrap", marginBottom: "0px"}}>{conteudo}</pre>  
       <DataHoraMensagem>
         {dayjs(data_criacao).format("DD/MM/YYYY HH:mm")}
       </DataHoraMensagem>
