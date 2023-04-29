@@ -1,20 +1,21 @@
-import api from '../../services/api';
+import api from "../../services/api";
 
+export const EnviandoImagem = (base64) =>
+  api.post("/arquivo", { file: base64 });
 
-export const EnviandoImagem = (base64) => api.post("/arquivo", { file: base64 });
 
 export const EnviandoArquivo = (base64) => api.post("/arquivofile", {file: base64});
 
 
 export const logarUsuario = (email, senha) =>
-  api.post('/login', {
+  api.post("/login", {
     email,
     senha,
   });
 
 export const criarUsuario = async (endereco, usuario) => {
-  const res = await api.post('/enderecos', endereco);
-  const response = await api.post('/usuarios', {
+  const res = await api.post("/enderecos", endereco);
+  const response = await api.post("/usuarios", {
     ...usuario,
     id_endereco: res.data.id,
   });
@@ -24,7 +25,9 @@ export const criarUsuario = async (endereco, usuario) => {
 
 export const recuperarSenha = (email) => api.put(`/alterar_senha/${email}`);
 
-export const criarConsulta = (consulta) => api.post('/consultas', consulta);
+export const criarConsulta = (consulta) => api.post("/consultas", consulta);
+
+export const criarExame = (exame) => api.post("/exame_marcados", exame);
 
 export const inicializarPDF = (data) => api.post('/inicializar', data);
 
@@ -32,6 +35,9 @@ export const finalizarPDF = (extensiondata) => api.post('/finalizar', extensiond
 
 export const updateConsulta = (id_consulta, consulta) =>
   api.put(`/consultas/${id_consulta}`, consulta);
+
+export const updateExameMarcado = (id, exame) =>
+  api.put(`/exame_marcados/${id}`, exame);
 
 export const updateDadosUsuario = (id_usuario, id_endereco, endereco, estado) =>
   api.put(`/enderecos/${id_endereco}`, endereco).then((res) => {
@@ -79,7 +85,7 @@ export const requisicaoDadosEndereco = (dadosUsuario) =>
   api.get(`/enderecos/${dadosUsuario.id_endereco}`);
 
 export const requisicaoVerificar = (email, senha) =>
-  api.post('/verificar', {
+  api.post("/verificar", {
     email,
     senha,
   });
@@ -102,7 +108,10 @@ export const requisicaoConsultaUsuario = (id_usuario) =>
 
 export const requisicaoExame = (id) => api.get(`/exames/${id}`);
 
-export const requisicaoDadosConsultorios = () => api.get(`/consultorios`);
+export const requisicaoDadosConsultorios = (filtro) =>
+  api.get(`/consultorios`, { tipo: filtro });
+
+export const requisicaoDadosExames = () => api.get(`/exames`);
 
 export const requisicaoDadosConsultoriosPorId = (id) =>
   api.get(`/consultorios/${id}`);
@@ -112,6 +121,17 @@ export const deletarConsulta = (id) => api.delete(`/consultas/${id}`);
 export const deletarExameMarcado = (id) => api.delete(`/exame_marcados/${id}`);
 
 export const requisicaoFormularios = () => api.get(`/formularios/`);
+ 
+export const requisicaoIndicacaoEspecifica = () => api.get(`/indicacoes_especificas/`);
+
+export const requisicaoMedicosIndicados = (id_indicacao_especifica) => api.get(`/medicos_indicados/${id_indicacao_especifica}`);
+
+export const indicarMedico = (id_indicacao_especifica, nome, telefone, local_atendimento) => api.post(`/medicos_indicados` ,
+ {id_indicacao_especifica, nome, telefone, local_atendimento});
+
+export const alterarMedicoIndicado = (id,estado) => api.put(`/medicos_indicados/${id}` ,estado);
+
+export const deletarMedicoIndicado = (id) => api.delete(`/medicos_indicados/${id}`);
 
 export const requisicaoFormularioEspecifico = (id) =>
   api.get(`/formularios/${id}`);
@@ -134,7 +154,7 @@ export const requisicaoFormularioPacientes = (id_formulario) =>
 
 export const requisicaoReceitas = () => api.get(`/receitas/`);
 
-export const criarReceita = (id_usuario, nomePaciente, dataNascimento, tituloReceita, descricao) =>
+export const criarReceita = (id_usuario, nomePaciente, dataNascimento, tituloReceita, descricao) => 
   api.post(`/receitas`, {
     id_usuario: id_usuario,
     nome: nomePaciente,
@@ -166,21 +186,30 @@ export const editarCamposFormulario = (id, campos) =>
   export const requisicaoTodosFormulariosPaciente = () =>
   api.get('/formularios_pacientes');
 
-
 export const updateFotoDePerfil = (id, base64) =>
-  api.post(`/usuariosimagem/${id}`, {
+  api.post(`/usuariosimagem/${id}`,{
     file: base64
   });
+export const enviarFormularioPaciente = (
+  status,
+  notificacao_ativa,
+  id_formulario,
+  id_usuario
+) => 
+   api.post("/formularios_pacientes", {
+    status,
+  notificacao_ativa,
+  id_formulario,
+  id_usuario,
+   });
 
 
 export const deleteFotoDePerfil = (id, base64) =>
   api.put(`/usuariosdeletarimagem/${id}`, {
-    file: base64
+    file: base64,
   });
 
-export const enviarFormularioPaciente = (status, notificacao_ativa, id_formulario, id_usuario) =>
-  api.post("/formularios_pacientes", { status, notificacao_ativa, id_formulario, id_usuario });
-
+  
 export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
 
 export const criarConversa = (conversa) => api.post(`/conversas`, conversa);
@@ -192,7 +221,8 @@ export const requisicaoConversasPorUsuario = (id_usuario) =>
   api.get(`/conversas/${id_usuario}/usuario`);
 
 export const updateConversaAtiva = (id) => api.put(`/conversas/ativacao/${id}`);
-export const updateConversaFinalizada = (id) => api.put(`/conversas/finalizacao/${id}`);
+export const updateConversaFinalizada = (id) =>
+  api.put(`/conversas/finalizacao/${id}`);
 export const deletarConversasInativas = (id_usuario) =>
   api.delete(`/conversas/${id_usuario}/usuario`);
 
@@ -246,3 +276,21 @@ export const atualizarSobreMim = (id, dados) =>
   });
 
 export const deletarSobreMim = (id) => api.delete(`/sobre_mims/${id}`);
+
+
+export const updateDadosHomes = (id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video) =>
+  api.put(`/homes/${id}`, { titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video });
+;
+
+export const requisicaoCarrossel = () =>
+  api.get(`/imagem_carrossels/`);
+
+export const updateImagemCarrossel = (id, base64) =>
+  api.put(`/imagem_carrossels_img/${id}`, {
+    file: base64
+  });
+
+  export const updateImagemHomes = (id, base64) =>
+  api.put(`/homesImagem/${id}`, {
+    file: base64
+  } );

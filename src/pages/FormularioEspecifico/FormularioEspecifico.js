@@ -42,6 +42,25 @@ import fotoPerfil from "./../../assets/fotoPerfil.png";
 import { Cores } from "../../variaveis";
 import * as managerService from "../../services/ManagerService/managerService";
 import { sleep } from "../../utils/sleep";
+import { saveAs } from 'file-saver';
+import {
+  Document,
+  Packer,
+  Paragraph,
+  TextRun,
+  SectionType,
+  HorizontalPositionRelativeFrom,
+  HorizontalPositionAlign,
+  VerticalPositionRelativeFrom,
+  VerticalPositionAlign,
+  TextWrappingType,
+  TextWrappingSide,
+  ImageRun,
+  AlignmentType
+} from "docx";
+import formatarData from "../../utils/formatarData";
+import logoWord from "./logo.json";
+import footerWord from "./footer.json";
 
 function FormularioEspecifico(props) {
   const { Search } = Input;
@@ -69,6 +88,8 @@ function FormularioEspecifico(props) {
   const [formularios, setFormularios] = useState();
   const [perguntas, setPerguntas] = useState();
   const [perguntasAlterar, setPerguntasAlterar] = useState();
+  const [usuario, setUsuario] = useState({});
+  const [dataNascimento, setDataNascimento] = useState("");
 
   const lowerBusca = busca
     .toLowerCase()
@@ -91,6 +112,10 @@ function FormularioEspecifico(props) {
   useEffect(() => {
     pegandoDadosFormularioEspecifico();
   }, [props]);
+
+  useEffect(() => {
+    pegandoDados();
+  }, []);
 
   async function pegandoFormularioPacientes() {
     const respostaFormularios =
@@ -209,6 +234,109 @@ function FormularioEspecifico(props) {
     setStatusSelect(value);
   }
 
+  async function salvaWordSomentePerguntas(docxWord) {
+    const perguntas = Object.values(docxWord.perguntas.properties);
+
+    let arrayParagrafos = [];
+
+    perguntas.forEach((pergunta, index) => {
+      const conteudoPergunta = pergunta.title
+      arrayParagrafos.push(
+        new TextRun({
+          text: `Pergunta: ${conteudoPergunta}`,
+          bold: true,
+          break: 6
+        })
+      )
+    });
+
+    const doc = new Document({
+      sections: [{
+        properties: {
+          type: SectionType.CONTINUOUS,
+        },
+        children: [
+          new Paragraph({
+            children: [
+              new ImageRun({
+                data: logoWord,
+                transformation: {
+                  width: 600,
+                  height: 150
+                },
+                floating: {
+                  horizontalPosition: {
+                    relative: HorizontalPositionRelativeFrom.TOP_MARGIN,
+                    align: HorizontalPositionAlign.CENTER,
+                  },
+                  verticalPosition: {
+                    relative: VerticalPositionRelativeFrom.TOP_MARGIN,
+                    align: VerticalPositionAlign.TOP,
+                  },
+                  wrap: {
+                    type: TextWrappingType.TOP_AND_BOTTOM,
+                    side: TextWrappingSide.LARGEST,
+                  },
+                  margins: {
+                    top: 201440,
+                    bottom: 201440,
+                  },
+                }
+              })
+            ]
+          }),
+          new Paragraph({
+            alignment: AlignmentType.CENTER,
+            children: [
+              new TextRun({
+                text: `${docxWord.titulo}`,
+                bold: true,
+                size: 28,
+              }),
+            ],
+          }),
+          new Paragraph({
+            children: arrayParagrafos,
+          }),
+          new Paragraph({
+            children: [
+              new ImageRun({
+                data: footerWord,
+                transformation: {
+                  width: 800,
+                  height: 120
+                },
+                floating: {
+                  horizontalPosition: {
+                    relative: HorizontalPositionRelativeFrom.TOP_AND_BOTTOM,
+                    align: HorizontalPositionAlign.CENTER,
+                  },
+                  verticalPosition: {
+                    relative: VerticalPositionRelativeFrom.BOTTOM_MARGIN,
+                    align: VerticalPositionAlign.BOTTOM,
+                  },
+                  wrap: {
+                    type: TextWrappingType.TOP_AND_BOTTOM,
+                    side: TextWrappingSide.LARGEST,
+                  },
+                  margins: {
+                    top: 201440,
+                    bottom: 201440,
+                  },
+                }
+              })
+            ]
+          }),
+        ],
+      }],
+    });
+
+    await Packer.toBlob(doc).then(blob => {
+      saveAs(blob,
+        "Perguntas do Formulário " + docxWord.titulo)
+    })
+  }
+
   async function enviarLembrete(usuarioSelecionado) {
     setCarregando(true)
     const Token =
@@ -231,6 +359,153 @@ function FormularioEspecifico(props) {
     await sleep(1000);
     setCarregando(false);
   };
+
+  async function salvaWord(docxWord) {
+
+    const perguntas = Object.values(docxWord.perguntas.properties);
+    const respostas = Object.values(docxWord.respostas);
+
+    const dataFormatada = formatarData({ data: docxWord.data_nascimento, formatacao: "dd/MM/yyyy" });
+
+    let arrayParagrafos = [];
+
+    perguntas.forEach((pergunta, index) => {
+      const conteudoPergunta = pergunta.title
+      const conteudoResposta = respostas[index];
+      arrayParagrafos.push(
+        new TextRun({
+          text: `Pergunta: ${conteudoPergunta}`,
+          break: 2,
+          bold: true
+        })
+      )
+      arrayParagrafos.push(
+        new TextRun({
+          text: `Resposta: ${conteudoResposta}`,
+          break: 1,
+        })
+      )
+    });
+
+    const doc = new Document({
+      sections: [{
+        properties: {
+          type: SectionType.CONTINUOUS,
+        },
+        children: [
+          new Paragraph({
+            children: [
+              new ImageRun({
+                data: logoWord,
+                transformation: {
+                  width: 600,
+                  height: 150
+                },
+                floating: {
+                  horizontalPosition: {
+                    relative: HorizontalPositionRelativeFrom.TOP_MARGIN,
+                    align: HorizontalPositionAlign.CENTER,
+                  },
+                  verticalPosition: {
+                    relative: VerticalPositionRelativeFrom.TOP_MARGIN,
+                    align: VerticalPositionAlign.TOP,
+                  },
+                  wrap: {
+                    type: TextWrappingType.TOP_AND_BOTTOM,
+                    side: TextWrappingSide.LARGEST,
+                  },
+                  margins: {
+                    top: 201440,
+                    bottom: 201440,
+                  },
+                }
+              })
+            ]
+          }),
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: `NOME: `,
+                bold: true,
+              }),
+              new TextRun({
+                text: `${docxWord.nome}`,
+              }),
+            ],
+          }),
+          new Paragraph({
+            children: [
+              new TextRun({
+                text: `DATA DE NASCIMENTO: `,
+                bold: true,
+              }),
+              new TextRun({
+                text: `${dataFormatada}`,
+              }),
+            ],
+          }),
+          new Paragraph({
+            alignment: AlignmentType.CENTER,
+            children: [
+              new TextRun({
+                text: `${docxWord.titulo}`,
+                bold: true,
+                size: 28,
+                break: 1
+              }),
+            ],
+          }),
+          new Paragraph({
+            children: arrayParagrafos
+          }),
+          new Paragraph({
+            children: [
+              new ImageRun({
+                data: footerWord,
+                transformation: {
+                  width: 800,
+                  height: 100
+                },
+                floating: {
+                  horizontalPosition: {
+                    relative: HorizontalPositionRelativeFrom.TOP_AND_BOTTOM,
+                    align: HorizontalPositionAlign.CENTER,
+                  },
+                  verticalPosition: {
+                    relative: VerticalPositionRelativeFrom.BOTTOM_MARGIN,
+                    align: VerticalPositionAlign.BOTTOM,
+                  },
+                  wrap: {
+                    type: TextWrappingType.TOP_AND_BOTTOM,
+                    side: TextWrappingSide.LARGEST,
+                  },
+                  margins: {
+                    top: 201440,
+                    bottom: 201440,
+                  },
+                }
+              })
+            ]
+          }),
+        ],
+      }],
+    });
+
+    await Packer.toBlob(doc).then(blob => {
+      saveAs(blob,
+        "Resposta do Formulário " + docxWord.titulo + " referente ao paciente " + docxWord.nome + ".docx")
+    })
+  }
+
+
+  async function pegandoDados() {
+    const resposta = await managerService.GetDadosUsuario(
+      props.location.state.email
+    );
+    const data = new Date(resposta.dadosUsuario.data_nascimento);
+    setUsuario(resposta.dadosUsuario);
+    setDataNascimento(data.toLocaleDateString());
+  }
 
   return (
     <div>
@@ -364,7 +639,7 @@ function FormularioEspecifico(props) {
                     )}
                   </BarraEsquerda>
                   <BarraCentro>
-                    {tipoUsuarioLogado === "MASTER" || (tipoUsuarioLogado === "SECRETARIA(O)" && formularioEspecifico.visualizacao_secretaria === true)? (
+                    {tipoUsuarioLogado === "MASTER" || (tipoUsuarioLogado === "SECRETARIA(O)" && formularioEspecifico.visualizacao_secretaria === true) ? (
                       <NomePacienteMaster
                         onClick={() =>
                           abrindoModalFormulario(
@@ -382,8 +657,28 @@ function FormularioEspecifico(props) {
                       </NomePacienteSecretaria>
                     )}
                   </BarraCentro>
-                  {value.status !== false ? (
-                    <></>
+                  {value.status === true ? (
+                    <BarraDireita key={value?.id}>
+                      <></>
+                      {tipoUsuarioLogado === "MASTER" &&
+                        <Button
+                          backgroundColor={Cores.cinza[7]}
+                          width="70%"
+                          boxShadow="3px 3px 5px 0px rgba(0, 0, 0, 0.2)"
+                          borderColor={Cores.azulEscuro}
+                          borderRadius="5px"
+                          height="40%"
+                          color={Cores.preto}
+                          fontSize="0.8em"
+                          fontSizeMedia950="0.75em"
+                          fontWeight="bold"
+                          heightMedia560="28px"
+                          onClick={() => salvaWord(value, value.nome, value.data_nascimento)}
+                        >
+                          BAIXAR DOCX
+                        </Button>
+                      }
+                    </BarraDireita>
                   ) : (
                     <BarraDireita>
                       <TextoBarraPaciente
@@ -458,23 +753,27 @@ function FormularioEspecifico(props) {
               >
                 Visualizar Perguntas
               </Button>
+              {tipoUsuarioLogado === "MASTER" || (tipoUsuarioLogado === "SECRETARIA(O)" && formularioEspecifico.visualizacao_secretaria === true)? (
               <Button
-                backgroundColor="green"
-                borderRadius="3px"
-                borderWidth="1px"
-                borderColor={Cores.preto}
-                boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
-                color={Cores.preto}
-                fontSize="15px"
-                height="50px"
-                width="60%"
-                marginTop="0%"
-                marginLeft="0%"
-                fontSizeMedia950="0.9em"
-                onClick={() => { }}
-              >
+              backgroundColor={Cores.lilas[2]}
+              borderRadius="3px"
+              borderWidth="1px"
+              borderColor={Cores.preto}
+              boxShadow="0px 4px 4px rgba(0, 0, 0, 0.25)"
+              color={Cores.preto}
+              fontSize="15px"
+              height="50px"
+              width="60%"
+              marginTop="0%"
+              marginLeft="0%"
+              fontSizeMedia950="0.9em"
+              onClick={() => salvaWordSomentePerguntas(formularioEspecifico)}
+              >   
                 Gerar documento Word
               </Button>
+              ):(
+                null
+              )}
             </ColunaDireita>
           </>
         )}

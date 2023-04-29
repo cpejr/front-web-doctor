@@ -29,6 +29,7 @@ import {
   MenuConversasTipoExame,
   NomePessoa,
 } from "./Styles";
+import { toast } from "react-toastify";
 export default function ConversaAberta({ socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState("");
@@ -84,7 +85,7 @@ export default function ConversaAberta({ socket }) {
           color={Cores.preto}
           fontSize="1rem"
           height="50px"
-          onClick={() => confirmarPagamento()}
+          onClick={() => confirmarPagamento(conversaSelecionada.conversaCom.id, usuarioId)}
         >
           <b>Confirmar Pagamento</b>
         </Button>
@@ -306,11 +307,32 @@ export default function ConversaAberta({ socket }) {
     );
   }
 
-  async function confirmarPagamento() {
-    managerService.confirmarPagamentoExame(
-      conversaSelecionada.conversaCom.id,
-      usuarioId
-    );
+  async function confirmarPagamento(id_paciente, id_usuario) {
+    const formulariosPaciente = await managerService.GetRespostaFormularioIdUsuario(id_paciente);
+    let possuiFormulario = false;
+    let posicao = -1;
+    let texto = inputMensagemConteudo;
+
+    for (const [index, value] of formulariosPaciente.entries()) {
+      if (value.tipo === "exame_actigrafia") {
+        possuiFormulario = true;
+        posicao = index;
+      }
+    }
+
+    if (!possuiFormulario)
+      toast.error("O paciente não possui um formulário desse exame");
+    else if (possuiFormulario && formulariosPaciente[posicao].respostas === null) {
+      toast.error("O paciente não respondeu as perguntas do formulário");
+    }
+    else {
+      await managerService.MandandoMensagemConfirmarPagamento(id_usuario);
+      texto = "Instruções para a realização do exame actigrafia: \n"
+      + "1.- \n"
+      + "2.- \n"
+      + "3.- "
+      enviaMensagem('nenhuma', texto);
+    }
   }
 
   async function finalizarChat() {
@@ -514,6 +536,7 @@ export default function ConversaAberta({ socket }) {
       enviarMensagemComInput(e);
     }
   };
+  
 
   return (
     <Conversa>
@@ -572,6 +595,7 @@ export default function ConversaAberta({ socket }) {
               media_url={m.media_url}
               scrollRef={mensagens?.length - 1 === idx ? scrollRef : null}
               data_criacao={m.data_criacao}
+              tipo={m.tipo}
             />
           ))
         )}

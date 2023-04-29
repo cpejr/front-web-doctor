@@ -135,6 +135,7 @@ export const ContainerBotoes = styled.div`
   @media (max-width: 1080px) {
     flex-direction: column;
   }
+  
 `;
 
 export const Botoes = styled.div`
@@ -144,4 +145,10 @@ export const Botoes = styled.div`
   align-items: center;
   justify-content: space-around;
   width: 100%;
+
+  @media (min-width: 1081px) {
+    flex-direction: row;
+    width: 40%;
+    justify-content: space-between;
+  }
 `;

@@ -12,45 +12,46 @@ import { toast } from "react-toastify";
 import * as managerService from "../../services/ManagerService/managerService";
 import * as utils from "../../utils/checarExtensao";
 import {
-	ContainerCriacaoReceitas,
-	CardCriacaoReceitas,
-	SelectContainer,
-	CriacaoReceitaNome,
-	DescricaoTextarea,
-	CriacaoReceitaCorpo,
-	Titulo,
-	NomeDoPaciente,
-	Assinatura,
-	Descricao,
-	CriacaoReceitaBotoes,
-	BotaoEnviar,
-	BotaoCancelar,
+  ContainerCriacaoReceitas,
+  CardCriacaoReceitas,
+  SelectContainer,
+  CriacaoReceitaNome,
+  DescricaoTextarea,
+  CriacaoReceitaCorpo,
+  Titulo,
+  NomeDoPaciente,
+  Assinatura,
+  Descricao,
+  CriacaoReceitaBotoes,
+  BotaoEnviar,
+  BotaoCancelar,
+  SelectUsuario,
 } from "./Styles";
 
 import {
-	Text,
-	Document,
-	Page,
-	Image,
-	PDFDownloadLink,
-	StyleSheet
-} from '@react-pdf/renderer';
+  Text,
+  Document,
+  Page,
+  Image,
+  PDFDownloadLink,
+  StyleSheet,
+} from "@react-pdf/renderer";
 
-import LogoPdf from "../../assets/LogoPdf.png"
-import footerPDF from "../../assets/footerPDF.png"
+import LogoPdf from "../../assets/LogoPdf.png";
+import footerPDF from "../../assets/footerPDF.png";
 
 const camposVaziosReferencia = {
-	id_usuario: false,
-	titulo: false,
-	assinatura: false,
-	descricao: false,
+  id_usuario: false,
+  titulo: false,
+  assinatura: false,
+  descricao: false,
 };
 
 const estadoIncial = {
-	id_usuario: "",
-	titulo: "",
-	assinatura: "",
-	descricao: "",
+  id_usuario: "",
+  titulo: "",
+  assinatura: "",
+  descricao: "",
 };
 
 function CriacaoReceitas() {
@@ -120,135 +121,200 @@ function CriacaoReceitas() {
 		e.preventDefault();
 		const { value, name } = e.target;
 
+    if (camposVazios[name])
+      setCamposVazios((valorAnterior) => ({ ...valorAnterior, [name]: false }));
 
-		if (camposVazios[name])
-			setCamposVazios((valorAnterior) => ({ ...valorAnterior, [name]: false }));
+    setEstado({ ...estado, [name]: value });
 
-		setEstado({ ...estado, [name]: value });
+    if (name === "titulo") {
+      setTituloReceita(value);
+    }
 
-		if (name === "titulo") {
-			setTituloReceita(value);
-		}
+    if (name === "id_usuario") {
+      armazenaInformacoesUsuario(value);
+    }
 
-		if (name === "id_usuario") {
-			armazenaInformacoesUsuario(value);
-		}
+    if (name === "assinatura") {
+      setTipoAssinatura(value);
+    }
 
-		if (name === "assinatura") {
-			setTipoAssinatura(value);
-		}
+    if (name === "descricao") {
+      setDescricaoReceita(value);
+    }
+  }
 
-		if (name === "descricao") {
-			setDescricaoReceita(value);
-		}
-	}
+  async function armazenaInformacoesUsuario(id) {
+    const resposta = await managerService.GetUsuarioPorId(id);
+    setEstado({ ...estado, id_usuario: id });
+    const dataDesformatada = resposta.data_nascimento;
+    const dia = dataDesformatada.slice(8, 10);
+    const mes = dataDesformatada.slice(5, 7);
+    const ano = dataDesformatada.slice(0, 4);
+    const dataFormatada = dia + "/" + mes + "/" + ano;
 
-	async function armazenaInformacoesUsuario(id) {
-		const resposta = await managerService.GetUsuarioPorId(id);
+    setDataNascimentoPaciente(dataFormatada);
+    setNomePaciente(resposta.nome);
+  }
 
-		const dataDesformatada = resposta.data_nascimento;
-		const dia = dataDesformatada.slice(8, 10);
-		const mes = dataDesformatada.slice(5, 7);
-		const ano = dataDesformatada.slice(0, 4);
-		const dataFormatada = dia + '/' + mes + '/' + ano;
+  useEffect(() => {
+    async function pegandoPacientes() {
+      setCarregandoCriacao(true);
+      const resposta = await managerService.GetDadosPessoais();
+      const pacientes = resposta.filter(
+        (usuario) => usuario.tipo === "PACIENTE"
+      );
 
-		setDataNascimentoPaciente(dataFormatada);
-		setNomePaciente(resposta.nome);
-	}
+      setUsuarios(pacientes);
+      setCarregandoCriacao(false);
+    }
 
+    pegandoPacientes();
+  }, []);
 
+  useEffect(() => {
+    if (
+      tituloReceita !== "" &&
+      tipoAssinatura !== "" &&
+      descricaoReceita !== "" &&
+      NomePaciente !== ""
+    ) {
+      if (
+        tituloReceita !== undefined &&
+        tipoAssinatura !== undefined &&
+        descricaoReceita !== undefined &&
+        NomePaciente !== undefined
+      ) {
+        setPreenchido(true);
+      }
+    } else {
+      setPreenchido(false);
+    }
+  }, [
+    tituloReceita,
+    descricaoReceita,
+    tipoAssinatura,
+    NomePaciente,
+    preenchido,
+  ]);
 
-	useEffect(() => {
-		async function pegandoPacientes() {
-			setCarregandoCriacao(true);
-			const resposta = await managerService.GetDadosPessoais();
-			const pacientes = resposta.filter(
-				(usuario) => usuario.tipo === "PACIENTE"
-			);
+  function cancelarCriacaoReceita() {
+    history.push("/web/areareceitas");
+  }
 
-			setUsuarios(pacientes);
-			setCarregandoCriacao(false);
-		}
+  async function criarReceita(e) {
+    e.preventDefault();
 
-		pegandoPacientes();
-	}, []);
+    const camposVaziosAtual = {
+      id_usuario: !estado.id_usuario,
+      titulo: !estado.titulo,
+      assinatura: !estado.assinatura,
+      descricao: !estado.descricao,
+    };
+    setCamposVazios(camposVaziosAtual);
 
-	useEffect(() => {
-		if (tituloReceita !== "" && tipoAssinatura !== "" && descricaoReceita !== "" && NomePaciente !== "") {
-			if (tituloReceita !== undefined && tipoAssinatura !== undefined && descricaoReceita !== undefined && NomePaciente !== undefined) {
-				setPreenchido(true);
-			}
-		} else {
-			setPreenchido(false);
-		}
+    if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
+      toast.warn("Preencha todos os campos");
+      return;
+    }
 
-	}, [tituloReceita, descricaoReceita, tipoAssinatura, NomePaciente, preenchido]);
+    setCarregandoCriacao(true);
+    const id = estado.id_usuario;
 
+    if (tipoAssinatura === "sem") {
+      setCarregandoCriacao(false);
+      return;
+    }
 
-	function cancelarCriacaoReceita() {
-		history.push("/web/areareceitas");
-	}
+    await managerService.CriandoReceita(
+      id,
+      NomePaciente,
+      dataNascimentoPaciente,
+      tituloReceita,
+      descricaoReceita,
+      {
+        mensagemSucesso: "Receita criada com sucesso",
+        tempo: 1500,
+        onClose: () => {
+          history.push("/web/areareceitas");
+        },
+      }
+    );
 
-	const getBase64 = (file, callback) => {
-		const reader = new FileReader();
-		reader.addEventListener("load", () => callback(reader.result));
-		reader.readAsDataURL(file);
-	  };
-	
-	  async function handleChange(info) {
-		estado.descricao = false;
-		getBase64(info.file.originFileObj, (url) => {
-		  setFile(url);
-		  setNomeArquivo(info.file.name);
-		});
-		setArquivoEscolhido(false)
-	  }
+    setCarregandoCriacao(false);
+  }
 
+  const antIcon = (
+    <LoadingOutlined style={{ fontSize: 25, color: Cores.azul }} spin />
+  );
 
-	async function criarReceita(e) {
-		e.preventDefault();
-        console.log(certificados);
-		const camposVaziosAtual = {
-			id_usuario: !estado.id_usuario,
-			titulo: !estado.titulo,
-			assinatura: !estado.assinatura,
-			descricao: !estado.descricao,
-		};
+  const PdfTeste = () => {
+    return (
+      <Document>
+        <Page style={styles.corpo} size="A4">
+          <Image style={styles.logo} src={LogoPdf} />
+          <Text style={styles.texto}>Nome do paciente: {NomePaciente}</Text>
+          <Text style={styles.texto}>
+            Data de nascimento: {dataNascimentoPaciente}
+          </Text>
+          <Text style={styles.titulo}>{tituloReceita}</Text>
+          <Text style={styles.texto}>{descricaoReceita}</Text>
+          <Image style={styles.footer} src={footerPDF} />
+        </Page>
+      </Document>
+    );
+  };
 
-		setCamposVazios(camposVaziosAtual);
+  const styles = StyleSheet.create({
+    corpo: {
+      paddingBottom: 5,
+      paddingHorizontal: 30,
+    },
+    logo: {
+      marginHorizontal: 150,
+      size: 8,
+      marginBottom: 20,
+    },
+    texto: {
+      margin: 12,
+      fontSize: 14,
+      textAlign: "justify",
+      fontFamily: "Times-Roman",
+    },
+    titulo: {
+      fontSize: 18,
+      marginBottom: 20,
+      textAlign: "center",
+    },
+    footer: {
+      width: "100%",
+      marginTop: "83.5%",
+    },
+  });
 
-		if (!_.isEqual(camposVaziosAtual, camposVaziosReferencia)) {
-			toast.warn("Preencha todos os campos");
-			return;
-		}
+  const ordenarusuarios = (a, b) => {
+    var nome1 = a.nome.toUpperCase();
+    var nome2 = b.nome.toUpperCase();
 
-		setCarregandoCriacao(true);
-		const id = estado.id_usuario;
+    if (nome1 > nome2) {
+      return 1;
+    } else {
+      return -1;
+    }
+  };
 
-		if (tipoAssinatura === 'sem') {
-			setCarregandoCriacao(false);
-			return;
-		}
-         
-         
-
-		/*data.append("certificado", certificados);
-        // PERFIL DE ASSINATURA (BASICA OU CARIMBO)
-        data.append("perfil", perfil);
-        // ALGORITMO HASH QUE SERÁ USADO NA CODIFICAÇÃO DO DOCUMENTO
-        data.append("algoritmoHash", algoritmoHash);
-        // DOCUMENTO NO FORMATO PDF QUE SERÁ ASSINADO
-        data.append("documento", PdfTeste);
-        // SE A ASSINATURA SERÁ VISIVEL NO DOCUMENTO
-        data.append("assinaturaVisivel", assinaturaVisivel)
-		data.append("tipoDocumento", tipoDocumento);
-        data.append("tipoProfissional", tipoProfissional);
-        data.append("numero", numero);
-        data.append("numeroOID", numeroOID);
-        data.append("UF", UF);
-        data.append("UFOID", UFOID);
-        data.append("especialidade", especialidade);
-        data.append("especialidadeOID", especialidadeOID);*/
+  function maiusculaMinuscula(match, input) {
+    return match
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .includes(
+        input
+          .toLowerCase()
+          .normalize("NFD")
+          .replace(/[\u0300-\u036f]/g, "")
+          .trim()
+      );
+  }
 
 		//formData_FwInicializar["metadados"] = form_Metadados;
 		let formData_FwInicializar = {  "certificado": certificados[0].certificateData
