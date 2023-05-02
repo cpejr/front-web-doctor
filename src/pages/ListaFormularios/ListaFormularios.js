@@ -274,6 +274,21 @@ function ListaFormularios() {
                   </Formulario>
                   {tipoUsuarioLogado === 'MASTER' && (
                     <BotoesVerticalMaster>
+                      {value.tipo !== 'urgencia_formulario' &&(
+                      <BotaoVertical>
+                        <Button
+                          backgroundColor={Cores.lilas[1]}
+                          color={Cores.branco}
+                          fontWeight='bold'
+                          borderColor={Cores.azulEscuro}
+                          height='37px'
+                          width='90%'
+                          onClick={() => abrindoModal(value.id)}
+                        >
+                          ENVIAR
+                        </Button>
+                      </BotaoVertical>
+                  )}
                       <BotaoVertical>
                         <Button
                           backgroundColor={Cores.cinza[7]}

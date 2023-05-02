@@ -140,7 +140,7 @@ export const BotoesVerticalMaster = styled.div`
   width: 10%;
   display: flex;
   min-height: 20vh;
-  
+  justify-content: space-between;
   flex-direction: column;
   @media (max-width: 920px) {
     display: flex;
