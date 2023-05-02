@@ -13,9 +13,6 @@ export default function Mensagem({
   tipo,
 }) {
 
-  useEffect(() => {
-    console.log(tipo);
-  }, []);
 
   return (
     <MensagemEnviada

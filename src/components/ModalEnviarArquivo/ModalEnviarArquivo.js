@@ -34,20 +34,18 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
     <LoadingOutlined style={{ fontSize: 15, color: Cores.azul }} spin />
   );
 
-  const getBase64 = (file, callback) => {
+  const getBuffer = (file, callback) => {
     const reader = new FileReader();
     reader.addEventListener("load", () => callback(reader.result));
-    reader.readAsDataURL(file);
+    reader.readAsArrayBuffer(file);
   };
 
   async function handleChange(info) {
     // Get this url from response in real world.
     setCarregando(true);
-    getBase64(info.file.originFileObj, (url) => {
-      setCarregando(false);
-      setFile(url);
-      setNomeArquivo(info.file.name);
-    });
+    setFile(info);
+    setCarregando(false);
+
   }
 
   const TestantoTipoArquivo = (file) => {
@@ -64,9 +62,11 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
   async function enviarArquivo() {
     if (file) {
       setCarregandoDeletar(true);
+      console.log(file);
       const res = await managerService.enviarArquivoMensagem(file);
-      setUrlArquivo(res);
+      /* setUrlArquivo(res); */
 
+      console.log(file);
       props.pegandoDados();
 
       setFile(null);
@@ -88,6 +88,7 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
       let res = {};
 
       if (file && urlArquivo) {
+        console.log(file);
         res = {
           file: file,
           url: urlArquivo,

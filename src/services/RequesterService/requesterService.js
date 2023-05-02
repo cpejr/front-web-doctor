@@ -4,7 +4,7 @@ export const EnviandoImagem = (base64) =>
   api.post("/arquivo", { file: base64 });
 
 
-export const EnviandoArquivo = (base64) => api.post("/arquivofile", {file: base64});
+export const EnviandoArquivo = (base64) => api.post("/arquivofile", { file: base64 });
 
 
 export const logarUsuario = (email, senha) =>
@@ -117,15 +117,15 @@ export const deletarConsulta = (id) => api.delete(`/consultas/${id}`);
 export const deletarExameMarcado = (id) => api.delete(`/exame_marcados/${id}`);
 
 export const requisicaoFormularios = () => api.get(`/formularios/`);
- 
+
 export const requisicaoIndicacaoEspecifica = () => api.get(`/indicacoes_especificas/`);
 
 export const requisicaoMedicosIndicados = (id_indicacao_especifica) => api.get(`/medicos_indicados/${id_indicacao_especifica}`);
 
-export const indicarMedico = (id_indicacao_especifica, nome, telefone, local_atendimento) => api.post(`/medicos_indicados` ,
- {id_indicacao_especifica, nome, telefone, local_atendimento});
+export const indicarMedico = (id_indicacao_especifica, nome, telefone, local_atendimento) => api.post(`/medicos_indicados`,
+  { id_indicacao_especifica, nome, telefone, local_atendimento });
 
-export const alterarMedicoIndicado = (id,estado) => api.put(`/medicos_indicados/${id}` ,estado);
+export const alterarMedicoIndicado = (id, estado) => api.put(`/medicos_indicados/${id}`, estado);
 
 export const deletarMedicoIndicado = (id) => api.delete(`/medicos_indicados/${id}`);
 
@@ -150,7 +150,7 @@ export const requisicaoFormularioPacientes = (id_formulario) =>
 
 export const requisicaoReceitas = () => api.get(`/receitas/`);
 
-export const criarReceita = (id_usuario, nomePaciente, dataNascimento, tituloReceita, descricao) => 
+export const criarReceita = (id_usuario, nomePaciente, dataNascimento, tituloReceita, descricao) =>
   api.post(`/receitas`, {
     id_usuario: id_usuario,
     nome: nomePaciente,
@@ -168,7 +168,7 @@ export const criarReceitaComArquivo = (
     id_usuario: id_usuario,
     titulo: tituloReceita,
     descricao: descricao,
-    file:base64,
+    file: base64,
   });
 
 export const deletarReceita = (id) => api.delete(`/receitas/${id}`);
@@ -179,11 +179,11 @@ export const editarPerguntasFormulario = (id, perguntas) =>
 export const editarCamposFormulario = (id, campos) =>
   api.put(`/formularios/${id}`, campos);
 
-  export const requisicaoTodosFormulariosPaciente = () =>
+export const requisicaoTodosFormulariosPaciente = () =>
   api.get('/formularios_pacientes');
 
 export const updateFotoDePerfil = (id, base64) =>
-  api.post(`/usuariosimagem/${id}`,{
+  api.post(`/usuariosimagem/${id}`, {
     file: base64
   });
 export const enviarFormularioPaciente = (
@@ -191,13 +191,13 @@ export const enviarFormularioPaciente = (
   notificacao_ativa,
   id_formulario,
   id_usuario
-) => 
-   api.post("/formularios_pacientes", {
+) =>
+  api.post("/formularios_pacientes", {
     status,
-  notificacao_ativa,
-  id_formulario,
-  id_usuario,
-   });
+    notificacao_ativa,
+    id_formulario,
+    id_usuario,
+  });
 
 
 export const deleteFotoDePerfil = (id, base64) =>
@@ -205,7 +205,7 @@ export const deleteFotoDePerfil = (id, base64) =>
     file: base64,
   });
 
-  
+
 export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
 
 export const criarConversa = (conversa) => api.post(`/conversas`, conversa);
@@ -239,9 +239,11 @@ export const updateMensagensVisualizadas = (id_usuario, id_conversa) =>
 
 export const dispostivoById = (id) => api.get(`/dispositivos/${id}`);
 
-export const enviarArquivoMensagem = (base64) =>
-  api.post(`/arquivofile/`,{
-    file: base64
+export const enviarArquivoMensagem = (formData) =>
+  api.post(`/arquivofile/`, formData, {
+    headers: {
+      'content-type': 'multipart/form-data'
+    }
   });
 
 export const requisicaoHomes = () =>
@@ -257,14 +259,14 @@ export const getTokenDispositivo = (token_dispositivo) =>
 export const requisicaoSobreMimDados = () =>
   api.get('/sobremims');
 
-export const criarSobreMim = (dados) => 
+export const criarSobreMim = (dados) =>
   api.post(`/sobremims`, dados, {
     headers: {
       "Content-Type": "multipart/form-data",
     }
   });
 
-export const atualizarSobreMim = (id, dados) => 
+export const atualizarSobreMim = (id, dados) =>
   api.put(`/sobremims/${id}`, dados, {
     headers: {
       "Content-Type": "multipart/form-data",
@@ -286,7 +288,7 @@ export const updateImagemCarrossel = (id, base64) =>
     file: base64
   });
 
-  export const updateImagemHomes = (id, base64) =>
+export const updateImagemHomes = (id, base64) =>
   api.put(`/homesImagem/${id}`, {
     file: base64
-  } );
+  });
