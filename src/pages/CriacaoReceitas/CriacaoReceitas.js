@@ -237,9 +237,9 @@ form_Metadados.tipoDoc = tipoDoc;
 form_Metadados.UFOID = UFOID;
 form_Metadados.numeroOID = numeroOID;
 form_Metadados.especialidadeOID = especialidadeOID;
-//form_Metadados[documento] = PdfTeste;
+//formData_FwInicializar.documento = PdfTeste;
 formData_FwInicializar.metadados = form_Metadados;
-
+console.log(formData_FwInicializar);
 console.log(form_Metadados);
 
 
@@ -252,7 +252,7 @@ console.log(form_Metadados);
 
    const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
 
-   console.log(respFinicializar)
+   console.log(respFinicializar);
 
 	await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
 		mensagemSucesso: "Receita criada com sucesso",
