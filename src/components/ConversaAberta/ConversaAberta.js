@@ -93,7 +93,14 @@ export default function ConversaAberta({ socket }) {
   ` ${apenasNumerosCep(endereco.cep)}`
   ;
   const mensagemNotificacao = `O exame ${conversaSelecionada.tipo} está disponível`;
-  
+  const mensagemConfirmarPagamentoActigrafia = `Instruções para a realização do exame actigrafia: \n`
+  + `1.- \n`
+  + `2.- \n`
+  + `3.- `;
+  const mensagemConfirmarPagamentoBiologix = `Instruções para a realização do exame biologix: \n`
+  + `1.- \n`
+  + `2.- \n`
+  + `3.- `;
   const menuBotoes = (
     <Menu>
       <Menu.Item>
@@ -180,6 +187,18 @@ export default function ConversaAberta({ socket }) {
           onClick={() => SolicitarPagamento()}
         >
           <b>Solicitar Pagamento</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => ResponderFormulario()}
+        >
+          <b>Responder Formulário</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -377,32 +396,13 @@ export default function ConversaAberta({ socket }) {
   });
 
 
-  async function confirmarPagamento(id_paciente, id_usuario) {
-    const formulariosPaciente = await managerService.GetRespostaFormularioIdUsuario(id_paciente);
-    let possuiFormulario = false;
-    let posicao = -1;
-    let texto = inputMensagemConteudo;
-
-    for (const [index, value] of formulariosPaciente.entries()) {
-      if (value.tipo === "exame_actigrafia") {
-        possuiFormulario = true;
-        posicao = index;
-      }
-    }
-
-    if (!possuiFormulario)
-      toast.error("O paciente não possui um formulário desse exame");
-    else if (possuiFormulario && formulariosPaciente[posicao].respostas === null) {
-      toast.error("O paciente não respondeu as perguntas do formulário");
-    }
-    else {
-      await managerService.MandandoMensagemConfirmarPagamento(id_usuario);
-      texto = "Instruções para a realização do exame actigrafia: \n"
-      + "1.- \n"
-      + "2.- \n"
-      + "3.- "
-      enviaMensagem('nenhuma', texto);
-    }
+  async function confirmarPagamento() {
+  if (conversaSelecionada.tipo === "ACTIGRAFIA"){
+    await enviaMensagem("nenhuma", mensagemConfirmarPagamentoActigrafia);
+  }else if (conversaSelecionada.tipo === "BIOLOGIX"){
+    await enviaMensagem("nenhuma", mensagemConfirmarPagamentoBiologix);
+  }
+      //await managerService.MandandoMensagemConfirmarPagamento(id_usuario);
   }
 
   async function finalizarChat() {
@@ -450,6 +450,13 @@ export default function ConversaAberta({ socket }) {
     await enviaMensagem("nenhuma", mensagemSolicitarPagamento);
   }
 
+  async function ResponderFormulario() {
+    if (conversaSelecionada.tipo === "ACTIGRAFIA"){
+      await enviaMensagem("nenhuma", mensagemResponderFormulárioActigrafia);
+    }else if (conversaSelecionada.tipo === "BIOLOGIX"){
+      await enviaMensagem("nenhuma", mensagemResponderFormulárioBiologix);
+    }
+  }
   function atualizaConversaFinalizada() {
     const auxConversa = conversaSelecionada;
     auxConversa.finalizada = true;
