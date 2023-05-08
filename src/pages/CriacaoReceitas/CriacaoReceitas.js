@@ -110,7 +110,6 @@ function CriacaoReceitas() {
 			  certificado.label = certificado.name;
 			});
 			setCertificados(certificados);
-			console.log(certificados);
 		  })
 		}
 	  }, [extensaoInstalada])
@@ -237,22 +236,17 @@ form_Metadados.tipoDoc = tipoDoc;
 form_Metadados.UFOID = UFOID;
 form_Metadados.numeroOID = numeroOID;
 form_Metadados.especialidadeOID = especialidadeOID;
-//formData_FwInicializar.documento = PdfTeste;
+//formData_FwInicializar.documento = PdfTeste; O documento precisa de multipart file
 formData_FwInicializar.metadados = form_Metadados;
-console.log(formData_FwInicializar);
-console.log(form_Metadados);
 
 
    const resposta = await managerService.InicializandoPDF(formData_FwInicializar);
    
-   console.log(resposta);
    const respostafinalizar =  await window.BryExtension.sign(certificados[0].certId, JSON.stringify(resposta));
    
-   console.log(respostafinalizar);
 
    const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
 
-   console.log(respFinicializar);
 
 	await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
 		mensagemSucesso: "Receita criada com sucesso",
