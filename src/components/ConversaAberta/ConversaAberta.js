@@ -75,7 +75,19 @@ export default function ConversaAberta({ socket }) {
           height="50px"
           onClick={() => testeMensagem()}
         >
-          <b>Teste Whatsapp</b>
+          <b>Formulario de Urgencia</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="50px"
+          onClick={() => MensagemMarcado()}
+        >
+          <b>Mensagem de Exame Marcado</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -555,6 +567,9 @@ export default function ConversaAberta({ socket }) {
     managerService.MandandoMensagemComunicadoUrgencia(
       usuarioId,
     );
+  }
+  function MensagemMarcado() {
+    managerService.MandandoMensagemExameMarcado(usuarioId);
   }
 
   return (
