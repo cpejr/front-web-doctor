@@ -6,7 +6,7 @@ import {
   SendOutlined,
   QuestionOutlined,
 } from "@ant-design/icons";
-import { Dropdown, Menu, Modal, Spin, Tooltip } from "antd";
+import { Dropdown, Menu, Modal, Spin, Tooltip} from "antd";
 import moment from "moment";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { ChatContext } from "../../contexts/ChatContext";
@@ -29,7 +29,7 @@ import {
   MenuConversasTipoExame,
   NomePessoa,
 } from "./Styles";
-
+import { toast } from "react-toastify";
 export default function ConversaAberta({ socket }) {
   const [usuarioAtual, setUsuarioAtual] = useState({});
   const [inputMensagemConteudo, setInputMensagemConteudo] = useState("");
@@ -85,7 +85,7 @@ export default function ConversaAberta({ socket }) {
           color={Cores.preto}
           fontSize="1rem"
           height="50px"
-          onClick={() => confirmarPagamento()}
+          onClick={() => confirmarPagamento(conversaSelecionada.conversaCom.id, usuarioId)}
         >
           <b>Confirmar Pagamento</b>
         </Button>
@@ -118,6 +118,151 @@ export default function ConversaAberta({ socket }) {
       </Menu.Item>
     </Menu>
   );
+  const TextoA1 = "Olá sou a enfermeira, posso te auxiliar em algo ?"
+  const TextoA2 = "Olá sou a enfermeira, posso te auxiliar em algo2 ?"
+  const TextoA3 = "Olá sou a enfermeira, posso te auxiliar em algo3 ?"
+  const TextoA4 = "Olá sou a enfermeira, posso te auxiliar em algo4 ?"
+  const TextoA5 = "Olá sou a enfermeira, posso te auxiliar em algo5 ?"
+  const TextoA6 = "Olá sou a enfermeira, posso te auxiliar em algo6 ?"
+  const TextoA7 = "Olá sou a enfermeira, posso te auxiliar em algo7 ?"
+  const TextoA8 = "Olá sou a enfermeira, posso te auxiliar em algo8 ?"
+  const TextoA9 = "Olá sou a enfermeira, posso te auxiliar em algo9 ?"
+  const TextoA10 = "Olá sou a enfermeira, posso te auxiliar em algo10 ?"
+  const menuMensagens = (
+    <Menu>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA1)}
+          value = {TextoA1}
+        >
+            <b >TextoA1</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA2)}
+          value = {TextoA2}
+        >
+            <b >TextoA2</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA3)}
+          value = {TextoA3}
+        >
+            <b >TextoA3</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA4)}
+          value = {TextoA4}
+        >
+            <b >TextoA4</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA5)}
+          value = {TextoA5}
+        >
+            <b >TextoA5</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA6)}
+          value = {TextoA6}
+        >
+            <b >TextoA6</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA7)}
+          value = {TextoA7}
+        >
+            <b >TextoA7</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA8)}
+          value = {TextoA8}
+        >
+            <b >TextoA8</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA9)}
+          value = {TextoA9}
+        >
+            <b >TextoA9</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoA10)}
+          value = {TextoA10}
+        >
+            <b >TextoA10</b>
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
+
   const TextoB1 = "Olá sou a enfermeira, posso te auxiliar em algo0 ?"
   const TextoB2 = "Olá sou a enfermeira, posso te auxiliar em algo02 ?"
   const TextoB3 = "Olá sou a enfermeira, posso te auxiliar em algo03 ?"
@@ -440,6 +585,7 @@ export default function ConversaAberta({ socket }) {
     verificaHorarioPermitidoParaEnvioDeMensagens();
   });
 
+
   async function enviarFormularioPaciente() {
     await managerService.EnviandoFormularioPaciente(
       false,
@@ -449,11 +595,32 @@ export default function ConversaAberta({ socket }) {
     );
   }
 
-  async function confirmarPagamento() {
-    managerService.confirmarPagamentoExame(
-      conversaSelecionada.conversaCom.id,
-      usuarioId
-    );
+  async function confirmarPagamento(id_paciente, id_usuario) {
+    const formulariosPaciente = await managerService.GetRespostaFormularioIdUsuario(id_paciente);
+    let possuiFormulario = false;
+    let posicao = -1;
+    let texto = inputMensagemConteudo;
+
+    for (const [index, value] of formulariosPaciente.entries()) {
+      if (value.tipo === "exame_actigrafia") {
+        possuiFormulario = true;
+        posicao = index;
+      }
+    }
+
+    if (!possuiFormulario)
+      toast.error("O paciente não possui um formulário desse exame");
+    else if (possuiFormulario && formulariosPaciente[posicao].respostas === null) {
+      toast.error("O paciente não respondeu as perguntas do formulário");
+    }
+    else {
+      await managerService.MandandoMensagemConfirmarPagamento(id_usuario);
+      texto = "Instruções para a realização do exame actigrafia: \n"
+      + "1.- \n"
+      + "2.- \n"
+      + "3.- "
+      enviaMensagem('nenhuma', texto);
+    }
   }
 
   async function finalizarChat() {
@@ -657,6 +824,7 @@ export default function ConversaAberta({ socket }) {
       enviarMensagemComInput(e);
     }
   };
+  
 
   return (
     <Conversa>
@@ -715,12 +883,13 @@ export default function ConversaAberta({ socket }) {
               media_url={m.media_url}
               scrollRef={mensagens?.length - 1 === idx ? scrollRef : null}
               data_criacao={m.data_criacao}
+              tipo={m.tipo}
             />
           ))
         )}
       </CorpoConversaAberta>
       <FooterConversaAberta>
-        {conversaSelecionada.tipo === "BIOLOGIX" || conversaSelecionada.tipo === "ACTIGRAFIA" ? (
+        {conversaSelecionada.tipo === "ACTIGRAFIA" || conversaSelecionada.tipo === "BIOLOGIX" ? (
           <MenuConversasTipoExame>
             <Dropdown
               onClick={(e) => e.preventDefault()}
@@ -733,6 +902,7 @@ export default function ConversaAberta({ socket }) {
             </Dropdown>
           </MenuConversasTipoExame>
         ) : (
+          <>
           <Tooltip placement="bottom" title="Enviar arquivo">
             <Button
               backgroundColor="transparent"
@@ -751,45 +921,24 @@ export default function ConversaAberta({ socket }) {
               />
             </Button>
           </Tooltip>
+            <Dropdown
+              backgroundColor="transparent"
+              borderColor="transparent"
+              color={Cores.lilas[1]}
+              width="10%"
+              widthres="15%"
+              height="10%"
+              marginTop="0%"
+              overlay={menuMensagens}
+              placement={"bottom"}
+            >
+              <QuestionOutlined 
+                style={{ fontSize: "27px", color: "#434b97", margin: "0px 1rem",marginLeft: "0%" }}
+              />
+            </Dropdown>
+          </>
         )}
-       {conversaSelecionada.tipo === "BIOLOGIX" ? (
-         <Dropdown
-           backgroundColor="transparent"
-           borderColor="transparent"
-           color={Cores.lilas[1]}
-           width="10%"
-           widthres="15%"
-           height="10%"
-           marginTop="0%"
-           overlay={menuMensagensBiologix}
-           placement={"bottom"}
-         >
-           <QuestionOutlined
-             style={{ fontSize: "27px", color: "{Cores.lilas[1]}", margin: "0px 1rem",marginLeft: "0%"  }}
-           />
-         </Dropdown>
-       ) : ( 
-       <h></h>
-        )}
-      {conversaSelecionada.tipo === "ACTIGRAFIA" ? (  
-         <Dropdown
-           backgroundColor="transparent"
-           borderColor="transparent"
-           color={Cores.lilas[1]}
-           width="10%"
-           widthres="15%"
-           height="10%"
-           marginTop="0%"
-           overlay={menuMensagensActigrafia}
-           placement={"bottom"}
-         >
-           <QuestionOutlined
-             style={{ fontSize: "27px", color: "{Cores.lilas[1]}", margin: "0px 1rem",marginLeft: "0%"  }}
-           />
-         </Dropdown>
-       ) : ( 
         <h></h>
-         )}
         <Input
           placeholder="Mensagem"
           backgroundColor="white"

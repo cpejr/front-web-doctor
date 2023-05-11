@@ -163,39 +163,13 @@ function HomeMedico() {
             fontSize='1em'
             gap='1%'
             boxShadow='3px 3px 5px 0px rgba(0, 0, 0, 0.2)'
-            onClick={() => history.push('/web/editarconteudo')}
-          >
-            Editar Conteúdo do Aplicativo
-          </Button>
-          <Button
-            backgroundColor='green'
-            color={Cores.azul}
-            width='100%'
-            height='50px'
-            borderColor={Cores.azul}
-            fontSize='1em'
-            gap='1%'
-            boxShadow='3px 3px 5px 0px rgba(0, 0, 0, 0.2)'
-            // onClick={() => history.push("avaliar-app")}
-          >
-            Avaliação do Aplicativo
-          </Button>
-        </Botoes>
-        <Botoes>
-          <Button
-            backgroundColor={Cores.cinza[7]}
-            color={Cores.azul}
-            width='100%'
-            height='50px'
-            borderColor={Cores.azul}
-            fontSize='1em'
-            gap='1%'
-            boxShadow='3px 3px 5px 0px rgba(0, 0, 0, 0.2)'
             onClick={() => passandoTipoParaCadastro('PACIENTE')}
           >
             Cadastrar Novo Paciente
             <PlusCircleOutlined style={{ color: Cores.azul }} />
           </Button>
+          </Botoes>
+          <Botoes>
           <Button
             backgroundColor={Cores.cinza[7]}
             color={Cores.azul}
@@ -209,6 +183,21 @@ function HomeMedico() {
           >
             Cadastrar nova(o) Secretária(o)
             <PlusCircleOutlined style={{ color: Cores.azul }} />
+          </Button>
+        </Botoes>
+        <Botoes>
+          <Button
+            backgroundColor={Cores.cinza[7]}
+            color={Cores.azul}
+            width='100%'
+            height='50px'
+            borderColor={Cores.azul}
+            fontSize='1em'
+            gap='1%'
+            boxShadow='3px 3px 5px 0px rgba(0, 0, 0, 0.2)'
+            onClick={() => history.push('/web/edicaoconteudo')}
+          >
+            Editar Conteúdo do Aplicativo
           </Button>
         </Botoes>
       </ContainerBotoes>

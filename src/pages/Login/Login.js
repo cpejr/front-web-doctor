@@ -76,7 +76,7 @@ function Login() {
   }
 
   async function entrar() {
-    if (!email) errors.email = true;
+    if (!email.trim()) errors.email = true;
     if (!senha) errors.senha = true;
     setCamposVazios({ ...camposVazios, ...errors });
 
@@ -88,17 +88,17 @@ function Login() {
       let quantidadeUsuarios = resposta.length;
       resposta.forEach((usuario) => {
         contandoForEach++;
-        if (usuario.email === email) {
+        if (usuario.email === email.trim()) {
           procurandoEmail++;
         }
         if (quantidadeUsuarios === contandoForEach) {
           if (procurandoEmail === 0)
             toast.error("Esse email não está cadastrado.");
-          else managerService.ConferirSenha(email, senha);
+          else managerService.ConferirSenha(email.trim(), senha);
         }
       });
 
-      await managerService.requisicaoLogin(email, senha);
+      await managerService.requisicaoLogin(email.trim(), senha);
       setCarregando(false);
     } else {
       setCarregando(true);

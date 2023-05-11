@@ -116,9 +116,9 @@ function ModalExcluirComentario(props) {
                 </Select>
                 <TextoIcone>
                     <Button
-                        backgroundColor={Cores.lilas[1]}
-                        borderColor={Cores.azul}
-                        color={Cores.branco}
+                        backgroundColor= '#f8d6cf'
+                        borderColor= 'red'
+                        color={Cores.preto}
                         fontWeight='medium'
                         fontSize='1.7em'
                         fontSizeMedia1080='1.5em'
