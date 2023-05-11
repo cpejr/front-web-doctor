@@ -48,7 +48,7 @@ export const MetadeEsquerda = styled.div`
   
   @media (max-width: 900px) {
     margin-top: 10%;
-    margin-bottom: -7%;
+    margin-bottom: -10%;
     border-right: 0px;
   }
 
@@ -242,6 +242,7 @@ export const BoxAlterarImagem = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-bottom: 4%;
   border-radius: 4px;
   border: solid 3px white;
   box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.25);
@@ -265,9 +266,9 @@ export const ContainerBotoes = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 20%;
+  height: 50%;
   width: 76%;
-  gap: 10%;
+  gap: 5%;
   font-size: 20px;
   border-radius: 6px;
   border: solid 3px #bbc0f4;
