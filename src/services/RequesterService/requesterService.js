@@ -226,6 +226,9 @@ export const updateConversaFinalizada = (id) =>
 export const deletarConversasInativas = (id_usuario) =>
   api.delete(`/conversas/${id_usuario}/usuario`);
 
+export const deletarConversa = (id) =>
+  api.delete(`/conversas/${id}`);
+
 export const criarMensagem = (mensagem) => api.post(`/mensagems`, mensagem);
 
 export const criarMensagemComArquivo = (mensagem) => api.post(`/mensagemsfile`, mensagem);
@@ -278,8 +281,8 @@ export const atualizarSobreMim = (id, dados) =>
 export const deletarSobreMim = (id) => api.delete(`/sobre_mims/${id}`);
 
 
-export const updateDadosHomes = (id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video) =>
-  api.put(`/homes/${id}`, { titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video });
+export const updateDadosHomes = (id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, video) =>
+  api.put(`/homes/${id}`, { titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, video });
 ;
 
 export const requisicaoCarrossel = () =>

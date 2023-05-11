@@ -1085,6 +1085,19 @@ export const deletarConversasInativas = async (id_usaurio) => {
   return conversasApagadas;
 };
 
+export const deletarConversa = async (id) => {
+  let conversaApagada = {};
+  await requesterService
+    .deletarConversa(id)
+    .then((res) => {
+      conversaApagada = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return conversaApagada;
+};
+
 export const CriandoMensagem = async (mensagem) => {
   let dadosMensagemCriada = {};
   await requesterService
@@ -1337,12 +1350,10 @@ export const UpdateDadosHomes = async (
   texto_dois, 
   titulo_tres, 
   texto_tres, 
-  titulo_quatro, 
-  texto_quatro,
   video
 ) => {
   await requesterService
-    .updateDadosHomes(id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video)
+    .updateDadosHomes(id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, video)
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = '/web/editarhome'));
       return false;
