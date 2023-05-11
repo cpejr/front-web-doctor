@@ -6,7 +6,7 @@ import {
   SendOutlined,
   QuestionOutlined,
 } from "@ant-design/icons";
-import { Dropdown, Menu, Modal, Spin, Tooltip} from "antd";
+import { Dropdown, Menu, Modal, Spin, Tooltip } from "antd";
 import moment from "moment";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { ChatContext } from "../../contexts/ChatContext";
@@ -138,9 +138,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA1)}
-          value = {TextoA1}
+          value={TextoA1}
         >
-            <b >TextoA1</b>
+          <b >TextoA1</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -151,9 +151,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA2)}
-          value = {TextoA2}
+          value={TextoA2}
         >
-            <b >TextoA2</b>
+          <b >TextoA2</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -164,9 +164,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA3)}
-          value = {TextoA3}
+          value={TextoA3}
         >
-            <b >TextoA3</b>
+          <b >TextoA3</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -177,9 +177,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA4)}
-          value = {TextoA4}
+          value={TextoA4}
         >
-            <b >TextoA4</b>
+          <b >TextoA4</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -190,9 +190,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA5)}
-          value = {TextoA5}
+          value={TextoA5}
         >
-            <b >TextoA5</b>
+          <b >TextoA5</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -203,9 +203,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA6)}
-          value = {TextoA6}
+          value={TextoA6}
         >
-            <b >TextoA6</b>
+          <b >TextoA6</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -216,9 +216,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA7)}
-          value = {TextoA7}
+          value={TextoA7}
         >
-            <b >TextoA7</b>
+          <b >TextoA7</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -229,9 +229,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA8)}
-          value = {TextoA8}
+          value={TextoA8}
         >
-            <b >TextoA8</b>
+          <b >TextoA8</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -242,9 +242,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA9)}
-          value = {TextoA9}
+          value={TextoA9}
         >
-            <b >TextoA9</b>
+          <b >TextoA9</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -255,9 +255,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA10)}
-          value = {TextoA10}
+          value={TextoA10}
         >
-            <b >TextoA10</b>
+          <b >TextoA10</b>
         </Button>
       </Menu.Item>
     </Menu>
@@ -283,9 +283,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoB1)}
-          value = {TextoB1}
+          value={TextoB1}
         >
-            <b >TextoB1</b>
+          <b >TextoB1</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -296,9 +296,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoB2)}
-          value = {TextoB2}
+          value={TextoB2}
         >
-            <b >TextoB2</b>
+          <b >TextoB2</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -309,9 +309,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoB3)}
-          value = {TextoB3}
+          value={TextoB3}
         >
-            <b >TextoB3</b>
+          <b >TextoB3</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -322,9 +322,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoB4)}
-          value = {TextoB4}
+          value={TextoB4}
         >
-            <b >TextoB4</b>
+          <b >TextoB4</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -335,9 +335,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoB5)}
-          value = {TextoB5}
+          value={TextoB5}
         >
-            <b >TextoB5</b>
+          <b >TextoB5</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -348,9 +348,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoB6)}
-          value = {TextoB6}
+          value={TextoB6}
         >
-            <b >TextoB6</b>
+          <b >TextoB6</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -361,9 +361,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoB7)}
-          value = {TextoB7}
+          value={TextoB7}
         >
-            <b >TextoB7</b>
+          <b >TextoB7</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -374,9 +374,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoB8)}
-          value = {TextoB8}
+          value={TextoB8}
         >
-            <b >TextoB8</b>
+          <b >TextoB8</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -387,9 +387,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoB9)}
-          value = {TextoB9}
+          value={TextoB9}
         >
-            <b >TextoB9</b>
+          <b >TextoB9</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -400,9 +400,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoB10)}
-          value = {TextoB10}
+          value={TextoB10}
         >
-            <b >TextoB10</b>
+          <b >TextoB10</b>
         </Button>
       </Menu.Item>
     </Menu>
@@ -427,9 +427,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoC1)}
-          value = {TextoC1}
+          value={TextoC1}
         >
-            <b >TextoC1</b>
+          <b >TextoC1</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -440,9 +440,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoC2)}
-          value = {TextoC2}
+          value={TextoC2}
         >
-            <b >TextoC2</b>
+          <b >TextoC2</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -453,9 +453,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoC3)}
-          value = {TextoC3}
+          value={TextoC3}
         >
-            <b >TextoC3</b>
+          <b >TextoC3</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -466,9 +466,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoC4)}
-          value = {TextoC4}
+          value={TextoC4}
         >
-            <b >TextoC4</b>
+          <b >TextoC4</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -479,9 +479,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoC5)}
-          value = {TextoC5}
+          value={TextoC5}
         >
-            <b >TextoC5</b>
+          <b >TextoC5</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -492,9 +492,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoC6)}
-          value = {TextoC6}
+          value={TextoC6}
         >
-            <b >TextoC6</b>
+          <b >TextoC6</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -505,9 +505,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoC7)}
-          value = {TextoC7}
+          value={TextoC7}
         >
-            <b >TextoC7</b>
+          <b >TextoC7</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -518,9 +518,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoC8)}
-          value = {TextoC8}
+          value={TextoC8}
         >
-            <b >TextoC8</b>
+          <b >TextoC8</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -531,9 +531,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoC9)}
-          value = {TextoC9}
+          value={TextoC9}
         >
-            <b >TextoC9</b>
+          <b >TextoC9</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -544,9 +544,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoC10)}
-          value = {TextoC10}
+          value={TextoC10}
         >
-            <b >TextoC10</b>
+          <b >TextoC10</b>
         </Button>
       </Menu.Item>
     </Menu>
@@ -616,9 +616,9 @@ export default function ConversaAberta({ socket }) {
     else {
       await managerService.MandandoMensagemConfirmarPagamento(id_usuario);
       texto = "Instruções para a realização do exame actigrafia: \n"
-      + "1.- \n"
-      + "2.- \n"
-      + "3.- "
+        + "1.- \n"
+        + "2.- \n"
+        + "3.- "
       enviaMensagem('nenhuma', texto);
     }
   }
@@ -824,7 +824,7 @@ export default function ConversaAberta({ socket }) {
       enviarMensagemComInput(e);
     }
   };
-  
+
 
   return (
     <Conversa>
@@ -855,7 +855,7 @@ export default function ConversaAberta({ socket }) {
           height="70px"
           width="76px"
         ></img>
-        {conversaSelecionada.tipo === "EXAME" ? (
+        {conversaSelecionada.tipo === "ACTIGRAFIA" || conversaSelecionada.tipo === "BIOLOGIX" ? (
           <NomePessoa>
             {conversaSelecionada?.conversaCom?.nome} - EXAME
           </NomePessoa>
@@ -897,12 +897,11 @@ export default function ConversaAberta({ socket }) {
               placement={"bottom"}
             >
               <PlusOutlined
-                style={{ fontSize: "27px", color: "{Cores.lilas[1]}", margin: "0px 0.9rem"}}
+                style={{ fontSize: "27px", color: "{Cores.lilas[1]}", margin: "0px 0.9rem" }}
               />
             </Dropdown>
           </MenuConversasTipoExame>
         ) : (
-          <>
           <Tooltip placement="bottom" title="Enviar arquivo">
             <Button
               backgroundColor="transparent"
@@ -921,24 +920,45 @@ export default function ConversaAberta({ socket }) {
               />
             </Button>
           </Tooltip>
-            <Dropdown
-              backgroundColor="transparent"
-              borderColor="transparent"
-              color={Cores.lilas[1]}
-              width="10%"
-              widthres="15%"
-              height="10%"
-              marginTop="0%"
-              overlay={menuMensagens}
-              placement={"bottom"}
-            >
-              <QuestionOutlined 
-                style={{ fontSize: "27px", color: "#434b97", margin: "0px 1rem",marginLeft: "0%" }}
-              />
-            </Dropdown>
-          </>
         )}
-        <h></h>
+        {conversaSelecionada.tipo === "BIOLOGIX" ? (
+          <Dropdown
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color={Cores.lilas[1]}
+            width="10%"
+            widthres="15%"
+            height="10%"
+            marginTop="0%"
+            overlay={menuMensagensBiologix}
+            placement={"bottom"}
+          >
+            <QuestionOutlined
+              style={{ fontSize: "27px", color: "{Cores.lilas[1]}", margin: "0px 1rem", marginLeft: "0%" }}
+            />
+          </Dropdown>
+        ) : (
+          <h></h>
+        )}
+        {conversaSelecionada.tipo === "ACTIGRAFIA" ? (
+          <Dropdown
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color={Cores.lilas[1]}
+            width="10%"
+            widthres="15%"
+            height="10%"
+            marginTop="0%"
+            overlay={menuMensagensActigrafia}
+            placement={"bottom"}
+          >
+            <QuestionOutlined
+              style={{ fontSize: "27px", color: "{Cores.lilas[1]}", margin: "0px 1rem", marginLeft: "0%" }}
+            />
+          </Dropdown>
+        ) : (
+          <h></h>
+        )}
         <Input
           placeholder="Mensagem"
           backgroundColor="white"
