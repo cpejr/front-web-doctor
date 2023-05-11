@@ -469,6 +469,42 @@ export const CriandoComentario = async (comentario) => {
   return;
 };
 
+export const InicializandoPDF = async (data) => {
+  let pdfIncializado = {}
+
+  await requesterService
+    .inicializarPDF(data)
+    .then((res) => {
+      toast.success('Assinatura iniciada  com sucesso.');
+      pdfIncializado = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
+      return false;
+    });
+  console.log(pdfIncializado);
+  return pdfIncializado;
+};
+export const FinalizandoPDF = async (extensiondata) => {
+  let pdfFinalizado = {}
+  await requesterService
+    .finalizarPDF(extensiondata)
+    .then((res) => {
+      toast.success('Assinatura finalizada com sucesso.');
+      pdfFinalizado = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
+      return false;
+    });
+
+  return pdfFinalizado;
+};
+
+
+
+
+
 export const GetComentario = async () => {
   let dadosComentario = [];
 

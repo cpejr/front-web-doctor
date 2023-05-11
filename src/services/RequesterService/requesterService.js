@@ -29,6 +29,10 @@ export const criarConsulta = (consulta) => api.post("/consultas", consulta);
 
 export const criarExame = (exame) => api.post("/exame_marcados", exame);
 
+export const inicializarPDF = (data) => api.post('/inicializar', data);
+
+export const finalizarPDF = (extensiondata) => api.post('/finalizar', extensiondata);
+
 export const updateConsulta = (id_consulta, consulta) =>
   api.put(`/consultas/${id_consulta}`, consulta);
 
