@@ -204,8 +204,9 @@ export const FooterConversaAberta = styled.div`
 export const MenuConversasTipoExame = styled.div`
   display:flex;
   justify-content:center;
-  margin-bottom: 1%;
+  margin-top: 0%;
+  margin-bottom: 0%;
   width: 10%;
-  height: 20%;
+  height: -20%;
   background-color: transparent;
 `;
