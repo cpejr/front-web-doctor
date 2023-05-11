@@ -222,6 +222,9 @@ export const updateConversaFinalizada = (id) =>
 export const deletarConversasInativas = (id_usuario) =>
   api.delete(`/conversas/${id_usuario}/usuario`);
 
+export const deletarConversa = (id) =>
+  api.delete(`/conversas/${id}`);
+
 export const criarMensagem = (mensagem) => api.post(`/mensagems`, mensagem);
 
 export const criarMensagemComArquivo = (mensagem) => api.post(`/mensagemsfile`, mensagem);

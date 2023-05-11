@@ -1049,6 +1049,19 @@ export const deletarConversasInativas = async (id_usaurio) => {
   return conversasApagadas;
 };
 
+export const deletarConversa = async (id) => {
+  let conversaApagada = {};
+  await requesterService
+    .deletarConversa(id)
+    .then((res) => {
+      conversaApagada = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return conversaApagada;
+};
+
 export const CriandoMensagem = async (mensagem) => {
   let dadosMensagemCriada = {};
   await requesterService
