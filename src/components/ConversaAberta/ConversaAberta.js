@@ -337,7 +337,6 @@ export default function ConversaAberta({ socket }) {
     let possuiFormulario = false;
     let posicao = -1;
     let texto = inputMensagemConteudo;
-
     for (const [index, value] of formulariosPaciente.entries()) {
       if (value.tipo === "exame_actigrafia") {
         possuiFormulario = true;
@@ -351,7 +350,7 @@ export default function ConversaAberta({ socket }) {
       toast.error("O paciente não respondeu as perguntas do formulário");
     }
     else {
-      await managerService.MandandoMensagemConfirmarPagamento(id_usuario);
+      await managerService.MandandoMensagemConfirmarPagamento(id_paciente, id_usuario)
       texto = "Instruções para a realização do exame actigrafia: \n"
       + "1.- \n"
       + "2.- \n"

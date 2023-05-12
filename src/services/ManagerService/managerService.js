@@ -984,9 +984,9 @@ export const CriandoConversa = async (
   return dadosConversaCriada;
 };
 
-export const MandandoMensagemConfirmarPagamento = async (id_usuario) => {
+export const MandandoMensagemConfirmarPagamento = async (id_usuario, Secretaria) => {
   await requesterService
-    .enviarMensagemDeConfirmarPagamento(id_usuario)
+    .enviarMensagemDeConfirmarPagamento(id_usuario, Secretaria)
     .then(() => {
       toast.success("Pagamento solicitado com sucesso!")
     })

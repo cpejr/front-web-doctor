@@ -210,8 +210,11 @@ export const requisicaoArquivo = (chave) => api.get(`/arquivo/${chave}`);
 
 export const criarConversa = (conversa) => api.post(`/conversas`, conversa);
 
-export const enviarMensagemDeConfirmarPagamento = (id_usuario) =>
-  api.post(`/conversas_whatsapp/${id_usuario}`);
+export const enviarMensagemDeConfirmarPagamento = (id_usuario, Secretaria) =>
+  api.post(`/conversas_whatsapp/confirmar_pagamento`,{
+    id_usuario: id_usuario,
+    secretaria: Secretaria
+  });
 
 export const requisicaoConversasPorUsuario = (id_usuario) =>
   api.get(`/conversas/${id_usuario}/usuario`);
