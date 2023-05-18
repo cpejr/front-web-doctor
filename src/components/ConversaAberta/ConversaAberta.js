@@ -83,14 +83,14 @@ export default function ConversaAberta({ socket }) {
   const [modalEnviarArquivo, setModalEnviarArquivo] = useState(false);
   const [pdfFromModal, setPdfFromModal] = useState("");
   const [endereco, setEndereco] = useState({});
-  const enderecoCompleto = `${endereco.rua}, ${endereco.numero}, ${endereco.complemento}, ${endereco.bairro}, ${endereco.cidade}, ${endereco.estado}, ${endereco.pais}`;
+  const enderecoCompleto = `${endereco.rua}, ${endereco.numero}, ${endereco.complemento}, ${endereco.bairro}, ${endereco.cidade}, ${endereco.estado}, ${endereco.pais}, ${endereco.cep}`;
   const mensagemConfirmacaoDeDados = 
   `Esses dados serão usados na entrega e no pagamento. Por favor, confirme se estão todos corretos, caso haja alguma inconsistência ou erro, altere os dados do seu perfil.` +
   `\nNome completo: ${conversaSelecionada.conversaCom.nome}` +
-  `\nCPF: ${cpf(conversaSelecionada.conversaCom.cpf)}` +
-  `\nTelefone: ${telefone(conversaSelecionada.conversaCom.telefone)}` +
+  `\nCPF: ${conversaSelecionada.conversaCom.cpf}` +
+  `\nTelefone: ${(conversaSelecionada.conversaCom.telefone)}` +
   `\nEndereço: ${(enderecoCompleto)}` +
-  ` ${apenasNumerosCep(endereco.cep)}`
+  ` ${(endereco.cep)}`
   ;
   const mensagemNotificacao = `O exame ${conversaSelecionada.tipo} está disponível`;
   const mensagemConfirmarPagamentoActigrafia = `Instruções para a realização do exame actigrafia: \n`
