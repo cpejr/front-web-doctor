@@ -89,9 +89,7 @@ export default function ConversaAberta({ socket }) {
   `\nNome completo: ${conversaSelecionada.conversaCom.nome}` +
   `\nCPF: ${conversaSelecionada.conversaCom.cpf}` +
   `\nTelefone: ${(conversaSelecionada.conversaCom.telefone)}` +
-  `\nEndereço: ${(enderecoCompleto)}` +
-  ` ${(endereco.cep)}`
-  ;
+  `\nEndereço: ${(enderecoCompleto)}`;
   const mensagemNotificacao = `O exame ${conversaSelecionada.tipo} está disponível`;
   const mensagemConfirmarPagamentoActigrafia = `Instruções para a realização do exame actigrafia: \n`
   + `1.- \n`
