@@ -35,6 +35,7 @@ import {
   Image,
   PDFDownloadLink,
   StyleSheet,
+  renderToStream,
 } from "@react-pdf/renderer";
 
 import LogoPdf from "../../assets/LogoPdf.png";
@@ -236,25 +237,30 @@ form_Metadados.tipoDoc = tipoDoc;
 form_Metadados.UFOID = UFOID;
 form_Metadados.numeroOID = numeroOID;
 form_Metadados.especialidadeOID = especialidadeOID;
+const pdfBase64 = await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita);
+console.log(pdfBase64);
+form_Metadados.documento = pdfBase64;
+//formData_FwInicializar.documento = pdfBase64;
+/*const formData = new FormData();
+formData.append('documento', "tenho que por o documento recem criado aqui")*/
 //formData_FwInicializar.documento = PdfTeste; O documento precisa de multipart file
 formData_FwInicializar.metadados = form_Metadados;
-
 
    const resposta = await managerService.InicializandoPDF(formData_FwInicializar);
    
    const respostafinalizar =  await window.BryExtension.sign(certificados[0].certId, JSON.stringify(resposta));
-   
+  
 
-   const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
+   //const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
 
 
-	await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
+/*	await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
 		mensagemSucesso: "Receita criada com sucesso",
 		tempo: 1500,
 		onClose: () => {
 			history.push("/web/areareceitas");
 		},
-	});
+	});*/
 
 	setCarregandoCriacao(false);
 }
@@ -307,7 +313,11 @@ formData_FwInicializar.metadados = form_Metadados;
       marginTop: "83.5%",
     },
   });
-
+  /*const generatePDF = async () => {
+    const pdfBlob = await <PdfTeste />.toBlob();
+  
+    return pdfBlob;
+  };*/
   const ordenarusuarios = (a, b) => {
     var nome1 = a.nome.toUpperCase();
     var nome2 = b.nome.toUpperCase();
