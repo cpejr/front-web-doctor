@@ -274,6 +274,7 @@ function ListaFormularios() {
                   </Formulario>
                   {tipoUsuarioLogado === 'MASTER' && (
                     <BotoesVerticalMaster>
+                      {value.tipo !== 'urgencia_formulario' &&(
                       <BotaoVertical>
                         <Button
                           backgroundColor={Cores.lilas[1]}
@@ -287,7 +288,7 @@ function ListaFormularios() {
                           ENVIAR
                         </Button>
                       </BotaoVertical>
-
+                  )}
                       <BotaoVertical>
                         <Button
                           backgroundColor={Cores.cinza[7]}
