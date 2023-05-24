@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   LoadingOutlined,
   StarOutlined,
@@ -8,6 +8,8 @@ import {
 import { Spin } from "antd";
 import { Modal } from "antd";
 import { toast } from "react-toastify";
+import { ChatContext } from '../../contexts/ChatContext';
+import { useHistory } from "react-router-dom";
 import {
   ContainerPerfil,
   Perfil,
@@ -72,8 +74,11 @@ import formatarData from "../../utils/formatarData";
 import logoWord from "./logo.json";
 import footerWord from "./footer.json";
 import { compararDataRecente } from "../../utils/tratamentoErros";
+import objCopiaProfunda from '../../utils/objCopiaProfunda';
+
 
 function PerfilPaciente(props) {
+  const history = useHistory();
   const [modalAgendamento, setModalAgendamento] = useState(false);
   const [modalFormulario, setModalFormulario] = useState(false);
   const [modalDeletarUsuario, setModalDeletarUsuario] = useState(false);
@@ -102,7 +107,16 @@ function PerfilPaciente(props) {
   const [tipoUsuarioLogado, setTipoUsuarioLogado] = useState("");
   const emailUsuarioLogado = sessionStorage.getItem("@doctorapp-Email");
   const [formularioEspecifico, setFormularioEspecifico] = useState({});
+  const [Clicado, setClicado] = useState(true);
+  
   const [formularios, setFormularios] = useState();
+  const {
+    usuarioId,
+    conversas,
+    setConversas,
+    setConversaSelecionada,
+    imagemPerfilPadrão,
+  } = useContext(ChatContext);
   const antIcon = (
     <LoadingOutlined style={{ fontSize: 25, color: Cores.azulEscuro }} spin />
   );
@@ -123,6 +137,58 @@ function PerfilPaciente(props) {
     const resposta = await managerService.GetDadosUsuario(emailUsuarioLogado);
     setTipoUsuarioLogado(resposta.dadosUsuario.tipo);
   }
+  
+
+  async function criarConversa() {
+    if(Clicado === false){return}
+    setClicado(false)
+    const quemLogado = await managerService.GetDadosUsuario(emailUsuarioLogado);
+    
+    const conversaCriada = {
+      id_criador: quemLogado.dadosUsuario.id,
+      id_receptor: usuario.id,
+    }
+    
+    const checarconversas= objCopiaProfunda(conversas);
+    
+    const Datafiltrada = checarconversas.filter(item => item.tipo === null && item.conversaCom.id === usuario.id);
+  
+    if(Datafiltrada.length === 0){
+
+      const conversa = await managerService.CriandoConversa(conversaCriada)
+      await managerService.UpdateConversaAtiva(conversa.id)
+    
+      const copiaConversas = objCopiaProfunda(conversas);
+
+      const conversaRedirecionada = {
+        id: conversa.id,
+        tipo: null,
+        conversaCom: {
+        id: usuario.id, 
+        nome: usuario.nome, 
+        avatar_url:usuario.avatar_url}
+      }
+
+
+      setConversaSelecionada(conversaRedirecionada);
+      setConversas(copiaConversas);
+
+      history.push("/web/chat")
+    }else{
+      const conversaRedirecionadaExistente = {
+        id: Datafiltrada[0].id,
+        tipo: null,
+        conversaCom: {
+        id: usuario.id, 
+        nome: usuario.nome, 
+        avatar_url:usuario.avatar_url}
+      }
+      setConversaSelecionada(conversaRedirecionadaExistente);
+      setConversas(checarconversas);
+
+      history.push("/web/chat")
+    }
+    }
 
   async function pegandoDados() {
     const resposta = await managerService.GetDadosUsuario(
@@ -557,7 +623,7 @@ function PerfilPaciente(props) {
                 <Botoes marginTop={margemBotoes}>
                   <Botao>
                     <Button
-                      backgroundColor="green"
+                      backgroundColor={Cores.lilas[2]}
                       color={Cores.azulEscuro}
                       fontWeight="bold"
                       borderColor={Cores.azulEscuro}
@@ -565,6 +631,7 @@ function PerfilPaciente(props) {
                       width="100%"
                       fontSize="1.3em"
                       fontSizeMedia480="1em"
+                      onClick={() => criarConversa()}
                     >
                       Iniciar Conversa
                     </Button>
@@ -608,10 +675,10 @@ function PerfilPaciente(props) {
                   {recebeTipo() === "MASTER" && (
                     <Botao>
                       <Button
-                        backgroundColor={Cores.lilas[2]}
-                        color={Cores.azulEscuro}
+                        backgroundColor="#f8d6cf"
+                        color="black"
                         fontWeight="bold"
-                        borderColor={Cores.azulEscuro}
+                        borderColor="red"
                         height="40px"
                         width="100%"
                         fontSize="1.3em"

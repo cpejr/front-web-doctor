@@ -47,7 +47,6 @@ function EdicaoHome() {
   const [img0, setImg0] = useState("");
   const [img1, setImg1] = useState("");
   const [img2, setImg2] = useState("");
-  const [img3, setImg3] = useState("");
   const [carregandoImg, setCarregandoImg] = useState(false);
   const history = useHistory();
   const [indexImagens, setIndexImagens] = useState([]);
@@ -76,7 +75,7 @@ function EdicaoHome() {
 
   function avancaCarrosselEsquerda(posicao) {
     if (posicao === 0) {
-      posicao = 3
+      posicao = 2
     }
     else {
       posicao -= 1;
@@ -85,7 +84,7 @@ function EdicaoHome() {
   }
 
   function avancaCarrosselDireita(posicao) {
-    if (posicao === 3) {
+    if (posicao === 2) {
       posicao = 0
     }
     else {
@@ -107,9 +106,6 @@ function EdicaoHome() {
       else if (index === 2) {
         await managerService.updateImagemCarrossel(2, img2);
       }
-      else if (index === 3) {
-        await managerService.updateImagemHomes(homes.id, img3);
-      }
     }
 
     if (houveAlteracao === true) {
@@ -121,8 +117,6 @@ function EdicaoHome() {
         homes.texto_dois,
         homes.titulo_tres,
         homes.texto_tres,
-        homes.titulo_quatro,
-        homes.texto_quatro,
         homes.video
       );
       setCarregando(false);
@@ -202,13 +196,6 @@ function EdicaoHome() {
         setCarregandoImg(false);
       });
     }
-
-    if (imgAtual === 3) {
-      getBase64(info.file.originFileObj, (url) => {
-        setImg3(url);
-        setCarregandoImg(false);
-      });
-    }
   }
 
   async function setandoImagemCarrossel() {
@@ -219,8 +206,6 @@ function EdicaoHome() {
       managerService.GetArquivoPorChave(imagem)
     );
 
-    const arquivo = await managerService.GetArquivoPorChave(homes.imagem_quatro);
-    setImg3(arquivo);
     const responses = await Promise.all(carrossel);
     setImg0(responses[0]);
     setImg1(responses[1]);
@@ -232,7 +217,7 @@ function EdicaoHome() {
     setandoImagemCarrossel();
   }, [homes]);
 
-  var imagens = [img0, img1, img2, img3];
+  var imagens = [img0, img1, img2];
 
   return (
     <Corpo>
@@ -343,6 +328,8 @@ function EdicaoHome() {
             />
             <TextoSaibaMais color={Cores.branco}>Saiba Mais</TextoSaibaMais>
           </BoxSaibaMais>
+        </MetadeEsquerda>
+        <MetadeDireita>
           <BoxAlterarImagem>
             <CarrosselContainer>
               <Esquerda
@@ -383,8 +370,6 @@ function EdicaoHome() {
               </Direita>
             </CarrosselContainer>
           </BoxAlterarImagem>
-        </MetadeEsquerda>
-        <MetadeDireita>
           <BoxSaibaMais backgroundColor="#FBCB4C" borderColor="#FBCB4C">
             <TextArea
               textAlign="left"
@@ -453,39 +438,6 @@ function EdicaoHome() {
               onChange={preenchendoDados}
             />
             <TextoSaibaMais color={Cores.branco}>Saiba Mais</TextoSaibaMais>
-          </BoxSaibaMais>
-          <BoxSaibaMais borderColor="white">
-            <TextArea
-              textAlign="left"
-              backgroundColor={Cores.branco}
-              color={Cores.preto}
-              fontSize="140%"
-              width="100%"
-              marginTop="2%"
-              borderWidth="0px"
-              value={homes.titulo_quatro}
-              name="titulo_quatro"
-              onChange={preenchendoDados}
-              paddingLeft="10%"
-            />
-            <TextArea
-              backgroundColor={Cores.branco}
-              color={Cores.preto}
-              width="100%"
-              minHeight="190px"
-              height="auto"
-              marginTop="2%"
-              borderWidth="0px"
-              paddingLeft="10%"
-              paddingRight="10%"
-              fontSize="100%"
-              textAlign="left"
-              lineBreak="auto"
-              value={homes.texto_quatro}
-              name="texto_quatro"
-              onChange={preenchendoDados}
-            />
-            <TextoSaibaMais color={Cores.preto}>Saiba Mais</TextoSaibaMais>
           </BoxSaibaMais>
           <ContainerBotoes>
             <Button

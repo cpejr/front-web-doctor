@@ -153,6 +153,7 @@ export const NomePessoa = styled.div`
   letter-spacing: 0em;
   text-align: left;
   color: ${Cores.lilas[1]};
+  padding-right: 80px;
 `;
 
 export const CorpoConversaAberta = styled.div`
@@ -204,8 +205,9 @@ export const FooterConversaAberta = styled.div`
 export const MenuConversasTipoExame = styled.div`
   display:flex;
   justify-content:center;
-  margin-bottom: 1%;
+  margin-top: 0%;
+  margin-bottom: 0%;
   width: 10%;
-  height: 20%;
+  height: -20%;
   background-color: transparent;
 `;
