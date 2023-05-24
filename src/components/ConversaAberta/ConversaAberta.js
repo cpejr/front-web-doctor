@@ -7,7 +7,7 @@ import {
   QuestionOutlined,
   DeleteOutlined
 } from "@ant-design/icons";
-import { Dropdown, Menu, message, Modal, Spin, Tooltip} from "antd";
+import { Dropdown, Menu, message, Modal, Spin, Tooltip } from "antd";
 import moment from "moment";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { ChatContext } from "../../contexts/ChatContext";
@@ -29,7 +29,7 @@ import {
   FooterConversaAberta,
   HeaderConversaAberta,
   MenuConversasTipoExame,
-  NomePessoa,ACTI
+  NomePessoa, ACTI
 } from "./Styles";
 import {
   apenasNumerosCep,
@@ -51,21 +51,21 @@ export default function ConversaAberta({ socket }) {
 
   const mensagemFinalizada =
     "Os seus exames estão disponíveis no PDF acima, clique para abrir.\nEssa conversa foi encerrada Finalizado!\n";
-  const mensagemActigrafia = 
+  const mensagemActigrafia =
     "A actigrafia é um exame não invasivo, realizado por meio de um dispositivo utilizado no pulso durante um período de uma a quatro semanas. Ele tem como objetivo detectar o padrão de vigília e sono. O exame é utilizado principalmente para auxiliar no diagnóstico de insônia e distúrbios de ritmo circadiano. O preço desse exame é: ";
-  const mensagemBiologix = 
+  const mensagemBiologix =
     "O Exame do Sono Biologix é uma poligrafia noturna utilizada para diagnóstico e acompanhamento do tratamento de ronco e apneia do sono, e permite que profissionais de saúde ofereçam a seus pacientes uma solução simplificada, utilizando apenas um celular e um sensor compacto e sem fios. O preço desse exame é: "
-  const mensagemDispositivoIndisponível = 
+  const mensagemDispositivoIndisponível =
     "O dispositivo para a realização desse exame está indisponível! Deseja ser comunicado quando houver disponibilidade?";
-  const mensagemDispositivoDisponível = 
+  const mensagemDispositivoDisponível =
     "O dispositivo para a realização desse exame está disponível! Deseja realizá-lo?";
-  const mensagemResponderFormulárioBiologix = 
+  const mensagemResponderFormulárioBiologix =
     "Por gentileza, responda o formulário BIOLOGIX";
-  const mensagemResponderFormulárioActigrafia = 
+  const mensagemResponderFormulárioActigrafia =
     "Por gentileza, responda o formulário ACTIGRAFIA";
-  const mensagemSolicitarPagamento = 
+  const mensagemSolicitarPagamento =
     "Realize o pagamento pela seguinte chave pix: ";
-  
+
   const {
     usuarioId,
     conversaSelecionada,
@@ -87,21 +87,21 @@ export default function ConversaAberta({ socket }) {
   const [pdfFromModal, setPdfFromModal] = useState("");
   const [endereco, setEndereco] = useState({});
   const enderecoCompleto = `${endereco.rua}, ${endereco.numero}, ${endereco.complemento}, ${endereco.bairro}, ${endereco.cidade}, ${endereco.estado}, ${endereco.pais}, ${endereco.cep}`;
-  const mensagemConfirmacaoDeDados = 
-  `Esses dados serão usados na entrega e no pagamento. Por favor, confirme se estão todos corretos, caso haja alguma inconsistência ou erro, altere os dados do seu perfil.` +
-  `\nNome completo: ${conversaSelecionada.conversaCom.nome}` +
-  `\nCPF: ${conversaSelecionada.conversaCom.cpf}` +
-  `\nTelefone: ${(conversaSelecionada.conversaCom.telefone)}` +
-  `\nEndereço: ${(enderecoCompleto)}`;
+  const mensagemConfirmacaoDeDados =
+    `Esses dados serão usados na entrega e no pagamento. Por favor, confirme se estão todos corretos, caso haja alguma inconsistência ou erro, altere os dados do seu perfil.` +
+    `\nNome completo: ${conversaSelecionada.conversaCom.nome}` +
+    `\nCPF: ${conversaSelecionada.conversaCom.cpf}` +
+    `\nTelefone: ${(conversaSelecionada.conversaCom.telefone)}` +
+    `\nEndereço: ${(enderecoCompleto)}`;
   const mensagemNotificacao = `O exame ${conversaSelecionada.tipo} está disponível`;
   const mensagemConfirmarPagamentoActigrafia = `Instruções para a realização do exame actigrafia: \n`
-  + `1.- \n`
-  + `2.- \n`
-  + `3.- `;
+    + `1.- \n`
+    + `2.- \n`
+    + `3.- `;
   const mensagemConfirmarPagamentoBiologix = `Instruções para a realização do exame biologix: \n`
-  + `1.- \n`
-  + `2.- \n`
-  + `3.- `;
+    + `1.- \n`
+    + `2.- \n`
+    + `3.- `;
   const menuBotoes = (
     <Menu>
       <Menu.Item>
@@ -689,29 +689,13 @@ export default function ConversaAberta({ socket }) {
   });
 
 
-  async function confirmarPagamento() {
-  if (conversaSelecionada.tipo === "ACTIGRAFIA"){
-    await enviaMensagem("nenhuma", mensagemConfirmarPagamentoActigrafia);
-  }else if (conversaSelecionada.tipo === "BIOLOGIX"){
-    await enviaMensagem("nenhuma", mensagemConfirmarPagamentoBiologix);
-  }
-      //await managerService.MandandoMensagemConfirmarPagamento(id_usuario);
-  }
-
   async function confirmarPagamento(id_paciente, id_usuario) {
-        if (conversaSelecionada.tipo === "ACTIGRAFIA"){
-    await enviaMensagem("nenhuma", mensagemConfirmarPagamentoActigrafia);
-  }else if (conversaSelecionada.tipo === "BIOLOGIX"){
-    await enviaMensagem("nenhuma", mensagemConfirmarPagamentoBiologix);
-  }
-    else {
-      await managerService.MandandoMensagemConfirmarPagamento(id_usuario);
-      texto = "Instruções para a realização do exame actigrafia: \n"
-        + "1.- \n"
-        + "2.- \n"
-        + "3.- "
-      enviaMensagem('nenhuma', texto);
+    if (conversaSelecionada.tipo === "ACTIGRAFIA") {
+      await enviaMensagem("nenhuma", mensagemConfirmarPagamentoActigrafia);
+    } else if (conversaSelecionada.tipo === "BIOLOGIX") {
+      await enviaMensagem("nenhuma", mensagemConfirmarPagamentoBiologix);
     }
+    await managerService.MandandoMensagemConfirmarPagamento(id_usuario);
   }
 
 
@@ -722,9 +706,9 @@ export default function ConversaAberta({ socket }) {
   }
 
   async function InformaçãoGeral() {
-    if (conversaSelecionada.tipo === "ACTIGRAFIA"){
+    if (conversaSelecionada.tipo === "ACTIGRAFIA") {
       await enviaMensagem("nenhuma", mensagemActigrafia);
-    }else if (conversaSelecionada.tipo === "BIOLOGIX"){
+    } else if (conversaSelecionada.tipo === "BIOLOGIX") {
       await enviaMensagem("nenhuma", mensagemBiologix);
     }
   }
@@ -733,25 +717,25 @@ export default function ConversaAberta({ socket }) {
   }
 
   async function DispositivoDisponível() {
-    await enviaMensagem("nenhuma", mensagemDispositivoDisponível); 
-        const Token =        
-          await managerService.TokenById(conversaSelecionada.conversaCom.id);
-          for(var i = 0; i <= Token.length - 1; i++){
-            const Message = {
-              to: Token[i].token_dispositivo.replace("expo/", ''),
-              sound: 'default',
-              title: 'Doctor App', 
-              body: mensagemNotificacao,
-              
-            };
-            fetch('https://exp.host/--/api/v2/push/send',{
-              method: 'POST',
-              body: JSON.stringify(Message),
-              }
-            );
-            }
-          }
-  
+    await enviaMensagem("nenhuma", mensagemDispositivoDisponível);
+    const Token =
+      await managerService.TokenById(conversaSelecionada.conversaCom.id);
+    for (var i = 0; i <= Token.length - 1; i++) {
+      const Message = {
+        to: Token[i].token_dispositivo.replace("expo/", ''),
+        sound: 'default',
+        title: 'Doctor App',
+        body: mensagemNotificacao,
+
+      };
+      fetch('https://exp.host/--/api/v2/push/send', {
+        method: 'POST',
+        body: JSON.stringify(Message),
+      }
+      );
+    }
+  }
+
   async function ConfirmacaoDeDados() {
     await enviaMensagem("nenhuma", mensagemConfirmacaoDeDados);
   }
@@ -761,9 +745,9 @@ export default function ConversaAberta({ socket }) {
   }
 
   async function ResponderFormulario() {
-    if (conversaSelecionada.tipo === "ACTIGRAFIA"){
+    if (conversaSelecionada.tipo === "ACTIGRAFIA") {
       await enviaMensagem("nenhuma", mensagemResponderFormulárioActigrafia);
-    }else if (conversaSelecionada.tipo === "BIOLOGIX"){
+    } else if (conversaSelecionada.tipo === "BIOLOGIX") {
       await enviaMensagem("nenhuma", mensagemResponderFormulárioBiologix);
     }
   }
@@ -780,7 +764,7 @@ export default function ConversaAberta({ socket }) {
       usuarioId,
       conversaSelecionada.id,
     );
-    
+
     if (componenteEstaMontadoRef.current) setMensagens(resposta);
   }
   useEffect(() => {
@@ -893,7 +877,7 @@ export default function ConversaAberta({ socket }) {
 
     let id_remetente = usuarioId;
     let texto = inputMensagemConteudo;
-    
+
     if (!horarioPermitidoParaEnvioMensagem && !conversaSelecionada.finalizada) {
       id_remetente = remetente.id;
       texto =
@@ -997,16 +981,16 @@ export default function ConversaAberta({ socket }) {
         ) : (
           <NomePessoa>{conversaSelecionada?.conversaCom?.nome}</NomePessoa>
         )}
-        <DeleteOutlined 
-        style={{
-          position: "absolute",
-          left: "82%",
-          fontSize: "40px",
-          color: Cores.lilas[1]
-        }}
-        onClick={() => {
-          setModalExcluirConversa(true);
-        }}
+        <DeleteOutlined
+          style={{
+            position: "absolute",
+            left: "82%",
+            fontSize: "40px",
+            color: Cores.lilas[1]
+          }}
+          onClick={() => {
+            setModalExcluirConversa(true);
+          }}
         />
       </HeaderConversaAberta>
       <CorpoConversaAberta>
@@ -1161,7 +1145,7 @@ export default function ConversaAberta({ socket }) {
           ref={modalRef}
         />
       </Modal>
-      
+
       <Modal
         visible={modalExcluirConversa}
         onCancel={fechandoModalExcluirConversa}
@@ -1177,7 +1161,7 @@ export default function ConversaAberta({ socket }) {
           ref={modalRef}
         />
       </Modal>
-      
+
     </Conversa>
   );
 }
