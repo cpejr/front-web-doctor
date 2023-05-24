@@ -50,7 +50,7 @@ export const requisicaoLogin = async (email, senha) => {
       await sleep(1500);
       window.location.href = ehMedico ? '/web/home' : '/web/listadeusuarios';
     }
-  } catch (error) {}
+  } catch (error) { }
 
   return;
 };
@@ -58,7 +58,7 @@ export const requisicaoLogin = async (email, senha) => {
 export const Cadastrando = async (
   usuario,
   endereco,
-  callbackError = () => {}
+  callbackError = () => { }
 ) => {
   const resposta = await requesterService.requisicaoDadosUsuario(usuario.email);
 
@@ -218,14 +218,14 @@ export const GetDadosPessoaisAlfabetico = async () => {
     .catch((error) => {
       requisicaoErro(error);
     });
-    dadosUsuario.sort(function(a, b){
-      var nomeA = a.nome.toLowerCase(), nomeB = b.nome.toLowerCase();
-      if (nomeA < nomeB) 
-       return -1;
-      if (nomeA > nomeB)
-       return 1;
-      return 0;
-     });
+  dadosUsuario.sort(function (a, b) {
+    var nomeA = a.nome.toLowerCase(), nomeB = b.nome.toLowerCase();
+    if (nomeA < nomeB)
+      return -1;
+    if (nomeA > nomeB)
+      return 1;
+    return 0;
+  });
   return dadosUsuario;
 };
 
@@ -695,24 +695,24 @@ export const GetRespostaReceitasIdUsuario = async (id_usuario) => {
   return dadosResposta;
 };
 
-export const confirmarPagamentoExame = async(id_paciente, id_usuario) => {
+export const confirmarPagamentoExame = async (id_paciente, id_usuario) => {
   const formulariosPaciente = await GetRespostaFormularioIdUsuario(id_paciente);
   let possuiFormulario = false;
   let posicao = -1;
 
-  for (const [index, value] of formulariosPaciente.entries()){
-    if(value.tipo === "exame_actigrafia"){
+  for (const [index, value] of formulariosPaciente.entries()) {
+    if (value.tipo === "exame_actigrafia") {
       possuiFormulario = true;
       posicao = index;
     }
   }
 
-  if(!possuiFormulario)
+  if (!possuiFormulario)
     toast.error("O paciente não possui um formulário desse exame");
-  else if(possuiFormulario && formulariosPaciente[posicao].respostas === null){
+  else if (possuiFormulario && formulariosPaciente[posicao].respostas === null) {
     toast.error("O paciente não respondeu as perguntas do formulário");
   }
-  else{
+  else {
     await MandandoMensagemConfirmarPagamento(id_usuario);
   }
 }
@@ -768,7 +768,7 @@ export const IndicandoMedicos = async (
   usarToast = {
     mensagemSucesso: 'Operação bem sucedida',
     tempo: 1500,
-    onClose: () => {},
+    onClose: () => { },
   }
 ) => {
   return requesterService
@@ -887,7 +887,7 @@ export const CriandoReceita = async (
   usarToast = {
     mensagemSucesso: 'Operação bem sucedida',
     tempo: 1500,
-    onClose: () => {},
+    onClose: () => { },
   }
 ) => {
   return requesterService
@@ -922,15 +922,15 @@ export const CriandoReceitaComArquivo = async (
   usarToast = {
     mensagemSucesso: 'Operação bem sucedida',
     tempo: 1500,
-    onClose: () => {},
+    onClose: () => { },
   }
 ) => {
   return requesterService.criarReceitaComArquivo(
-      id_usuario,
-      tituloReceita,
-      descricao,
-      base64,
-    )
+    id_usuario,
+    tituloReceita,
+    descricao,
+    base64,
+  )
     .then(() => {
       if (usarToast) {
         toast.success(usarToast.mensagemSucesso, {
@@ -1002,7 +1002,7 @@ export const GetArquivoPorChave = async (chave) => {
       requisicaoErro(error);
     });
   return arquivo;
-  
+
 };
 
 export const CriandoConversa = async (
@@ -1273,16 +1273,23 @@ export const GetHomes = async () => {
       requisicaoErro(error);
     });
   return dadosHomes[0];
-}; 
+};
 
 export const enviarArquivoMensagem = async (file) => {
+
+  console.log(file);
+  let formData = new FormData();
+  console.log(file.file.originFileObj);
+  formData.append('file', file.file.originFileObj);
+
+  console.log(formData.get('file'));
   let id;
   await requesterService
-    .enviarArquivoMensagem(file)
+    .enviarArquivoMensagem(formData)
     .then((res) => {
       toast.success('Arquivo PDF enviado com sucesso');
       id = res.data;
-      
+
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -1363,25 +1370,25 @@ export const UpdateDadosHomes = async (
 };
 
 export const updateImagemCarrossel = async (id, file) => {
-  try{
-  const res = await requesterService
-    .updateImagemCarrossel(id, file)
+  try {
+    const res = await requesterService
+      .updateImagemCarrossel(id, file)
     return res;
   } catch (error) {
-      requisicaoErro(error);
-      return;
-    };
+    requisicaoErro(error);
+    return;
+  };
 };
 
 export const updateImagemHomes = async (id, file) => {
-    try{
+  try {
     const res = await requesterService
-    .updateImagemHomes(id, file)
+      .updateImagemHomes(id, file)
     return res;
-    
-    }catch (error) {
-      requisicaoErro(error);
-      return;
-    }; 
-    
+
+  } catch (error) {
+    requisicaoErro(error);
+    return;
+  };
+
 };
