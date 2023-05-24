@@ -23,7 +23,12 @@ export const apenasNumerosCpfTel = (value) => {
   return value.replace(/\D/g, "").replace(/(\d{11})(\d)/, "$1");
 };
 export const apenasNumerosCep = (value) => {
-  return value.replace(/\D/g, "").replace(/(\d{8})(\d)/, "$1");
+  if (value && typeof value === "string") {
+    const cepNumerico = value.replace(/\D/g, "");
+    return cepNumerico.replace(/^(\d{5})(\d{3})$/, "$1-$2");
+  } else {
+    return "";
+  }
 };
 
 export const data = (value) => {
