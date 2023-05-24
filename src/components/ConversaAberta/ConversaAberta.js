@@ -5,6 +5,7 @@ import {
   PlusOutlined,
   SendOutlined,
   QuestionOutlined,
+  DeleteOutlined
 } from "@ant-design/icons";
 import { Dropdown, Menu, message, Modal, Spin, Tooltip} from "antd";
 import moment from "moment";
@@ -20,6 +21,7 @@ import objCopiaProfunda from "../../utils/objCopiaProfunda";
 import { Cores } from "../../variaveis";
 import Mensagem from "../Mensagem/Mensagem";
 import ModalEnviarArquivo from "../ModalEnviarArquivo";
+import ModalExcluirConversa from "../ModalExcluirConversa";
 import {
   BotaoVoltar,
   Conversa,
@@ -81,6 +83,7 @@ export default function ConversaAberta({ socket }) {
   const horaAtual = moment().hours();
   const horarioComercial = horaAtual >= 7 && horaAtual < 21 ? true : false;
   const [modalEnviarArquivo, setModalEnviarArquivo] = useState(false);
+  const [modalExcluirConversa, setModalExcluirConversa] = useState(false);
   const [pdfFromModal, setPdfFromModal] = useState("");
   const [endereco, setEndereco] = useState({});
   const enderecoCompleto = `${endereco.rua}, ${endereco.numero}, ${endereco.complemento}, ${endereco.bairro}, ${endereco.cidade}, ${endereco.estado}, ${endereco.pais}, ${endereco.cep}`;
@@ -233,9 +236,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA1)}
-          value = {TextoA1}
+          value={TextoA1}
         >
-            <b >TextoA1</b>
+          <b >TextoA1</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -246,9 +249,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA2)}
-          value = {TextoA2}
+          value={TextoA2}
         >
-            <b >TextoA2</b>
+          <b >TextoA2</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -259,9 +262,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA3)}
-          value = {TextoA3}
+          value={TextoA3}
         >
-            <b >TextoA3</b>
+          <b >TextoA3</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -272,9 +275,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA4)}
-          value = {TextoA4}
+          value={TextoA4}
         >
-            <b >TextoA4</b>
+          <b >TextoA4</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -285,9 +288,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA5)}
-          value = {TextoA5}
+          value={TextoA5}
         >
-            <b >TextoA5</b>
+          <b >TextoA5</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -298,9 +301,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA6)}
-          value = {TextoA6}
+          value={TextoA6}
         >
-            <b >TextoA6</b>
+          <b >TextoA6</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -311,9 +314,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA7)}
-          value = {TextoA7}
+          value={TextoA7}
         >
-            <b >TextoA7</b>
+          <b >TextoA7</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -324,9 +327,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA8)}
-          value = {TextoA8}
+          value={TextoA8}
         >
-            <b >TextoA8</b>
+          <b >TextoA8</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -337,9 +340,9 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA9)}
-          value = {TextoA9}
+          value={TextoA9}
         >
-            <b >TextoA9</b>
+          <b >TextoA9</b>
         </Button>
       </Menu.Item>
       <Menu.Item>
@@ -350,16 +353,308 @@ export default function ConversaAberta({ socket }) {
           fontSize="1rem"
           height="30px"
           onClick={() => enviaMensagem(null, TextoA10)}
-          value = {TextoA10}
+          value={TextoA10}
         >
-            <b >TextoA10</b>
+          <b >TextoA10</b>
         </Button>
       </Menu.Item>
     </Menu>
   );
 
+  const TextoB1 = "Olá sou a enfermeira, posso te auxiliar em algo0 ?"
+  const TextoB2 = "Olá sou a enfermeira, posso te auxiliar em algo02 ?"
+  const TextoB3 = "Olá sou a enfermeira, posso te auxiliar em algo03 ?"
+  const TextoB4 = "Olá sou a enfermeira, posso te auxiliar em algo04 ?"
+  const TextoB5 = "Olá sou a enfermeira, posso te auxiliar em algo05 ?"
+  const TextoB6 = "Olá sou a enfermeira, posso te auxiliar em algo06 ?"
+  const TextoB7 = "Olá sou a enfermeira, posso te auxiliar em algo07 ?"
+  const TextoB8 = "Olá sou a enfermeira, posso te auxiliar em algo08 ?"
+  const TextoB9 = "Olá sou a enfermeira, posso te auxiliar em algo09 ?"
+  const TextoB10 = "Olá sou a enfermeira, posso te auxiliar em algo010 ?"
+  const menuMensagensBiologix = (
+    <Menu>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB1)}
+          value={TextoB1}
+        >
+          <b >TextoB1</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB2)}
+          value={TextoB2}
+        >
+          <b >TextoB2</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB3)}
+          value={TextoB3}
+        >
+          <b >TextoB3</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB4)}
+          value={TextoB4}
+        >
+          <b >TextoB4</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB5)}
+          value={TextoB5}
+        >
+          <b >TextoB5</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB6)}
+          value={TextoB6}
+        >
+          <b >TextoB6</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB7)}
+          value={TextoB7}
+        >
+          <b >TextoB7</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB8)}
+          value={TextoB8}
+        >
+          <b >TextoB8</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB9)}
+          value={TextoB9}
+        >
+          <b >TextoB9</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoB10)}
+          value={TextoB10}
+        >
+          <b >TextoB10</b>
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
+  const TextoC1 = "Olá sou a enfermeira, posso te auxiliar em algo1 ?"
+  const TextoC2 = "Olá sou a enfermeira, posso te auxiliar em algo22 ?"
+  const TextoC3 = "Olá sou a enfermeira, posso te auxiliar em algo33 ?"
+  const TextoC4 = "Olá sou a enfermeira, posso te auxiliar em algo44 ?"
+  const TextoC5 = "Olá sou a enfermeira, posso te auxiliar em algo55 ?"
+  const TextoC6 = "Olá sou a enfermeira, posso te auxiliar em algo66 ?"
+  const TextoC7 = "Olá sou a enfermeira, posso te auxiliar em algo77 ?"
+  const TextoC8 = "Olá sou a enfermeira, posso te auxiliar em algo88 ?"
+  const TextoC9 = "Olá sou a enfermeira, posso te auxiliar em algo99 ?"
+  const TextoC10 = "Olá sou a enfermeira, posso te auxiliar em algo100 ?"
+  const menuMensagensActigrafia = (
+    <Menu>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC1)}
+          value={TextoC1}
+        >
+          <b >TextoC1</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC2)}
+          value={TextoC2}
+        >
+          <b >TextoC2</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC3)}
+          value={TextoC3}
+        >
+          <b >TextoC3</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC4)}
+          value={TextoC4}
+        >
+          <b >TextoC4</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC5)}
+          value={TextoC5}
+        >
+          <b >TextoC5</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC6)}
+          value={TextoC6}
+        >
+          <b >TextoC6</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC7)}
+          value={TextoC7}
+        >
+          <b >TextoC7</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC8)}
+          value={TextoC8}
+        >
+          <b >TextoC8</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC9)}
+          value={TextoC9}
+        >
+          <b >TextoC9</b>
+        </Button>
+      </Menu.Item>
+      <Menu.Item>
+        <Button
+          backgroundColor="transparent"
+          borderColor="transparent"
+          color={Cores.preto}
+          fontSize="1rem"
+          height="30px"
+          onClick={() => enviaMensagem(null, TextoC10)}
+          value={TextoC10}
+        >
+          <b >TextoC10</b>
+        </Button>
+      </Menu.Item>
+    </Menu>
+  );
   async function fechandoModalEnviarArquivo() {
     setModalEnviarArquivo(false);
+  }
+
+  async function fechandoModalExcluirConversa() {
+    setModalExcluirConversa(false);
   }
 
   useEffect(() => {
@@ -400,7 +695,33 @@ export default function ConversaAberta({ socket }) {
   }else if (conversaSelecionada.tipo === "BIOLOGIX"){
     await enviaMensagem("nenhuma", mensagemConfirmarPagamentoBiologix);
   }
-      //await managerService.MandandoMensagemConfirmarPagamento(id_usuario);
+
+  async function confirmarPagamento(id_paciente, id_usuario) {
+    const formulariosPaciente = await managerService.GetRespostaFormularioIdUsuario(id_paciente);
+    let possuiFormulario = false;
+    let posicao = -1;
+    let texto = inputMensagemConteudo;
+
+    for (const [index, value] of formulariosPaciente.entries()) {
+      if (value.tipo === "exame_actigrafia") {
+        possuiFormulario = true;
+        posicao = index;
+      }
+    }
+
+    if (!possuiFormulario)
+      toast.error("O paciente não possui um formulário desse exame");
+    else if (possuiFormulario && formulariosPaciente[posicao].respostas === null) {
+      toast.error("O paciente não respondeu as perguntas do formulário");
+    }
+    else {
+      await managerService.MandandoMensagemConfirmarPagamento(id_usuario);
+      texto = "Instruções para a realização do exame actigrafia: \n"
+        + "1.- \n"
+        + "2.- \n"
+        + "3.- "
+      enviaMensagem('nenhuma', texto);
+    }
   }
 
   async function finalizarChat() {
@@ -678,13 +999,24 @@ export default function ConversaAberta({ socket }) {
           height="70px"
           width="76px"
         ></img>
-        {conversaSelecionada.tipo === "EXAME" ? (
+        {conversaSelecionada.tipo === "ACTIGRAFIA" || conversaSelecionada.tipo === "BIOLOGIX" ? (
           <NomePessoa>
             {conversaSelecionada?.conversaCom?.nome} - EXAME
           </NomePessoa>
         ) : (
           <NomePessoa>{conversaSelecionada?.conversaCom?.nome}</NomePessoa>
         )}
+        <DeleteOutlined 
+        style={{
+          position: "absolute",
+          left: "82%",
+          fontSize: "40px",
+          color: Cores.lilas[1]
+        }}
+        onClick={() => {
+          setModalExcluirConversa(true);
+        }}
+        />
       </HeaderConversaAberta>
       <CorpoConversaAberta>
         {carregandoConversa ? (
@@ -720,12 +1052,11 @@ export default function ConversaAberta({ socket }) {
               placement={"bottom"}
             >
               <PlusOutlined
-                style={{ fontSize: "27px", color: "{Cores.lilas[1]}" }}
+                style={{ fontSize: "27px", color: "{Cores.lilas[1]}", margin: "0px 0.9rem" }}
               />
             </Dropdown>
           </MenuConversasTipoExame>
         ) : (
-          <>
           <Tooltip placement="bottom" title="Enviar arquivo">
             <Button
               backgroundColor="transparent"
@@ -744,22 +1075,44 @@ export default function ConversaAberta({ socket }) {
               />
             </Button>
           </Tooltip>
-            <Dropdown
-              backgroundColor="transparent"
-              borderColor="transparent"
-              color={Cores.lilas[1]}
-              width="10%"
-              widthres="15%"
-              height="10%"
-              marginTop="0%"
-              overlay={menuMensagens}
-              placement={"bottom"}
-            >
-              <QuestionOutlined 
-                style={{ fontSize: "27px", color: "#434b97", margin: "0px 1rem",marginLeft: "0%" }}
-              />
-            </Dropdown>
-          </>
+        )}
+        {conversaSelecionada.tipo === "BIOLOGIX" ? (
+          <Dropdown
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color={Cores.lilas[1]}
+            width="10%"
+            widthres="15%"
+            height="10%"
+            marginTop="0%"
+            overlay={menuMensagensBiologix}
+            placement={"bottom"}
+          >
+            <QuestionOutlined
+              style={{ fontSize: "27px", color: "{Cores.lilas[1]}", margin: "0px 1rem", marginLeft: "0%" }}
+            />
+          </Dropdown>
+        ) : (
+          <h></h>
+        )}
+        {conversaSelecionada.tipo === "ACTIGRAFIA" ? (
+          <Dropdown
+            backgroundColor="transparent"
+            borderColor="transparent"
+            color={Cores.lilas[1]}
+            width="10%"
+            widthres="15%"
+            height="10%"
+            marginTop="0%"
+            overlay={menuMensagensActigrafia}
+            placement={"bottom"}
+          >
+            <QuestionOutlined
+              style={{ fontSize: "27px", color: "{Cores.lilas[1]}", margin: "0px 1rem", marginLeft: "0%" }}
+            />
+          </Dropdown>
+        ) : (
+          <h></h>
         )}
         <Input
           placeholder="Mensagem"
@@ -817,6 +1170,23 @@ export default function ConversaAberta({ socket }) {
           ref={modalRef}
         />
       </Modal>
+      
+      <Modal
+        visible={modalExcluirConversa}
+        onCancel={fechandoModalExcluirConversa}
+        footer={null}
+        width={"50%"}
+        centered={true}
+        destroyOnClose={true}
+        style={{ maxWidth: "450px", minWidth: "250px" }}
+      >
+        <ModalExcluirConversa
+          fecharModal={() => fechandoModalExcluirConversa()}
+          id={conversaSelecionada.id}
+          ref={modalRef}
+        />
+      </Modal>
+      
     </Conversa>
   );
 }

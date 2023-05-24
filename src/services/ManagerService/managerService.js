@@ -469,6 +469,42 @@ export const CriandoComentario = async (comentario) => {
   return;
 };
 
+export const InicializandoPDF = async (data) => {
+  let pdfIncializado = {}
+
+  await requesterService
+    .inicializarPDF(data)
+    .then((res) => {
+      toast.success('Assinatura iniciada  com sucesso.');
+      pdfIncializado = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
+      return false;
+    });
+  console.log(pdfIncializado);
+  return pdfIncializado;
+};
+export const FinalizandoPDF = async (extensiondata) => {
+  let pdfFinalizado = {}
+  await requesterService
+    .finalizarPDF(extensiondata)
+    .then((res) => {
+      toast.success('Assinatura finalizada com sucesso.');
+      pdfFinalizado = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
+      return false;
+    });
+
+  return pdfFinalizado;
+};
+
+
+
+
+
 export const GetComentario = async () => {
   let dadosComentario = [];
 
@@ -1049,6 +1085,19 @@ export const deletarConversasInativas = async (id_usaurio) => {
   return conversasApagadas;
 };
 
+export const deletarConversa = async (id) => {
+  let conversaApagada = {};
+  await requesterService
+    .deletarConversa(id)
+    .then((res) => {
+      conversaApagada = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return conversaApagada;
+};
+
 export const CriandoMensagem = async (mensagem) => {
   let dadosMensagemCriada = {};
   await requesterService
@@ -1313,7 +1362,7 @@ export const UpdateDadosHomes = async (
   video
 ) => {
   await requesterService
-    .updateDadosHomes(id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video)
+    .updateDadosHomes(id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, video)
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = '/web/editarhome'));
       return false;

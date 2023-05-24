@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   BarraPesquisaChat,
   ImagemPessoa,
@@ -24,6 +24,7 @@ import {
 import * as managerService from '../../services/ManagerService/managerService';
 import { ChatContext } from '../../contexts/ChatContext';
 import objCopiaProfunda from '../../utils/objCopiaProfunda';
+import { redirecionamento, sleep } from "../../utils/sleep";
 
 export default function BarraLateralChat({ carregandoConversas }) {
   const [modalAdicionar, setModalAdicionar] = useState(false);
