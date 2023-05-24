@@ -29,6 +29,10 @@ export const criarConsulta = (consulta) => api.post("/consultas", consulta);
 
 export const criarExame = (exame) => api.post("/exame_marcados", exame);
 
+export const inicializarPDF = (data) => api.post('/inicializar', data);
+
+export const finalizarPDF = (extensiondata) => api.post('/finalizar', extensiondata);
+
 export const updateConsulta = (id_consulta, consulta) =>
   api.put(`/consultas/${id_consulta}`, consulta);
 
@@ -222,6 +226,9 @@ export const updateConversaFinalizada = (id) =>
 export const deletarConversasInativas = (id_usuario) =>
   api.delete(`/conversas/${id_usuario}/usuario`);
 
+export const deletarConversa = (id) =>
+  api.delete(`/conversas/${id}`);
+
 export const criarMensagem = (mensagem) => api.post(`/mensagems`, mensagem);
 
 export const criarMensagemComArquivo = (mensagem) => api.post(`/mensagemsfile`, mensagem);
@@ -274,8 +281,8 @@ export const atualizarSobreMim = (id, dados) =>
 export const deletarSobreMim = (id) => api.delete(`/sobre_mims/${id}`);
 
 
-export const updateDadosHomes = (id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video) =>
-  api.put(`/homes/${id}`, { titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video });
+export const updateDadosHomes = (id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, video) =>
+  api.put(`/homes/${id}`, { titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, video });
 ;
 
 export const requisicaoCarrossel = () =>
