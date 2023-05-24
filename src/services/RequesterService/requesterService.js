@@ -280,6 +280,20 @@ export const atualizarSobreMim = (id, dados) =>
 
 export const deletarSobreMim = (id) => api.delete(`/sobre_mims/${id}`);
 
+export const enviarMensagemComunicadoUrgencia = (id_usuario) =>
+  api.post(`/conversas_whatsapp/comunicado_urgencia`, {
+    id_usuario
+  });
+
+export const enviarMensagemExameMarcado = (id_usuario) =>
+  api.post(`/conversas_whatsapp/exame_marcado`, {
+    id_usuario
+  });
+
+export const enviarMensagemConfirmarPagamento = (id_usuario) =>
+  api.post(`/conversas_whatsapp/confirmar_pagamento`, {
+    id_usuario
+  });
 
 export const updateDadosHomes = (id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, video) =>
   api.put(`/homes/${id}`, { titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, video });

@@ -680,7 +680,8 @@ export default function ConversaAberta({ socket }) {
 
   const verificaHorarioPermitidoParaEnvioDeMensagens = () => {
     const verificaHorarioUsuario =
-      horarioComercial === false && tipoUsuario !== "MASTER" ? false : true;
+    /* horarioComercial === false && tipoUsuario !== "MASTER" ? false : true; */
+    horarioComercial || tipoUsuario === "MASTER"
     setHorarioPermitidoParaEnvioMensagem(verificaHorarioUsuario);
   };
 
@@ -846,7 +847,7 @@ export default function ConversaAberta({ socket }) {
 
     const novaMensagem = {
       ...dados,
-      pertenceAoUsuarioAtual: !horarioPermitidoParaEnvioMensagem,
+      pertenceAoUsuarioAtual: horarioPermitidoParaEnvioMensagem,
     };
 
     if (conversaSelecionada.ativada) {
@@ -943,7 +944,6 @@ export default function ConversaAberta({ socket }) {
       enviarMensagemComInput(e);
     }
   };
-
 
   return (
     <Conversa>
