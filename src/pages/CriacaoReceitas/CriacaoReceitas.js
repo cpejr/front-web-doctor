@@ -239,7 +239,15 @@ form_Metadados.numeroOID = numeroOID;
 form_Metadados.especialidadeOID = especialidadeOID;
 const pdfBase64 = await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita);
 console.log(pdfBase64);
-form_Metadados.documento = pdfBase64;
+const dadosCriacaoPdf = {
+  id: id,
+  NomePaciente:NomePaciente,
+  dataNascimentoPaciente:dataNascimentoPaciente,
+  tituloReceita:tituloReceita,
+  descricaoReceita:descricaoReceita,
+}
+form_Metadados.documento = dadosCriacaoPdf;
+console.log(form_Metadados.documento);
 //formData_FwInicializar.documento = pdfBase64;
 /*const formData = new FormData();
 formData.append('documento', "tenho que por o documento recem criado aqui")*/
