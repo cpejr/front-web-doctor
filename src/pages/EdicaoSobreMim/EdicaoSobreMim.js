@@ -23,9 +23,7 @@ function EdicaoSobreMim() {
 
   async function getSobreMimDados() {
     setCarregando(true)
-    console.log("teste")
     let dados = await managerService.requisicaoSobreMimDados();
-    console.log(dados)
     dados.imagem_um = await managerService.GetArquivoPorChave(dados.imagem_um)
     dados.imagem_dois = await managerService.GetArquivoPorChave(dados.imagem_dois)
     
