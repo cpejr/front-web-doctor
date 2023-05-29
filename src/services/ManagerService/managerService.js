@@ -1303,13 +1303,13 @@ export const requisicaoSobreMimDados = async () => {
   await requesterService
     .requisicaoSobreMimDados()
     .then((res) => {
-      sobreMimDados = res.data[0];
+      sobreMimDados = res.data;
     })
     .catch((error) => {
       requisicaoErro(error);
     });
 
-  return sobreMimDados;
+  return sobreMimDados[0];
 };
 
 export const criarSobreMim = async (dados) => {

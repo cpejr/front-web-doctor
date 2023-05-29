@@ -23,8 +23,12 @@ function EdicaoSobreMim() {
 
   async function getSobreMimDados() {
     setCarregando(true)
-
-    const dados = await managerService.requisicaoSobreMimDados();
+    console.log("teste")
+    let dados = await managerService.requisicaoSobreMimDados();
+    console.log(dados)
+    dados.imagem_um = await managerService.GetArquivoPorChave(dados.imagem_um)
+    dados.imagem_dois = await managerService.GetArquivoPorChave(dados.imagem_dois)
+    
     setSobreMimDados(dados);
     
     setCarregando(false);
@@ -125,7 +129,7 @@ function EdicaoSobreMim() {
         <Titulo>Página sobre mim</Titulo>
           <Inputs onSubmit={handleSubmit}>
             <InputContainer>
-              <InputImagemContainer src={sobreMimDados?.imagem_um?.url}>
+              <InputImagemContainer src={sobreMimDados?.imagem_um}>
                 <InputImagem htmlFor="imagem_um">Alterar Imagem</InputImagem>
                 <input 
                   type="file"
@@ -151,7 +155,7 @@ function EdicaoSobreMim() {
             </InputContainer>
             <Divisor />
             <InputContainer>
-              <InputImagemContainer src={sobreMimDados?.imagem_dois?.url}>
+              <InputImagemContainer src={sobreMimDados?.imagem_dois}>
                 <InputImagem htmlFor="imagem_dois">Alterar Imagem</InputImagem>
                 <input 
                   type="file" 
