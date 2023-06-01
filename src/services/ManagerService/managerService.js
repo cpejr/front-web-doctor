@@ -10,24 +10,27 @@ const sleep = (milliseconds) => {
 };
 
 export const EnviandoImagem = async (file) => {
+  let data = {};
   await requesterService
     .EnviandoImagem(file)
-    .then(() => {
-      return;
+    .then((res) => {
+      data = res.data
     })
     .catch((error) => {
       requisicaoErro(error);
       return false;
     });
 
-  return;
+  return data;
 };
 
 export const EnviandoArquivo = async (file) => {
+  let data = {};
   await requesterService
     .EnviandoArquivo(file)
-    .then(() => {
-      return;
+    .then((res) => {
+      data = res.data
+      return data;
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -1326,9 +1329,9 @@ export const criarSobreMim = async (dados) => {
   return sobreMimDados;
 };
 
-export const atualizarSobreMim = async (id, dados) => {
+export const atualizarSobreMim = async (id, titulo_um, texto_um, titulo_dois, texto_dois, imagem_um, imagem_dois) => {
   await requesterService
-    .atualizarSobreMim(id, dados)
+    .atualizarSobreMim(id, titulo_um, texto_um, titulo_dois, texto_dois, imagem_um, imagem_dois)
     .then(() => {
       toast.success('Dados da página "Sobre mim" atualizados com sucesso!');
     })

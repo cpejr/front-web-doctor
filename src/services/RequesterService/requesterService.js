@@ -271,12 +271,8 @@ export const criarSobreMim = (dados) =>
     }
   });
 
-export const atualizarSobreMim = (id, dados) => 
-  api.put(`/sobremims/${id}`, dados, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    }
-  });
+export const atualizarSobreMim = (id, titulo_um, texto_um, titulo_dois, texto_dois, imagem_um, imagem_dois) => 
+  api.put(`/sobremims/${id}`, {titulo_um, texto_um, titulo_dois, texto_dois, imagem_um, imagem_dois});
 
 export const deletarSobreMim = (id) => api.delete(`/sobre_mims/${id}`);
 
