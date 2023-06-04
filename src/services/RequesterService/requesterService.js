@@ -271,8 +271,8 @@ export const criarSobreMim = (dados) =>
     }
   });
 
-export const atualizarSobreMim = (id, titulo_um, texto_um, titulo_dois, texto_dois, imagem_um, imagem_dois) => 
-  api.put(`/sobremims/${id}`, {titulo_um, texto_um, titulo_dois, texto_dois, imagem_um, imagem_dois});
+export const atualizarSobreMim = (id, titulo_um, texto_um, titulo_dois, texto_dois) => 
+  api.put(`/sobremims/${id}`, {titulo_um, texto_um, titulo_dois, texto_dois});
 
 export const deletarSobreMim = (id) => api.delete(`/sobre_mims/${id}`);
 
@@ -307,3 +307,13 @@ export const updateImagemCarrossel = (id, base64) =>
   api.put(`/homesImagem/${id}`, {
     file: base64
   } );
+
+export const updateImagemUmSobreMim = (id, base64) =>
+api.put(`/sobremims/imagemUm/${id}`, {
+  file: base64
+} );
+
+export const updateImagemDoisSobreMim = (id, base64) =>
+api.put(`/sobremims/imagemDois/${id}`, {
+  file: base64
+} );

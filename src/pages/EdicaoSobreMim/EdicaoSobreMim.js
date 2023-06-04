@@ -9,6 +9,7 @@ import {
   InputTitulo, Titulo
 } from "./Styles";
 import { useHistory } from "react-router-dom";
+import { sleep } from "../../utils/sleep";
 
 function EdicaoSobreMim() {
   const history = useHistory();
@@ -29,13 +30,16 @@ function EdicaoSobreMim() {
 
   async function getSobreMimDados() {
     setCarregando(true)
-    let imagens = await managerService.requisicaoSobreMimDados();
     let dados = await managerService.requisicaoSobreMimDados();
-    imagens.imagem_um = await managerService.GetArquivoPorChave(dados.imagem_um)
-    imagens.imagem_dois = await managerService.GetArquivoPorChave(dados.imagem_dois)
+    let imagensPlaceholder = {
+      imagem_um: "0",
+      imagem_dois: "0"
+    }
+    imagensPlaceholder.imagem_um = await managerService.GetArquivoPorChave(dados.imagem_um)
+    imagensPlaceholder.imagem_dois = await managerService.GetArquivoPorChave(dados.imagem_dois)
     
     setSobreMimDados(dados);
-    setImagens(imagens);
+    setImagens(imagensPlaceholder);
     setCarregando(false);
   }
   useEffect(() => {
@@ -65,6 +69,7 @@ function EdicaoSobreMim() {
       toast.error("Arquivo muito grande!")
       return false
     }
+
     return true
   }
   
@@ -74,19 +79,13 @@ function EdicaoSobreMim() {
 
     if (houveAlteracao === false) {toast.error("Altere algum dado!"); return}
     setCarregando(true);
-    let imagem_um = sobreMimDados.imagem_um
-    let imagem_dois = sobreMimDados.imagem_dois
     if (imagemumAlterada) {
-       const chave = await managerService.EnviandoImagem(imageumUrl);
-       console.log(chave)
-       imagem_um = chave
+        await managerService.updateImagemUmSobreMim(sobreMimDados.id, imageumUrl);
       }
     if (imagemdoisAlterada) {
-      const chave = await managerService.EnviandoImagem(imagedoisUrl);
-      console.log(chave)
-      imagem_dois = chave.data
+       await managerService.updateImagemDoisSobreMim(sobreMimDados.id, imagedoisUrl);
       }
-    await managerService.atualizarSobreMim(sobreMimDados.id, sobreMimDados.titulo_um,sobreMimDados.texto_um,sobreMimDados.titulo_dois,sobreMimDados.texto_dois,imagem_um,imagem_dois);
+    await managerService.atualizarSobreMim(sobreMimDados.id, sobreMimDados.titulo_um,sobreMimDados.texto_um,sobreMimDados.titulo_dois,sobreMimDados.texto_dois);
     setCarregando(false);
     history.push("/web/home")
   };
@@ -126,29 +125,31 @@ function EdicaoSobreMim() {
     };
     getBase64(info.file.originFileObj, (url) => {
       setImageumUrl(url);
-      
+      setHouveAlteracao(true)
+      setImagemumAlterada(true);
+      ima.imagem_um = url;
+      ima.imagem_dois = imagens.imagem_dois
+      setImagens(ima);
     })
     
-    ima.imagem_um = imageumUrl;
-    ima.imagem_dois = imagens.imagem_dois
-    setHouveAlteracao(true)
-    setImagemumAlterada(true);
-    setImagens(ima);
+    
   }
   async function handleChangeDois(info) {
-    getBase64(info.file.originFileObj, (url) => {
-      setImagedoisUrl(url);
-      
-    })
     let ima = {
       imagem_um: "0",
       imagem_dois: "0",
     };
-    ima.imagem_um = imagens.imagem_um;
-    ima.imagem_dois = imagedoisUrl;
-    setHouveAlteracao(true)
-    setImagemdoisAlterada(true);
-    setImagens(ima);
+    getBase64(info.file.originFileObj, (url) => {
+      setImagedoisUrl(url);
+      setHouveAlteracao(true)
+      setImagemdoisAlterada(true);
+      ima.imagem_um = imagens.imagem_um;
+      ima.imagem_dois = url;
+      setImagens(ima);
+    })
+    
+    
+    
   }
 
    const uploadButton = (

@@ -1329,9 +1329,9 @@ export const criarSobreMim = async (dados) => {
   return sobreMimDados;
 };
 
-export const atualizarSobreMim = async (id, titulo_um, texto_um, titulo_dois, texto_dois, imagem_um, imagem_dois) => {
+export const atualizarSobreMim = async (id, titulo_um, texto_um, titulo_dois, texto_dois) => {
   await requesterService
-    .atualizarSobreMim(id, titulo_um, texto_um, titulo_dois, texto_dois, imagem_um, imagem_dois)
+    .atualizarSobreMim(id, titulo_um, texto_um, titulo_dois, texto_dois)
     .then(() => {
       toast.success('Dados da página "Sobre mim" atualizados com sucesso!');
     })
@@ -1416,3 +1416,29 @@ export const MandandoMensagemExameMarcado = async (id_usuario) => {
       requisicaoErro(error);
     })
   }
+
+export const updateImagemUmSobreMim = async (id, file) => {
+    try {
+      const res = await requesterService
+        .updateImagemUmSobreMim(id, file)
+      return res;
+  
+    } catch (error) {
+      requisicaoErro(error);
+      return;
+    };
+  
+  };
+
+  export const updateImagemDoisSobreMim = async (id, file) => {
+    try {
+      const res = await requesterService
+        .updateImagemDoisSobreMim(id, file)
+      return res;
+  
+    } catch (error) {
+      requisicaoErro(error);
+      return;
+    };
+  
+  };
