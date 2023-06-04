@@ -994,7 +994,7 @@ export default function ConversaAberta({ socket }) {
         ></img>
         {conversaSelecionada.tipo === "ACTIGRAFIA" || conversaSelecionada.tipo === "BIOLOGIX" ? (
           <NomePessoa>
-            {conversaSelecionada?.conversaCom?.nome} - EXAME
+            {conversaSelecionada?.conversaCom?.nome} - {conversaSelecionada.tipo}
           </NomePessoa>
         ) : (
           <NomePessoa>{conversaSelecionada?.conversaCom?.nome}</NomePessoa>
