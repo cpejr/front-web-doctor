@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from '../../variaveis';
 import {
-  Botao, BotaoContainer, Container, Divisor, EdicaoContainer, InputAreaTexto, InputContainer, InputImagem, InputImagemContainer, Inputs, InputTextoContainer,
+  Botao, BotaoContainer, CaixaUpload, Container, Divisor, EdicaoContainer, InputAreaTexto, InputContainer, InputImagem, InputImagemContainer, Inputs, InputTextoContainer,
   InputTitulo, Titulo
 } from "./Styles";
 import { useHistory } from "react-router-dom";
@@ -77,7 +77,7 @@ function EdicaoSobreMim() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (houveAlteracao === false) {toast.error("Altere algum dado!"); return}
+    if (houveAlteracao === false) {toast.warning("Altere algum dado!"); return}
     setCarregando(true);
     if (imagemumAlterada) {
         await managerService.updateImagemUmSobreMim(sobreMimDados.id, imageumUrl);
@@ -152,18 +152,6 @@ function EdicaoSobreMim() {
     
   }
 
-   const uploadButton = (
-    <div>
-      {carregando ? <LoadingOutlined /> : <PlusOutlined />}
-      <div
-        style={{
-          marginTop: 8,
-        }}
-      >
-        Upload
-      </div>
-    </div>
-  );
 
   return (
     <Container>
@@ -172,6 +160,7 @@ function EdicaoSobreMim() {
           <Inputs onSubmit={handleSubmit}>
             <InputContainer>
               <InputImagemContainer src={imagens?.imagem_um}>
+                <CaixaUpload>
                 <Upload
                   // nome de preferência
                   name="imagem_um"
@@ -188,10 +177,11 @@ function EdicaoSobreMim() {
                   // chama a função de handleChange
                   onChange={handleChangeUm}
                 >
-                  {
-                    uploadButton
-                  }
+                  
+                    Altere Imagem
+                  
                 </Upload>
+                </CaixaUpload>
               </InputImagemContainer>
               <InputTextoContainer>
                 <InputTitulo 
@@ -211,6 +201,7 @@ function EdicaoSobreMim() {
             <Divisor />
             <InputContainer>
               <InputImagemContainer src={imagens?.imagem_dois}>
+              <CaixaUpload>
                 <Upload
                   // nome de preferência
                   name="imagem_dois"
@@ -227,21 +218,23 @@ function EdicaoSobreMim() {
                   // chama a função de handleChange
                   onChange={handleChangeDois}
                 >
-                  {
-                    uploadButton
-                  }
+                  Altere Imagem
                 </Upload>
+              
+              </CaixaUpload>
               </InputImagemContainer>
               <InputTextoContainer>
                 <InputTitulo 
                   name="titulo_dois" 
                   ref={tituloDoisRef} 
                   defaultValue={sobreMimDados?.titulo_dois} 
+                  onChange={preenchendoDados}
                 />
                 <InputAreaTexto
                   name="texto_dois"
                   ref={textoDoisRef}
                   defaultValue={sobreMimDados?.texto_dois}
+                  onChange={preenchendoDados}
                 />
               </InputTextoContainer>
               <BotaoContainer>
