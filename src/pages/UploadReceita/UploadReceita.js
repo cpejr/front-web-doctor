@@ -129,6 +129,7 @@ function UploadReceita() {
     setCarregandoCriacao(true);
     const id = estado.id_usuario;
     const string = file.replace("data:application/pdf;base64,", "");
+    console.log(string);
     await managerService.CriandoReceitaComArquivo(
       id,
       tituloReceita,

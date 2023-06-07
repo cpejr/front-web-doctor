@@ -237,8 +237,7 @@ form_Metadados.tipoDoc = tipoDoc;
 form_Metadados.UFOID = UFOID;
 form_Metadados.numeroOID = numeroOID;
 form_Metadados.especialidadeOID = especialidadeOID;
-const pdfBase64 = await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita);
-console.log(pdfBase64);
+
 const dadosCriacaoPdf = {
   id: id,
   NomePaciente:NomePaciente,
@@ -248,10 +247,7 @@ const dadosCriacaoPdf = {
 }
 form_Metadados.documento = dadosCriacaoPdf;
 console.log(form_Metadados.documento);
-//formData_FwInicializar.documento = pdfBase64;
-/*const formData = new FormData();
-formData.append('documento', "tenho que por o documento recem criado aqui")*/
-//formData_FwInicializar.documento = PdfTeste; O documento precisa de multipart file
+
 formData_FwInicializar.metadados = form_Metadados;
 
    const resposta = await managerService.InicializandoPDF(formData_FwInicializar);
@@ -259,16 +255,25 @@ formData_FwInicializar.metadados = form_Metadados;
    const respostafinalizar =  await window.BryExtension.sign(certificados[0].certId, JSON.stringify(resposta));
   
 
-   //const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
+   const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
+   
+   console.log(respFinicializar.PDF[0]);
+   console.log(id);
+   console.log(tituloReceita);
+   await managerService.CriandoReceitaComArquivo(
+    id,
+    tituloReceita,
+    "receita",
+    respFinicializar.PDF[0],
+    {
+      mensagemSucesso: "Receita criada com sucesso",
+      tempo: 1500,
+      onClose: () => {
+        history.push("/web/areareceitas");
+      },
+    }
+  );
 
-
-/*	await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
-		mensagemSucesso: "Receita criada com sucesso",
-		tempo: 1500,
-		onClose: () => {
-			history.push("/web/areareceitas");
-		},
-	});*/
 
 	setCarregandoCriacao(false);
 }
