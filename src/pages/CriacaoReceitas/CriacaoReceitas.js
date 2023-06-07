@@ -421,8 +421,8 @@ formData_FwInicializar.metadados = form_Metadados;
 							name="assinatura"
 							onChange={preenchendoDados}
 						>
-							<option value="">
-								Tipo da Assinatura
+              <option value="" hidden>
+                Tipo da Assinatura
 							</option>
 							<option value="sem">
 								Sem Assinatura
