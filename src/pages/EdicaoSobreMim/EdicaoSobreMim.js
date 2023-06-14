@@ -1,14 +1,15 @@
-import { LoadingOutlined } from '@ant-design/icons';
-import { Spin } from 'antd';
+import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
+import { Spin, Upload } from 'antd';
 import React, { useEffect, useRef, useState} from "react";
 import { toast } from 'react-toastify';
 import * as managerService from "../../services/ManagerService/managerService";
 import { Cores } from '../../variaveis';
 import {
-  Botao, BotaoContainer, Container, Divisor, EdicaoContainer, InputAreaTexto, InputContainer, InputImagem, InputImagemContainer, Inputs, InputTextoContainer,
+  Botao, BotaoContainer, CaixaUpload, Container, Divisor, EdicaoContainer, InputAreaTexto, InputContainer, InputImagem, InputImagemContainer, Inputs, InputTextoContainer,
   InputTitulo, Titulo
 } from "./Styles";
 import { useHistory } from "react-router-dom";
+import { sleep } from "../../utils/sleep";
 
 function EdicaoSobreMim() {
   const history = useHistory();
@@ -20,18 +21,37 @@ function EdicaoSobreMim() {
   const tituloDoisRef = useRef(null);
   const textoDoisRef = useRef(null);
   const imagemDoisRef = useRef(null);
+  const [houveAlteracao, setHouveAlteracao] = useState(false);
+  const [imagens, setImagens] = useState()
+  const [imageumUrl, setImageumUrl] = useState()
+  const [imagedoisUrl, setImagedoisUrl] = useState()
+  const [imagemumAlterada, setImagemumAlterada] = useState(false)
+  const [imagemdoisAlterada, setImagemdoisAlterada] = useState(false)
 
   async function getSobreMimDados() {
     setCarregando(true)
-
-    const dados = await managerService.requisicaoSobreMimDados();
-    setSobreMimDados(dados);
+    let dados = await managerService.requisicaoSobreMimDados();
+    let imagensPlaceholder = {
+      imagem_um: "0",
+      imagem_dois: "0"
+    }
+    imagensPlaceholder.imagem_um = await managerService.GetArquivoPorChave(dados.imagem_um)
+    imagensPlaceholder.imagem_dois = await managerService.GetArquivoPorChave(dados.imagem_dois)
     
+    setSobreMimDados(dados);
+    setImagens(imagensPlaceholder);
     setCarregando(false);
   }
   useEffect(() => {
     getSobreMimDados();
   }, [])
+
+  const getBase64 = (img, callback) => {
+    const reader = new FileReader();
+    console.log(reader)
+    reader.addEventListener("load", () => callback(reader.result));
+    reader.readAsDataURL(img);
+  };
 
   const imagemEhValida = (file) => {
     const tiposValidos = ["jpg", "gif", "png", "jpeg", "pjpeg"];
@@ -52,49 +72,24 @@ function EdicaoSobreMim() {
 
     return true
   }
-  const imagemOnChange = (e) => {
-    if (!e.target.files.length) return
-      
-    const nome = e.target.name;
-    const file = e.target.files[0];
-    const ehImagemUm = nome === "imagem_um";
-
-    if (!imagemEhValida(file)) {
-      ehImagemUm
-        ? imagemUmRef.current.value = null 
-        : imagemDoisRef.current.value = null
-      
-      return
-    }
-
-    const url = URL.createObjectURL(file);
-    const novaImagem = ehImagemUm
-      ? { imagem_um: { url } } 
-      : { imagem_dois: { url } }
-
-    setSobreMimDados((prev) => ({ ...prev, ...novaImagem }))
-  }
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const dados = new FormData(e.target);
-    const formDados = Object.fromEntries(dados.entries());
-
-    if (!formDados.imagem_um?.size) dados.delete("imagem_um");
-    if (!formDados.imagem_dois?.size) dados.delete("imagem_dois");
-
-    delete formDados.imagem_um;
-    delete formDados.imagem_dois;
-
-    const id = sobreMimDados.id;
-
+    if (houveAlteracao === false) {toast.warning("Altere algum dado!"); return}
     setCarregando(true);
-    await managerService.atualizarSobreMim(id, dados);
-    setSobreMimDados((prev) => ({ ...prev, ...formDados }));
+    if (imagemumAlterada) {
+        await managerService.updateImagemUmSobreMim(sobreMimDados.id, imageumUrl);
+      }
+    if (imagemdoisAlterada) {
+       await managerService.updateImagemDoisSobreMim(sobreMimDados.id, imagedoisUrl);
+      }
+    await managerService.atualizarSobreMim(sobreMimDados.id, sobreMimDados.titulo_um,sobreMimDados.texto_um,sobreMimDados.titulo_dois,sobreMimDados.texto_dois);
     setCarregando(false);
     history.push("/web/home")
   };
+
   const handleCancelar = () => {
     getSobreMimDados();
 
@@ -118,6 +113,45 @@ function EdicaoSobreMim() {
       }}
     />
   )
+  function preenchendoDados(e) {
+    const { value, name } = e.target;
+    setSobreMimDados({ ...sobreMimDados, [name]: value });
+    setHouveAlteracao(true);
+  }
+  async function handleChangeUm(info) {
+    let ima = {
+      imagem_um: "0",
+      imagem_dois: "0",
+    };
+    getBase64(info.file.originFileObj, (url) => {
+      setImageumUrl(url);
+      setHouveAlteracao(true)
+      setImagemumAlterada(true);
+      ima.imagem_um = url;
+      ima.imagem_dois = imagens.imagem_dois
+      setImagens(ima);
+    })
+    
+    
+  }
+  async function handleChangeDois(info) {
+    let ima = {
+      imagem_um: "0",
+      imagem_dois: "0",
+    };
+    getBase64(info.file.originFileObj, (url) => {
+      setImagedoisUrl(url);
+      setHouveAlteracao(true)
+      setImagemdoisAlterada(true);
+      ima.imagem_um = imagens.imagem_um;
+      ima.imagem_dois = url;
+      setImagens(ima);
+    })
+    
+    
+    
+  }
+
 
   return (
     <Container>
@@ -125,53 +159,82 @@ function EdicaoSobreMim() {
         <Titulo>Página sobre mim</Titulo>
           <Inputs onSubmit={handleSubmit}>
             <InputContainer>
-              <InputImagemContainer src={sobreMimDados?.imagem_um?.url}>
-                <InputImagem htmlFor="imagem_um">Alterar Imagem</InputImagem>
-                <input 
-                  type="file"
+              <InputImagemContainer src={imagens?.imagem_um}>
+                <CaixaUpload>
+                <Upload
+                  // nome de preferência
                   name="imagem_um"
-                  id="imagem_um"
-                  ref={imagemUmRef}
-                  onChange={imagemOnChange}
-                  style={{ display: "none" }} 
-                />
+                  // como mostrar as imagens já enviadas, mas não queremos mostrar no nosso programa
+                  listType="picture-card"
+                  // nome de preferência
+                  className="avatar-uploader"
+                  // se queremos mostrar os itens já enviados
+                  showUploadList={false}
+                  // antes tinha a propriedade action, que redirecionava, substituímos por essa para funcionar
+                  customRequest={() => {}}
+                  // chama a função de beforeUpload
+                  beforeUpload={imagemEhValida}
+                  // chama a função de handleChange
+                  onChange={handleChangeUm}
+                >
+                  
+                    Altere Imagem
+                  
+                </Upload>
+                </CaixaUpload>
               </InputImagemContainer>
               <InputTextoContainer>
                 <InputTitulo 
                   name="titulo_um" 
                   ref={tituloUmRef} 
-                  defaultValue={sobreMimDados?.titulo_um} 
+                  value={sobreMimDados?.titulo_um} 
+                  onChange={preenchendoDados}
                 />
                 <InputAreaTexto
                   name="texto_um"
                   ref={textoUmRef}
-                  defaultValue={sobreMimDados?.texto_um}
+                  value={sobreMimDados?.texto_um}
+                  onChange={preenchendoDados}
                 />
               </InputTextoContainer>
             </InputContainer>
             <Divisor />
             <InputContainer>
-              <InputImagemContainer src={sobreMimDados?.imagem_dois?.url}>
-                <InputImagem htmlFor="imagem_dois">Alterar Imagem</InputImagem>
-                <input 
-                  type="file" 
-                  name="imagem_dois" 
-                  id="imagem_dois"
-                  ref={imagemDoisRef}
-                  onChange={imagemOnChange}
-                  style={{ display: "none" }} 
-                />
+              <InputImagemContainer src={imagens?.imagem_dois}>
+              <CaixaUpload>
+                <Upload
+                  // nome de preferência
+                  name="imagem_dois"
+                  // como mostrar as imagens já enviadas, mas não queremos mostrar no nosso programa
+                  listType="picture-card"
+                  // nome de preferência
+                  className="avatar-uploader"
+                  // se queremos mostrar os itens já enviados
+                  showUploadList={false}
+                  // antes tinha a propriedade action, que redirecionava, substituímos por essa para funcionar
+                  customRequest={() => {}}
+                  // chama a função de beforeUpload
+                  beforeUpload={imagemEhValida}
+                  // chama a função de handleChange
+                  onChange={handleChangeDois}
+                >
+                  Altere Imagem
+                </Upload>
+              
+              </CaixaUpload>
               </InputImagemContainer>
               <InputTextoContainer>
                 <InputTitulo 
                   name="titulo_dois" 
                   ref={tituloDoisRef} 
                   defaultValue={sobreMimDados?.titulo_dois} 
+                  onChange={preenchendoDados}
                 />
                 <InputAreaTexto
                   name="texto_dois"
                   ref={textoDoisRef}
                   defaultValue={sobreMimDados?.texto_dois}
+                  onChange={preenchendoDados}
                 />
               </InputTextoContainer>
               <BotaoContainer>
