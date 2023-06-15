@@ -104,7 +104,6 @@ function CriacaoReceitas() {
 	const history = useHistory();
 
     useEffect(() => {
-		// SE A EXTENSAO TIVER INSTALADA, PEGA OS CERTIFICADOS INSTALADOS DO CLIENTE
 		if (extensaoInstalada) {
 		  window.BryExtension.listCertificates().then((certificados) => {
 			certificados.forEach(certificado => {
@@ -224,7 +223,6 @@ function CriacaoReceitas() {
       setCarregandoCriacao(false);
       return;
     }
-	//formData_FwInicializar["metadados"] = form_Metadados;
 	let formData_FwInicializar = {  "certificado": certificados[0].certificateData
 };
 let UFOID = "2.16.76.1.4.2.2.2";
@@ -246,7 +244,6 @@ const dadosCriacaoPdf = {
   descricaoReceita:descricaoReceita,
 }
 form_Metadados.documento = dadosCriacaoPdf;
-console.log(form_Metadados.documento);
 
 formData_FwInicializar.metadados = form_Metadados;
 
@@ -257,9 +254,7 @@ formData_FwInicializar.metadados = form_Metadados;
 
    const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
    
-   console.log(respFinicializar.PDF[0]);
-   console.log(id);
-   console.log(tituloReceita);
+   
    await managerService.CriandoReceitaComArquivo(
     id,
     tituloReceita,
