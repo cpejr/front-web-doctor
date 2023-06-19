@@ -482,7 +482,6 @@ export const InicializandoPDF = async (data) => {
       requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
       return false;
     });
-  console.log(pdfIncializado);
   return pdfIncializado;
 };
 export const FinalizandoPDF = async (extensiondata) => {
@@ -1031,7 +1030,6 @@ export const MandandoMensagemConfirmarPagamento = async (id_usuario, Secretaria)
     })
 }
 
-
 export const GetConversasUsuario = async (id_usuario) => {
   let dadosConversas = {};
   await requesterService
@@ -1277,12 +1275,9 @@ export const GetHomes = async () => {
 
 export const enviarArquivoMensagem = async (file) => {
 
-  console.log(file);
   let formData = new FormData();
-  console.log(file.file.originFileObj);
   formData.append('file', file.file.originFileObj);
 
-  console.log(formData.get('file'));
   let id;
   await requesterService
     .enviarArquivoMensagem(formData)

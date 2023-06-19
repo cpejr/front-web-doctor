@@ -76,8 +76,6 @@ function CriacaoFormulario() {
       setVisualizacao(true)
     else
       setVisualizacao(false)
-
-    console.log(visualizar)
   }
 
   async function requisicaoFormularios() {
@@ -86,8 +84,6 @@ function CriacaoFormulario() {
     if (!estado.urgencia) errors.urgencia = true;
     if (!estado.titulo) errors.titulo = true;
     setCamposVazios({ ...camposVazios, ...errors });
-    console.log(referenciaInputNulos)
-    console.log(camposVazios)
     if (_.isEqual(camposVazios, referenciaInputNulos)) {
       if (campoPerguntas === false) {
         toast.warn('Adicione alguma pergunta.');

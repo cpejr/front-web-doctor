@@ -156,9 +156,7 @@ function EdicaoIndicacoesESugestoes(props) {
   }
   async function pegandoDados() {
     setCarregando(true);
-    console.log(idIndicado);
     const resposta = await managerService.GetMedicosIndicadosPorID(idIndicado);
-    console.log(resposta.nome);
     setMedicosIndicados(resposta);
     setCarregando(false);
   }

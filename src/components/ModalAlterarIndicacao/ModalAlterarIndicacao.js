@@ -97,7 +97,6 @@ function ModalAlterarIndicacao(props) {
   async function alterar(e) {
     e.preventDefault();
     
-    console.log(nenhumDadoEscolhido);
     if(nenhumMedicoSelecionado === false){
       toast.warn("Selecione algum um médico para alterar seus dados");
       return;
