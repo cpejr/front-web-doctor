@@ -163,7 +163,9 @@ function CriacaoFormulario() {
           width='100%'
           marginBottom="2%"
         >
-          <option value=''>Urgência</option>
+          <option value="" hidden>
+            Urgência
+					</option>
           <option value='1' borderColor={Cores.azul}>
             1
           </option>
