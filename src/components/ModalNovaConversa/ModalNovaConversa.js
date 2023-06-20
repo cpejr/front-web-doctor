@@ -53,23 +53,25 @@ function ModalNovaConversa({ setModalAdicionar }) {
 
     async function pegandoPacientes() {
       setCarregando(true);
-
+      
       const dados = await managerService.GetDadosPessoais();
+
       const conversasUsuariosIds = conversas.map(
         ({ conversaCom }) => conversaCom.id
-      );
+        );
 
-      const usuarios = dados.filter(
-        (usuario) =>
+        
+        const usuarios = dados.filter(
+          (usuario) =>
           !conversasUsuariosIds.includes(usuario.id) && usuario.id !== usuarioId
-      );
-
-      if (componenteEstaMontadoRef.current) {
-        setUsuarios(usuarios);
-        setCarregando(false);
-      }
-    }
-
+          );
+          
+          if (componenteEstaMontadoRef.current) {
+            setUsuarios(usuarios);
+            setCarregando(false);
+          }
+        }
+        
     pegandoPacientes();
 
     return () => (componenteEstaMontadoRef.current = false);

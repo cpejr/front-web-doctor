@@ -691,12 +691,31 @@ export default function ConversaAberta({ socket }) {
 
 
   async function confirmarPagamento(id_paciente, id_usuario) {
-    if (conversaSelecionada.tipo === "ACTIGRAFIA") {
-      await enviaMensagem("nenhuma", mensagemConfirmarPagamentoActigrafia);
-    } else if (conversaSelecionada.tipo === "BIOLOGIX") {
-      await enviaMensagem("nenhuma", mensagemConfirmarPagamentoBiologix);
+    const formulariosPaciente = await managerService.GetRespostaFormularioIdUsuario(id_paciente);
+    let possuiFormulario = false;
+    let posicao = -1;
+    let texto = inputMensagemConteudo;
+    for (const [index, value] of formulariosPaciente.entries()) {
+      if (value.tipo === "exame_actigrafia") {
+        possuiFormulario = true;
+        posicao = index;
+      }
     }
-    await managerService.MandandoMensagemConfirmarPagamento(id_usuario);
+
+    if (!possuiFormulario)
+      toast.error("O paciente não possui um formulário desse exame");
+    else if (possuiFormulario && formulariosPaciente[posicao].respostas === null) {
+      toast.error("O paciente não respondeu as perguntas do formulário");
+    }
+    else {
+      await managerService.MandandoMensagemConfirmarPagamento(id_paciente, id_usuario)
+      await managerService.MandandoMensagemExameMarcado(id_paciente)
+      texto = "Instruções para a realização do exame actigrafia: \n"
+      + "1.- \n"
+      + "2.- \n"
+      + "3.- "
+      enviaMensagem('nenhuma', texto);
+    }
   }
 
 
@@ -976,7 +995,7 @@ export default function ConversaAberta({ socket }) {
         ></img>
         {conversaSelecionada.tipo === "ACTIGRAFIA" || conversaSelecionada.tipo === "BIOLOGIX" ? (
           <NomePessoa>
-            {conversaSelecionada?.conversaCom?.nome} - EXAME
+            {conversaSelecionada?.conversaCom?.nome} - {conversaSelecionada.tipo}
           </NomePessoa>
         ) : (
           <NomePessoa>{conversaSelecionada?.conversaCom?.nome}</NomePessoa>
