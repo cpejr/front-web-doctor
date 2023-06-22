@@ -64,7 +64,7 @@ const ModalEnviarArquivo = forwardRef((props, ref) => {
       setCarregandoDeletar(true);
       console.log(file);
       const res = await managerService.enviarArquivoMensagem(file);
-      /* setUrlArquivo(res); */
+      setUrlArquivo(res);
 
       console.log(file);
       props.pegandoDados();
