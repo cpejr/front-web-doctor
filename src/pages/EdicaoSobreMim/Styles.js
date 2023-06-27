@@ -263,3 +263,24 @@ const cancelarBotaoStyle = css`
   color: black;
 
 `
+
+export const CaixaUpload = styled.div`
+.ant-upload{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100% ;
+  width: 100% ;
+  background-color:${Cores.azulClaro};
+  border-radius: 3px;
+  border-width: 2px ;
+  border-color:${Cores.preto};
+  color:${Cores.preto};
+  font-size: 17px ;
+  
+
+  @media (max-width: 950px) {
+    font-size: 0.9em;
+  }
+}
+`;

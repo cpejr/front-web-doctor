@@ -29,6 +29,10 @@ export const criarConsulta = (consulta) => api.post("/consultas", consulta);
 
 export const criarExame = (exame) => api.post("/exame_marcados", exame);
 
+export const inicializarPDF = (data) => api.post('/inicializar', data);
+
+export const finalizarPDF = (extensiondata) => api.post('/finalizar', extensiondata);
+
 export const updateConsulta = (id_consulta, consulta) =>
   api.put(`/consultas/${id_consulta}`, consulta);
 
@@ -222,6 +226,9 @@ export const updateConversaFinalizada = (id) =>
 export const deletarConversasInativas = (id_usuario) =>
   api.delete(`/conversas/${id_usuario}/usuario`);
 
+export const deletarConversa = (id) =>
+  api.delete(`/conversas/${id}`);
+
 export const criarMensagem = (mensagem) => api.post(`/mensagems`, mensagem);
 
 export const criarMensagemComArquivo = (mensagem) => api.post(`/mensagemsfile`, mensagem);
@@ -266,18 +273,28 @@ export const criarSobreMim = (dados) =>
     }
   });
 
-export const atualizarSobreMim = (id, dados) =>
-  api.put(`/sobremims/${id}`, dados, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    }
-  });
+export const atualizarSobreMim = (id, titulo_um, texto_um, titulo_dois, texto_dois) => 
+  api.put(`/sobremims/${id}`, {titulo_um, texto_um, titulo_dois, texto_dois});
 
 export const deletarSobreMim = (id) => api.delete(`/sobre_mims/${id}`);
 
+export const enviarMensagemComunicadoUrgencia = (id_usuario) =>
+  api.post(`/conversas_whatsapp/comunicado_urgencia`, {
+    id_usuario
+  });
 
-export const updateDadosHomes = (id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video) =>
-  api.put(`/homes/${id}`, { titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video });
+export const enviarMensagemExameMarcado = (id_usuario) =>
+  api.post(`/conversas_whatsapp/exame_marcado`, {
+    id_usuario
+  });
+
+export const enviarMensagemConfirmarPagamento = (id_usuario) =>
+  api.post(`/conversas_whatsapp/confirmar_pagamento`, {
+    id_usuario
+  });
+
+export const updateDadosHomes = (id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, video) =>
+  api.put(`/homes/${id}`, { titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, video });
 ;
 
 export const requisicaoCarrossel = () =>
@@ -292,3 +309,13 @@ export const updateImagemHomes = (id, base64) =>
   api.put(`/homesImagem/${id}`, {
     file: base64
   });
+
+export const updateImagemUmSobreMim = (id, base64) =>
+api.put(`/sobremims/imagemUm/${id}`, {
+  file: base64
+} );
+
+export const updateImagemDoisSobreMim = (id, base64) =>
+api.put(`/sobremims/imagemDois/${id}`, {
+  file: base64
+} );

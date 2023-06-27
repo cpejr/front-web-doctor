@@ -10,24 +10,27 @@ const sleep = (milliseconds) => {
 };
 
 export const EnviandoImagem = async (file) => {
+  let data = {};
   await requesterService
     .EnviandoImagem(file)
-    .then(() => {
-      return;
+    .then((res) => {
+      data = res.data
     })
     .catch((error) => {
       requisicaoErro(error);
       return false;
     });
 
-  return;
+  return data;
 };
 
 export const EnviandoArquivo = async (file) => {
+  let data = {};
   await requesterService
     .EnviandoArquivo(file)
-    .then(() => {
-      return;
+    .then((res) => {
+      data = res.data
+      return data;
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -468,6 +471,42 @@ export const CriandoComentario = async (comentario) => {
 
   return;
 };
+
+export const InicializandoPDF = async (data) => {
+  let pdfIncializado = {}
+
+  await requesterService
+    .inicializarPDF(data)
+    .then((res) => {
+      toast.success('Assinatura iniciada  com sucesso.');
+      pdfIncializado = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
+      return false;
+    });
+  console.log(pdfIncializado);
+  return pdfIncializado;
+};
+export const FinalizandoPDF = async (extensiondata) => {
+  let pdfFinalizado = {}
+  await requesterService
+    .finalizarPDF(extensiondata)
+    .then((res) => {
+      toast.success('Assinatura finalizada com sucesso.');
+      pdfFinalizado = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error, () => (window.location.href = '/web/areareceitas'));
+      return false;
+    });
+
+  return pdfFinalizado;
+};
+
+
+
+
 
 export const GetComentario = async () => {
   let dadosComentario = [];
@@ -1049,6 +1088,19 @@ export const deletarConversasInativas = async (id_usaurio) => {
   return conversasApagadas;
 };
 
+export const deletarConversa = async (id) => {
+  let conversaApagada = {};
+  await requesterService
+    .deletarConversa(id)
+    .then((res) => {
+      conversaApagada = res.data;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    });
+  return conversaApagada;
+};
+
 export const CriandoMensagem = async (mensagem) => {
   let dadosMensagemCriada = {};
   await requesterService
@@ -1254,13 +1306,13 @@ export const requisicaoSobreMimDados = async () => {
   await requesterService
     .requisicaoSobreMimDados()
     .then((res) => {
-      sobreMimDados = res.data[0];
+      sobreMimDados = res.data;
     })
     .catch((error) => {
       requisicaoErro(error);
     });
 
-  return sobreMimDados;
+  return sobreMimDados[0];
 };
 
 export const criarSobreMim = async (dados) => {
@@ -1277,9 +1329,9 @@ export const criarSobreMim = async (dados) => {
   return sobreMimDados;
 };
 
-export const atualizarSobreMim = async (id, dados) => {
+export const atualizarSobreMim = async (id, titulo_um, texto_um, titulo_dois, texto_dois) => {
   await requesterService
-    .atualizarSobreMim(id, dados)
+    .atualizarSobreMim(id, titulo_um, texto_um, titulo_dois, texto_dois)
     .then(() => {
       toast.success('Dados da página "Sobre mim" atualizados com sucesso!');
     })
@@ -1302,18 +1354,16 @@ export const deletarSobreMim = async (id) => {
 
 export const UpdateDadosHomes = async (
   id,
-  titulo_um,
-  texto_um,
-  titulo_dois,
-  texto_dois,
-  titulo_tres,
-  texto_tres,
-  titulo_quatro,
-  texto_quatro,
+  titulo_um, 
+  texto_um, 
+  titulo_dois, 
+  texto_dois, 
+  titulo_tres, 
+  texto_tres, 
   video
 ) => {
   await requesterService
-    .updateDadosHomes(id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, titulo_quatro, texto_quatro, video)
+    .updateDadosHomes(id, titulo_um, texto_um, titulo_dois, texto_dois, titulo_tres, texto_tres, video)
     .catch((error) => {
       requisicaoErro(error, () => (window.location.href = '/web/editarhome'));
       return false;
@@ -1345,3 +1395,50 @@ export const updateImagemHomes = async (id, file) => {
   };
 
 };
+export const MandandoMensagemComunicadoUrgencia = async (id_usuario) => {
+  await requesterService
+    .enviarMensagemComunicadoUrgencia(id_usuario)
+    .then(() => {
+      toast.success("Exame finalizado com sucesso!")
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    })
+}
+
+export const MandandoMensagemExameMarcado = async (id_usuario) => {
+  await requesterService
+    .enviarMensagemExameMarcado(id_usuario)
+    .then(() => {
+      toast.success("Exame finalizado com sucesso!")
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+    })
+  }
+
+export const updateImagemUmSobreMim = async (id, file) => {
+    try {
+      const res = await requesterService
+        .updateImagemUmSobreMim(id, file)
+      return res;
+  
+    } catch (error) {
+      requisicaoErro(error);
+      return;
+    };
+  
+  };
+
+  export const updateImagemDoisSobreMim = async (id, file) => {
+    try {
+      const res = await requesterService
+        .updateImagemDoisSobreMim(id, file)
+      return res;
+  
+    } catch (error) {
+      requisicaoErro(error);
+      return;
+    };
+  
+  };
