@@ -226,15 +226,22 @@ function CriacaoReceitas() {
 	let formData_FwInicializar = {  "certificado": certificados[0].certificateData
 };
 let UFOID = "2.16.76.1.4.2.2.2";
+let UF = "MG";
+let numero = "56.888";
+let tipoProfissional = "MEDICO";
+let especialidade = "Neurologista e Neurofisiologista Clínico"
 let numeroOID = "2.16.76.1.4.2.2.1";
 let especialidadeOID = "2.16.76.1.4.2.2.3";
 let tipoDoc = "2.16.76.1.12.1.1";
 let form_Metadados = {
 }
-form_Metadados.tipoDoc = tipoDoc;
-form_Metadados.UFOID = UFOID;
-form_Metadados.numeroOID = numeroOID;
-form_Metadados.especialidadeOID = especialidadeOID;
+form_Metadados.meta[tipoDoc] = "";
+form_Metadados.meta[UFOID] = UF;
+form_Metadados.meta[numeroOID] = numero;
+//form_Metadados.UF = UF;
+form_Metadados.tipoProfissional = tipoProfissional;
+form_Metadados.numero = numero;
+form_Metadados.meta[especialidadeOID] = especialidade;
 
 const dadosCriacaoPdf = {
   id: id,
