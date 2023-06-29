@@ -235,13 +235,18 @@ let especialidadeOID = "2.16.76.1.4.2.2.3";
 let tipoDoc = "2.16.76.1.12.1.1";
 let form_Metadados = {
 }
-form_Metadados.meta[tipoDoc] = "";
-form_Metadados.meta[UFOID] = UF;
-form_Metadados.meta[numeroOID] = numero;
+form_Metadados[tipoDoc] = "";
+form_Metadados[UFOID] = UF;
+form_Metadados[numeroOID] = numero;
 //form_Metadados.UF = UF;
 form_Metadados.tipoProfissional = tipoProfissional;
 form_Metadados.numero = numero;
-form_Metadados.meta[especialidadeOID] = especialidade;
+form_Metadados[especialidadeOID] = especialidade;
+/*form_Metadados.tipoDoc = tipoDoc;
+form_Metadados.UFOID = UFOID;
+form_Metadados.numeroOID = numeroOID;
+form_Metadados.especialidadeOID = especialidadeOID;*/
+
 
 const dadosCriacaoPdf = {
   id: id,
@@ -253,16 +258,16 @@ const dadosCriacaoPdf = {
 form_Metadados.documento = dadosCriacaoPdf;
 
 formData_FwInicializar.metadados = form_Metadados;
-
+console.log(form_Metadados);
    const resposta = await managerService.InicializandoPDF(formData_FwInicializar);
-   
+   console.log(resposta);
    const respostafinalizar =  await window.BryExtension.sign(certificados[0].certId, JSON.stringify(resposta));
   
 
-   const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
+   //const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
    
    
-   await managerService.CriandoReceitaComArquivo(
+  /* await managerService.CriandoReceitaComArquivo(
     id,
     tituloReceita,
     "receita",
@@ -274,7 +279,7 @@ formData_FwInicializar.metadados = form_Metadados;
         history.push("/web/areareceitas");
       },
     }
-  );
+  );*/
 
 
 	setCarregandoCriacao(false);
