@@ -264,10 +264,10 @@ console.log(form_Metadados);
    const respostafinalizar =  await window.BryExtension.sign(certificados[0].certId, JSON.stringify(resposta));
   
 
-   //const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
+   const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
    
    
-  /* await managerService.CriandoReceitaComArquivo(
+   await managerService.CriandoReceitaComArquivo(
     id,
     tituloReceita,
     "receita",
@@ -279,7 +279,7 @@ console.log(form_Metadados);
         history.push("/web/areareceitas");
       },
     }
-  );*/
+  );
 
 
 	setCarregandoCriacao(false);
