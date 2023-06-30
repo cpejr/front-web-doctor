@@ -887,12 +887,9 @@ export const CriandoReceita = async (
   dataNascimento,
   tituloReceita,
   descricao,
-  usarToast = {
-    mensagemSucesso: 'Operação bem sucedida',
-    tempo: 1500,
-    onClose: () => { },
-  }
+  
 ) => {
+  let receitaMultpart = {};
   return requesterService
 
     .criarReceita(
@@ -900,16 +897,12 @@ export const CriandoReceita = async (
       nomePaciente,
       dataNascimento,
       tituloReceita,
-      descricao
+      descricao,
     )
-    .then(() => {
-      if (usarToast) {
-        toast.success(usarToast.mensagemSucesso, {
-          autoClose: usarToast.tempo,
-          onClose: usarToast.onClose,
-        });
-      }
-      return true;
+    .then((res) => {
+       receitaMultpart = res.data;
+      
+      return receitaMultpart;
     })
     .catch((error) => {
       requisicaoErro(error);

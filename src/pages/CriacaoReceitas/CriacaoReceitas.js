@@ -35,6 +35,7 @@ import {
   Image,
   PDFDownloadLink,
   StyleSheet,
+  renderToStream,
 } from "@react-pdf/renderer";
 
 import LogoPdf from "../../assets/LogoPdf.png";
@@ -103,7 +104,6 @@ function CriacaoReceitas() {
 	const history = useHistory();
 
     useEffect(() => {
-		// SE A EXTENSAO TIVER INSTALADA, PEGA OS CERTIFICADOS INSTALADOS DO CLIENTE
 		if (extensaoInstalada) {
 		  window.BryExtension.listCertificates().then((certificados) => {
 			certificados.forEach(certificado => {
@@ -223,38 +223,64 @@ function CriacaoReceitas() {
       setCarregandoCriacao(false);
       return;
     }
-	//formData_FwInicializar["metadados"] = form_Metadados;
 	let formData_FwInicializar = {  "certificado": certificados[0].certificateData
 };
 let UFOID = "2.16.76.1.4.2.2.2";
+let UF = "MG";
+let numero = "56.888";
+let tipoProfissional = "MEDICO";
+let especialidade = "Neurologista e Neurofisiologista Clínico"
 let numeroOID = "2.16.76.1.4.2.2.1";
 let especialidadeOID = "2.16.76.1.4.2.2.3";
 let tipoDoc = "2.16.76.1.12.1.1";
 let form_Metadados = {
 }
-form_Metadados.tipoDoc = tipoDoc;
+form_Metadados[tipoDoc] = "";
+form_Metadados[UFOID] = UF;
+form_Metadados[numeroOID] = numero;
+//form_Metadados.UF = UF;
+form_Metadados.tipoProfissional = tipoProfissional;
+form_Metadados.numero = numero;
+form_Metadados[especialidadeOID] = especialidade;
+/*form_Metadados.tipoDoc = tipoDoc;
 form_Metadados.UFOID = UFOID;
 form_Metadados.numeroOID = numeroOID;
-form_Metadados.especialidadeOID = especialidadeOID;
-//formData_FwInicializar.documento = PdfTeste; O documento precisa de multipart file
+form_Metadados.especialidadeOID = especialidadeOID;*/
+
+
+const dadosCriacaoPdf = {
+  id: id,
+  NomePaciente:NomePaciente,
+  dataNascimentoPaciente:dataNascimentoPaciente,
+  tituloReceita:tituloReceita,
+  descricaoReceita:descricaoReceita,
+}
+form_Metadados.documento = dadosCriacaoPdf;
+
 formData_FwInicializar.metadados = form_Metadados;
-
-
+console.log(form_Metadados);
    const resposta = await managerService.InicializandoPDF(formData_FwInicializar);
-   
+   console.log(resposta);
    const respostafinalizar =  await window.BryExtension.sign(certificados[0].certId, JSON.stringify(resposta));
-   
+  
 
    const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
+   
+   
+   await managerService.CriandoReceitaComArquivo(
+    id,
+    tituloReceita,
+    "receita",
+    respFinicializar.PDF[0],
+    {
+      mensagemSucesso: "Receita criada com sucesso",
+      tempo: 1500,
+      onClose: () => {
+        history.push("/web/areareceitas");
+      },
+    }
+  );
 
-
-	await managerService.CriandoReceita(id, NomePaciente, dataNascimentoPaciente, tituloReceita, descricaoReceita, {
-		mensagemSucesso: "Receita criada com sucesso",
-		tempo: 1500,
-		onClose: () => {
-			history.push("/web/areareceitas");
-		},
-	});
 
 	setCarregandoCriacao(false);
 }
@@ -307,7 +333,11 @@ formData_FwInicializar.metadados = form_Metadados;
       marginTop: "83.5%",
     },
   });
-
+  /*const generatePDF = async () => {
+    const pdfBlob = await <PdfTeste />.toBlob();
+  
+    return pdfBlob;
+  };*/
   const ordenarusuarios = (a, b) => {
     var nome1 = a.nome.toUpperCase();
     var nome2 = b.nome.toUpperCase();
