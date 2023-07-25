@@ -771,7 +771,7 @@ export const IndicandoMedicos = async (
   usarToast = {
     mensagemSucesso: 'Operação bem sucedida',
     tempo: 1500,
-    onClose: () => { },
+    onClose: () => {},
   }
 ) => {
   return requesterService
@@ -788,6 +788,7 @@ export const IndicandoMedicos = async (
           onClose: usarToast.onClose,
         });
       }
+      window.location.href = '/web/edicaoindicacoesesugestoes' 
       return true;
     })
     .catch((error) => {
@@ -800,6 +801,7 @@ export const EditarMedicoIndicado = async (id, estado) => {
     .alterarMedicoIndicado(id, estado)
     .then(() => {
       toast.success('Indicação atualizada com sucesso.');
+      window.location.href = '/web/edicaoindicacoesesugestoes' 
     })
     .catch((error) => {
       requisicaoErro(error);
@@ -813,6 +815,7 @@ export const DeletarIndicao = async (id) => {
     .deletarMedicoIndicado(id)
     .then(() => {
       toast.success('Indicação deletada com sucesso.');
+      window.location.href = '/web/edicaoindicacoesesugestoes' 
     })
     .catch((error) => {
       requisicaoErro(
