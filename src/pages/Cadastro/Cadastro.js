@@ -307,6 +307,7 @@ function Cadastro(props) {
 
     if (_.isEqual(camposVazios, testeTemp)) {
       if (usuario.senha === usuario.senhaConfirmada) {
+        enderecoBack.cep = endereco.cep.replace("-","")
         const cadastradoComSucesso = await managerService.Cadastrando(
           usuario,
           enderecoBack,
