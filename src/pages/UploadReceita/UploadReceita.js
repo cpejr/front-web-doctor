@@ -128,13 +128,12 @@ function UploadReceita() {
     }
     setCarregandoCriacao(true);
     const id = estado.id_usuario;
-    const string = file.replace("data:application/pdf;base64,", "");
-    console.log(string);
+    const res = await managerService.enviarArquivoMensagem(file);
     await managerService.CriandoReceitaComArquivo(
       id,
       tituloReceita,
       "upload",
-      string,
+      res,
       {
         mensagemSucesso: "Receita criada com sucesso",
         tempo: 1500,
@@ -158,14 +157,13 @@ function UploadReceita() {
   };
 
   async function handleChange(info) {
+    setFile(info);
+    setArquivoEscolhido(false)
+    setNomeArquivo(info.file.name);
     estado.descricao = false;
-    getBase64(info.file.originFileObj, (url) => {
-      setFile(url);
-      setNomeArquivo(info.file.name);
-    });
-	setArquivoEscolhido(false)
   }
 
+	
   return (
     <ContainerUploadReceitas>
       <CardUploadReceitas>
@@ -213,24 +211,25 @@ function UploadReceita() {
           </SelectContainer>
           <UploadBox>Upload:</UploadBox>
           <Area camposVazios = {arquivoEscolhido}>
-            {file ? (
-              <ArquivoSelecionado>
-                <FilePdfOutlined style={{ fontSize: 20 }} />
-                <UploadVazio>{nomeArquivo}</UploadVazio>
-              </ArquivoSelecionado>
-            ) : (
               <EnviarUploadArea
+                name="file"
                 multiple={true}
-                showUploadList={true}
+                showUploadList={false}
                 onChange={handleChange}
-                action={"http://localhost:3000/"}
+                status={"removed"}
               >
+                {!file ? (
                 <UploadText>
-                  <div>+</div>
-                  <div>Buscar Receita</div>
+                  <div>+ Buscar Receita</div>
+                </UploadText>):(
+                <UploadText>
+                  <FilePdfOutlined style={{ fontSize: 20 }} />
+                  <div>{nomeArquivo}</div>
                 </UploadText>
+                )}
+                
               </EnviarUploadArea>
-            )}
+
           </Area>
         </UploadReceitaCorpo>
         <UploadReceitaBotoes>
