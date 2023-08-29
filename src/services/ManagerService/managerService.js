@@ -942,6 +942,38 @@ export const CriandoReceitaComArquivo = async (
     });
 };
 
+export const CriandoReceitaComArquivo64 = async (
+  id_usuario,
+  tituloReceita,
+  descricao,
+  base64,
+  usarToast = {
+    mensagemSucesso: 'Operação bem sucedida',
+    tempo: 1500,
+    onClose: () => { },
+  }
+) => {
+  return requesterService.criarReceitaComArquivo64(
+    id_usuario,
+    tituloReceita,
+    descricao,
+    base64,
+  )
+    .then(() => {
+      if (usarToast) {
+        toast.success(usarToast.mensagemSucesso, {
+          autoClose: usarToast.tempo,
+          onClose: usarToast.onClose,
+        });
+      }
+      return true;
+    })
+    .catch((error) => {
+      requisicaoErro(error);
+      return false;
+    });
+};
+
 export const EditarPerguntasFormulario = async (id, perguntas) => {
   await requesterService
     .editarPerguntasFormulario(id, perguntas)
