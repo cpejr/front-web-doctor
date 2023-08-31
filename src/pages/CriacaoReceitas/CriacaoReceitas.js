@@ -266,6 +266,7 @@ console.log(form_Metadados);
 
    const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
    
+   console.log(respostafinalizar);
    
    await managerService.CriandoReceitaComArquivo64(
     id,
