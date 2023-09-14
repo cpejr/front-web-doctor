@@ -223,7 +223,7 @@ function CriacaoReceitas() {
       setCarregandoCriacao(false);
       return;
     }
-	let formData_FwInicializar = {  "certificado": certificados[1].certificateData
+	let formData_FwInicializar = {  "certificado": certificados[0].certificateData
 };
 let UFOID = "2.16.76.1.4.2.2.2";
 let UF = "MG";
@@ -266,7 +266,7 @@ console.log(form_Metadados);
 
    const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
    
-   console.log(respostafinalizar);
+   console.log(respFinicializar);
    
    await managerService.CriandoReceitaComArquivo64(
     id,
