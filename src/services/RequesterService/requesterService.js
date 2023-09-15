@@ -175,6 +175,19 @@ export const criarReceitaComArquivo = (
     file: base64,
   });
 
+  export const criarReceitaComArquivo64 = (
+    id_usuario,
+    tituloReceita,
+    descricao,
+    base64
+  ) =>
+    api.post(`/receitasarquivo2`, {
+      id_usuario: id_usuario,
+      titulo: tituloReceita,
+      descricao: descricao,
+      file: base64,
+    });
+
 export const deletarReceita = (id) => api.delete(`/receitas/${id}`);
 
 export const editarPerguntasFormulario = (id, perguntas) =>

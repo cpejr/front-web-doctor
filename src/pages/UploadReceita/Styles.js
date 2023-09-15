@@ -155,7 +155,8 @@ export const UploadText = styled.div`
 	font-size: 20px;
 	flex-direction: column;	
 	line-height: 30px;
-	margin-bottom: 2%;
+	margin-bottom: 3%;
+	margin-top: 3%;
 	display: flex;
 	justify-content: center;
 	align-items: center;

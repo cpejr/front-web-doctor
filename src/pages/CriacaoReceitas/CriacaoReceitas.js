@@ -266,8 +266,9 @@ console.log(form_Metadados);
 
    const respFinicializar = await managerService.FinalizandoPDF(respostafinalizar);
    
+   console.log(respFinicializar);
    
-   await managerService.CriandoReceitaComArquivo(
+   await managerService.CriandoReceitaComArquivo64(
     id,
     tituloReceita,
     "receita",
