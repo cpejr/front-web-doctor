@@ -268,7 +268,7 @@ console.log(form_Metadados);
    
    console.log(respFinicializar);
    
-   await managerService.CriandoReceitaComArquivo(
+   await managerService.CriandoReceitaComArquivo64(
     id,
     tituloReceita,
     "receita",
