@@ -361,9 +361,7 @@ function PerfilPaciente(props) {
   async function baixarPdf(receitaPdf) {
     const chave = receitaPdf.pdf_url;
     const resposta = await managerService.GetArquivoPorChave(chave);
-    console.log(resposta.slice(0,3))
     if(resposta.slice(0,4) !== "%PDF"){
-      console.log("TESTE1")
     const fonteLink = `data:application/pdf;base64,${resposta}`;
     const Linkbaixavel = document.createElement('a');
     const nome = receitaPdf.titulo + ".pdf";
@@ -371,7 +369,6 @@ function PerfilPaciente(props) {
     Linkbaixavel.download = nome;
     Linkbaixavel.click();
     }else{
-      console.log("TESTE2")
     window.open(`http://localhost:3333/arquivo/${chave}`) //ALTERAR QUANDO TIVERMOS O BACKEND DO DEPLOY DEFINIDO
   }
 
