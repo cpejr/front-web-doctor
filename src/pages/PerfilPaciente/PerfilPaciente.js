@@ -361,17 +361,14 @@ function PerfilPaciente(props) {
   async function baixarPdf(receitaPdf) {
     const chave = receitaPdf.pdf_url;
     const resposta = await managerService.GetArquivoPorChave(chave);
-    if(resposta.slice(0,4) !== "%PDF"){
+
     const fonteLink = `data:application/pdf;base64,${resposta}`;
     const Linkbaixavel = document.createElement('a');
     const nome = receitaPdf.titulo + ".pdf";
+
     Linkbaixavel.href = fonteLink;
     Linkbaixavel.download = nome;
     Linkbaixavel.click();
-    }else{
-    window.open(`http://localhost:3333/arquivo/${chave}`) //ALTERAR QUANDO TIVERMOS O BACKEND DO DEPLOY DEFINIDO
-  }
-
   }
 
   async function pegandoDadosFormularioEspecifico(id) {
